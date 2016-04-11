@@ -1,6 +1,6 @@
 import grockScala.datastructures._
 
-object Chap3Test {
+object ListTest {
 
   /** Test package */
   def main(args: Array[String]) = {

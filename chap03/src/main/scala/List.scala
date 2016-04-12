@@ -18,6 +18,12 @@ object List {
       case _ => l
     }
 
+  /** Return first element of List - partial function */
+  def head[A](l: List[A]): A =
+    l match {
+      case Cons(h, t) => h
+    }
+
   /** Return a list with a replaced first element */
   def setHead[A](l: List[A], a: A): List[A] =
     l match {
@@ -152,5 +158,49 @@ object List {
   /** Flatten a List of Lists */
   def flatten[A](ass: List[List[A]]): List[A] = 
     foldRight(ass, Nil: List[A])(append)
+
+  // Exercise 3.16
+  /** Transform a List[Int] by incrementing each element by 1 */
+  def bump1(l: List[Int]): List[Int] = 
+    foldRight(l, Nil: List[Int])((a, as) => Cons(a+1, as))
+
+  // Exercise 3.17
+  /** Transform a List[Double] to a List[String] */
+  def doublesToStrings(l: List[Double]): List[String] = 
+    foldRight(l, Nil: List[String])((d, ds) => Cons(d.toString, ds))
+
+  // Exercise 3.18
+  /** Modify each element of a list while maintaining
+   *  while maintaining the structure of the List 
+   */
+  def map[A, B](l: List[A])(f: A => B): List[B] = 
+    foldRight(l, Nil: List[B])((a, as) => Cons(f(a), as))
+
+  // Exercise 3.19
+  /** Filter elements from a list based on a predicate */
+  def filter[A](l: List[A])(f: A => Boolean): List[A] =
+    foldRight(l, Nil: List[A])(
+      (a,as) => 
+        if (f(a))
+          Cons(a, as)
+        else
+          as
+    )
+
+  // Exercise 3.20
+  /** Implement flatMap for List */
+  def flatMap[A, B](as: List[A])(f: A => List[B]): List[B] =
+    flatten(map(as)(f))
+
+  // Exercise 3.21
+  /** Reimplimention of filter using flatMap */
+  def filter2[A](as: List[A])(f: A => Boolean): List[A] =
+    flatMap(as)(
+      a => 
+        if (f(a))
+          List(a)
+        else
+          Nil
+    )
 
 }

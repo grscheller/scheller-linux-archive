@@ -197,5 +197,60 @@ object ListTest {
     print(") = ")
     println(List.flatten(emptyList))
 
+    // Test bump1
+    print("List.bump1(")
+    print(foo1234)
+    print(") = ")
+    println(List.bump1(foo1234))
+
+    // Test doublesToStrings
+    print("List.doublesToStrings(")
+    print(doo12345)
+    print(") = ")
+    val dooStrings = List.doublesToStrings(doo12345)
+    println(dooStrings)
+
+    val thirdElement = List.head(List.drop(dooStrings,2))
+    print("List.head(List.drop(dooStrings,2))) = ")
+    println(List.head(List.drop(dooStrings,2)))
+    print("List.head(List.drop(dooStrings,2))).reverse = ")
+    println(List.head(List.drop(dooStrings,2)).reverse)
+
+    // Test map
+    print("List.map(")
+    print(foo1234)
+    print(")((x: Int) => math.exp(x) - 5.0) = ")
+    println(List.map(foo1234)((x: Int) => math.exp(x) - 5.0))
+    
+    // Test filter: filter out odd values
+    print("List.filter(")
+    print(foo1234)
+    print(")(_ % 2 != 1) = ")
+    println(List.filter(foo1234)(_ % 2 != 1))
+
+    // Test flatmap
+    print("List.flatMap(")
+    print(foo1234)
+    print(")(i => List(i, i*i)) = ")
+    println(List.flatMap(foo1234)(i => List(i, i*i)))
+
+    // Test filter2: filter out even values
+    print("List.filter2(")
+    print(foo1234)
+    print(")(_ % 2 == 1) = ")
+    println(List.filter2(foo1234)(_ % 2 == 1))
+
+    // Compare filter and filter2
+    var aa = List(): List[Int]
+    for (a <- 1 to 700000) aa = Cons(a,aa)
+    val a1 = List.drop(aa, 10000)
+    val a2 = a1
+    
+    print("List.filter(a1)(_ < 20) = ")
+    println(List.filter(a1)(_ < 20))
+
+    print("List.filter2(a2)(_ < 15) = ")
+    println(List.filter2(a2)(_ < 15))
+
   }
 }

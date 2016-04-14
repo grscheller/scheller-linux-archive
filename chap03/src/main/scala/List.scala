@@ -88,7 +88,7 @@ object List {
 
   // Exercise 3.7
   /** Right fold with short circuit logic */
-  def foldRightSC[A,B](xs: List[A], zero: A, one: B)(f: (A,B) => B): B =
+  def foldRightSC[A,B](xs: List[A], zero: A, one: B)(f: (A, B) => B): B =
     xs match {
       case Nil => one
       case Cons(x, rest) if x == zero => f(zero, one)
@@ -115,7 +115,6 @@ object List {
     lenAcc(0)(as)
   }
 
-  // Exercise 3.10 - Implement tail recursive foldLeft
   /** Implement foldRight - not tail recursive, not stack safe */
   def foldRightUnsafe[A, B](as: List[A], z: B)(f: (A, B) => B): B =
     as match {
@@ -123,6 +122,7 @@ object List {
       case Cons(x, xs) => f(x, foldRightUnsafe(xs, z)(f))
     }
 
+  // Exercise 3.10 - Implement tail recursive foldLeft
   /** Tail recursive foldLeft - stack safe */
   def foldLeft[A, B](as: List[A], z: B)(f: (B, A) => B): B = {
     def acc(lt: B, rt: List[A]): B = 
@@ -132,6 +132,18 @@ object List {
       }
 
     acc(z, as)
+  }
+
+  /** Tail recursive foldLeft - with Short Circuit */
+  def foldLeftSC[A, B](as: List[A], zero: A, one: B)(f: (B, A) => B): B = {
+    def acc(lt: B, rt: List[A]): B = 
+      rt match {
+        case Nil => lt
+        case Cons(x, xs) if x == zero => f(one, zero)
+        case Cons(x, xs) => acc(f(lt, x), xs)
+      }
+
+    acc(one, as)
   }
 
   // Exercise 3.11 (Partial)
@@ -202,5 +214,67 @@ object List {
         else
           Nil
     )
+
+  // Exercise 3.22
+  /** Add corressponding elements of 2 lists of Ints - match up from head */
+  def addLists(as: List[Int], bs: List[Int]): List[Int] =
+    (as, bs) match {
+      case (Cons(a, rest_as), Cons(b, rest_bs)) =>
+        Cons(a+b, addLists(rest_as, rest_bs))
+      case _ =>
+        Nil
+    }
+
+  // Exercise 3.23
+  /** Implements standard zipWith function
+   *  
+   *    Not stack safe
+   */
+  def zipWith[A,B,C](as: List[A], bs: List[B])(f: (A,B) => C): List[C] =
+    (as, bs) match {
+      case (Cons(a, rest_as), Cons(b, rest_bs)) =>
+        Cons(f(a, b), zipWith(rest_as, rest_bs)(f))
+      case _ =>
+        Nil
+    }
+
+  /* Implements standard zipWith function 
+   *
+   *  Todo: when I know how to make things lazy 
+   */
+  //def zipWith[A,B,C](as: List[A], bs: List[B])(f: (A,B) => C): List[C] =
+  //  foldLeft(as, Nil: List[C])
+
+  // Exercise 3.24
+  /** Determine if a List contains another List as a subsequence */
+  def hasSubsequence[A](sup: List[A], sub: List[A]): Boolean = {
+
+    def hasHead(h: A, l: List[A]): Boolean = 
+      l match {
+        case Cons(h2, rest) if h == h2 => true
+        case _ => false
+      }
+
+    def sameInit(l1: List[A], l2: List[A]): Boolean  = 
+      foldLeftSC(zipWith(l1, l2)(_ == _), false, true)(_ && _)
+
+    def foundIt(l: List[A]): Boolean =
+      if (hasHead(head(sub), l))
+        if (sameInit(l, sub))
+          true
+        else
+          foundIt(tailT(l))
+      else
+        if (l == Nil)
+          false
+        else
+          foundIt(tailT(l))
+
+    if (sub != Nil)
+      foundIt(sup)
+    else
+      true
+
+  }
 
 }

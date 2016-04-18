@@ -5,16 +5,4 @@ lazy val commonSettings = Seq(
 )
 
 lazy val root = (project in file(".")).
-  aggregate(firstSteps, datastructures)
-
-lazy val firstSteps = (project in file("chap02")).
-  settings(commonSettings: _*).
-  settings(
-    name := "firstSteps"
-  )
-
-lazy val datastructures = (project in file("chap03")).
-  settings(commonSettings: _*).
-  settings(
-    name := "datastructures"
-  )
+  settings(commonSettings: _*)

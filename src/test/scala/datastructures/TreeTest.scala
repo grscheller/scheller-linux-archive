@@ -56,5 +56,21 @@ object TreeTest {
     // See how it displays
     print("\nitree9 = "); println(itree9)
 
+    // Exercise 3.27 - Test depth
+    println("\nTest Tree.depth:")
+    print("Tree.depth(leaf5) = "); println(Tree.depth(leaf5))
+    print("Tree.depth(tree3) = "); println(Tree.depth(tree3))
+    print("Tree.depth(tree5) = "); println(Tree.depth(tree5))
+    print("Tree.depth(tree9) = "); println(Tree.depth(tree9))
+    print("Tree.depth(tree11) = "); println(Tree.depth(tree11))
+    print("Tree.depth(tree21) = "); println(Tree.depth(tree21))
+
+    print("\ntree21 = "); println(tree21)
+
+    // Exercise 3.28 - Test map
+    println("\nTest Tree.map:")
+    print("Tree.map(tree21)((x) => x*x -1) = ")
+    println( Tree.map(tree21)((x) => x*x -1) )
+
   }
 }

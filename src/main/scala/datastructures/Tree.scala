@@ -38,4 +38,20 @@ object Tree {
       case Leaf(ii) => ii
     }
 
+  // Exercise 3.27
+  /** Returns the maximum path length from the root
+   *  to any Leaf in the tree
+   */
+  def depth[A](tree: Tree[A]): Int =
+    tree match {
+      case Branch(left, right) => (depth(left) max depth(right)) + 1
+      case _ => 1
+    }
+
+  def map[A, B](tree: Tree[A])(f: A => B): Tree[B] =
+    tree match {
+      case Branch(left, right) => Branch(map(left)(f), map(right)(f))
+      case Leaf(a) => Leaf(f(a))
+    }
+
 }

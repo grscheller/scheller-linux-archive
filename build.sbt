@@ -21,7 +21,7 @@ lazy val root = (project in file(".")).
    is a jvm and run.
 
 */
-//exportJars := true
+exportJars := false
 
 /* An attempt to get at the classpath to try and run
    scala directly.  Didn't work.

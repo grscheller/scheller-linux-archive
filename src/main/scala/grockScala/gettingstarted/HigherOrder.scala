@@ -1,3 +1,5 @@
+package grockScala.gettingstarted
+
 /*
    Currying and partial application
 */

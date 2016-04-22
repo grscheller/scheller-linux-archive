@@ -1,3 +1,5 @@
+package grockScala.test.datastructures
+
 import grockScala.datastructures._
 
 object TreeTest {

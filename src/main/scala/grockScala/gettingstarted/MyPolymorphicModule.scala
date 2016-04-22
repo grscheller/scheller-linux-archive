@@ -1,3 +1,5 @@
+package grockScala.gettingstarted
+
 /*
    Refactored version of MyModule.
 */

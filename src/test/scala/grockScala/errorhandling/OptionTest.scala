@@ -5,7 +5,7 @@ import grockScala.errorhandling._
 object OptionTest {
 
   /** Test package */
-  def main(args: Array[String]): Void = {
+  def main(args: Array[String]): Unit = {
 
 
   }

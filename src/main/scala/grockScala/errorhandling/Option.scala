@@ -27,10 +27,26 @@ sealed trait Option[+A] {
 
   /** Convert Some to None if predicate false */
   def filter(pred: A => Boolean): Option[A] = 
-    this.flatMap((a: A) =>
+    flatMap((a: A) =>
       if (pred(a)) this
       else None
     )
+
+// Versions from book answers
+  /** Apply f, which may fail, to the Option, if not none */
+  def flatMap_book[B](f: A => Option[B]): Option[B] = 
+    map(f).getOrElse(None)
+
+  /** Convert Some to None if predicate false */
+  def filter2(pred: A => Boolean): Option[A] = 
+    flatMap_book((a: A) =>
+      if (pred(a)) this
+      else None
+    )
+
+  /** If None, swap with superclass Option, nonstrictly */
+  def orElse_book[B >: A](default: => Option[B]): Option[B] =
+    map(Some(_)).getOrElse(default)
 
 }
 case class Some[+A](get: A) extends Option[A]

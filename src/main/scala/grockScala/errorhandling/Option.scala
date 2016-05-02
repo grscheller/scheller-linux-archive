@@ -94,7 +94,10 @@ object Option {
    *  with no knowledge of Options, a function that operates with
    *  the corresponding Options and returning an Option will be returned.
    */
-  def lift2[A,B,C](f: (A, B) => C)(aO: Option[A], bO: Option[B]): Option[C] =
+  def map2r[A,B,C](f: (A, B) => C)(aO: Option[A], bO: Option[B]): Option[C] =
     aO.flatMap(a => bO map (b => f(a, b)))
+
+  def lift2[A,B,C](f: (A, B) => C): (Option[A], Option[B]) => Option[C] =
+    map2r(f)( _, _)
 
 }

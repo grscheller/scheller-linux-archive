@@ -134,7 +134,7 @@ object OptionTest {
                        "Option.Try(fun2_failable(10. 5.0))")
 
     // Test lift
-    println("Test lift:\n")
+    println("\nTest lift:\n")
     val fun1Lifted = Option.lift(fun1)
     evalP1(baz5, fun1Lifted, "fun1Lifted")
     evalP1(bazN, fun1Lifted, "fun1Lifted")
@@ -174,17 +174,17 @@ object OptionTest {
     evalP1(fn, opt8N, "opt8N")
     evalP1(fn, optNN, "optNN")
 
-    // Test lift2
-    println("\nTest lift2 directly:\n")
-    evalP0(Option.lift2(fn)(baz5, baz8), "Option.lift2(fn)(baz5, baz8)")
-    evalP0(Option.lift2(fn)(baz8, baz5), "Option.lift2(fn)(baz8, baz5)")
-    evalP0(Option.lift2(fn)(bazN, baz8), "Option.lift2(fn)(bazN, baz8)")
-    evalP0(Option.lift2(fn)(bazN, baz5), "Option.lift2(fn)(bazN, baz5)")
-    evalP0(Option.lift2(fn)(baz5, bazN), "Option.lift2(fn)(baz5, bazN)")
-    evalP0(Option.lift2(fn)(baz8, bazN), "Option.lift2(fn)(baz8, bazN)")
-    evalP0(Option.lift2(fn)(bazN, bazN), "Option.lift2(fn)(bazN, bazN)")
+    // Test map2r
+    println("\nTest map2r directly:\n")
+    evalP0(Option.map2r(fn)(baz5, baz8), "Option.map2r(fn)(baz5, baz8)")
+    evalP0(Option.map2r(fn)(baz8, baz5), "Option.map2r(fn)(baz8, baz5)")
+    evalP0(Option.map2r(fn)(bazN, baz8), "Option.map2r(fn)(bazN, baz8)")
+    evalP0(Option.map2r(fn)(bazN, baz5), "Option.map2r(fn)(bazN, baz5)")
+    evalP0(Option.map2r(fn)(baz5, bazN), "Option.map2r(fn)(baz5, bazN)")
+    evalP0(Option.map2r(fn)(baz8, bazN), "Option.map2r(fn)(baz8, bazN)")
+    evalP0(Option.map2r(fn)(bazN, bazN), "Option.map2r(fn)(bazN, bazN)")
 
-    println("\nTest lift2 partially applied:\n")
+    println("\nTest map2r partially applied:\n")
     val fnO = Option.lift2(fn)(_, _)
 
     evalP2(baz5, baz8, fnO, "fnO")
@@ -195,13 +195,24 @@ object OptionTest {
     evalP2(baz8, bazN, fnO, "fnO")
     evalP2(bazN, bazN, fnO, "fnO")
 
-    println("\nTest lift2 again, more complicated types:\n")
+    println("\nTest map2r again, more complicated types:\n")
     val fun2O = Option.lift2(fun2)(_, _)
 
     evalP2(baz5, bar3, fun2O, "fun2O")
     evalP2(baz5, barN, fun2O, "fun2O")
     evalP2(bazN, bar3, fun2O, "fun2O")
     evalP2(bazN, barN, fun2O, "fun2O")
+
+    // Test lift2
+    println("\nTest lift2:\n")
+    val fun2Lifted = Option.lift2(fun2)
+
+    evalP2(baz5, bar3, fun2Lifted, "fun2Lifted")
+    evalP2(baz5, barN, fun2Lifted, "fun2Lifted")
+    evalP2(bazN, bar3, fun2Lifted, "fun2Lifted")
+    evalP2(bazN, barN, fun2Lifted, "fun2Lifted")
+    
+    println()
 
   }
 }

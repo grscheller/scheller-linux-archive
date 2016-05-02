@@ -11,7 +11,7 @@ object Stats {
     if (xs.isEmpty) None
     else Some(xs.sum/xs.size)
 
-  // Initial attempt without flatMap - needed to something working
+  // Initial attempt without flatMap - needed to see something that worked
   // in order to figure out the flatMap version.
   /** Computes the variance of a dataset of Doubles */
   def variance1(xs: Seq[Double]): Option[Double] = {
@@ -34,27 +34,174 @@ object OptionTest {
 
   import Stats._
 
+  // Define some utility functions
+  /**
+   * Evaluate and nicely print expresion - let any
+   * exceptions happen before anything printed.
+   */
+  def evalP0[A](expr: => A, fname: String): Unit = {
+    val result = expr  // Let any exceptions happen before anything printed.
+    print(fname ++ " = "); println(result)
+  }
+
+  /**
+   * Evaluate and nicely print function of one argument - let any
+   * exceptions happen before anything printed.
+   */
+  def evalP1[A,B](arg: => A, f: (A) => B, fname: String): Unit = {
+    val result = f(arg)
+    print(fname); print("("); print(arg); print(") = ")
+    println(result)
+  }
+
+  /**
+   * Evaluate and nicely print function of two arguments - let any
+   * exceptions happen before anything printed.
+   */
+  def evalP2[A,B,C](arg1: => A, arg2: => B, f: (A,B) => C,
+                                            fname: String): Unit = {
+    val result = f(arg1, arg2)
+    print(fname); print("("); print(arg1)
+    print(", "); print(arg2); print(") = ")
+    println(result)
+  }
+      
   /** Test package */
   def main(args: Array[String]): Unit = {
+
+    // Test mean and variance
+
     // Some test data:
-    val foo = List(1, 2, 3, 4, 5): List[Double]
-    val bar = (0 to 10000).map(_.toDouble)
+    val foo = List(1, 2, 3, 4, 5, 6, 7, 8, 9, 10): List[Double]
+    val bar = (0 to 100).map(_.toDouble)
     val baz = Nil: List[Double]
 
-    println("Test mean:")
-    println(mean(foo))
-    println(mean(bar))
-    println(mean(baz))
+    println("Test mean:\n")
+    evalP1(foo, mean, "mean")
+    evalP1(bar, mean, "mean")
+    evalP1(baz, mean, "mean")
 
-    println("\nTest variance1:")
-    println(variance1(foo))
-    println(variance1(bar))
-    println(variance1(baz))
+    println("\nTest variance1:\n")
+    evalP1(foo, variance1, "variance1")
+    evalP1(bar, variance1, "variance1")
+    evalP1(baz, variance1, "variance1")
 
-    println("\nTest variance:")
-    println(variance(foo))
-    println(variance(bar))
-    println(variance(baz))
+    println("\nTest variance:\n")
+    evalP1(foo, variance, "variance")
+    evalP1(bar, variance, "variance")
+    evalP1(baz, variance, "variance")
+
+    // Test Try, lift, map2, lift2
+
+    // First define some functions and Options
+    val fun2 = (x: Int, y: Double) => (x * y).toString ++ " string"
+
+    val fun2_failable = (x: Int, y: Double) =>
+      if (x == 10) throw new Exception("fail!")
+      else (x * y).toString
+
+    val fun1 = (x: Int) => x + 1
+
+    val fun1_failable = (x: Int) => 
+      if (x == 42) throw new Exception("fail!")
+      else x + 1
+
+    val baz5 = Some(5)
+    val baz8 = Some(8)
+    val baz10 = Some(10)
+    val bazN: Option[Int] = None
+
+    val bar3 = Some(3.0)
+    val barN: Option[Double] = None
+
+    // First run naked 
+    println("\nTest unlifted functions in try block:\n")
+    try {
+      evalP2(5, 3.0, fun2, "fun2")
+      evalP2(5, 3.0, fun2_failable, "fun2_failable")
+      evalP2(10, 3.0, fun2_failable, "fun2_failable")
+    } catch {
+      case e: Exception =>  println("An exception was caught, boohoohoo.\n")
+    }
+
+    // Next, test Try 
+    println("Convert from exceptions to Options via Try:\n")
+    evalP0(Option.Try(fun1_failable(5)), "Option.Try(fun1_failable(5))")
+    evalP0(Option.Try(fun1_failable(42)), "Option.Try(fun1_failable(42))")
+    evalP0(Option.Try(fun2_failable(5, 5.0)),
+                      "Option.Try(fun2_failable(5, 5.0))")
+    evalP0(Option.Try(fun2_failable(10, 5.0)),
+                       "Option.Try(fun2_failable(10. 5.0))")
+
+    // Test lift
+    println("Test lift:\n")
+    val fun1Lifted = Option.lift(fun1)
+    evalP1(baz5, fun1Lifted, "fun1Lifted")
+    evalP1(bazN, fun1Lifted, "fun1Lifted")
+
+    // Test map2
+    println("\nTest map2:\n")
+    evalP0(Option.map2(baz5, bar3)(fun2),
+                       "Option.map2(Some(5), Some(3.0))(fun2)")
+    evalP0(Option.map2(bazN, bar3)(fun2),
+                       "Option.map2(None, Some(3.0))(fun2)")
+    evalP0(Option.map2(baz5, barN)(fun2),
+                       "Option.map2(Some(5), None)(fun2)")
+    evalP0(Option.map2(bazN, barN)(fun2),
+                       "Option.map2(None, None)(fun2)")
+
+    println("\nTest partially applied map2:\n")
+
+    val fn = (m: Int, n: Int) => 
+      if (m < 7) m
+      else n
+
+    // Doesn't seem to play nice with partial function application.
+    // I had to explicitly annotate to get to work.
+    val opt58 = Option.map2(baz5, baz8)(_: (Int, Int) => Int)
+    val opt85 = Option.map2(baz8, baz5)(_: (Int, Int) => Int)
+    val optN8 = Option.map2(bazN, baz8)(_: (Int, Int) => Int)
+    val optN5 = Option.map2(bazN, baz5)(_: (Int, Int) => Int)
+    val opt5N = Option.map2(baz5, bazN)(_: (Int, Int) => Int)
+    val opt8N = Option.map2(baz8, bazN)(_: (Int, Int) => Int)
+    val optNN = Option.map2(bazN, bazN)(_: (Int, Int) => Int)
+
+    evalP1(fn, opt58, "opt58")
+    evalP1(fn, opt85, "opt85")
+    evalP1(fn, optN8, "optN8")
+    evalP1(fn, optN5, "optN5")
+    evalP1(fn, opt5N, "opt5N")
+    evalP1(fn, opt8N, "opt8N")
+    evalP1(fn, optNN, "optNN")
+
+    // Test lift2
+    println("\nTest lift2 directly:\n")
+    evalP0(Option.lift2(fn)(baz5, baz8), "Option.lift2(fn)(baz5, baz8)")
+    evalP0(Option.lift2(fn)(baz8, baz5), "Option.lift2(fn)(baz8, baz5)")
+    evalP0(Option.lift2(fn)(bazN, baz8), "Option.lift2(fn)(bazN, baz8)")
+    evalP0(Option.lift2(fn)(bazN, baz5), "Option.lift2(fn)(bazN, baz5)")
+    evalP0(Option.lift2(fn)(baz5, bazN), "Option.lift2(fn)(baz5, bazN)")
+    evalP0(Option.lift2(fn)(baz8, bazN), "Option.lift2(fn)(baz8, bazN)")
+    evalP0(Option.lift2(fn)(bazN, bazN), "Option.lift2(fn)(bazN, bazN)")
+
+    println("\nTest lift2 partially applied:\n")
+    val fnO = Option.lift2(fn)(_, _)
+
+    evalP2(baz5, baz8, fnO, "fnO")
+    evalP2(baz8, baz5, fnO, "fnO")
+    evalP2(bazN, baz8, fnO, "fnO")
+    evalP2(bazN, baz5, fnO, "fnO")
+    evalP2(baz5, bazN, fnO, "fnO")
+    evalP2(baz8, bazN, fnO, "fnO")
+    evalP2(bazN, bazN, fnO, "fnO")
+
+    println("\nTest lift2 again, more complicated types:\n")
+    val fun2O = Option.lift2(fun2)(_, _)
+
+    evalP2(baz5, bar3, fun2O, "fun2O")
+    evalP2(baz5, barN, fun2O, "fun2O")
+    evalP2(bazN, bar3, fun2O, "fun2O")
+    evalP2(bazN, barN, fun2O, "fun2O")
 
   }
 }

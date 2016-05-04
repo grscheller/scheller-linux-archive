@@ -1,6 +1,7 @@
 package grockScala.test.errorhanding
 
 import grockScala.errorhandling._
+import grockScala.errorhandling.Option._
 
 object Stats {
 
@@ -48,7 +49,7 @@ object OptionTest {
    * Evaluate and nicely print function of one argument - let any
    * exceptions happen before anything printed.
    */
-  def evalP1[A,B](arg: => A, f: (A) => B, fname: String): Unit = {
+  def evalP1[A,B](arg: => A, f: A => B, fname: String): Unit = {
     val result = f(arg)
     print(fname); print("("); print(arg); print(") = ")
     println(result)
@@ -126,29 +127,23 @@ object OptionTest {
 
     // Next, test Try 
     println("Convert from exceptions to Options via Try:\n")
-    evalP0(Option.Try(fun1_failable(5)), "Option.Try(fun1_failable(5))")
-    evalP0(Option.Try(fun1_failable(42)), "Option.Try(fun1_failable(42))")
-    evalP0(Option.Try(fun2_failable(5, 5.0)),
-                      "Option.Try(fun2_failable(5, 5.0))")
-    evalP0(Option.Try(fun2_failable(10, 5.0)),
-                       "Option.Try(fun2_failable(10. 5.0))")
+    evalP0(Try(fun1_failable(5)), "Try(fun1_failable(5))")
+    evalP0(Try(fun1_failable(42)), "Try(fun1_failable(42))")
+    evalP0(Try(fun2_failable(5, 5.0)), "Try(fun2_failable(5, 5.0))")
+    evalP0(Try(fun2_failable(10, 5.0)), "Try(fun2_failable(10. 5.0))")
 
     // Test lift
     println("\nTest lift:\n")
-    val fun1Lifted = Option.lift(fun1)
+    val fun1Lifted = lift(fun1)
     evalP1(baz5, fun1Lifted, "fun1Lifted")
     evalP1(bazN, fun1Lifted, "fun1Lifted")
 
     // Test map2
     println("\nTest map2:\n")
-    evalP0(Option.map2(baz5, bar3)(fun2),
-                       "Option.map2(Some(5), Some(3.0))(fun2)")
-    evalP0(Option.map2(bazN, bar3)(fun2),
-                       "Option.map2(None, Some(3.0))(fun2)")
-    evalP0(Option.map2(baz5, barN)(fun2),
-                       "Option.map2(Some(5), None)(fun2)")
-    evalP0(Option.map2(bazN, barN)(fun2),
-                       "Option.map2(None, None)(fun2)")
+    evalP0(map2(baz5, bar3)(fun2), "map2(Some(5), Some(3.0))(fun2)")
+    evalP0(map2(bazN, bar3)(fun2), "map2(None, Some(3.0))(fun2)")
+    evalP0(map2(baz5, barN)(fun2), "map2(Some(5), None)(fun2)")
+    evalP0(map2(bazN, barN)(fun2), "map2(None, None)(fun2)")
 
     println("\nTest partially applied map2:\n")
 
@@ -158,13 +153,13 @@ object OptionTest {
 
     // Doesn't seem to play nice with partial function application.
     // I had to explicitly annotate to get to work.
-    val opt58 = Option.map2(baz5, baz8)(_: (Int, Int) => Int)
-    val opt85 = Option.map2(baz8, baz5)(_: (Int, Int) => Int)
-    val optN8 = Option.map2(bazN, baz8)(_: (Int, Int) => Int)
-    val optN5 = Option.map2(bazN, baz5)(_: (Int, Int) => Int)
-    val opt5N = Option.map2(baz5, bazN)(_: (Int, Int) => Int)
-    val opt8N = Option.map2(baz8, bazN)(_: (Int, Int) => Int)
-    val optNN = Option.map2(bazN, bazN)(_: (Int, Int) => Int)
+    val opt58 = map2(baz5, baz8)(_: (Int, Int) => Int)
+    val opt85 = map2(baz8, baz5)(_: (Int, Int) => Int)
+    val optN8 = map2(bazN, baz8)(_: (Int, Int) => Int)
+    val optN5 = map2(bazN, baz5)(_: (Int, Int) => Int)
+    val opt5N = map2(baz5, bazN)(_: (Int, Int) => Int)
+    val opt8N = map2(baz8, bazN)(_: (Int, Int) => Int)
+    val optNN = map2(bazN, bazN)(_: (Int, Int) => Int)
 
     evalP1(fn, opt58, "opt58")
     evalP1(fn, opt85, "opt85")
@@ -176,16 +171,16 @@ object OptionTest {
 
     // Test map2r
     println("\nTest map2r directly:\n")
-    evalP0(Option.map2r(fn)(baz5, baz8), "Option.map2r(fn)(baz5, baz8)")
-    evalP0(Option.map2r(fn)(baz8, baz5), "Option.map2r(fn)(baz8, baz5)")
-    evalP0(Option.map2r(fn)(bazN, baz8), "Option.map2r(fn)(bazN, baz8)")
-    evalP0(Option.map2r(fn)(bazN, baz5), "Option.map2r(fn)(bazN, baz5)")
-    evalP0(Option.map2r(fn)(baz5, bazN), "Option.map2r(fn)(baz5, bazN)")
-    evalP0(Option.map2r(fn)(baz8, bazN), "Option.map2r(fn)(baz8, bazN)")
-    evalP0(Option.map2r(fn)(bazN, bazN), "Option.map2r(fn)(bazN, bazN)")
+    evalP0(map2r(fn)(baz5, baz8), "map2r(fn)(baz5, baz8)")
+    evalP0(map2r(fn)(baz8, baz5), "map2r(fn)(baz8, baz5)")
+    evalP0(map2r(fn)(bazN, baz8), "map2r(fn)(bazN, baz8)")
+    evalP0(map2r(fn)(bazN, baz5), "map2r(fn)(bazN, baz5)")
+    evalP0(map2r(fn)(baz5, bazN), "map2r(fn)(baz5, bazN)")
+    evalP0(map2r(fn)(baz8, bazN), "map2r(fn)(baz8, bazN)")
+    evalP0(map2r(fn)(bazN, bazN), "map2r(fn)(bazN, bazN)")
 
     println("\nTest map2r partially applied:\n")
-    val fnO = Option.lift2(fn)(_, _)
+    val fnO = map2r(fn)(_, _)
 
     evalP2(baz5, baz8, fnO, "fnO")
     evalP2(baz8, baz5, fnO, "fnO")
@@ -196,7 +191,7 @@ object OptionTest {
     evalP2(bazN, bazN, fnO, "fnO")
 
     println("\nTest map2r again, more complicated types:\n")
-    val fun2O = Option.lift2(fun2)(_, _)
+    val fun2O = map2r(fun2)(_, _)
 
     evalP2(baz5, bar3, fun2O, "fun2O")
     evalP2(baz5, barN, fun2O, "fun2O")
@@ -205,7 +200,7 @@ object OptionTest {
 
     // Test lift2
     println("\nTest lift2:\n")
-    val fun2Lifted = Option.lift2(fun2)
+    val fun2Lifted = lift2(fun2)
 
     evalP2(baz5, bar3, fun2Lifted, "fun2Lifted")
     evalP2(baz5, barN, fun2Lifted, "fun2Lifted")
@@ -215,24 +210,22 @@ object OptionTest {
     // Test sequence and its variants
     println("\nTest various implementations of sequence:\n")
 
-    // Test data (thrashing with Scala collections)
-    // val some2to30: List[Option[Int]] = (2 to 30 by 2).to[List] map (Some(_))
-    // val missing2to30 = some2to30 map (_ filter (x => x > 20 || x < 10))
-    val some1to10 = List(1,2,3,4,5,6,7,8,9,10) map (Some(_))
-    val miss1to10 = some1to10 map (_ filter (x => x < 4 || x > 6))
+    // Test data
+    val someNums = List(1,2,3,4,5,6,7,8,9,10) map (Some(_))
+    val missSome = someNums map (_ filter (x => x < 4 || x > 6))
+    val strDouble = List("1.0", "2.0", "3.0", "4.0")
+    val strDoubt = List("1.0", "2.0", "Three", "4.0")
 
-    println(Option.sequence1(some1to10))
-    println(Option.sequence1(miss1to10))
-    println()
-    println(Option.sequence2(some1to10))
-    println(Option.sequence2(miss1to10))
-
-    // evalP1(some1to10, Option.sequence1, "Option.sequence1")
-    // evalP1(miss1to10, Option.sequence1, "Option.sequence1")
-    // evalP1(some1to10, Option.sequence2, "Option.sequence2")
-    // evalP1(miss1to10, Option.sequence2, "Option.sequence2")
-    // evalP1(some1to10, Option.sequence, "Option.sequence")
-    // evalP1(miss1to10, Option.sequence, "Option.sequence")
+    // Scala is messing up type inference on these.
+    // Had to use explicit anotation for it to work.
+    // evalP1(someSome, sequence, "sequence")
+    // evalP1(missSome, sequence, "sequence")
+    //evalP1(someNums, sequence(_: List[Option[Int]]), "sequence")
+    //evalP1(missSome, sequence(_: List[Option[Int]]), "sequence")
+    evalP1(someNums, sequence1(_: List[Option[Int]]), "sequence1")
+    evalP1(missSome, sequence1(_: List[Option[Int]]), "sequence1")
+    evalP1(someNums, sequence2(_: List[Option[Int]]), "sequence2")
+    evalP1(missSome, sequence2(_: List[Option[Int]]), "sequence2")
     
     println()
 

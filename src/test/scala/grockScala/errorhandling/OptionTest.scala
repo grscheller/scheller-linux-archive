@@ -211,6 +211,28 @@ object OptionTest {
     evalP2(baz5, barN, fun2Lifted, "fun2Lifted")
     evalP2(bazN, bar3, fun2Lifted, "fun2Lifted")
     evalP2(bazN, barN, fun2Lifted, "fun2Lifted")
+
+    // Test sequence and its variants
+    println("\nTest various implementations of sequence:\n")
+
+    // Test data (thrashing with Scala collections)
+    // val some2to30: List[Option[Int]] = (2 to 30 by 2).to[List] map (Some(_))
+    // val missing2to30 = some2to30 map (_ filter (x => x > 20 || x < 10))
+    val some1to10 = List(1,2,3,4,5,6,7,8,9,10) map (Some(_))
+    val miss1to10 = some1to10 map (_ filter (x => x < 4 || x > 6))
+
+    println(Option.sequence1(some1to10))
+    println(Option.sequence1(miss1to10))
+    println()
+    println(Option.sequence2(some1to10))
+    println(Option.sequence2(miss1to10))
+
+    // evalP1(some1to10, Option.sequence1, "Option.sequence1")
+    // evalP1(miss1to10, Option.sequence1, "Option.sequence1")
+    // evalP1(some1to10, Option.sequence2, "Option.sequence2")
+    // evalP1(miss1to10, Option.sequence2, "Option.sequence2")
+    // evalP1(some1to10, Option.sequence, "Option.sequence")
+    // evalP1(miss1to10, Option.sequence, "Option.sequence")
     
     println()
 

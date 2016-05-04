@@ -98,6 +98,24 @@ object Option {
     aO.flatMap(a => bO map (b => f(a, b)))
 
   def lift2[A,B,C](f: (A, B) => C): (Option[A], Option[B]) => Option[C] =
-    map2r(f)( _, _)
+    map2r(f)(_, _)
+
+  /**
+   *  Take a List of Options, if all are Some, return an Option of a
+   *  a single List of the Option values, otherwise return None.
+   */
+  def sequence1[A](aOs: List[Option[A]]): Option[List[A]] =
+    aOs.foldRight(Some(Nil): Option[List[A]])((aO, asO) =>
+      aO.flatMap(a => asO.flatMap(as => Some(a :: as)))
+    )
+
+  // Above translated into for comprehension
+  def sequence2[A](aOs: List[Option[A]]): Option[List[A]] =
+    aOs.foldRight(Some(Nil): Option[List[A]])((aO, asO) =>
+      for {
+        a <- aO
+        as <- asO
+      } yield a :: as
+    )
 
 }

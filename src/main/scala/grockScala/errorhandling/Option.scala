@@ -118,4 +118,23 @@ object Option {
       } yield a :: as
     )
 
+  // Trivial change
+  def sequence3[A](aOs: List[Option[A]]): Option[List[A]] =
+    aOs.foldRight(Some(Nil): Option[List[A]])((aO, asO) =>
+      for {
+        as <- asO
+        a <- aO
+      } yield a :: as
+    )
+
+  // Translate back into explicitly functional notation
+  //   If I were smarter, this is the one I would have come up
+  //   with first.  I think it is more efficient, once the built
+  //   up array becomes a None, everything shorts out without
+  //   ever examining another Option[a]
+  def sequence4[A](aOs: List[Option[A]]): Option[List[A]] =
+    aOs.foldRight(Some(Nil): Option[List[A]])((aO, asO) =>
+      asO.flatMap(as => aO.flatMap(a => Some(a :: as)))
+    )
+
 }

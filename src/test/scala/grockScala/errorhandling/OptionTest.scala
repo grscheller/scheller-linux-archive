@@ -31,9 +31,21 @@ object Stats {
 
 }
 
+object Parse {
+
+  /** 
+   *  Take a list of strings and return an Option of a List
+   *  of Doubles if all can be converted.
+   */  
+  def parseDoubles1(ss: List[String]): Option[List[Double]] =
+    sequence1(ss map (s => Try(s.toDouble)))
+
+}
+
 object OptionTest {
 
   import Stats._
+  import Parse._
 
   // Define some utility functions
   /**
@@ -213,20 +225,33 @@ object OptionTest {
     // Test data
     val someNums = List(1,2,3,4,5,6,7,8,9,10) map (Some(_))
     val missSome = someNums map (_ filter (x => x < 4 || x > 6))
-    val strDouble = List("1.0", "2.0", "3.0", "4.0")
-    val strDoubt = List("1.0", "2.0", "Three", "4.0")
 
     // Scala is messing up type inference on these.
     // Had to use explicit anotation for it to work.
-    // evalP1(someSome, sequence, "sequence")
-    // evalP1(missSome, sequence, "sequence")
-    //evalP1(someNums, sequence(_: List[Option[Int]]), "sequence")
-    //evalP1(missSome, sequence(_: List[Option[Int]]), "sequence")
+    // evalP1(someSome, sequence1, "sequence1")
+    // evalP1(missSome, sequence1, "sequence1")
     evalP1(someNums, sequence1(_: List[Option[Int]]), "sequence1")
     evalP1(missSome, sequence1(_: List[Option[Int]]), "sequence1")
     evalP1(someNums, sequence2(_: List[Option[Int]]), "sequence2")
     evalP1(missSome, sequence2(_: List[Option[Int]]), "sequence2")
-    
+    evalP1(someNums, sequence3(_: List[Option[Int]]), "sequence3")
+    evalP1(missSome, sequence3(_: List[Option[Int]]), "sequence3")
+    evalP1(someNums, sequence4(_: List[Option[Int]]), "sequence4")
+    evalP1(missSome, sequence4(_: List[Option[Int]]), "sequence4")
+
+    // Test parseDoubles1
+    println("\nTest parseDouble1 which uses sequence1:\n")
+
+    val strDouble = List("1.0", "2.0", "3.0", "4.0")
+    val strDoubt = List("1.0", "2.0", "Three", "4.0")
+
+    evalP1(strDouble, parseDoubles1, "parseDoubles1")
+    evalP1(strDoubt, parseDoubles1, "parseDoubles1")
+
+    // Test transvers and sequence based on transverse
+    //evalP1(someNums, sequence(_: List[Option[Int]]), "sequence")
+    //evalP1(missSome, sequence(_: List[Option[Int]]), "sequence")
+
     println()
 
   }

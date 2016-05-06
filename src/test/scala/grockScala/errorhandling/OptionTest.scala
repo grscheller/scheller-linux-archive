@@ -40,6 +40,20 @@ object Parse {
   def parseDoubles1(ss: List[String]): Option[List[Double]] =
     sequence1(ss map (s => Try(s.toDouble)))
 
+  /** 
+   *  Take a list of strings and return an Option of a List
+   *  of Doubles if all can be converted.
+   */  
+  def parseDoubles(ss: List[String]): Option[List[Double]] =
+    traverse(ss)(s => Try(s.toDouble))
+
+  /** 
+   *  Take a list of strings and return an Option of a List
+   *  of Ints if all can be converted.
+   */  
+  def parseInts(ss: List[String]): Option[List[Int]] =
+    traverse(ss)(s => Try(s.toInt))
+
 }
 
 object OptionTest {
@@ -244,14 +258,28 @@ object OptionTest {
 
     val strDouble = List("1.0", "2.0", "3.0", "4.0")
     val strDoubt = List("1.0", "2.0", "Three", "4.0")
+    val strInts = List("1", "2", "3", "4", "5", "6")
+    val strIntsNotAll = List("1", "Two", "3", "4", "5", "6")
 
     evalP1(strDouble, parseDoubles1, "parseDoubles1")
     evalP1(strDoubt, parseDoubles1, "parseDoubles1")
 
-    // Test transvers and sequence based on transverse
-    //evalP1(someNums, sequence(_: List[Option[Int]]), "sequence")
-    //evalP1(missSome, sequence(_: List[Option[Int]]), "sequence")
+    // Test methods based on traverse
 
+    println("\nTest sequence based on transverse:\n")
+    evalP1(someNums, sequence(_: List[Option[Int]]), "sequence")
+    evalP1(missSome, sequence(_: List[Option[Int]]), "sequence")
+
+    println("\nTest parseDouble based on transverse:\n")
+    evalP1(strDouble, parseDoubles, "parseDoubles")
+    evalP1(strDoubt, parseDoubles, "parseDoubles")
+    evalP1(strInts, parseDoubles, "parseDoubles")
+ 
+    println("\nTest parseInts based on transverse:\n")
+    evalP1(strInts, parseInts, "parseInts")
+    evalP1(strIntsNotAll, parseInts, "parseInts")
+    evalP1(strDouble, parseInts, "parseInts")
+ 
     println()
 
   }

@@ -127,7 +127,7 @@ object Option {
       } yield a :: as
     )
 
-  // Translate back into explicitly functional notation
+  // Translate above back into explicitly functional notation
   //   If I were smarter, this is the one I would have come up
   //   with first.  I think it is more efficient, once the built
   //   up array becomes a None, everything shorts out without
@@ -136,5 +136,39 @@ object Option {
     aOs.foldRight(Some(Nil): Option[List[A]])((aO, asO) =>
       asO.flatMap(as => aO.flatMap(a => Some(a :: as)))
     )
+ 
+  /**
+   *  Take a list, apply a function which returns an Option
+   *  to each element of the list and if none are None,
+   *  return an Option of a list of all the values in the
+   *  Somes, otherwise return a None
+   */
+  def traverse[A,B](as: List[A])(f: A => Option[B]): Option[List[B]] =
+    as.foldRight(Some(Nil): Option[List[B]])(
+      (a, bsO) => 
+        for {
+          bs <- bsO
+          b <- f(a)
+        } yield b :: bs
+    )
+
+  // Direct translation
+  def traverse1[A,B](as: List[A])(f: A => Option[B]): Option[List[B]] =
+    as.foldRight(Some(Nil): Option[List[B]])(
+      (a, bsO) => bsO.flatMap(bs => f(a).map(b => b :: bs))
+    )
+
+  // Simplification using sections
+  def traverse2[A,B](as: List[A])(f: A => Option[B]): Option[List[B]] =
+    as.foldRight(Some(Nil): Option[List[B]])(
+      (a, bsO) => bsO.flatMap(bs => f(a).map(_ :: bs))
+    )
+
+  /**
+   *  Take a List of Options, if all are Some, return an Option of a
+   *  a single List of the Option values, otherwise return None.
+   */
+  def sequence[A](aOs: List[Option[A]]): Option[List[A]] =
+    traverse(aOs)((aO: Option[A]) => aO)
 
 }

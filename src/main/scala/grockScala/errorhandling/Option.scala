@@ -1,6 +1,6 @@
 package grockScala.errorhandling
 
-/** Implement Option ADT to handle error conditons */
+/** Implement Option ADT to handle error conditions */
 sealed trait Option[+A] {
 
   /** Apply function to value in Option, if not None */
@@ -70,8 +70,8 @@ object Option {
                        bO: Option[B])(f: (A, B) => C): Option[C] =
     aO.flatMap(a => bO.flatMap(b => Some(f(a, b)): Option[C]))
 
-  // Book's version of map2.  I like mine better except for having
-  // to type annotate the above Some.
+  // Book's version of map2.  At first I like mine better except
+  // for having to type annotate the above Some.
   //
   //   After a while, I see why this one is better.  The second
   //   flatMap is providing me no protection for f failing (by
@@ -93,6 +93,9 @@ object Option {
    *  Now, when partially applied with a function of two arguments,
    *  with no knowledge of Options, a function that operates with
    *  the corresponding Options and returning an Option will be returned.
+   *
+   *  Of course this trick would not have worked if we had put this
+   *  method in the trait itself instead of the companion object.
    */
   def map2r[A,B,C](f: (A, B) => C)(aO: Option[A], bO: Option[B]): Option[C] =
     aO.flatMap(a => bO map (b => f(a, b)))

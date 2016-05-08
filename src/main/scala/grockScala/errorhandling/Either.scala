@@ -68,38 +68,25 @@ object Either {
 //  def lift2[A,B,C](f: (A, B) => C): (Option[A], Option[B]) => Option[C] =
 //    map2r(f)(_, _)
 
-//  /**
-//   *  Take a list, apply a function which returns an Option
-//   *  to each element of the list and if none are None,
-//   *  return an Option of a list of all the values in the
-//   *  Somes, otherwise return a None
-//   */
-//  def traverse[A,B](as: List[A])(f: A => Option[B]): Option[List[B]] =
-//    as.foldRight(Some(Nil): Option[List[B]])(
-//      (a, bsO) => 
-//        for {
-//          bs <- bsO
-//          b <- f(a)
-//        } yield b :: bs
-//    )
+  /**
+   *  Take a list, apply a function which returns a Either
+   *  to each element of the list and if all are Rights
+   *  return a Either of a list of all the values in the
+   *  Rights, otherwise return a None.
+   */
+  def traverse[E,A,B](as: List[A])(f: A => Either[E,B]): Either[E,List[B]] =
+    as.foldRight(Right(Nil): Either[E,List[B]])(
+      (a, bsO) => 
+        for {
+          bs <- bsO
+          b <- f(a)
+        } yield b :: bs )
 
-//  // Direct translation
-//  def traverse1[A,B](as: List[A])(f: A => Option[B]): Option[List[B]] =
-//    as.foldRight(Some(Nil): Option[List[B]])(
-//      (a, bsO) => bsO.flatMap(bs => f(a).map(b => b :: bs))
-//    )
-//
-//  // Simplification using sections
-//  def traverse2[A,B](as: List[A])(f: A => Option[B]): Option[List[B]] =
-//    as.foldRight(Some(Nil): Option[List[B]])(
-//      (a, bsO) => bsO.flatMap(bs => f(a).map(_ :: bs))
-//    )
-
-//  /**
-//   *  Take a List of Options, if all are Some, return an Option of a
-//   *  a single List of the Option values, otherwise return None.
-//   */
-//  def sequence[A](aOs: List[Option[A]]): Option[List[A]] =
-//    traverse(aOs)((aO: Option[A]) => aO)
+  /**
+   *  Take a List of Options, if all are Some, return an Option of a
+   *  a single List of the Option values, otherwise return None.
+   */
+  def sequence[E,A](aEs: List[Either[E,A]]): Either[E,List[A]] =
+    traverse(aEs)((aE: Either[E,A]) => aE)
 
 }

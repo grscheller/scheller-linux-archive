@@ -109,7 +109,7 @@ object Option {
    */
   def sequence1[A](aOs: List[Option[A]]): Option[List[A]] =
     aOs.foldRight(Some(Nil): Option[List[A]])((aO, asO) =>
-      aO.flatMap(a => asO.flatMap(as => Some(a :: as)))
+      aO.flatMap(a => asO.map(as => a :: as))
     )
 
   // Above translated into for comprehension
@@ -137,7 +137,7 @@ object Option {
   //   ever examining another Option[a]
   def sequence4[A](aOs: List[Option[A]]): Option[List[A]] =
     aOs.foldRight(Some(Nil): Option[List[A]])((aO, asO) =>
-      asO.flatMap(as => aO.flatMap(a => Some(a :: as)))
+      asO.flatMap(as => aO.map(a => a :: as))
     )
  
   /**

@@ -1,64 +1,94 @@
 package grockScala.test.errorhanding
 
 import grockScala.errorhandling._
-import grockScala.errorhandling.Option._
+import grockScala.errorhandling.Either._
 
-object OptionStats {
+object EitherStats {
 
   // Exercise 4.2 - Implement a variance function via flatMap
 
   /** Computes the mean of a dataset of Doubles */
-  def mean(xs: Seq[Double]): Option[Double] =
-    if (xs.isEmpty) None
-    else Some(xs.sum/xs.size)
+  def mean(xs: Seq[Double]): Either[String,Double] =
+    if (xs.isEmpty) Left("mean of empty list!")
+    else Right(xs.sum/xs.size)
 
-  // Initial attempt without flatMap - needed to see something that worked
-  // in order to figure out the flatMap version.
+  // Actually clearer to me than the equivalent
+  // for comprehension,
   /** Computes the variance of a dataset of Doubles */
-  def variance1(xs: Seq[Double]): Option[Double] = {
-    val m_Op = mean(xs)
-    if (m_Op == None)
-      None
-    else
-      mean(xs.map((x: Double) => math.pow(x - m_Op.getOrElse(0.0), 2)))
-  }
+  def variance(xs: Seq[Double]): Either[String,Double] = 
+    mean(xs) flatMap (m =>
+    mean(xs map (x => math.pow((x - m), 2))))
 
-  // Much nicer
+  // Translate outer chain above to a for comprehension.
+  //
+  //   Note: Only in principle could the second mean
+  //         fail.  So, mean's return type prevents me
+  //         from putting it in the yield.  I end up
+  //         having to "unpack" it so that the yield
+  //         can "repack" its value.
+  //
   /** Computes the variance of a dataset of Doubles */
-  def variance(xs: Seq[Double]): Option[Double] = 
-    mean(xs).flatMap(m => mean(xs.map(x => math.pow((x - m), 2))))
+  def variance1(xs: Seq[Double]): Either[String,Double] =
+    for {
+      m <- mean(xs)
+      v <- mean(xs map (x => math.pow((x - m), 2)))
+    } yield v
+
+  // Direct litteral translation back to functional notation.
+  // Done so that I can better understand why I found 
+  // translating into for/yield notation so difficult.
+  //` 
+  //   Note: The identity function at end could be a useful
+  //         pattern when translating a monadic chain into
+  //         a for comprehension when the last bind in
+  //         the chain is a flatmap.
+  //
+  /** Computes the variance of a dataset of Doubles */
+  def variance2(xs: Seq[Double]): Either[String,Double] =
+    mean(xs) flatMap (m =>
+    mean(xs map (x => math.pow((x - m), 2))) map (v => v))
+
+  // Version using pattern matching
+  /** Computes the variance of a dataset of Doubles */
+  def variance3(xs: Seq[Double]): Either[String,Double] =
+    mean(xs) match {
+      case Right(m) =>
+        mean(xs.map((x: Double) => math.pow((x - m), 2)))
+      case a =>
+        a 
+    }
 
 }
 
-object OptionParse {
+object EitherParse {
+
+  /** 
+   *  Take a list of strings and return an Option of a List
+   *  of Doubles if all can be converted.
+   */
+  def parseDoubles1(ss: List[String]): Either[Exception,List[Double]] =
+    sequence(ss map (s => Try(s.toDouble)))
 
   /** 
    *  Take a list of strings and return an Option of a List
    *  of Doubles if all can be converted.
    */  
-  def parseDoubles1(ss: List[String]): Option[List[Double]] =
-    sequence1(ss map (s => Try(s.toDouble)))
-
-  /** 
-   *  Take a list of strings and return an Option of a List
-   *  of Doubles if all can be converted.
-   */  
-  def parseDoubles(ss: List[String]): Option[List[Double]] =
+  def parseDoubles(ss: List[String]): Either[Exception,List[Double]] =
     traverse(ss)(s => Try(s.toDouble))
 
   /** 
    *  Take a list of strings and return an Option of a List
    *  of Ints if all can be converted.
    */  
-  def parseInts(ss: List[String]): Option[List[Int]] =
+  def parseInts(ss: List[String]): Either[Exception,List[Int]] =
     traverse(ss)(s => Try(s.toInt))
 
 }
 
-object OptionTest {
+object EitherTest {
 
-  import OptionStats._
-  import OptionParse._
+  import EitherStats._
+  import EitherParse._
 
   // Define some utility functions
   /**
@@ -107,15 +137,25 @@ object OptionTest {
     evalP1(bar, mean, "mean")
     evalP1(baz, mean, "mean")
 
+    println("\nTest variance:\n")
+    evalP1(foo, variance, "variance")
+    evalP1(bar, variance, "variance")
+    evalP1(baz, variance, "variance")
+
     println("\nTest variance1:\n")
     evalP1(foo, variance1, "variance1")
     evalP1(bar, variance1, "variance1")
     evalP1(baz, variance1, "variance1")
 
-    println("\nTest variance:\n")
-    evalP1(foo, variance, "variance")
-    evalP1(bar, variance, "variance")
-    evalP1(baz, variance, "variance")
+    println("\nTest variance2:\n")
+    evalP1(foo, variance2, "variance2")
+    evalP1(bar, variance2, "variance2")
+    evalP1(baz, variance2, "variance2")
+
+    println("\nTest variance2:\n")
+    evalP1(foo, variance3, "variance3")
+    evalP1(bar, variance3, "variance3")
+    evalP1(baz, variance3, "variance3")
 
     // Test Try, lift, map2, lift2
 
@@ -157,6 +197,7 @@ object OptionTest {
     evalP0(Try(fun2_failable(5, 5.0)), "Try(fun2_failable(5, 5.0))")
     evalP0(Try(fun2_failable(10, 5.0)), "Try(fun2_failable(10. 5.0))")
 
+/*
     // Test lift
     println("\nTest lift:\n")
     val fun1Lifted = lift(fun1)
@@ -279,6 +320,7 @@ object OptionTest {
     evalP1(strIntsNotAll, parseInts, "parseInts")
     evalP1(strDouble, parseInts, "parseInts")
  
+*/
     println()
 
   }

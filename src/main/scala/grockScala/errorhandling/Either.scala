@@ -38,9 +38,21 @@ sealed trait Either[+E, +A] {
       case _ => this
     }
 
+  /**
+   *  Take two Eithers and a function of two arguments, with no
+   *  knowledge of Eithers, apply the function with the values 
+   *  within the the Eithers and return an Eithers containing
+   *  the result.
+   */
   def map2[EE >: E,B,C](bE: Either[EE,B])(f: (A,B) => C): Either[EE,C] =
     this.flatMap(a => bE map (b => f(a, b)))
 
+  /**
+   *  Take two Eithers and a function of two arguments, with no
+   *  knowledge of Eithers, apply the function with the values 
+   *  within the the Eithers and return an Eithers containing
+   *  the result.
+   */
   def map2_for[EE >: E,B,C](bE: Either[EE,B])(f: (A,B) => C): Either[EE,C] =
     for {
       a <- this
@@ -61,15 +73,8 @@ object Either {
     try Right(a)
     catch { case e: Exception => Left(e) }
 
-//  // In real life I would probably just use the map directly.
-//  /** Take a fucntion and "lift" it to work on options */
-//  def lift[A,B](f: A => B): Option[A] => Option[B] = _ map f
-
-//  def lift2[A,B,C](f: (A, B) => C): (Option[A], Option[B]) => Option[C] =
-//    map2r(f)(_, _)
-
   /**
-   *  Take a list, apply a function which returns a Either
+   *  Take a list, apply a function which returns an Either
    *  to each element of the list and if all are Rights
    *  return a Either of a list of all the values in the
    *  Rights, otherwise return a None.
@@ -83,8 +88,8 @@ object Either {
         } yield b :: bs )
 
   /**
-   *  Take a List of Options, if all are Some, return an Option of a
-   *  a single List of the Option values, otherwise return None.
+   *  Take a List of Eithers, if all are Right, return a Right of a
+   *  a single List of the Right values, otherwise return a Left.
    */
   def sequence[E,A](aEs: List[Either[E,A]]): Either[E,List[A]] =
     traverse(aEs)((aE: Either[E,A]) => aE)

@@ -63,22 +63,22 @@ object EitherStats {
 object EitherParse {
 
   /** 
-   *  Take a list of strings and return an Option of a List
-   *  of Doubles if all can be converted.
+   *  Take a list of strings and return a Right(List[Double])
+   *  of Doubles if all can be converted, Left[Exception] otherwise.
    */
   def parseDoubles1(ss: List[String]): Either[Exception,List[Double]] =
     sequence(ss map (s => Try(s.toDouble)))
 
   /** 
-   *  Take a list of strings and return an Option of a List
-   *  of Doubles if all can be converted.
+   *  Take a list of strings and return a Right(List[Double])
+   *  of Doubles if all can be converted, Left[Exception] otherwise.
    */  
   def parseDoubles(ss: List[String]): Either[Exception,List[Double]] =
     traverse(ss)(s => Try(s.toDouble))
 
   /** 
-   *  Take a list of strings and return an Option of a List
-   *  of Ints if all can be converted.
+   *  Take a list of strings and return a Right(List[Int])
+   *  of Ints if all can be converted, Left[Exception] otherwise.
    */  
   def parseInts(ss: List[String]): Either[Exception,List[Int]] =
     traverse(ss)(s => Try(s.toInt))
@@ -157,7 +157,7 @@ object EitherTest {
     evalP1(bar, variance3, "variance3")
     evalP1(baz, variance3, "variance3")
 
-    // Test Try, lift, map2, lift2
+    // Test Try, lift, map2
 
     // First define some functions and Options
     val fun2 = (x: Int, y: Double) => (x * y).toString ++ " string"
@@ -172,16 +172,16 @@ object EitherTest {
       if (x == 42) throw new Exception("fail!")
       else x + 1
 
-    val baz5 = Some(5)
-    val baz8 = Some(8)
-    val baz10 = Some(10)
-    val bazN: Option[Int] = None
+    val baz5: Either[String,Int] = Right(5)
+    val baz8: Either[String,Int] = Right(8)
+    val baz10: Either[String,Int] = Right(10)
+    val bazN: Either[String,Int] = Left("bazN was used")
 
-    val bar3 = Some(3.0)
-    val barN: Option[Double] = None
+    val bar3: Either[String,Double] = Right(3.0)
+    val barN: Either[String,Double] = Left("barN was used")
 
     // First run naked 
-    println("\nTest unlifted functions in try block:\n")
+    println("\nTest unwrapped functions in try block:\n")
     try {
       evalP2(5, 3.0, fun2, "fun2")
       evalP2(5, 3.0, fun2_failable, "fun2_failable")
@@ -191,110 +191,58 @@ object EitherTest {
     }
 
     // Next, test Try 
-    println("Convert from exceptions to Options via Try:\n")
+    println("Convert from exceptions to Eithers via Try:\n")
     evalP0(Try(fun1_failable(5)), "Try(fun1_failable(5))")
     evalP0(Try(fun1_failable(42)), "Try(fun1_failable(42))")
     evalP0(Try(fun2_failable(5, 5.0)), "Try(fun2_failable(5, 5.0))")
     evalP0(Try(fun2_failable(10, 5.0)), "Try(fun2_failable(10. 5.0))")
 
-/*
-    // Test lift
-    println("\nTest lift:\n")
-    val fun1Lifted = lift(fun1)
-    evalP1(baz5, fun1Lifted, "fun1Lifted")
-    evalP1(bazN, fun1Lifted, "fun1Lifted")
-
     // Test map2
-    println("\nTest map2:\n")
-    evalP0(map2(baz5, bar3)(fun2), "map2(Some(5), Some(3.0))(fun2)")
-    evalP0(map2(bazN, bar3)(fun2), "map2(None, Some(3.0))(fun2)")
-    evalP0(map2(baz5, barN)(fun2), "map2(Some(5), None)(fun2)")
-    evalP0(map2(bazN, barN)(fun2), "map2(None, None)(fun2)")
+    println("\nTest map2 directly:\n")
+    evalP0(baz5.map2(bar3)(fun2), "baz5.map2(bar3)(fun2)")
+    evalP0(bazN.map2(bar3)(fun2), "bazN.map2(bar3)(fun2)")
+    evalP0(baz5.map2(barN)(fun2), "baz5.map2(barN)(fun2)")
+    evalP0(bazN.map2(barN)(fun2), "bazN.map2(barN)(fun2)")
 
-    println("\nTest partially applied map2:\n")
-
+    println("\nTest map2 partially applied:\n")
     val fn = (m: Int, n: Int) => 
       if (m < 7) m
       else n
 
-    // Doesn't seem to play nice with partial function application.
-    // I had to explicitly annotate to get to work.
-    val opt58 = map2(baz5, baz8)(_: (Int, Int) => Int)
-    val opt85 = map2(baz8, baz5)(_: (Int, Int) => Int)
-    val optN8 = map2(bazN, baz8)(_: (Int, Int) => Int)
-    val optN5 = map2(bazN, baz5)(_: (Int, Int) => Int)
-    val opt5N = map2(baz5, bazN)(_: (Int, Int) => Int)
-    val opt8N = map2(baz8, bazN)(_: (Int, Int) => Int)
-    val optNN = map2(bazN, bazN)(_: (Int, Int) => Int)
+    // Annotate necessary.  Otherwise how would Scalac know
+    // the return type?
+    val either58 = baz5.map2(baz8)(_: (Int, Int) => Int)
+    val either85 = baz8.map2(baz5)(_: (Int, Int) => Int)
+    val eitherN8 = bazN.map2(baz8)(_: (Int, Int) => Int)
+	val eitherN5 = bazN.map2(baz5)(_: (Int, Int) => Int)
+    val either5N = baz5.map2(bazN)(_: (Int, Int) => Int)
+    val either8N = baz8.map2(bazN)(_: (Int, Int) => Int)
+    val eitherNN = bazN.map2(bazN)(_: (Int, Int) => Int)
 
-    evalP1(fn, opt58, "opt58")
-    evalP1(fn, opt85, "opt85")
-    evalP1(fn, optN8, "optN8")
-    evalP1(fn, optN5, "optN5")
-    evalP1(fn, opt5N, "opt5N")
-    evalP1(fn, opt8N, "opt8N")
-    evalP1(fn, optNN, "optNN")
+    evalP1(fn, either58, "either58")
+    evalP1(fn, either85, "either85")
+    evalP1(fn, eitherN8, "eitherN8")
+    evalP1(fn, eitherN5, "eitherN5")
+    evalP1(fn, either5N, "either5N")
+    evalP1(fn, either8N, "either8N")
+    evalP1(fn, eitherNN, "eitherNN")
 
-    // Test map2r
-    println("\nTest map2r directly:\n")
-    evalP0(map2r(fn)(baz5, baz8), "map2r(fn)(baz5, baz8)")
-    evalP0(map2r(fn)(baz8, baz5), "map2r(fn)(baz8, baz5)")
-    evalP0(map2r(fn)(bazN, baz8), "map2r(fn)(bazN, baz8)")
-    evalP0(map2r(fn)(bazN, baz5), "map2r(fn)(bazN, baz5)")
-    evalP0(map2r(fn)(baz5, bazN), "map2r(fn)(baz5, bazN)")
-    evalP0(map2r(fn)(baz8, bazN), "map2r(fn)(baz8, bazN)")
-    evalP0(map2r(fn)(bazN, bazN), "map2r(fn)(bazN, bazN)")
-
-    println("\nTest map2r partially applied:\n")
-    val fnO = map2r(fn)(_, _)
-
-    evalP2(baz5, baz8, fnO, "fnO")
-    evalP2(baz8, baz5, fnO, "fnO")
-    evalP2(bazN, baz8, fnO, "fnO")
-    evalP2(bazN, baz5, fnO, "fnO")
-    evalP2(baz5, bazN, fnO, "fnO")
-    evalP2(baz8, bazN, fnO, "fnO")
-    evalP2(bazN, bazN, fnO, "fnO")
-
-    println("\nTest map2r again, more complicated types:\n")
-    val fun2O = map2r(fun2)(_, _)
-
-    evalP2(baz5, bar3, fun2O, "fun2O")
-    evalP2(baz5, barN, fun2O, "fun2O")
-    evalP2(bazN, bar3, fun2O, "fun2O")
-    evalP2(bazN, barN, fun2O, "fun2O")
-
-    // Test lift2
-    println("\nTest lift2:\n")
-    val fun2Lifted = lift2(fun2)
-
-    evalP2(baz5, bar3, fun2Lifted, "fun2Lifted")
-    evalP2(baz5, barN, fun2Lifted, "fun2Lifted")
-    evalP2(bazN, bar3, fun2Lifted, "fun2Lifted")
-    evalP2(bazN, barN, fun2Lifted, "fun2Lifted")
-
-    // Test sequence and its variants
-    println("\nTest various implementations of sequence:\n")
+    // Test sequence and other methods based on traverse
+    println("\nTest sequence and other methods based on traverse:\n")
 
     // Test data
-    val someNums = List(1,2,3,4,5,6,7,8,9,10) map (Some(_))
-    val missSome = someNums map (_ filter (x => x < 4 || x > 6))
+    val rtNums: List[Either[String,Int]] = List(Right(1), Right(2),
+                                                Right(3), Right(4),
+                                                Right(5))
+    val ltMiss: List[Either[String,Int]] = List(Right(1), Left("Two"),
+                                                Right(3), Left("Four"),
+                                                Right(5))
 
-    // Scala is messing up type inference on these.
-    // Had to use explicit anotation for it to work.
-    // evalP1(someSome, sequence1, "sequence1")
-    // evalP1(missSome, sequence1, "sequence1")
-    evalP1(someNums, sequence1(_: List[Option[Int]]), "sequence1")
-    evalP1(missSome, sequence1(_: List[Option[Int]]), "sequence1")
-    evalP1(someNums, sequence2(_: List[Option[Int]]), "sequence2")
-    evalP1(missSome, sequence2(_: List[Option[Int]]), "sequence2")
-    evalP1(someNums, sequence3(_: List[Option[Int]]), "sequence3")
-    evalP1(missSome, sequence3(_: List[Option[Int]]), "sequence3")
-    evalP1(someNums, sequence4(_: List[Option[Int]]), "sequence4")
-    evalP1(missSome, sequence4(_: List[Option[Int]]), "sequence4")
+    evalP1(rtNums, sequence(_: List[Either[String,Int]]), "sequence")
+    evalP1(ltMiss, sequence(_: List[Either[String,Int]]), "sequence")
 
     // Test parseDoubles1
-    println("\nTest parseDouble1 which uses sequence1:\n")
+    println("\nTest parseDouble1 which uses sequence:\n")
 
     val strDouble = List("1.0", "2.0", "3.0", "4.0")
     val strDoubt = List("1.0", "2.0", "Three", "4.0")
@@ -304,23 +252,16 @@ object EitherTest {
     evalP1(strDouble, parseDoubles1, "parseDoubles1")
     evalP1(strDoubt, parseDoubles1, "parseDoubles1")
 
-    // Test methods based on traverse
+    println("\nTest parseDoubles and parseInts which use traverse:\n")
 
-    println("\nTest sequence based on transverse:\n")
-    evalP1(someNums, sequence(_: List[Option[Int]]), "sequence")
-    evalP1(missSome, sequence(_: List[Option[Int]]), "sequence")
-
-    println("\nTest parseDouble based on transverse:\n")
     evalP1(strDouble, parseDoubles, "parseDoubles")
     evalP1(strDoubt, parseDoubles, "parseDoubles")
     evalP1(strInts, parseDoubles, "parseDoubles")
  
-    println("\nTest parseInts based on transverse:\n")
     evalP1(strInts, parseInts, "parseInts")
     evalP1(strIntsNotAll, parseInts, "parseInts")
     evalP1(strDouble, parseInts, "parseInts")
- 
-*/
+
     println()
 
   }

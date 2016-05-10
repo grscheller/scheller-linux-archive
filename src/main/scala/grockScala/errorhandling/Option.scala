@@ -63,7 +63,7 @@ object Option {
   /**
    *  Take two Options and a function of two arguments, with no
    *  knowledge of Options, apply the function with the values 
-   *  within the the Options and return on Option containing
+   *  within the the Options and return an Option containing
    *  the result.
    */
   def map2_mine[A,B,C](aO: Option[A],
@@ -81,7 +81,7 @@ object Option {
   /**
    *  Take two Options and a function of two arguments, with no
    *  knowledge of Options, apply the function with the values 
-   *  within the the Options and return on Option containing
+   *  within the the Options and return an Option containing
    *  the result.
    */
   def map2[A,B,C](aO: Option[A], bO: Option[B])(f: (A, B) => C): Option[C] =
@@ -92,7 +92,7 @@ object Option {
    *
    *  Now, when partially applied with a function of two arguments,
    *  with no knowledge of Options, a function that operates with
-   *  the corresponding Options and returning an Option will be returned.
+   *  the corresponding Options and returning an Option.
    *
    *  Of course this trick would not have worked if we had put this
    *  method in the trait itself instead of the companion object.
@@ -100,6 +100,7 @@ object Option {
   def map2r[A,B,C](f: (A, B) => C)(aO: Option[A], bO: Option[B]): Option[C] =
     aO.flatMap(a => bO map (b => f(a, b)))
 
+  /* Lift a function to the Option monad */
   def lift2[A,B,C](f: (A, B) => C): (Option[A], Option[B]) => Option[C] =
     map2r(f)(_, _)
 

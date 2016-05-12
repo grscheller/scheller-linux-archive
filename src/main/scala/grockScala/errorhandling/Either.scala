@@ -10,27 +10,33 @@ package grockScala.errorhandling
  */
 sealed trait Either[+E, +A] {
 
-  /** Apply function to RHS value of Either, if not None */
+  /**
+   *  If Right, apply function to Right Either value,
+   *  otherwise leave the Left value alone.
+   */
   def map[B](f: A => B): Either[E,B] = this match {
-    case Left(e) => Left(e)
     case Right(a) => Right(f(a))
+    case Left(e) => Left(e)
   }
 
   /** Apply f, which may fail, to RHS of Either, if not None */
-  def flatMap[EE >: E,B](f: A => Either[EE, B]): Either[EE, B] = this match {
-    case Left(e) => Left(e)
+  def flatMap[EE >: E,B](f: A => Either[EE,B]): Either[EE,B] = this match {
     case Right(a) => f(a)
+    case Left(e) => Left(e)
   }
 
   /** Return value if Right, otherwise return default, default nonstrict */
   def getOrElse[B >: A](default: => B): B = this match {
-    case Left(_) => default
     case Right(a) => a
+    case Left(_) => default
   }
 
+  // We can return this ("this" not a pronoun) because
+  // this <: Either[EE,B].  This trick will not work for map
+  // or flatMap because of the type changing.
   /**
    *  If Left, nonstrictly swap with superclass Either, either
-   *  a Left or Right will work.
+   *  a Left or Right will work for the default value.
    */
   def orElse[EE >: E,B >: A](default: => Either[EE,B]): Either[EE,B] =
     this match {
@@ -47,17 +53,13 @@ sealed trait Either[+E, +A] {
   def map2[EE >: E,B,C](bE: Either[EE,B])(f: (A,B) => C): Either[EE,C] =
     this.flatMap(a => bE map (b => f(a, b)))
 
-  /**
-   *  Take two Eithers and a function of two arguments, with no
-   *  knowledge of Eithers, apply the function with the values 
-   *  within the the Eithers and return an Eithers containing
-   *  the result.
-   */
-  def map2_for[EE >: E,B,C](bE: Either[EE,B])(f: (A,B) => C): Either[EE,C] =
-    for {
-      a <- this
-      b <- bE
-    } yield f(a, b)
+  /** Fold left, more for completeness than utility */
+  def foldLeft[B](z: B)(f: (B, A) => B): Either[E,B] =
+    this map ((a: A) => f(z, a))
+
+  /** Fold right, more for completeness than utility */
+  def foldRight[B](z: B)(f: (A, B) => B): Either[E,B] =
+    this map ((a: A) => f(a, z))
 
 }
 case class Left[+E](value: E) extends Either[E, Nothing]

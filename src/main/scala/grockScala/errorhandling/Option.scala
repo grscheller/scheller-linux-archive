@@ -42,6 +42,14 @@ sealed trait Option[+A] {
   def orElse_book[B >: A](default: => Option[B]): Option[B] =
     map(Some(_)).getOrElse(default)
 
+  /** Fold left, more for completeness than utility */
+  def foldLeft[B](z: B)(f: (B, A) => B): Option[B] =
+    this map ((a: A) => f(z, a))
+
+  /** Fold right, more for completeness than utility */
+  def foldRight[B](z: B)(f: (A, B) => B): Option[B] =
+    this map ((a: A) => f(a, z))
+
 }
 case class Some[+A](get: A) extends Option[A]
 case object None extends Option[Nothing]

@@ -5,8 +5,6 @@ import grockScala.errorhandling.Either._
 
 object EitherStats {
 
-  // Exercise 4.2 - Implement a variance function via flatMap
-
   /** Computes the mean of a dataset of Doubles */
   def mean(xs: Seq[Double]): Either[String,Double] =
     if (xs.isEmpty) Left("mean of empty list!")
@@ -82,6 +80,25 @@ object EitherParse {
    */  
   def parseInts(ss: List[String]): Either[Exception,List[Int]] =
     traverse(ss)(s => Try(s.toInt))
+
+}
+
+case class Person(name: Name, age: Age)
+sealed class Name(val value: String)
+sealed class Age(val value: Int)
+
+object Person {
+
+  def mkName(name: String): Either[String, Name] =
+    if (name == "" || name == null) Left("Name is empty.")
+    else Right(new Name(name))
+
+  def mkAge(age: Int): Either[String, Age] =
+    if (age < 0) Left("Age is out of range.")
+    else Right(new Age(age))
+
+  def mkPerson(name: String, age: Int): Either[String, Person] =
+    mkName(name).map2(mkAge(age))(Person(_, _))
 
 }
 
@@ -226,6 +243,15 @@ object EitherTest {
     evalP1(fn, either5N, "either5N")
     evalP1(fn, either8N, "either8N")
     evalP1(fn, eitherNN, "eitherNN")
+
+    println("\nTest map2 via Person objects\n")
+    val ethel = Person.mkPerson("Ethel", 52)
+    val fred1 = Person.mkPerson("", 62)
+    val fred2 = Person.mkPerson("Fred", -5)
+
+    evalP0(ethel, "ethel")
+    evalP0(fred1, "fred1")
+    evalP0(fred2, "fred2")
 
     // Test sequence and other methods based on traverse
     println("\nTest sequence and other methods based on traverse:\n")

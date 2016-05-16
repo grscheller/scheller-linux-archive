@@ -1,4 +1,4 @@
-package grockScala.test.errorhanding
+package grockScala.test.errorhandling
 
 import grockScala.errorhandling._
 import grockScala.errorhandling.Option._

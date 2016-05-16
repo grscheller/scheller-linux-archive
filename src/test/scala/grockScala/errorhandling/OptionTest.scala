@@ -279,6 +279,50 @@ object OptionTest {
     evalP1(strIntsNotAll, parseInts, "parseInts")
     evalP1(strDouble, parseInts, "parseInts")
  
+    // Test flatten and compare the two flatmaps
+
+    println("\nTest flatten:\n")
+    val mule = Some(42)
+    val goat = Some(Some(42))
+    val frog: Option[Option[Double]] = None
+    // evalP0(mule, "mule")
+    // evalP0(mule.flatten, "mule.flatten")     /* Does not compile. */
+    evalP0(goat, "goat")
+    evalP0(goat.flatten, "goat.flatten")
+    evalP0(frog, "frog")
+    evalP0(frog.flatten, "frog.flatten")
+
+    println("\nCompare flatMap and flatMap2:\n")
+    val goodDoubleStrings = List("1.2", "3.14159", "10.3", "6", "7.1")
+    val goodDoubles = parseDoubles(goodDoubleStrings)
+    val goodMean = goodDoubles flatMap mean
+    val goodMean2 = goodDoubles flatMap2 mean
+
+    val failDoubleStrings = List("1.2", "3.14159", "Fred", "6", "8.9")
+    val failDoubles = parseDoubles(failDoubleStrings)
+    val failMean = failDoubles flatMap mean
+    val failMean2 = failDoubles flatMap2 mean
+
+    val noDoubleStrings: List[String] = List()
+    val noDoubles = parseDoubles(noDoubleStrings)
+    val noMean = noDoubles flatMap mean
+    val noMean2 = noDoubles flatMap2 mean
+
+    evalP0(goodDoubleStrings, "goodDoubleStrings")
+    evalP0(goodDoubles, "goodDoubles")
+    evalP0(goodMean, "goodMean")
+    evalP0(goodMean2, "goodMean2")
+
+    evalP0(failDoubleStrings, "failDoubleStrings")
+    evalP0(failDoubles, "failDoubles")
+    evalP0(failMean, "failMean")
+    evalP0(failMean2, "failMean2")
+
+    evalP0(noDoubleStrings, "noDoubleStrings")
+    evalP0(noDoubles, "noDoubles")
+    evalP0(noMean, "noMean")
+    evalP0(noMean2, "noMean2")
+
     println()
 
   }

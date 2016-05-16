@@ -70,8 +70,7 @@ object List {
   /** Remove last element in list - not a total function since
    *  the empty list has no last element to remove.
    *
-   *  Will cause a compiler warning.
-   *  Also, will cause stackoverflow.
+   *  @note Will cause a compiler warning.  Also, will cause stackoverflow.
    */
   def init[A](l: List[A]): List[A] = 
     l match {
@@ -226,9 +225,10 @@ object List {
     }
 
   // Exercise 3.23
-  /** Implements standard zipWith function
+  /**
+   *  Implements standard zipWith function
    *  
-   *    Not stack safe
+   *  @note Not stack safe
    */
   def zipWith[A,B,C](as: List[A], bs: List[B])(f: (A,B) => C): List[C] =
     (as, bs) match {
@@ -238,7 +238,8 @@ object List {
         Nil
     }
 
-  /* Implements standard zipWith function 
+  /*
+   *  Implements standard zipWith function 
    *
    *  Todo: when I know how to make things lazy 
    */

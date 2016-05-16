@@ -33,7 +33,8 @@ sealed trait Option[+A] {
       else None
     )
 
-// Versions from book answers
+  // Versions from book answers
+
   /** Apply f, which may fail, to the Option, if not none */
   def flatMap_book[B](f: A => Option[B]): Option[B] = 
     map(f).getOrElse(None)
@@ -42,18 +43,43 @@ sealed trait Option[+A] {
   def orElse_book[B >: A](default: => Option[B]): Option[B] =
     map(Some(_)).getOrElse(default)
 
-  /** Fold left, more for completeness than utility */
+  // Some extra stuff
+
+  /** Fold left, could be more useful with some type variance */
   def foldLeft[B](z: B)(f: (B, A) => B): Option[B] =
     this map ((a: A) => f(z, a))
 
-  /** Fold right, more for completeness than utility */
+  /** Fold right, could be more useful with some type variance */
   def foldRight[B](z: B)(f: (A, B) => B): Option[B] =
     this map ((a: A) => f(a, z))
+
+  /**
+   *  Flatten an Option of an Option to a single Option.
+   *
+   *  @note This is tricky, type errasure in scala prevents
+   *  deep pattern matching.  I looked up how this was 
+   *  done in the Scala standard library for the Option
+   *  abstract class.  Current implementation works, but
+   *  not sure why.
+   */
+  def flatten[B](implicit ev: A <:< Option[B]): Option[B] =
+    this match {
+      case Some(oA) => oA
+      case _ => None
+    }
+
+  /** Apply f, which may fail, to the Option, if not None */
+  def flatMap2[B](f: A => Option[B]): Option[B] = 
+    (this map f).flatten
 
 }
 case class Some[+A](get: A) extends Option[A]
 case object None extends Option[Nothing]
 
+/**
+ * Utility functions for working with Options.
+ *
+ */
 object Option {
 
   /**
@@ -143,7 +169,7 @@ object Option {
   //   If I were smarter, this is the one I would have come up
   //   with first.  I think it is more efficient, once the built
   //   up array becomes a None, everything shorts out without
-  //   ever examining another Option[a]
+  //   ever examining another Option[a].
   def sequence4[A](aOs: List[Option[A]]): Option[List[A]] =
     aOs.foldRight(Some(Nil): Option[List[A]])((aO, asO) =>
       asO.flatMap(as => aO.map(a => a :: as))
@@ -153,7 +179,7 @@ object Option {
    *  Take a list, apply a function which returns an Option
    *  to each element of the list and if none are None,
    *  return an Option of a list of all the values in the
-   *  Somes, otherwise return a None
+   *  Somes, otherwise return a None.
    */
   def traverse[A,B](as: List[A])(f: A => Option[B]): Option[List[B]] =
     as.foldRight(Some(Nil): Option[List[B]])(
@@ -179,6 +205,11 @@ object Option {
   /**
    *  Take a List of Options, if all are Some, return an Option of a
    *  a single List of the Option values, otherwise return None.
+   *  
+   *  @param aOs a list of Options of type A.
+   *  @return A single Option of a List of type A.
+   *  @note All or nothing.
+   *
    */
   def sequence[A](aOs: List[Option[A]]): Option[List[A]] =
     traverse(aOs)((aO: Option[A]) => aO)

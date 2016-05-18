@@ -75,6 +75,52 @@ object StreamTest{
     print("putz.toList = "); println(putz.toList)
     print("putz.toList = "); println(putz.toList)
 
+    // Test takeWhile method
+
+    println("\nTest dropWhile and takeWhile:\n")
+
+    val oneToTen = Stream(1,2,3,4,5,6,7,8,9,10)
+    print("oneToTen.takeWhile(_ < 4).toList = ");
+    println(oneToTen.takeWhile(_ < 4).toList)
+    print("oneToTen.dropWhile(_ < 5).takeWhile(_ < 8).toList = ");
+    println(oneToTen.dropWhile(_ < 5).takeWhile(_ < 8).toList)
+
+    val bad1To10 =
+      Stream.cons({print("<1>"); 1},
+        Stream.cons({print("<2>"); 2},
+          Stream.cons({print("<3>"); 3},
+            Stream.cons({print("<4>"); 4},
+              Stream.cons({print("<5>"); 5},
+                Stream.cons({print("<6>"); 6},
+                  Stream.cons({print("<7>"); 7},
+                    Stream.cons({print("<8>"); 8},
+                      Stream.cons({print("<9>"); 9},
+                        Stream.cons({print("<10>"); 10},
+                          Stream.empty))))))))))
+    println("\nbad1To10 = ")
+    println("  Stream.cons({print(\"<1>\"); 1},")
+    println("    Stream.cons({print(\"<2>\"); 2},")
+    println("      Stream.cons({print(\"<3>\"); 3},")
+    println("        Stream.cons({print(\"<4>\"); 4},")
+    println("          Stream.cons({print(\"<5>\"); 5},")
+    println("            Stream.cons({print(\"<6>\"); 6},")
+    println("              Stream.cons({print(\"<7>\"); 7},")
+    println("                Stream.cons({print(\"<8>\"); 8},")
+    println("                  Stream.cons({print(\"<9>\"); 9},")
+    println("                    Stream.cons({print(\"<10>\"); 10},")
+    println("                      Stream.empty))))))))))")
+
+    print("\nbadPlan = ")
+    println("bad1To10.dropWhile(_ < 3).takeWhile(_ < 8)")
+
+    val badPlan = bad1To10.dropWhile(_ < 3).takeWhile(_ < 8)
+
+    print("\nbadPlan = "); println(badPlan)
+
+    print("badPlan.toList = "); println(badPlan.toList)
+
+    print("bad1To10.toList = "); println(bad1To10.toList)
+
     println()
 
   }

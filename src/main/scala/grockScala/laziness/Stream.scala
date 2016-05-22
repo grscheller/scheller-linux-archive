@@ -3,6 +3,8 @@ package grockScala.laziness
 /** Implement a lazy list */
 sealed trait Stream[+A] {
 
+  import Stream._
+
   def headOption1: Option[A] = this match {
     case Empty => None
     case Cons(h, t) => Some(h())   // Explicitly evaluate the thunk
@@ -14,7 +16,7 @@ sealed trait Stream[+A] {
   } 
 
   def tailSafe: Stream[A] =
-    tailOption getOrElse (Stream.empty)
+    tailOption getOrElse (empty[A])
 
   def toList1: List[A] = this match {
     case Empty => Nil
@@ -24,7 +26,7 @@ sealed trait Stream[+A] {
   def drop(n: Int): Stream[A] = 
     if (n < 1) this
     else this match {
-      case Cons(h, t) => t().drop(n-1)
+      case Cons(_, t) => t().drop(n-1)
       case _ => Empty
     }
 
@@ -43,7 +45,7 @@ sealed trait Stream[+A] {
 
   def dropWhile1(p: A => Boolean): Stream[A] =
     this match {
-      case Cons(h, t) if p(h()) => t().dropWhile(p)
+      case Cons(h, t) if p(h()) => t().dropWhile1(p)
       case _ => this
     }
 
@@ -66,12 +68,12 @@ sealed trait Stream[+A] {
     foldRight(true)((a, b) => p(a) && b)
 
   def takeWhile(p: A => Boolean): Stream[A] =
-    foldRight(Empty: Stream[A])((a, b) => 
-      if (p(a)) Cons(() => a, () => b)
+    foldRight(empty[A])((a, b) => 
+      if (p(a)) cons(a, b)
       else Empty)
 
   def dropWhile(p: A => Boolean): Stream[A] =
-    foldRight(Empty: Stream[A])((a, b) => 
+    foldRight(empty[A])((a, b) => 
       if (p(a)) b
       else this)
 
@@ -82,11 +84,11 @@ sealed trait Stream[+A] {
     foldRight(Nil: List[A])((a, as) => a :: as.toList)
 
   def map[B](f: A => B): Stream[B] =
-    foldRight(Empty: Stream[B])((a, bs) => Stream.cons(f(a), bs))
+    foldRight(empty[B])((a, bs) => cons(f(a), bs))
 
   def filter(p: A => Boolean): Stream[A] =
-    foldRight(Stream.empty[A])((a, as) =>
-      if (p(a)) Stream.cons(a, as)
+    foldRight(empty[A])((a, as) =>
+      if (p(a)) cons(a, as)
       else as )
 
 }
@@ -114,6 +116,6 @@ object Stream {
 
   /** Convert List to Stream */
   def listToStream[A](l: List[A]): Stream[A] =
-    l.foldRight(empty: Stream[A])((a, s) => cons(a, s))
+    l.foldRight(empty[A])((a, s) => cons(a, s))
 
 }

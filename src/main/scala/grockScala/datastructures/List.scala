@@ -185,13 +185,13 @@ object List {
    *  while maintaining the structure of the List 
    */
   def map[A, B](l: List[A])(f: A => B): List[B] = 
-    foldRight(l, Nil: List[B])((a, as) => Cons(f(a), as))
+    foldRight(l, Nil: List[B])((a, bs) => Cons(f(a), bs))
 
   // Exercise 3.19
   /** Filter elements from a list based on a predicate */
   def filter[A](l: List[A])(f: A => Boolean): List[A] =
     foldRight(l, Nil: List[A])(
-      (a,as) => 
+      (a, as) => 
         if (f(a))
           Cons(a, as)
         else

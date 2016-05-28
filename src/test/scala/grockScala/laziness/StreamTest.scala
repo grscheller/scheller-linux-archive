@@ -4,7 +4,7 @@ import grockScala.laziness._
 
 object StreamTest{
 
-  // A really poor implementation to calculating fibonacci numbers.
+  // A really poor implementation for calculating fibonacci numbers.
   // To model an expensive calculation.
   def fibPoor(n: Int): Int =
     if (n < 2) n else fibPoor(n-1) + fibPoor(n-2)
@@ -254,8 +254,7 @@ object StreamTest{
     val domainFibs = Stream(0,1,2,3,4,5,6,7,8,9,10,
                              11,12,13,14,15,16,17,18,19,20,
                              21,22,23,24,25,26,27,28,29,30,
-                             31,32,33,34,35,36,37,38,39,40,
-                             41,42)
+                             31,32,33,34,35,36,37,38,39,40)
     val fibStream = domainFibs.map(fibPoor)
     val fibsTail = fibStream.drop(30)
 
@@ -266,7 +265,116 @@ object StreamTest{
     print("fibStream.toList = "); println(fibStream.toList)
     println("Finished calculation:\n")
 
-    println("\nTest laziness across streams:\n")
+    println("\nTest both prepends(#:: & #:::) and append(:::#):")
+
+    val bad1To5 =
+      Stream.cons({print("<1>"); 1},
+        Stream.cons({print("<2>"); 2},
+          Stream.cons({print("<3>"); 3},
+            Stream.cons({print("<4>"); 4},
+              Stream.cons({print("<5>"); 5},
+                Stream.empty)))))
+
+    print("\nMake bad0To5")
+    val bad0To5 = {print("<0>"); 0} #:: bad1To5
+    print("\nMake bad42and0To5")
+    val bad42and0To5 = Stream.cons({print("<42>"); 42}, bad0To5);
+    println()
+
+    print("bad42and0To5.toList = "); println(bad42and0To5.toList)
+
+    val bad1To8 =
+      Stream.cons({print("<1>"); 1},
+        Stream.cons({print("<2>"); 2},
+          Stream.cons({print("<3>"); 3},
+            Stream.cons({print("<4>"); 4},
+              Stream.cons({print("<5>"); 5},
+                Stream.cons({print("<6>"); 6},
+                  Stream.cons({print("<7>"); 7},
+                    Stream.cons({print("<8>"); 8},
+                      Stream.empty))))))))
+
+    print("\nMake bad567")
+    val bad567 = bad1To8.drop(4).take(3)
+    print("\nMake bad123456")
+    val bad123456 = bad1To8.take(6)
+    print("\nMake bad567123456")
+    val bad567123456 = bad567 #::: bad123456
+    print("\nMake bad12345678567")
+    val bad12345678567 = bad1To8 :::# bad567
+    println()
+
+    print("bad567123456.toList = "); println(bad567123456.toList)
+    print("bad12345678567.toList = "); println(bad12345678567.toList)
+
+    // Compare flatMap1 and flatMap
+
+    println("\nCompare flatMap1 and flatMap with some evaluated data:\n")
+
+    val numStrings = Stream("4", "0", "1", "bob", "2", "3")
+    
+    def numStringToCharStream(s: String): Stream[Char] = {
+      val sAsInt = try {
+        s.toInt
+        } catch {
+          case e: Exception => 0
+      }
+
+      var outStream: Stream[Char] = Stream.empty
+      for (ii <- 1 to sAsInt) {
+        val tempStream = outStream  // Needed to avoid infinite datastructure
+        outStream = Stream.cons(('`' + sAsInt).toChar, tempStream)
+      }
+
+      outStream
+
+    }
+
+    print("(numStrings flatMap1 numStringToCharStream).toList = ")
+    println((numStrings flatMap1 numStringToCharStream).toList)
+
+    print("(numStrings flatMap numStringToCharStream).toList = ")
+    println((numStrings flatMap numStringToCharStream).toList)
+
+    println("\nCompare flatMap1 and flatMap with unevaluated data:\n")
+
+    val unEval1 =
+      Stream.cons({print("<4>"); "4"},
+        Stream.cons({print("<0>"); "0"},
+          Stream.cons({print("<1>"); "1"},
+            Stream.cons({print("<bob>"); "bob"},
+              Stream.cons({print("<2>"); "2"},
+                Stream.cons({print("<3>"); "3"},
+                  Stream.empty))))))
+
+    val unEval2 =
+      Stream.cons({print("<4>"); "4"},
+        Stream.cons({print("<0>"); "0"},
+          Stream.cons({print("<1>"); "1"},
+            Stream.cons({print("<bob>"); "bob"},
+              Stream.cons({print("<2>"); "2"},
+                Stream.cons({print("<3>"); "3"},
+                  Stream.empty))))))
+
+    print("(unEval1 flatMap1 numStringToCharStream).toList = ")
+    println((unEval1 flatMap1 numStringToCharStream).toList)
+
+    print("(unEval2 flatMap numStringToCharStream).toList = ")
+    println((unEval2 flatMap numStringToCharStream).toList)
+
+    println("\nTest flatMap via for comprehension:\n")
+
+    val evaluatedStream = unEval1 #::: unEval2.takeWhile(_.length < 3)
+    val charStream =
+      for {
+        numStr <- evaluatedStream
+        char <- numStringToCharStream(numStr)
+      } yield char
+
+    print("charStream.toList = ")
+    println(charStream.toList)
+
+    println("\nTest variance of #:::, :::#, and flatMaps:\n")
 
     println()
 

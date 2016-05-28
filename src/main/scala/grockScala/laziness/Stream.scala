@@ -91,6 +91,26 @@ sealed trait Stream[+A] {
       if (p(a)) cons(a, as)
       else as )
 
+  /** Strict operator wrapper for cons */
+  def #::[B>:A](b: B): Stream[B] =
+    cons(b, this)
+
+  /** Prepend supertype stream */
+  def #:::[B>:A](bs: Stream[B]): Stream[B] =
+    bs.foldRight(this: Stream[B])((b,bs) => cons(b, bs))
+
+  /** Append supertype stream */
+  def :::#[B>:A](bs: Stream[B]): Stream[B] =
+    foldRight(bs)((a,as) => cons(a, as))
+
+  /** Flatmap (Bind) for Streams */
+  def flatMap1[B](f: A => Stream[B]): Stream[B] =
+    foldRight(empty[B])((a, bs) => f(a) #::: bs)  // Scala library way
+
+  /** Flatmap (Bind) for Streams */
+  def flatMap[B](f: A => Stream[B]): Stream[B] =
+    foldRight(empty[B])((a, bs) => f(a) :::# bs)  // Book ans way
+
 }
 case object Empty extends Stream[Nothing]
 case class Cons[+A](h: () => A, t: () => Stream[A]) extends Stream[A]

@@ -1,19 +1,14 @@
 lazy val commonSettings = Seq(
   organization := "mil.afrl.dtic",
-  version := "1.0"//,
-//  scalaVersion := "2.12.0-M4"
+  version := "1.0",
+  scalaVersion := "2.12.0-M4"
 )
 
 lazy val root = (project in file(".")).
   settings(commonSettings: _*)
 
-/* This will cause the jar file to be used by run, test, 
-   console, and other tasks that use the full classpath.
-
-   I commented it out since its best use case is for a
-   single standalong, not necessarily totally self contained,
-   application, where I really want to run/test everything
-   from the jar files.  
+/* If true, this will cause the jar file to be used by run,
+   test, console, and other tasks that use the full classpath.
 
    There is an sbt plug-in called sbt-assembly
    that will generate a fat jar with everthing including
@@ -23,10 +18,9 @@ lazy val root = (project in file(".")).
 */
 exportJars := false
 
-/* An attempt to get at the classpath to try and run
-   scala directly.  Didn't work.
-*/
-//lazy val printClasspath = task {
-//  this.runClasspath.getPaths.foreach(println)
-//  None
-//}
+/* To force the use of java8 */
+initialize := {
+  val _ = initialize.value
+  if (sys.props("java.specification.version") != "1.8")
+    sys.error("Java 8 is required for this project.")
+}

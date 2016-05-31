@@ -18,7 +18,11 @@ lazy val root = (project in file(".")).
 */
 exportJars := false
 
-/* To force the use of java8 */
+// Build to require/target java8
+
+javacOptions ++= Seq("-source", "1.8", "-target", "1.8", "-Xlint")
+
+/* To force the use of java8 libraries only */
 initialize := {
   val _ = initialize.value
   if (sys.props("java.specification.version") != "1.8")

@@ -2,6 +2,12 @@ package grockScala.test.laziness
 
 import grockScala.laziness._
 
+// For testing covariance and contravariance.
+//   Also, to help familiarize myself with OO aspects of scala.
+abstract class Fruit { print("<yum>") }
+class Apple extends Fruit { print("<crisp>") }
+class Orange extends Fruit { print("<juicy>") }
+
 object StreamTest{
 
   // A really poor implementation for calculating fibonacci numbers.
@@ -346,7 +352,6 @@ object StreamTest{
               Stream.cons({print("<2>"); "2"},
                 Stream.cons({print("<3>"); "3"},
                   Stream.empty))))))
-
     val unEval2 =
       Stream.cons({print("<4>"); "4"},
         Stream.cons({print("<0>"); "0"},
@@ -375,6 +380,55 @@ object StreamTest{
     println(charStream.toList)
 
     println("\nTest variance of #:::, :::#, and flatMaps:\n")
+
+    println("Make apples stream")
+    val apples = Stream(new Apple, new Apple, new Apple)
+    println("\nMake orange stream")
+    val oranges = Stream(new Orange, new Orange)
+    println("\nMake fruit1 stream")
+    val fruit1 = apples #::: oranges
+    println("Make fruit2 stream reuse same fruit")
+    val fruit2 = apples :::# oranges
+
+    print("\nfruit1.toList = "); println(fruit1.toList)
+    print("\nfruit2.toList = "); println(fruit2.toList)
+
+    print("\nfruit1 == fruit2 = ")
+    println(fruit1 == fruit2)
+    print("\nfruit1.toList == fruit2.toList = ")
+    println(fruit1.toList == fruit2.toList)
+
+    print("\nfruit1  = "); println(fruit1)
+    print("\nfruit2  = "); println(fruit2)
+
+    println("\nMake fruit stream")
+    val fruit3 = Stream(new Apple, new Orange, new Apple)
+    print("\nfruit3.toList = "); println(fruit3.toList)
+
+    def printFruitStream(fruits: Stream[Fruit]) = 
+      for (fruit <- fruits.toList) {
+        fruit match {
+          case a: Apple => println("An apple")
+          case o: Orange => println("An orange")
+          case f: Fruit => println("A fruit")
+          case _ => println("Something else")
+        }
+      }
+
+    println("\nPrint out fruit in fruit3")
+    printFruitStream(fruit3)
+
+    // Make some lazy fruit
+    println("\nMake some bad lazy fruit\n")
+    val badLazyFruit =
+      Stream.cons({print("<11>"); new Orange},
+        Stream.cons({print("<12>"); new Apple},
+          Stream.cons({print("<13>"); new Apple},
+            Stream.cons({print("<14>"); new Orange},
+              Stream.empty))))
+
+    println("Print out fruit in badLazyFruit")
+    printFruitStream(badLazyFruit)
 
     println()
 

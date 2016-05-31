@@ -131,11 +131,16 @@ object StreamTest{
     println("                    Stream.cons({print(\"<10>\"); 10},")
     println("                      Stream.empty))))))))))")
 
+    print("\nset badPlan = ")
     println("bad1To10.dropWhile1(_ < 3).takeWhile1(_ < 8)")
 
+    println("Make badPlan")
     val badPlan = bad1To10.dropWhile1(_ < 3).takeWhile1(_ < 8)
+    println("\nFinished making badPlan")
 
-    print("\nbadPlan = "); println(badPlan)
+    // With imported Traversable trait, below println is now
+    // forcing an evaluation.
+    //print("\nbadPlan = "); println(badPlan)
 
     print("badPlan.toList = "); println(badPlan.toList)
 
@@ -229,12 +234,16 @@ object StreamTest{
     println("                      Stream.cons({print(\"<11>\"); 11},")
     println("                        Stream.empty)))))))))))")
 
-    print("\nanotherBadPlan = ")
+    print("\nset anotherBadPlan = ")
     println("bad1To11.dropWhile(_ < 3).takeWhile(_ < 8)")
 
+    println("Make anotherBadPlan")
     val anotherBadPlan = bad1To11.dropWhile(_ < 3).takeWhile(_ < 8)
+    println("\nFinished making anotherBadPlan")
 
-    print("\nanotherBadPlan = "); println(anotherBadPlan)
+    // With imported Traversable trait, below println is now
+    // forcing an evaluation.
+    // print("\nanotherBadPlan = "); println(anotherBadPlan)
 
     print("anotherBadPlan.toList = "); println(anotherBadPlan.toList)
 
@@ -249,6 +258,8 @@ object StreamTest{
     println("baz = Stream(42)")
     println("bar = Stream[Double]()\n")
 
+    // I think I am dragging in some _.toString method
+    // which is forcing an evaluation from Traversable trait?
     print("foo.map((_: Double) + 1.0) = ")
     println(foo.map((_: Double) + 1.0))
     print("foo.map((_: Double) + 1.0).toList = ")
@@ -409,7 +420,7 @@ object StreamTest{
     print("\nfruit3.toList = "); println(fruit3.toList)
 
     def printFruitStream(fruits: Stream[Fruit]) = 
-      for (fruit <- fruits.toList) {
+      for (fruit <- fruits) {
         fruit match {
           case a: Apple => println("An apple")
           case o: Orange => println("An orange")
@@ -424,10 +435,10 @@ object StreamTest{
     // Make some lazy fruit
     println("\nMake some bad lazy fruit\n")
     val badLazyFruit =
-      Stream.cons({print("<11>"); new Orange},
-        Stream.cons({print("<12>"); new Apple},
-          Stream.cons({print("<13>"); new Apple},
-            Stream.cons({print("<14>"); new Orange},
+      Stream.cons({print("<1>"); new Orange},
+        Stream.cons({print("<2>"); new Apple},
+          Stream.cons({print("<3>"); new Apple},
+            Stream.cons({print("<4>"); new Orange},
               Stream.empty))))
 
     println("Print out fruit in badLazyFruit")

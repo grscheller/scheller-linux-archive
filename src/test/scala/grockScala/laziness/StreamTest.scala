@@ -21,12 +21,12 @@ object StreamTest{
 
     val foo = Stream(2.1, 4.2, 5.3, 1.4, 8.5)
     val baz = Stream(42)
-    val bar: Stream[Int] = Stream()
+    val bar = Stream[Double]()
 
     println("\nDatastructures used:\n")
     println("foo = Stream(2.1, 4.2, 5.3, 1.4, 8.5)")
     println("baz = Stream(42)")
-    println("bar = Stream()")
+    println("bar = Stream[Double]()")
 
     // Test headOption and tailSafe
 
@@ -131,7 +131,6 @@ object StreamTest{
     println("                    Stream.cons({print(\"<10>\"); 10},")
     println("                      Stream.empty))))))))))")
 
-    print("\nbadPlan = ")
     println("bad1To10.dropWhile1(_ < 3).takeWhile1(_ < 8)")
 
     val badPlan = bad1To10.dropWhile1(_ < 3).takeWhile1(_ < 8)
@@ -248,12 +247,16 @@ object StreamTest{
 
     println("foo = Stream(2.1, 4.2, 5.3, 1.4, 8.5)")
     println("baz = Stream(42)")
-    println("bar = Stream()\n")
+    println("bar = Stream[Double]()\n")
 
-    print("foo.map(_ + 1.0) = "); println(foo.map(_ + 1.0))
-    print("foo.map(_ + 1.0).toList = "); println(foo.map(_ + 1.0).toList)
-    print("baz.map(_ + 1.0).toList = "); println(baz.map(_ + 1.0).toList)
-    print("bar.map(_ + 1.0).toList = "); println(bar.map(_ + 1.0).toList)
+    print("foo.map((_: Double) + 1.0) = ")
+    println(foo.map((_: Double) + 1.0))
+    print("foo.map((_: Double) + 1.0).toList = ")
+    println(foo.map((_: Double) + 1.0).toList)
+    print("baz.map(_ + 1.0).toList = ")
+    println(baz.map((_: Int) + 1.0).toList)
+    print("bar.map((_: Double) + 1.0).toList = ")
+    println(bar.map((_: Double) + 1.0).toList)
 
     println("\nTest laziness with an expensive function:\n")
 
@@ -261,7 +264,7 @@ object StreamTest{
                              11,12,13,14,15,16,17,18,19,20,
                              21,22,23,24,25,26,27,28,29,30,
                              31,32,33,34,35,36,37,38,39,40)
-    val fibStream = domainFibs.map(fibPoor)
+    val fibStream = domainFibs.map(fibPoor _)
     val fibsTail = fibStream.drop(30)
 
     println("Start calculation:")
@@ -339,8 +342,8 @@ object StreamTest{
     print("(numStrings flatMap1 numStringToCharStream).toList = ")
     println((numStrings flatMap1 numStringToCharStream).toList)
 
-    print("(numStrings flatMap numStringToCharStream).toList = ")
-    println((numStrings flatMap numStringToCharStream).toList)
+    print("(numStrings flatMap numStringToCharStream _).toList = ")
+    println((numStrings flatMap numStringToCharStream _).toList)
 
     println("\nCompare flatMap1 and flatMap with unevaluated data:\n")
 
@@ -364,16 +367,16 @@ object StreamTest{
     print("(unEval1 flatMap1 numStringToCharStream).toList = ")
     println((unEval1 flatMap1 numStringToCharStream).toList)
 
-    print("(unEval2 flatMap numStringToCharStream).toList = ")
-    println((unEval2 flatMap numStringToCharStream).toList)
+    print("(unEval2 flatMap numStringToCharStream _).toList = ")
+    println((unEval2 flatMap numStringToCharStream _).toList)
 
     println("\nTest flatMap via for comprehension:\n")
 
     val evaluatedStream = unEval1 #::: unEval2.takeWhile(_.length < 3)
     val charStream =
       for {
-        numStr <- evaluatedStream
-        char <- numStringToCharStream(numStr)
+        (numStr: String) <- evaluatedStream
+        (char: Char) <- numStringToCharStream(numStr)
       } yield char
 
     print("charStream.toList = ")

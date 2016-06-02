@@ -1,7 +1,7 @@
 package grockScala.laziness
 
 /** Implement a lazy list */
-sealed trait Stream[+A] extends Traversable[A] {
+sealed trait Stream[+A] {
 
   import Stream._
 
@@ -28,14 +28,14 @@ sealed trait Stream[+A] extends Traversable[A] {
     case Cons(h, t) => h() :: t().toList1
   }
 
-  override def drop(n: Int): Stream[A] = 
+  def drop(n: Int): Stream[A] = 
     if (n < 1) this
     else this match {
       case Cons(_, t) => t().drop(n-1)
       case _ => Empty
     }
 
-  override def take(n: Int): Stream[A] = 
+  def take(n: Int): Stream[A] = 
     if (n < 1) Empty
     else this match {
       case Cons(h, t) => Cons(h, () => t().take(n-1))
@@ -66,32 +66,32 @@ sealed trait Stream[+A] extends Traversable[A] {
       case _ => z
     }
 
-  override def exists(p: A => Boolean): Boolean =
+  def exists(p: A => Boolean): Boolean =
     foldRight(false)((a, b) => p(a) || b)
 
   def forAll(p: A => Boolean): Boolean =
     foldRight(true)((a, b) => p(a) && b)
 
-  override def takeWhile(p: A => Boolean): Stream[A] =
+  def takeWhile(p: A => Boolean): Stream[A] =
     foldRight(empty[A])((a, b) => 
       if (p(a)) cons(a, b)
       else Empty)
 
-  override def dropWhile(p: A => Boolean): Stream[A] =
+  def dropWhile(p: A => Boolean): Stream[A] =
     foldRight(empty[A])((a, b) => 
       if (p(a)) b
       else this)
 
-  override def headOption: Option[A] = 
+  def headOption: Option[A] = 
     foldRight(None: Option[A])((a, _) => Some(a))
 
-  override def toList: List[A] =
+  def toList: List[A] =
     foldRight(Nil: List[A])((a, as) => a :: as.toList)
 
   def map[B](f: A => B): Stream[B] =
     foldRight(empty[B])((a, bs) => cons(f(a), bs))
 
-  override def filter(p: A => Boolean): Stream[A] =
+  def filter(p: A => Boolean): Stream[A] =
     foldRight(empty[A])((a, as) =>
       if (p(a)) cons(a, as)
       else as )

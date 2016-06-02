@@ -21,6 +21,7 @@ exportJars := false
 // Build to require/target java8
 
 javacOptions ++= Seq("-source", "1.8", "-target", "1.8", "-Xlint")
+scalacOptions += "-target:jvm-1.8"
 
 /* To force the use of java8 libraries only */
 initialize := {

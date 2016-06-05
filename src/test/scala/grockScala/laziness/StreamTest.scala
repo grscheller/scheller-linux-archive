@@ -2,12 +2,6 @@ package grockScala.test.laziness
 
 import grockScala.laziness._
 
-// For testing covariance and contravariance.
-//   Also, to help familiarize myself with OO aspects of scala.
-abstract class Fruit { print("<yum>") }
-class Apple extends Fruit { print("<crisp>") }
-class Orange extends Fruit { print("<juicy>") }
-
 object StreamTest{
 
   // A really poor implementation for calculating fibonacci numbers.
@@ -391,7 +385,14 @@ object StreamTest{
     print("charStream.toList = ")
     println(charStream.toList)
 
+    // For testing covariance and contravariance.
     println("\nTest variance of #:::, :::#, and flatMaps:\n")
+
+    abstract class Fruit { print("<yum>") }
+    class Apple extends Fruit { print("<crisp>") }  // purposely not case class to 
+    class Orange extends Fruit { print("<juicy>") } // test how well matching works
+    class Pear extends Fruit { print("<eve's real favorite>") }
+    class Kiwi extends Fruit { print("<exotic>") }
 
     println("Make apples stream")
     val apples = Stream(new Apple, new Apple, new Apple)
@@ -417,18 +418,18 @@ object StreamTest{
     val fruit3 = Stream(new Apple, new Orange, new Apple)
     print("\nfruit3.toList = "); println(fruit3.toList)
 
-    def printFruitStream(fruits: Stream[Fruit]) = 
+    def printFruitStreamVersions(fruits: Stream[Fruit]) = 
       for (fruit <- fruits) {
         fruit match {
           case a: Apple => println("An apple")
           case o: Orange => println("An orange")
           case f: Fruit => println("A fruit")
-          case _ => println("Something else")
-        }
-      }
+          case _ => println("Something else")   // If I understand typing
+        }                                       // and variance, nothing
+      }                                         // should ever get here.
 
-    println("\nPrint out fruit in fruit3")
-    printFruitStream(fruit3)
+    println("\nPrint out fruit versions in fruit3")
+    printFruitStreamVersions(fruit3)
 
     // Make some lazy fruit
     println("\nMake some bad lazy fruit\n")
@@ -437,10 +438,33 @@ object StreamTest{
         Stream.cons({print("<2>"); new Apple},
           Stream.cons({print("<3>"); new Apple},
             Stream.cons({print("<4>"); new Orange},
-              Stream.empty))))
+              Stream.cons({print("<5>"); new Kiwi},
+                Stream.empty)))))
 
     println("Print out fruit in badLazyFruit")
-    printFruitStream(badLazyFruit)
+    printFruitStreamVersions(badLazyFruit)
+
+    // Test find
+    println("\nTest find with evaluated fruit:\n")
+
+    val maybeApple = badLazyFruit.find(_ match {
+      case a: Apple => true
+      case _ => false
+    })
+    val maybePear = badLazyFruit.find(_ match {
+      case a: Pear => true
+      case _ => false
+    })
+    val maybeKiwi = badLazyFruit.find(_ match {
+      case a: Kiwi => true
+      case _ => false
+    })
+    val streamOfMaybeFruit = Stream(maybeApple, maybePear, maybeKiwi)
+    printFruitStreamVersions(streamOfMaybeFruit filter (mbF => 
+      mbF match {
+        case Some(_) => true
+        case _ => false
+      }) map (_.get))  // my guess not too idiomatic
 
     println()
 

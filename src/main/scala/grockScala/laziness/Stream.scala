@@ -1,10 +1,24 @@
 package grockScala.laziness
 
-/** Implement a lazy list */
+/** Implement a lazy list
+ *
+ * @author    "Geoffrey Scheller <geoffrey@scheller.com>"
+ * @version   1.0
+ * @since     1.0
+ */
 sealed trait Stream[+A] {
 
   import Stream._
 
+  /** For for expressions
+   *
+   *  This imperitive hook maybe out of place 
+   *  in this bit of functional heaven the book is
+   *  trying to create.
+   *
+   *  I was just curious how to implement for expressions.
+   *
+   */
   def foreach[U](f: A => U): Unit = this match {
     case Cons(h, t) => {f(h()); t().foreach(f)}
     case Empty => ()
@@ -106,7 +120,7 @@ sealed trait Stream[+A] {
 
   /** Append supertype stream */
   def :::#[B>:A](bs: Stream[B]): Stream[B] =
-    foldRight(bs)((a,as) => cons(a, as))
+    foldRight(bs)((a,as) => cons(a, as))          // Book ans way
 
   /** Flatmap (Bind) for Streams */
   def flatMap1[B](f: A => Stream[B]): Stream[B] =
@@ -115,6 +129,10 @@ sealed trait Stream[+A] {
   /** Flatmap (Bind) for Streams */
   def flatMap[B](f: A => Stream[B]): Stream[B] =
     foldRight(empty[B])((a, bs) => f(a) :::# bs)  // Book ans way
+
+  /** Return the first element which matches a predicate */
+  def find(p: A => Boolean) =
+    filter(p).headOption
 
 }
 case object Empty extends Stream[Nothing]

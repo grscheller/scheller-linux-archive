@@ -445,7 +445,7 @@ object StreamTest{
     printFruitStreamVersions(badLazyFruit)
 
     // Test find
-    println("\nTest find with evaluated fruit:\n")
+    println("\nTest find with evaluated fruit:")
 
     val maybeApple = badLazyFruit.find(_ match {
       case a: Apple => true
@@ -464,7 +464,8 @@ object StreamTest{
       mbF match {
         case Some(_) => true
         case _ => false
-      }) map (_.get))  // my guess not too idiomatic
+      }) map (_.get))  // My guess there is a better way to do this.
+                       // Perhaps a filterNone method.
 
     println()
 

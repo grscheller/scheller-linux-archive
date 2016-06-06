@@ -59,8 +59,10 @@ sealed trait Option[+A] {
    *  @note This is tricky, type errasure in scala prevents
    *  deep pattern matching.  I looked up how this was 
    *  done in the Scala standard library for the Option
-   *  abstract class.  Current implementation works, but
-   *  not sure why.
+   *  abstract class.  The sematics is that type A is required
+   *  to be a subtype of an Option of an A supertype, hence
+   *  an option itself.  Current implementation works, but not
+   *  sure what syntaxical is meant by the syntax.
    */
   def flatten[B](implicit ev: A <:< Option[B]): Option[B] =
     this match {

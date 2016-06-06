@@ -161,4 +161,25 @@ object Stream {
   def listToStream[A](l: List[A]): Stream[A] =
     l.foldRight(empty[A])((a, s) => cons(a, s))
 
+  /* Range related operators - just implement for Int
+     for now. */
+
+  class DefaultIncrement(val inc: Int)
+
+  /** Count up from start by inc */
+  def from(start: Int, inc: Int): Stream[Int] =
+    Stream.cons(start, from(start + inc))
+
+  /** Count up from start */
+  def from(start: Int): Stream[Int] =
+    from(start, 1)
+
+  //** Exclusive range with increment */
+  def range(start: Int, stop: Int, inc: Int): Stream[Int] =
+    from(start, inc).takeWhile(_ < stop)
+
+  //** Exclusive range with increment */
+  def range(start: Int, stop: Int): Stream[Int] =
+    range(start, stop, 1)
+
 }

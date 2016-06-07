@@ -1,21 +1,25 @@
+// Using SBT version 0.13 as the build tool.
+// 
+//   Using the sbteclipse-plugin 4.0.0 to generate Eclipse
+//   configuation files.
+//
+//   Configured Eclipse IDE for Java Developers, version Mars-2,
+//   release 4.5.2 with the scala-ide.org Scala Plugin, 
+//   version 4.4.1-v2 for code editing.
+//   
+//   Vim is still my preferred editing tool!
+//   
+
 lazy val commonSettings = Seq(
   organization := "mil.afrl.dtic",
   version := "1.0",
-  scalaVersion := "2.12.0-M4"
+  scalaVersion := "2.11.7"
 )
 
 lazy val root = (project in file(".")).
   settings(commonSettings: _*)
 
-/* If true, this will cause the jar file to be used by run,
-   test, console, and other tasks that use the full classpath.
-
-   There is an sbt plug-in called sbt-assembly
-   that will generate a fat jar with everthing including
-   the kitchen sink that can be plopped anywhere where there
-   is a jvm and run.
-
-*/
+// Put build in Jar files if true.
 exportJars := false
 
 // Tell scaladoc to process author tags

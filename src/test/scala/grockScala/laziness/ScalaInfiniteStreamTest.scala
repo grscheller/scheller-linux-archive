@@ -23,9 +23,8 @@ object ScalaInfiniteStreamTest{
    */
   def fibs(): Stream[Long] = fibStream(0L, 1L)
 
-  def fibStream(f0: Long, f1: Long): Stream[Long] = {
+  def fibStream(f0: Long, f1: Long): Stream[Long] =
     Stream.cons(f0, fibStream(f1, f0 + f1))
-  }
 
   def main(args: Array[String]): Unit = {
 

@@ -161,14 +161,27 @@ object Stream {
   def listToStream[A](l: List[A]): Stream[A] =
     l.foldRight(empty[A])((a, s) => cons(a, s))
 
+  /** Take an initial state and generate a stream
+   *  by interatively applying a function which can fail.
+   *
+   *  
+   */
+  def unfold[A,S](s: S)(f: S => Option[(A, S)]): Stream[A] =
+    f(s) flatMap (p => Some(cons(p._1, unfold(p._2)(f)))) getOrElse empty
+
+  /** Books version of my unfold function */
+  def unfold1[A,S](s: S)(f: S => Option[(A, S)]): Stream[A] =
+    f(s) match {
+      case Some((a, s)) => cons(a, unfold1(s)(f))
+      case None => empty
+    }
+
   /* Range related operators - just implement for Int
      for now. */
 
-  class DefaultIncrement(val inc: Int)
-
   /** Count up from start by inc */
   def from(start: Int, inc: Int): Stream[Int] =
-    Stream.cons(start, from(start + inc))
+    cons(start, from(start + inc))
 
   /** Count up from start */
   def from(start: Int): Stream[Int] =

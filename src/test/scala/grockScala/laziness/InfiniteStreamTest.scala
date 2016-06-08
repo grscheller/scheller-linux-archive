@@ -45,8 +45,27 @@ object InfiniteStreamTest{
    */
   def fibs(): Stream[Long] = fibStream(0L, 1L)
 
-  def fibStream(f0: Long, f1: Long): Stream[Long] = {
+  def fibStream(f0: Long, f1: Long): Stream[Long] =
     Stream.cons(f0, fibStream(f1, f0 + f1))
+
+  def fibs_unfold(): Stream[Long] = {
+    def f(fp: (Long, Long)) = {
+      val f1 = fp._1
+      val f2 = fp._2
+      if (f1 >= 0L) Some((f1, (f2, f1 + f2)))
+      else None
+    }
+    Stream.unfold((0L, 1L))(f)
+  }
+
+  def fibs_unfold1(): Stream[Long] = {
+    def f(fp: (Long, Long)) = {
+      val f1 = fp._1
+      val f2 = fp._2
+      if (f1 >= 0L) Some((f1, (f2, f1 + f2)))
+      else None
+    }
+    Stream.unfold1((0L, 1L))(f)
   }
 
   def main(args: Array[String]): Unit = {
@@ -140,6 +159,13 @@ object InfiniteStreamTest{
 
     println("\nFibonaccii numbers run negative too:")
     for (fib <- fibStream(34, -21).take(20)) println(fib)
+
+    // Compare my unfold method with books unfold method
+
+    println("\nCompare two unfold implementations -")
+    println("First with Fibonacci streams:")
+    println("fibs_unfold.toList =  " + fibs_unfold.toList + "\n")
+    println("fibs_unfold1.toList = " + fibs_unfold1.toList + "\n")
 
     println()
 

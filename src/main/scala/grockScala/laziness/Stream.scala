@@ -62,9 +62,9 @@ sealed trait Stream[+A] {
       case _ => Empty
     }
 
-  def dropWhile1(p: A => Boolean): Stream[A] =
+  def dropWhile(p: A => Boolean): Stream[A] =
     this match {
-      case Cons(h, t) if p(h()) => t().dropWhile1(p)
+      case Cons(h, t) if p(h()) => t().dropWhile(p)
       case _ => this
     }
 
@@ -90,11 +90,6 @@ sealed trait Stream[+A] {
     foldRight(empty[A])((a, b) => 
       if (p(a)) cons(a, b)
       else Empty)
-
-  def dropWhile(p: A => Boolean): Stream[A] =
-    foldRight(empty[A])((a, b) => 
-      if (p(a)) b
-      else this)
 
   def headOption: Option[A] = 
     foldRight(None: Option[A])((a, _) => Some(a))
@@ -162,8 +157,15 @@ object Stream {
     l.foldRight(empty[A])((a, s) => cons(a, s))
 
   /** Take an initial state and generate a stream
-   *  by interatively applying a function which can fail.
+   *  by repeatedly applying a function, which can
+   *  fail, to the current state.
    *
+   *  @param s the initial state
+   *  @param f takes a state and returns an Option to
+   *         a value and state Pair
+   *  @return A Stream of values
+   *  @note The Option is used to determine when to
+   *        terminate the stream, if ever.
    *  
    */
   def unfold[A,S](s: S)(f: S => Option[(A, S)]): Stream[A] =
@@ -181,7 +183,7 @@ object Stream {
 
   /** Count up from start by inc */
   def from(start: Int, inc: Int): Stream[Int] =
-    cons(start, from(start + inc))
+    cons(start, from(start + inc, inc))
 
   /** Count up from start */
   def from(start: Int): Stream[Int] =
@@ -189,10 +191,24 @@ object Stream {
 
   //** Exclusive range with increment */
   def range(start: Int, stop: Int, inc: Int): Stream[Int] =
-    from(start, inc).takeWhile(_ < stop)
+    if (stop >= start)
+      from(start, inc).takeWhile(_ < stop)
+    else
+      from(start, inc).takeWhile(_ > stop)
 
-  //** Exclusive range with increment */
+  //** Exclusive range */
   def range(start: Int, stop: Int): Stream[Int] =
-    range(start, stop, 1)
+    if (stop >= start)
+      range(start, stop, 1)
+    else
+      range(start, stop, -1)
+
+  /** Count up from start using unfold */
+  def fromu(start: Int): Stream[Int] =
+    unfold(start)(s => Some((s, s + 1)))
+
+  /** Count up from start using unfold1 */
+  def fromu1(start: Int): Stream[Int] =
+    unfold1(start)(s => Some((s, s + 1)))
 
 }

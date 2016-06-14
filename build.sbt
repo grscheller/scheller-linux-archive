@@ -13,7 +13,7 @@
 lazy val commonSettings = Seq(
   organization := "mil.afrl.dtic",
   version := "1.0",
-  scalaVersion := "2.11.7"
+  scalaVersion := "2.12.0-M4"
 )
 
 lazy val root = (project in file(".")).
@@ -21,6 +21,9 @@ lazy val root = (project in file(".")).
 
 // Put build in Jar files if true.
 exportJars := false
+
+// Run scalac with deprecation flag
+scalacOptions += "-deprecation"
 
 // Tell scaladoc to process author tags
 scalacOptions in (Compile,doc) += "-author"

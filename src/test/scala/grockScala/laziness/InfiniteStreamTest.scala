@@ -139,9 +139,7 @@ object InfiniteStreamTest{
     print("constant(9).take(800000).drop(4200).take(7).toList = ")
     println(constant(9).take(800000).drop(4200).take(7).toList)
 
-    // Test from method
-
-    println("\nTest from methods:")
+    // Test from and range methods
 
     val count42to52 = Stream.from(42).takeWhile(_ < 53)
     println("count42to52.toList = " + count42to52.toList)
@@ -150,7 +148,15 @@ object InfiniteStreamTest{
     var sumAccm = 0
     for (nn <- oneTo1000) sumAccm += nn
     println("\nSum 1 to 1000 is " + sumAccm)
-    println("Sum 1 to 1000 is " + oneTo1000.foldRight(0)(_ + _))
+    println("Sum 1 to 1000 is " + oneTo1000.foldRight(0)(_ + _) + "\n")
+
+    val countDown100 = Stream.range(100, -1)
+    val mySin = for {
+      ii <- countDown100
+      if ii < 51
+      x = math.Pi*ii/100.0
+    } yield (x, math.sin(x))
+    for ((x, y) <- mySin) printf("sin(%f) = %f\n", x, y)
     
     // Test Fibonaccii Stream
     println("\nPrint the first 100 Fibonaccii numbers:")
@@ -163,9 +169,18 @@ object InfiniteStreamTest{
     // Compare my unfold method with books unfold method
 
     println("\nCompare two unfold implementations -")
+
     println("First with Fibonacci streams:")
     println("fibs_unfold.toList =  " + fibs_unfold.toList + "\n")
     println("fibs_unfold1.toList = " + fibs_unfold1.toList + "\n")
+
+    print("Next with from:")
+    print("\nStream.from(-1000).dropWhile(_ < 600).take(3).toList = ")
+    println(Stream.from(-1000).dropWhile(_ < 600).take(3).toList)
+    print("\nStream.fromu(-1000).dropWhile(_ < 600).take(3).toList = ")
+    println(Stream.fromu(-1000).dropWhile(_ < 600).take(3).toList)
+    print("\nStream.fromu1(-1000).dropWhile(_ < 600).take(3).toList = ")
+    println(Stream.fromu1(-1000).dropWhile(_ < 600).take(3).toList)
 
     println()
 

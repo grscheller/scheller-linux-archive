@@ -90,15 +90,15 @@ object StreamTest{
     print("putz.toList = "); println(putz.toList)
     print("putz.toList = "); println(putz.toList)
 
-    // Test takeWhile1 and dropWhile1 method
+    // Test takeWhile1 and dropWhile method
 
-    println("\nTest dropWhile1 and takeWhile1:\n")
+    println("\nTest dropWhile and takeWhile1:\n")
 
     val oneToTen = Stream(1,2,3,4,5,6,7,8,9,10)
     print("oneToTen.takeWhile1 (_ < 4).toList = ");
     println(oneToTen.takeWhile1(_ < 4).toList)
-    print("oneToTen.dropWhile1(_ < 5).takeWhile1(_ < 8).toList = ");
-    println(oneToTen.dropWhile1(_ < 5).takeWhile1(_ < 8).toList)
+    print("oneToTen.dropWhile(_ < 5).takeWhile1(_ < 8).toList = ");
+    println(oneToTen.dropWhile(_ < 5).takeWhile1(_ < 8).toList)
 
     val bad1To10 =
       Stream.cons({print("<1>"); 1},
@@ -126,10 +126,10 @@ object StreamTest{
     println("                      Stream.empty))))))))))")
 
     print("\nset badPlan = ")
-    println("bad1To10.dropWhile1(_ < 3).takeWhile1(_ < 8)")
+    println("bad1To10.dropWhile(_ < 3).takeWhile1(_ < 8)")
 
     println("Make badPlan")
-    val badPlan = bad1To10.dropWhile1(_ < 3).takeWhile1(_ < 8)
+    val badPlan = bad1To10.dropWhile(_ < 3).takeWhile1(_ < 8)
     println("\nFinished making badPlan")
 
     // If I imported the Traversable trait, 

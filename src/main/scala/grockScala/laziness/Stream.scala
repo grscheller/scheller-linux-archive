@@ -16,7 +16,20 @@ sealed trait Stream[+A] {
    *  in this bit of functional heaven the book is
    *  trying to create.
    *
-   *  I was just curious how to implement for expressions.
+   *  To fully implement for comprehensions and expressions,
+   *  you need to implement all the members in the trait
+   *  scala.collection.generic.FilterMonadic.
+   *
+   *  These are: flatMap and map (for comprehensions), 
+   *             foreach (for for expressions), and
+   *             withFilter (to enable guards).
+   *
+   *  If withFilter is not defined, the compiler will use the
+   *  filter method for guards in for comprehensions/expresions
+   *  but complain about it. Filter creates an intermediate data
+   *  structure.  An actual withFilter method wraps the monadic
+   *  object in a withFilter object with flatMap, map, and foreach
+   *  methods which lazily filters out the undesired elements.
    *
    */
   def foreach[U](f: A => U): Unit = this match {
@@ -97,8 +110,16 @@ sealed trait Stream[+A] {
   def toList: List[A] =
     foldRight(Nil: List[A])((a, as) => a :: as.toList)
 
-  def map[B](f: A => B): Stream[B] =
+  def mapFR[B](f: A => B): Stream[B] =
     foldRight(empty[B])((a, bs) => cons(f(a), bs))
+
+  def map[B](f: A => B): Stream[B] = {
+    def uf(s: Stream[A]): Option[(B, Stream[A])] = s match {
+      case Cons(a, as) => Some( (f(a()), as()) )
+      case Empty => None
+    }
+    unfold(this)(uf)
+  }
 
   def filter(p: A => Boolean): Stream[A] =
     foldRight(empty[A])((a, as) =>

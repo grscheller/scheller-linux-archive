@@ -39,6 +39,22 @@ object InfiniteStreamTest{
     tail
   }
 
+  // Using unfold method for constant
+  def constantU[A](a: A): Stream[A] = 
+    Stream.unfold(a)((a0: A) => Some((a0, a0)))
+
+  // Using unfold method for constant - Book version
+  def constantU_Book[A](a: A): Stream[A] = 
+    Stream.unfold(a)(_ => Some((a, a)))
+
+  // Using unfold method for constant - Testing Syntax
+  def constantU_Book_version2[A](a: A): Stream[A] = 
+    Stream.unfold(a) {case _ => Some((a, a))}
+
+  // Using unfold method for constant - Testing Syntax
+  def constantU_Book_version3[A](a: A): Stream[A] = 
+    Stream.unfold(a) { _ => Some((a, a)) }
+
   /** Create an infinite stream of the Fibonaccii numbers
    *
    *    Make them Longs, so they are more useful.
@@ -47,16 +63,6 @@ object InfiniteStreamTest{
 
   def fibStream(f0: Long, f1: Long): Stream[Long] =
     Stream.cons(f0, fibStream(f1, f0 + f1))
-
-  def fibs_unfold(): Stream[Long] = {
-    def f(fp: (Long, Long)) = {
-      val f1 = fp._1
-      val f2 = fp._2
-      if (f1 >= 0L) Some((f1, (f2, f1 + f2)))
-      else None
-    }
-    Stream.unfold((0L, 1L))(f)
-  }
 
   def fibs_unfold1(): Stream[Long] = {
     def f(fp: (Long, Long)) = {
@@ -67,6 +73,15 @@ object InfiniteStreamTest{
     }
     Stream.unfold1((0L, 1L))(f)
   }
+
+  // Similar to above (if I used a case statement instead of the
+  // if statement), except using a syntactic shortcut Scala
+  // provides when you create a variable just to match on it.
+  def fibs_unfold(): Stream[Long] =
+    Stream.unfold((0L, 1L)) {
+      case (f1, f2) if f1 >= 0 => Some((f1, (f2, f1 + f2)))
+      case _ => None
+    }
 
   def main(args: Array[String]): Unit = {
 
@@ -127,17 +142,21 @@ object InfiniteStreamTest{
     // Test constant method
 
     println("\nTest constant methods:")
-    print("constant1(7).drop(42).take(9).toList = ")
-    println(constant1(7).drop(42).take(9).toList)
-    print("constant(9).drop(42).take(7).toList = ")
-    println(constant(9).drop(42).take(7).toList)
+    print("constant1(7).drop(42).take(7).toList = ")
+    println(constant1(7).drop(42).take(7).toList)
+    print("constant(8).drop(42).take(8).toList = ")
+    println(constant(8).drop(42).take(8).toList)
+    print("constantU(9).drop(42).take(9).toList = ")
+    println(constantU(9).drop(42).take(9).toList)
     // The drop is more prone to make expression sensitive to
     // stackoverflow than the take because all the values need
     // to actually be dropped, but not taken.
-    print("constant1(7).take(800000).drop(4200).take(9).toList = ")
-    println(constant1(7).take(800000).drop(4200).take(9).toList)
-    print("constant(9).take(800000).drop(4200).take(7).toList = ")
-    println(constant(9).take(800000).drop(4200).take(7).toList)
+    print("constant1(7).take(800000).drop(4200).take(7).toList = ")
+    println(constant1(7).take(800000).drop(4200).take(7).toList)
+    print("constant(8).take(800000).drop(4200).take(8).toList = ")
+    println(constant(8).take(800000).drop(4200).take(8).toList)
+    print("constantU(9).take(800000).drop(4200).take(9).toList = ")
+    println(constantU(9).take(800000).drop(4200).take(9).toList)
 
     // Test from and range methods
 
@@ -175,12 +194,27 @@ object InfiniteStreamTest{
     println("fibs_unfold1.toList = " + fibs_unfold1.toList + "\n")
 
     print("Next with from:")
-    print("\nStream.from(-1000).dropWhile(_ < 600).take(3).toList = ")
-    println(Stream.from(-1000).dropWhile(_ < 600).take(3).toList)
-    print("\nStream.fromu(-1000).dropWhile(_ < 600).take(3).toList = ")
-    println(Stream.fromu(-1000).dropWhile(_ < 600).take(3).toList)
-    print("\nStream.fromu1(-1000).dropWhile(_ < 600).take(3).toList = ")
-    println(Stream.fromu1(-1000).dropWhile(_ < 600).take(3).toList)
+    print("\nStream.from(-2000).dropWhile(_ < 1600).take(3).toList = ")
+    println(Stream.from(-2000).dropWhile(_ < 1600).take(3).toList)
+    print("\nStream.fromu(-2000).dropWhile(_ < 1600).take(3).toList = ")
+    println(Stream.fromu(-2000).dropWhile(_ < 1600).take(3).toList)
+    print("\nStream.fromu1(-2000).dropWhile(_ < 1600).take(3).toList = ")
+    println(Stream.fromu1(-2000).dropWhile(_ < 1600).take(3).toList)
+
+    // Test map and mapFR directly
+    val cycle7UF = Stream.from(0) map (_ % 7)
+    val cycle11FR = Stream.from(0) mapFR (_ % 11)
+
+    println("\nTest map and mapFR directly:")
+    print("(cycle7UF take 120 drop 100).toList = ")
+    println((cycle7UF take 120 drop 100).toList)
+    print("(cycle11FR take 120 drop 100).toList = ")
+    println((cycle11FR take 120 drop 100).toList)
+
+    print("(cycle7UF take 20020 drop 20000).toList = ")
+    println((cycle7UF take 20020 drop 20000).toList)
+    print("(cycle11FR take 20020 drop 20000).toList = ")
+    println((cycle11FR take 20020 drop 20000).toList)
 
     println()
 

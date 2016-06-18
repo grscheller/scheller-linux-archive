@@ -96,6 +96,11 @@ object ScalaInfiniteStreamTest{
     println("\nFibonaccii numbers run negative too:")
     for (fib <- fibStream(34, -21).take(20)) println(fib)
 
+    /* Only could atart with -3000 reliably, -3700 intermitantly
+       with grockscala versions before stack overflow. */
+    print("\nCompare grockscala.laziness.{from,dropWhile}:")
+    print("\nStream.from(-20000).dropWhile(_ < 1600).take(3).toList = ")
+    println(Stream.from(-20000).dropWhile(_ < 1600).take(3).toList)
     println()
 
   }

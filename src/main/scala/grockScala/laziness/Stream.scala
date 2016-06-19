@@ -10,7 +10,7 @@ sealed trait Stream[+A] {
 
   import Stream._
 
-  /** For for expressions
+  /*  For for expressions
    *
    *  This imperitive hook maybe out of place 
    *  in this bit of functional heaven the book is
@@ -25,11 +25,11 @@ sealed trait Stream[+A] {
    *             withFilter (to enable guards).
    *
    *  If withFilter is not defined, the compiler will use the
-   *  filter method for guards in for comprehensions/expresions
-   *  but complain about it. Filter creates an intermediate data
-   *  structure.  An actual withFilter method wraps the monadic
-   *  object in a withFilter object with flatMap, map, and foreach
-   *  methods which lazily filters out the undesired elements.
+   *  filter method for guards in its place but will complain
+   *  about it. Filter creates an intermediate data structure.  
+   *  An actual withFilter method wraps the monad in a withFilter
+   *  object lazily filters out the undesired elements from the 
+   *  original flatMap, map, and foreach method calls.
    *
    */
   def foreach[U](f: A => U): Unit = this match {
@@ -51,8 +51,8 @@ sealed trait Stream[+A] {
     tailOption getOrElse (empty[A])
 
   def toList1: List[A] = this match {
-    case Empty => Nil
     case Cons(h, t) => h() :: t().toList1
+    case Empty => Nil
   }
 
   def drop(n: Int): Stream[A] = 
@@ -62,23 +62,23 @@ sealed trait Stream[+A] {
       case _ => Empty
     }
 
+  def dropWhile(p: A => Boolean): Stream[A] =
+    this match {
+      case Cons(h, t) if p(h()) => t().dropWhile(p)
+      case _ => this
+    }
+
   def take(n: Int): Stream[A] = 
     if (n < 1) Empty
     else this match {
-      case Cons(h, t) => Cons(h, () => t().take(n-1))
+      case Cons(h, t) => cons(h(), t().take(n-1))
       case _ => Empty
     }
 
   def takeWhile1(p: A => Boolean): Stream[A] =
     this match {
-      case Cons(h, t) if p(h()) => Cons(h, () => t().takeWhile1(p))
+      case Cons(h, t) if p(h()) => cons(h(), t().takeWhile1(p))
       case _ => Empty
-    }
-
-  def dropWhile(p: A => Boolean): Stream[A] =
-    this match {
-      case Cons(h, t) if p(h()) => t().dropWhile(p)
-      case _ => this
     }
 
   def exists1(p: A => Boolean): Boolean =

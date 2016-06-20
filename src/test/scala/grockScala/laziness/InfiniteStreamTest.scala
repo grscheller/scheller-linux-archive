@@ -216,6 +216,38 @@ object InfiniteStreamTest{
     print("(cycle11FR take 20020 drop 20000).toList = ")
     println((cycle11FR take 20020 drop 20000).toList)
 
+    // Test find
+    println("\nTest find method:")
+    print("Stream.from(43).find(x => x > 1000 && ")
+    print("x % 17 == 0 && x % 19 == 0) = ")
+    println(Stream.from(42).find(x => x > 1000 && x % 17 == 0 && x % 19 == 0))
+
+    print("Stream.range(42,2042).find(x => x % 131 == 0 && ")
+    print("x % 17 == 0 && x % 19 == 0) = ")
+    println(Stream.range(42, 2042) find (x => x % 131 == 0 && 
+      x % 17 == 0 && x % 19 == 0))
+
+    // Test zipWith and zipAll
+    println("\nTest zipWith method:")
+    val func = (x: Int, y: Int) => x + 2*y
+
+    print("Stream.range(0,100,10).zipWith(Stream.range(1,6))(func).toList = ")
+    println(Stream.range(0,100,10).zipWith(Stream.range(1,6))(func).toList)
+
+    print("Stream.empty[Int].zipWith(Stream.range(1,6))(func).toList = ")
+    println(Stream.empty[Int].zipWith(Stream.range(1,6))(func).toList)
+
+    print("Stream.range(0,100,10).zipWith(Stream.empty[Int])(func).toList = ")
+    println(Stream.range(0,100,10).zipWith(Stream.empty[Int])(func).toList)
+
+    print("Stream.empty[Int].zipWith(Stream.empty[Int])(func).toList = ")
+    println(Stream.empty[Int].zipWith(Stream.empty[Int])(func).toList)
+
+    println("\nTest zipAll method:")
+
+    print("(Stream.range(0,100,10) zipAll Stream.range(1,6)).toList = ")
+    println((Stream.range(0,100,10) zipAll Stream.range(1,6)).toList)
+
     println()
 
   }

@@ -144,12 +144,32 @@ sealed trait Stream[+A] {
 
   /** Flatmap (Bind) for Streams */
   def flatMap[B](f: A => Stream[B]): Stream[B] =
-    foldRight(empty[B])((a, bs) => f(a) :::# bs)  // Book ans way
+    foldRight(empty[B])((a, bs) => f(a) :::# bs)  // Book answer way
 
   /** Return the first element which matches a predicate */
   def find(p: A => Boolean) =
     filter(p).headOption
 
+  def zipWith[B,C](that: Stream[B])(f: (A, B) => C): Stream[C] =
+    unfold((this, that)) {
+      case (Cons(a, as), Cons(b, bs)) =>
+        Some( (f(a(), b()), (as(), bs())) )
+      case _ =>
+        None
+    }
+
+  def zipAll[B](that: Stream[B]): Stream[(Option[A], Option[B])] =
+    unfold((this, that)) {
+      case (Cons(a, as), Cons(b, bs)) =>
+        Some( (Some(a()), Some(b())), (as(), bs()) )
+      case (Empty, Cons(b, bs)) =>
+        Some( (None, Some(b())), (empty, bs()) )
+      case (Cons(a, as), Empty) =>
+        Some( (Some(a()), None), (as(), empty) )
+      case _ =>
+        None
+    }
+    
 }
 case object Empty extends Stream[Nothing]
 case class Cons[+A](h: () => A, t: () => Stream[A]) extends Stream[A]

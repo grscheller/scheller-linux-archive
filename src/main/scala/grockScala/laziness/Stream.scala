@@ -28,8 +28,8 @@ sealed trait Stream[+A] {
    *  filter method for guards in its place but will complain
    *  about it. Filter creates an intermediate data structure.  
    *  An actual withFilter method wraps the monad in a withFilter
-   *  object lazily filters out the undesired elements from the 
-   *  original flatMap, map, and foreach method calls.
+   *  object which lazily filters out the undesired elements from
+   *  the original flatMap, map, and foreach method calls.
    *
    */
   def foreach[U](f: A => U): Unit = this match {
@@ -87,6 +87,19 @@ sealed trait Stream[+A] {
       case _ => false
     }
 
+  // 
+  /** Reduce a stream right to left with a function.
+   *
+   *  @param z initial value of the accumulator (value
+   *           for empty stream)
+   *  @param f folding function applied to stream
+   *  @return A Stream of values
+   *  @note Return value generated from stream elements
+   *        right to left.
+   *  @note Second parameter to f not strict, allows for
+   *        early termination from the recursion.
+   *  
+   */
   def foldRight[B](z: => B)(f: (A, => B) => B): B =
     this match {
       case Cons(h, t) => f(h(), t().foldRight(z)(f))
@@ -153,23 +166,56 @@ sealed trait Stream[+A] {
   def zipWith[B,C](that: Stream[B])(f: (A, B) => C): Stream[C] =
     unfold((this, that)) {
       case (Cons(a, as), Cons(b, bs)) =>
-        Some( (f(a(), b()), (as(), bs())) )
+        Some((f(a(), b()), (as(), bs())))
       case _ =>
         None
     }
 
+  def zip[B](that: Stream[B]): Stream[(A,B)] =
+    zipWith(that)((_,_))
+
   def zipAll[B](that: Stream[B]): Stream[(Option[A], Option[B])] =
     unfold((this, that)) {
       case (Cons(a, as), Cons(b, bs)) =>
-        Some( (Some(a()), Some(b())), (as(), bs()) )
+        Some((Some(a()), Some(b())), (as(), bs()))
       case (Empty, Cons(b, bs)) =>
-        Some( (None, Some(b())), (empty, bs()) )
+        Some((None, Some(b())), (empty, bs()))
       case (Cons(a, as), Empty) =>
-        Some( (Some(a()), None), (as(), empty) )
+        Some((Some(a()), None), (as(), empty))
       case _ =>
         None
     }
+
+  // Had to add "final" otherwise compiler would not allow tail
+  // recursion optimization due to the possibility of overiding
+  // in a derived class. (Once done, annotation not needed - but
+  // I needed it to diagnose the problem.)
+  @annotation.tailrec
+  final def startsWith[B>:A](prefix: Stream[B]): Boolean =
+    (this, prefix) match {
+      case (Cons(a, as), Cons(b, bs)) =>
+        if (a() == b()) as().startsWith(bs())
+        else false
+      case (_, Empty) =>
+        true
+      case (Empty, _) =>
+        false
+    }
+
+  // Not stacksafe (due to foldRight), but pretty.
+  // FAILS: when prefix stream is longer than stream,
+  def startsWith2[B>:A](prefix: Stream[B]): Boolean =
+    zipWith(prefix)(_ == _).foldRight(true)(_ && _)
+
+  // Book answer version - also not stacksafe
+  def startsWith3[B>:A](prefix: Stream[B]): Boolean =
+    zipAll(prefix).takeWhile(_._2.nonEmpty) forAll {
+      case (h1, h2) => h1 == h2    // Compares Options
+    }
+
+//  def hasSubsequence1(sub: List[A]): Boolean =
     
+
 }
 case object Empty extends Stream[Nothing]
 case class Cons[+A](h: () => A, t: () => Stream[A]) extends Stream[A]
@@ -207,6 +253,7 @@ object Stream {
    *  @return A Stream of values
    *  @note The Option is used to determine when to
    *        terminate the stream, if ever.
+   *  @note Elements in stream are generated left to right.
    *  
    */
   def unfold[A,S](s: S)(f: S => Option[(A, S)]): Stream[A] =

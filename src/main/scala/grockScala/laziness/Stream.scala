@@ -203,7 +203,9 @@ sealed trait Stream[+A] {
     }
 
   // Not stacksafe (due to foldRight), but pretty.
-  // FAILS: when prefix stream is longer than stream,
+  // FAILS: When prefix stream is longer than stream,
+  //        really need zipAll, book answers also implements
+  //        a zipAllWith.
   def startsWith2[B>:A](prefix: Stream[B]): Boolean =
     zipWith(prefix)(_ == _).foldRight(true)(_ && _)
 
@@ -213,8 +215,26 @@ sealed trait Stream[+A] {
       case (h1, h2) => h1 == h2    // Compares Options
     }
 
-//  def hasSubsequence1(sub: List[A]): Boolean =
-    
+  // Simple but final empty list handled
+  // like an edge case in imperative code.
+  def tails1(): Stream[Stream[A]] =
+    unfold(this)((s: Stream[A]) => s match {
+      case Cons(_, rest) => Some((s, rest()))
+      case _ => None
+    }) #::: Stream(Empty)
+
+  // State now handled as an Option[Stream[A]] so
+  // that I have a state to represent no tail.
+  def tails(): Stream[Stream[A]] =
+    unfold(Some(this): Option[Stream[A]])(
+      (os: Option[Stream[A]]) => os flatMap {
+        case Cons(_, rest) => Some((os.get, Some(rest())))
+        case Empty => Some((os.get, None))
+      }
+    )
+
+  def hasSubsequence[B](sub: Stream[B]): Boolean =
+    tails exists (_ startsWith sub)
 
 }
 case object Empty extends Stream[Nothing]
@@ -257,7 +277,7 @@ object Stream {
    *  
    */
   def unfold[A,S](s: S)(f: S => Option[(A, S)]): Stream[A] =
-    f(s) flatMap (p => Some(cons(p._1, unfold(p._2)(f)))) getOrElse empty
+    f(s) map (p => cons(p._1, unfold(p._2)(f))) getOrElse empty
 
   /** Books version of my unfold function */
   def unfold1[A,S](s: S)(f: S => Option[(A, S)]): Stream[A] =

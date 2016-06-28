@@ -58,6 +58,38 @@ object HasSubsequenceStreamTest{
     print("Stream(2,4,6,8) startsWith3 Stream(2,4,6,8,10,12)) = ")
     println(Stream(2,4,6,8) startsWith3 Stream(2,4,6,8,10,12))
 
+    // Test tails1 and tails methods
+
+    println("\nTest tails1 and tails methods")
+
+    println("\nStream(1,2,3,4).tails1 map (_.toList) foreach println = ")
+    Stream(1,2,3,4).tails1 map (_.toList) foreach println
+
+    println("\nStream[Double]().tails1 map (_.toList) foreach println = ")
+    Stream[Double]().tails1 map (_.toList) foreach println
+
+    println("\nStream(1,2,3,4).tails map (_.toList) foreach println = ")
+    Stream(1,2,3,4).tails map (_.toList) foreach println
+
+    println("\nStream[Double]().tails map (_.toList) foreach println = ")
+    Stream[Double]().tails map (_.toList) foreach println
+
+    // Test hasSubsequence
+
+    println("\nTest hasSubsequence method")
+
+    print("\nStream.range(1,2000) hasSubsequence ")
+    print("Stream.range(1875, 1889) = ")
+    println(Stream.range(1, 2000) hasSubsequence Stream.range(1875, 1889))
+
+    print("\nStream.range(1,2000) hasSubsequence ")
+    print("Stream(5,4,3,2,1) = ")
+    println(Stream.range(1, 2000) hasSubsequence Stream(5,4,3,2,1))
+
+    print("\nStream.range(1,2000) hasSubsequence ")
+    print("Stream(1999,2000,2001) = ")
+    println(Stream.range(1, 2000) hasSubsequence Stream(1999,2000,2001))
+
     println()
 
   }

@@ -215,7 +215,7 @@ sealed trait Stream[+A] {
       case (h1, h2) => h1 == h2    // Compares Options
     }
 
-  // Simple but final empty list handled
+  // Simple, but final empty list handled
   // like an edge case in imperative code.
   def tails1(): Stream[Stream[A]] =
     unfold(this)((s: Stream[A]) => s match {

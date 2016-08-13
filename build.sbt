@@ -11,9 +11,9 @@
 //   
 
 lazy val commonSettings = Seq(
-  organization := "mil.afrl.dtic",
-  version := "1.0",
-  scalaVersion := "2.12.0-M4"
+  organization := "geoffrey.scheller.com",
+  version := "1.1",
+  scalaVersion := "2.12.0-M5"
 )
 
 lazy val root = (project in file(".")).

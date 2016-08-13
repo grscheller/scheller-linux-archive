@@ -11,7 +11,7 @@ object StreamTest{
 
   def main(args: Array[String]): Unit = {
 
-    // Test constructors
+    // Test the "constructor" in the companion object
 
     val foo = Stream(2.1, 4.2, 5.3, 1.4, 8.5)
     val baz = Stream(42)

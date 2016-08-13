@@ -39,10 +39,10 @@ object HasSubsequenceStreamTest{
 
     print("\nStream.from(0) startsWith Stream.range(0,50000)) = ")
     println(Stream.from(0) startsWith Stream.range(0,50000))
-    print("Stream.from(0) startsWith2 Stream.range(0,1100)) = ")
-    println(Stream.from(0) startsWith2 Stream.range(0,1100))
-    print("Stream.from(0) startsWith3 Stream.range(0,1100)) = ")
-    println(Stream.from(0) startsWith3 Stream.range(0,1100))
+    print("Stream.from(0) startsWith2 Stream.range(0,900)) = ")
+    println(Stream.from(0) startsWith2 Stream.range(0,900))
+    print("Stream.from(0) startsWith3 Stream.range(0,900)) = ")
+    println(Stream.from(0) startsWith3 Stream.range(0,900))
 
     print("\nStream.from(0) startsWith Stream.range(0,500)#:::Stream(3,2,1) = ")
     println(Stream.from(0) startsWith Stream.range(0,500)#:::Stream(3,2,1))
@@ -78,17 +78,17 @@ object HasSubsequenceStreamTest{
 
     println("\nTest hasSubsequence method")
 
-    print("\nStream.range(1,2000) hasSubsequence ")
-    print("Stream.range(1875, 1889) = ")
-    println(Stream.range(1, 2000) hasSubsequence Stream.range(1875, 1889))
+    print("\nStream.range(1,1000) hasSubsequence ")
+    print("Stream.range(875, 889) = ")
+    println(Stream.range(1, 1000) hasSubsequence Stream.range(875, 889))
 
-    print("\nStream.range(1,2000) hasSubsequence ")
+    print("\nStream.range(1,1000) hasSubsequence ")
     print("Stream(5,4,3,2,1) = ")
-    println(Stream.range(1, 2000) hasSubsequence Stream(5,4,3,2,1))
+    println(Stream.range(1, 1000) hasSubsequence Stream(5,4,3,2,1))
 
-    print("\nStream.range(1,2000) hasSubsequence ")
-    print("Stream(1999,2000,2001) = ")
-    println(Stream.range(1, 2000) hasSubsequence Stream(1999,2000,2001))
+    print("\nStream.range(1,1000) hasSubsequence ")
+    print("Stream(999,1000,1001) = ")
+    println(Stream.range(1, 1000) hasSubsequence Stream(999,1000,1001))
 
     println()
 

@@ -158,10 +158,26 @@ object InfiniteStreamTest{
     print("constantU(9).take(800000).drop(4200).take(9).toList = ")
     println(constantU(9).take(800000).drop(4200).take(9).toList)
 
+    // Test constant methods I moved to Stream companion object
+
+    println("\nTest constant methods:")
+    print("Stream.const1(7).drop(42).take(7).toList = ")
+    println(Stream.const1(7).drop(42).take(7).toList)
+    print("Stream.const(8).drop(42).take(8).toList = ")
+    println(Stream.const(8).drop(42).take(8).toList)
+    print("Stream.constU(9).drop(42).take(9).toList = ")
+    println(Stream.constU(9).drop(42).take(9).toList)
+    print("Stream.const1(7).take(800000).drop(4200).take(7).toList = ")
+    println(Stream.const1(7).take(800000).drop(4200).take(7).toList)
+    print("Stream.const(8).take(800000).drop(4200).take(8).toList = ")
+    println(Stream.const(8).take(800000).drop(4200).take(8).toList)
+    print("Stream.constU(9).take(800000).drop(4200).take(9).toList = ")
+    println(Stream.constU(9).take(800000).drop(4200).take(9).toList)
+
     // Test from and range methods
 
     val count42to52 = Stream.from(42).takeWhile(_ < 53)
-    println("count42to52.toList = " + count42to52.toList)
+    println("\ncount42to52.toList = " + count42to52.toList)
 
     val oneTo1000 = Stream.from(1).takeWhile(_ <= 1000)
     var sumAccm = 0

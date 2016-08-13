@@ -210,9 +210,10 @@ sealed trait Stream[+A] {
     zipWith(prefix)(_ == _).foldRight(true)(_ && _)
 
   // Book answer version - also not stacksafe
+  //   Sugared match statement below compares Options.
   def startsWith3[B>:A](prefix: Stream[B]): Boolean =
     zipAll(prefix).takeWhile(_._2.nonEmpty) forAll {
-      case (h1, h2) => h1 == h2    // Compares Options
+      case (hO1, hO2) => hO1 == hO2
     }
 
   // Simple, but final empty list handled
@@ -318,5 +319,29 @@ object Stream {
   /** Count up from start using unfold1 */
   def fromu1(start: Int): Stream[Int] =
     unfold1(start)(s => Some((s, s + 1)))
+
+  // For completeness, here are the constant methods
+  // developed in InfiniteStreamTest.scala
+
+  // My original version of constant
+  def const1[A](a: A): Stream[A] =
+    cons(a, const1(a))
+
+  // More efficient since it is only
+  // one object referencing itself.
+  /** Take a value and return an infinite Stream of that value,
+   *
+   *  @param a the constant value to be returned by the Stream
+   *  @return A Stream of constant values
+   *  
+   */
+  def const[A](a: A): Stream[A] = {
+    lazy val tail: Stream[A] = Cons(() => a, () => tail)
+    tail
+  }
+
+  // Using unfold method for constant
+  def constU[A](a: A): Stream[A] = 
+    unfold(a) { _ => Some((a, a)) }
 
 }

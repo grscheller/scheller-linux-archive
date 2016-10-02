@@ -16,7 +16,7 @@ Korn Shell while a Member of Technical Staff at AT&T
 during the late 1980's and early 1990's.  I didn't obtain
 any sort of proficiency until the late 1990's when I did
 software configuration management at Lucent Microelectonics,
-soon to become Agere Systems.  Currently, I am research
+soon to become Agere Systems.  Currently, I am a research
 scientist at Air Force Research Laboratories where I help
 fellow scientists and engineers refactor MATLAB and Python code.
 I am also a Functional Programming enthusiast/hobbiest trying

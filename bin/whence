@@ -1,0 +1,36 @@
+#!/bin/bash
+#
+# Drill down through $PATH to look for files or directories.
+# Like the ksh builtin whence, except it does not stop
+# after finding the first instance.  Handles spaces in file names 
+# and directories on $PATH.  Also shell patterns supported.
+#
+# Usage Whence file1 file2 ...
+#       Whence 'pattern'
+#
+# Written by Geoffrey Scheller
+#
+
+shopt -s extglob   # Turn on extended pattern matching
+
+i=0;
+for File in "$@"
+do
+   IFS=':'
+   for Dir in $PATH
+   do
+      if [[ -d "$Dir" ]]
+      then
+          for match in $Dir/$File
+          do
+              [[ -f $match ]] && FileList[((i++))]="$match"
+              [[ -d $match ]] && FileList[((i++))]="$match/"
+          done
+      fi
+   done
+done
+
+for File in "${FileList[@]}"
+do
+   echo $File
+done

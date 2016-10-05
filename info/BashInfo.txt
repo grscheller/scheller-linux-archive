@@ -1,0 +1,461 @@
+These are my own personal Bash notes/cheatsheet.  Intially never intended 
+as a tutorial or, for that matter, other people's use.  They are a work
+in progress.  For a good tutorial, I suggest using "The Linux Command Line"
+by William Shotts.  Most of what I know about shell programming comes from
+David Korns ksh book and the Unix/Linux man pages.  Bash is a superset of
+the Bourn shell (sh) with the best features of both the Korn shell and C
+shell added.
+
+Probably you will get the most out of these notes if you already are
+functional with Bash.
+
+The original Bourn shell was flawed.  There are features of the Bourn shell 
+that are in Bash for backward compatibility.  These should be 
+avoided as indicated later in the notes.
+
+C shell was revolutionary in its day.  It provides for enhanced 
+interactive user operability.  Its syntax was modeled after the C
+programming language which made it easier for C programmers to learn. 
+Unfortunately, it has an inconsistent grammer and its syntax is
+not really consistent across the language.  Compared to Bash, it is
+really, really slow.
+
+Bash command line editting can use either EMACS or VI mode.  Emacs and
+vi are text editting programs invented for terminal use.  Emacs and vi
+are both very powerful editors.  By default bash uses emacs mode.  Since
+I have invested a lot of time learning vi, I use that mode by doing
+the command "set -o vi" in my .bashrc file.  I also do some other 
+modifications in .bashrc to further enhance the power of VI mode
+and interacting with the shell history.  I have written entire shell
+scripts interactively in vi mode.  I make bash very ksh-like in its
+command line editting.  That said, EMACS mode is certainly a fine way
+of doing things; it just that I don't know EMACS that well.
+
+1. Extended globbing:
+
+   I usually turn on extended shell pattern matching.  This is
+   not to be confused with regular expression pattern matching
+   which is used by commands like grep and sed or programming
+   languages like Python or Perl.
+
+   When shopt -s extglob is set, in addition to
+      *
+      ? 
+      []
+   you can also use,
+      ?() zero or one occurances of pattern
+      *() zero or more occurances of pattern
+      +() one or more occurances of pattern
+      @() one occurance of pattern
+      !() anything except the pattern
+
+   case $1 in
+       a*           ) foo;;   # match anything starting with a
+       b?           ) bar;;   # match 2 char string starting with b
+       c[de]        ) baz;;   # match cd or ce
+       me?(e)t      ) qux;;   # match met or meet
+       @(a|e|i|o|u) ) quux;;  # match one vowel
+   esac
+
+   Aside: Names like foo, bar, baz, and values like 42 are examples of
+          what are called "metasyntactic variables."  They are just
+          meaningless place holders when illustrating syntax.  In the above
+          they can represent Linux commands or shell functions.  Can
+          also be multiple statements separated by newlines or semicolens.
+
+
+   Note: Case statements end with a "esac", case spelled backwards.
+         If statements end similarly with an "fi".  This comes from
+         the original Bourn shell where it was stolen from Algol.
+
+2. In Bash4 and later, case has (in addition to ;;) ;& and ;;&
+
+       ;&  fall through without testing next case (like in C without break)
+       ;;& means don't terminate, continue testing 
+
+          case $greating in
+              hello*)
+                echo "begins with hello"
+                ;&
+              @(h|H)ello*)
+                echo "a friendly greating"
+                echo "this is good"
+                ;;&
+              *\!)
+                echo "ends in an exclaimation"
+                ;;
+              *.)
+                echo "ends in a period"
+                ;;
+           esac
+                
+3. Redirection tricks:
+
+   Read from commands or pipes as if they were files.
+     $ cat <(echo -e "Hello,\nEveryone" | sed 's/^E.*/there/') <(echo 'World!')
+     Hello,
+     there
+     World!
+
+        Implemented via /dev/fd
+          $ echo <(echo hi)
+          /dev/fd/63
+
+   Read or write to commands or pipes as if they are files:
+     $ cp <(echo -n 'Hello World')  >(cat <(echo -n 'So, ') - <(echo '.'))
+     So, Hello World.
+
+   To redirect the output of a command  to a file
+     $ cmd > /path/to/file
+   This is shorthand for
+     $ cmd 1> /path/to/file
+   To append instead of overwriting
+     $ cmd >> /peth/to/file
+
+   To through away output
+     $ cmd > /dev/null
+   To through away error messages
+     $ cmd 2> /dev/null
+   Throw away both
+     $ cmd > /dev/null 2>&1
+     $ cmd &> /dev/null          # Added in Bash 4
+
+   This throws cmd output away and sends error
+   output to stdout (common mistake for above - but
+   useful if this is what you want to do)
+     cmd 2>&1 > /dev/null
+
+   Redirect stderr and stdout to stdin of piped command
+     cmd1 |& cmd2
+
+   Send only stderr down a pile:
+     cmd1 2>&1 >/dev/null | cmd2
+   Swap stderr and stdout:
+     cmd1 3>&2 2>&1 >&3 | cmd2
+
+   You can even redirect stdin
+     $ echo foobar > junk; cat - 0<junk
+     foobar
+
+   Users should use file descriptors < 10 in scripts to avoid
+   clashing with ones used by the shell.  Bash starts with
+   file descriptor 63 and works its way down.  File descriptors 
+   0, 1, 2 are predefined:
+
+     stdin  = /dev/fd/0
+     stdout = /dev/fd/1
+     stderr = /dev/fd/2
+
+   Can also append with stderr
+     cmd 2>> file_with_error_messages
+   Can append both
+     cmd &>> file
+   which is the same as
+     cmd >> file 2>&1
+
+   Less commonly known is that you can close file descriptures,
+   for example, this closes stderr
+     cmd 2>&-
+   This is NOT the same as
+     cmd 2>/dev/null
+   Alot of times the former and latter seem to accomplish the same
+   thing, they gag error messages.  In the latter, we are dependingr
+   that cmd is smart enough to know what to do in case it encounters
+   a closed file descriptor (as in C language file descriptor).
+   This can be used for efficiency, but depends on knowledge of the
+   internal workings of commands.  Usually cmd complains:
+
+     $ tee junk 1>&-
+     good
+     tee: standard output: Bad file descriptor
+     bye
+     tee: write error: Bad file descriptor
+     ^D
+     $ cat junk
+     good
+     bye
+
+4. Heads and Tails:
+
+   Prints first 5 lines of Filename or stdin if Filename omitted.
+
+     $ head -5 Filename
+
+   Does same thing.
+
+     $ head -n 5 Filename
+
+   Prints all but the last 5 lines of Filename.
+
+     $ head -n -5 Filename
+
+   Note: tail is duel to head with first replaced with last.
+
+   Prints out last 3 lines of Filename after last 5 lines have
+   been stripped off.
+
+     $ head -n -5 Filename | tail -n 3
+
+5. $* verses $@:
+
+   The shell variables $* amd $@ represent script and function command
+   line arguments.  Without quotes, they are the same.  Positional
+   parameters loose their identity and the $IFS characters are used to
+   split the arguments.
+
+   With double quotes, "$@" will split along positional parameters.
+   Each parmeter expands to a separate word.
+   "$@" is the same as typing "$1" "$2" "$3" ...
+
+   "$*" expands to a single word.  All the contiguous $IFS characters not
+   protected via quoting have been consolidated into a single character,
+   the first character of the $IFS string.
+
+   Suppose IPS=$'c \t\n',
+   then "$*" is the same as typing $1c$2c$3c... If IFS is null, no
+   character is use.  If IFS unset, a space is used.
+   (Acts as if IPS=$' \t\n')
+
+   Without quotes, $* and $@ both get all their leading and trailing 
+   $IFS characters stripped off. All other contiguous $IFS characters get
+   consolidated.  All quotes removed before stripping and consolidation.
+
+   Array variables ${foo[@]} and ${foo[*]} behave similarly when quoted.
+
+6. Array variables:
+
+   In bash, all variables are array variables.
+
+      $ foo=bar
+      $ echo ${foo[0]}
+      bar
+
+      $ gang=(fred daphney thelma)
+      $ gang+=(shaggie scooby)
+      $ echo ${gang[2]} ${gang[3]}
+      thelma shaggie
+      $ echo $gang
+      fred
+
+   Same as
+
+      $ echo ${gang[0]}
+      fred
+
+   Can take contiguous slices of arrays:
+
+      $ echo ${gang[@]:1:3}
+      daphney thelma shaggie
+
+      $ echo ${gang[@]:2:2}
+      thelma shaggie
+
+   Add another character:
+
+      $ gang+=("scrappy    doo")
+
+   When quoted:
+
+      $ for jj in "${gang[@]}"
+      > do
+      >    echo $jj
+      > done
+      fred
+      daphney
+      thelma
+      shaggie
+      scooby
+      scrappy doo
+
+      $ for jj in "${gang[*]}"
+      > do
+      >   echo $jj
+      > done
+      fred daphney thelma shaggie scooby scrappy doo
+
+   Instead of shell variable redirection, you get the indices:
+
+      $ echo ${!gang[@]}
+      0 1 2 3 4 5
+
+7. Speaking of shell redirection, 
+
+      $ foo=bar
+      $ bar=baz
+      $ echo ${foo}
+      bar
+      $ echo ${!foo}
+      baz
+
+8. Default values for shell variables:
+
+   Use a := instead of = to specify a default value for a shell variable,
+   if it is unset.
+
+      $ PIE="Apple Pie"
+      $ FavoritePie=${PIE:="Cherry Pie"}
+      $ FavoriteCake=${CAKE:="Chocolotte Cake"}
+      $ echo $FavoritePie
+      Apple Pie
+      $ echo $FavoriteCake 
+      Chocolotte Cake
+
+9. Comments begin with a # and can occur anywhere on a line:
+      # This is a comment
+      Foo="foo"  # This is a comment too.
+      Bar="bar"
+      # Silly to type comments at the shell prompt, but comments
+      # help the reader of a shell script know what is going on.
+      echo ${Foo}${Bar}  # This will print "foobar" without the quotes.
+                         # It will work without the brackets, but I think
+                         # they make the command more readable.
+
+10. Shell variables verses environment variables.
+
+   To define a shell variable, use an = with no unquoted spaces.
+   These are only known to the current shell.  So that other programs
+   (including sub-shells) know nothing about them, you need to "export
+   them to the environment."
+
+      $ answer=42
+      $ bash                # We are now in a subshell
+      $ echo "The answer is ${answer}."
+      The answer is .
+      $ exit                 # We are back in the original shell.
+      $ export answer     # answer is now known to the environment.
+      $ bash     # sub-shell again
+      $ echo "The answer is ${answer}."
+      The answer is 42.
+      $ exit   # ctrl-d will also get you back to the original shell
+      $ answer=53
+      $ bash
+      $ echo "The answer is ${answer}."
+      The answer is 53.
+      $ answer=0
+      $ echo "The answer is ${answer}."
+      The answer is 0.
+      $ exit
+      $ echo "The answer is ${answer}."   # value unchanged in parent shell
+      The answer is 53.
+
+   Note, unlike the standard sh, you don't have to re-export a shell
+   variable to the environment every time you change it.  Also, csh
+   contains two separate namespaces for shell and environment variables,
+   which can get very confusing for someone coming from bash without
+   a heads up.
+
+11. Big and little nibbles:
+
+    Let 
+   
+      $ aString="Hello big wide world"
+
+    Little nibbles are conservative(delete smallest possible pattern):
+
+      $ echo ${aString#* }      # Anything followed by a space from front
+      big wide world
+      $ echo ${aString% *}      # A space followed by anything from end
+      Hello big wide
+
+    Big nibbles are greedy(delete largest possible pattern):
+      
+      $ echo ${aString##* }      # Anything followed by a space from front
+      world
+      $ echo ${aString%% *}      # A space followed by anything from end
+      Hello
+
+12. Never use [ ... ], use [[ ... ]] instead.
+
+    In standard Bourn shell `[' was an actual program called test.  
+    They are located here: /usr/bin/[
+                           /use/bin/test
+
+    On CentOS Linux they are separate commands.  On other Unixes,
+    I have seen them sim and hard linked to the same executable.  I have
+    seen bizzarre bugs in shell scripts when people have used test as 
+    a shell variable name.  (So don't do this either.)
+
+    Anycase, when performing tests, always use [[ ... ]].  Double
+    brackets are reserve words in Bash and are much more tolerant
+    to empty string evaluations.
+
+    Example:
+
+      $ unset Fruit
+      $ if [[ $Fruit == "" ]]
+      > then
+      >    echo "No Fruit"
+      > else
+      >    echo Got a $Fruit
+      > fi
+      No Fruit
+
+   The above will give you a syntac error if you use single [ and ].
+
+      Aside: In older Bourn shell scripts (and even new Bash scripts!)
+             you frequently see constructs like
+
+             $ if [ FOO$Fruit == FOO ]
+
+             for the first line of the test above. This is to get
+             around an old wart from the Bourn shell.  
+
+13. Use (( ... )) instead of [[ ... ]] for arithmetic and numeric
+    testing in Bash.
+
+    Do this:
+
+       ((jj = 40)); while ((jj <= 42))
+       do
+		echo $jj
+           ((jj++))
+       done
+
+    Instead of this (still ideomatic Bash):
+
+       jj=39; while [[ $jj -lt 42 ]]
+       do
+           echo $jj
+           let jj=$jj+1
+       done 
+ 
+    And absolutely never this (Bourn shell):
+
+      jj=39; while [ $jj -lt 42 ]
+      do
+          echo $jj
+          jj=`expr $jj + 1`
+      done
+
+14. Use $(...) instead of back tics `...`.
+
+    $(...) is used to embed the output of a bash command or
+    pipeline into a bash script as if you typed it.
+
+    Example:
+
+      for File in $(ls src/main/scala/grockScala/datastructures/*.scala)
+      do
+        baseName=${File##*/}
+        rootName=${File%.scala}
+        rm target/scala-2.11/classes/grockScala/datastructures/$rootName.class
+      done
+
+    OK, the back tics save you from typing one extra character, but
+    they are hard to see and THEY DON'T NEST.
+
+      $ ll $(ls $(ls *.pdf))
+      -rwxrwxrwx. 1 geoff geoff 2057650 Jan 31 12:13 TLCL.pdf
+
+    You can also embed $(...) in double quoted strings:
+
+      $ helloString="Hello, $(whoami), you use $(uname)."
+      $ echo $helloString
+      Hello, geoff, you use Linux.
+
+    Here is a nontrivial example:
+
+      $ otherUsers=$(ps -ef | egrep -v "($(whoami)|root|USER)" | sed 's/ .*//' | sort | uniq)
+      $ echo $otherUsers
+      68 dbus gdm nails ntp postfix rtkit
+ 

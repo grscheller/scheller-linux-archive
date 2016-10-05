@@ -59,14 +59,15 @@ do
           rabbitHole "${currentPath}"
       fi
   else
-      # Nothing at the end of the rabbit hole (or circular links).
+      # Nothing at the end of the rabbit hole, or circular links,
+      # or insufficient permissions along path..
       if [[ -L ${currentPath} ]]
       then
           # Broken symlink
           echo ">>>ENCOUNTERED BROKEN SYMLINKS FOR: ${currentPath}" >&2
       else
           # Target does not exist
-          echo ">>>DOES NOT EXIST: ${currentPath}" >&2
+          echo ">>>DOES NOT EXIST OR INSUFFICIENT PERMISSIONS: ${currentPath}" >&2
       fi
   fi
 done

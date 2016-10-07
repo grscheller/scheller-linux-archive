@@ -375,7 +375,7 @@ VII. Git branch:
            $ git branch -a
              Anansi
              astrolog-java
-             car-mhf
+             bar-mph
              silverdb
              silver_grs_oneToolbar
            * master
@@ -383,7 +383,7 @@ VII. Git branch:
              remotes/origin/Anansi
              remotes/origin/HEAD -> origin/master
              remotes/origin/astrolog-java
-             remotes/origin/car-mhf
+             remotes/origin/bar-mph
              remotes/origin/silverdb
              remotes/origin/silverdb_grs_oneToolbar
              remotes/origin/master

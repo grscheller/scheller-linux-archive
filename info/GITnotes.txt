@@ -1,0 +1,833 @@
+These notes were taken by me while I learned GIT.
+
+On Linux there is a good GIT tutorial in the man pages.
+
+    man gittutorial
+
+To get a comprehensive overview of git, use
+
+    man git
+
+and to get information on individual commands 
+
+    man git-add
+    man git-info
+
+Some resources I used for these notes:
+http://www.git-scm.com/book/en/v2   (ProGIT book)
+https://www.atlassian.com/git/tutorials/setting-up-a-repository
+https://help.github.com
+https://www.garron.me/en/articles/git-101-basics-introduction-basic-use-commands.html
+
+Also, stackoverflow.com contains lots of good "from the trenches"
+advice on GIT best practices.  You just need to separate the wheat
+from the chaff.
+
+Each Roman numeral section goes from simple to more advanced.
+You may need more elementary info from a higher Roman 
+numeral section for information further down in a lower 
+Roman numeral section.
+
+I. Getting started and some configuration.
+
+    1. Three places git stores config info:
+    
+       1. /etc/gitconfig       (not on my workstation)
+       2. ~/.gitconfig or ~/.config/git/config
+       3. config file in the Git directory of whatever repository 
+          you are using (that is .git/config).
+    
+       Each one overrides the one above.
+    
+    2. Set up your identity:
+    
+          git config --global user.name "John Doe"
+          git config --global user.email john.doe.2@us.af.mil
+    
+       If you want to override these settings for a specific project,
+       run the above commands without the --global option when in
+       that project.
+    
+    3. To customize editor:
+    
+          git config --global core.editor vi
+
+    4. Set default merge behavior to diff3:
+
+          git config --global merge.conflictstyle diff3
+    
+    5. With CentOS 6.7 Linux on our internal network, setting
+ 
+          git config --global http.postBuffer 5242880000
+
+       Helps with big pushes.  (Something to do with the
+                                Curl URL library on that OS).
+
+    6. To list the settings set so far:
+    
+          git config --list
+    
+       for a specific setting:
+    
+          git config user.name
+    
+    7. Three (equivalent) ways to get help:
+    
+          git help <verb>
+          git <verb> --help
+          man git-<verb>
+
+       Also #git or #github channels on the Freenode IRC server.
+       at http://irc.freenode.net/ (Blocked on DREN and NIPRnet).
+
+II. Getting a Git Repository
+
+    1. Initializing a repository in an existing directory:
+
+          cd /path/to/an/existing/directory
+          git init
+
+       This creates a .git subdirectory (a Git repository skeleton).
+
+       Add files to this repository:
+
+           git add *.c *.py
+           git add LICENSE README.txt
+           git commit -m 'initial project version'
+
+    2. Cloning an existing repository:
+
+           git clone https://github.com/libgit2/libgit2
+           git clone https://github.com/libgit2/libgit2 mylibgit
+           git clone schelleg@us.navo.hpc.mil:proj/grsHome.git
+
+       This is not just a checkout, it clones the entire repository
+       of change controled files.  (Does not clone some of the server 
+       side settings.)  The second version changes the name of the
+       Git repository directory from libgit2 to mylibgit.
+
+       Transfer protocols:
+
+           https://
+           git://
+           user@server:path/to/repo.git      (this uses ssh)
+
+    3. Setting up a shared repository:
+
+          git init --bare ourProject.git
+
+       Initialize an empty Git repository, but omit the working 
+       directory.  Shared repositories should always be created with
+       the --bare flag.  The ourProject.git directory will be a
+       subdirectory.  (Equiv to a .git directory, but without the
+       parent working directory.)  Think --bare as marking the 
+       repository as a storage facility as opposed to a development
+       environment.
+
+    4. Now connect up our empty naked repository to somewhere where
+       we have done some prior development work:
+
+          cd ourProject.git
+          git remote add --fetch --tags localDevel ~/Devel/local/myProject
+
+       This will bring in all the branches and tags.
+       In the localDevel development environment repo, I like to reference
+       our new colaboritive repo as origin:
+
+          git remote rm origin      <- if already set to point elsewhere
+          git remote add origin ~/Repo/ourProject.git
+
+    5. I found it better to create the empty shared repository, clone it, 
+       and then add the initial files to the clone and push it back.
+`
+          git clone schelleg@us.mhpcc.hpc.mil:projects/DVS.git
+          cp DVS_150605/* DVS
+          cd DVS
+          git add *
+          git commit
+          git push origin master
+
+    6. To "rename" a GIT repository, first note that that git does
+       not care about the name of the directory the repository is in.
+       The client just needs to know where to point.
+
+       On the server:
+
+          mv PAT.git SDT.git
+
+       On the client:
+
+          git remote rm origin
+          git remote add origin schelleg@us.mhpcc.hpc.mil:projects/SDT.git
+
+    7. Cloning from another working repo.
+
+       Let's say I have a working repo in ~/Devel/SDT
+
+          $ cd ~/Devel/SDT
+
+       Make sure we are in a stable state
+
+          $ git status
+          # On branch sdt_devel_branch
+          nothing to commit (working directory clean)
+
+       See what branches are here
+
+          $ git branch
+            sdt_production_branch
+          * sdt_devel_branch
+            master
+
+       Let's clone the repo
+
+          $ cd ../..
+          $ mkdir temp
+          $ cd temp
+          $ git clone ../Devel/SDT
+          Initialized empty Git repository in /home/schelleg/temp/SDT/.git/
+
+       Let's see what we got
+
+          $ cd SDT
+          $ git branch
+          * sdt_devel_branch
+          $ git remote -v
+          origin    /home/schelleg/temp/../Devel/SDT (fetch)
+          origin    /home/schelleg/temp/../Devel/SDT (push)
+       
+       We only picked up the currently active branch.  I will sometimes do this
+       to have a quick and dirty snapshot of a working copy of the software.
+       Also, I can "rm -rf .git" and burn what I have to DVD to give someone
+       a working copy.  (Just make sure you do this in ~/temp/SDT and not
+       in ~/Devel/SDT !!!)
+
+    8. Fetch command updates local copies of remote branches.
+
+          git fetch origin
+
+       will update information of local copies of remote branches.
+
+          git fetch --all
+
+       will do this with all remote repositories your local repo
+       knows about.
+
+       Note: "git fetch" commands will not create local branches to 
+       track remote branches.  You must do a "git pull" for each new
+       branch you want to track.  The "git pull --all" command will
+       only pull from branches you currently track.
+
+III. Lifecycle of files:
+
+     Untracked         Unmodified         Modified           Staged
+         |                  |                 |                 |
+         |-- Add file ----------------------->|                 | 
+         |                  |-- Edit file --->|                 |
+         |                                    |-- Stage file -->|
+         |<---Remove file --|                 |                 |
+         |                  |<------------------- Commit file --|
+
+IV. Git Basics:
+
+    1. Checking status of files:
+
+           git status
+           git status --short
+           git status -s
+
+    2. To begin tracking a files:
+
+           git add myfile.c    (myfile.c is now staged)
+           git add directory   (all files staged recursively)
+
+       Think of add as meaning "add this content to the next commit" rather
+       than "add this file to the project."  Git stages the file as it was 
+       when 'git add' command was issued.  If you modify a file after it was
+       staged, you have to add it again to pick up the latest changes.
+
+    3. To unstage a file:
+
+           git reset HEAD <file> 
+
+    4. To discard changes:
+
+           git checkout <file>
+
+V. Ignoring files:
+
+    Use a .gitignore file to make Git ignore files.
+
+    Example: 
+        # no .a files
+        *.a
+       
+        # but do track lib.a, even though you're ignoring .a files above
+        !lib.a
+       
+        # only ignore the root TODO file, not subdir/TODO
+        /TODO
+       
+        # ignore all files in the build/ directory
+        build/
+       
+        # ignore doc/notes.txt, but not doc/server/arch.txt
+        doc/*.txt
+       
+        # ignore all .txt files in the doc/ directory
+        doc/**/*.txt
+
+    1. Blank lines and lines starting with # are ignored.
+    2. Extended shell globbing patterns work.
+    3. End patterns with a forward slash (/) to specify a directory.
+    4. Negate a pattern by starting it with an exclamation point (!).
+    5. Two asterisks match nested directories.
+
+VI. Moving and removing files.
+
+    To remove files:
+
+    1. While the files or directories still exist,
+
+          git rm file1 file2 dir1
+          git commit
+
+       Sometimes you will need to do a 
+
+          rm file1 file2
+
+       to actually get rid of them from your working directory.
+       If the current working versions are different than what is
+       in the repository, GIT will treat the files as an unstaged
+       local change.  You run into this a lot when files are
+       removed upstream.
+
+    2. Lets say you want to remove a lot of files.  For example, lets
+       get rid of all the subversion directories (since we are using GIT).
+
+          find . -depth -name '.svn' -exec rm -rf '{}' \;
+
+       best practice is to
+
+          git add -u
+          git commit
+
+       this will save you from having to do a lot of tricky bash shell
+       scripting like
+
+          git rm $(git status | grep delete | awk '{print $3}')
+          git commit
+
+       which will also work.  The -u option only matches files in the 
+       index rather than the working tree.
+
+    3. Updating major changes, such as a vendor upgrade, with file 
+       additions and removals, in a brut force sort of way, use
+
+          git add -A
+          git commit
+
+       The -A (or --all) option is like -u (or --update) except that
+       it also will match against files in the working tree.
+
+       For better fidelity, especially when dealing with directory
+       structure changes, one might want to use git mv commands.
+
+    To move files:
+
+    4. To move files
+
+          git mv path/to/filename new/path/to/new_filename
+          git commit
+
+       Git will move and rename the file before the commit.
+
+    5. To move a bunch of files to a new directory
+
+          mkdir new_dir
+          git mv file1 file2 file3 new_directory
+          git commit
+
+    6. To delete an empty directory.
+
+       GIT does not track directories, only files.  You can't 
+       use "git rm" to remove a directory and push change.
+
+       A good habit is to periodically use
+
+          git clean -fd 
+
+       to clean things up.  Best practice is to first do
+
+          git clean -fdn
+
+       to see what it would remove first, especially if you 
+       have important untracked stuff around.
+
+VII. Git branch:
+
+    1. List all available branches:
+
+           git branch
+
+       To also see the remote tracked branches:
+
+           $ git branch -a
+             Anansi
+             astrolog-java
+             car-mhf
+             silverdb
+             silver_grs_oneToolbar
+           * master
+             oneToolbar
+             remotes/origin/Anansi
+             remotes/origin/HEAD -> origin/master
+             remotes/origin/astrolog-java
+             remotes/origin/car-mhf
+             remotes/origin/silverdb
+             remotes/origin/silverdb_grs_oneToolbar
+             remotes/origin/master
+
+    2. Create a new branch (does not checkout the branch)
+
+           git branch myBranch
+
+       This branch is based on the current branch checked out.
+
+    3. Create a new local empty branch 
+
+           git checkout --orphan newBranch
+
+       This will create a new branch without any commit.  The first
+       commit will start a new history without any ancestry.  The
+       --orphan option will keep the index and working tree files 
+       intact in order to make it convenient for creating a directory
+       structure and files resembling the ones from the current
+       branch.
+
+       Unfortunately, the olde CentOS 6.7 version of git, 
+       git version 1.7.1, does not support the --orphan option
+       with checkout.
+
+    4. Delete a branch (safe, git will prevent you if you
+       have unmerged changes)
+
+           git branch -d myBranch
+
+       Force delete a specified branch. (This will permanently
+       throw away all unmerged changes)
+
+           git branch -D myBranch
+
+    5. Delete a remote branch or tag
+
+           git push origin --delete myBranchToDelete
+
+       prior to git version 7.0 (and will still work)
+
+           git push origin :myBranchToDelete
+
+    6. Delete references to remote branches that no longer
+       exist on the remote repo.
+
+           git fetch -p
+           git fetch -p some_remote_repo
+           git fetch -p origin
+
+    7. Rename current branch to new name
+
+           git branch -m myNewName
+
+    Note that all branches really are just pointers to commits. 
+
+    8. Delete existing branches.
+
+       To delete local branch:
+
+           git branch -d the_local_branch
+
+       To delete remote branch:
+
+           git push origin :the_remote_branch
+
+VIII. Git checkout:
+
+    The git checkout command lets you navigate between branches.  
+    Checking out a branch updates the files in the working directory
+    to match the version stored in that branch, and it tells Git to
+    record all new commits on that branch. Think of it as a way to 
+    select which line of development you’re working on.
+
+    1. Check out an existing branch
+
+           git checkout existingBranch
+
+    2. Can also create a new branch at checkout
+
+           git checkout -b newBranch
+
+       or base it on another existing branch instead of
+       the current one.
+
+           git checkout -b newBranch anotherBranch
+
+    You can work on multiple branches in a single repository 
+    by switching between them with git checkout.
+
+    3. Check out a branch you don't have locally from origin (the repo
+       you are tracking from - usually the one you originally cloned from).
+
+           git fetch
+           git checkout some_new_remote_branch
+
+    4. If you are tracking several remote branches, you need to
+       be a bit more specific:
+
+           git checkout -b some_branch remote-name/some_branch
+
+IX. Git merge:
+
+    1. Merge a specific branch into the current branch.
+
+           git merge someBranch
+
+    2. Example of a 3-way merge:
+
+           Start a new feature
+
+              git checkout -b new-feature master
+
+           Edit some files
+
+              git add <file>
+              git commit -m "Start a feature"
+
+           Edit some files
+
+              git add <file>
+              git commit -m "Finish a feature"
+
+           Develop the master branch
+
+              git checkout master
+
+           Edit some files
+
+              git add <file>
+              git commit -m "Make some super-stable changes to master"
+
+           Merge in the new-feature branch
+
+              git merge new-feature
+
+           Delete the new-feature branch (Once things safely merged in
+           no sense keeping useless dirty laundry around.  Best 
+           practices is to only push to origin stable changes.)
+           
+              git branch -d new-feature
+
+           Remove a file from the branch (not the history)
+
+              git rm <FileName>
+
+     3. Periodically sync in changes from master:
+
+           Start a new feature
+
+              git checkout -b long-term-feature master
+
+           Do some development for a while
+              ...
+
+           Switch to master and sync up with origin/master
+
+              git checkout master
+              git pull origin master
+
+           Switch back to development branch and merge in changes from master
+
+              git checkout long-term-feature
+              git merge master
+
+           Continue long-term development
+              ...
+     4. git merge --abort   
+
+X. Syncing repositories:
+
+    1. List remote connections.
+
+           $ git remote
+           origin
+
+       Use -v for more info.
+
+           $ git remote -v
+           origin	schelleg@us.navo.hpc.mil:proj/PAT (fetch)
+           origin	schelleg@us.navo.hpc.mil:proj/PAT (push)
+
+       The name, this case origin, can be used as a short cut
+       to the other repository in git commands.  The name origin
+       is the default name given to the reprository you clone
+       from, otherwise there is nothing special about it.
+
+
+     2. Add a remote connection.
+
+           git remote add ethel emurtz@devel.desilu.com:projects/iHateFred
+
+     3. Remove the connection.
+
+           git remote rm ethel
+
+     4. Rename connection.
+
+           git remote rename old_name new_name      
+
+        Developers need to pull upstream commits to their local repository
+        and push local commits to other repositories.  Having connections 
+        to other individual developers makes it possible to collaborate 
+        outside of the central repository.  This can be very useful for 
+        small teams working on a large project.
+
+     5. Git fetch imports commits from a remote repository, giving
+        you chance to review changes before integrating them into the
+        local copy of the project.
+
+           git fetch origin
+
+        For only one branch, use
+
+           git fetch origin someBranch
+
+      6. Use 'git branch' to view local branches and 
+         use 'git branch -r' for remote branches.  Inspect these
+         branches with the ususal git chechout and git log commands.
+
+      7. Git pull (bring in remote changes).  This command fetches from and 
+         integrates with another repository or local banch.  The 'git pull'
+         command is shorthand for 'git fetch' followed by 'git merge FETCH_HEAD'
+
+            git pull origin someBranch
+
+         To pull from the (possibly remote) branch you are tracking, with
+         the current branch, use
+
+            git pull
+
+         Warning!!!  
+
+            git pull origin someBranch
+
+         will pull in from "someBranch" even if you are on "someOtherBranch".
+
+         Best practice is:
+
+            git fetch origin     # So local repo knows of remote changes.
+            git status           # So we are sure we are where we think.
+                                 # This will also give other potentially
+                                 # useful info to keep yourself from shotting
+                                 # yourself in foot.
+            git pull 
+
+         Now, the "git status" may tell us we can't just do a fast
+         foreward.  In that case, create a new local branch to track
+         the remote branch and do a git merge (see IX).
+            
+
+      8. GIT push (push local changes elsewhere):
+
+            git push origin <branch>
+            git push origin master
+            git push origin --all
+            git push origin --tags
+
+         The commands (with nothing else)
+
+            git push
+            git push origin
+
+         by themselves should be avoided.  Its default behavior is
+         different on different versions of git.  On git 1.9.5,
+         it seems to push all tracked branches to their remotes.
+         I beleive on later versions of git, it will just push
+         whatever branch you are currently on.
+
+         To remove a remote branch, do
+
+            git push <Remotename> :<BranchName>
+
+         note the space before the colon, similar to renaming a branch,
+         you are pushing "nothing" into BranchName.
+
+         To push a tag,
+
+            git push <RemoteName> <TagName>
+
+         to push all tags,
+
+            git push <RemoteName> --tag
+
+XI. Tagging:
+
+     1. List available tags.
+
+            git tag
+
+        This will list all current tags in alphabetical order.
+        To refine search,
+
+            git tag -l 'v1.8.*'
+            git tag -l '*foo*'
+
+     2. Creating Tags.
+
+        There are two types of tags, lightweight and annotated.  A 
+        lightweight tag is like a branch that does not change - it is
+        just a pointer to a specific commit.  Annotated tags are
+        stored as full objects in GIT database.  They have tagger name,
+        e-mail address, date, and can be signed with GNU Privacy Guard.
+
+        To create an annotated tag, use -a:
+
+           git tag -a v1.0 -m 'Original DVS code gotten from David Steller'
+
+    3. Pushing tags.
+
+       By default, git push does not push tags.  To explicitly push a
+       tag,
+
+           git push origin v1.0
+
+       To push all available tags, use the --tags option on git push.
+
+           git push origin --tags
+
+    4. Checking out tags.
+
+       To create a new branch at a specific tag:
+
+           git checkout -b version2 v2.0.0
+
+    5. Deleting tags (local and remote).
+
+       To delete local tag:
+
+           git tag -d tag_to_delete
+
+       To delete off of a remote repo:
+
+           git push origin :refs/tags/tag_to_delete
+
+    6. Show info about a tag, use show cmd.
+
+           git show tag_name
+
+XII. Examining previous versions of a file:
+
+     1. To view a previous version of file,
+
+            git show REVISION:path/to/file
+
+        for example
+
+            git show HEAD~3:PAT_Files/mfiles/FilterValuesPanel.m
+
+        will send the third version back of the file to a pager.
+
+            git show HEAD~1:pat.m > junk
+
+        will dump it all to a file called junk.
+
+XIII. GIT revision history tools:
+
+     1. git log
+
+        "git log A B" shows history of both commits A and B (a Union)
+
+     2. git log -p 
+
+     3. git show
+        
+        Very versatile command.  Commit ranges a..b will be resolved to
+        show each commit individually.  Files can be specified
+        via syntax commit:path/to/file .  Pass it a directory, it will
+        commit info of the last commit changing that directory.
+
+     4. git diff
+
+        Generally expects two trees or two files to compare.
+
+        Compare two versions of file in a branch-
+
+           git diff HEAD~2:DVS.m HEAD:DVS.m
+
+        Comparing past version with what is in the working 
+        directory-
+
+           git diff HEAD~2:DVS.m DVS.m
+                  
+               note: 2 revisions ago, not necessarily
+                     in the same branch (i.e. could
+                     predate the existence of the
+                     current branch)
+
+        Comparing a file between branches-
+
+           git diff new_feature:DVS.m master:DVS.m
+
+        Comparing two source trees-
+
+           git diff master~2 master~3
+
+
+     5. The range A...B means every commit reachable by A or B
+        but not both.
+                    
+        with git log   it will show you those commits and it makes
+                       when used with divergent branches.
+
+        with git diff  it is syntactic sugar for 
+                       git diff $(git merge-base A B) B
+
+        with git show  will jush show commit info for each
+                       single commit in that range.
+
+     6. git merge-base finds the best common ancestor for a
+                       three way merge
+
+     7. Look into git-rev-list and git-show-branch.
+
+XIV. Debug options:
+
+    1. To turn on debug logging (assuming Linux/Cygwin Bash shell)
+
+           export GIT_TRACE_PACKET=1
+           export GIT_TRACE=1
+           export GIT_CURL_VERSION=1
+
+       before doing git commands.  
+
+    2. On CentOS 6.7 Linux we have encountered RPC errors while attempting
+       large GIT pushes from our internal network.
+
+           $ git push origin master
+           Password:
+           Counting objects: 2525, done.
+           Delta compression using up to 8 threads.
+           Compressing objects: 100% (2514/2514), done.
+           error: RPC failed; result=56, HTTP code = 0
+           Writing objects: 100% (2524/2524), 332.86 MiB | 19.80 MiB/s, done.
+           Total 2524 (delta 679), reused 8 (delta 0)
+
+       This does not happen when GIT pushing from a high bandwidth
+       public internet hot-spot.  Also doesn't happen for more modest
+       GIT pushes from the on our internal network.
+
+       Turns out that the problem is with the Curl URL library and
+       changing the following setting
+
+           git config http.postBuffer 5242880000
+
+       fixed the problem for big pushes.
+

@@ -83,32 +83,34 @@ Purpose: For things installed locally as an unprivalleged user.
 
   But, panda not installed!  So, I cloned it from git-hub following
   the directions from there.
+
     $ git clone --recursive git://github.com/tadzik/panda.git
 
   and followed README.md instructions build it using my shinny
   new perl6.  Build fails to complete, but without "errors."
-  May be related to something called 
 
   Now, the first thing suggested in README.md is to use a perl5
   based utility called rakudobrew to build and install it.  This
   seems to be similar to sbt abd lien in its use case.  Cloned
   it directly into ~/.rakudobrew.
+
     $ git clone https://github.com/tadzik/rakudobrew ~/.rakudobrew
 
   Now, I tried to use it to build the package manager panda:
+
     $ rakudobrew build panda
 
   It complains that I have not told it what version of perl6 to use.
   Why not the only bloody one on the path???  Then I realize that
-  I am dealing with something like sbt or lien which wants to
-  itself build/install whatever perl6 version I indicate.  
+  I am dealing with something like sbt or lien, which wants to
+  itself build or install whatever perl6 version I indicate.  
 
 2016-09-17:
   I decided to change the use case of ~/local.  It is more likely
   that Arch packages will (eventually) be more up-to-date than
   anything I build, I will put ~/local/bin just before ~/bin
-  on my path.  (At work I've been stuck on outdated CentOS 6.7 
-  for way, way, too long.)
+  on my path.  (At work, I've been stuck on outdated CentOS 6.7 
+  for way, way, way too long.)
 
   Now, my Linux path is:
 
@@ -137,10 +139,16 @@ Purpose: For things installed locally as an unprivalleged user.
   Using stack as my build tool for Haskell -
 
   Installed into /usr/local/bin via.
-    curl -sSL https://get.haskellstack.org/ | sh
+
+    $ curl -sSL https://get.haskellstack.org/ | sh
+
+  Install ghc locally to your home directory:
+
+    $ stack setup
 
   Created a stack "sandbox" and using with git.
-    stack --resolver ghc-7.10.3 new pythagTriples simple
+
+    $ stack --resolver ghc-7.10.3 new pythagTriples simple
     cd pythagTriples
     git init
     git add develLog.txt LICENSE Setup.hs pythagTriples.cabal
@@ -172,3 +180,27 @@ Purpose: For things installed locally as an unprivalleged user.
     *.eventlog
     .stack-work/
     *.swp
+
+  Run ghci outside of a project:
+
+    $ stack ghci
+    Run from outside a project, using implicit global project config
+    Using resolver: lts-7.1 from implicit global project's config file:
+        /home/geoff/.stack/global-project/stack.yaml
+    Configuring GHCi with the following packages: 
+    GHCi, version 8.0.1: http://www.haskell.org/ghc/  :? for help
+    Loaded GHCi configuration from /tmp/ghci7977/ghci-script
+    Prelude> 
+
+  Run another version of ghci outside of a project:
+
+    $ stack --resolver ghc-7.10.3 ghci
+    Run from outside a project, using implicit global project config
+    Using resolver: ghc-7.10.3 specified on command line
+    Configuring GHCi with the following packages: 
+    GHCi, version 7.10.3: http://www.haskell.org/ghc/  :? for help
+    Prelude> 
+
+  OK, I need to figure out which version I should be using.  Seems
+  that the lts-7.1 is using a newer version of GHCi than ghc-7.10.3!
+  Until I am better "educated", I'll stick to lts-7.1.

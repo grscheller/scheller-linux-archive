@@ -1,0 +1,174 @@
+Purpose: For things installed locally as an unprivalleged user.
+
+2016-07-29:
+  Installed Anaconda Python into /home/geoff/opt/anaconda3.
+    Adjusted .bash_profile to put it in the path before
+    system python.
+
+    $ /home/geoff/opt/anaconda3/bin/python --version
+    Python 3.5.2 :: Anaconda 4.1.1 (64-bit)
+
+    $ /usr/bin/python --version
+    Python 3.5.2
+
+    $ /usr/bin/python2 --version
+    Python 2.7.12
+
+2016-08-01:
+  For scanning journalctl output, some useful options -
+    journalctl -f : follows like tail -f
+    journalctl -x : Augment log lines with explanation texts
+
+  For querying installed packages -
+    pacman -Qet : List all explicitly installed packages
+
+2016-08-17:
+  Added a simplistic ~/.vimrc file containing the following:
+    syntax off
+    set encoding=utf-8
+    set fileencoding=utf-8
+    set tabstop=4
+    set shiftwidth=4
+    set expandtab
+
+  It also contains comments explaining what I want to accomplish.
+
+2016-08-30:
+  Configured Cabal to install Haskell Cabal packages into geoff
+  home directory for Cabal packages not yet rolled into Arch
+  Linux Pacman packages.
+
+    $ mkdir -p .cabal/bin
+    $ cabal update
+
+  Installed codo-notation Cabal package
+
+    $ cabal install codo-notation
+
+    Cabal001: codo-notation
+
+  Note: Cabal is "NOT" a true package manager.  Subsequent 
+    "cabal installs" can break previous ones.  This is known
+    as "Cabal Hell."
+
+    1. Cabal can install packages globally - NEVER DO THIS!!!
+    2. Be prepared to blow away the .cabal directory and 
+       start over.
+    3. Possible to do Cabal on a per project basis using Cabal
+       sandboxws.  I wish to avoid this.  Also, periodically
+       monitor if Arch Linux Repos pick up these Cabal packages.
+    4. Like I did with Pacman, using "Cabal#:" so that I know
+       what I have currently installed via Cabal.  Use
+
+         $ grep 'Cabal...:' userland_Adminlog.txt 
+
+       to get the list of Cabal installs.  Starting the 
+       count at 001.
+
+  Cabal man page says that it is "cabal - a system for building
+  and packaging Haskell libraries and programs".
+
+2016-09-16:
+  Perl6 is "finally?" stable enough to try out.  There seems to 
+  be two AUR's for it, rakudo and rakudo-star.  Much confusion
+  for which to use.  So, by passing AUR and install locally.
+
+  Installed the rakudo-star-2016.07 tarball into /home/geoff/local.
+  Built a perl6 that seems to work.  Some minor problems with the
+  regression tests when I built it (missing tests I think?).  When
+  I run perl6, it suggests I use for line editting either:
+    1. panda install Readline
+    2. panda install Linenoise
+    3. use rlwrap
+
+  But, panda not installed!  So, I cloned it from git-hub following
+  the directions from there.
+    $ git clone --recursive git://github.com/tadzik/panda.git
+
+  and followed README.md instructions build it using my shinny
+  new perl6.  Build fails to complete, but without "errors."
+  May be related to something called 
+
+  Now, the first thing suggested in README.md is to use a perl5
+  based utility called rakudobrew to build and install it.  This
+  seems to be similar to sbt abd lien in its use case.  Cloned
+  it directly into ~/.rakudobrew.
+    $ git clone https://github.com/tadzik/rakudobrew ~/.rakudobrew
+
+  Now, I tried to use it to build the package manager panda:
+    $ rakudobrew build panda
+
+  It complains that I have not told it what version of perl6 to use.
+  Why not the only bloody one on the path???  Then I realize that
+  I am dealing with something like sbt or lien which wants to
+  itself build/install whatever perl6 version I indicate.  
+
+2016-09-17:
+  I decided to change the use case of ~/local.  It is more likely
+  that Arch packages will (eventually) be more up-to-date than
+  anything I build, I will put ~/local/bin just before ~/bin
+  on my path.  (At work I've been stuck on outdated CentOS 6.7 
+  for way, way, too long.)
+
+  Now, my Linux path is:
+
+    $ ~/bin/path
+    /home/geoff/.cabal/bin
+    /home/geoff/opt/anaconda3/bin
+    /usr/local/sbin
+    /usr/local/bin
+    /usr/bin
+    /opt/cuda/bin
+    /usr/lib/jvm/default/bin
+    /usr/bin/site_perl
+    /usr/bin/vendor_perl
+    /usr/bin/core_perl
+    /home/geoff/local/bin
+    /home/geoff/local/share/perl6/site/bin
+    /home/geoff/bin
+    .
+
+2016-09-17:
+  Back to Perl6, after some digging, the rakudo-star AUR package
+  is broken and rakudo package last updated 2016-08-20.  I'll 
+  go with rakudo (see guass17_AdminLog.txt).
+
+2016-10-13:
+  Using stack as my build tool for Haskell -
+
+  Installed into /usr/local/bin via.
+    curl -sSL https://get.haskellstack.org/ | sh
+
+  Created a stack "sandbox" and using with git.
+    stack --resolver ghc-7.10.3 new pythagTriples simple
+    cd pythagTriples
+    git init
+    git add develLog.txt LICENSE Setup.hs pythagTriples.cabal
+    git add stack.yaml src/Main.hs
+    vi develLog.txt
+    git status
+    git commit
+
+  Later, created a .gitignore file based on what was recommended
+  by Chris Allen in 'https://www.howistart.org/posts/haskell/1'.
+
+    $ cat .gitignore 
+    dist
+    dist-*
+    cabal-dev
+    *.o
+    *.hi
+    *.chi
+    *.chs.h
+    *.dyn_o
+    *.dyn_hi
+    .hpc
+    .hsenv
+    .cabal-sandbox/
+    cabal.sandbox.config
+    *.prof
+    *.aux
+    *.hp
+    *.eventlog
+    .stack-work/
+    *.swp

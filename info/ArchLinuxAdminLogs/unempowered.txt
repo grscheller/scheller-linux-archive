@@ -1,0 +1,14 @@
+Purpose: Useful admin commands and factoids that can be 
+         done without root or sudo access.
+
+Journalctl:
+  For scanning journalctl output, some useful options -
+    journalctl -f : follows like tail -f
+    journalctl -x : Augment log lines with explanation texts
+
+Pacman:
+  For querying installed packages -
+    pacman -Qet : List all explicitly installed packages
+    pacman -Q   : List all installed packages
+    pacman -Ss regex : search for terms in package database
+    pacman -Qlq tor  : List files associated with a package

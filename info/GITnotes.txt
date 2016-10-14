@@ -147,9 +147,9 @@ II. Getting a Git Repository
           git commit
           git push origin master
 
-    6. To "rename" a GIT repository, first note that that git does
-       not care about the name of the directory the repository is in.
-       The client just needs to know where to point.
+    6. To "rename" the directory that a GIT repository is in, first
+       note that that git does not care about the name of the directory
+       the repository is in. The client just needs to know where to point.
 
        On the server:
 
@@ -159,6 +159,12 @@ II. Getting a Git Repository
 
           git remote rm origin
           git remote add origin schelleg@us.mhpcc.hpc.mil:projects/SDT.git
+
+       Note: you may need to tell a branch what its upstream now is
+
+          git checkout master
+          git branch -u origin/master
+          git fetch origin
 
     7. Cloning from another working repo.
 
@@ -214,7 +220,7 @@ II. Getting a Git Repository
        knows about.
 
        Note: "git fetch" commands will not create local branches to 
-       track remote branches.  You must do a "git pull" for each new
+       track remote branches.  You must do a "git checkout" for each new
        branch you want to track.  The "git pull --all" command will
        only pull from branches you currently track.
 
@@ -571,7 +577,6 @@ X. Syncing repositories:
        is the default name given to the reprository you clone
        from, otherwise there is nothing special about it.
 
-
      2. Add a remote connection.
 
            git remote add ethel emurtz@devel.desilu.com:projects/iHateFred
@@ -590,7 +595,33 @@ X. Syncing repositories:
         outside of the central repository.  This can be very useful for 
         small teams working on a large project.
 
-     5. Git fetch imports commits from a remote repository, giving
+     5. Make an existing branch track a remote branch.
+
+        As of GIT 1.8.0
+
+           git checkout bar
+           git branch -u upstream/foo
+
+        Now your local branch bar is tracking the branch foo on
+        the remote repo upstream.
+
+        If you are on a branch otrher than bar,
+
+           git branch -u upstream/foo bar
+
+        As of GIT 1.7.0 you had to use
+
+           git branch --set-upstream bar upstream foo
+
+        if you like longer options, in 1.8.0 you can do
+
+           git branch --set-upstream-to=upstream/foo bar
+
+        If you can keep things simple, best practices is
+        rename upstream to origin and your local repo 
+        bar to foo. 
+
+     6. Git fetch imports commits from a remote repository, giving
         you chance to review changes before integrating them into the
         local copy of the project.
 
@@ -600,73 +631,73 @@ X. Syncing repositories:
 
            git fetch origin someBranch
 
-      6. Use 'git branch' to view local branches and 
-         use 'git branch -r' for remote branches.  Inspect these
-         branches with the ususal git chechout and git log commands.
+     7. Use 'git branch' to view local branches and 
+        use 'git branch -r' for remote branches.  Inspect these
+        branches with the ususal git chechout and git log commands.
 
-      7. Git pull (bring in remote changes).  This command fetches from and 
-         integrates with another repository or local banch.  The 'git pull'
-         command is shorthand for 'git fetch' followed by 'git merge FETCH_HEAD'
+     8. Git pull (bring in remote changes).  This command fetches from and 
+        integrates with another repository or local banch.  The 'git pull'
+        command is shorthand for 'git fetch' followed by 'git merge FETCH_HEAD'
 
-            git pull origin someBranch
+           git pull origin someBranch
 
-         To pull from the (possibly remote) branch you are tracking, with
-         the current branch, use
+        To pull from the (possibly remote) branch you are tracking, with
+        the current branch, use
 
-            git pull
+           git pull
 
-         Warning!!!  
+        Warning!!!  
 
-            git pull origin someBranch
+           git pull origin someBranch
 
-         will pull in from "someBranch" even if you are on "someOtherBranch".
+        will pull in from "someBranch" even if you are on "someOtherBranch".
 
-         Best practice is:
+        Best practice is:
 
-            git fetch origin     # So local repo knows of remote changes.
-            git status           # So we are sure we are where we think.
-                                 # This will also give other potentially
-                                 # useful info to keep yourself from shotting
-                                 # yourself in foot.
-            git pull 
+           git fetch origin     # So local repo knows of remote changes.
+           git status           # So we are sure we are where we think.
+                                # This will also give other potentially
+                                # useful info to keep yourself from shotting
+                                # yourself in foot.
+           git pull 
 
-         Now, the "git status" may tell us we can't just do a fast
-         foreward.  In that case, create a new local branch to track
-         the remote branch and do a git merge (see IX).
-            
+        Now, the "git status" may tell us we can't just do a fast
+        foreward.  In that case, create a new local branch to track
+        the remote branch and do a git merge (see IX).
+           
 
-      8. GIT push (push local changes elsewhere):
+     9. GIT push (push local changes elsewhere):
 
-            git push origin <branch>
-            git push origin master
-            git push origin --all
-            git push origin --tags
+           git push origin <branch>
+           git push origin master
+           git push origin --all
+           git push origin --tags
 
-         The commands (with nothing else)
+        The commands (with nothing else)
 
-            git push
-            git push origin
+           git push
+           git push origin
 
-         by themselves should be avoided.  Its default behavior is
-         different on different versions of git.  On git 1.9.5,
-         it seems to push all tracked branches to their remotes.
-         I beleive on later versions of git, it will just push
-         whatever branch you are currently on.
+        by themselves should be avoided.  Its default behavior is
+        different on different versions of git.  On git 1.9.5,
+        it seems to push all tracked branches to their remotes.
+        I beleive on later versions of git, it will just push
+        whatever branch you are currently on.
 
-         To remove a remote branch, do
+        To remove a remote branch, do
 
-            git push <Remotename> :<BranchName>
+           git push <Remotename> :<BranchName>
 
-         note the space before the colon, similar to renaming a branch,
-         you are pushing "nothing" into BranchName.
+        note the space before the colon, similar to renaming a branch,
+        you are pushing "nothing" into BranchName.
 
-         To push a tag,
+        To push a tag,
 
-            git push <RemoteName> <TagName>
+           git push <RemoteName> <TagName>
 
-         to push all tags,
+        to push all tags,
 
-            git push <RemoteName> --tag
+           git push <RemoteName> --tag
 
 XI. Tagging:
 

@@ -204,3 +204,66 @@ Purpose: For things installed locally as an unprivalleged user.
   OK, I need to figure out which version I should be using.  Seems
   that the lts-7.1 is using a newer version of GHCi than ghc-7.10.3!
   Until I am better "educated", I'll stick to lts-7.1.
+
+2016-10-15:
+  The latest long term support version of Haskell on Stackage,
+  https://www.stackage.org/, is LTS Haskell 7.3 (ghc-8.0.1).  The
+  defaults stack generates in stack.yaml are really out of date.
+  The lts-3.5 on Arch Linux caused me a lot of confussion, but it
+  did tell me that the only supported versions of ghc for OS
+  key 'linux64-ncurses6' are GhcVersion 7.10.3, GhcVersion 8.0.1.
+
+  So, I'll stick with lts-7.3 until the next LTS release.
+
+  Globally I installed lts-7.3 via
+
+    $ stack --resolver lts-7.3 setup
+
+  and made lts-7.3 by editing ~/.stack/global-project/stack.yaml,
+  where the non-comment contents of this file are now:
+
+    extra-package-dbs: []
+    packages: []
+    extra-deps: []
+    resolver: lts-7.3
+  
+  Now, a comment in this file directs me to the file
+  ~/.stack/config.yaml as being the default template for
+  new projects.  This file refers to the website
+  http://docs.haskellstack.org/en/stable/yaml_configuration/
+  for how to configure this file.  After consulting this 
+  website, the contents of ~/.stack/config.yaml are now:
+
+    templates:
+      params:
+        author-email: geoffrey@scheller.com
+        author-name: 'Geoffrey Scheller'
+        copyright: 'Copyright: (c) 2016 Geoffrey R. Scheller'
+        github-username: grscheller
+
+  I left the param 'category: value' off until I understand
+  it better.  Seems that it should be set on a per project
+  basis anyway.
+
+  I left the param 'category: value' off until I understand
+  it better.  Seems that it should be set on a per project
+  basis anyway.
+
+2016-10-15:
+  When creating a new stack project, use
+
+    $ stack new foofoo new-template
+
+  This will create:
+    LICENSE
+    Setup.hs
+    foofoo.cabal
+    stack.yaml
+    app/Main.hs
+    src/Lib.hs
+    test/Spec.hs
+
+  This seems a much better starting point than the ones I
+  fumbled to create above.
+
+  Aside: Don't know why it put it in the Web category?

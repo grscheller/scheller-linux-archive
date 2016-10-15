@@ -1732,3 +1732,23 @@ Purpose: To indicate what was done to create gauss17 and
 
     Pacman: mplayer
     Pacman: whois
+
+2016-10-15:
+  I may have lost some information in this file due to updating
+  this file with a version of it in my scheller-linux-environment
+  GitHub repo.  To avoid this confusion in the future, I created
+  the following symlink:
+
+    $ cd ~/info/ArchLinux/admin
+    $ ln -s ~/devel/scheller-linux-environment/info/ArchLinuxAdminLogs
+
+  so now there will only be one copy of my admin logs.  There is
+  another subdirectory ~/info/ArchLinux/admin/Config that
+  contains specific info about the changes I have made to the
+  system configuration files, for example
+
+    $ ls ~/info/ArchLinux/admin/Config_Files/etc/pam.d
+    login  login_orig  passwd  passwd_orig
+
+  Unfortunatelay, I can't share this with the rest of the world 
+  due to security reasons.

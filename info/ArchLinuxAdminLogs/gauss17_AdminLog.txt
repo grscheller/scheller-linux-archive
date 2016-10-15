@@ -1750,5 +1750,5 @@ Purpose: To indicate what was done to create gauss17 and
     $ ls ~/info/ArchLinux/admin/Config_Files/etc/pam.d
     login  login_orig  passwd  passwd_orig
 
-  Unfortunatelay, I can't share this with the rest of the world 
+  Unfortunately, I can't share this with the rest of the world 
   due to security reasons.

@@ -219,8 +219,9 @@ Purpose: For things installed locally as an unprivalleged user.
 
     $ stack --resolver lts-7.3 setup
 
-  and made lts-7.3 by editing ~/.stack/global-project/stack.yaml,
-  where the non-comment contents of this file are now:
+  and made lts-7.3 the default  by editing
+  ~/.stack/global-project/stack.yaml, where the non-comment
+  contents of this file are now:
 
     extra-package-dbs: []
     packages: []
@@ -240,10 +241,6 @@ Purpose: For things installed locally as an unprivalleged user.
         author-name: 'Geoffrey Scheller'
         copyright: 'Copyright: (c) 2016 Geoffrey R. Scheller'
         github-username: grscheller
-
-  I left the param 'category: value' off until I understand
-  it better.  Seems that it should be set on a per project
-  basis anyway.
 
   I left the param 'category: value' off until I understand
   it better.  Seems that it should be set on a per project

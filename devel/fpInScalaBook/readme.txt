@@ -1,0 +1,42 @@
+I am working my way through the book "Functional Programming in Scala"
+by Paul Chiusana and Runar Bjarnason to learn Scala.  Using the online
+reference manual at http://www.scala-sbt.org/ to learn sbt.
+
+So far I have completed through chapter 5.
+
+I am doing this in a another (local) GIT repo.  As I make progress,
+I will periodically make snapshots for my public repo.
+
+Libaries are under "src", test scripts (except for chapter 2 stuff)
+are under "test".  These tests just exercise the libaries.
+
+Run code:
+  $ sbt test:run
+  $ sbt run
+
+The version of sbt I am currently using: 0.13.12
+The version of scala and java are:
+
+  $ sbt console
+  [info] Set current project to root (in build file:/home/geoff/devel/learn/learnScala/fpInScalaBook/)
+  [info] Starting scala interpreter...
+  [info] 
+  Welcome to Scala 2.12.0-M5 (OpenJDK 64-Bit Server VM, Java 1.8.0_102).
+  Type in expressions for evaluation. Or try :help.
+
+  scala>
+
+My usual work flow is "continuous compile":
+
+  $ sbt
+  > ~; compile; test:compile
+  [success] Total time: 0 s, completed Oct 17, 2016 2:31:19 PM
+  [success] Total time: 0 s, completed Oct 17, 2016 2:31:19 PM
+  1. Waiting for source changes... (press enter to interrupt)
+     .
+     .
+     .
+
+  > test:run
+
+while I edit files in other terminal windows.

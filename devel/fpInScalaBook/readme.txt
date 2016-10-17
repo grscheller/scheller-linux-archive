@@ -7,8 +7,8 @@ So far I have completed through chapter 5.
 I am doing this in a another (local) GIT repo.  As I make progress,
 I will periodically make snapshots for my public repo.
 
-Libaries are under "src", test scripts (except for chapter 2 stuff)
-are under "test".  These tests just exercise the libaries.
+Libraries are under "src", test scripts (except for chapter 2 stuff)
+are under "test".  These tests just exercise the libraries.
 
 Run code:
   $ sbt test:run
@@ -36,7 +36,11 @@ My usual work flow is "continuous compile":
      .
      .
      .
-
   > test:run
+  > ~; compile; test:compile
+  1. Waiting for source changes... (press enter to interrupt)
+     .
+     .
+     .
 
-while I edit files in other terminal windows.
+repeat, while I edit files in other terminal windows.

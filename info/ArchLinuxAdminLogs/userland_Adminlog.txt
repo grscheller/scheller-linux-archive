@@ -264,3 +264,12 @@ Purpose: For things installed locally as an unprivalleged user.
   fumbled to create above.
 
   Aside: Don't know why it put it in the Web category?
+
+2016-10-16:
+  Seems that the Haskell/Stack world has moved onto lts-7.4.
+
+  I saw this when I tried to build something with stack.
+
+  Updated stack itself:
+
+    $ stack update

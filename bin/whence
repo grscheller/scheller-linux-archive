@@ -13,7 +13,7 @@
 
 shopt -s extglob   # Turn on extended pattern matching
 
-i=0;
+((i = 0))
 for File in "$@"
 do
    IFS=':'

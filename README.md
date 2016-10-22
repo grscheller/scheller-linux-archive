@@ -4,9 +4,10 @@ So they may be of some marginal use to others, and that they
 are always easily available to me, I have created a Github repo
 to capture my Bash/Unix environment configuration.  Also
 included are notes I have taken while learning software development
-and linux system administration.  These include administration 
-documenting the steps I did to create an Arch Linux system.  Some
-example software projects are included in the devel directory.
+and linux system administration.  These include my system
+administration logs documenting the steps I did to create an 
+Arch Linux system.  Some example software projects I have 
+written are included in the devel directory.
 
 I will set up this project as if it were a regular user's home
 directory.  My intention is not to provide a comprehensive set

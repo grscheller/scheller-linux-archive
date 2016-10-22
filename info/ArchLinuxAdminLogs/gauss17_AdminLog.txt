@@ -1752,3 +1752,21 @@ Purpose: To indicate what was done to create gauss17 and
 
   Unfortunately, I can't share this with the rest of the world 
   due to security reasons.
+
+2016-10-22:
+  Installed speedtest-cli and iperf to measure internet bandwidth.
+
+    Pacman: speedtest-cli iperf
+
+  speedtest-cli is a python script that gives a command-line-interface
+  to the http://www.zdnet.com/broadband-speedtest/ website.  I find it
+  alot more easy and user friendly than the actual website.  
+
+  iperf is both a client and server that can perform TCP speed test
+  between two systems.
+
+    On server run: $ iperf -s
+    On client run: $ iperf -c host
+
+  where host is IP of server.  Man page for iperf is quite complete.
+  Can also run UDP tests.

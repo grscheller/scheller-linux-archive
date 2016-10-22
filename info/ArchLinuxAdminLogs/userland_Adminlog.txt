@@ -273,3 +273,13 @@ Purpose: For things installed locally as an unprivalleged user.
   Updated stack itself:
 
     $ stack update
+
+2016-10-20:
+  Updated stack to use lts-7.4 when outside a project:
+
+  Changed
+
+    resolver: lts-7.3
+
+  in ~/.stack/global-project/stack.yaml
+

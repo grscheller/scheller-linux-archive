@@ -1,0 +1,224 @@
+Notes taken while implementing a Pythagorean Triple
+generation program in Haskell using the stack buildtool.
+
+These notes are more about how to use stack as a software
+development tool in a Linux environment.  Also, my attempts
+to understand/reverse engineer what is going on.
+
+Anyway, a Pythagoean Triple is a tuple (a,b,c) such
+that a^2 + b^2 = c^2.  This project is to write a program
+to generate all possible pythagorean triples such that
+gcd(a,b,c) = 1 and a, b, c > 0.
+
+2016-10-16:
+  Use stack to create boilerplate fo the project:
+
+    $ stack new pythagTriples new-template -p "category:Example"
+    Downloading template "new-template" to create project "pythagTriples" in pythagTriples/ ...
+    Looking for .cabal or package.yaml files to use to init the project.
+    Using cabal packages:
+    - pythagTriples/pythagTriples.cabal
+
+    Selecting the best among 9 snapshots...
+
+    * Matches lts-7.4
+
+    Selected resolver: lts-7.4
+    Initialising configuration using resolver: lts-7.4
+    Total number of user packages considered: 1
+    Writing configuration to file: pythagTriples/stack.yaml
+    All done.
+
+  The files created were:
+
+    LICENSE
+    pythagTriples.cabal
+    Setup.hs
+    stack.yaml
+    app/Main.hs
+    src/Lib.hs
+    test/Spec.hs
+
+2016-10-16:
+    Created this develLog.readme file to document development
+    efforts for this project.
+
+    Created a .gitignore file based on what was recommended
+    by Chris Allen in 'https://www.howistart.org/posts/haskell/1'.
+
+      $ cat .gitignore
+      dist
+      dist-*
+      cabal-dev
+      *.o
+      *.hi
+      *.chi
+      *.chs.h
+      *.dyn_o
+      *.dyn_hi
+      .hpc
+      .hsenv
+      .cabal-sandbox/
+      cabal.sandbox.config
+      *.prof
+      *.aux
+      *.hp
+      *.eventlog
+      .stack-work/
+      *.swp
+
+  The last item, *.swp, was added by me since I usually use the
+  editor vi, stack commands, and stack ghci running in multiple
+  terminal emulators as my IDE.
+
+  Finally, initialize a local GIT repo for the project.
+
+    $ git init
+    $ git add LICENSE pythagTriples.cabal Setup.hs stack.yaml
+    $ git add app/Main.hs src/Lib.hs test/Spec.hs
+    $ git add develLog.readme
+    $ git add .gitignore
+
+2016-10-16:
+  Build something.
+
+    $ git status
+    On branch master
+    nothing to commit, working tree clean
+
+    $ stack build
+    pythagTriples-0.1.0.0: configure
+    Configuring pythagTriples-0.1.0.0...
+    pythagTriples-0.1.0.0: build
+    Preprocessing library pythagTriples-0.1.0.0...
+    [1 of 1] Compiling Lib              ( src/Lib.hs, .stack-work/dist/x86_64-linux-ncurses6/Cabal-1.24.0.0/build/Lib.o )
+    Preprocessing executable 'pythagTriples-exe' for pythagTriples-0.1.0.0...
+    [1 of 1] Compiling Main             ( app/Main.hs, .stack-work/dist/x86_64-linux-ncurses6/Cabal-1.24.0.0/build/pythagTriples-exe/pythagTriples-exe-tmp/Main.o )
+    Linking .stack-work/dist/x86_64-linux-ncurses6/Cabal-1.24.0.0/build/pythagTriples-exe/pythagTriples-exe ...
+    pythagTriples-0.1.0.0: copy/register
+    Installing library in
+    /home/geoff/devel/learn/learnHaskell/pythagTriples/.stack-work/install/x86_64-linux-ncurses6/lts-7.4/8.0.1/lib/x86_64-linux-ghc-8.0.1/pythagTriples-0.1.0.0-EnHpQZMptv6AvrGgRBF8hR
+    Installing executable(s) in
+    /home/geoff/devel/learn/learnHaskell/pythagTriples/.stack-work/install/x86_64-linux-ncurses6/lts-7.4/8.0.1/bin
+    Registering pythagTriples-0.1.0.0...
+
+  Now, lets test if .gitignore file did its job:
+
+    $ git status
+    On branch master
+    nothing to commit, working tree clean
+
+2016-10-16:
+  Lets test the boilerplate code:
+
+    $ stack exec pythagTriples
+    Executable named pythagTriples not found on path: [<snip>]
+
+  So, nobody home???
+
+    $ find . -name 'pythagT*' -executable \! -type d
+    ./.stack-work/dist/x86_64-linux-ncurses6/Cabal-1.24.0.0/build/pythagTriples-exe/pythagTriples-exe
+    ./.stack-work/install/x86_64-linux-ncurses6/lts-7.4/8.0.1/bin/pythagTriples-exe
+
+  Now test it:
+
+    $ stack exec pythagTriples-exe
+    someFunc
+
+  OK, boilerplate works.
+
+  Aside:  I could also have used my "whence" command to
+          find the executable:
+
+      $ stack exec whence 'pythagT*'
+      /home/geoff/devel/learn/learnHaskell/pythagTriples/.stack-work/install/x86_64-linux-ncurses6/lts-7.4/8.0.1/bin/pythagTriples-exe
+      ./pythagTriples.cabal
+
+    Or just looked at the output of the stack build command.
+
+    There is also "stack path" command, contains lots of info.
+
+      $ stack path
+      stack-root: /home/geoff/.stack
+      project-root: /home/geoff/devel/learn/learnHaskell/pythagTriples
+      config-location: /home/geoff/devel/learn/learnHaskell/pythagTriples/stack.yaml
+      bin-path: /home/geoff/.stack/snapshots/x86_64-linux-ncurses6/lts-7.4/8.0.1/bin:/home/geoff/.stack/programs/x86_64-linux/ghc-ncurses6-8.0.1/bin:/home/geoff/.local/bin:/home/geoff/opt/anaconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/home/geoff/local/bin:/home/geoff/local/share/perl6/site/bin:/home/geoff/bin:.
+      programs: /home/geoff/.stack/programs/x86_64-linux
+      compiler-exe: /home/geoff/.stack/programs/x86_64-linux/ghc-ncurses6-8.0.1/bin/ghc
+      compiler-bin: /home/geoff/.stack/programs/x86_64-linux/ghc-ncurses6-8.0.1/bin
+      local-bin: /home/geoff/.local/bin
+      extra-include-dirs: 
+      extra-library-dirs: 
+      snapshot-pkg-db: /home/geoff/.stack/snapshots/x86_64-linux-ncurses6/lts-7.4/8.0.1/pkgdb
+      local-pkg-db: /home/geoff/devel/learn/learnHaskell/pythagTriples/.stack-work/install/x86_64-linux-ncurses6/lts-7.4/8.0.1/pkgdb
+      global-pkg-db: /home/geoff/.stack/programs/x86_64-linux/ghc-ncurses6-8.0.1/lib/ghc-8.0.1/package.conf.d
+      ghc-package-path: /home/geoff/devel/learn/learnHaskell/pythagTriples/.stack-work/install/x86_64-linux-ncurses6/lts-7.4/8.0.1/pkgdb:/home/geoff/.stack/snapshots/x86_64-linux-ncurses6/lts-7.4/8.0.1/pkgdb:/home/geoff/.stack/programs/x86_64-linux/ghc-ncurses6-8.0.1/lib/ghc-8.0.1/package.conf.d
+      snapshot-install-root: /home/geoff/.stack/snapshots/x86_64-linux-ncurses6/lts-7.4/8.0.1
+      local-install-root: /home/geoff/devel/learn/learnHaskell/pythagTriples/.stack-work/install/x86_64-linux-ncurses6/lts-7.4/8.0.1
+      snapshot-doc-root: /home/geoff/.stack/snapshots/x86_64-linux-ncurses6/lts-7.4/8.0.1/doc
+      local-doc-root: /home/geoff/devel/learn/learnHaskell/pythagTriples/.stack-work/install/x86_64-linux-ncurses6/lts-7.4/8.0.1/doc
+      dist-dir: .stack-work/dist/x86_64-linux-ncurses6/Cabal-1.24.0.0
+      local-hpc-root: /home/geoff/devel/learn/learnHaskell/pythagTriples/.stack-work/install/x86_64-linux-ncurses6/lts-7.4/8.0.1/hpc
+      local-bin-path: /home/geoff/.local/bin
+      ghc-paths: /home/geoff/.stack/programs/x86_64-linux
+
+    Or even more simply, use my path command:
+
+      $ stack exec path
+      /home/geoff/devel/learn/learnHaskell/pythagTriples/.stack-work/install/x86_64-linux-ncurses6/lts-7.4/8.0.1/bin
+      /home/geoff/.stack/snapshots/x86_64-linux-ncurses6/lts-7.4/8.0.1/bin
+      /home/geoff/.stack/programs/x86_64-linux/ghc-ncurses6-8.0.1/bin
+      /home/geoff/.local/bin
+      /home/geoff/opt/anaconda3/bin
+      /usr/local/sbin
+      /usr/local/bin
+      /usr/bin
+      /usr/lib/jvm/default/bin
+      /usr/bin/site_perl
+      /usr/bin/vendor_perl
+      /usr/bin/core_perl
+      /home/geoff/local/bin
+      /home/geoff/local/share/perl6/site/bin
+      /home/geoff/bin
+  
+    Which is easier to read than
+
+     $ stack exec -- bash -c 'echo $PATH'
+     /home/geoff/devel/learn/learnHaskell/pythagTriples/.stack-work/install/x86_64-linux-ncurses6/lts-7.4/8.0.1/bin:/home/geoff/.stack/snapshots/x86_64-linux-ncurses6/lts-7.4/8.0.1/bin:/home/geoff/.stack/programs/x86_64-linux/ghc-ncurses6-8.0.1/bin:/home/geoff/.local/bin:/home/geoff/opt/anaconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/home/geoff/local/bin:/home/geoff/local/share/perl6/site/bin:/home/geoff/bin:.
+
+    The '--' is needed otherwise stack thinks I am sending
+    its exec command a -c option.
+
+2016-10-16:
+  By editting the pythagTriples.cabal file, got rid of the 
+  "-exe", generated command is now pythagTriples.  The command
+  works outside of the stack build environment.
+
+  Note: "stack clean" does not remove previously built executables.
+
+2016-10-19:
+  Minor refactoring.
+
+  Changed module Lib -> PythagTriples
+  pythagTriples now a "Hello World" program.
+  Test suite now prints message and runs program.
+
+    $ stack exec pythagTriples
+    Hello World
+
+    $ stack test
+    pythagTriples-0.1.0.0: test (suite: pythagTriples-test)
+
+
+    Just run command(test suite not yet implemented):
+    Hello World
+
+2016-10-22:
+  Finished implementing pathagTriple "app" and library implements
+  two pathagorean triple algorithms, one fast, one which will
+  generate them in lexiconical order.
+
+  Still to do:
+    1. Describe algorithms.
+    2. Implement tests to ensure fast version is complete and
+       characterize its output.

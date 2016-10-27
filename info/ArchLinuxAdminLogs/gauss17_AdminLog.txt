@@ -1860,3 +1860,27 @@ Purpose: To indicate what was done to create gauss17 and
   were spun up.
 
   Interesting...
+
+2016-10-26:
+  Every time a "shutdown" from within Xfce, but not "log out",
+  the next time I startx, I get one more of these 
+  'Thunar --sm-client-id ... --daemon' running.  I am up to 11 
+  of these now.  I will look into Xfce startup configurations.
+
+2016-10-27:
+  Revisionist history to follow (took a while to work out):
+
+  In 'Sessions and Startup' Xfce config gui, checked 'Prompt
+  on logout' and unchecked 'Launch thunar in daemon mode'.
+  Killed off all the running Thunar Daemons.  On 'Log Out' 
+  checked 'Save session for future logins'.
+
+  On reboot, now only one Thunar runs in Daemon mode.
+
+  So, I have an unconfigured display manager installed that
+  I have disabled.  In retrospect, I could have fixed original
+  problem with kill command and gui settings.
+
+  Never had to reinstall thunar, thunar-archive-plugin,
+  thunar-media-tags-pluggin, and thunar-volman.  My external
+  hard drive mounts just fine.

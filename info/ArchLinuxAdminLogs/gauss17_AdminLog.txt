@@ -1770,3 +1770,93 @@ Purpose: To indicate what was done to create gauss17 and
 
   where host is IP of server.  Man page for iperf is quite complete.
   Can also run UDP tests.
+
+2016-10-24:
+  Over last few days I noticed XFCE gui environment getting
+  slower, terminals & browser windows failed to spin up.
+
+2016-10-25:
+  Over last few days I noticed XFCE gui environment getting
+  slower, terminals & browser windows failed to spin up.
+
+  Previously, I have noticed that I am getting quite a 
+  few Thunar related daemon processes spun up:
+
+    Thunar --sm-client-id 2c76304e3-138f-44e2-9910-e77c65e60ab5 --daemon
+
+  Well, today GUI-land unusable and several hundred of them are
+  running. 
+
+  I don't know if this has anything to do with it, but the
+  XFCE gui environment really started steadily going downhill
+  after a pacman update that brought in gtk/gtk3 stuff.
+
+2016-10-25:
+  Try uninstalling Thunar related stuff:
+
+    Pacman(Remove): thunar thunar-archive-plugin
+    Pacman(Remove): thunar-media-tags-pluggin thunar-volman
+
+  Before reinstalling, I rebooted.  Not only was Thunar file
+  manager still there, but all the daemon processes too.
+  XFCE-DE still barely usable.  Punt on the reinstall for
+  now, but I suspect I will need thunar-volman to mount
+  my external HD.
+
+2016-10-26:
+  GUI-land completely unusable until I slew off hundreds of
+  these Thunar deamon processes via:
+
+    $ ((jj = 2600)); while (( jj++ < 2826))
+    > do
+    >    kill -15 $15
+    > done
+
+  in another virtural console.  I left 6 of them running.
+  Now, the desktop environment is functioning as it should.
+
+  There is nothing on internet about XFCE/Thunar issues and
+  a pacman update when I logged on didn't drag in any possibly
+  related gtk/thunar/xfce updates.
+
+2016-10-26:
+  I going to research completely redoing my XFCE Desktop 
+  Environment.  I think I will bring in a Display Manager.
+  This, I hope, will make my system more "convensional" and
+  thus more close to a tested "configuration."
+
+2016-10-26:
+  Installed lightdm display manager
+
+    Pacman: lightdm lightdm-gtk-greater
+
+  and some optional dependencies
+
+    Pacman: accountsservice xorg-server-xephyr
+
+  and enabled it
+
+    $ sudo systemctl enable lightdm
+
+  reboot
+
+  As I suspected, dark screen.  I will need to figure out
+  how to configure it to use the NVIDIA card like I did
+  for startx in my ~/.xinitrc file.
+
+  But!!! when I jump over to another virtual terminal, and
+  run startx, XFCE spins up perfectly with only one
+  instance of '/usr/bin/thunar --daemon' running!
+
+2016-10-26:
+  No wireless running.  Lets disable lightdm.
+
+    $ sudo systemctl disable lightdm
+
+  and reboot.
+
+  System came back up, started xfce via startx, network
+  configured again, but 7 'Thunar --sm-client-id ... --daemon'
+  were spun up.
+
+  Interesting...

@@ -557,7 +557,6 @@ IX. Git merge:
 
            Continue long-term development
               ...
-     4. git merge --abort   
 
 X. Syncing repositories:
 
@@ -605,19 +604,15 @@ X. Syncing repositories:
         Now your local branch bar is tracking the branch foo on
         the remote repo upstream.
 
-        If you are on a branch otrher than bar,
+        If you are on a branch other than bar,
 
            git branch -u upstream/foo bar
 
-        As of GIT 1.7.0 you had to use
-
-           git branch --set-upstream bar upstream foo
-
-        if you like longer options, in 1.8.0 you can do
+        if you like longer options, in 1.8.0+ you can do
 
            git branch --set-upstream-to=upstream/foo bar
 
-        If you can keep things simple, best practices is
+        To keep things simple, best practices is to
         rename upstream to origin and your local repo 
         bar to foo. 
 

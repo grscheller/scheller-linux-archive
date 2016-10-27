@@ -101,46 +101,66 @@ Uses for /dev device files:
     bash: echo: write error: No space left on device
 
 To completely scrub all environment variables in bash:
-    env -i /bin/bash --noprofile --norc
+  env -i /bin/bash --noprofile --norc
 
 To turn cpu throttleing off:
-    CentOS:
-    To see how fast processor is running:
-        sudo cat /sys/devices/system/cpu/cpu*/cpufreq/cpuinfo_cur_freq
-    Temporarily turn off throttling:
-        sudo service cpuspeed stop
-    Permanently turn off cpu throttling:
-        sudo chkconfig cpuspeed off
-    Note: Above two commands will cause the cpufreq directory to disappear, but 
-          you can get this info from:
-              cat /proc/cpuinfo
+  CentOS:
+  To see how fast processor is running:
+     sudo cat /sys/devices/system/cpu/cpu*/cpufreq/cpuinfo_cur_freq
+  Temporarily turn off throttling:
+     sudo service cpuspeed stop
+  Permanently turn off cpu throttling:
+     sudo chkconfig cpuspeed off
+  Note: Above two commands will cause the cpufreq directory to disappear, but 
+        you can get this info from:
+           cat /proc/cpuinfo
 
-    Fedora command (Not sure for CentOS):
-        /usr/bin/cpufreq-selector -g performance
+  Fedora command (Not sure for CentOS):
+     /usr/bin/cpufreq-selector -g performance
 
 Bash tricks:
-    Send only stderr down pile:
-        cmd1 2>&1 >/dev/null | cmd2
-    Swap stderr and stdout:
-        cmd1 3>&2 2>&1 >&3 | cmd2
+  Send only stderr down pile:
+     cmd1 2>&1 >/dev/null | cmd2
+  Swap stderr and stdout:
+     cmd1 3>&2 2>&1 >&3 | cmd2
 
 To type Unicode characters into a Linux Gnome Terminal:
-    Example, to type λ at a linux gnome-terminal, 
-    type <ctrl+shift+u>00b3<return>.
-    Cut and paste works great!
+  Example, to type λ at a linux gnome-terminal, 
+  type <ctrl+shift+u>00b3<return>.
+  Cut and paste works great!
 
 To distribute something in gzip tar format:
-    To make the "tarball",
-      tar cvzf Infostuff.tar.gz Info/
-    To get a table of contents,
-      tar tvf Infostuff.tar.gz
-    To unpack the "tarball",
-      tar xvf Infostuff.tar.gz
+  To make the "tarball",
+     tar cvzf Infostuff.tar.gz Info/
+  To get a table of contents,
+     tar tvf Infostuff.tar.gz
+  To unpack the "tarball",
+     tar xvf Infostuff.tar.gz
 
 View boot messages after system is booted:
-    dmesg
+  dmesg
 
 The Unix grep command has -B and -A options that
 will print a number of lines before and after
 the matching line.  These options eliminate about
 90% of the use cases for the Unix sed command.
+
+Linux CUPS printer commands:
+  To list default printer,
+     lpstat -d
+  To show your current print jobs,
+     lpstat
+     lpstat -l
+  To show the "accepting state" of printers,
+     lpstat -a
+  To print a file,
+     lp filename
+  Send std out to printer, print two copies,
+     echo 'Test of printer' | lp -n2
+
+Linux mailx  command:
+  To Read mail,
+     mailx
+  To send mail with attachmented file and subject line to
+  address in shell variable ME,
+     echo "Homepage attached" | mailx -s "Home page" -a Homepage.html $ME

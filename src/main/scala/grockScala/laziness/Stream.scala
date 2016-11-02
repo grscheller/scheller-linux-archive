@@ -10,40 +10,6 @@ sealed trait Stream[+A] { self =>
 
   import Stream._
 
-  /*  For for expressions
-   *
-   *  This imperitive hook maybe out of place 
-   *  in this bit of functional heaven the book is
-   *  trying to create.
-   *
-   *  To fully implement for comprehensions and expressions,
-   *  you need to implement all the members in the trait
-   *  scala.collection.generic.FilterMonadic.
-   *
-   *  These are: flatMap and map (for comprehensions), 
-   *             foreach (for for expressions), and
-   *             withFilter (to enable guards).
-   *
-   *  flatMap    - done as part of the tutorial
-   *  foreach    - fundamently not functional
-   *  withFilter - modeled after scala.Option
-   *
-   */
-
-  def foreach[U](f: A => U): Unit = self match {
-    case Cons(h, t) => {f(h()); t().foreach(f)}
-    case Empty => ()
-  }
-
-  @inline final def withFilter(p: A => Boolean): WithFilter = new WithFilter(p)
-
-  class WithFilter(p: A => Boolean) {
-    def map[B](f: A => B): Stream[B] = self filter p map f
-    def flatMap[B](f: A => Stream[B]): Stream[B] = self filter p flatMap f
-    def foreach[U](f: A => U): Unit = self filter p foreach f
-    def withFilter(q: A => Boolean): WithFilter = new WithFilter(x => p(x) && q(x))
-  }
-
   def headOption1: Option[A] = self match {
     case Empty => None
     case Cons(h, t) => Some(h())   // Explicitly evaluate the thunk
@@ -94,7 +60,6 @@ sealed trait Stream[+A] { self =>
       case _ => false
     }
 
-  // 
   /** Reduce a stream right to left with a function.
    *
    *  @param z initial value of the accumulator (value
@@ -244,6 +209,46 @@ sealed trait Stream[+A] { self =>
   def hasSubsequence[B](sub: Stream[B]): Boolean =
     tails exists (_ startsWith sub)
 
+  /*  For for expressions
+   *
+   *  This imperitive hook maybe out of place 
+   *  in this bit of functional heaven the book is
+   *  trying to create.
+   *
+   *  To fully implement for comprehensions and expressions,
+   *  you need to implement all the members in the trait
+   *  scala.collection.generic.FilterMonadic.
+   *
+   *  These are: flatMap and map (for comprehensions), 
+   *             foreach (for for expressions), and
+   *             withFilter (to enable guards).
+   *
+   *  flatMap    - done above
+   *  foreach    - fundamently not functional
+   *  withFilter - modeled after scala.Option
+   *
+   */
+
+  def foreach[U](f: A => U): Unit = self match {
+    case Cons(h, t) => {f(h()); t().foreach(f)}
+    case Empty => ()
+  }
+
+  @inline final def withFilter(p: A => Boolean): WithFilter =
+     new WithFilter(p)
+
+  class WithFilter(p: A => Boolean) {
+    def map[B](f: A => B): Stream[B] = self filter p map f
+
+    def flatMap[B](f: A => Stream[B]): Stream[B] =
+      self filter p flatMap f
+
+    def foreach[U](f: A => U): Unit = self filter p foreach f
+
+    def withFilter(q: A => Boolean): WithFilter =
+      new WithFilter(x => p(x) && q(x))
+  }
+
 }
 case object Empty extends Stream[Nothing]
 case class Cons[+A](h: () => A, t: () => Stream[A]) extends Stream[A]
@@ -331,6 +336,8 @@ object Stream {
   // developed in InfiniteStreamTest.scala
 
   // My original version of constant
+  //   Seems to be more prone to stack overflow
+  //   than const and constU
   def const1[A](a: A): Stream[A] =
     cons(a, const1(a))
 

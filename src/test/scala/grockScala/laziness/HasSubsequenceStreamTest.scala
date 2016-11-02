@@ -1,6 +1,7 @@
 package grockScala.test.laziness
 
 import grockScala.laziness._
+import grockScala.laziness.Stream._
 
 object HasSubsequenceStreamTest{
 
@@ -16,40 +17,40 @@ object HasSubsequenceStreamTest{
     // Test startsWith and indirectly zipWith and zipAll
     println("\nTest startWith methods:")
 
-    print("Stream.range(0,100,10) startsWith Stream.range(0,60,10)) = ")
-    println(Stream.range(0,100,10) startsWith Stream.range(0,60,10))
-    print("Stream.range(0,100,10) startsWith2 Stream.range(0,60,10)) = ")
-    println(Stream.range(0,100,10) startsWith2 Stream.range(0,60,10))
-    print("Stream.range(0,100,10) startsWith3 Stream.range(0,60,10)) = ")
-    println(Stream.range(0,100,10) startsWith3 Stream.range(0,60,10))
+    print("range(0,100,10) startsWith range(0,60,10)) = ")
+    println(range(0,100,10) startsWith range(0,60,10))
+    print("range(0,100,10) startsWith2 range(0,60,10)) = ")
+    println(range(0,100,10) startsWith2 range(0,60,10))
+    print("range(0,100,10) startsWith3 range(0,60,10)) = ")
+    println(range(0,100,10) startsWith3 range(0,60,10))
 
-    print("\nStream.range(0,100,10) startsWith Stream(1,2,3,4)) = ")
-    println(Stream.range(0,100,10) startsWith Stream(1,2,3,4))
-    print("Stream.range(0,100,10) startsWith2 Stream(1,2,3,4)) = ")
-    println(Stream.range(0,100,10) startsWith2 Stream(1,2,3,4))
-    print("Stream.range(0,100,10) startsWith3 Stream(1,2,3,4)) = ")
-    println(Stream.range(0,100,10) startsWith3 Stream(1,2,3,4))
+    print("\nrange(0,100,10) startsWith Stream(1,2,3,4)) = ")
+    println(range(0,100,10) startsWith Stream(1,2,3,4))
+    print("range(0,100,10) startsWith2 Stream(1,2,3,4)) = ")
+    println(range(0,100,10) startsWith2 Stream(1,2,3,4))
+    print("range(0,100,10) startsWith3 Stream(1,2,3,4)) = ")
+    println(range(0,100,10) startsWith3 Stream(1,2,3,4))
 
-    print("\nStream.from(0) startsWith Stream.from(4)) = ")
-    println(Stream.from(0) startsWith Stream.from(4))
-    print("Stream.from(0) startsWith2 Stream.from(4)) = ")
-    println(Stream.from(0) startsWith2 Stream.from(4))
-    print("Stream.from(0) startsWith3 Stream.from(4)) = ")
-    println(Stream.from(0) startsWith3 Stream.from(4))
+    print("\nfrom(0) startsWith from(4)) = ")
+    println(from(0) startsWith from(4))
+    print("from(0) startsWith2 from(4)) = ")
+    println(from(0) startsWith2 from(4))
+    print("from(0) startsWith3 from(4)) = ")
+    println(from(0) startsWith3 from(4))
 
-    print("\nStream.from(0) startsWith Stream.range(0,50000)) = ")
-    println(Stream.from(0) startsWith Stream.range(0,50000))
-    print("Stream.from(0) startsWith2 Stream.range(0,900)) = ")
-    println(Stream.from(0) startsWith2 Stream.range(0,900))
-    print("Stream.from(0) startsWith3 Stream.range(0,900)) = ")
-    println(Stream.from(0) startsWith3 Stream.range(0,900))
+    print("\nfrom(0) startsWith range(0,50000)) = ")
+    println(from(0) startsWith range(0,50000))
+    print("from(0) startsWith2 range(0,900)) = ")
+    println(from(0) startsWith2 range(0,900))
+    print("from(0) startsWith3 range(0,900)) = ")
+    println(from(0) startsWith3 range(0,900))
 
-    print("\nStream.from(0) startsWith Stream.range(0,500)#:::Stream(3,2,1) = ")
-    println(Stream.from(0) startsWith Stream.range(0,500)#:::Stream(3,2,1))
-    print("Stream.from(0) startsWith2 Stream.range(0,500)#:::Stream(3,2,1) = ")
-    println(Stream.from(0) startsWith2 Stream.range(0,500)#:::Stream(3,2,1))
-    print("Stream.from(0) startsWith3 Stream.range(0,500)#:::Stream(3,2,1) = ")
-    println(Stream.from(0) startsWith3 Stream.range(0,500)#:::Stream(3,2,1))
+    print("\nfrom(0) startsWith range(0,500)#:::Stream(3,2,1) = ")
+    println(from(0) startsWith range(0,500)#:::Stream(3,2,1))
+    print("from(0) startsWith2 range(0,500)#:::Stream(3,2,1) = ")
+    println(from(0) startsWith2 range(0,500)#:::Stream(3,2,1))
+    print("from(0) startsWith3 range(0,500)#:::Stream(3,2,1) = ")
+    println(from(0) startsWith3 range(0,500)#:::Stream(3,2,1))
 
     print("\nStream(2,4,6,8) startsWith Stream(2,4,6,8,10,12)) = ")
     println(Stream(2,4,6,8) startsWith Stream(2,4,6,8,10,12))
@@ -78,17 +79,17 @@ object HasSubsequenceStreamTest{
 
     println("\nTest hasSubsequence method")
 
-    print("\nStream.range(1,1000) hasSubsequence ")
-    print("Stream.range(875, 889) = ")
-    println(Stream.range(1, 1000) hasSubsequence Stream.range(875, 889))
+    print("\nrange(1,1000) hasSubsequence ")
+    print("range(875, 889) = ")
+    println(range(1, 1000) hasSubsequence range(875, 889))
 
-    print("\nStream.range(1,1000) hasSubsequence ")
+    print("\nrange(1,1000) hasSubsequence ")
     print("Stream(5,4,3,2,1) = ")
-    println(Stream.range(1, 1000) hasSubsequence Stream(5,4,3,2,1))
+    println(range(1, 1000) hasSubsequence Stream(5,4,3,2,1))
 
-    print("\nStream.range(1,1000) hasSubsequence ")
+    print("\nrange(1,1000) hasSubsequence ")
     print("Stream(999,1000,1001) = ")
-    println(Stream.range(1, 1000) hasSubsequence Stream(999,1000,1001))
+    println(range(1, 1000) hasSubsequence Stream(999,1000,1001))
 
     println()
 

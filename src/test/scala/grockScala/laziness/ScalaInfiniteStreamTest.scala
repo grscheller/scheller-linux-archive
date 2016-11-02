@@ -1,12 +1,14 @@
 package grockScala.test.laziness
 
+import scala.collection.immutable.Stream.{cons, from}
+
 /** Repeat first half of InfiniteStreamTest but use
  *  Stream class from Scala Collections.
  */
 object ScalaInfiniteStreamTest{
 
   // Infinite data structure - infinite Stream of 42's
-  val fortyTwos: Stream[Int] = Stream.cons(42, fortyTwos)
+  val fortyTwos: Stream[Int] = cons(42, fortyTwos)
 
   // This works.
   def oneSixtyEight(): Int = {
@@ -14,8 +16,7 @@ object ScalaInfiniteStreamTest{
   }
 
   // My original version of constant
-  def constant[A](a: A): Stream[A] =
-    Stream.cons(a, constant(a))
+  def constant[A](a: A): Stream[A] = cons(a, constant(a))
 
   /** Create an infinite stream of the Fibonaccii numbers
    *
@@ -24,7 +25,7 @@ object ScalaInfiniteStreamTest{
   def fibs(): Stream[Long] = fibStream(0L, 1L)
 
   def fibStream(f0: Long, f1: Long): Stream[Long] =
-    Stream.cons(f0, fibStream(f1, f0 + f1))
+    cons(f0, fibStream(f1, f0 + f1))
 
   def main(args: Array[String]): Unit = {
 
@@ -40,12 +41,12 @@ object ScalaInfiniteStreamTest{
           definition of value ones"
        Fails for both scala-2.12.0-M4 and scala-2.11.7.
     */
-    // val ones: Stream[Int] = Stream.cons(1, ones)
+    // val ones: Stream[Int] = cons(1, ones)
     // print("ones.drop(42).take(10).headOption = ")
     // println(ones.drop(42).take(10).headOption)
 
     // Works if we make the val lazy
-    lazy val twos: Stream[Int] = Stream.cons(2, twos)
+    lazy val twos: Stream[Int] = cons(2, twos)
     print("twos.take(10).drop(3).toList = ")
     println(twos.take(10).drop(3).toList)
     print("twos.take(1000).drop(993).toList = ")
@@ -59,7 +60,7 @@ object ScalaInfiniteStreamTest{
        This works if we use a lazy val.
     */
     def six(): Int = {
-       lazy val ones: Stream[Int] = Stream.cons(1, ones)
+       lazy val ones: Stream[Int] = cons(1, ones)
        ones.take(6).foldRight(0)(_ + _)
     }
     println("six() = " + six())
@@ -79,10 +80,10 @@ object ScalaInfiniteStreamTest{
 
     println("\nTest from methods:")
 
-    val count42to52 = Stream.from(42).takeWhile(_ < 53)
+    val count42to52 = from(42).takeWhile(_ < 53)
     println("count42to52.toList = " + count42to52.toList)
 
-    val oneTo1000 = Stream.from(1).takeWhile(_ <= 1000)
+    val oneTo1000 = from(1).takeWhile(_ <= 1000)
     var sumAccm = 0
     for (nn <- oneTo1000) sumAccm += nn
     println("\nSum 1 to 1000 is " + sumAccm)
@@ -99,8 +100,8 @@ object ScalaInfiniteStreamTest{
     /* Only could atart with -3000 reliably, -3700 intermitantly
        with grockscala versions before stack overflow. */
     print("\nCompare grockscala.laziness.{from,dropWhile}:")
-    print("\nStream.from(-20000).dropWhile(_ < 1600).take(3).toList = ")
-    println(Stream.from(-20000).dropWhile(_ < 1600).take(3).toList)
+    print("\nfrom(-20000).dropWhile(_ < 1600).take(3).toList = ")
+    println(from(-20000).dropWhile(_ < 1600).take(3).toList)
     println()
 
   }

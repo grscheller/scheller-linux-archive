@@ -1,6 +1,7 @@
 package grockScala.test.laziness
 
 import grockScala.laziness._
+import grockScala.laziness.Stream._
 
 object StreamTest{
 
@@ -73,14 +74,14 @@ object StreamTest{
     // Test Laziness via a functions with side effects
 
     println("\nTest laziness with drop and take:\n")
-    val putz = Stream.cons({print("three "); 3},
-                 Stream.cons({print("two "); 2},
-                   Stream.cons({print("one "); 1},
-                     Stream.empty)))
-    println("putz = Stream.cons({print(\"three \"); 3},")
-    println("         Stream.cons({print(\"two \"); 2},")
-    println("           Stream.cons({print(\"one \"); 1},")
-    println("             Stream.empty)))\n")
+    val putz = cons({print("three "); 3},
+                 cons({print("two "); 2},
+                   cons({print("one "); 1},
+                     empty)))
+    println("putz = cons({print(\"three \"); 3},")
+    println("         cons({print(\"two \"); 2},")
+    println("           cons({print(\"one \"); 1},")
+    println("             empty)))\n")
 
     print("putz = "); println(putz)
     print("putz.drop(2).toList = "); println(putz.drop(2).toList)
@@ -101,29 +102,29 @@ object StreamTest{
     println(oneToTen.dropWhile(_ < 5).takeWhile1(_ < 8).toList)
 
     val bad1To10 =
-      Stream.cons({print("<1>"); 1},
-        Stream.cons({print("<2>"); 2},
-          Stream.cons({print("<3>"); 3},
-            Stream.cons({print("<4>"); 4},
-              Stream.cons({print("<5>"); 5},
-                Stream.cons({print("<6>"); 6},
-                  Stream.cons({print("<7>"); 7},
-                    Stream.cons({print("<8>"); 8},
-                      Stream.cons({print("<9>"); 9},
-                        Stream.cons({print("<10>"); 10},
-                          Stream.empty))))))))))
+      cons({print("<1>"); 1},
+        cons({print("<2>"); 2},
+          cons({print("<3>"); 3},
+            cons({print("<4>"); 4},
+              cons({print("<5>"); 5},
+                cons({print("<6>"); 6},
+                  cons({print("<7>"); 7},
+                    cons({print("<8>"); 8},
+                      cons({print("<9>"); 9},
+                        cons({print("<10>"); 10},
+                          empty))))))))))
     println("\nbad1To10 = ")
-    println("  Stream.cons({print(\"<1>\"); 1},")
-    println("    Stream.cons({print(\"<2>\"); 2},")
-    println("      Stream.cons({print(\"<3>\"); 3},")
-    println("        Stream.cons({print(\"<4>\"); 4},")
-    println("          Stream.cons({print(\"<5>\"); 5},")
-    println("            Stream.cons({print(\"<6>\"); 6},")
-    println("              Stream.cons({print(\"<7>\"); 7},")
-    println("                Stream.cons({print(\"<8>\"); 8},")
-    println("                  Stream.cons({print(\"<9>\"); 9},")
-    println("                    Stream.cons({print(\"<10>\"); 10},")
-    println("                      Stream.empty))))))))))")
+    println("  cons({print(\"<1>\"); 1},")
+    println("    cons({print(\"<2>\"); 2},")
+    println("      cons({print(\"<3>\"); 3},")
+    println("        cons({print(\"<4>\"); 4},")
+    println("          cons({print(\"<5>\"); 5},")
+    println("            cons({print(\"<6>\"); 6},")
+    println("              cons({print(\"<7>\"); 7},")
+    println("                cons({print(\"<8>\"); 8},")
+    println("                  cons({print(\"<9>\"); 9},")
+    println("                    cons({print(\"<10>\"); 10},")
+    println("                      empty))))))))))")
 
     print("\nset badPlan = ")
     println("bad1To10.dropWhile(_ < 3).takeWhile1(_ < 8)")
@@ -178,13 +179,13 @@ object StreamTest{
     println(oneToTwenty forAll (_ < 30))
 
     val bad1To6 =
-      Stream.cons({print("<1>"); 1},
-        Stream.cons({print("<2>"); 2},
-          Stream.cons({print("<3>"); 3},
-            Stream.cons({print("<4>"); 4},
-              Stream.cons({print("<5>"); 5},
-                Stream.cons({print("<6>"); 6},
-                  Stream.empty))))))
+      cons({print("<1>"); 1},
+        cons({print("<2>"); 2},
+          cons({print("<3>"); 3},
+            cons({print("<4>"); 4},
+              cons({print("<5>"); 5},
+                cons({print("<6>"); 6},
+                  empty))))))
 
     print("\nbad1To6 forAll (_ < 3) = ")
     println(bad1To6 forAll (_ < 3))
@@ -202,31 +203,31 @@ object StreamTest{
     println(oneToEleven.dropWhile(_ < 5).takeWhile(_ < 8).toList)
 
     val bad1To11 =
-      Stream.cons({print("<1>"); 1},
-        Stream.cons({print("<2>"); 2},
-          Stream.cons({print("<3>"); 3},
-            Stream.cons({print("<4>"); 4},
-              Stream.cons({print("<5>"); 5},
-                Stream.cons({print("<6>"); 6},
-                  Stream.cons({print("<7>"); 7},
-                    Stream.cons({print("<8>"); 8},
-                      Stream.cons({print("<9>"); 9},
-                        Stream.cons({print("<10>"); 10},
-                          Stream.cons({print("<11>"); 11},
-                            Stream.empty)))))))))))
+      cons({print("<1>"); 1},
+        cons({print("<2>"); 2},
+          cons({print("<3>"); 3},
+            cons({print("<4>"); 4},
+              cons({print("<5>"); 5},
+                cons({print("<6>"); 6},
+                  cons({print("<7>"); 7},
+                    cons({print("<8>"); 8},
+                      cons({print("<9>"); 9},
+                        cons({print("<10>"); 10},
+                          cons({print("<11>"); 11},
+                            empty)))))))))))
     println("\nbad1To11 = ")
-    println("  Stream.cons({print(\"<1>\"); 1},")
-    println("    Stream.cons({print(\"<2>\"); 2},")
-    println("      Stream.cons({print(\"<3>\"); 3},")
-    println("        Stream.cons({print(\"<4>\"); 4},")
-    println("          Stream.cons({print(\"<5>\"); 5},")
-    println("            Stream.cons({print(\"<6>\"); 6},")
-    println("              Stream.cons({print(\"<7>\"); 7},")
-    println("                Stream.cons({print(\"<8>\"); 8},")
-    println("                  Stream.cons({print(\"<9>\"); 9},")
-    println("                    Stream.cons({print(\"<10>\"); 10},")
-    println("                      Stream.cons({print(\"<11>\"); 11},")
-    println("                        Stream.empty)))))))))))")
+    println("  cons({print(\"<1>\"); 1},")
+    println("    cons({print(\"<2>\"); 2},")
+    println("      cons({print(\"<3>\"); 3},")
+    println("        cons({print(\"<4>\"); 4},")
+    println("          cons({print(\"<5>\"); 5},")
+    println("            cons({print(\"<6>\"); 6},")
+    println("              cons({print(\"<7>\"); 7},")
+    println("                cons({print(\"<8>\"); 8},")
+    println("                  cons({print(\"<9>\"); 9},")
+    println("                    cons({print(\"<10>\"); 10},")
+    println("                      cons({print(\"<11>\"); 11},")
+    println("                        empty)))))))))))")
 
     print("\nset anotherBadPlan = ")
     println("bad1To11.dropWhile(_ < 3).takeWhile(_ < 8)")
@@ -280,31 +281,31 @@ object StreamTest{
     println("\nTest both prepends(#:: & #:::) and append(:::#):")
 
     val bad1To5 =
-      Stream.cons({print("<1>"); 1},
-        Stream.cons({print("<2>"); 2},
-          Stream.cons({print("<3>"); 3},
-            Stream.cons({print("<4>"); 4},
-              Stream.cons({print("<5>"); 5},
-                Stream.empty)))))
+      cons({print("<1>"); 1},
+        cons({print("<2>"); 2},
+          cons({print("<3>"); 3},
+            cons({print("<4>"); 4},
+              cons({print("<5>"); 5},
+                empty)))))
 
     print("\nMake bad0To5")
     val bad0To5 = {print("<0>"); 0} #:: bad1To5
     print("\nMake bad42and0To5")
-    val bad42and0To5 = Stream.cons({print("<42>"); 42}, bad0To5);
+    val bad42and0To5 = cons({print("<42>"); 42}, bad0To5);
     println()
 
     print("bad42and0To5.toList = "); println(bad42and0To5.toList)
 
     val bad1To8 =
-      Stream.cons({print("<1>"); 1},
-        Stream.cons({print("<2>"); 2},
-          Stream.cons({print("<3>"); 3},
-            Stream.cons({print("<4>"); 4},
-              Stream.cons({print("<5>"); 5},
-                Stream.cons({print("<6>"); 6},
-                  Stream.cons({print("<7>"); 7},
-                    Stream.cons({print("<8>"); 8},
-                      Stream.empty))))))))
+      cons({print("<1>"); 1},
+        cons({print("<2>"); 2},
+          cons({print("<3>"); 3},
+            cons({print("<4>"); 4},
+              cons({print("<5>"); 5},
+                cons({print("<6>"); 6},
+                  cons({print("<7>"); 7},
+                    cons({print("<8>"); 8},
+                      empty))))))))
 
     print("\nMake bad567")
     val bad567 = bad1To8.drop(4).take(3)
@@ -332,10 +333,10 @@ object StreamTest{
           case e: Exception => 0
       }
 
-      var outStream: Stream[Char] = Stream.empty
+      var outStream: Stream[Char] = empty
       for (ii <- 1 to sAsInt) {
         val tempStream = outStream  // Needed to avoid infinite datastructure
-        outStream = Stream.cons(('`' + sAsInt).toChar, tempStream)
+        outStream = cons(('`' + sAsInt).toChar, tempStream)
       }
 
       outStream
@@ -351,21 +352,21 @@ object StreamTest{
     println("\nCompare flatMap1 and flatMap with unevaluated data:\n")
 
     val unEval1 =
-      Stream.cons({print("<4>"); "4"},
-        Stream.cons({print("<0>"); "0"},
-          Stream.cons({print("<1>"); "1"},
-            Stream.cons({print("<bob>"); "bob"},
-              Stream.cons({print("<2>"); "2"},
-                Stream.cons({print("<3>"); "3"},
-                  Stream.empty))))))
+      cons({print("<4>"); "4"},
+        cons({print("<0>"); "0"},
+          cons({print("<1>"); "1"},
+            cons({print("<bob>"); "bob"},
+              cons({print("<2>"); "2"},
+                cons({print("<3>"); "3"},
+                  empty))))))
     val unEval2 =
-      Stream.cons({print("<4>"); "4"},
-        Stream.cons({print("<0>"); "0"},
-          Stream.cons({print("<1>"); "1"},
-            Stream.cons({print("<bob>"); "bob"},
-              Stream.cons({print("<2>"); "2"},
-                Stream.cons({print("<3>"); "3"},
-                  Stream.empty))))))
+      cons({print("<4>"); "4"},
+        cons({print("<0>"); "0"},
+          cons({print("<1>"); "1"},
+            cons({print("<bob>"); "bob"},
+              cons({print("<2>"); "2"},
+                cons({print("<3>"); "3"},
+                  empty))))))
 
     print("(unEval1 flatMap1 numStringToCharStream).toList = ")
     println((unEval1 flatMap1 numStringToCharStream).toList)
@@ -393,6 +394,7 @@ object StreamTest{
     class Orange extends Fruit { print("<juicy>") } // test how well matching works
     class Pear extends Fruit { print("<eve's real favorite>") }
     class Kiwi extends Fruit { print("<exotic>") }
+    class Pineapple extends Fruit { print("<sweet>") }
 
     println("Make apples stream")
     val apples = Stream(new Apple, new Apple, new Apple)
@@ -400,8 +402,8 @@ object StreamTest{
     val oranges = Stream(new Orange, new Orange)
     println("\nMake fruit1 stream")
     val fruit1 = apples #::: oranges
-    println("Make fruit2 stream reuse same fruit")
-    val fruit2 = apples :::# oranges
+    println("Make fruit2 stream reuse some fruit")
+    val fruit2 = apples :::# oranges :::# Stream(new Pineapple, new Pear)
 
     print("\nfruit1.toList = "); println(fruit1.toList)
     print("\nfruit2.toList = "); println(fruit2.toList)
@@ -411,35 +413,62 @@ object StreamTest{
     print("\nfruit1.toList == fruit2.toList = ")
     println(fruit1.toList == fruit2.toList)
 
+    print("\nfruit1 == fruit1 = ")
+    println(fruit1 == fruit1)
+    print("\nfruit2.toList == fruit2.toList = ")
+    println(fruit2.toList == fruit2.toList)
+
     print("\nfruit1  = "); println(fruit1)
     print("\nfruit2  = "); println(fruit2)
 
+    val fruit3      = cons( new Pineapple
+                          , cons( new Apple
+                          , cons( new Pear
+                          , empty[Fruit])))
+
+    val fruit3Clone = cons( new Pineapple
+                          , cons( new Apple
+                          , cons( new Pear
+                          , empty[Fruit])))
+
+    print("\nfruit3 == fruit3 = ")
+    println(fruit3 == fruit3)
+    print("\nfruit3 == fruit3Clone = ")
+    println(fruit3 == fruit3Clone)
+    print("\nfruit3.toList == fruit3Clone.toList = ")
+    println(fruit3.toList == fruit3Clone.toList)
+
     println("\nMake fruit stream")
-    val fruit3 = Stream(new Apple, new Orange, new Apple)
-    print("\nfruit3.toList = "); println(fruit3.toList)
+    val fruit4 = Stream( new Apple, new Orange
+                       , new Apple, new Pear
+                       , new Kiwi )
+    print("\nfruit4.toList = "); println(fruit4.toList)
 
     def printFruitStreamVersions(fruits: Stream[Fruit]) = 
       for (fruit <- fruits) {
         fruit match {
-          case a: Apple => println("An apple")
-          case o: Orange => println("An orange")
-          case f: Fruit => println("A fruit")
-          case _ => println("Something else")   // If I understand typing
-        }                                       // and variance, nothing
-      }                                         // should ever get here.
+          case _: Apple     => println("An apple")
+          case _: Orange    => println("An orange")
+          case _: Pear      => println("A pear")
+          case _: Pineapple => println("A pineapple")
+          case _: Fruit     => println("A fruit")
+          case _            => println("Something else") 
+        }
+      }
 
-    println("\nPrint out fruit versions in fruit3")
-    printFruitStreamVersions(fruit3)
+    println("\nPrint out fruit versions in fruit4")
+    printFruitStreamVersions(fruit4)
 
     // Make some lazy fruit
     println("\nMake some bad lazy fruit\n")
     val badLazyFruit =
-      Stream.cons({print("<1>"); new Orange},
-        Stream.cons({print("<2>"); new Apple},
-          Stream.cons({print("<3>"); new Apple},
-            Stream.cons({print("<4>"); new Orange},
-              Stream.cons({print("<5>"); new Kiwi},
-                Stream.empty)))))
+      cons({print("<1>"); new Orange},
+        cons({print("<2>"); new Apple},
+          cons({print("<3>"); new Apple},
+            cons({print("<4>"); new Pear},
+              cons({print("<5>"); new Orange},
+                cons({print("<6>"); new Kiwi},
+                  empty))))))
 
     println("Print out fruit in badLazyFruit")
     printFruitStreamVersions(badLazyFruit)
@@ -448,24 +477,29 @@ object StreamTest{
     println("\nTest find with evaluated fruit:")
 
     val maybeApple = badLazyFruit.find(_ match {
-      case a: Apple => true
+      case _: Apple => true
       case _ => false
     })
     val maybePear = badLazyFruit.find(_ match {
-      case a: Pear => true
+      case _: Pear => true
+      case _ => false
+    })
+    val maybePineapple = badLazyFruit.find(_ match {
+      case a: Pineapple => true
       case _ => false
     })
     val maybeKiwi = badLazyFruit.find(_ match {
       case a: Kiwi => true
       case _ => false
     })
-    val streamOfMaybeFruit = Stream(maybeApple, maybePear, maybeKiwi)
-    printFruitStreamVersions(streamOfMaybeFruit filter (mbF => 
-      mbF match {
+    val streamOfMaybeFruit = Stream( maybeApple
+                                   , maybePear
+                                   , maybePineapple
+                                   , maybeKiwi )
+    printFruitStreamVersions(streamOfMaybeFruit filter {
         case Some(_) => true
         case _ => false
-      }) map (_.get))  // My guess there is a better way to do this.
-                       // Perhaps a filterNone method.
+      } map (_.get))
 
     println()
 

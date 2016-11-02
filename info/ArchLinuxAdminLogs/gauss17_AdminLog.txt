@@ -1124,8 +1124,8 @@ Purpose: To indicate what was done to create gauss17 and
   for what I did.
 
   One key step was to run the newaliases cmd as root.  I did it
-  from /etc/postfix directory, don't know if location matters.  It
-  created the /etc/postfix/aliases.db file.
+  from /etc/postfix directory, don't know if location matters.
+  It created the /etc/postfix/aliases.db file.
 
     $ file /etc/postfix/aliases.db 
     /etc/postfix/aliases.db: Berkeley DB (Hash, version 9,
@@ -1772,8 +1772,7 @@ Purpose: To indicate what was done to create gauss17 and
   Can also run UDP tests.
 
 2016-10-24:
-  Over last few days I noticed XFCE gui environment getting
-  slower, terminals & browser windows failed to spin up.
+  Something wrong with XFCE gui environment.  Not working smoothly.
 
 2016-10-25:
   Over last few days I noticed XFCE gui environment getting
@@ -1809,7 +1808,7 @@ Purpose: To indicate what was done to create gauss17 and
 
     $ ((jj = 2600)); while (( jj++ < 2826))
     > do
-    >    kill -15 $15
+    >    kill -15 $jj
     > done
 
   in another virtural console.  I left 6 of them running.
@@ -1868,6 +1867,8 @@ Purpose: To indicate what was done to create gauss17 and
   of these now.  I will look into Xfce startup configurations.
 
 2016-10-27:
+  Finally fixed Xfce GUI-land problems.
+
   Revisionist history to follow (took a while to work out):
 
   In 'Sessions and Startup' Xfce config gui, checked 'Prompt

@@ -6,43 +6,16 @@ package grockScala.laziness
  * @version   1.0
  * @since     1.0
  */
-sealed trait Stream[+A] {
+sealed trait Stream[+A] { self =>
 
   import Stream._
 
-  /*  For for expressions
-   *
-   *  This imperitive hook maybe out of place 
-   *  in this bit of functional heaven the book is
-   *  trying to create.
-   *
-   *  To fully implement for comprehensions and expressions,
-   *  you need to implement all the members in the trait
-   *  scala.collection.generic.FilterMonadic.
-   *
-   *  These are: flatMap and map (for comprehensions), 
-   *             foreach (for for expressions), and
-   *             withFilter (to enable guards).
-   *
-   *  If withFilter is not defined, the compiler will use the
-   *  filter method for guards in its place but will complain
-   *  about it. Filter creates an intermediate data structure.  
-   *  An actual withFilter method wraps the monad in a withFilter
-   *  object which lazily filters out the undesired elements from
-   *  the original flatMap, map, and foreach method calls.
-   *
-   */
-  def foreach[U](f: A => U): Unit = this match {
-    case Cons(h, t) => {f(h()); t().foreach(f)}
-    case Empty => ()
-  }
-
-  def headOption1: Option[A] = this match {
+  def headOption1: Option[A] = self match {
     case Empty => None
     case Cons(h, t) => Some(h())   // Explicitly evaluate the thunk
   }
 
-  def tailOption: Option[Stream[A]] = this match {
+  def tailOption: Option[Stream[A]] = self match {
     case Empty => None
     case Cons(h, t) => Some(t())
   } 
@@ -50,44 +23,43 @@ sealed trait Stream[+A] {
   def tailSafe: Stream[A] =
     tailOption getOrElse (empty[A])
 
-  def toList1: List[A] = this match {
+  def toList1: List[A] = self match {
     case Cons(h, t) => h() :: t().toList1
     case Empty => Nil
   }
 
   def drop(n: Int): Stream[A] = 
-    if (n < 1) this
-    else this match {
+    if (n < 1) self
+    else self match {
       case Cons(_, t) => t().drop(n-1)
       case _ => Empty
     }
 
   def dropWhile(p: A => Boolean): Stream[A] =
-    this match {
+    self match {
       case Cons(h, t) if p(h()) => t().dropWhile(p)
-      case _ => this
+      case _ => self
     }
 
   def take(n: Int): Stream[A] = 
     if (n < 1) Empty
-    else this match {
+    else self match {
       case Cons(h, t) => cons(h(), t().take(n-1))
       case _ => Empty
     }
 
   def takeWhile1(p: A => Boolean): Stream[A] =
-    this match {
+    self match {
       case Cons(h, t) if p(h()) => cons(h(), t().takeWhile1(p))
       case _ => Empty
     }
 
   def exists1(p: A => Boolean): Boolean =
-    this match {
+    self match {
       case Cons(h, t) => p(h()) || t().exists1(p)
       case _ => false
     }
 
-  // 
   /** Reduce a stream right to left with a function.
    *
    *  @param z initial value of the accumulator (value
@@ -101,7 +73,7 @@ sealed trait Stream[+A] {
    *  
    */
   def foldRight[B](z: => B)(f: (A, => B) => B): B =
-    this match {
+    self match {
       case Cons(h, t) => f(h(), t().foldRight(z)(f))
       case _ => z
     }
@@ -131,7 +103,7 @@ sealed trait Stream[+A] {
       case Cons(a, as) => Some( (f(a()), as()) )
       case Empty => None
     }
-    unfold(this)(uf)
+    unfold(self)(uf)
   }
 
   def filter(p: A => Boolean): Stream[A] =
@@ -141,11 +113,11 @@ sealed trait Stream[+A] {
 
   /** Strict operator wrapper for cons */
   def #::[B>:A](b: B): Stream[B] =
-    cons(b, this)
+    cons(b, self)
 
   /** Prepend supertype stream */
   def #:::[B>:A](bs: Stream[B]): Stream[B] =
-    bs.foldRight(this: Stream[B])((b,bs) => cons(b, bs))
+    bs.foldRight(self: Stream[B])((b,bs) => cons(b, bs))
 
   /** Append supertype stream */
   def :::#[B>:A](bs: Stream[B]): Stream[B] =
@@ -164,7 +136,7 @@ sealed trait Stream[+A] {
     filter(p).headOption
 
   def zipWith[B,C](that: Stream[B])(f: (A, B) => C): Stream[C] =
-    unfold((this, that)) {
+    unfold((self, that)) {
       case (Cons(a, as), Cons(b, bs)) =>
         Some((f(a(), b()), (as(), bs())))
       case _ =>
@@ -175,7 +147,7 @@ sealed trait Stream[+A] {
     zipWith(that)((_,_))
 
   def zipAll[B](that: Stream[B]): Stream[(Option[A], Option[B])] =
-    unfold((this, that)) {
+    unfold((self, that)) {
       case (Cons(a, as), Cons(b, bs)) =>
         Some((Some(a()), Some(b())), (as(), bs()))
       case (Empty, Cons(b, bs)) =>
@@ -192,7 +164,7 @@ sealed trait Stream[+A] {
   // I needed it to diagnose the problem.)
   @annotation.tailrec
   final def startsWith[B>:A](prefix: Stream[B]): Boolean =
-    (this, prefix) match {
+    (self, prefix) match {
       case (Cons(a, as), Cons(b, bs)) =>
         if (a() == b()) as().startsWith(bs())
         else false
@@ -219,7 +191,7 @@ sealed trait Stream[+A] {
   // Simple, but final empty list handled
   // like an edge case in imperative code.
   def tails1(): Stream[Stream[A]] =
-    unfold(this)((s: Stream[A]) => s match {
+    unfold(self)((s: Stream[A]) => s match {
       case Cons(_, rest) => Some((s, rest()))
       case _ => None
     }) #::: Stream(Empty)
@@ -227,7 +199,7 @@ sealed trait Stream[+A] {
   // State now handled as an Option[Stream[A]] so
   // that I have a state to represent no tail.
   def tails(): Stream[Stream[A]] =
-    unfold(Some(this): Option[Stream[A]])(
+    unfold(Some(self): Option[Stream[A]])(
       (os: Option[Stream[A]]) => os flatMap {
         case Cons(_, rest) => Some((os.get, Some(rest())))
         case Empty => Some((os.get, None))
@@ -236,6 +208,46 @@ sealed trait Stream[+A] {
 
   def hasSubsequence[B](sub: Stream[B]): Boolean =
     tails exists (_ startsWith sub)
+
+  /*  For for expressions
+   *
+   *  This imperitive hook maybe out of place 
+   *  in this bit of functional heaven the book is
+   *  trying to create.
+   *
+   *  To fully implement for comprehensions and expressions,
+   *  you need to implement all the members in the trait
+   *  scala.collection.generic.FilterMonadic.
+   *
+   *  These are: flatMap and map (for comprehensions), 
+   *             foreach (for for expressions), and
+   *             withFilter (to enable guards).
+   *
+   *  flatMap    - done above
+   *  foreach    - fundamently not functional
+   *  withFilter - modeled after scala.Option
+   *
+   */
+
+  def foreach[U](f: A => U): Unit = self match {
+    case Cons(h, t) => {f(h()); t().foreach(f)}
+    case Empty => ()
+  }
+
+  @inline final def withFilter(p: A => Boolean): WithFilter =
+     new WithFilter(p)
+
+  class WithFilter(p: A => Boolean) {
+    def map[B](f: A => B): Stream[B] = self filter p map f
+
+    def flatMap[B](f: A => Stream[B]): Stream[B] =
+      self filter p flatMap f
+
+    def foreach[U](f: A => U): Unit = self filter p foreach f
+
+    def withFilter(q: A => Boolean): WithFilter =
+      new WithFilter(x => p(x) && q(x))
+  }
 
 }
 case object Empty extends Stream[Nothing]
@@ -324,6 +336,8 @@ object Stream {
   // developed in InfiniteStreamTest.scala
 
   // My original version of constant
+  //   Seems to be more prone to stack overflow
+  //   than const and constU
   def const1[A](a: A): Stream[A] =
     cons(a, const1(a))
 

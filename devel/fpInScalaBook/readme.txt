@@ -2,7 +2,7 @@ I am working my way through the book "Functional Programming in Scala"
 by Paul Chiusana and Runar Bjarnason to learn Scala.  Using the online
 reference manual at http://www.scala-sbt.org/ to learn sbt.
 
-So far I have almost completed chapter 5.
+So far I have completed chapter 5.
 
 I am doing this in a another (local) GIT repo.  As I make progress,
 I will periodically make snapshots for my public repo.

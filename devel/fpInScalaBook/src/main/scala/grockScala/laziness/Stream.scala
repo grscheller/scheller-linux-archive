@@ -15,13 +15,19 @@ sealed trait Stream[+A] { self =>
     case Cons(h, t) => Some(h())   // Explicitly evaluate the thunk
   }
 
+  def headOption: Option[A] = 
+    foldRight(None: Option[A])((a, _) => Some(a))
+
+  def headSafe[B>:A](default: B): B =
+    headOption getOrElse default 
+
   def tailOption: Option[Stream[A]] = self match {
     case Empty => None
     case Cons(h, t) => Some(t())
   } 
 
   def tailSafe: Stream[A] =
-    tailOption getOrElse (empty[A])
+    tailOption getOrElse empty[A]
 
   def toList1: List[A] = self match {
     case Cons(h, t) => h() :: t().toList1
@@ -88,9 +94,6 @@ sealed trait Stream[+A] { self =>
     foldRight(empty[A])((a, b) => 
       if (p(a)) cons(a, b)
       else Empty)
-
-  def headOption: Option[A] = 
-    foldRight(None: Option[A])((a, _) => Some(a))
 
   def toList: List[A] =
     foldRight(Nil: List[A])((a, as) => a :: as.toList)
@@ -209,11 +212,43 @@ sealed trait Stream[+A] { self =>
   def hasSubsequence[B](sub: Stream[B]): Boolean =
     tails exists (_ startsWith sub)
 
-  /*  For for expressions
-   *
-   *  This imperitive hook maybe out of place 
-   *  in this bit of functional heaven the book is
-   *  trying to create.
+  // Initial version - folding up into a Pair where in the
+  // end we are only interest in the second element of the
+  // Pair.  
+  def scanRight1[B](z: => B)(f: (A, => B) => B): Stream[B] =
+    foldRight((z, Stream(z)))(
+      (a, p) => (f(a, p._1), cons(f(a, p._1), p._2 ))
+    )._2
+
+  // Had to do above before refactoring into this.
+  def scanRight2[B](z: => B)(f: (A, => B) => B): Stream[B] =
+    foldRight((z, Stream(z)))(
+      (a, p) => {
+        val b = f(a, p._1)
+        (b, cons(b, p._2 ))
+      } )._2
+
+  // Book version
+  def scanRight3[B](z: B)(f: (A, => B) => B): Stream[B] =
+    foldRight((z, Stream(z)))(
+      (a, p) => {
+        lazy val lp = p
+        val b = f(a, lp._1)
+        (b, cons(b, lp._2 ))
+      } )._2
+
+  // Final version - The variadic apply method is strict and I
+  // think the problem is that it is forcing an evaluation of z
+  // too early.  The foldRight passes the pair non-strictly.
+  def scanRight[B](z: => B)(f: (A, => B) => B): Stream[B] =
+    foldRight((z, cons(z, empty[B])))(
+      (a, p) => {
+        val b = f(a, p._1)
+        (b, cons(b, p._2 ))
+      } )._2
+
+  /*
+   *  Fully implement 'for' comprehensions & expressions.
    *
    *  To fully implement for comprehensions and expressions,
    *  you need to implement all the members in the trait
@@ -282,7 +317,7 @@ object Stream {
    *
    *  @param s the initial state
    *  @param f takes a state and returns an Option to
-   *         a value and state Pair
+   *         a (value, state) Pair
    *  @return A Stream of values
    *  @note The Option is used to determine when to
    *        terminate the stream, if ever.
@@ -292,7 +327,7 @@ object Stream {
   def unfold[A,S](s: S)(f: S => Option[(A, S)]): Stream[A] =
     f(s) map (p => cons(p._1, unfold(p._2)(f))) getOrElse empty
 
-  /** Books version of my unfold function */
+  /** Books version of unfold function */
   def unfold1[A,S](s: S)(f: S => Option[(A, S)]): Stream[A] =
     f(s) match {
       case Some((a, s)) => cons(a, unfold1(s)(f))

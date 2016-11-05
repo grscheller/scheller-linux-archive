@@ -1,0 +1,185 @@
+Vim - Vi improved (minimalistic)
+
+1. Configuration:
+
+  My go to text editor of choice in vim.  All I want out
+  of vim is the ability to edit text files in terminal
+  windows in a unicode aware way.  I want my editing
+  sessions to be CLI centric but still integrate well
+  into the Linux GUI environment.  I do not want to change
+  vim into a gui editor.  Nor use it as an IDE.
+  
+  Out of the box, vim highjacks the mouse from the terminal
+  emulator (usually xfce4-terminal or gnome-terminal) so
+  that the mouse will reposition the cursor.  This is
+  especially anoying because now I have to precisely position
+  the cursor before pasting.  If I wnat this behavior, I will
+  use gvim instead.
+  
+  The following simplistic ~/.vimrc file will prevent this
+  mouse steeling:
+
+    syntax off
+    set encoding=utf-8
+    set fileencoding=utf-8
+    set tabstop=4
+    set shiftwidth=4
+    set expandtab
+
+  The first line turns off colors in vim since these usually
+  don't work out well with the dark terminal backgrounds I like.
+
+  The next two lines make vim more unicode aware.
+
+  The last 3 lines have the tab key put in 4 spaces, which is
+  my default for C/C++ and Python.  For Haskell and Scala, I
+  find typing 2 spaces easier than hitting the tab key once.
+
+  My desktop gui environment is very old school.  I configure
+  things to use "sloppy" mouse focus.  Also, I do not have 
+  windows jump to the top of the Z-order just because they
+  got the focus.  Alt-click or lt-click title bar will bring
+  the window to the top if I want.  Double-click title bar to
+  make full screen, middle-click title bar to drop them to
+  bottom of the Z-order.  This enables me to interact with
+  vim in a small area of a terminal window while having another
+  windows on top.  This is increadibly useful.  You are not
+  constantly having to juggle windows around nor do you need
+  a 42" monitor.
+
+2. Cursor movement:
+
+      h,i,j,k   move cursor one character (also arrow keys)
+      w, W      move forward to beginning next word
+      b, B      move back to beginning of previous word
+      e, E      move forward to end of word
+      $         move to end of line
+      ^         move to first non-whitespace character on line 
+      %         move to the matching (, ) or [, ] or {, }
+      (         move to beginning of sentence
+      )         move to beginning of next sentence
+      {         move up a paragraph
+      }         move down paragraph
+      G         move to last line in file
+      gg        move to first line in file
+      /pattern<ret>    Search forward for pattern (pattern can be
+                       a regular expression).
+      ?pattern<ret>    search backwards for pattern
+      /<ret>    search forward for last pattern
+      ?<ret>    search backward for last pattern
+      n         search forward or backward for last pattern
+
+3. Interacting with the buffer:
+
+     yy    yank line to buffer (copy)
+     dd    delete line and put in buffer (cut)
+     5dd   delete 5 lines and put in buffer
+     x     delete character under cursor to buffer
+     p     paste buffer contents "after"
+     P     paste buffer contents "before"
+
+   What "before" or "after" mean depends on what is
+   in the buffer.
+
+   y and d can be used with all the cursor positioning
+   commands in section 2 
+
+     d$    delete to end of line and put in buffer
+     3yw   yank three words to buffer, starting at cursor
+
+   You can use named buffers to store text.
+
+     'adw  delete word and put in buffer a
+     'sd$  delete to end of line and put in buffer "s"
+     'sp   paste contents of buffer "s" after cursor
+     'ap   paste contents of buffer "a" after cursor
+
+   One use case for named buffers is that you can copy
+   items from multiple files and paste them into later
+   files.
+
+4. Commands to Insert text:
+
+   Vim has two modes, these commands take vim from "command"
+   mode to "typing input mode."  To return to "command" mode,
+   type ESC.  
+
+     i    insert text at cursor
+     a    insert text after cursor
+     I    insert text at beginning of line
+          after initial white space
+     A    insert text at end of line
+     o    open new line after current line to insert text
+     O    open new line before current line to insert text
+     3cw  change next three words
+     c$   change text to end of line
+     5cc  change next 5 lines
+     5C   change next 5 lines
+     c^   change text before cursor, excuding initial white space
+
+   While in "typing input mode," you can navigate through
+   the file with the arrow keys.
+
+5. Undo/redo commands:
+
+      u       undo previous edit
+      cntl-r  redo edit undone
+
+   These can be used to linearly undo and redo edits.  Sort
+   of like the arrow buttons in a web browser.
+
+   Aside: It is posible in vim to navigate entire edit
+          trees, though I never felt the need to learn
+          how.
+
+   Navigating with the arrow keys while in "typing input
+   mode" will result in multiple edits to undo/redo.
+
+6. Line editor commands:
+
+   Vim is an open source version of the Unix editor vi,
+   which is a CLI visual version of the Berkley Unix
+   line editor ex, which itself is a reimplementation of
+   the AT&T Unix line editor ed. 
+
+   On really old terminals, essentually line printers with
+   keyboards, the desendents of teletypes, you edited files
+   one line at a time.
+
+   Use the : command to enter a line editor command.  The
+   cursor jumps down to the bottom of the terminal and prompts
+   you with the : you just typed.
+
+     :w        Write to disk file you are editing.
+     :w file   Write to file, unlike MS Word, you are still
+               editing the original file.
+     :q        Quit editing, vim will warn you if you have
+               unsaved changes.
+     :wq       Write to disk, then quit.
+     :q!       Quit without saving unsaved changes.
+     :n        Move to next file given on command line.
+     :wn       Write to disk and move on to next file to edit.
+     :42       Move cursor to beginning of line 42.
+     :#        Give line number of current line cursor is on.
+     :s/foo/bar/   Substitute first instance of foo with bar
+                   on current line. (foo can be a regular expression)
+     :s/foo/bar/g   Substitute all instances of foo with bar.
+     :17,42s/foo/bar/g   Substitute all instances of foo with
+                         bar on lines 17 through 42.
+
+7. Repeating commands:
+
+     .    repeat the last command
+
+   This is frequently used in conjuction with the n command.
+   The command is the last regular vim command mode command
+   that changed text, not a line editor command.
+
+8. End remarks:
+
+   Editors like vim or emacs are very powerful.  I have just
+   scratched the surface of what is possible with vim.  I
+   choose this minimalistic approach since it fits into my
+   brain and allows me to be much more productive than what
+   is provided with WYSIWYG editors, or even context sensitive
+   editors provided by IDEs.

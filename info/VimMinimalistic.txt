@@ -13,7 +13,7 @@ Vim - Vi improved (minimalistic)
   emulator (usually xfce4-terminal or gnome-terminal) so
   that the mouse will reposition the cursor.  This is
   especially anoying because now I have to precisely position
-  the cursor before pasting.  If I wnat this behavior, I will
+  the cursor before pasting.  If I want this behavior, I will
   use gvim instead.
   
   The following simplistic ~/.vimrc file will prevent this
@@ -183,3 +183,16 @@ Vim - Vi improved (minimalistic)
    brain and allows me to be much more productive than what
    is provided with WYSIWYG editors, or even context sensitive
    editors provided by IDEs.
+
+   There is a backward capatibility mode that forces vim to
+   behave very much like vi -> vim -C.  I think this is a too
+   reactionary approach and not sure all of its ramifications.
+   All I can say is that it does not make vim a clone of
+   System V vi.  Nor do I want it to be.
+
+   I do not like colored syntax highlighting.  If it did
+   something useful like destinguish different scopes, 
+   then I might reconsider.  Otherwise, I just waste time
+   adjusting the colors so that I can read the code.  The
+   only language I found it useful is MATLAB when using
+   the MATLAB debugger.

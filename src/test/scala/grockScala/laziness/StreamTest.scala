@@ -1,4 +1,4 @@
-package grockScala.test.laziness
+package grockScala.chap05.laziness
 
 import grockScala.laziness._
 import grockScala.laziness.Stream._

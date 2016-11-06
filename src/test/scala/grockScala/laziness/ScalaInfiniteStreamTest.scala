@@ -1,4 +1,4 @@
-package grockScala.test.laziness
+package grockScala.chap05.laziness
 
 import scala.collection.immutable.Stream.{cons, from}
 

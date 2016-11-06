@@ -1,4 +1,4 @@
-package grockScala.gettingstarted
+package grockScala.chap02.gettingstarted
 
 // Comment - start off with something familiar to OO programmer
 /*

@@ -17,7 +17,7 @@ Vim - Vi improved (minimalistic)
   use gvim instead.
   
   The following simplistic ~/.vimrc file will prevent this
-  mouse steeling:
+  mouse stealing:
 
     syntax off
     set encoding=utf-8

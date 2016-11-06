@@ -1,4 +1,4 @@
-package grockScala.gettingstarted
+package grockScala.chap02.gettingstarted
 
 /*
    Refactored version of MyModule.

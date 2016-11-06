@@ -1,4 +1,4 @@
-package grockScala.test.datastructures
+package grockScala.chap03.datastructures
 
 import grockScala.datastructures._
 

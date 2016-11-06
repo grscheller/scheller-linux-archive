@@ -7,8 +7,8 @@ So far I have completed chapter 5.
 I am doing this in a another (local) GIT repo.  As I make progress,
 I will periodically make snapshots for my public repo.
 
-Libraries are under "src", test scripts (except for chapter 2 stuff)
-are under "test".  These tests just exercise the libraries.
+Libraries are under "src", test objects are under "test".
+These tests just exercise the libraries I write.
 
 Run code:
   $ sbt test:run

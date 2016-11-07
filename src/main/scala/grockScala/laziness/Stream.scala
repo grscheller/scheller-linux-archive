@@ -66,7 +66,7 @@ sealed trait Stream[+A] { self =>
       case _ => false
     }
 
-  /** Reduce a stream right to left with a function.
+  /** Reduce a stream right to left with a function and initial value.
    *
    *  @param z initial value of the accumulator (value
    *           for empty stream)
@@ -83,6 +83,25 @@ sealed trait Stream[+A] { self =>
       case Cons(h, t) => f(h(), t().foldRight(z)(f))
       case _ => z
     }
+
+  /** Reduce a stream left to right with a function and initial value.
+   *
+   *  @param z initial value of the accumulator (value
+   *           for empty stream)
+   *  @param f folding function applied to stream
+   *  @return A Stream of values
+   *  @note Return value generated from stream elements
+   *        left to right.
+   *  @note Not infinite Stream safe.
+   *  
+   */
+  def foldLeft[B](z: B)(f: (B, A) => B): B = {
+    var accum = (z, self)
+    while (accum._2 != Empty) accum = accum._2 match {
+      case Cons(h, t) => (f(accum._1, h()), t())
+    }
+    accum._1
+  }
 
   def exists(p: A => Boolean): Boolean =
     foldRight(false)((a, b) => p(a) || b)

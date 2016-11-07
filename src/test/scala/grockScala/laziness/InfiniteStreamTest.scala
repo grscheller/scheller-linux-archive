@@ -4,7 +4,7 @@ import grockScala.laziness._
 import grockScala.laziness.Stream._
 
 
-object InfiniteStreamTest{
+object InfiniteStreamTest {
 
   // Infinite data structure - infinite Stream of 42's
   val fortyTwos: Stream[Int] = cons(42, fortyTwos)

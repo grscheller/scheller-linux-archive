@@ -3,7 +3,7 @@ package grockScala.chap05.laziness
 import grockScala.laziness._
 import grockScala.laziness.Stream._
 
-object HasSubsequenceStreamTest{
+object HasSubsequenceStreamTest {
 
   def main(args: Array[String]): Unit = {
 

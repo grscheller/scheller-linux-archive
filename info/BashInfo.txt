@@ -278,7 +278,7 @@ of doing things; it just that I don't know EMACS that well.
       $ echo ${!gang[@]}
       0 1 2 3 4 5
 
-7. Speaking of shell redirection, 
+7. Speaking of redirection, 
 
       $ foo=bar
       $ bar=baz
@@ -314,11 +314,11 @@ of doing things; it just that I don't know EMACS that well.
 
    To define a shell variable, use an = with no unquoted spaces.
    These are only known to the current shell.  So that other programs
-   (including sub-shells) know nothing about them, you need to "export
+   (but not sub-shells) know nothing about them, you need to "export
    them to the environment."
 
       $ answer=42
-      $ bash                # We are now in a subshell
+      $ bash          # We are now in a completely different instance of bash
       $ echo "The answer is ${answer}."
       The answer is .
       $ exit                 # We are back in the original shell.
@@ -338,11 +338,35 @@ of doing things; it just that I don't know EMACS that well.
       $ echo "The answer is ${answer}."   # value unchanged in parent shell
       The answer is 53.
 
-   Note, unlike the standard sh, you don't have to re-export a shell
+   Note: Unlike the standard sh, you don't have to re-export a shell
    variable to the environment every time you change it.  Also, csh
    contains two separate namespaces for shell and environment variables,
    which can get very confusing for someone coming from bash without
    a heads up.
+
+   Also note: Bash subshells are not separate instances of bash:
+
+      # Export one shell variable but not the other
+      $ export cap=kirk; snd=spock
+
+      $ echo $cap and $snd
+      kirk and spock
+
+      # Shell substitution happens in subshell
+      $ (cap=picard; snd=riker; echo $cap and $snd)
+      picard and riker
+
+      # You can force substitution to happen in parent shell
+      $ eval "(cap=picard; snd=riker; echo $cap and $snd)"
+      kirk and spock
+
+      # Unexported shell variable snd known to subshell
+      $ (cap=picard; echo $cap and $snd)
+      picard and spock
+
+      # But not to a child process (which happens to be another instance of bash)
+      $ bash -c 'echo $cap and $snd'
+      kirk and
 
 11. Big and little nibbles:
 
@@ -444,7 +468,7 @@ of doing things; it just that I don't know EMACS that well.
     OK, the back tics save you from typing one extra character, but
     they are hard to see and THEY DON'T NEST.
 
-      $ ll $(ls $(ls *.pdf))
+      $ ls -l $(ls $(ls *.pdf))
       -rwxrwxrwx. 1 geoff geoff 2057650 Jan 31 12:13 TLCL.pdf
 
     You can also embed $(...) in double quoted strings:
@@ -457,5 +481,47 @@ of doing things; it just that I don't know EMACS that well.
 
       $ otherUsers=$(ps -ef | egrep -v "($(whoami)|root|USER)" | sed 's/ .*//' | sort | uniq)
       $ echo $otherUsers
-      68 dbus gdm nails ntp postfix rtkit
+      dbus polkitd postfix rtkit
  
+15. Comparisons with [[ ... ]]
+
+    Strings and numerics use different sets of operators:
+
+      $ foo42=42; bar42=fortytwo
+      $ [[ $foo42 -lt '50' ]] && echo "true as numbers"
+      true as numbers
+
+      $ [[ $foo42 < '50' ]] && echo "true as strings"
+      true as strings
+
+      $ [[ forty < $bar42 ]] && echo "true as strings"
+      true as strings
+
+      $ [[ twenty < forty ]] || echo "false as strings"
+      false as strings
+
+    Aside: The && and || operators "short circuit" that
+           is they are non-strict in their second argument.
+
+    You can match on regular expressions:
+
+      $ fName=myMatlabProg.m
+      $ if [[ $fName =~ .*\.m ]]
+      then
+        echo "MATLAB file"
+      else
+        echo "Something else"
+      fi
+      MATLAB file
+
+    You can also put the regular expression in a shell variable:
+
+      $ fName=myMatlabProg.m
+      $ regEx='.*\.m'
+      $ if [[ $fName =~ $regEx ]]
+      then
+        echo "MATLAB file"
+      else
+        echo "Something else"
+      fi
+      MATLAB file

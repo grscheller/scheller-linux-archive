@@ -1,8 +1,8 @@
 name:                pythagTriples
 version:             0.1.0.0
 synopsis:            Pythagorean triple CLI generation program
-description:         Please see README.md
-homepage:            https://github.com/grscheller/pythagTriples#readme
+description:         Please see devel/pythagTriples/develLog.readme
+homepage:            https://github.com/grscheller/scheller-linux-environment
 license:             BSD3
 license-file:        LICENSE
 author:              Geoffrey Scheller

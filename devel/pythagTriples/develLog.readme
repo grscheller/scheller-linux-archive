@@ -314,5 +314,5 @@ gcd(a,b,c) = 1 and a, b, c > 0.
      algorithm seems complete, but it not clear yet how far
      you have to take it out to ensure you catch all triples
      for a given a.  Also, if you sort the results of the fast
-     algorithm, is there a point that the cost of sorting isi
+     algorithm, is there a point that the cost of sorting is
      so high that the ordered algorithm wins out?

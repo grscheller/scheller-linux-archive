@@ -1,19 +1,10 @@
 // Using SBT version 0.13 as the build tool.
 // 
-//   Using the sbteclipse-plugin 4.0.0 to generate Eclipse
-//   configuation files.
-//
-//   Configured Eclipse IDE for Java Developers, version Mars-2,
-//   release 4.5.2 with the scala-ide.org Scala Plugin, 
-//   version 4.4.1-v2 for code editing.
-//   
-//   Vim is still my preferred editing tool!
-//   
 
 lazy val commonSettings = Seq(
   organization := "geoffrey.scheller.com",
   version := "1.1",
-  scalaVersion := "2.12.0-RC2"
+  scalaVersion := "2.12.0"
 )
 
 lazy val root = (project in file(".")).

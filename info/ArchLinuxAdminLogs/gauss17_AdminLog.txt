@@ -1885,3 +1885,11 @@ Purpose: To indicate what was done to create gauss17 and
   Never had to reinstall thunar, thunar-archive-plugin,
   thunar-media-tags-pluggin, and thunar-volman.  My external
   hard drive mounts just fine.
+
+2016-11-16:
+  Updated Google Chrome,
+
+    $ cd ~/build/AUR/google-chrome_build/google-chrome
+    $ git pull origin
+    $ makepkg -sri
+

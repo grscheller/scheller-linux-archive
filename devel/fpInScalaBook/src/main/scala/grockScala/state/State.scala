@@ -22,7 +22,7 @@ trait RNG {
  *    lower order bits.
  *
  *    This implementation uses bit-& optimization for
- *    the mod operator, basically we are "adding" -2^48 to
+ *    the mod operator, basically we are "adding" -2^48
  *    to get a result in the right range.
  */
 case class LCG(seed: Long) extends RNG {
@@ -47,14 +47,27 @@ object RNG {
    */
   def nonNegativeInt(rng: RNG): (Int, RNG) =
     rng.nextInt match {
-      case (ran, rng) if ran >= 0            => ( ran, rng)
-      case (ran, rng) if ran == Int.MinValue => (   0, rng)
-      case (ran, rng)                        => (-ran, rng)
+      case (ran, rng2) if ran >= 0            => ( ran, rng2)
+      case (ran, rng2) if ran == Int.MinValue => (   0, rng2)
+      case (ran, rng2)                        => (-ran, rng2)
     }
 
   // Book's version nonNegativeInt
+  //   As with mine above, there are precisely two ways
+  //   to get any particular non-negative integer.  This
+  //   way everything stays equally weighted.
   def nonNegativeInt1(rng: RNG): (Int, RNG) = {
     val (ran, rng2) = rng.nextInt
     (if (ran < 0) -(ran + 1) else ran, rng2)
   }
+
+  /** Generate a random double between
+   *  0 (inclusive) and 1 (exclusive).
+   */
+  def double(rng: RNG): (Double, RNG) =
+    nonNegativeInt(rng) match {
+      case (ranNNI, rng2) => 
+        ( ranNNI.toDouble/(Int.MaxValue.toDouble + 1.0), rng2 )
+    }
+    
 }

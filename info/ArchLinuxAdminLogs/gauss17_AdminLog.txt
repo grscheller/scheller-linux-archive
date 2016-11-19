@@ -1893,3 +1893,14 @@ Purpose: To indicate what was done to create gauss17 and
     $ git pull origin
     $ makepkg -sri
 
+2016-11-19:
+  I "Uninstalled" anaconda via
+
+    $ cd ~/opt
+    $ rm -rf anaconda3/
+
+  I am finding the Ipython that comes with Arch much better
+  configured "out of the box."  Also, I like the direction
+  that pypy is taking the language better than that of the
+  python scientific stack.  Too many accidemic old fossils 
+  unwilling to leave 2.7 in the dust.

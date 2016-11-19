@@ -38,14 +38,26 @@ Vim - Vi improved (minimalistic)
   My desktop gui environment is very old school.  I configure
   things to use "sloppy" mouse focus.  Also, I do not have 
   windows jump to the top of the Z-order just because they
-  got the focus.  Alt-click or lt-click title bar will bring
-  the window to the top if I want.  Double-click title bar to
-  make full screen, middle-click title bar to drop them to
-  bottom of the Z-order.  This enables me to interact with
-  vim in a small area of a terminal window while having another
-  windows on top.  This is increadibly useful.  You are not
-  constantly having to juggle windows around nor do you need
-  a 42" monitor.
+  got the focus or received a mouse click.  Alt-click or
+  lt-click-title_bar will bring the window to the top if I
+  want.  Double-click title bar to make full screen,
+  middle-click title bar to drop them to bottom of the Z-order.
+  This enables me to interact with vim in a small area of a
+  terminal window while having another windows on top.  This
+  is increadibly useful.  You are not constantly having to juggle
+  windows around nor do you need a 42" monitor.
+
+  In vim I find the Caps-Lock key annoying since it is easy to
+  accidently hit and commands like j or J do much different
+  things.  Since this is much more annoying to me than the use
+  case for Caps-Lock, I remap the key to be a second escape key.
+  My left pinky is much happier.  This can be done through the
+  Gnome-2 GUI configuration settings and in Xfce you can add
+
+    xmodmap -e "clear Lock" -e "keysym Caps_Lock = Escape"
+
+  to the Application Autostart section of Session and Startup
+  of Settings.
 
 2. Cursor movement:
 

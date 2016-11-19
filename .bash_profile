@@ -2,9 +2,9 @@
 #
 # The purpose of this is to set up an initial environment 
 #
-# This profile attempts to be a common bash environment setup file
-# for all my Unix-like systems I use at work.  Probably a bit
-# too much CentOS oriented.  Before GIT and when diskspace was 
+# This profile evoled from a common bash environment setup file
+# for all my Unix-like systems I use at work.  Probably now a bit
+# too much CentOS 6.7 oriented.  Before GIT and when diskspace was 
 # expensive, developers sometimes shared a development environment.
 # The reference SDE below stand for such a shared development
 # environment.  I also build software under my home directory.
@@ -72,6 +72,8 @@ PATH=$PATH:/usr/local/bin:/usr/bin:/bin
  
 #
 ## For external packages built locally in home directory
+##   Put early in PATH since the version of CentOS am forced to
+##   use at work is so out of date. 
 PATH=~/local/bin:$PATH
 MANPATH=~/local/share/man:$MANPATH
 # For local software builds: 

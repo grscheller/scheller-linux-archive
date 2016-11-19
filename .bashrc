@@ -20,7 +20,8 @@ export LANG=en_US.utf8
 
 ##
 ## Set default mask so other members of a unix group can share a
-## development environment. (Fixes what /etc/bashrc breaks at work)
+## development environment. ( Fixes what /etc/bashrc breaks at
+## work due to misguided DISA system "hardening". )
 umask 0007
 
 ##
@@ -61,7 +62,7 @@ alias khpc='kinit userName3@foo.mySchool.edu'
 alias rygar='/usr/bin/ssh userName@rygar'
 alias galaga='/usr/bin/ssh userName2@galaga'
 alias frogger='/usr/bin/ssh userName@frogger'
-alias bar='/usr/bin/ssh userName3@bar.mySchool.edu'
+alias foobar='/usr/bin/ssh userName3@bar.mySchool.edu'
 
 # scp shell functions (use via aliases)
 

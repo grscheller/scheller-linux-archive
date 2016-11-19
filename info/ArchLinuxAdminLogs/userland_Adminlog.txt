@@ -283,3 +283,17 @@ Purpose: For things installed locally as an unprivalleged user.
 
   in ~/.stack/global-project/stack.yaml
 
+2016-18-2016:
+  Change the X keymappings to make Caps-Lock a second Escape key.
+
+  Rt Click desktop ->
+    Applications -> Settings -> Sessions and Startup ->
+      Application Autostart tab
+
+      Now add the following entry:
+
+      Name: Keymapping
+      Description: Make caps-lock an escape key
+      Command: xmodmap -e "clear Lock" -e "keysym Caps_Lock = Escape" 
+
+  Restart X.

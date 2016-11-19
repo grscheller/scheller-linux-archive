@@ -1,0 +1,63 @@
+#
+# ~/.bash_profile
+#
+#  Configure initial environment of my login shells.
+#
+#    Essentually, reconfigure what is handed
+#    to me by /etc/profile.
+#
+#  Note: Configure xfce-terminal to launch new terminals
+#        with login shells if using a display manager.
+#
+#        If using startx, initial environment picked up
+#        from console login.
+#
+#  Note: Non-existent path and duplicate path elements
+#        will be dealt with near end of script.
+#
+
+# Configure interactive shells.
+[[ -f ~/.bashrc ]] && source ~/.bashrc
+
+umask 0007
+
+## Configure Python environment.
+#  If I choose to reinstall the Anaconda Scientific Stack
+PATH=~/opt/anaconda3/bin:$PATH
+#  Make sure private libraries both 2.7/3.3+ compatible
+#  and distribution agnostic..
+export PYTHONPATH=~/devel/pygrs/lib
+
+## For Haskell stuff I can't get through official Arch repos
+#PATH=~/.cabal/bin:$PATH
+# For Haskell locally contained and administered via stack
+PATH=/home/geoff/.local/bin:$PATH
+
+# Use ~/local/bin for stuff I hope Arch will eventually
+# supercede what I install in my home directory.
+PATH=$PATH:~/local/bin
+
+# Finish configuring Perl6
+PATH=$PATH:~/local/share/perl6/site/bin
+
+# My private utils bin and current directory last.  Someday
+# turn these utils into an ARCH package.
+PATH=$PATH:~/bin:.
+
+# Activate Rakudobrew, a perl5 package manager for perl6
+#eval "$(/home/geoff/.rakudobrew/bin/rakudobrew init -)"
+
+# Clean up PATH
+[[ -x ~/bin/pathTrim ]] && PATH=$(~/bin/pathTrim $PATH)
+
+# Let Linux be Linux.
+#   No sense letting things like ps follow the useless
+#   and bad parts of the Unix98 standard.
+[[ $(uname) == Linux ]] && {
+    export CMD_ENV=linux
+    export PS_PERSONALITY=linux
+}
+
+# Count number of times file sourced
+export BASH_PROFILE_SOURCED=${BASH_PROFILE_SOURCED:=0}
+((BASH_PROFILE_SOURCED++))

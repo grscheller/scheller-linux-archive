@@ -19,17 +19,24 @@ object RNGTest {
     println(RNG.nonNegativeInt1(rng))
 
     // Imperitively generate 10 random doubles d, 0.0 <= d < 1.0,
-    //   re-use rng from beginning.
-    println("\nTen random doubles in [0,1):")
+    println("\nImperitively print ten random doubles in [0,1):")
+
     var rngVar: RNG = rng
     var kk = 0
     while (kk < 10) {
       kk = kk + 1
       val pair = RNG.double(rngVar)  // Tuple unpacking awkward,
       val ranD = pair._1             // scala doesn't seem to like
-      rngVar = pair._2               // to unpack into vars.
+      rngVar = pair._2               // to unpack into existing vars.
       println(ranD)
     }
+
+    // Repeat but more functionally using std scala libraries
+    println("\nFunctionally print ten random doubles in [0,1):")
+
+    val getNextRanPair = (x: (Double, RNG)) => RNG.double(x._2)
+    val rngS = Stream.iterate(RNG.double(rng))(getNextRanPair) map (_._1) take 10
+    for (ranDouble <- rngS) println(ranDouble)
 
     // Generate comma separated list of random 3D data
     // and write to disk.

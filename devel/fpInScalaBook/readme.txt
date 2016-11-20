@@ -7,15 +7,14 @@ I am currently working on chapter 6.
 I am doing this in a another (local) GIT repo.  As I make progress,
 I will periodically make snapshots for my public repo.
 
-Libraries are under "src", test objects are under "test".
+Libraries are under "src/main", test objects are under "src/test".
 These tests just exercise the libraries I write.
 
 Run code:
   $ sbt test:run
   $ sbt run
 
-The version of sbt I am currently using: 0.13.13
-The version of scala and java are:
+The versions of sbt, scala, and java I am currently using:
 
   $ sbt sbtVersion
   [info] Set current project to root (in build file:/home/geoff/devel/learn/learnScala/fpInScalaBook/)
@@ -25,7 +24,7 @@ The version of scala and java are:
   [info] Set current project to root (in build file:/home/geoff/devel/learn/learnScala/fpInScalaBook/)
   [info] Starting scala interpreter...
   [info] 
-  Welcome to Scala 2.12.0-RC2 (OpenJDK 64-Bit Server VM, Java 1.8.0_112).
+  Welcome to Scala 2.12.0 (OpenJDK 64-Bit Server VM, Java 1.8.0_112).
   Type in expressions for evaluation. Or try :help.
 
   scala> 
@@ -46,6 +45,7 @@ My usual work flow is "continuous compile":
      .
      .
      .
+  > test:run
 
 repeat, while I edit files, use Unix commands like grep and find,
- and perform GIT commands in other terminal windows.
+and perform GIT commands in other terminal windows.

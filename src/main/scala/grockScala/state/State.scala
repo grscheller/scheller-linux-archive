@@ -2,7 +2,7 @@ package grockScala.state
 
 /** Trait for pseudo-random number generators */
 trait RNG {
-  def nextInt: (Int, RNG)
+  def nextInt: (Int,RNG)
 }
 
 /** Implement the same Linear Congruence Generator
@@ -21,9 +21,10 @@ trait RNG {
  *    The higher order bits are less correlated than the
  *    lower order bits.
  *
- *    This implementation uses bit-& optimization for
- *    the mod operator, basically we are "adding" -2^48
- *    to get a result in the right range.
+ *    A bit-& optimization is being used for the mod
+ *    operator.  Basically we are using an IEEE float 
+ *    implementation detail to "add" -2^48 to get a
+ *    result in the correct range.
  */
 case class LCG(seed: Long) extends RNG {
 
@@ -31,7 +32,7 @@ case class LCG(seed: Long) extends RNG {
   private val c = 0xBL
   private val modMask = 0xFFFFFFFFFFFFL
 
-  def nextInt: (Int, RNG) = {
+  def nextInt: (Int,RNG) = {
     val newSeed = (a*seed + c) & modMask
     val nextRNG = LCG(newSeed)
     val n = (newSeed >>> 16).toInt
@@ -45,7 +46,7 @@ object RNG {
   /** Generate a random integer between
    *  0 and Int.maxValue (inclusive).
    */
-  def nonNegativeInt(rng: RNG): (Int, RNG) =
+  def nonNegativeInt(rng: RNG): (Int,RNG) =
     rng.nextInt match {
       case (ran, rng2) if ran >= 0            => ( ran, rng2)
       case (ran, rng2) if ran == Int.MinValue => (   0, rng2)
@@ -56,7 +57,7 @@ object RNG {
   //   As with mine above, there are precisely two ways
   //   to get any particular non-negative integer.  This
   //   way everything stays equally weighted.
-  def nonNegativeInt1(rng: RNG): (Int, RNG) = {
+  def nonNegativeInt1(rng: RNG): (Int,RNG) = {
     val (ran, rng2) = rng.nextInt
     (if (ran < 0) -(ran + 1) else ran, rng2)
   }
@@ -64,10 +65,34 @@ object RNG {
   /** Generate a random double between
    *  0 (inclusive) and 1 (exclusive).
    */
-  def double(rng: RNG): (Double, RNG) =
+  def double(rng: RNG): (Double,RNG) =
     nonNegativeInt(rng) match {
-      case (ranNNI, rng2) => 
-        ( ranNNI.toDouble/(Int.MaxValue.toDouble + 1.0), rng2 )
+      case (ranNNI, rng1) => 
+        ( ranNNI.toDouble/(Int.MaxValue.toDouble + 1.0), rng1 )
     }
+
+  def intDouble(rng: RNG): ((Int,Double),RNG) = {
+    val (ranI, rng1) = rng.nextInt
+    val (ranD, rng2) = double(rng1)
+    ((ranI, ranD), rng2)
+  }
+
+  def doubleInt(rng: RNG): ((Double,Int),RNG) = 
+    intDouble(rng) match {
+      case ((int, doub), rng1) => ((doub, int), rng1)
+    }
+
+  // Book's version
+  def doubleInt1(rng: RNG): ((Double,Int),RNG) = {
+    val ((int, doub), rng1) = intDouble(rng)
+    ((doub, int), rng1)
+  }
+
+  def double3(rng: RNG): ((Double,Double,Double),RNG) = {
+    val (doub1, rng1) = double(rng)
+    val (doub2, rng2) = double(rng1)
+    val (doub3, rng3) = double(rng2)
+    ((doub1, doub2, doub3), rng3)
+  }
     
 }

@@ -1902,5 +1902,34 @@ Purpose: To indicate what was done to create gauss17 and
   I am finding the Ipython that comes with Arch much better
   configured "out of the box."  Also, I like the direction
   that pypy is taking the language better than that of the
-  python scientific stack.  Too many accidemic old fossils 
-  unwilling to leave 2.7 in the dust.
+  python scientific stack.  There are too many old fossils
+  in the scientific community unwilling to leave Python 2.7
+  in the dust.
+
+2016-11-21:
+  Noticed /etc/bashrc.pacnew and /etc/local.gen.pacnew files.
+
+  I simply replaced /etc/bashrc with the first, the only
+  difference was with prompts, which I override anyway.
+
+  Replaced /etc/local.gen with new version after uncommenting
+  the line 
+
+    #en_US.UTF-8 UTF-8  
+
+  Also /etc/ssh/sshd_config.pacnew, after editting in changes
+  to new version, the only differences now are
+
+    # diff sshd_config sshd_config.pacnew 
+    1c1
+    < # $OpenBSD: sshd_config,v 1.98 2016/02/17 05:29:04 djm Exp $
+    ---
+    > # $OpenBSD: sshd_config,v 1.99 2016/07/11 03:19:44 tedu Exp $
+    38d37
+    < # obsoletes QuietMode and FascistLogging
+
+  so, I replaced it too.
+
+  Finally, I replaced /etc/pacman.d/mirrorlist with latest 
+  version.  I uncommented the Worldwide, Canadian, and US
+  servers.

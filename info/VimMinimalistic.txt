@@ -67,6 +67,7 @@ Vim - Vi improved (minimalistic)
       e, E      move forward to end of word
       $         move to end of line
       ^         move to first non-whitespace character on line 
+      0         move to first character on line
       %         move to the matching (, ) or [, ] or {, }
       (         move to beginning of sentence
       )         move to beginning of next sentence
@@ -74,6 +75,10 @@ Vim - Vi improved (minimalistic)
       }         move down paragraph
       G         move to last line in file
       gg        move to first line in file
+      f<char>   move forward to next <char> on current line
+      ;         move forward to target of last f command
+      ,         move backward to target of last f command
+      3f<char>  move forward to 3rd occurance of <char> on line
       /pattern<ret>    Search forward for pattern (pattern can be
                        a regular expression).
       ?pattern<ret>    search backwards for pattern
@@ -98,19 +103,21 @@ Vim - Vi improved (minimalistic)
 
      d$    delete to end of line and put in buffer
      3yw   yank three words to buffer, starting at cursor
+     d2fz  delete from cursor to 2nd z on current line
+     2y3w  ends up yanking 6 words
 
    You can use named buffers to store text.
 
      'adw  delete word and put in buffer a
      'sd$  delete to end of line and put in buffer "s"
      'sp   paste contents of buffer "s" after cursor
-     'ap   paste contents of buffer "a" after cursor
+     'aP   paste contents of buffer "a" before cursor
 
    One use case for named buffers is that you can copy
-   items from multiple files and paste them into later
-   files.
+   multiple items from multiple files and paste them into
+   later files.
 
-4. Commands to Insert text:
+4. Commands to Insert or manipulate text:
 
    Vim has two modes, these commands take vim from "command"
    mode to "typing input mode."  To return to "command" mode,
@@ -119,7 +126,8 @@ Vim - Vi improved (minimalistic)
      i    insert text at cursor
      a    insert text after cursor
      I    insert text at beginning of line
-          after initial white space
+            after initial white space
+     0I   insert text beginning of line
      A    insert text at end of line
      o    open new line after current line to insert text
      O    open new line before current line to insert text
@@ -128,6 +136,10 @@ Vim - Vi improved (minimalistic)
      5cc  change next 5 lines
      5C   change next 5 lines
      c^   change text before cursor, excuding initial white space
+     ~    change case of current character, advance one character,
+            stay in command mode
+     r    change current character to next character typed,
+            stay in command mode
 
    While in "typing input mode," you can navigate through
    the file with the arrow keys.
@@ -135,7 +147,7 @@ Vim - Vi improved (minimalistic)
 5. Undo/redo commands:
 
       u       undo previous edit
-      cntl-r  redo edit undone
+      ctrl-r  redo edit undone
 
    These can be used to linearly undo and redo edits.  Sort
    of like the arrow buttons in a web browser.

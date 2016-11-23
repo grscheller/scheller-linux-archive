@@ -161,7 +161,7 @@ of doing things; it just that I don't know EMACS that well.
    Alot of times the former and latter seem to accomplish the same
    thing, they gag error messages.  In the latter, we are dependingr
    that cmd is smart enough to know what to do in case it encounters
-   a closed file descriptor (as in C language file descriptor).
+   descriptor (as in C language file descriptor).
    This can be used for efficiency, but depends on knowledge of the
    internal workings of commands.  Usually cmd complains:
 
@@ -519,9 +519,31 @@ of doing things; it just that I don't know EMACS that well.
       $ fName=myMatlabProg.m
       $ regEx='.*\.m'
       $ if [[ $fName =~ $regEx ]]
-      then
-        echo "MATLAB file"
-      else
-        echo "Something else"
-      fi
+      > then
+      >   echo "MATLAB file"
+      > else
+      >   echo "Something else"
+      > fi
       MATLAB file
+
+16. Editting differences between vi/vim and bash in vi mode:
+
+    You can edit a command with vi by esc-v , this in
+    particularly useful in editting multiline commands.
+
+    Some differences from vim are:
+
+      cntl-k  delete from cursor to end of line
+      cntl-u  delete from before cursor beginning of line
+      k         move to previous command in history (beginning of line)
+      j         move to next line in history (beginning of line)
+      #         prepend # to current line and put in history
+
+      ctrl-r    reverse search history, <ret> to execute, <esc> to edit
+      ctrl-s    forward search history, <ret> to execute, <esc> to edit
+
+                Note: To use ctrl-s, you need to turn off terminal flow
+                      control.  To do this, use the "stty -ixon" command.
+                      You will no longer be able to use ctrl-s to stop
+                      output and ctrl-u to start it again.  Use "stty ixon"
+                      to turn flow control back on.

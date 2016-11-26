@@ -1932,4 +1932,17 @@ Purpose: To indicate what was done to create gauss17 and
 
   Finally, I replaced /etc/pacman.d/mirrorlist with latest 
   version.  I uncommented the Worldwide, Canadian, and US
-  servers.
+  servers.  Will continue to do this periodically in future
+  without noting it in this log file.
+
+2016-11-25:
+  Uninstalled flightgear because its data file too big for slow
+  coffee shop internat connection making "pacman -Syu" too slow.
+  Maintainers might consider breaking up data file into smaller
+  chunks. 
+
+    Pacman(Remove): flightgear flightgear-data
+
+  Added a git repo viewer,
+
+    Pacman: gitg

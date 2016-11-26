@@ -10,6 +10,7 @@ an an IDE.  In the age of SBT, probably won't happen.
 To build:
   $ make
   javac  Carl.java
+  javac  Church.java
 
 To run:
   $ java Carl
@@ -17,3 +18,6 @@ To run:
 
   $ java Carl 36
   Sum of 1 to 36 is 666
+
+  $ java Church foo bar
+  foobar

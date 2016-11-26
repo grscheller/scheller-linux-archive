@@ -6,7 +6,7 @@ JFLAGS =
 .java.class:
 	$(JAVAC) $(JFLAGS) $*.java
 
-SOURCES = Carl.java
+SOURCES = Carl.java Church.java
 
 default: classes
 

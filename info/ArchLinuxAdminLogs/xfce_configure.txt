@@ -67,3 +67,37 @@ Claws E-mail:
 
    S/MIME turns out to be IMPOSSIBLE to configure - what a mess.  So
    I disabled it and enabled PGP/Inline and PGP/MIME.
+
+Keymapping treaks:
+  1. Change the X keymappings to make Caps-Lock a second Escape key.
+
+    Rt Click desktop ->
+      Applications -> Settings -> Sessions and Startup ->
+        Application Autostart tab
+
+      Now add the following entry:
+
+      Name: Keymapping
+      Description: Make caps-lock an escape key
+      Command: xmodmap -e "clear Lock" -e "keysym Caps_Lock = Escape" 
+
+    Now restart X.
+
+  2. Make Super-L also lock the screen.
+
+     Rt Click desktop ->
+      Applications -> Settings -> Settings Editor
+        xfce4-keyboard-shortcuts (in left panel)
+          commands -> custom -> <Super>l (in right panel)
+
+      Set action to xflock4.
+
+  3. Similarly to 2 above, I set the following shortcuts:
+
+       <Super>g  -> /usr/bin/google-chrome-stable
+       <Super>f  -> /usr/bin/firefox
+       <Super>m  -> /usr/bin/claws-mail
+       <Super>t  -> /usr/bin/tor-browser
+
+     Actually, I tend to forget about these and use the
+     shortcuts I have put in the lower panel bar instead.

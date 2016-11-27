@@ -493,9 +493,16 @@ VIII. Git checkout:
 
 IX. Git merge:
 
+    The git merge command is used to merge another branch
+    into your working directory.  You still need to do a
+    git commit to commit these changes to the current 
+    branch.
+
     1. Merge a specific branch into the current branch.
 
            git merge someBranch
+           <edit any conflicts>
+           commit
 
     2. Example of a 3-way merge:
 
@@ -525,6 +532,7 @@ IX. Git merge:
            Merge in the new-feature branch
 
               git merge new-feature
+              commit
 
            Delete the new-feature branch (Once things safely merged in
            no sense keeping useless dirty laundry around.  Best 
@@ -554,6 +562,8 @@ IX. Git merge:
 
               git checkout long-term-feature
               git merge master
+              <edit any conflicts>
+              commit
 
            Continue long-term development
               ...

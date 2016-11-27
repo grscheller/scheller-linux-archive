@@ -1,9 +1,6 @@
 /*
- * Sole purpose of this project is to reverse engineer the boiler plate 
- * the Netbeans IDE give me and learn how to extend it to do something
- * non-trivial in the Java language.
- *
- * This time see how to use Lambda expressions
+ * The purpose of this program is to try to get lambdas to
+ * work with the base java language.
  *
  * @author Geoffrey Scheller
  */
@@ -15,7 +12,7 @@ public class Church {
   // No matter what I do, I am not tickling java8
   // correctly for it to be happy with lambda expressions.
   //
-  BiFunction<String, String, String> add_twoL =
+  static BiFunction<String, String, String> add_twoL =
    (first, second) -> first + second;
 
   // Vanilla static method

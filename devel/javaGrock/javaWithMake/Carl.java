@@ -1,5 +1,5 @@
 /*
- * Sole purpose of this project is to reverse engineer the boiler plate 
+ * Purpose of this program is to reverse engineer the boiler plate 
  * the Netbeans IDE give me and learn how to extend it to do something
  * non-trivial in the Java language.
  *
@@ -9,21 +9,24 @@
  */
 public class Carl {
 
-    public static void main(String[] args) {
-        long N = 100L;
-        if (args.length > 0) {
-            try {
-                N = Integer.parseInt(args[0]);
-            } catch (Exception e) {
-                System.out.println(e);
-                return;
-            }
+  public static void main(String[] args) {
+
+    long N = 100L;
+
+    if (args.length > 0) {
+        try {
+            N = Integer.parseInt(args[0]);
+        } catch (Exception e) {
+            System.out.println(e);
+            return;
         }
-        long sum = 0L;
-        for (long ii = 1; ii <= N; ii++) {
-            sum = sum + ii;
-        }
-        System.out.println("Sum of 1 to " + N + " is " + sum);
     }
-    
+
+    long sum = 0L;
+    for (long ii = 1; ii <= N; ii++) {
+      sum = sum + ii;
+    }
+    System.out.println("Sum of 1 to " + N + " is " + sum);
+  }
+
 }

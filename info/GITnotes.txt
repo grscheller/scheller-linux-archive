@@ -494,9 +494,10 @@ VIII. Git checkout:
 IX. Git merge:
 
     The git merge command is used to merge another branch
-    into your working directory.  You still need to do a
-    git commit to commit these changes to the current 
-    branch.
+    into your current branch.  If merge successful without conflicts,
+    you are done.  If not, changes merged into your working directory
+    with GIT putting comments in the code.  In this case, you still
+    need to resolve the conflicts and do a git commit.
 
     1. Merge a specific branch into the current branch.
 

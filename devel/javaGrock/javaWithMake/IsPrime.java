@@ -2,7 +2,10 @@
  * The purpose of this program is to try to get lambdas to
  * work by using an object designed to be a bit more functional.
  *
- * Program to determine if input arguments are prime.
+ * Program to determine if input arguments,
+ * parsed as unsigned longs. are prime.
+ *
+ * Note: Java does not seem to handle unsigned types.
  *
  * @author Geoffrey Scheller
  */
@@ -19,7 +22,14 @@ public class IsPrime {
     if (argCnt > 0) {
       try {
         for (int ii = 0; ii < argCnt; ii++) {
-          potPrimes[ii] = Integer.parseInt(args[ii]);
+          long potentialPrime = Long.parseUnsignedLong(args[ii]);
+          if (potentialPrime < 0L) {
+            throw new IllegalArgumentException(
+              args[ii] + " too large to fit in a long"
+            );
+          } else {
+            potPrimes[ii] = potentialPrime;
+          }
         }
       } catch (Exception e) {
         System.out.println(e);
@@ -31,18 +41,20 @@ public class IsPrime {
     }
 
     for (int jj = 0; jj < argCnt; jj++) {
-      System.out.print(potPrimes[jj] + " is");
+      System.out.print(potPrimes[jj]);
       if (isPrime(potPrimes[jj])) {
-        System.out.println(" prime.");
+        System.out.println(" is prime.");
       } else {
-        System.out.println(" not prime.");
+        System.out.println(" is not prime.");
       }
     }
   }
 
   private static boolean isPrime(final Long num) {
+    final long upto = (long) java.lang.Math.sqrt(num);
+
     return num > 1L && 
-    LongStream.range(2, num).noneMatch(e -> num%e == 0);
+    LongStream.range(2, upto).noneMatch(e -> num%e == 0);
   }
 
 }

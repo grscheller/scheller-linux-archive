@@ -191,7 +191,20 @@ Vim - Vi improved (minimalistic)
      :17,42s/foo/bar/g   Substitute all instances of foo with
                          bar on lines 17 through 42.
 
-7. Repeating commands:
+7. Dealing with non-printable characters:
+
+   To see non-printable charactersr,
+
+     :set list
+
+   to return to normal mode,
+
+     :set nolist
+
+   This is a wonderful feature to get rid of tabs and
+   trailing whitespace.
+
+8. Repeating commands:
 
      .    repeat the last command
 
@@ -199,7 +212,7 @@ Vim - Vi improved (minimalistic)
    The command is the last regular vim command mode command
    that changed text, not a line editor command.
 
-8. End remarks:
+9. End remarks:
 
    Editors like vim or emacs are very powerful.  I have just
    scratched the surface of what is possible with vim.  I

@@ -1,6 +1,6 @@
 # .bashrc
 
-# Used for all my Unix/Unix-like environments at work.
+# Used for all my CentOS6 environments at work.
 
 ##
 ## Source global definitions - in case the gods know better.
@@ -9,9 +9,9 @@ if [[ -f /etc/bashrc ]]; then
 fi
 
 ##
-## Source temporary aliases and functions
-if [[ -f ~/.bashrc_myTemps ]]; then
-	source ~/.bashrc_myTemps
+## Source local aliases and functions
+if [[ -f ~/.bashrc_local ]]; then
+	source ~/.bashrc_local
 fi
 
 ##
@@ -103,7 +103,7 @@ function low() {
     /usr/lib64/libreoffice/program/oosplash --writer "$@" &
 }
 
-## PDF readed evince
+## PDF reader evince
 function ev() {
     evince "$@" &
 }
@@ -196,9 +196,9 @@ PS4='+ '
 
 ##
 ## Defaults if X-Windows not configured.
-export DISPLAY=${DISPLAY:=:0.0}    # In case DISPLAY not set, an educated
-                                   # guess of what it will be when I bring
-                                   # X up.  Mostly for the cygwin env.
+export DISPLAY=${DISPLAY:=:0.0}  # In case DISPLAY not set, an educated
+                                 # guess of what it will be when I bring
+                                 # X up.  Mostly for the cygwin env.
 
 ##
 ## Count number of time file sourced

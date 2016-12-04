@@ -90,7 +90,7 @@ PATH=$PATH:/sbin:/usr/sbin:/usr/local/sbin
 
 #
 ## Personal bin directory - policy is to defer to all others' names.
-## (Usi ~/local/bin to overide others' names)
+## (Use ~/local/bin to overide others' names)
 PATH=$PATH:~/bin:.
 
 #

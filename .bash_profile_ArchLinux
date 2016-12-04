@@ -25,7 +25,7 @@ umask 0007
 #  If I choose to reinstall the Anaconda Scientific Stack
 PATH=~/opt/anaconda3/bin:$PATH
 #  Make sure private libraries both 2.7/3.3+ compatible
-#  and distribution agnostic..
+#  and distribution agnostic.
 export PYTHONPATH=~/devel/pygrs/lib
 
 ## For Haskell stuff I can't get through official Arch repos

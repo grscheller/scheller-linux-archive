@@ -1,0 +1,22 @@
+body {
+  color: white;
+  background-color: black;
+}
+
+a:link {
+  color: aqua;
+  text-decoration: none;
+}
+
+a:visited {
+  color: pink;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+p {
+  margin-left: 30px;
+}

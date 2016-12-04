@@ -502,8 +502,7 @@ IX. Git merge:
     1. Merge a specific branch into the current branch.
 
            git merge someBranch
-           <edit any conflicts>
-           commit
+           <edit any conflicts, "git add" changes, commit if needed>
 
     2. Example of a 3-way merge:
 
@@ -563,8 +562,7 @@ IX. Git merge:
 
               git checkout long-term-feature
               git merge master
-              <edit any conflicts>
-              commit
+              <edit any conflicts, "git add" changes, commit if needed>
 
            Continue long-term development
               ...

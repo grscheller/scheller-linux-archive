@@ -1946,3 +1946,10 @@ Purpose: To indicate what was done to create gauss17 and
   Added a git repo viewer,
 
     Pacman: gitg
+
+2016-12-05:
+  Uninstalled 0AD due to data files taking too long to down
+  load on slow connections.
+
+    Pacman(Remove): 0ad 0ad-data
+

@@ -1953,3 +1953,42 @@ Purpose: To indicate what was done to create gauss17 and
 
     Pacman(Remove): 0ad 0ad-data
 
+2016-12-17:
+  Installed blender.
+
+    Pacman: blender
+
+2016-12-17:
+  Reset the timezone to East Coast.
+
+    $ timedatectl list-timezones | grep America/Ne
+    America/New_York
+ 
+    $ sudo timedatectl set-timezone America/New_York
+
+2016-12-17:
+  Noticed system time about 4 minutes behind my cell
+  phone's time.  Install network time deamon ntpd.
+
+    Pacman: ntp
+
+  When I went to figure out how to turn it on, I discovered
+  that systemd has a simple client only time deamon built in,
+  so I will use it instead.
+
+    Pacman(Remove): ntp
+
+  Now configuren systemd to use ntp time:
+
+    $ sudo timedatectl set-ntp true
+ 
+2016-12-28:
+  Installed the C++ Boost library header files.
+
+    Pacman: boost
+
+  The boost libraries, boost-libs, were already installed.
+  
+  When building software with Boost, -I or -L flags not
+  needed since headers and libs are installed under /usr/include
+  and /usr/lib repectively.

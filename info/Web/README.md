@@ -2,7 +2,7 @@ This is an "old school" homepage but done in a
 "new school" way.  Goal is to make a personal home
 page for my bookmarks and password schemas in a
 simple and clear cut way.  I try and keep content
-(html) and style (css) as separate as possile.  
+(html) and style (css) as separate as possile.
 HTML can be a snake pit of complexity, I endeavor
 to try to keep things as simple as possible.
 
@@ -28,10 +28,9 @@ Anyway, sometime early in 1994, when I first
 started using web browsers, the web was organized
 via directory sites.  Your "homepage" was just
 your private starting point into these.  When search
-engines emerged, everyone started using one as
-their "homepage."  "Homepages" became personal
+engines emerged, may people started using one as
+their homepage.  Homepages became personal
 websites on school and ISP webservers.  Social
 media more or less did these in.  Modern search engines
 rank these personal homepages so low, they might as
 well not exist.  Beware the filter bubble.
-

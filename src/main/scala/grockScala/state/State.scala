@@ -94,5 +94,15 @@ object RNG {
     val (doub3, rng3) = double(rng2)
     ((doub1, doub2, doub3), rng3)
   }
+
+ def ints(count: Int)(rng: RNG): (List[Int], RNG) = 
+   count match {
+     case n if n <= 0 => (Nil, rng)
+     case n           => {
+                           val (ii, rng1) = rng.nextInt
+                           val (l, rng2) = ints(n-1)(rng1)
+                           (ii :: l, rng2) 
+                         }
+   }
     
 }

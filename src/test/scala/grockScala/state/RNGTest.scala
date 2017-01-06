@@ -50,6 +50,14 @@ object RNGTest {
     println("\nPrint 3 double 3-tuples:")
     println(firstTuple); println(secondTuple); println(thirdTuple)
 
+    // Test ints
+    val (  twoList, rng1) = RNG.ints(2)(rng42)
+    val (emptyList, rng2) = RNG.ints(0)(rng1)
+    val (  sixList,  _  ) = RNG.ints(6)(rng2)
+    print("\nPrint twoList = ");   println(twoList)
+    print("\nPrint emptyList = "); println(emptyList)
+    print("\nPrint sixList = ");   println(sixList)
+
     // Generate comma separated list of random 3D data
     // and write to disk.  (do in its own test)
 

@@ -51,12 +51,24 @@ object RNGTest {
     println(firstTuple); println(secondTuple); println(thirdTuple)
 
     // Test ints
+    println("\nTest ints:")
     val (  twoList, rng1) = RNG.ints(2)(rng42)
     val (emptyList, rng2) = RNG.ints(0)(rng1)
     val (  sixList,  _  ) = RNG.ints(6)(rng2)
-    print("\nPrint twoList = ");   println(twoList)
-    print("\nPrint emptyList = "); println(emptyList)
-    print("\nPrint sixList = ");   println(sixList)
+    print("\nPrint twoList = "); println(twoList)
+    print("Print emptyList = "); println(emptyList)
+    print("Print sixList = ");   println(sixList)
+
+    // Test nonNegativeEven
+    println("\nTest nonNegativeEven:")
+    val (evenA, rngA) = RNG.nonNegativeEven(rng42)
+    val (evenB, rngB) = RNG.nonNegativeEven(rngA)
+    val (evenC, rngC) = RNG.nonNegativeEven(rngB)
+    val (evenD, rngD) = RNG.nonNegativeEven(rngC)
+    print("\nPrint evenA = "); println(evenA)
+    print("Print evenB = "); println(evenB)
+    print("Print evenC = "); println(evenC)
+    print("Print evenD = "); println(evenD)
 
     // Generate comma separated list of random 3D data
     // and write to disk.  (do in its own test)

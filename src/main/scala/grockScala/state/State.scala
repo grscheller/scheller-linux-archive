@@ -64,8 +64,10 @@ object RNG {
 
   /** Generate a random double between
    *  0 (inclusive) and 1 (exclusive).
+   *
+   *  Initial version.
    */
-  def double(rng: RNG): (Double,RNG) =
+  def double1(rng: RNG): (Double,RNG) =
     nonNegativeInt(rng) match {
       case (ranNNI, rng1) => 
         ( ranNNI.toDouble/(Int.MaxValue.toDouble + 1.0), rng1 )
@@ -95,14 +97,44 @@ object RNG {
     ((doub1, doub2, doub3), rng3)
   }
 
- def ints(count: Int)(rng: RNG): (List[Int], RNG) = 
-   count match {
-     case n if n <= 0 => (Nil, rng)
-     case n           => {
-                           val (ii, rng1) = rng.nextInt
-                           val (l, rng2) = ints(n-1)(rng1)
-                           (ii :: l, rng2) 
-                         }
-   }
-    
+  def ints(count: Int)(rng: RNG): (List[Int], RNG) = 
+    count match {
+      case n if n <= 0 => (Nil, rng)
+      case n           => {
+        val (ii, rng1) = rng.nextInt
+        val (l, rng2) = ints(n-1)(rng1)
+        (ii :: l, rng2) 
+      }
+    }
+
+  /* Note that types cannot be defined outside
+   * of classes/objects.  They are a feature that is
+   * is part of Scala's OO system - see page 457 of
+   * Oderski's Programming in Scala, 3rd edition,
+   * on path dependent type.  Types are members 
+   * just like defs, vals, and vars.  FPinScala is
+   * using the feature here to implement type aliases.
+   */
+  type Rand[+A] = RNG => (A,RNG)
+
+  def unit[A](a: A): Rand[A] =
+    rng => (a, rng)
+
+  def map[A,B](s: Rand[A])(f: A => B): Rand[B] =
+    rng => {
+      val (a, rng1) = s(rng)
+      (f(a), rng1)
+    }
+
+  def nonNegativeEven: Rand[Int] =
+    map(nonNegativeInt)(i => i - i%2)
+
+  /** Generate a random double between
+   *  0 (inclusive) and 1 (exclusive).
+   */
+  def double: Rand[Double] = {
+    val d = Int.MaxValue.toDouble + 1.0
+    map(nonNegativeInt)(_.toDouble/d)
+  }
+
 }

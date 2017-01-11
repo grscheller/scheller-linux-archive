@@ -1992,3 +1992,37 @@ Purpose: To indicate what was done to create gauss17 and
   When building software with Boost, -I or -L flags not
   needed since headers and libs are installed under /usr/include
   and /usr/lib repectively.
+
+2017-01-11:
+  Noticed that both chrome and firefox not displaying asian
+  character sets correctly.  Type installing more fonts.
+
+    Pacman: texlive-langjapanese texlive-langchinese
+
+  Did not help.  I got these via:
+
+    $ pacman -Ss font | less
+
+  and looked for "chinese" and "japanese".
+
+  Gnu's gnu-free-fonts, which are a set of free OpenType fonts
+  covering the Unicode character set, are installed.
+
+    Pacman: ttf-croscore
+
+  Above are Chrome OS core fonts, also did not help.
+
+    Pacman: adobe-source-han-sans-cn-fonts
+    Pacman: adobe-source-han-sans-jp-fonts
+    Pacman: adobe-source-han-sans-kr-fonts
+    Pacman: adobe-source-han-sans-otc-fonts
+    Pacman: adobe-source-han-sans-tw-fonts
+    Pacman: opendesktop-fonts otf-ipafont
+    Pacman: ttf-mph-2b-damase ttf-sazanami
+    Pacman: ttf-hannom ttf-hannom ttf-baekmuk
+    Pacman: ttf-hanazono wqy-bitmapfont wqy-microhei
+    Pacman: wqy-microhei-lite wqy-zenhei
+
+  Installed everything Chinese, Japanese, and Korean
+  font wise I could find.  Now Baidu displays correctly
+  in Chrome and Firefox.

@@ -70,7 +70,26 @@ object RNGTest {
     print("Print evenC = "); println(evenC)
     print("Print evenD = "); println(evenD)
 
-    // Generate comma separated list of random 3D data
+    // Test map and map2
+    println("\nTest map and map2 by throwing dice:")
+
+    def dieRoll: RNG.Rand[Int] =
+      RNG.map(RNG.nonNegativeInt)(die => die % 6 + 1)
+
+    def diceRoll: RNG.Rand[Int] =
+      RNG.map2(dieRoll, dieRoll)(_ + _)
+
+    // Some manuel rolls to start off
+    val (role1, rngR1) = diceRoll(rngD)
+    val (role2, rngR2) = diceRoll(rngR1)
+    val (role3, rngR3) = diceRoll(rngR2)
+    val (role4, rngR4) = diceRoll(rngR3)
+    print("\nPrint role1 = "); println(role1)
+    print("Print role2 = "); println(role2)
+    print("Print role3 = "); println(role3)
+    print("Print role4 = "); println(role4)
+
+    // Generate comma separated list of random 2D data
     // and write to disk.  (do in its own test)
 
     println()

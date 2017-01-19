@@ -219,7 +219,7 @@ Purpose: To indicate what was done to create gauss17 and
 
 2016-07-09:
   Attempting to install GNOME Desktop
-    Pacman: gnome, gnome-extra gonoe-tweak-tool
+    Pacman: gnome, gnome-extra gnome-tweak-tool
 
   I created a .initrc file that esentially does an
   "exec gnome-session".

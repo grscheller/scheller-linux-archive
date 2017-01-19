@@ -1,4 +1,4 @@
-package grockScala.chap06.state
+package grockScala.test.chap06.state
 
 import grockScala.state._
 
@@ -39,7 +39,7 @@ object RNGTest {
     for (ranDouble <- rngS) println(ranDouble)
 
     // Test intDouble and doubleInt
-    println("\nTheses next two should be reverse of each other:")
+    println("\nThese next two should be reverse of each other:")
     print("RNG.intDouble(rng42) = "); println(RNG.intDouble(rng42))
     print("RNG.doubleInt(rng42) = "); println(RNG.doubleInt(rng42))
 
@@ -80,14 +80,14 @@ object RNGTest {
       RNG.map2(dieRoll, dieRoll)(_ + _)
 
     // Some manuel rolls to start off
-    val (role1, rngR1) = diceRoll(rngD)
-    val (role2, rngR2) = diceRoll(rngR1)
-    val (role3, rngR3) = diceRoll(rngR2)
-    val (role4, rngR4) = diceRoll(rngR3)
-    print("\nPrint role1 = "); println(role1)
-    print("Print role2 = "); println(role2)
-    print("Print role3 = "); println(role3)
-    print("Print role4 = "); println(role4)
+    val (roll1, rngR1) = diceRoll(rngD)
+    val (roll2, rngR2) = diceRoll(rngR1)
+    val (roll3, rngR3) = diceRoll(rngR2)
+    val (roll4, rngR4) = diceRoll(rngR3)
+    print("\nPrint role1 = "); println(roll1)
+    print("Print role2 = "); println(roll2)
+    print("Print role3 = "); println(roll3)
+    print("Print role4 = "); println(roll4)
 
     // Generate comma separated list of random 2D data
     // and write to disk.  (do in its own test)

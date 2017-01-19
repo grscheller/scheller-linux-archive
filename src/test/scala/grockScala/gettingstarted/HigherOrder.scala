@@ -1,4 +1,4 @@
-package grockScala.chap02.gettingstarted
+package grockScala.test.chap02.gettingstarted
 
 /*
    Currying and partial application

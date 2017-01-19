@@ -22,9 +22,17 @@ trait RNG {
  *    lower order bits.
  *
  *    A bit-& optimization is being used for the mod
- *    operator.  Basically we are using an IEEE float 
- *    implementation detail to "add" -2^48 to get a
- *    result in the correct range.
+ *    operator.  Basically we are using an integer
+ *    arithmetic implementation detail to "add" -2^48
+ *    to get a result in the correct range.
+ *
+ *    According to Knuth, you will get the maximum period
+ *    of m ,if and only if, when the following conditions
+ *    hold:
+ *
+ *      1. m and c are relatively prime,
+ *      2. a-1 is divisible by all prime factors of m,
+ *      3. a-1 is divisible by 4 if m is divisible by 4.
  */
 case class LCG(seed: Long) extends RNG {
 

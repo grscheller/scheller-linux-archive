@@ -1,4 +1,4 @@
-package grockScala.chap04.errorhandling
+package grockScala.test.chap04.errorhandling
 
 import scala.util.{Try, Success, Failure}
 

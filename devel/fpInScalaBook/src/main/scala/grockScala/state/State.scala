@@ -22,9 +22,17 @@ trait RNG {
  *    lower order bits.
  *
  *    A bit-& optimization is being used for the mod
- *    operator.  Basically we are using an IEEE float 
- *    implementation detail to "add" -2^48 to get a
- *    result in the correct range.
+ *    operator.  Basically we are using an integer
+ *    arithmetic implementation detail to "add" -2^48
+ *    to get a result in the correct range.
+ *
+ *    According to Knuth, you will get the maximum period
+ *    of m ,if and only if, when the following conditions
+ *    hold:
+ *
+ *      1. m and c are relatively prime,
+ *      2. a-1 is divisible by all prime factors of m,
+ *      3. a-1 is divisible by 4 if m is divisible by 4.
  */
 case class LCG(seed: Long) extends RNG {
 
@@ -108,10 +116,10 @@ object RNG {
     }
 
   /* Note that types cannot be defined outside
-   * of classes/objects.  They are a feature that is
+   * of classes/objects.  They are a feature that
    * is part of Scala's OO system - see page 457 of
    * Oderski's Programming in Scala, 3rd edition,
-   * on path dependent type.  Types are members 
+   * on path dependent types.  Types are members 
    * just like defs, vals, and vars.  FPinScala is
    * using the feature here to implement type aliases.
    */
@@ -129,12 +137,38 @@ object RNG {
   def nonNegativeEven: Rand[Int] =
     map(nonNegativeInt)(i => i - i%2)
 
-  /** Generate a random double between
+  /** Generate a random Double between
    *  0 (inclusive) and 1 (exclusive).
+   *
+   *    (state: RNG) => (value, nextState)
+   *
+   *  Random variable in the sense of probability theory.
    */
   def double: Rand[Double] = {
     val d = Int.MaxValue.toDouble + 1.0
     map(nonNegativeInt)(_.toDouble/d)
   }
+
+  /** Generate a random Int
+   *
+   *    (state: RNG) => (value: Int, nextState: RNG)
+   *
+   *  Random variable in the sense of probability theory.
+   */
+  def int: Rand[Int] = _.nextInt
+
+  def map2[A,B,C](ra: Rand[A], rb: Rand[B])(f: (A, B) => C): Rand[C] =
+    rng => {
+      val (a, rng1) = ra(rng)
+      val (b, rng2) = rb(rng1)
+      (f(a, b), rng2)
+    }
+
+  def both[A,B](ra: Rand[A], rb: Rand[B]): Rand[(A,B)] =
+    map2(ra, rb)((_, _))
+
+  def randIntDouble: Rand[(Int,Double)] = both(int, double)
+
+  def randDoubleInt: Rand[(Double,Int)] = both(double, int)
 
 }

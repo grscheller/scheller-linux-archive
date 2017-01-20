@@ -2026,3 +2026,11 @@ Purpose: To indicate what was done to create gauss17 and
   Installed everything Chinese, Japanese, and Korean
   font wise I could find.  Now Baidu displays correctly
   in Chrome and Firefox.
+
+2017-01-19:
+  Changed time back to Mountain time.
+
+    $ sudo timedatectl set-timezone America/Denver
+
+  Note: Clock in XFCE gui did not update until I 
+        restarted the XFCE session.

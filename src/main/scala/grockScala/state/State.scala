@@ -1,6 +1,7 @@
 package grockScala.state
 
-/** Trait for pseudo-random number generators */
+/** Trait for pseudo-random number generators
+ */
 trait RNG {
   def nextInt: (Int,RNG)
 }
@@ -16,19 +17,18 @@ trait RNG {
  *        c = 11 = B
  *        m = 2^48 = 281474976710656 = FFFFFFFFFFFF + 1
  *          
- *    pseudo-random int value = bits 47...16 of newSeed
+ *    Pseudo-random int value = bits 47...16 of newSeed.
  *
  *    The higher order bits are less correlated than the
- *    lower order bits.
+ *    lower order bits.  We shift by 16 bits to get a
+ *    32-bit value.
  *
  *    A bit-& optimization is being used for the mod
- *    operator.  Basically we are using an integer
- *    arithmetic implementation detail to "add" -2^48
- *    to get a result in the correct range.
+ *    operator.  Basically we are (_ % 2^48) by ignoring
+ *    all the digits of a long value past bit-47.
  *
  *    According to Knuth, you will get the maximum period
- *    of m ,if and only if, when the following conditions
- *    hold:
+ *    of m, if and only if, the following conditions hold:
  *
  *      1. m and c are relatively prime,
  *      2. a-1 is divisible by all prime factors of m,

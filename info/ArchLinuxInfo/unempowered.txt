@@ -12,3 +12,9 @@ Pacman:
     pacman -Q   : List all installed packages
     pacman -Ss regex : search for terms in package database
     pacman -Qlq tor  : List files associated with a package
+    pacman -Q | grep '^linux ' : Get Linux kernel version
+
+POSIX:
+  Get linux kernel version:
+    uname -r
+

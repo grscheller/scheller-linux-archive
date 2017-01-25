@@ -2034,3 +2034,14 @@ Purpose: To indicate what was done to create gauss17 and
 
   Note: Clock in XFCE gui did not update until I 
         restarted the XFCE session.
+
+2017-01-25:
+  Installed bc.  GNU extension to POSIX command line
+  calculator/math language.
+
+    Pacman: bc
+
+  Need to set scale to something greater than 0 for
+  division to make sense.  When scale = 0, then
+  the % operator is the integer mod operator with
+  the usual C language negative value behavior.

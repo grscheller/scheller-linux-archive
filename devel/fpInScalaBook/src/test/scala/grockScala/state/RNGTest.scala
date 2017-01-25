@@ -55,9 +55,9 @@ object RNGTest {
     val (  twoList, rng1) = RNG.ints(2)(rng42)
     val (emptyList, rng2) = RNG.ints(0)(rng1)
     val (  sixList,  _  ) = RNG.ints(6)(rng2)
-    print("\nPrint twoList = "); println(twoList)
-    print("Print emptyList = "); println(emptyList)
-    print("Print sixList = ");   println(sixList)
+    print("\ntwoList = "); println(twoList)
+    print("emptyList = "); println(emptyList)
+    print("sixList = ");   println(sixList)
 
     // Test nonNegativeEven
     println("\nTest nonNegativeEven:")
@@ -65,10 +65,10 @@ object RNGTest {
     val (evenB, rngB) = RNG.nonNegativeEven(rngA)
     val (evenC, rngC) = RNG.nonNegativeEven(rngB)
     val (evenD, rngD) = RNG.nonNegativeEven(rngC)
-    print("\nPrint evenA = "); println(evenA)
-    print("Print evenB = "); println(evenB)
-    print("Print evenC = "); println(evenC)
-    print("Print evenD = "); println(evenD)
+    print("\nevenA = "); println(evenA)
+    print("evenB = "); println(evenB)
+    print("evenC = "); println(evenC)
+    print("evenD = "); println(evenD)
 
     // Test map and map2
     println("\nTest map and map2 by throwing dice:")
@@ -76,18 +76,18 @@ object RNGTest {
     def dieRoll: RNG.Rand[Int] =
       RNG.map(RNG.nonNegativeInt)(die => die % 6 + 1)
 
-    def diceRoll: RNG.Rand[Int] =
+    def twoDiceRoll: RNG.Rand[Int] =
       RNG.map2(dieRoll, dieRoll)(_ + _)
 
     // Some manuel rolls to start off
-    val (roll1, rngR1) = diceRoll(rngD)
-    val (roll2, rngR2) = diceRoll(rngR1)
-    val (roll3, rngR3) = diceRoll(rngR2)
-    val (roll4, rngR4) = diceRoll(rngR3)
-    print("\nPrint role1 = "); println(roll1)
-    print("Print role2 = "); println(roll2)
-    print("Print role3 = "); println(roll3)
-    print("Print role4 = "); println(roll4)
+    val (twoDiceRoll1, rngR1) = twoDiceRoll(rngD)
+    val (twoDiceRoll2, rngR2) = twoDiceRoll(rngR1)
+    val (twoDiceRoll3, rngR3) = twoDiceRoll(rngR2)
+    val (twoDiceRoll4, rngR4) = twoDiceRoll(rngR3)
+    print("\ntwoDiceRoll1 = "); println(twoDiceRoll1)
+    print("twoDiceRoll2 = "); println(twoDiceRoll2)
+    print("twoDiceRoll3 = "); println(twoDiceRoll3)
+    print("twoDiceRoll4 = "); println(twoDiceRoll4)
 
     // Generate comma separated list of random 2D data
     // and write to disk.  (do in its own test)

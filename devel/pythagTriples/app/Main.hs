@@ -31,7 +31,7 @@ triplesFast num = take num pythagTriplesFast
 
 usageString :: String
 usageString = unlines [
-  "  Usage: pythagTriples [-o|-f|-h] number",
+  "  Usage: pythagTriples  [-o|-f|-fs|-h] number",
   "    where",
   "      number = number of triples to print",
   "    and",

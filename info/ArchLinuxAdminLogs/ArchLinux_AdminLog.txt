@@ -2044,4 +2044,13 @@ Purpose: To indicate what was done to create gauss17 and
   Need to set scale to something greater than 0 for
   division to make sense.  When scale = 0, then
   the % operator is the integer mod operator with
-  the usual C language negative value behavior.
+  the usual C language negative value behavior for %.
+
+2017-01-28:
+  Installed exiftool to extract metadata from files.
+
+    Pacman: perl-image-exiftool
+
+  Installed this to ensure that JPG files uploaded to
+  Facebook did not contain GPS metadata.  This perl
+  script seems to work on a large variety of file types.

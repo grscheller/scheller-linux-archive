@@ -1,11 +1,11 @@
-###A Pythagorean Triple generation program implemented in Haskell using the stack buildtool.
+#A Pythagorean Triple generation program implemented in Haskell using the stack buildtool.
 
 A Pythagoean Triple is a tuple `(a, b, c)` such that `a^2 + b^2 = c^2`.
 
 This program generates all possible pythagorean triples such
 that `gcd(a, b, c) = 1` and `a, b, c > 0`.
 
-####Usage:
+###Usage:
   ```
   pythagTriples [-o|-f|-fs|-h] number
     where
@@ -23,7 +23,7 @@ that `gcd(a, b, c) = 1` and `a, b, c > 0`.
   ```   
   Both algorithms only print triples with no common factors, that is `gcd(a,b,c) = 1`.
 
-####Some design considerations:
+###Some design considerations:
 
   1. These algorithms generate pathagorean triples with no common
      factors.
@@ -66,7 +66,6 @@ that `gcd(a, b, c) = 1` and `a, b, c > 0`.
                            vary b
      ```
      As `b` gets bigger, eventially `c - b < 1` => no more triples.
-     So,
      ```
         a^2 + b^2 = c^2
         a^2 = c^2 - b^2 = (c-b)*(c+b) < c + b

@@ -2054,3 +2054,27 @@ Purpose: To indicate what was done to create gauss17 and
   Installed this to ensure that JPG files uploaded to
   Facebook did not contain GPS metadata.  This perl
   script seems to work on a large variety of file types.
+
+2017-01-28:
+  Installed Markdown.pl perl script to render markdown
+  files (like GitHub README.md files) as html.
+
+    Pacman: perl-text-markdown
+
+  Use -html4tags to render as HTML as opposed to XML,
+  example -
+
+    $ Markdown.pl -html4tags README.md > README.html
+
+  For more info see:
+
+    https://daringfireball.net/projects/markdown/
+
+  Unfortunately, this version does not quite work the
+  same as what GitHub does.
+
+2017-01-29:
+  Installing Haskell Stack infrastructure and the Stack
+  build tool from the Arch Linux repos
+
+    Pacman: stack haskell-stack

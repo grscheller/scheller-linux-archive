@@ -47,12 +47,12 @@ Purpose: For things installed locally as an unprivalleged user.
 
     Cabal001: codo-notation
 
-  Note: Cabal is "NOT" a true package manager.  Subsequent 
+  Note: Cabal is "NOT" a true package manager.  Subsequent
     "cabal installs" can break previous ones.  This is known
     as "Cabal Hell."
 
     1. Cabal can install packages globally - NEVER DO THIS!!!
-    2. Be prepared to blow away the .cabal directory and 
+    2. Be prepared to blow away the .cabal directory and
        start over.
     3. Possible to do Cabal on a per project basis using Cabal
        sandboxws.  I wish to avoid this.  Also, periodically
@@ -60,16 +60,16 @@ Purpose: For things installed locally as an unprivalleged user.
     4. Like I did with Pacman, using "Cabal#:" so that I know
        what I have currently installed via Cabal.  Use
 
-         $ grep 'Cabal...:' userland_Adminlog.txt 
+         $ grep 'Cabal...:' userland_Adminlog.txt
 
-       to get the list of Cabal installs.  Starting the 
+       to get the list of Cabal installs.  Starting the
        count at 001.
 
   Cabal man page says that it is "cabal - a system for building
   and packaging Haskell libraries and programs".
 
 2016-09-16:
-  Perl6 is "finally?" stable enough to try out.  There seems to 
+  Perl6 is "finally?" stable enough to try out.  There seems to
   be two AUR's for it, rakudo and rakudo-star.  Much confusion
   for which to use.  So, by passing AUR and install locally.
 
@@ -103,13 +103,13 @@ Purpose: For things installed locally as an unprivalleged user.
   It complains that I have not told it what version of perl6 to use.
   Why not the only bloody one on the path???  Then I realize that
   I am dealing with something like sbt or lien, which wants to
-  itself build or install whatever perl6 version I indicate.  
+  itself build or install whatever perl6 version I indicate.
 
 2016-09-17:
   I decided to change the use case of ~/local.  It is more likely
   that Arch packages will (eventually) be more up-to-date than
   anything I build, I will put ~/local/bin just before ~/bin
-  on my path.  (At work, I've been stuck on outdated CentOS 6.7 
+  on my path.  (At work, I've been stuck on outdated CentOS 6.7
   for way, way, way too long.)
 
   Now, my Linux path is:
@@ -132,7 +132,7 @@ Purpose: For things installed locally as an unprivalleged user.
 
 2016-09-17:
   Back to Perl6, after some digging, the rakudo-star AUR package
-  is broken and rakudo package last updated 2016-08-20.  I'll 
+  is broken and rakudo package last updated 2016-08-20.  I'll
   go with rakudo (see guass17_AdminLog.txt).
 
 2016-10-13:
@@ -160,7 +160,7 @@ Purpose: For things installed locally as an unprivalleged user.
   Later, created a .gitignore file based on what was recommended
   by Chris Allen in 'https://www.howistart.org/posts/haskell/1'.
 
-    $ cat .gitignore 
+    $ cat .gitignore
     dist
     dist-*
     cabal-dev
@@ -187,19 +187,19 @@ Purpose: For things installed locally as an unprivalleged user.
     Run from outside a project, using implicit global project config
     Using resolver: lts-7.1 from implicit global project's config file:
         /home/geoff/.stack/global-project/stack.yaml
-    Configuring GHCi with the following packages: 
+    Configuring GHCi with the following packages:
     GHCi, version 8.0.1: http://www.haskell.org/ghc/  :? for help
     Loaded GHCi configuration from /tmp/ghci7977/ghci-script
-    Prelude> 
+    Prelude>
 
   Run another version of ghci outside of a project:
 
     $ stack --resolver ghc-7.10.3 ghci
     Run from outside a project, using implicit global project config
     Using resolver: ghc-7.10.3 specified on command line
-    Configuring GHCi with the following packages: 
+    Configuring GHCi with the following packages:
     GHCi, version 7.10.3: http://www.haskell.org/ghc/  :? for help
-    Prelude> 
+    Prelude>
 
   OK, I need to figure out which version I should be using.  Seems
   that the lts-7.1 is using a newer version of GHCi than ghc-7.10.3!
@@ -227,12 +227,12 @@ Purpose: For things installed locally as an unprivalleged user.
     packages: []
     extra-deps: []
     resolver: lts-7.3
-  
+
   Now, a comment in this file directs me to the file
   ~/.stack/config.yaml as being the default template for
   new projects.  This file refers to the website
   http://docs.haskellstack.org/en/stable/yaml_configuration/
-  for how to configure this file.  After consulting this 
+  for how to configure this file.  After consulting this
   website, the contents of ~/.stack/config.yaml are now:
 
     templates:
@@ -294,6 +294,133 @@ Purpose: For things installed locally as an unprivalleged user.
 
       Name: Keymapping
       Description: Make caps-lock an escape key
-      Command: xmodmap -e "clear Lock" -e "keysym Caps_Lock = Escape" 
+      Command: xmodmap -e "clear Lock" -e "keysym Caps_Lock = Escape"
 
   Restart X.
+
+2017-01-29:
+  I had noticed that some package (I think haskell-cmark)
+  required ghc 8.0.1-1 as a dependency.  Also noticed that
+  the version of stack in the Arch Repos was later than
+  the one I previous installed in /usr/local.
+
+  Removed previous stack Haskell infrastructure.
+
+    $ rm -rf ~/.stack
+    $ rm ~/.local/bin/{cabal,happy,alex}
+    # rm /usr/local/bin/stack
+
+  Installed stack and haskell-stack packages with
+  pacman.  Initialized new sandbox into my home
+  directory.
+
+    $ stack setup
+
+  and created a new project with
+
+    $ stack new junkTest simple
+
+  From the stack.yaml file, I see the following
+
+    resolver: lts-7.18
+    # require-stack-version: ">=1.3"
+
+  Also,
+
+    $ whence ghc
+    /usr/bin/ghc
+
+    $ stack exec whence ghc
+    /home/geoff/.stack/programs/x86_64-linux/ghc-ncurses6-8.0.1/bin/ghc
+    /usr/bin/ghc
+
+  Running stack the first time created a default YAML file
+
+    ~/.stack/global-project/stack.yaml
+
+  With the following non-comment content:
+
+    flags: {}
+    extra-package-dbs: []
+    packages: []
+    extra-deps: []
+    resolver: lts-7.18
+
+  Versions of ghc
+
+    $ /usr/bin/ghc --version
+    The Glorious Glasgow Haskell Compilation System, version 8.0.1
+
+    $ ~/.stack/programs/x86_64-linux/ghc-ncurses6-8.0.1/bin/ghc --version
+    The Glorious Glasgow Haskell Compilation System, version 8.0.1
+
+  Finally I editted the file
+
+    ~/.stack/config.yaml
+
+  as follows
+
+    templates:
+      params:
+        author-name: geoffrey@scheller.com
+        author-email: 'Geoffrey Scheller'
+        copyright: 'Copyright: (c) 2017 Geoffrey R. Scheller'
+        github-username: grscheller
+        category: 'Learning Haskell'
+
+  From these sites:
+
+    https://docs.haskellstack.org
+    https://haskell-lang.org/tutorial/stack-build
+
+  I got the following:
+
+    We define project to mean a directory that contains a
+    stack.yaml file, which specifies how to build a set of
+    cabal packages.  We define package to be a package with
+    a .cabal file.
+
+    A cabal package is identified by a single .cabal file, and
+    has 0 or 1 libraries, and 0 or more executables, test suites,
+    and benchmarks.
+
+    A Stack project has 1 or more cabal packages, and can build
+    them all at the same time.
+
+  Initialize a new project with
+
+    $ stack new junkTest simple
+
+  Build the project with
+
+    $ stack build
+
+  Test the project with
+
+    $ stack test
+
+  Install the project with
+
+    $ stack install
+
+    For the simple project, this just installs
+    the executable into ~/.local/bin
+
+  An existing Cabal package can be initialize
+  a stack.yaml file to use Stack via
+
+    $ stack init
+
+  inside the directory with the package's .cabal file.
+  Stack will attempt to determine a package set compatible
+  with the packages requested in the .cabal file.
+
+  To get all sorts of configuration info, use
+
+    $ stack path
+
+  To find out the versions of libraries which stack installed
+
+    $ stack list-dependencies
+    base 4.9.0.0
+    junkTest3 0.1.0.0

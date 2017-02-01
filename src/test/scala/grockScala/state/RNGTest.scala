@@ -50,6 +50,15 @@ object RNGTest {
     println("\nPrint 3 double 3-tuples:")
     println(firstTuple); println(secondTuple); println(thirdTuple)
 
+    // Test ints1
+    println("\nTest ints1:")
+    val (  twoList1, rng11) = RNG.ints1(2)(rng42)
+    val (emptyList1, rng12) = RNG.ints1(0)(rng11)
+    val (  sixList1,  _  ) = RNG.ints1(6)(rng12)
+    print("\ntwoList1 = "); println(twoList1)
+    print("emptyList1 = "); println(emptyList1)
+    print("sixList1 = ");   println(sixList1)
+
     // Test ints
     println("\nTest ints:")
     val (  twoList, rng1) = RNG.ints(2)(rng42)
@@ -80,14 +89,22 @@ object RNGTest {
       RNG.map2(dieRoll, dieRoll)(_ + _)
 
     // Some manuel rolls to start off
+    println("\nManually roll 2 dice 4 times:")
     val (twoDiceRoll1, rngR1) = twoDiceRoll(rngD)
     val (twoDiceRoll2, rngR2) = twoDiceRoll(rngR1)
     val (twoDiceRoll3, rngR3) = twoDiceRoll(rngR2)
     val (twoDiceRoll4, rngR4) = twoDiceRoll(rngR3)
-    print("\ntwoDiceRoll1 = "); println(twoDiceRoll1)
+    print("twoDiceRoll1 = "); println(twoDiceRoll1)
     print("twoDiceRoll2 = "); println(twoDiceRoll2)
     print("twoDiceRoll3 = "); println(twoDiceRoll3)
     print("twoDiceRoll4 = "); println(twoDiceRoll4)
+
+    // Auto-roll some dice
+    println("\nAuto roll 2 dice 10 times:")
+    val diceRolls = List.fill(10)(twoDiceRoll)
+    val rollSome = RNG.sequence(diceRolls)
+    val (rolledDice, _) = rollSome(rngD)
+    print("Auto-rolled = \n   "); println(rolledDice)
 
     // Generate comma separated list of random 2D data
     // and write to disk.  (do in its own test)

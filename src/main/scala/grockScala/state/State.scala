@@ -171,15 +171,53 @@ object RNG {
 
   def randDoubleInt: Rand[(Double,Int)] = both(double, int)
 
-  def sequence[A](fs: List[Rand[A]]): Rand[List[A]] =
+  /** Combine a list of random actions into one action.
+   *
+   *    My initial version.
+   *
+   */
+  def sequenceRecursion[A](fs: List[Rand[A]]): Rand[List[A]] =
     if (fs.isEmpty)
       unit(List())
     else
       rng => {
         val (f, rngH) = fs.head(rng)
-        val (fTail, rngT) = sequence(fs.tail)(rngH)
+        val (fTail, rngT) = sequenceRecursion(fs.tail)(rngH)
         (f :: fTail, rngT)
       }
+
+  /** Combine a list of random actions into one action.
+   *
+   *    Book's inital version - using foldRight:
+   *      Implementation O(n^2)?
+   *
+   */
+  def sequenceFR[A](fs: List[Rand[A]]): Rand[List[A]] =
+    fs.foldRight(unit(List[A]()))((f, acc) => map2(f, acc)(_ :: _))
+
+  /** Combine a list of random actions into one action.
+   *
+   *    My first attempt at Book's suggested improved version.
+   *      Gives resulting List reversed.  I don't know why I
+   *      "clearly saw" the result would "obviously" need to
+   *      be reversed.  Kept it around because I found the
+   *      unnecessary reversing step interesting.
+   *
+   */
+  def sequenceFLRev[A](fs: List[Rand[A]]): Rand[List[A]] =
+    RNG.map( fs.foldLeft(unit(List[A]()))((acc, f) =>
+      map2(f, acc)(_ :: _)) )(_.reverse)
+
+  /** Combine a list of random actions into one action.
+   *
+   *    Book's suggested improved version - using foldLeft:
+   *      I think this one is O(n)?
+   *
+   */
+  def sequenceFL[A](fs: List[Rand[A]]): Rand[List[A]] =
+    fs.foldLeft(unit(List[A]()))((acc, f) => map2(f, acc)(_ :: _))
+
+  def sequence[A] = sequenceRecursion(_: List[Rand[A]])    // for now
 
   def ints(count: Int)(rng: RNG): (List[Int], RNG) =
     sequence(List.fill(count)((_: RNG).nextInt))(rng)

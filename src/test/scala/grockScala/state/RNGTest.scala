@@ -102,12 +102,51 @@ object RNGTest {
     // Auto-roll some dice
     println("\nAuto roll 2 dice 10 times:")
     val diceRolls = List.fill(10)(twoDiceRoll)
-    val rollSome = RNG.sequence(diceRolls)
+    val rollSome  = RNG.sequenceRecursion(diceRolls)
     val (rolledDice, _) = rollSome(rngD)
-    print("Auto-rolled = \n   "); println(rolledDice)
+    print("rolledSome  = "); println(rolledDice)
 
-    // Generate comma separated list of random 2D data
-    // and write to disk.  (do in its own test)
+    // Auto-roll some dice - test 3 other implementations
+    val rollSomeRecursion = RNG.sequenceRecursion(diceRolls)
+    val rollSomeFLRev = RNG.sequenceFLRev(diceRolls)
+    val rollSomeFL = RNG.sequenceFL(diceRolls)
+    val (rolledDiceRecursion, _) = rollSomeRecursion(rngD)
+    val (rolledDiceFLRev, _) = rollSomeFLRev(rngD)
+    val (rolledDiceFL, _) = rollSomeFL(rngD)
+    print("rolledSomeRecursion = "); println(rolledDiceRecursion)
+    print("rolledSomeFLRev = "); println(rolledDiceFLRev)
+    print("rolledSomeFL = "); println(rolledDiceFL)
+
+    // Test how stack-safe RNG.sequence is
+    println("\nAuto roll 2 dice large number of times and find average:")
+    var numRolls = 2500
+    val diceRollsRecursion1 = List.fill(numRolls)(twoDiceRoll)
+    val rollSomeRecursion1  = RNG.sequenceRecursion(diceRollsRecursion1)
+    val (rolledDiceRecursion1, _) = rollSomeRecursion1(rng42)
+    print("Average of " + numRolls + " two dice rolls  = ")
+    println(rolledDiceRecursion1.sum.toDouble/numRolls)
+
+    // Test the other implementations of sequence for stack safety
+    numRolls = 3000
+    val diceRollsFoldRight1 = List.fill(numRolls)(twoDiceRoll)
+    val rollSomeFoldRight1 = RNG.sequenceFR(diceRollsFoldRight1)
+    val (rolledDiceFoldRight1, _) = rollSomeFoldRight1(rng42)
+    print("Average of " + numRolls + " two dice rolls  = ")
+    println(rolledDiceFoldRight1.sum.toDouble/numRolls)
+
+    numRolls = 3500
+    val diceRollsFoldLeftRev1 = List.fill(numRolls)(twoDiceRoll)
+    val rollSomeFoldLeftRev1 = RNG.sequenceFLRev(diceRollsFoldLeftRev1)
+    val (rolledDiceFoldLeftRev1, _) = rollSomeFoldLeftRev1(rng42)
+    print("Average of " + numRolls + " two dice rolls  = ")
+    println(rolledDiceFoldLeftRev1.sum.toDouble/numRolls)
+
+    numRolls = 3500
+    val diceRollsFoldLeft1 = List.fill(numRolls)(twoDiceRoll)
+    val rollSomeFoldLeft1 = RNG.sequenceFL(diceRollsFoldLeft1)
+    val (rolledDiceFoldLeft1, _) = rollSomeFoldLeft1(rng42)
+    print("Average of " + numRolls + " two dice rolls  = ")
+    println(rolledDiceFoldLeft1.sum.toDouble/numRolls)
 
     println()
   }

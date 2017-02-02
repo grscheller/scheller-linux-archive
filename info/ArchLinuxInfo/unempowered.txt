@@ -2,19 +2,37 @@ Purpose: Useful admin commands and factoids that can be
          done without root or sudo access.
 
 Journalctl:
-  For scanning journalctl output, some useful options -
+  For scanning journalctl output, some useful options,
     journalctl -f : follows like tail -f
     journalctl -x : Augment log lines with explanation texts
 
+  System maintenance,
+    journalctl -p 3 -xb : Look for high priority errors.
+
 Pacman:
-  For querying installed packages -
+  For querying installed packages,
     pacman -Qet : List all explicitly installed packages
     pacman -Q   : List all installed packages
-    pacman -Ss regex : search for terms in package database
     pacman -Qlq tor  : List files associated with a package
+    pacman -Qmq : List all foreign (usually AUR) packages
     pacman -Q | grep '^linux ' : Get Linux kernel version
+
+  Query orphan packages,
+    pacman -Qtdq
+
+  Pacman logs stored here,
+    /var/log/pacman.log
+
+  To search for packages, not necessarily installed,
+    pacman -Ss regex : search for terms in package database
+
+Systemctl:
+  System maintenance,
+    systemctl --failed
 
 POSIX:
   Get linux kernel version:
     uname -r
 
+  System maintenance,
+    Look for errors in /var/log (some logs need root privs).

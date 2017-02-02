@@ -2078,3 +2078,79 @@ Purpose: To indicate what was done to create gauss17 and
   build tool from the Arch Linux repos
 
     Pacman: stack haskell-stack
+
+2017-02-01:
+  Found the following orphaned packages,
+
+    $ pacman -Qtdq
+    cmake
+    colord
+    elfutils
+    enet
+    gloox
+    gstreamer0.10-base-plugins
+    id3lib
+    js17
+    libgnomeui
+    libkeybinder2
+    libnm-glib
+    miniupnpc
+    python-path
+    vte
+
+  Removed them via,
+
+    $ sudo pacman -Rns $(pacman -Qtdq)
+
+  Here is what actually got removed,
+
+    gnome-mime-data-2.18.0-7, gnome-vfs-2.24.4-10,
+    gstreamer0.10-0.10.36-4, gstreamer0.10-base-0.10.36-3,
+    jsoncpp-1.8.0-1, libbonobo-2.32.1-4, libbonoboui-2.24.5-3,
+    libgnome-2.32.1-6, libgnome-data-2.32.1-6,
+    libgnome-keyring-3.12.0-2, libgusb-0.2.9-1,
+    libidl2-0.8.14-4, libnm-1.6.0-4, libuv-1.10.2-1,
+    orbit2-2.14.19-3, cmake-3.7.2-1, colord-1.3.4-1,
+    elfutils-0.168-1, enet-1.3.13-1, gloox-1.0.17-1,
+    gstreamer0.10-base-plugins-0.10.36-3, id3lib-3.8.3-16,
+    js17-17.0.0-4  libgnomeui-2.24.5-2, libkeybinder2-0.3.1-1,
+    libnm-glib-1.6.0-4, miniupnpc-2.0-1, python-path-8.2.1-1,
+    vte-0.28.2-8
+
+2017-02-01:
+  List all foreign (usually AUR) packages:
+
+    $ pacman -Qmq
+    banshee
+    dropbox
+    gdata-sharp
+    google-chrome
+    gudev-sharp
+    moarvm
+    nouveau-fw
+    nqp
+    pyogg
+    pyvorbis
+    rtorrent-systemd
+    tor-browser-bin
+
+  I will go through these to see which to update and which 
+  to remove.
+
+    sudo pacman -Rsu nouveau-fw    <- Don't need (see above).
+    sudo pacman -Rsu moarvm nqp    <- Clutter from perl6 build attemp.
+
+    sudo pacman -Rsu google-chrome <- Remove AUR built chrome.
+    sudo pacman -Syu chromium      <- Replace with chromium
+
+      But now have to chromium-widevine from AUR so Netflix 
+      will work (sorry rms, i'm a bad boy).
+
+        $ cd ~/build/AUR
+        $ git clone https://aur.archlinux.org/chromium-widevine.git
+        $ cd chromium-widevine
+        $ makepkg -sri
+
+    Pacman: chromium
+
+    I'll continue with this tomorrow.

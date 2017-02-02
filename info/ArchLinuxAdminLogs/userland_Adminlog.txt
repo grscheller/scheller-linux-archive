@@ -424,3 +424,15 @@ Purpose: For things installed locally as an unprivalleged user.
     $ stack list-dependencies
     base 4.9.0.0
     junkTest3 0.1.0.0
+
+2017-02-01:
+  Installed networking components.
+
+    Pacman: python2-iwscan python2-wpactrl
+
+  Noticed following warnings in /var/log/wicd/wicd.log - 
+
+    2017/01/21 19:50:13 :: WARNING: python-iwscan not found, falling back to using iwlist scan.
+    2017/01/21 19:50:13 :: WARNING: python-wpactrl not found, falling back to using wpa_cli.
+
+  At several wifi hotspots, not all, I've had to configure static IP addresses.

@@ -16,7 +16,7 @@ trait RNG {
  *        a = 25214903917 = 5DEECE66D
  *        c = 11 = B
  *        m = 2^48 = 281474976710656 = FFFFFFFFFFFF + 1
- *          
+ *
  *    Pseudo-random int value = bits 47...16 of newSeed.
  *
  *    The higher order bits are less correlated than the
@@ -36,7 +36,7 @@ trait RNG {
  */
 case class LCG(seed: Long) extends RNG {
 
-  private val a = 0x5DEECE66DL 
+  private val a = 0x5DEECE66DL
   private val c = 0xBL
   private val modMask = 0xFFFFFFFFFFFFL
 
@@ -77,7 +77,7 @@ object RNG {
    */
   def double1(rng: RNG): (Double,RNG) =
     nonNegativeInt(rng) match {
-      case (ranNNI, rng1) => 
+      case (ranNNI, rng1) =>
         ( ranNNI.toDouble/(Int.MaxValue.toDouble + 1.0), rng1 )
     }
 
@@ -87,7 +87,7 @@ object RNG {
     ((ranI, ranD), rng2)
   }
 
-  def doubleInt(rng: RNG): ((Double,Int),RNG) = 
+  def doubleInt(rng: RNG): ((Double,Int),RNG) =
     intDouble(rng) match {
       case ((int, doub), rng1) => ((doub, int), rng1)
     }
@@ -105,13 +105,13 @@ object RNG {
     ((doub1, doub2, doub3), rng3)
   }
 
-  def ints(count: Int)(rng: RNG): (List[Int], RNG) = 
+  def ints1(count: Int)(rng: RNG): (List[Int], RNG) =
     count match {
       case n if n <= 0 => (Nil, rng)
       case n           => {
         val (ii, rng1) = rng.nextInt
         val (l, rng2) = ints(n-1)(rng1)
-        (ii :: l, rng2) 
+        (ii :: l, rng2)
       }
     }
 
@@ -119,7 +119,7 @@ object RNG {
    * of classes/objects.  They are a feature that
    * is part of Scala's OO system - see page 457 of
    * Oderski's Programming in Scala, 3rd edition,
-   * on path dependent types.  Types are members 
+   * on path dependent types.  Types are members
    * just like defs, vals, and vars.  FPinScala is
    * using the feature here to implement type aliases.
    */
@@ -170,5 +170,56 @@ object RNG {
   def randIntDouble: Rand[(Int,Double)] = both(int, double)
 
   def randDoubleInt: Rand[(Double,Int)] = both(double, int)
+
+  /** Combine a list of random actions into one action.
+   *
+   *    My initial version.
+   *
+   */
+  def sequenceRecursion[A](fs: List[Rand[A]]): Rand[List[A]] =
+    if (fs.isEmpty)
+      unit(List())
+    else
+      rng => {
+        val (f, rngH) = fs.head(rng)
+        val (fTail, rngT) = sequenceRecursion(fs.tail)(rngH)
+        (f :: fTail, rngT)
+      }
+
+  /** Combine a list of random actions into one action.
+   *
+   *    Book's inital version - using foldRight:
+   *      Implementation O(n^2)?
+   *
+   */
+  def sequenceFR[A](fs: List[Rand[A]]): Rand[List[A]] =
+    fs.foldRight(unit(List[A]()))((f, acc) => map2(f, acc)(_ :: _))
+
+  /** Combine a list of random actions into one action.
+   *
+   *    My first attempt at Book's suggested improved version.
+   *      Gives resulting List reversed.  I don't know why I
+   *      "clearly saw" the result would "obviously" need to
+   *      be reversed.  Kept it around because I found the
+   *      unnecessary reversing step interesting.
+   *
+   */
+  def sequenceFLRev[A](fs: List[Rand[A]]): Rand[List[A]] =
+    RNG.map( fs.foldLeft(unit(List[A]()))((acc, f) =>
+      map2(f, acc)(_ :: _)) )(_.reverse)
+
+  /** Combine a list of random actions into one action.
+   *
+   *    Book's suggested improved version - using foldLeft:
+   *      I think this one is O(n)?
+   *
+   */
+  def sequenceFL[A](fs: List[Rand[A]]): Rand[List[A]] =
+    fs.foldLeft(unit(List[A]()))((acc, f) => map2(f, acc)(_ :: _))
+
+  def sequence[A] = sequenceRecursion(_: List[Rand[A]])    // for now
+
+  def ints(count: Int)(rng: RNG): (List[Int], RNG) =
+    sequence(List.fill(count)((_: RNG).nextInt))(rng)
 
 }

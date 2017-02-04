@@ -13,12 +13,16 @@ Pacman:
   For querying installed packages,
     pacman -Qet : List all explicitly installed packages
     pacman -Q   : List all installed packages
-    pacman -Qlq tor  : List files associated with a package
+    pacman -Qi net-tools : Get information on net-tools package
+    pacman -Qlq tor  : List files associated with tor package
     pacman -Qmq : List all foreign (usually AUR) packages
     pacman -Q | grep '^linux ' : Get Linux kernel version
 
   Query orphan packages,
     pacman -Qtdq
+
+  Find installed packages depending on a package (net-tools in this case),
+    pacman -Sii net-tools
 
   Pacman logs stored here,
     /var/log/pacman.log

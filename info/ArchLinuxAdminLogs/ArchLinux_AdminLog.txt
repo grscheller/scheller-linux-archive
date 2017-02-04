@@ -2153,4 +2153,48 @@ Purpose: To indicate what was done to create gauss17 and
 
     Pacman: chromium
 
-    I'll continue with this tomorrow.
+    I'll continue with this later.
+
+2017-02-03:
+  Can't seem to be able to remove net-tools:
+
+    $ sudo pacman -Rsu net-tools
+    [sudo] password for geoff: 
+    checking dependencies...
+    warning: removing net-tools from target list
+    there is nothing to do
+
+    $ pacman -Ss net-tools
+    core/net-tools 1.60.20160710git-1 [installed]
+        Configuration tools for Linux networking
+
+    $ whence ifconfig
+    /usr/bin/ifconfig
+
+  The only tools I regularly used was ipconfig and netstat.
+
+      For ipconfig, use:
+
+        $ ip addr
+        $ ip link
+    
+      For netstat, use
+
+        $ ss
+        $ ip route
+
+  The warning is due to the -Rs option.  With -R, -s means to recursively 
+  remove all dependencies provided:
+
+    1. They are not required by any other packages.
+    2. They were not explicity installed.
+
+  The command
+
+    $ pacman -Sii net-tools
+
+  shows that net-tools is a dependency for 21 installed packages, one of
+  which is wicd.
+
+  Therefore, after net-tools was removed from the list of packages
+  to be removed, there was "nothing to do".

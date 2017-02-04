@@ -189,7 +189,6 @@ object RNG {
   /** Combine a list of random actions into one action.
    *
    *    Book's inital version - using foldRight:
-   *      Implementation O(n^2)?
    *
    */
   def sequenceFR[A](fs: List[Rand[A]]): Rand[List[A]] =
@@ -198,10 +197,18 @@ object RNG {
   /** Combine a list of random actions into one action.
    *
    *    My first attempt at Book's suggested improved version.
-   *      Gives resulting List reversed.  I don't know why I
-   *      "clearly saw" the result would "obviously" need to
-   *      be reversed.  Kept it around because I found the
-   *      unnecessary reversing step interesting.
+   *    Gives resulting List reversed.  I don't know why I
+   *    "clearly saw" the result would "obviously" need to
+   *    be reversed.
+   *
+   *    Originally kept it around because I found
+   *    the reversing step interesting.  Turns out the reversing
+   *    does keep the the resulting random List in the same
+   *    order as the list of random actions.  What gets reversed
+   *    is the evaluation order.  Since the evaluations are
+   *    "random," and scala List foldLefts more stacksafe and
+   *    efficient than foldRights, I beleive this to be best
+   *    implemetation.  
    *
    */
   def sequenceFLRev[A](fs: List[Rand[A]]): Rand[List[A]] =
@@ -217,7 +224,12 @@ object RNG {
   def sequenceFL[A](fs: List[Rand[A]]): Rand[List[A]] =
     fs.foldLeft(unit(List[A]()))((acc, f) => map2(f, acc)(_ :: _))
 
-  def sequence[A] = sequenceRecursion(_: List[Rand[A]])    // for now
+  /** Combine a list of random actions into one action.
+   *
+   *    Choosing the sequenceFLRev implementation.
+   *
+   */
+  def sequence[A] = sequenceFLRev(_: List[Rand[A]])
 
   def ints(count: Int)(rng: RNG): (List[Int], RNG) =
     sequence(List.fill(count)((_: RNG).nextInt))(rng)

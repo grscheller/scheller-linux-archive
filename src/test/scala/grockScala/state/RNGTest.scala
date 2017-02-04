@@ -1,10 +1,12 @@
 package grockScala.test.chap06.state
 
-import grockScala.state._
+import grockScala.state.{RNG, LCG}
+import grockScala.state.RNG.Rand
 
 object RNGTest {
 
   val rng42 = LCG(42)
+  val rng666 = LCG(666)
   val oneToTen = List(1,2,3,4,5,6,7,8,9,10)
 
   def main(args: Array[String]): Unit = {
@@ -117,13 +119,13 @@ object RNGTest {
     print("rolledSomeFLRev = "); println(rolledDiceFLRev)
     print("rolledSomeFL = "); println(rolledDiceFL)
 
-    // Test how stack-safe RNG.sequence is
+    // Test how stack-safe RNG.sequence implementations are
     println("\nAuto roll 2 dice large number of times and find average:")
     var numRolls = 2500
     val diceRollsRecursion1 = List.fill(numRolls)(twoDiceRoll)
     val rollSomeRecursion1  = RNG.sequenceRecursion(diceRollsRecursion1)
     val (rolledDiceRecursion1, _) = rollSomeRecursion1(rng42)
-    print("Average of " + numRolls + " two dice rolls  = ")
+    print("Average of " + numRolls + " two dice rolls(Recur) = ")
     println(rolledDiceRecursion1.sum.toDouble/numRolls)
 
     // Test the other implementations of sequence for stack safety
@@ -131,22 +133,59 @@ object RNGTest {
     val diceRollsFoldRight1 = List.fill(numRolls)(twoDiceRoll)
     val rollSomeFoldRight1 = RNG.sequenceFR(diceRollsFoldRight1)
     val (rolledDiceFoldRight1, _) = rollSomeFoldRight1(rng42)
-    print("Average of " + numRolls + " two dice rolls  = ")
+    print("Average of " + numRolls + " two dice rolls(FR)    = ")
     println(rolledDiceFoldRight1.sum.toDouble/numRolls)
-
-    numRolls = 3500
-    val diceRollsFoldLeftRev1 = List.fill(numRolls)(twoDiceRoll)
-    val rollSomeFoldLeftRev1 = RNG.sequenceFLRev(diceRollsFoldLeftRev1)
-    val (rolledDiceFoldLeftRev1, _) = rollSomeFoldLeftRev1(rng42)
-    print("Average of " + numRolls + " two dice rolls  = ")
-    println(rolledDiceFoldLeftRev1.sum.toDouble/numRolls)
 
     numRolls = 3500
     val diceRollsFoldLeft1 = List.fill(numRolls)(twoDiceRoll)
     val rollSomeFoldLeft1 = RNG.sequenceFL(diceRollsFoldLeft1)
     val (rolledDiceFoldLeft1, _) = rollSomeFoldLeft1(rng42)
-    print("Average of " + numRolls + " two dice rolls  = ")
+    print("Average of " + numRolls + " two dice rolls(FL)    = ")
     println(rolledDiceFoldLeft1.sum.toDouble/numRolls)
+
+    numRolls = 3500
+    val diceRollsFoldLeftRev1 = List.fill(numRolls)(twoDiceRoll)
+    val rollSomeFoldLeftRev1 = RNG.sequenceFLRev(diceRollsFoldLeftRev1)
+    val (rolledDiceFoldLeftRev1, _) = rollSomeFoldLeftRev1(rng42)
+    print("Average of " + numRolls + " two dice rolls(FLRev) = ")
+    println(rolledDiceFoldLeftRev1.sum.toDouble/numRolls)
+
+    // I need to straighten out this the difference
+    // between RNG.sequenceFL and RNG.sequenceFLRev.
+    // What is confusimg me is the above list are all
+    // the "same" random action (twoDiceRoll: Rand).
+    println("\nCreate a random non-homogenous random sequence:")
+    val powOfTen: List[Double] = List(1,10,100,1000,10000)
+    val scaledRandomDoubles: List[Rand[Double]] =
+      powOfTen.map(ii => RNG.map(RNG.double)(_ * ii))
+
+    val scaledRandomSequenceRecur = RNG.sequenceFR(scaledRandomDoubles)
+    val scaledRandomSequenceFR    = RNG.sequenceFR(scaledRandomDoubles)
+    val scaledRandomSequenceFL    = RNG.sequenceFL(scaledRandomDoubles)
+    val scaledRandomSequenceFLRev = RNG.sequenceFLRev(scaledRandomDoubles)
+
+    val (resultRecur, _) = scaledRandomSequenceRecur(rng666)
+    val (resultFR, _) = scaledRandomSequenceFR(rng666)
+    val (resultFL, _) = scaledRandomSequenceFL(rng666)
+    val (resultFLRev, _) = scaledRandomSequenceFLRev(rng666)
+
+    print("With Recursion:\n   ")
+    println(resultRecur)
+
+    print("With Fold Right:\n   ")
+    println(resultFR)
+
+    print("With Fold Left:\n   ")
+    println(resultFL)
+
+    print("With Reversed Fold Left:\n   ")
+    println(resultFLRev)
+
+    // Look at ints again.
+    val (tenInts1, _) = RNG.ints(10)(rng42)
+    val (tenInts2, _) = RNG.ints(10)(rng666)
+    print("\n10 Ints: "); tenInts1.foreach(x => print(x + " "))
+    print("\n10 Ints: "); tenInts2.foreach(x => print(x + " "))
 
     println()
   }

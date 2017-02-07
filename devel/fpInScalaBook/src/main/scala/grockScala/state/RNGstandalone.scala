@@ -1,4 +1,8 @@
-package grockScala.state
+package grockScala.rng
+
+// I have split this off to its own standalone implementation.
+// I will define a State case class in another file.  I will
+// reimplent what was done here with it.
 
 /** Trait for pseudo-random number generators
  */
@@ -192,7 +196,9 @@ object RNG {
    *
    */
   def sequenceFR[A](fs: List[Rand[A]]): Rand[List[A]] =
-    fs.foldRight(unit(List[A]()))((f, acc) => map2(f, acc)(_ :: _))
+    fs.foldRight(unit(List[A]())) {
+      (f, acc) => map2(f, acc)(_ :: _)
+    }
 
   /** Combine a list of random actions into one action.
    *
@@ -205,15 +211,28 @@ object RNG {
    *    the reversing step interesting.  Turns out the reversing
    *    does keep the the resulting random List in the same
    *    order as the list of random actions.  What gets reversed
-   *    is the evaluation order.  Since the evaluations are
-   *    "random," and scala List foldLefts more stacksafe and
-   *    efficient than foldRights, I beleive this to be best
-   *    implemetation.  
+   *    is the evaluation order.
+   *
+   *    My original intuition was correct.
    *
    */
   def sequenceFLRev[A](fs: List[Rand[A]]): Rand[List[A]] =
     RNG.map( fs.foldLeft(unit(List[A]()))((acc, f) =>
-      map2(f, acc)(_ :: _)) )(_.reverse)
+      map2(f, acc)(_ :: _))) {_.reverse}
+
+  /** Combine a list of random actions into one action.
+   *
+   *    Reverse list first, then do left fold. 
+   *    
+   *    This keeps results the same as simple recursion.
+   *
+   *    Fold lefts for (strict) scala lists are more stacksafe
+   *    and efficient than fold rights, I beleive this to be
+   *    best implemetation.  
+   */
+  def sequenceRevFL[A](fs: List[Rand[A]]): Rand[List[A]] =
+    fs.reverse.foldLeft(unit(List[A]()))((acc, f) =>
+      map2(f, acc)(_ :: _))
 
   /** Combine a list of random actions into one action.
    *
@@ -222,16 +241,18 @@ object RNG {
    *
    */
   def sequenceFL[A](fs: List[Rand[A]]): Rand[List[A]] =
-    fs.foldLeft(unit(List[A]()))((acc, f) => map2(f, acc)(_ :: _))
+    fs.foldLeft(unit(List[A]())) {
+      (acc, f) => map2(f, acc)(_ :: _)
+    }
 
   /** Combine a list of random actions into one action.
    *
-   *    Choosing the sequenceFLRev implementation.
+   *    Choosing the sequenceRevFL implementation.
    *
    */
-  def sequence[A] = sequenceFLRev(_: List[Rand[A]])
+  def sequence[A] = sequenceRevFL(_: List[Rand[A]]): Rand[List[A]]
 
   def ints(count: Int)(rng: RNG): (List[Int], RNG) =
-    sequence(List.fill(count)((_: RNG).nextInt))(rng)
+    sequence(List.fill(count)(int))(rng)
 
 }

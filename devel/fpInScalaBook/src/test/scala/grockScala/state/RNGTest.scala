@@ -1,13 +1,12 @@
-package grockScala.test.chap06.state
+package grockScala.test.chap06.rng
 
-import grockScala.state.{RNG, LCG}
-import grockScala.state.RNG.Rand
+import grockScala.rng.{RNG, LCG}
+import grockScala.rng.RNG.Rand
 
 object RNGTest {
 
   val rng42 = LCG(42)
   val rng666 = LCG(666)
-  val oneToTen = List(1,2,3,4,5,6,7,8,9,10)
 
   def main(args: Array[String]): Unit = {
 
@@ -101,85 +100,97 @@ object RNGTest {
     print("twoDiceRoll3 = "); println(twoDiceRoll3)
     print("twoDiceRoll4 = "); println(twoDiceRoll4)
 
-    // Auto-roll some dice
+    // Auto-roll some dice - test 5 sequence implementations
     println("\nAuto roll 2 dice 10 times:")
-    val diceRolls = List.fill(10)(twoDiceRoll)
-    val rollSome  = RNG.sequenceRecursion(diceRolls)
-    val (rolledDice, _) = rollSome(rngD)
-    print("rolledSome  = "); println(rolledDice)
 
-    // Auto-roll some dice - test 3 other implementations
-    val rollSomeRecursion = RNG.sequenceRecursion(diceRolls)
-    val rollSomeFLRev = RNG.sequenceFLRev(diceRolls)
-    val rollSomeFL = RNG.sequenceFL(diceRolls)
-    val (rolledDiceRecursion, _) = rollSomeRecursion(rngD)
-    val (rolledDiceFLRev, _) = rollSomeFLRev(rngD)
-    val (rolledDiceFL, _) = rollSomeFL(rngD)
-    print("rolledSomeRecursion = "); println(rolledDiceRecursion)
-    print("rolledSomeFLRev = "); println(rolledDiceFLRev)
-    print("rolledSomeFL = "); println(rolledDiceFL)
+    val diceRolls10 = List.fill(10)(twoDiceRoll)
+
+    val rollSomeRecur10 = RNG.sequenceRecursion(diceRolls10)
+    val rollSomeFR10    = RNG.sequenceFR(diceRolls10)
+    val rollSomeFLRev10 = RNG.sequenceFLRev(diceRolls10)
+    val rollSomeFL10    = RNG.sequenceFL(diceRolls10)
+    val rollSomeRevFL10 = RNG.sequenceRevFL(diceRolls10)
+
+    val (rolledDiceRecur10, _) = rollSomeRecur10(rngD)
+    val (rolledDiceFR10, _)    = rollSomeFR10(rngD)
+    val (rolledDiceFLRev10, _) = rollSomeFLRev10(rngD)
+    val (rolledDiceFL10, _)    = rollSomeFL10(rngD)
+    val (rolledDiceRevFL10, _) = rollSomeRevFL10(rngD)
+
+    print("rolledSomeRecur10 = "); println(rolledDiceRecur10)
+    print("rolledSomeFR10 = ");    println(rolledDiceFR10)
+    print("rolledSomeFLRev10 = "); println(rolledDiceFLRev10)
+    print("rolledSomeFL10 = ");    println(rolledDiceFL10)
+    print("rolledSomeRevFL10 = "); println(rolledDiceRevFL10)
 
     // Test how stack-safe RNG.sequence implementations are
     println("\nAuto roll 2 dice large number of times and find average:")
+
     var numRolls = 2500
-    val diceRollsRecursion1 = List.fill(numRolls)(twoDiceRoll)
-    val rollSomeRecursion1  = RNG.sequenceRecursion(diceRollsRecursion1)
-    val (rolledDiceRecursion1, _) = rollSomeRecursion1(rng42)
-    print("Average of " + numRolls + " two dice rolls(Recur) = ")
-    println(rolledDiceRecursion1.sum.toDouble/numRolls)
+    var diceRolls = List.fill(numRolls)(twoDiceRoll)
+    val (rolledDiceRecur, _) = RNG.sequenceRecursion(diceRolls)(rng42)
+    print("Average of " + numRolls + " two dice rolls(Recur) is ")
+    println(rolledDiceRecur.sum.toDouble/numRolls)
 
-    // Test the other implementations of sequence for stack safety
     numRolls = 3000
-    val diceRollsFoldRight1 = List.fill(numRolls)(twoDiceRoll)
-    val rollSomeFoldRight1 = RNG.sequenceFR(diceRollsFoldRight1)
-    val (rolledDiceFoldRight1, _) = rollSomeFoldRight1(rng42)
-    print("Average of " + numRolls + " two dice rolls(FR)    = ")
-    println(rolledDiceFoldRight1.sum.toDouble/numRolls)
+    diceRolls = List.fill(numRolls)(twoDiceRoll)
+    val (rolledDiceFR, _) = RNG.sequenceFR(diceRolls)(rng42)
+    print("Average of " + numRolls + " two dice rolls(FR)    is ")
+    println(rolledDiceFR.sum.toDouble/numRolls)
 
-    numRolls = 3500
-    val diceRollsFoldLeft1 = List.fill(numRolls)(twoDiceRoll)
-    val rollSomeFoldLeft1 = RNG.sequenceFL(diceRollsFoldLeft1)
-    val (rolledDiceFoldLeft1, _) = rollSomeFoldLeft1(rng42)
-    print("Average of " + numRolls + " two dice rolls(FL)    = ")
-    println(rolledDiceFoldLeft1.sum.toDouble/numRolls)
+    numRolls = 3700
+    diceRolls = List.fill(numRolls)(twoDiceRoll)
+    val (rolledDiceFLRev, _) = RNG.sequenceFLRev(diceRolls)(rng42)
+    print("Average of " + numRolls + " two dice rolls(FLRev) is ")
+    println(rolledDiceFLRev.sum.toDouble/numRolls)
 
-    numRolls = 3500
-    val diceRollsFoldLeftRev1 = List.fill(numRolls)(twoDiceRoll)
-    val rollSomeFoldLeftRev1 = RNG.sequenceFLRev(diceRollsFoldLeftRev1)
-    val (rolledDiceFoldLeftRev1, _) = rollSomeFoldLeftRev1(rng42)
-    print("Average of " + numRolls + " two dice rolls(FLRev) = ")
-    println(rolledDiceFoldLeftRev1.sum.toDouble/numRolls)
+    numRolls = 3700
+    diceRolls = List.fill(numRolls)(twoDiceRoll)
+    val (rolledDiceFL, _) = RNG.sequenceFL(diceRolls)(rng42)
+    print("Average of " + numRolls + " two dice rolls(FL)    is ")
+    println(rolledDiceFL.sum.toDouble/numRolls)
+
+    numRolls = 3700
+    diceRolls = List.fill(numRolls)(twoDiceRoll)
+    val (rolledDiceRevFL, _) = RNG.sequenceRevFL(diceRolls)(rng42)
+    print("Average of " + numRolls + " two dice rolls(RevFL) is ")
+    println(rolledDiceRevFL.sum.toDouble/numRolls)
 
     // I need to straighten out this the difference
     // between RNG.sequenceFL and RNG.sequenceFLRev.
     // What is confusimg me is the above list are all
     // the "same" random action (twoDiceRoll: Rand).
-    println("\nCreate a random non-homogenous random sequence:")
+    println("\nCreate a random non-homogenous random sequence -")
     val powOfTen: List[Double] = List(1,10,100,1000,10000)
     val scaledRandomDoubles: List[Rand[Double]] =
       powOfTen.map(ii => RNG.map(RNG.double)(_ * ii))
 
     val scaledRandomSequenceRecur = RNG.sequenceFR(scaledRandomDoubles)
     val scaledRandomSequenceFR    = RNG.sequenceFR(scaledRandomDoubles)
-    val scaledRandomSequenceFL    = RNG.sequenceFL(scaledRandomDoubles)
     val scaledRandomSequenceFLRev = RNG.sequenceFLRev(scaledRandomDoubles)
+    val scaledRandomSequenceFL    = RNG.sequenceFL(scaledRandomDoubles)
+    val scaledRandomSequenceRevFL = RNG.sequenceRevFL(scaledRandomDoubles)
 
     val (resultRecur, _) = scaledRandomSequenceRecur(rng666)
     val (resultFR, _) = scaledRandomSequenceFR(rng666)
-    val (resultFL, _) = scaledRandomSequenceFL(rng666)
     val (resultFLRev, _) = scaledRandomSequenceFLRev(rng666)
+    val (resultFL, _) = scaledRandomSequenceFL(rng666)
+    val (resultRevFL, _) = scaledRandomSequenceRevFL(rng666)
 
-    print("With Recursion:\n   ")
+    print("  with recursion:\n    ")
     println(resultRecur)
 
-    print("With Fold Right:\n   ")
+    print("  fold right:\n    ")
     println(resultFR)
 
-    print("With Fold Left:\n   ")
+    print("  fold left then reverse:\n    ")
+    println(resultFLRev)
+
+    print("  fold left:\n    ")
     println(resultFL)
 
-    print("With Reversed Fold Left:\n   ")
-    println(resultFLRev)
+    print("  reverse then fold left:\n    ")
+    println(resultRevFL)
 
     // Look at ints again.
     val (tenInts1, _) = RNG.ints(10)(rng42)

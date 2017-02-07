@@ -2198,3 +2198,32 @@ Purpose: To indicate what was done to create gauss17 and
 
   Therefore, after net-tools was removed from the list of packages
   to be removed, there was "nothing to do".
+
+2017-02-04:
+  Installed haveged, a daemon that generates system entropy;
+
+  This speeds up critical operations in cryptographic programs
+  such as gnupg (including the generation of new keyrings).
+
+    Pacman: haveged 
+
+    $ sudo systemctl start haveged
+    $ sudo systemctl enable haveged
+
+2017-02-04:
+  Enabled Intel microcode updates:
+
+    $ cat /boot/loader/entries/arch.conf 
+    title Arch Linux
+    linux /vmlinuz-linux
+    initrd /intel-ucode.img
+    initrd /initramfs-linux.img
+    options root=PARTUUID=fd153bda-5bf1-4a49-9728-4f
+
+  Added the 3rd line above.  I finally configured the intel-ucode
+  package I installed back in 2016-07-04.
+
+  Configuration from Arch Linux Wiki:
+    https://wiki.archlinux.org/index.php/Microcode
+
+  The file /boot/intel-ucode.img last updated 2016-11-15.

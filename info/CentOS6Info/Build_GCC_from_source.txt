@@ -1,0 +1,206 @@
+Since I am behind a firewall that blocks svn protocol,
+I am forced to use https protocol:
+
+First, uncomment and edit these changes into ~/.subversion/servers,
+adjust http-proxy-host accordingly:http-proxy-host
+
+  [groups]
+  group1 = gcc.gnu.org
+
+  [group1]
+  http-proxy-host = Kprs-wg-001
+  http-proxy-port = 9090
+  http-timeout = 60
+  http-auth-types = basic;digest;negotiate
+
+Get the software with subversion:
+
+  $ mkdir -p ~/BUILD/GCC
+  $ cd ~/BUILD/GCC
+  $ svn co https://gcc.gnu.org/svn/gcc/tags/gcc_6_3_0_release/ gcc_6_3_0_release
+
+While the source is now downloading into ~/Build/GCC/gcc_6_3_0_release,
+lets snag some tarballs and build some dependencies:
+
+  GNU GMP Big number library: https://gmplib.org/
+  GNU MPFR Floating Point Comp Lib: http://www.mpfr.org/
+  GNU MPC GNU Complex Num Lib: http://www.multiprecision.org/
+
+  $ mkdir tarballs; cd tarballs
+  $ wget https://gmplib.org/download/gmp/gmp-6.1.2.tar.lz
+  $ wget http://www.mpfr.org/mpfr-current/mpfr-3.1.5.tar.xz
+  $ wget ftp://ftp.gnu.org/gnu/mpc/mpc-1.0.3.tar.gz
+  $ cd ..
+
+  $ tar -xvf tarballs/gmp-6.1.2.tar.lz
+  $ tar -xvf tarballs/mpfr-3.1.5.tar.xz
+  $ tar -xvf tarballs/mpc-1.0.3.tar.gz
+
+Build and install GMP:
+
+  $ cd gmp-6.1.2
+  $ mkdir buildIT; cd buildIT
+  $ ../configure --prefix=/home/schelleg/local
+  $ make
+  $ make check      <= VERY IMPORTANT!!!
+  $ make install
+  $ cd ../..
+
+Build and install MPFR:
+
+  $ cd mpfr-3.1.5
+  $ mkdir buildIT; cd buildIT
+  $ ../configure --prefix=/home/schelleg/local --with-gmp=/home/schelleg/local
+  $ make
+  $ make check
+  $ make install
+  $ cd ../..
+
+Build and install MPC:
+
+  $ cd mpc-1.0.3
+  $ mkdir buildIT; cd buildIT
+  $ ../configure --prefix=/home/schelleg/local --with-gmp=/home/schelleg/local --with-mpfr=/home/schelleg/local
+  $ make
+  $ make check
+  $ make install
+  $ cd ../..
+
+Now it is time to build the GCC (Gnu Compiler Colection):
+
+  They took the install directions out of the distribution
+  and referred builder to their website -
+  http://gcc.gnu.org/install/.  There is much that
+  can be customized and optimized.  I'll follow what I
+  did last time and keep things simple.  The main reason
+  I need an updated GCC is for Haskell Stack to be able
+  to link together different versions of ghc.
+  
+  Build initially failed a couple of minutes in with strange
+  error message that the build process did not know what to
+  use for "suffixes" probably due to "configuration error."
+  Looking back at the notes I took a few years ago, the
+  only thing I did different was having $LD_LIBRARY_PATH
+  defined. 
+
+  export LD_LIBRARY_PATH=/home/schelleg/local/lib:/home/schelleg/local/lib64
+
+  This seemed to make the build happy.
+
+Configure GCC:
+
+  $ cd gcc_6_3_0_release
+  $ mkdir buildIT; cd buildIT
+  $ ../configure --prefix=/home/schelleg/local --disable-multilib --with-gmp=/home/schelleg/local --with-mpfr=/home/schelleg/local --with-mpc=/home/schelleg/local
+
+Build GCC using 6 threads:
+  Even though I only have 4 non-hyperthreaded cores,
+  6 threads will result in fewer I/O latency hits.
+
+  $ make -j 6
+
+  The build finished, I noticed some warnings along the way:
+
+    Comparing stages 2 and 3
+    warning: gcc/cc1obj-checksum.o differs
+    warning: gcc/cc1plus-checksum.o differs
+    warning: gcc/cc1-checksum.o differs
+
+Test GCC (Optional):
+
+  Skipped - don't have DejaGnu installed.
+
+Final Install:
+
+  make install
+
+Results:
+
+  $ /home/schelleg/local/bin/gcc --version
+  gcc (GCC) 6.3.0
+  Copyright (C) 2016 Free Software Foundation, Inc.
+  This is free software; see the source for copying conditions.  There is NO
+  warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+  $ /usr/bin/gcc --version
+  gcc (GCC) 4.4.7 20120313 (Red Hat 4.4.7-17)
+  Copyright (C) 2010 Free Software Foundation, Inc.
+  This is free software; see the source for copying conditions.  There is NO
+  warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+  Try some C/C++ code:
+
+    $ cd ~/Devel/hello_world
+    $ ls
+    hw.c  hw_newschool.cpp  hw_oldschool.cpp
+
+    $ cat hw.c 
+    #include <stdio.h>
+
+    int main(void) {
+
+      char *hw = "Hello, World!";
+      printf("%s\n", hw);
+
+      return 0;
+    }
+
+    $ cat hw_oldschool.cpp 
+    #include <cstdio>
+
+    int main() {
+
+        char *hw = "Hello, World!";
+        printf("%s\n", hw);
+
+        return 0;
+    }
+
+    $ cat hw_newschool.cpp 
+    #include <iostream>
+
+    using namespace std;
+
+    int main() {
+
+      const string hw = "Hello, World!";
+      cout << hw << endl;
+
+      return 0;
+    }
+
+    $ make hw
+    cc     hw.c   -o hw
+
+    $ ./hw
+    Hello, World!
+
+    $ make hw_oldschool
+    g++     hw_oldschool.cpp   -o hw_oldschool
+    hw_oldschool.cpp: In function ‘int main()’:
+    hw_oldschool.cpp:5:16: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+         char *hw = "Hello, World!";
+                    ^~~~~~~~~~~~~~~
+
+    $ make hw_newschool
+    g++     hw_newschool.cpp   -o hw_newschool
+
+    $ ./hw_newschool 
+    Hello, World!
+
+  See if stack will now work:
+
+    $ stack ghci
+    Configuring GHCi with the following packages: 
+    GHCi, version 8.0.1: http://www.haskell.org/ghc/  :? for help
+    Loaded GHCi configuration from /tmp/ghci14141/ghci-script
+    Prelude> 
+    Leaving GHCi.
+
+    $ whence ghci
+
+    $ stack exec whence ghci
+    /home/schelleg/.stack/programs/x86_64-linux/ghc-gmp4-8.0.1/bin/ghci
+
+  With the old Redhat gcc linker, stack failed linking together ghc it
+  is sandboxing for me. 

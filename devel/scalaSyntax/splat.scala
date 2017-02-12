@@ -1,4 +1,4 @@
-package scalaExamples
+package scalaSyntax
 
 object splat {
 

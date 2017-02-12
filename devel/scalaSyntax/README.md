@@ -11,7 +11,7 @@
      >>> f(2,3,4)
      10
      >>> x = (2,3,4)
-     >>> f(*y)
+     >>> f(*x)
      10
   ```
   The code in splat object in splat.scala explores
@@ -23,6 +23,6 @@
   ```
   To run,
   ```
-     $ scala scalaExamples.splat  
+     $ scala scalaSyntax.splat  
   ```
   Currently, code is just a start.

@@ -168,7 +168,7 @@ Purpose: To indicate what was done to create gauss17 and
   and shutting down card when used by clients.  Clients
   attach a GPU by openning it's device file and detach
   device file.  To simulate graphics environment without
-  incurring the overhead, the persistence daemon runs ini
+  incurring the overhead, the persistence daemon runs in
   the background and sleeps with the device files open.
   Daemon uses libnvidia-cfg.so to provide a RPC interface
   to control the persistence mode of each GPU individually.
@@ -238,6 +238,7 @@ Purpose: To indicate what was done to create gauss17 and
   discrete NVIDIA GPU to be built into and accessed by a
   laptop".  Arch Linux Wiki has a section called "NVIDIA
   Optimus" that I need to work through.  
+
     Pacman: nvidia, nvidia-libgl, xorg-xrandr
 
   First two are reinstalls, last one I am not sure if it was
@@ -352,6 +353,7 @@ Purpose: To indicate what was done to create gauss17 and
 2016-07-10:
   Installed OpenSSH package.  Verified OpenSSL was
   previosly installed as a dependency.
+
     Pacman: openssh
 
   Editted /etc/ssh/sshd_config:
@@ -362,7 +364,7 @@ Purpose: To indicate what was done to create gauss17 and
     ChallengeResponseAuthentication no (already set)
 
     There are two possible systemd services for sshd,
-    sshd.service and sshd.sockete.  The second one is
+    sshd.service and sshd.socket.  The second one is
     prefered (first one has sshd itself sitting on the
     port forking children - used on systems with high
     ssh usage).
@@ -385,9 +387,10 @@ Purpose: To indicate what was done to create gauss17 and
   Preparing to configure the Wireless networking.
 
   First install command line utilities:
+
     Pacman: iw, wpa_supplicant
 
-  Wirwless interfase is wlp2s0 (from "ip link" and "iw dev")
+  Wireless interfase is wlp2s0 (from "ip link" and "iw dev")
 
     # lspci -k
     > ...
@@ -2227,3 +2230,126 @@ Purpose: To indicate what was done to create gauss17 and
     https://wiki.archlinux.org/index.php/Microcode
 
   The file /boot/intel-ucode.img last updated 2016-11-15.
+
+2017-02-15:
+  Installed strace and ltrace to track system and shared
+  library calls of executables.
+
+    Pacman: strace ltrace
+
+  Installed dnstracer, a command which determines where a
+  given Domain Name Server (DNS) gets its information from,
+  and follows the chain of DNS servers back to the servers
+  which know the data.
+
+    Pacman: dnstracer
+
+2017-02-19:
+  I have been using either the XFCE menus to power off/reboot
+  the system or "sudo shutdown" command when not in X.  I
+  looked into more "native" ways to do these things in Arch.
+  After 10's of minutes, I did not find anything definitive
+  on this topic in the Arch Wikis.  Based on what I read in
+  the systemctl man pages I tried, probably foolishly, from
+  within an XFCE session:
+
+    $ systemctl poweroff
+
+  The system went down very fast.  When I rebooted, the
+  command "ip link" showed no wireless interface.  Bringing
+  up XFCE and several reboots did not bring back the wireless
+  interface.  The "dmesg | grep firmware" command did not
+  indicate that any of the ath10k drivers were loaded.  
+
+  After I did the following, I had my wireless interface
+  back:
+
+    $ systemctl is-enabled wicd
+    enabled
+    $ sudo systemctl disable wicd
+    ...
+    $ sudo systemctl enable wicd
+    ...
+
+  After a reboot, all was fine.  I have no idea whether the
+  above commands had any effect or the system would have
+  "fixed itself" as I have seen it do before.
+
+  Also, when I brought Chromium up, it complained it was
+  improperly shutdown.
+
+  Now,
+
+    $ loginctl show-session $XDG_SESSION_ID --property=Active
+    Active=yes
+    $ loginctl show-session $XDG_SESSION_ID --property=Remote
+    Remote=no
+
+  according to the general trobleshooting page on Arch Wiki,
+  this indicates that regular users can use the following
+  commands (from the cmdline or put in menus):
+
+    systemctl poweroff
+    systemctl reboot
+    systemctl hibernate
+    systemctl suspend
+
+  assuming the following:
+
+    1. systemd and polkit installed
+    2. A polkit authentication agent installed, in my
+       case it is polkit-gnome.  There is one for XFCE,
+       but it is in AUR.
+
+  What I have been using to shutdown and reboot the system 
+  are commands from a System V compatibility package:
+
+    $ pacman -Qlq  systemd-sysvcompat
+    ...
+    /usr/bin/halt
+    /usr/bin/init
+    /usr/bin/poweroff
+    /usr/bin/reboot
+    /usr/bin/runlevel
+    /usr/bin/shutdown
+    /usr/bin/telinit
+    ...
+
+  The man pages for these commands have the following -
+
+    Note: These are legacy commands available
+          for compatibility only.
+
+  I don't know, the native commands don't seem to play nice
+  with XFCE and the System V ones are deprecated.
+
+  Posted this question on Arch Linux Newbie Corner Wiki:
+
+    https://bbs.archlinux.org/viewtopic.php?id=223345
+
+  Got some useful feedback.
+
+02-20-2017:
+  Figured out why LibreOffice spell checker not working,
+  no English dictionary.
+
+    Pacman: hunspell-en
+
+  Might as well add other functionality too.  
+
+  For hyphenation rules:
+
+    Pacman: hyphen-en
+
+  Both hunspell and hyphen packages already installed.
+
+  For grammer checking,
+
+    Pacman: languagetool
+
+  For Thesaurus,
+
+    Pacman: libmythes mythes-en
+
+  Spelling and thesaurus features now work, but not spotting
+  obvious grammer mistakes.

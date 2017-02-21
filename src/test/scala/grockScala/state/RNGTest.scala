@@ -198,6 +198,30 @@ object RNGTest {
     print("\n10 Ints: "); tenInts1.foreach(x => print(x + " "))
     print("\n10 Ints: "); tenInts2.foreach(x => print(x + " "))
 
+    // Test nonNegativeLessThan implementations
+
+    println("\n\nTest nonNegativeLessThan implementations")
+    def foo(num: Int, lt: Int): Rand[List[Int]] = 
+      RNG.sequence(List.fill(num)(RNG.nonNegativeLessThanManual(lt)))
+
+    def bar(num: Int, lt: Int): Rand[List[Int]] = 
+      RNG.sequence(List.fill(num)(RNG.nonNegativeLessThanNonUniform(lt)))
+
+    print("\n100 random non-neg Ints less than 10")
+    println(" (using nonNegativeLessThanManual):")
+    for (ii <- foo(100, 10)(rng42)._1) {print(ii); print(" ")}
+
+    print("\n100 random non-neg Ints less than 10")
+    println(" (using nonNegativeLessNonUniform):")
+    for (ii <- bar(100, 10)(rng42)._1) {print(ii); print(" ")}
+
+    println("\nCompare nonNegativeLessThanNonUniform and nonNegativeLessThanManual:")
+    val midRoad = 200000000
+    for (intPair <- foo(100, midRoad)(LCG(3))._1.zip(bar(100, midRoad)(LCG(3))._1))
+      println(intPair)
+
+    val foobar = RNG.both(foo(100, midRoad), bar(100, midRoad))
+
     println()
   }
 

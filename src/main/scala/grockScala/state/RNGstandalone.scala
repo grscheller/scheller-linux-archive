@@ -169,7 +169,7 @@ object RNG {
     }
 
   def both[A,B](ra: Rand[A], rb: Rand[B]): Rand[(A,B)] =
-    map2(ra, rb)((_, _))
+    map2(ra, rb) { (_, _) }
 
   def randIntDouble: Rand[(Int,Double)] = both(int, double)
 
@@ -254,5 +254,40 @@ object RNG {
 
   def ints(count: Int)(rng: RNG): (List[Int], RNG) =
     sequence(List.fill(count)(int))(rng)
+
+  /** Random action non-negative Int less than n
+   *
+   *    Problems:
+   *    1. If n does not evenly divide the integer
+   *       value Int.MaxValue + 1, the result will
+   *       not be uniformly distributed over the
+   *       range of the random veriable.
+   *    2. For n = 0, you will get a divide by 0
+   *       runtime java.lang.ArithmeticException.
+   *    3. In "production code" I could replace
+   *       n in the function body with n.abs,
+   *       but this may mask a bug elsewhere.
+   *       Better to range check if n <= 0 and
+   *       throw some sort of range exception.
+   */
+  def nonNegativeLessThanNonUniform(n: Int): Rand[Int] =
+    map(nonNegativeInt) { _ % n }
+
+  /** Random action non-negative Int less than n
+   *
+   *    It would have been more "natural" to implement
+   *    this in terms of unsigned Int types, but
+   *    unfortunately the JVM does not have them.
+   *
+   *    Caller be warned, don't call with n <= 0.
+   */
+  def nonNegativeLessThanManual(n: Int): Rand[Int] =
+    rng1 => {
+      val (i, rng2) = nonNegativeInt(rng1)
+      if (i + (n-1) < 0)
+        nonNegativeLessThanManual(n)(rng2)
+      else
+        (i % n, rng2)
+    }
 
 }

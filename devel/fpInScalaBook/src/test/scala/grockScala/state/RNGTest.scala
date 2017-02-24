@@ -193,10 +193,26 @@ object RNGTest {
     println(resultRevFL)
 
     // Look at ints again.
+    println("\nLook at ints again:\n")
+
+    print("Compare with different RNGs:")
     val (tenInts1, _) = RNG.ints(10)(rng42)
     val (tenInts2, _) = RNG.ints(10)(rng666)
     print("\n10 Ints: "); tenInts1.foreach(x => print(x + " "))
     print("\n10 Ints: "); tenInts2.foreach(x => print(x + " "))
+
+    print("\n\nTest if ints can be partially applied:")
+    val tenInts = RNG.ints(10)(_)
+    val tenInts3 = tenInts(rng666)._1
+    print("\n10 Ints: "); tenInts3.foreach(x => print(x + " "))
+    print("\n10 Ints: ")
+    tenInts(rng666)._1.foreach(x => print(x + " "))
+
+    print("\n\nCompare different syntax:")
+    print("\n10 Ints: ")
+    RNG.ints(10)(rng666)._1.foreach(x => print(x + " "))
+    print("\n10 Ints: ")
+    RNG.ints(10)(rng666)._1 foreach {x => print(x + " ")}
 
     // Test nonNegativeLessThan implementations
 
@@ -207,20 +223,38 @@ object RNGTest {
     def bar(num: Int, lt: Int): Rand[List[Int]] = 
       RNG.sequence(List.fill(num)(RNG.nonNegativeLessThanNonUniform(lt)))
 
+    def baz(num: Int, lt: Int): Rand[List[Int]] = 
+      RNG.sequence(List.fill(num)(RNG.nonNegativeLessThan(lt)))
+
     print("\n100 random non-neg Ints less than 10")
     println(" (using nonNegativeLessThanManual):")
     for (ii <- foo(100, 10)(rng42)._1) {print(ii); print(" ")}
 
     print("\n100 random non-neg Ints less than 10")
-    println(" (using nonNegativeLessNonUniform):")
+    println(" (using nonNegativeLessThanNonUniform):")
     for (ii <- bar(100, 10)(rng42)._1) {print(ii); print(" ")}
 
-    println("\nCompare nonNegativeLessThanNonUniform and nonNegativeLessThanManual:")
-    val midRoad = 200000000
-    for (intPair <- foo(100, midRoad)(LCG(3))._1.zip(bar(100, midRoad)(LCG(3))._1))
-      println(intPair)
+    print("\n100 random non-neg Ints less than 10")
+    println(" (using nonNegativeLessThan):")
+    for (ii <- baz(100, 10)(rng42)._1) {print(ii); print(" ")}
 
-    val foobar = RNG.both(foo(100, midRoad), bar(100, midRoad))
+    print("\n\nCompare nonNegativeLessThanNonUniform ")
+    println("vs nonNegativeLessThanManual:")
+    val midRoad = 200000000
+    for (intPair <- foo(100, midRoad)(LCG(3))._1.zip(bar(100, midRoad)(LCG(3))._1)) {
+      println(intPair)
+    }
+
+    print("\n\nCompare nonNegativeLessThanManual ")
+    println("vs nonNegativeLessThan:")
+    for (intPair <- foo(15, midRoad)(rng42)._1.zip(baz(15, midRoad)(rng42)._1)) {
+      println(intPair)
+    }
+
+    print("\n\nCompare nonNegativeLessThanManual ")
+    println("vs nonNegativeLessThan as a single random action:")
+    val foobaz = RNG.both(foo(10, midRoad), baz(10, midRoad))(rng42)._1
+    for (intPair <- foobaz._1.zip(foobaz._2)) println(intPair)
 
     println()
   }

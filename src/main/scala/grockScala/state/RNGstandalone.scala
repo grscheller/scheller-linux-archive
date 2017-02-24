@@ -67,8 +67,8 @@ object RNG {
 
   // Book's version nonNegativeInt
   //   As with mine above, there are precisely two ways
-  //   to get any particular non-negative integer.  This
-  //   way everything stays equally weighted.
+  //   to get any particular non-negative integer.
+  //   This keeps everything equally weighted.
   def nonNegativeInt1(rng: RNG): (Int,RNG) = {
     val (ran, rng2) = rng.nextInt
     (if (ran < 0) -(ran + 1) else ran, rng2)
@@ -114,7 +114,7 @@ object RNG {
       case n if n <= 0 => (Nil, rng)
       case n           => {
         val (ii, rng1) = rng.nextInt
-        val (l, rng2) = ints(n-1)(rng1)
+        val (l, rng2) = ints1(n-1)(rng1)
         (ii :: l, rng2)
       }
     }
@@ -226,7 +226,7 @@ object RNG {
    *    
    *    This keeps results the same as simple recursion.
    *
-   *    Fold lefts for (strict) scala lists are more stacksafe
+   *    Fold Lefts for (strict) scala lists are more stacksafe
    *    and efficient than fold rights, I beleive this to be
    *    best implemetation.  
    */
@@ -250,7 +250,7 @@ object RNG {
    *    Choosing the sequenceRevFL implementation.
    *
    */
-  def sequence[A] = sequenceRevFL(_: List[Rand[A]]): Rand[List[A]]
+  def sequence[A]: List[Rand[A]] => Rand[List[A]] = sequenceRevFL 
 
   def ints(count: Int)(rng: RNG): (List[Int], RNG) =
     sequence(List.fill(count)(int))(rng)
@@ -289,5 +289,20 @@ object RNG {
       else
         (i % n, rng2)
     }
+
+  def flatMap[A,B](f: Rand[A])(g: A => Rand[B]): Rand[B] = 
+    rng => {
+      val (a, rng1) = f(rng)
+      g(a)(rng1)
+    }
+
+  def nonNegativeLessThan(n: Int): Rand[Int] = 
+    flatMap(nonNegativeInt)(
+      (ii: Int) =>
+        if (ii + (n-1) < 0)
+          nonNegativeLessThan(n)
+        else
+          unit(ii % n)
+    )
 
 }

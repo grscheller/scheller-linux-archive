@@ -1,6 +1,6 @@
 # Basic Scala Language Constructs:
 
-1. ## Scala's "splat" equivalents: splat.scala
+##1. Scala's "splat" equivalents: splat.scala
      Languages like Python and Ruby have a syntactic
      sugar to pass an array or tuple into a fixed or
      variable-arity function.

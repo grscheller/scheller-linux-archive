@@ -6,12 +6,13 @@ contains a .git repository.  It is NOT designed to work
 directly in a scheller-linux-environment GitHub clone.
 
 Also, password-less ssh needs to be set up for this project
-to work.  See the "Secure Shell" section file UnixCommands.txt
-for info on how to do this.  You will need to adjust the
-system names to match your network.  At work, DNS aliases are
-set up to match nice names I use in the scripts to the 
-truely ugly names our system admins are forced to give to our
-systems.  Scripts also utilize shell functions defined in .bashrc.
+to work.  See the "Secure Shell" section file 
+../info/UnixCommands.txt for info on how to do this.  You will
+need to adjust the system names to match your network.  
+At work, DNS aliases are set up to match nice names I use in
+the scripts to the truely ugly names our system admins are
+forced to give to our systems.  Scripts also utilize shell
+functions defined in .bashrc.
 
 I have scaled down the example .bashrc and .bash_profile files
 contained in this project somewhat.

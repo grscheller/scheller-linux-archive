@@ -1,4 +1,4 @@
-package scalaSyntax
+package grockScala
 
 object splat {
 

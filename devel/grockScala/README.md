@@ -43,5 +43,5 @@
      ```
      To run,
      ```
-        $ scala scalaSyntax.splat  
+        $ scala grockScala.splat  
      ```

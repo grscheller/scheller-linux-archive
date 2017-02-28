@@ -256,7 +256,54 @@ object RNGTest {
     val foobaz = RNG.both(foo(10, midRoad), baz(10, midRoad))(rng42)._1
     for (intPair <- foobaz._1.zip(foobaz._2)) println(intPair)
 
-    println()
-  }
+    // Test map_ and map2_
+    println("\nTest map_ and map2_ by throwing dice:\n")
 
+    def dieRollFM: RNG.Rand[Int] =
+      RNG.map_(RNG.nonNegativeLessThan(6))(_ + 1)
+
+    def twoDiceRollFM: RNG.Rand[Int] =
+      RNG.map2_(dieRollFM, dieRollFM)(_ + _)
+
+    def throwSome(num: Int): Rand[List[Int]] =
+      RNG.sequence(List.fill(num)(twoDiceRollFM))
+
+    print("throwSome(20)(rng42)._1 = ")
+    println(throwSome(20)(rng42)._1)
+
+//  The following use of a "for comprehension" will
+//  not work!  I get the error message:
+//
+//    value flatMap is not a member of fpinscala.rngStandalone.RNG.Rand[Int] 
+//
+//  which is just a type alias for function type RNG => (Int, RNG).
+//
+//  The problem is that flatMap and map are defined in the RNG companion
+//  object.  This is a strong indication that we need to encapsulate the
+//  Rand[A] type into some sort of class or trait that can have flatMap
+//  and map methods.
+//
+//  The Function1 trait doesn't have flatMap and map methods.
+//
+//  /** Return a random action that will
+//   *  product a List of length less than lt
+//   *  and whose values are bounded by the
+//   *  List's length.
+//   */
+//  def makeRandList(lt: Int): Rand[List[Int]] = for {
+//    len <- RNG.nonNegativeLessThan(lt)
+//    x   <- RNG.nonNegativeLessThan(len)
+//    xs = List.fill(len)(x)
+//  } yield RNG.sequence(xs)
+//
+//  val myRandList10 = makeRandList(10)
+//  val myRandList20 = makeRandList(20)
+//  print("myRandList10(rng42) = "); println(myRandList10(rng42))
+//  print("myRandList10(rng666) = "); println(myRandList10(rng666))
+//  print("myRandList20(rng42) = "); println(myRandList20(rng42))
+//  print("myRandList20(rng666) = "); println(myRandList20(rng666))
+
+    println()
+
+  }
 }

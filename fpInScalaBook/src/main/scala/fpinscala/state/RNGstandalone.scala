@@ -297,12 +297,28 @@ object RNG {
     }
 
   def nonNegativeLessThan(n: Int): Rand[Int] = 
-    flatMap(nonNegativeInt)(
+    flatMap(nonNegativeInt) {
       (ii: Int) =>
         if (ii + (n-1) < 0)
           nonNegativeLessThan(n)
         else
           unit(ii % n)
-    )
+    }
+
+// Implement map and map2 in terms of flatMap
+//   Essentially idetical with book, maybe I took
+//   "implement in terms of flatMap" too literally.
+
+  def map_[A,B](r: Rand[A])(f: A => B): Rand[B] =
+    flatMap(r) { a => unit(f(a)) }
+
+  def map2_[A,B,C](ra: Rand[A], rb: Rand[B])(f: (A, B) => C): Rand[C] =
+    flatMap(ra) { a => flatMap(rb) { b => unit(f(a, b)) } }
+
+  def map_book[A,B](r: Rand[A])(f: A => B): Rand[B] =
+    flatMap(r)(a => unit(f(a)))
+
+  def map2_book[A,B,C](ra: Rand[A], rb: Rand[B])(f: (A, B) => C): Rand[C] =
+    flatMap(ra)(a => map_book(rb)(b => f(a, b)))
 
 }

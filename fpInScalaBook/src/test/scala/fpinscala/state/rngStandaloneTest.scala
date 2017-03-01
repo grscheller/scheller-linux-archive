@@ -271,37 +271,67 @@ object RNGTest {
     print("throwSome(20)(rng42)._1 = ")
     println(throwSome(20)(rng42)._1)
 
-//  The following use of a "for comprehension" will
-//  not work!  I get the error message:
+    //  Lets try and do a for comprehension:
+
+//  The following naive use of a "for comprehension"
+//  will not work!
 //
-//    value flatMap is not a member of fpinscala.rngStandalone.RNG.Rand[Int] 
+//  def makeRandList(lt: Int): Rand[List[Int]] = for {
+//    n   <- RNG.nonNegativeLessThan(lt)
+//    d   <- RNG.nonNegativeLessThan(n)
+//    ns  <- RNG.unit(RNG.ints(n)(_))
+//  } yield ns._1 map { _.abs % (d + 1) }
+//
+//  I get error messages like:
+//
+//    value flatMap is not a member of
+//    fpinscala.rngStandalone.RNG.Rand[Int] 
 //
 //  which is just a type alias for function type RNG => (Int, RNG).
 //
-//  The problem is that flatMap and map are defined in the RNG companion
-//  object.  This is a strong indication that we need to encapsulate the
-//  Rand[A] type into some sort of class or trait that can have flatMap
-//  and map methods.
+//  The problem is that flatMap and map are defined in
+//  the RNG companion object.  This is a strong indication
+//  that we need to encapsulate the Rand[A] type into some
+//  sort of class or trait that can have flatMap and map
+//  methods.
 //
-//  The Function1 trait doesn't have flatMap and map methods.
+//  The Function1 trait doesn't have flatMap and map methods,
+//  hence the errors we get.
 //
-//  /** Return a random action that will
-//   *  product a List of length less than lt
-//   *  and whose values are bounded by the
-//   *  List's length.
-//   */
-//  def makeRandList(lt: Int): Rand[List[Int]] = for {
-//    len <- RNG.nonNegativeLessThan(lt)
-//    x   <- RNG.nonNegativeLessThan(len)
-//    xs = List.fill(len)(x)
-//  } yield RNG.sequence(xs)
-//
-//  val myRandList10 = makeRandList(10)
-//  val myRandList20 = makeRandList(20)
-//  print("myRandList10(rng42) = "); println(myRandList10(rng42))
-//  print("myRandList10(rng666) = "); println(myRandList10(rng666))
-//  print("myRandList20(rng42) = "); println(myRandList20(rng42))
-//  print("myRandList20(rng666) = "); println(myRandList20(rng666))
+
+    // Try to implement above with RNG companion
+    // object methods directly.
+
+    println("\nMake some length/value bounded List[Int]:\n")
+
+    /** Return a random action that will
+     *  product a List of length less than lt
+     *  and whose values are bounded by the
+     *  List's length.
+     */
+    def makeRandList(lt: Int): Rand[List[Int]] =
+      RNG.flatMap(RNG.nonNegativeLessThan(lt)) { n =>
+        RNG.flatMap(RNG.nonNegativeLessThan(n)) { d =>
+          RNG.map(RNG.ints(n)) { ns =>
+            ns map { _.abs % (d + 1) }
+          }
+        }
+      }
+
+    val myRandList10 = makeRandList(10)
+    val myRandList20 = makeRandList(20)
+
+    print("myRandList10(rng42)._1 = ")
+    println(myRandList10(rng42)._1)
+
+    print("myRandList10(rng666)._1 = ")
+    println(myRandList10(rng666)._1)
+
+    print("myRandList20(rng42)._1 = ")
+    println(myRandList20(rng42)._1)
+
+    print("myRandList20(rng666)._1 = ")
+    println(myRandList20(rng666)._1)
 
     println()
 

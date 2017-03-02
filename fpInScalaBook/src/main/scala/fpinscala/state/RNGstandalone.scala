@@ -161,7 +161,7 @@ object RNG {
    */
   def int: Rand[Int] = _.nextInt
 
-  def map2[A,B,C](ra: Rand[A], rb: Rand[B])(f: (A, B) => C): Rand[C] =
+  def map2[A,B,C](ra: Rand[A], rb: Rand[B])(f: (A,B) => C): Rand[C] =
     rng => {
       val (a, rng1) = ra(rng)
       val (b, rng2) = rb(rng1)
@@ -310,15 +310,15 @@ object RNG {
 //   "implement in terms of flatMap" too literally.
 
   def map_[A,B](r: Rand[A])(f: A => B): Rand[B] =
-    flatMap(r) { a => unit(f(a)) }
+    flatMap(r) {a => unit(f(a))}
 
   def map2_[A,B,C](ra: Rand[A], rb: Rand[B])(f: (A, B) => C): Rand[C] =
-    flatMap(ra) { a => flatMap(rb) { b => unit(f(a, b)) } }
+    flatMap(ra) {a => flatMap(rb) {b => unit(f(a, b))}}
 
   def map_book[A,B](r: Rand[A])(f: A => B): Rand[B] =
     flatMap(r)(a => unit(f(a)))
 
-  def map2_book[A,B,C](ra: Rand[A], rb: Rand[B])(f: (A, B) => C): Rand[C] =
+  def map2_book[A,B,C](ra: Rand[A], rb: Rand[B])(f: (A,B) => C): Rand[C] =
     flatMap(ra)(a => map_book(rb)(b => f(a, b)))
 
 }

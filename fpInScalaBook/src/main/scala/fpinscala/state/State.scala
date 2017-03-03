@@ -21,12 +21,17 @@ import State._
  *  where the lambda/Function1 is embedded
  *  in the state case class via the 
  *  State constuctor and is accessed via
- *  the run "method" [actually, run is a
- *  val whose value happens to be of
- *  type S => (A,S)].
+ *  the run "method".
  *
- *  The get and set combinators are used to
- *  manipulate the state.
+ *  note: Actually, as far as the Scala language
+ *        is concerned, run is a class member/property
+ *        whose value happens to be of type S => (A,S).
+ *        Members and methods share the same namespace,
+ *        hence the distinction is just an
+ *        implementation detail.
+ *
+ *  The getState and setState combinators
+ *  are used to manipulate the state.
  *  
  */
 case class State[S,+A](run: S => (A,S)) {
@@ -48,25 +53,46 @@ case class State[S,+A](run: S => (A,S)) {
     flatMap {a => sb flatMap {b => unit(f(a, b))}}
 
   /** Return the current state as the value. */
-  def get: State[S,S] = State(s => (s, s))
+  def getState: State[S,S] = State(s => (s, s))
 
   /** Manually set a state.
    *
    *    Ignore previous state,
    *    return a meaningless value.
    */
-  def set(s: S): State[S,Unit] = State(_ => ((), s))
+  def setState(s: S): State[S,Unit] = State(_ => ((), s))
 
   /** Modify the state with a function,
    *
    *    Included here more to illustrate
    *    the use case of get and set.
    */
-  def modify(f: S => S): State[S, Unit] =
+  def modifyState(f: S => S): State[S, Unit] =
     for {
-      s <- get
-      _ <- set(f(s))
+      s <- getState
+      _ <- setState(f(s))
     } yield ()
+
+  /** Run the action, extract the value, ignore next state.
+   *
+   *    A convience method to extract a final result
+   *    to avoid having to pattern match the value out.
+   *    Doesn't save much in the way of typing, but
+   *    has the virtual of hiding the tupple used in
+   *    the implemention of the State monad.
+   *
+   *    Use case:
+   *      val a = action.extract(s)
+   *      val a = action extract s
+   *
+   *    same as
+   *      val a = action.run(s)._1
+   *      val a = (action run s)._1
+   *      val (a, _) = action.run(s)
+   *      val (a, _) = action run s
+   *
+   */
+  def extract(s: S): A = run(s)._1
 
 }
 

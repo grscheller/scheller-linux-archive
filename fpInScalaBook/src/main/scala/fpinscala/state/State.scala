@@ -50,7 +50,10 @@ case class State[S,+A](run: S => (A,S)) {
     flatMap {a => unit(f(a))}
 
   def map2[B,C](sb: State[S,B])(f: (A,B) => C): State[S,C] =
-    flatMap {a => sb flatMap {b => unit(f(a, b))}}
+    flatMap {a => sb map {b => f(a, b)}}
+
+  def both[B](rb: State[S,B]): State[S,(A,B)] =
+    map2(rb) { (_, _) }
 
   /** Return the current state as the value. */
   def getState: State[S,S] = State(s => (s, s))
@@ -75,10 +78,10 @@ case class State[S,+A](run: S => (A,S)) {
 
   /** Run the action, extract the value, ignore next state.
    *
-   *    A convience method to extract a final result
+   *    A convenience method to extract a final result
    *    to avoid having to pattern match the value out.
    *    Doesn't save much in the way of typing, but
-   *    has the virtual of hiding the tupple used in
+   *    has the virtual of hiding the tuple used in
    *    the implemention of the State monad.
    *
    *    Use case:

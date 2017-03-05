@@ -132,19 +132,19 @@ object RNGTest {
     print("Average of " + numRolls + " two dice rolls(Recur) is ")
     println(rolledDiceRecur.sum.toDouble/numRolls)
 
-    numRolls = 3000
+    numRolls = 2500
     diceRolls = List.fill(numRolls)(twoDiceRoll)
     val (rolledDiceFR, _) = RNG.sequenceFR(diceRolls)(rng42)
     print("Average of " + numRolls + " two dice rolls(FR)    is ")
     println(rolledDiceFR.sum.toDouble/numRolls)
 
-    numRolls = 3700
+    numRolls = 2500
     diceRolls = List.fill(numRolls)(twoDiceRoll)
     val (rolledDiceFLRev, _) = RNG.sequenceFLRev(diceRolls)(rng42)
     print("Average of " + numRolls + " two dice rolls(FLRev) is ")
     println(rolledDiceFLRev.sum.toDouble/numRolls)
 
-    numRolls = 3700
+    numRolls = 2500
     diceRolls = List.fill(numRolls)(twoDiceRoll)
     val (rolledDiceFL, _) = RNG.sequenceFL(diceRolls)(rng42)
     print("Average of " + numRolls + " two dice rolls(FL)    is ")

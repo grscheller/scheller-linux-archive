@@ -1,4 +1,23 @@
-package fpinscala.rng
+/** Package fpinscala.state.rng
+ *
+ ^  Implemented the RNG and LCG classes
+ *  where Rand is a type alias for
+ *  fpinscala.state.State.
+ *
+ *  Note:
+ *
+ *    The unit and sequence fuctions don't
+ *    seem to belong here.  They are more
+ *    associated with the Rand type alias
+ *    than the RNG companion object.
+ *
+ *    Maybe I should try implementing another
+ *    package, fpinscala.state.rand, where the
+ *    abstraction will be more on Rand 
+ *    than on RNG.
+ *    
+ */
+package fpinscala.state.rng
 
 import fpinscala.state.State
 
@@ -9,9 +28,12 @@ abstract class RNG {
 
 object RNG {
 
-  import State._
+  type Rand[A] = State[RNG,A]
 
-  type Rand[A] = State[RNG, A]
+  def unit[A]: A => Rand[A] = State.unit[RNG,A]
+
+  def sequence[A]: List[Rand[A]] => Rand[List[A]] =
+    State.sequence[RNG,A]
 
   /** State action to generate a random Int.
    *

@@ -81,7 +81,7 @@ case class State[S,+A](run: S => (A,S)) {
    *    A convenience method to extract a final result
    *    to avoid having to pattern match the value out.
    *    Doesn't save much in the way of typing, but
-   *    has the virtual of hiding the tuple used in
+   *    has the virtue of hiding the tuple used in
    *    the implemention of the State monad.
    *
    *    Use case:
@@ -109,10 +109,10 @@ object State {
    *    contravariant position.
    *
    *    Putting in the companion objects actually 
-   *    makes sense since I only need an a: A, and
-   *    not a State[S,A], to use it.
+   *    makes sense since I only need an (a: A),
+   *    and not a State[S,A], to use it.
    */
-  def unit[S,A](a: A): State[S, A] = State(s => (a, s))
+  def unit[S,A](a: A): State[S,A] = State(s => (a, s))
 
   def sequence[S,A](fs: List[State[S,A]]): State[S,List[A]] =
     fs.reverse.foldLeft(unit[S,List[A]](Nil)) {

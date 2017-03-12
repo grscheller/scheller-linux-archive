@@ -23,10 +23,11 @@ object RNG {
    *
    *  State((state: RNG) => (value: Int, nextState: RNG))
    *
-   *  Aside: int.extract is a random variable, in the sense
+   *  Aside: int(rng: RNG) is a random variable, in the sense
    *    of probability theory.  It is a function which maps
-   *    values from some probability space (a subclass of RNG) 
-   *    to the space of 32-bit signed integer values (Int).
+   *    values from some probability space (the possible 
+   *    values of some subclass of RNG) to the space of
+   *    32-bit signed integer values (Int).
    *
    *    For the LCG subclass, this mapping is uniform, i.e.
    *    it is equally likey to get any possible Int value.

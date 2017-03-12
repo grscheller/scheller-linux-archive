@@ -80,13 +80,12 @@ case class State[S,+A](run: S => (A,S)) {
    *
    *    A convenience method to extract a final result
    *    to avoid having to pattern match the value out.
-   *    Doesn't save much in the way of typing, but
-   *    has the virtue of hiding the tuple used in
+   *    Has the virtue of hiding the tuple used in
    *    the implemention of the State monad.
    *
    *    Use case:
-   *      val a = action.extract(s)
-   *      val a = action extract s
+   *      val a = action(s)
+   *      val a = action apply s
    *
    *    same as
    *      val a = action.run(s)._1
@@ -95,7 +94,7 @@ case class State[S,+A](run: S => (A,S)) {
    *      val (a, _) = action run s
    *
    */
-  def extract(s: S): A = run(s)._1
+  def apply(s: S): A = run(s)._1
 
 }
 

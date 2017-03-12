@@ -24,8 +24,8 @@ object RandTest {
     // See if fpinscala.state namespace in scope
     print("\nrng42 = "); println(rng42)
 
-    print("RNG.nonNegativeInt.extract(rng42)  = ")
-    println(RNG.nonNegativeInt.extract(rng42))
+    print("RNG.nonNegativeInt(rng42)  = ")
+    println(RNG.nonNegativeInt(rng42))
 
     // Imperitively generate 10 random doubles d, 0.0 <= d < 1.0,
     println("\nImperitively print ten random doubles in [0,1):")
@@ -92,8 +92,8 @@ object RandTest {
 
     val diceRolls10 = List.fill(10)(twoDiceRoll)
     val rollSome10 = Rand.sequence(diceRolls10)
-    print("rollSome10.extract(rngD) = ");
-    println(rollSome10.extract(rngD))
+    print("rollSome10(rngD) = ");
+    println(rollSome10(rngD))
 
     // Test how stack-safe is sequence.
     def averageDiceRoll(numRolls: Int): Rand[Double] = {
@@ -113,16 +113,16 @@ object RandTest {
     println("\nLook at ints again:\n")
 
     print("Compare with different RNGs:")
-    val tenInts1 = RNG.ints(10).extract(rng42)
-    val tenInts2 = RNG.ints(10).extract(rng666)
+    val tenInts1 = RNG.ints(10)(rng42)
+    val tenInts2 = RNG.ints(10)(rng666)
     print("\n10 Ints: "); tenInts1.foreach(x => print(x + " "))
     print("\n10 Ints: "); tenInts2.foreach(x => print(x + " "))
 
     print("\n\nCompare different syntax:")
     print("\n10 Ints: ")
-    RNG.ints(10).extract(rng666).foreach(x => print(x + " "))
+    RNG.ints(10)(rng666).foreach(x => print(x + " "))
     print("\n10 Ints: ")
-    RNG.ints(10).extract(rng666) foreach {x => print(x + " ")}
+    RNG.ints(10)(rng666) foreach {x => print(x + " ")}
 
     // Test nonNegativeLessThan
 
@@ -131,11 +131,11 @@ object RandTest {
 
     print("\n100 random non-neg Ints less than 20")
     println(" (using nonNegativeLessThan):")
-    for (ii <- baz(100, 10).extract(rng42)) {print(ii + " ")}
+    for (ii <- baz(100, 10)(rng42)) {print(ii + " ")}
 
     print("\n50 random non-neg Ints less than 200000000")
     println(" (using nonNegativeLessThan):")
-    for (ii <- baz(50, 200000000).extract(rng42)) {println(ii)}
+    for (ii <- baz(50, 200000000)(rng42)) {println(ii)}
 
     // Test map and map2
     println("\nTest map and map2 by throwing dice:\n")
@@ -149,8 +149,8 @@ object RandTest {
     def throwSome(num: Int): Rand[List[Int]] =
       Rand.sequence(List.fill(num)(twoDiceRollFM))
 
-    print("throwSome(20).extract(rng42) = ")
-    println(throwSome(20).extract(rng42))
+    print("throwSome(20)(rng42) = ")
+    println(throwSome(20)(rng42))
 
     // Lets try a for comprehension:
 
@@ -183,25 +183,25 @@ object RandTest {
     val myRandListFor20 = makeRandList1(20)
     val myRandListFlatmap20 = makeRandList2(20)
 
-    print("\nmyRandListFor10.extract(rng42) = ")
-    println(myRandListFor10.extract(rng42))
-    print("myRandListFlatmap10.extract(rng42) = ")
-    println(myRandListFlatmap10.extract(rng42))
+    print("\nmyRandListFor10(rng42) = ")
+    println(myRandListFor10(rng42))
+    print("myRandListFlatmap10(rng42) = ")
+    println(myRandListFlatmap10(rng42))
 
-    print("\nmyRandListFor10.extract(rng666) = ")
-    println(myRandListFor10.extract(rng666))
-    print("myRandListFlatmap10.extract(rng666) = ")
-    println(myRandListFlatmap10.extract(rng666))
+    print("\nmyRandListFor10(rng666) = ")
+    println(myRandListFor10(rng666))
+    print("myRandListFlatmap10(rng666) = ")
+    println(myRandListFlatmap10(rng666))
 
-    print("\nmyRandListFor20.extract(rng42) = ")
-    println(myRandListFor20.extract(rng42))
-    print("myRandListFlatmap20.extract(rng42) = ")
-    println(myRandListFlatmap20.extract(rng42))
+    print("\nmyRandListFor20(rng42) = ")
+    println(myRandListFor20(rng42))
+    print("myRandListFlatmap20(rng42) = ")
+    println(myRandListFlatmap20(rng42))
 
-    print("\nmyRandListFor20.extract(rng666) = ")
-    println(myRandListFor20.extract(rng666))
-    print("myRandListFlatmap20.extract(rng666) = ")
-    println(myRandListFlatmap20.extract(rng666))
+    print("\nmyRandListFor20(rng666) = ")
+    println(myRandListFor20(rng666))
+    print("myRandListFlatmap20(rng666) = ")
+    println(myRandListFlatmap20(rng666))
 
     println()
 

@@ -21,7 +21,8 @@ Pacman:
   Query orphan packages,
     pacman -Qtdq
 
-  Find installed packages depending on a package (net-tools in this case),
+  Find installed packages depending on a package (net-tools
+  in this case),
     pacman -Sii net-tools
 
   Pacman logs stored here,
@@ -33,6 +34,18 @@ Pacman:
 Systemctl:
   System maintenance,
     systemctl --failed
+
+Hostnamectl:
+  Get info on an Arch System,
+    $ hostnamectl
+       Static hostname: gauss17
+             Icon name: computer-laptop
+               Chassis: laptop
+            Machine ID: 89e16dfa61c540876d1da444b85a9cbb
+               Boot ID: a28fe2b64d714a7bba86a45ff91f2d9c
+      Operating System: Arch Linux
+                Kernel: Linux 4.10.1-1-ARCH
+          Architecture: x86-64
 
 POSIX:
   Get linux kernel version:

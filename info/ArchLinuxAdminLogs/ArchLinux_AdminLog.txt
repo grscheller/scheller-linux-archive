@@ -2353,3 +2353,26 @@ Purpose: To indicate what was done to create gauss17 and
 
   Spelling and thesaurus features now work, but not spotting
   obvious grammer mistakes.
+
+03-09-2017:
+  Installed timidity++ midi player/daemon.
+
+    Pacman: timidity++ timidity-freepats
+
+  Added to bottom of file /etc/timidity++/timidity.cfg:
+
+    dir /usr/share/timidity/freepats
+    source /etc/timidity++/freepats/freepats.cfg
+
+  In Thubar file manager, I associated the .mid extension
+  with /usr/bin/timidity.
+
+  Firefox gives me the option to play the file or download
+  it.  Chromium just gives me a download box.
+
+03-12-2017:
+  During a pacman -Syu, before resolving dependencies, pacman
+  asked if I wanted to replace extra/nvidia-libgl with
+  extra/nvidia-utils.  I said yes.  Made sure I was not in X
+  when I did this.  Also, rebooted before starting X.
+

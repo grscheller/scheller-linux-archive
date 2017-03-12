@@ -3,7 +3,7 @@
  *
  *  Deliberately not importing fpinscala.state
  *  since I feel it is an implementation detail
- *  of the fpinscala.rng package.
+ *  of the fpinscala.rand package.
  *
  *  At least initialy, repeat tests done in
  *  the fpinscala.test.chap06.rngStandalone

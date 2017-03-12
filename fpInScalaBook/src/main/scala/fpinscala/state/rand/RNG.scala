@@ -1,10 +1,10 @@
-/** Package fpinscala.state.rand
- *
- *  Implemented the RNG and LCG classes.
+/** Implemented the RNG and LCG classes
+ *  for the package fpinscala.state.rand.
  *
  *  Note: Rand is a type alias for
- *    fpinscala.state.State[RNG, A].  We define
- *    this package-wide in the rand package object.
+ *        fpinscala.state.State[RNG, A].
+ *        We define this package-wide in
+ *        the rand package object.
  *  
  */
 package fpinscala.state.rand

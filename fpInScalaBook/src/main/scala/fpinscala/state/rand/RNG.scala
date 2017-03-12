@@ -1,10 +1,22 @@
+/** Package fpinscala.state.rand
+ *
+ *  Implemented the RNG and LCG classes.
+ *
+ *  Note: Rand is a type alias for
+ *    fpinscala.state.State[RNG, A].  We define
+ *    this package-wide in the rand package object.
+ *  
+ */
 package fpinscala.state.rand
 
-/** Base class for pseudo-random number generators. */
+/** Base class for the RNG class for
+ *  pseudo-random number generators.
+ */
 abstract class RNG {
   def nextInt: (Int, RNG)
 }
 
+/** Companion object for RNG class */
 object RNG {
 
   /** State action to generate a random Int.
@@ -27,6 +39,7 @@ object RNG {
    */
   def int: Rand[Int] = new Rand[Int](_.nextInt)
 
+  /** Random action to generate a list of Int */
   def ints(count: Int): Rand[List[Int]] =
     Rand.sequence(List.fill(count)(int))
 
@@ -40,6 +53,9 @@ object RNG {
       case (ran, rng2)                        => (-ran, rng2)
     })
 
+  /** Generate an even random integer between
+   *  0 and Int.maxValue (inclusive).
+   */
   def nonNegativeEven: Rand[Int] =
    nonNegativeInt.map(i => i - i%2)
 

@@ -1,3 +1,5 @@
+package fpinscala.state
+
 /** Package object for fpinscala.state.rand
  *
  *  Used to define the Rand type alias, as
@@ -12,7 +14,6 @@
  *  Note: Modeled after what is done in the
  *        package.scala file for the scala package.
  */
-package fpinscala.state
 package object rand {
 
   type Rand[A] = fpinscala.state.State[RNG,A]

@@ -1,8 +1,12 @@
+# Functional Programming in Scala Book Exercises
+
 I am working my way through the book "Functional Programming in Scala"
 by Paul Chiusana and Runar Bjarnason to learn Scala.  Using the online
 reference manual at http://www.scala-sbt.org/ to learn sbt.
 
 I am currently working on chapter 6.
+
+## Work flow
 
 Libraries are under "src/main", test objects are under "src/test".
 These tests just exercise the libraries I write.

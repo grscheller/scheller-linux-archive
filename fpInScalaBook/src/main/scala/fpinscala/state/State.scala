@@ -55,6 +55,9 @@ case class State[S,+A](run: S => (A,S)) {
   def both[B](rb: State[S,B]): State[S,(A,B)] =
     map2(rb) { (_, _) }
 
+  // These next two method are what makes
+  // this the State Monad.
+
   /** Return the current state as the value. */
   def getState: State[S,S] = State(s => (s, s))
 

@@ -23,7 +23,7 @@ to write something very similar to the scalaz monad transformer.
     * A reimplementation of rngStandalone.scala using State.scala. 
 ### src/test/scala/fpinscala/state/randTest.scala -
     * Program to exercise package rand.
-### test/scala/fpinscala/state/candyMachines/candyMachines.scala -
-    * Standalone application to model a candy dispensing machines, 
-      based on FPinScala exercise 6.11.  Used to help me grock the 
-      State monad.
+### src/test/scala/fpinscala/state/candyMachines/candyMachines.scala -
+    * Standalone application to model candy dispensing machines, 
+      based on FPinScala exercise 6.11.  Useful to me as I grock
+      the State monad.

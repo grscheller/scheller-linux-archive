@@ -2376,3 +2376,21 @@ Purpose: To indicate what was done to create gauss17 and
   extra/nvidia-utils.  I said yes.  Made sure I was not in X
   when I did this.  Also, rebooted before starting X.
 
+03-16-2017:
+  Today "sudo pacman -Syu" failed.  From Arch Linux Wiki, 
+
+  "The upgrade to ca-certificates-utils 20170307-1 requires
+   manual intervention because a symlink which used to be
+   generated post-install has been moved into the package
+   proper."
+
+   # pacman -Syuw                           # download packages
+   # rm /etc/ssl/certs/ca-certificates.crt  # remove conflicting file
+   # pacman -Su                             # perform upgrade
+
+   Here is what I actually did,
+
+     # rm /etc/ssl/certs/ca-certificates.crt
+     # pacman -Su
+     $ sudo pacman -Syu
+

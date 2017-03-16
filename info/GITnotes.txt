@@ -703,6 +703,32 @@ X. Syncing repositories:
 
            git push <RemoteName> --tag
 
+    10. GIT push (to GITHUB):
+
+        Cloning from GITHUB sets the URL to origin as
+
+           $ git config remote.origin.url
+           https://github.com/grscheller/scheller-linux-environment
+
+         On Arch Linux "git push" prompts for username and password
+         and everything works fine.  On CentOS 6.8 (git version 1.7.1)
+         I get the error:
+
+           $ git push
+           error: The requested URL returned error: 403 Forbidden while accessing https://github.com/grscheller/scheller-linux-environment/info/refs
+           fatal: HTTP request failed
+
+         To fix this, set the URL to
+
+           git config remote.origin.url https://grscheller@github.com/grscheller/scheller-linux-environment.git
+
+         Not recommended, but seting it to
+         "https://grscheller:MYPASSWORD@github.com/grscheller/scheller-linux-environment.git"
+         would allow you to not have to type your password.
+
+         I think the issue is the olde version of git CentOS 6.8 uses, 
+         but it might also be related to firewall/proxy issues.
+
 XI. Tagging:
 
      1. List available tags.

@@ -20,7 +20,7 @@ to write something very similar to the scalaz monad transformer.
 ### Package fpinscala.State -
     * Abstracting out the State Monad from what was done in rngStandalone.scala.
 ### Package fpinscala.rand -
-    * A reimplementation of packagr rngStandalone using fpinscala.State. 
+    * A reimplementation of package rngStandalone using fpinscala.State. 
 ### src/test/scala/fpinscala/state/randTest.scala -
     * Program to exercise package fpinscala.rand.
 ### src/test/scala/fpinscala/state/candyMachines/candyMachines.scala -

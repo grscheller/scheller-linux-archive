@@ -18,6 +18,9 @@ Pacman:
     pacman -Qmq : List all foreign (usually AUR) packages
     pacman -Q | grep '^linux ' : Get Linux kernel version
 
+  Find the package which owns a particular file,
+    pacman -Qo /etc/profile
+
   Query orphan packages,
     pacman -Qtdq
 

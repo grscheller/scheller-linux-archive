@@ -11,7 +11,7 @@ package fpinscala.test.chap02.gettingstarted
 /** Documentation comment for MyModule */
 object MyModule {
 
-  // Note that if ... else ... is a an expression
+  // Note that "if ... else ..." is a an expression
   //   and returns a value, Int in this case, but
   //   could be (): Unit as main does.
   // Body of this function is a single expression. 

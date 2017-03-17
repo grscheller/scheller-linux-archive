@@ -5,8 +5,8 @@
 # after finding the first instance.  Handles spaces in file names 
 # and directories on $PATH.  Also shell patterns supported.
 #
-# Usage Whence file1 file2 ...
-#       Whence 'pattern'
+# Usage: Whence file1 file2 ...
+#        Whence 'pattern'
 #
 # Written by Geoffrey Scheller
 #

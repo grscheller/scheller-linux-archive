@@ -1,4 +1,4 @@
-Purpose: Useful admin commands and factoids that can be 
+Purpose: Useful commands and factoids that can be 
          done without root or sudo access.
 
 Journalctl:

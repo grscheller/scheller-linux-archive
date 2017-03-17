@@ -16,10 +16,9 @@ build from source software that normally would not
 run or compile on CentOS6.  You will notice vestiages
 of hooks needed for collaborative software
 development in a shared file environment, from
-the olde days before GIT and when disk drive
+the old days before GIT and when disk drive
 space was expensive.
 
 The ARCH Linux versions I have no need to "override"
 what ARCH gives me in the official repos.
 
--Geoffrey Scheller

@@ -132,6 +132,7 @@ Vim - Vi improved (minimalistic)
      o    open new line after current line to insert text
      O    open new line before current line to insert text
      3cw  change next three words
+     c3w  change next three words
      c$   change text to end of line
      5cc  change next 5 lines
      5C   change next 5 lines

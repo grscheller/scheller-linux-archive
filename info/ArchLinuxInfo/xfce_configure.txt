@@ -12,8 +12,8 @@ XFCE-TERMINAL:
         don't like the real estate these GUI items
         take up.
 
-  Set F12 to toggle toolbar.
-  Set Shift-F12 to toggle menu bar.
+  Press F12 to toggle toolbar.
+  Press Shift-F12 to toggle menu bar.
 
   Colors:
                  Text: #CCCCCC
@@ -42,7 +42,7 @@ GNOME-KEYRING:
 Claws E-mail:
   Easily stumbled through configuring Hover (Send/Receive) and
   local mail (Receive).  [Getting local mail working is another
-  story for gauss17_AdminLog.txt.]
+  story, see ArchLinux_AdminLog.txt for details.]
 
   To enable being able to view (not send) HTML e-mail, install the
   Fancy HTML plug-in:
@@ -59,7 +59,7 @@ Claws E-mail:
    By default it will display as text.  When you click icon on RHS
    of email, everything (Pictures, Javascript, Java Apps, and
    pluggins open attachments have all been enabled by me -> so,
-   only view HTML if you TRUST SENDER!)      
+   only view HTML if you TRUST SENDER!!!)      
 
    Initially, explicitly enable the Address Keeper and S/MIME plugins.
    The S/MIME plugin brought in PGP/Core plugin which had me create

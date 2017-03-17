@@ -1,3 +1,7 @@
+#Private Home Page
+
+##Used in lieu of browser bookmarks.
+
 This is an "old school" homepage but done in a 
 "new school" way.  Goal is to make a personal home
 page for my bookmarks and password schemas in a
@@ -13,18 +17,18 @@ these files to my various Linux and Windows systems
 and then just set my home page in my browser
 to ~/info/Web/homepage.
 
-I don't want to share boookmarks or passwords in any
-sort of "cloud" that I don't have control over.
-Although a private GitHub page with ascii encrypted
-files would work well for this.  I don't trust
-"free as in beer" bookmark and password syncing
-technologies.  If you don't pay for it, you are
-not the customer and probably someone is data mining
+I don't want to share boookmarks or passwords in
+any sort of "cloud" that I don't have control over.
+Although Dropbox or a private GitHub repo with
+encrypted ascii files might work well for this.
+I don't trust "free as in beer" bookmark and password
+syncing technologies.  If you don't pay for it, you
+are not the customer and probably someone is data mining
 you at best, or at worst, not doing their due diligents
-protecting your passwords.  Same reason I use a
-paid e-mail service.
+protecting your passwords.  Same reason I use a paid
+e-mail service.
 
-Anyway, sometime early in 1994, when I first
+Anyway, sometime early in 1990's, when I first
 started using web browsers, the web was organized
 via directory sites.  Your "homepage" was just
 your private starting point into these.  When search

@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Usage viewJarManifest someJarFile.jar
+# Usage: viewJarManifest someJarFile.jar
 #
 # Written by Geoffrey Scheller
 #

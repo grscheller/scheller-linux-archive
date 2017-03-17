@@ -1,6 +1,6 @@
-# Functional Programming in Scala Book Exercises
+#Functional Programming in Scala Book Exercises
 
-## Getting started with functional programming in Scala
+##Getting started with functional programming in Scala
 
 Chapter 2.
 

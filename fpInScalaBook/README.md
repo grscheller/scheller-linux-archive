@@ -6,15 +6,59 @@ reference manual at http://www.scala-sbt.org/ to learn sbt.
 
 I am currently working on chapter 6.
 
-## Work flow
+##Packages and corresponding book chapters
+
+### fpinscala.gettingstarted
+  * Chapter  2: Getting started with functional programming in Scala
+
+### fpinscala.datastructures
+  * Chapter  3: Functional data structures
+
+### fpinscala.errorhandling
+  * Chapter  4: Handling errors without exceptions
+
+### fpinscala.laziness
+  * Chapter  5: Strictness and laziness
+
+### fpinscala.state
+  * Chapter  6: Purely functional state
+
+### fpinscala.parallelism
+  * Chapter  7: Purely functional parallelism
+
+### fpinscala.testing
+  * Chapter  8: Property-based testing
+
+### fpinscala.parsing
+  * Chapter  9: Parser combinators
+
+### fpinscala.monoids
+  * Chapter 10: Monoids
+
+### fpinscala.monads
+  * Chapter 11: Monads
+
+### fpinscala.applicative
+  * Chapter 12: Applicative and traversable functors
+
+### fpinscala.iomonad
+  * Chapter 13: External effects and I/O
+
+### fpinscala.localeffects
+  * Chapter 14: Local effects and mutable state
+
+### fpinscala.streamingio
+  * Chapter 15: Stream processing and incremental I/O
+
+##Work flow
 
 Libraries are under "src/main", test objects are under "src/test".
 These tests just exercise the libraries I write.
 
 Run code:
   ```
-    $ sbt test:run
     $ sbt run
+    $ sbt test:run
   ```
 The versions of sbt, scala, and java I am currently using:
   ```
@@ -41,13 +85,14 @@ My usual work flow is "continuous compile":
        .
        .
        .
+    > run
     > test:run
     > ~; compile; test:compile
     1. Waiting for source changes... (press enter to interrupt)
        .
        .
        .
-    > test:run
+    > run
   ```
 repeat, while I edit files, use Unix commands like grep and find,
 and perform GIT commands in other terminal windows.

@@ -1,11 +1,13 @@
-Implementing a random number generation package using the
-state.State Monad while working through the
-exercises in  "Functional Programming in Scala" by Paul
-Chiusana and Runar Bjarnason.
+#Functional Programming in Scala Book Exercises
+
+##Functional random number generator.
+
+Implementing random number generation package rand
+using the fpinscala.state.State Monad.  Basically,
+reimplementating what was done in fpinscala.rngStandalone.
 
 From chapter 6.
 
-At this point in the book, I am not supposed to know the 
-term "monad" yet.  The code the book has gently led me
-to write something very similar to the scalaz monad transformer.
-
+Note also the use of a package object defined in
+package.scala to define the rand type alias at
+the rand package level.

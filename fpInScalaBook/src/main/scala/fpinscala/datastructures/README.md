@@ -8,10 +8,10 @@ Implementing List and rose Tree data structures while working
 through the exercises in  "Functional Programming in Scala"
 by Paul Chiusana and Runar Bjarnason.
 
-###fpinscala.datastructures.List
+### fpinscala.datastructures.List
    * A strict Lisp-like Cons/Nil datastructure.
 
-###fpinscala.datastructures.Tree
+### fpinscala.datastructures.Tree
    * A strict Rose tree datastructure.
 
 Using Scala traits, companion objects, and case classes to

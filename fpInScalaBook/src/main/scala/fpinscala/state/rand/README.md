@@ -1,6 +1,6 @@
-#Functional Programming in Scala Book Exercises
+# Functional Programming in Scala Book Exercises
 
-##Functional random number generator.
+## Functional random number generator.
 
 Implementing random number generation package rand
 using the fpinscala.state.State Monad.  Basically,

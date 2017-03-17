@@ -6,7 +6,7 @@ reference manual at http://www.scala-sbt.org/ to learn sbt.
 
 I am currently working on chapter 6.
 
-##Packages and corresponding book chapters
+## Packages and corresponding book chapters
 
 ### fpinscala.gettingstarted
   * Chapter  2: Getting started with functional programming in Scala
@@ -50,7 +50,7 @@ I am currently working on chapter 6.
 ### fpinscala.streamingio
   * Chapter 15: Stream processing and incremental I/O
 
-##Work flow
+## Work flow
 
 Libraries are under "src/main", test objects are under "src/test".
 These tests just exercise the libraries I write.

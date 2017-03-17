@@ -1,6 +1,6 @@
-#Functional Programming in Scala Book Exercises
+# Functional Programming in Scala Book Exercises
 
-##Strictness and laziness
+## Strictness and laziness
 
 Chapter 5.
 
@@ -8,7 +8,7 @@ Implementing a Stream (Lazy List) data structures while working
 through the exercises in  "Functional Programming in Scala"
 by Paul Chiusana and Runar Bjarnason.
 
-###fpinscala.laziness.Stream
+### fpinscala.laziness.Stream
    * Implement a lazy list, or stream, using a trait and
      case classes.
 

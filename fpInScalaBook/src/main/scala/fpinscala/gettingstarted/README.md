@@ -1,6 +1,6 @@
-#Functional Programming in Scala Book Exercises
+# Functional Programming in Scala Book Exercises
 
-##Getting started with functional programming in Scala
+## Getting started with functional programming in Scala
 
 Chapter 2.
 
@@ -10,13 +10,13 @@ objects, currying and uncurrying while working through
 the exercises in "Functional Programming in Scala" by
 Paul Chiusana and Runar Bjarnason.
 
-###fpinscala.test.chap02.gettingstarted.{MyModule,MyModuleRefactored}
+### fpinscala.test.chap02.gettingstarted.{MyModule,MyModuleRefactored}
    * Singleton objects defined in the file myModules.scala.
 
-###fpinscala.test.chap02.gettingstarted.HigherOrder
+### fpinscala.test.chap02.gettingstarted.HigherOrder
    * Explores using functions as first class ojects.
 
-###fpinscala.test.chap02.gettingstarted.MyPolymorphicModule
+### fpinscala.test.chap02.gettingstarted.MyPolymorphicModule
    * Explores the FP concept of polymorphism.
 
 As a starting point, the book is using standalone objects

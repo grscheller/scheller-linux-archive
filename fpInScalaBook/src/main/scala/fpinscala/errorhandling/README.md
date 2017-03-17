@@ -1,6 +1,6 @@
-#Functional Programming in Scala Book Exercises
+# Functional Programming in Scala Book Exercises
 
-##Handling errors without exceptions.
+## Handling errors without exceptions.
 
 Chapter 4.
 
@@ -8,11 +8,11 @@ Implementing Option and Either error handling data structures
 while working through the exercises in  "Functional Programming
 in Scala" by Paul Chiusana and Runar Bjarnason.
 
-###Package fpinscala.errorhandling.Option
+### Package fpinscala.errorhandling.Option
    * A datatype containing a successful value or 
      indicating a failure occured.
 
-###Package fpinscala.errorhandling.Either
+### Package fpinscala.errorhandling.Either
    * A datatype containing either one or another
      of two possible types of values.
 

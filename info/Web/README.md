@@ -1,6 +1,6 @@
-#Private Home Page
+# Private Home Page
 
-##Used in lieu of browser bookmarks.
+## Used in lieu of browser bookmarks.
 
 This is an "old school" homepage but done in a 
 "new school" way.  Goal is to make a personal home

@@ -15,15 +15,21 @@ to write something very similar to the scalaz monad transformer.
 ### Package fpinscala.rngStandalone -
    * A random number generation package created
      while working through the book exercises.
+
 ### src/test/scala/fpinscala/state/rngStandaloneTest.scala -
    * Program to exercise package fpinscala.rngStandalone.
+
 ### Package fpinscala.State -
    * Abstracting out the State Monad from what was done in rngStandalone.scala.
+
 ### Package fpinscala.rand -
    * A reimplementation of package rngStandalone using fpinscala.State. 
+
 ### src/test/scala/fpinscala/state/randTest.scala -
    * Program to exercise package fpinscala.rand.
+
 ### src/test/scala/fpinscala/state/candyMachines/candyMachines.scala -
    * Standalone application to model candy dispensing machines, 
-     based on FPinScala exercise 6.11.  Useful to me as I grock
-     the State monad.
+
+   * Based on FPinScala exercise 6.11.  Using this
+     as I grock the State monad.

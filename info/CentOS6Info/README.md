@@ -1,6 +1,6 @@
-#CentOS 6 Guide to the unempowered
+# CentOS 6 Guide to the unempowered
 
-##CentOS6 Linux info for those without root priveleges.
+## CentOS6 Linux info for those without root priveleges.
 
 ### Build_GCC_from_source.txt
     * Documents how to build the GCC Gnu Compiler

@@ -1,8 +1,14 @@
-The file, HarmonicOscWaveFunctions.mn, is a MATLAB MuPad
-notebook which models a 1-dimensional Harmonic Oscillator
-wave function.  I was curious on how the the function
-looked for high wave number.
+# MuPad
 
-I haven't had MuPad on my MATLAB license for at least 5
-years, so I can not vouch how well it will work for
-later versions of MuPad.
+## Disclaimer:
+I haven't had MuPad on my MATLAB license for
+at least 5 years, so I cannot vouch how well
+it will work for later versions of MuPad.
+
+## MuPad Notebooks -
+
+### HarmonicOscWaveFunctions.mn
+   * Models a 1-dimensional Harmonic Oscillator
+     wave function.  I was curious on how the it
+     looks for high wave number.
+

@@ -13,7 +13,7 @@ homepage in my browser to ~/info/Web/homepage.
 * Easily resized with Ctrl= and Ctrl-.
 * CtrlShift+ and CtrlShift_ also work to resize.
 
-### [homepage.html(http://htmlpreview.github.com/?)https://github.com/grscheller/scheller-linux-archive/blob/master/linuxHome/info/Web/homepage.html)
+### [homepage.html](http://htmlpreview.github.com/?)https://github.com/grscheller/scheller-linux-archive/blob/master/linuxHome/info/Web/homepage.html)
 * Same as above except rendered as HTML.
 
 ### [style.css](style.ccs)

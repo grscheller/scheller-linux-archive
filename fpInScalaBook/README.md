@@ -11,19 +11,19 @@ authors.
 
 ## Packages and corresponding book chapters
 
-### fpinscala.gettingstarted
+### [fpinscala.gettingstarted](src/main/scala/fpinscala/gettingstarted/)
 * Chapter 2: Getting started with functional programming in Scala
 
-### fpinscala.datastructures
+### [fpinscala.datastructures](src/main/scala/fpinscala/datastructures/)
 * Chapter 3: Functional data structures
 
-### fpinscala.errorhandling
+### [fpinscala.errorhandling](src/main/scala/fpinscala/errorhandling/)
 * Chapter 4: Handling errors without exceptions
 
-### fpinscala.laziness
+### [fpinscala.laziness](src/main/scala/fpinscala/laziness/)
 * Chapter 5: Strictness and laziness
 
-### fpinscala.state
+### [fpinscala.state](src/main/scala/fpinscala/state/)
 * Chapter 6: Purely functional state
 
 ### fpinscala.parallelism

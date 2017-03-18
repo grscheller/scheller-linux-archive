@@ -5,7 +5,7 @@ these files to my various Linux systems and then just set my<br>
 homepage in my browser to ~/info/Web/homepage.
 
 ##Files:
-### [homepage.html](homepage.html) as HTML
+### [homepage.html](homepage.html)
 * Information content.
 * Basically an HTML table organizing topics.
 * Kept as simple as possible to facilitate monkey
@@ -13,19 +13,19 @@ homepage in my browser to ~/info/Web/homepage.
 * Easily resized with Ctrl= and Ctrl-.
 * CtrlShift+ and CtrlShift_ also work to resize.
 
-### [homepage.html](homepage.txt) as Text File
-* Same as above except viewed as a text document.
+### [homepage.html(http://htmlpreview.github.com/?)https://github.com/grscheller/scheller-linux-archive/blob/master/linuxHome/info/Web/homepage.html)
+* Same as above except rendered as HTML.
 
 ### [style.css](style.ccs)
 * All formating done here.
 * Optimize for my vision problems - dark background.
 
-### [Portmanteau](Portmanteau.html) as HTML
+### [Portmanteau](Portmanteau.html)
 * Contains password schemas I used
 * Organized as a column table, which I am not happy with.
   I intend to change it to a row table since the "records"
   for each site are kept together.
 
-### [Portmanteau](Portmanteau.txt) as Text File
-* Same as above except viewed as a text document.
+### [Portmanteau](Portmanteau.txt)
+* Same as above except rendered as HTML.
 

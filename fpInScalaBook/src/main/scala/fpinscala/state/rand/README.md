@@ -8,6 +8,8 @@ reimplementating what was done in fpinscala.rngStandalone.
 
 From chapter 6.
 
-Note also the use of a package object defined in
-package.scala to define the rand type alias at
-the rand package level.
+### [RNG and LCG classes](RNG.scala)
+* Define abstract class RNG and the LCG implementation.
+
+### [fpinscala.state.rand package object](package.scala)
+* Used to define the rand type alias at the rand package level.

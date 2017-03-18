@@ -1,67 +1,67 @@
 # Functional Programming in Scala Book Exercises
 
-I am working my way through the book "Functional Programming in Scala"
-by Paul Chiusana and Runar Bjarnason to learn Scala.  Using the online
-reference manual at http://www.scala-sbt.org/ to learn sbt.
+I'm working my way through "Functional Programming in Scala"<br>
+by Paul Chiusana and Runar Bjarnason to learn Scala.  Also, I am<br>
+teaching myself SBT using the online
+[SBT reference manual](http://www.scala-sbt.org/).
 
-I am currently working on chapter 6.
+I have set up my own build.sbt file and am not using the canned SBT<br>
+setup supplied [here](https://github.com/fpinscala/fpinscala) by the
+authors.
 
 ## Packages and corresponding book chapters
 
 ### fpinscala.gettingstarted
-  * Chapter  2: Getting started with functional programming in Scala
+* Chapter 2: Getting started with functional programming in Scala
 
 ### fpinscala.datastructures
-  * Chapter  3: Functional data structures
+* Chapter 3: Functional data structures
 
 ### fpinscala.errorhandling
-  * Chapter  4: Handling errors without exceptions
+* Chapter 4: Handling errors without exceptions
 
 ### fpinscala.laziness
-  * Chapter  5: Strictness and laziness
+* Chapter 5: Strictness and laziness
 
 ### fpinscala.state
-  * Chapter  6: Purely functional state
+* Chapter 6: Purely functional state
 
 ### fpinscala.parallelism
-  * Chapter  7: Purely functional parallelism
+* Chapter 7: Purely functional parallelism
 
 ### fpinscala.testing
-  * Chapter  8: Property-based testing
+* Chapter 8: Property-based testing
 
 ### fpinscala.parsing
-  * Chapter  9: Parser combinators
+* Chapter 9: Parser combinators
 
 ### fpinscala.monoids
-  * Chapter 10: Monoids
+* Chapter 10: Monoids
 
 ### fpinscala.monads
-  * Chapter 11: Monads
+* Chapter 11: Monads
 
 ### fpinscala.applicative
-  * Chapter 12: Applicative and traversable functors
+* Chapter 12: Applicative and traversable functors
 
 ### fpinscala.iomonad
-  * Chapter 13: External effects and I/O
+* Chapter 13: External effects and I/O
 
 ### fpinscala.localeffects
-  * Chapter 14: Local effects and mutable state
+* Chapter 14: Local effects and mutable state
 
 ### fpinscala.streamingio
-  * Chapter 15: Stream processing and incremental I/O
+* Chapter 15: Stream processing and incremental I/O
 
-## Work flow
-
-Libraries are under "src/main", test objects are under "src/test".
-These tests just exercise the libraries I write.
+## Typical work flow
 
 Run code:
-  ```
+```
     $ sbt run
     $ sbt test:run
-  ```
+```
 The versions of sbt, scala, and java I am currently using:
-  ```
+```
     $ sbt sbtVersion
     [info] Set current project to root (in build file:/home/geoff/devel/learn/learnScala/fpInScalaBook/)
     [info] 0.13.13
@@ -74,9 +74,9 @@ The versions of sbt, scala, and java I am currently using:
     Type in expressions for evaluation. Or try :help.
 
     scala> 
-  ```
+```
 My usual work flow is "continuous compile":
-  ```
+```
     $ sbt
     > ~; compile; test:compile
     [success] Total time: 0 s, completed Oct 17, 2016 2:31:19 PM
@@ -93,6 +93,6 @@ My usual work flow is "continuous compile":
        .
        .
     > run
-  ```
-repeat, while I edit files, use Unix commands like grep and find,
-and perform GIT commands in other terminal windows.
+```
+repeat, while I edit files, use Unix commands like grep and<br>
+find, and perform GIT commands in other terminal windows.

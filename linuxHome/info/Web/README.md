@@ -1,4 +1,6 @@
-# Private Homepage
+# Private Homepage Example
+Stub version of what I do in [info/Web](../../../info/Web).
+
 I use a variety of different browsers and don't want to have to<br>
 "sync" my book marks and passwords schemas between them.  I push<br>
 these files to my various Linux systems and then just set my<br>

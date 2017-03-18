@@ -10,7 +10,7 @@ in a way that helps me stay up to speed on a topic.  I try to<br>
 maintain additional infrastructure so that this information may be<br>
 of some marginal use to others.
 
-## info directory:
+## [info](info/) directory:
 
 This directory is a fairly free form collection of<br>
 text files with information on a variety of topics.

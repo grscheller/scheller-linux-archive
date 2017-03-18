@@ -1,10 +1,10 @@
-#Private Homepage
+# Private Homepage
 I use a variety of different browsers and don't want to have to<br>
 "sync" my book marks and passwords schemas between them.  I push<br>
 these files to my various Linux systems and then just set my<br>
 homepage in my browser to ~/info/Web/homepage.
 
-##Files:
+## Files:
 ### [homepage.html](homepage.html)
 * Information content.
 * Basically an HTML table organizing topics.
@@ -13,7 +13,7 @@ homepage in my browser to ~/info/Web/homepage.
 * Easily resized with Ctrl= and Ctrl-.
 * CtrlShift+ and CtrlShift_ also work to resize.
 
-### [homepage.html](http://htmlpreview.github.com/?)https://github.com/grscheller/scheller-linux-archive/blob/master/linuxHome/info/Web/homepage.html)
+### [homepage.html](http://htmlpreview.github.com/?https://github.com/grscheller/scheller-linux-archive/blob/master/linuxHome/info/Web/homepage.html)
 * Same as above except rendered as HTML.
 
 ### [style.css](style.ccs)
@@ -26,6 +26,6 @@ homepage in my browser to ~/info/Web/homepage.
   I intend to change it to a row table since the "records"
   for each site are kept together.
 
-### [Portmanteau](Portmanteau.txt)
+### [Portmanteau](http://htmlpreview.github.com/?https://github.com/grscheller/scheller-linux-archive/blob/master/linuxHome/info/Web/Portmanteau.html)
 * Same as above except rendered as HTML.
 

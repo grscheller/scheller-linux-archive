@@ -26,7 +26,7 @@ files with information on a variety of topics.
 
 ## Software projects:
 
-### 1. bash-utils
+### 1. [bash-utils](bash-utils/)
     * Simple, but utilitarian, bash scripts illustrating bash scripting
       techniques.  I put these in my ~/bin directory.
 

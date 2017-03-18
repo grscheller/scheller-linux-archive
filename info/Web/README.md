@@ -28,7 +28,7 @@
 ### [homepage.html](http://htmlpreview.github.com/?https://github.com/grscheller/scheller-linux-archive/blob/master/info/Web/homepage.html)
 * Same as above except rendered as HTML.
 
-### [style.css](style.ccs)
+### style.css
 * All formating done here.
 * Optimize for my vision problems - dark background.
 

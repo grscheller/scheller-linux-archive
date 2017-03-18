@@ -38,6 +38,6 @@
   I intend to change it to a row table since the "records"
   for each site are kept together.
 
-### [Portmanteau](http://htmlpreview.github.com/?https://github.com/grscheller/scheller-linux-archive/info/Web/Portmanteau.html)
+### [Portmanteau](http://htmlpreview.github.com/?https://github.com/grscheller/scheller-linux-archive/blob/master/info/Web/Portmanteau.html)
 * Same as above except rendered as HTML.
-                                         
+

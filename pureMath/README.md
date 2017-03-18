@@ -11,11 +11,11 @@
 * Program to compute Pythagorean triples
 
 
-
 ## Notes:
 Known to work with both Python 2.7 and Python 3.2+
 
-I wrote these for Python 3, but tried to keep Python 2.7 backward compatibility.
+I wrote these for Python 3, but tried to keep Python 2.7
+backward compatibility.
 
 I use the *PYTHONPATH* environment variable so that the executable<br>
 can find its library. Most Python Scientific Stacks, like Enthought<br>

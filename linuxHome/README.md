@@ -14,7 +14,7 @@ systems share the same home directory via NFS.
 
 * Password-less ssh needs to be set up for this project
   to work.  See the "Secure Shell" section file 
-  ../info/UnixCommands.txt for info on how to do this.
+  [UnixCommands](../info/UnixCommands.txt) for info on how to do this.
   You will need to adjust the system names to match your
   network.  At work, DNS aliases are set up to match nice
   names I use in the scripts to the truely ugly names our
@@ -25,20 +25,23 @@ systems share the same home directory via NFS.
 * I have scaled down the example .bashrc and .bash_profile
   files contained in this project somewhat.
 
-The scripts:
+##The scripts:
+### [pushHome](bin/pushHome)
+* Transfer linuxHome package to your various linux systems.
 
-### pushHome
-    * Transfer linuxHome package to your various linux systems.
-      Run this on the system you maintain the projects git repo.
+* Run this on the system you maintain the projects git repo.
 
-### installHome
-    * Installs linuxHome package locally and then into your
-      home directory.
+* Changes to this script don't get picked up in
+  your ~/bin directory until the next time it is run.
 
-    * When you initially bootstrap this on a new system,
-      you may need to extract this script from what
-      pushHome deposits into the ~/catch directory.
+### [installHome](bin/installHome)
+* Installs linuxHome package locally and then into your
+  home directory.
 
-    * Changes to this script don't get picked up in
-      your ~/bin directory until the next time it is run.
+* When you initially bootstrap this on a new system,
+  you may need to extract this script from what
+  pushHome deposits into the ~/catch directory.
+
+* Changes to this script don't get picked up in
+  your ~/bin directory until the next time it is run.
 

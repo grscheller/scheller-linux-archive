@@ -4,11 +4,13 @@
 
 ## Source Code:
 
-### lib/pureMath.py
+### * lib/pureMath.py
 * Library for integer mathematics
 
-### bin/pythag3.py
+### * bin/pythag3.py
 * Program to compute Pythagorean triples
+
+
 
 ## Notes:
 Known to work with both Python 2.7 and Python 3.2+

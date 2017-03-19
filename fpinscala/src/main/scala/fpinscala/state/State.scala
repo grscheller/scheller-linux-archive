@@ -30,7 +30,7 @@ import State._
  *        hence the distinction is just an
  *        implementation detail.
  *
- *  The getState and setState combinators
+ *  The get and set combinators
  *  are used to manipulate the state.
  *  
  */
@@ -59,14 +59,14 @@ case class State[S,+A](run: S => (A,S)) {
   // this the State Monad.
 
   /** Return the current state as the value. */
-  def getState: State[S,S] = State(s => (s, s))
+  def get: State[S,S] = State(s => (s, s))
 
   /** Manually set a state.
    *
    *    Ignore previous state,
    *    return a meaningless value.
    */
-  def setState(s: S): State[S,Unit] = State(_ => ((), s))
+  def set(s: S): State[S,Unit] = State(_ => ((), s))
 
   /** Modify the state with a function,
    *
@@ -75,8 +75,8 @@ case class State[S,+A](run: S => (A,S)) {
    */
   def modifyState(f: S => S): State[S, Unit] =
     for {
-      s <- getState
-      _ <- setState(f(s))
+      s <- get
+      _ <- set(f(s))
     } yield ()
 
   /** Run the action, extract the value, ignore next state.

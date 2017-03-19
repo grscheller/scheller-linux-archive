@@ -13,13 +13,13 @@ At this point in the book, I am not supposed to know the term<br>
 very similar to the scalaz monad transformer.
 
 ### Package [fpinscala.rngStandalone](rngStandalone.scala)
-* A random number generation package created
-  while working through the book exercises.
+* A random number generation package.
+* Created while working through the book exercises.
 
-### src/test/scala/fpinscala/state/rngStandaloneTest.scala
+### Program [rngStandaloneTest](rngStandaloneTest.scala)
 * Program to exercise package fpinscala.rngStandalone.
 
-### case class [fpinscala.state.State](State.scala)
+### Case class [fpinscala.state.State](State.scala)
 * Abstracting out the State Monad from
   what was done in rngStandalone.scala.
 
@@ -27,11 +27,6 @@ very similar to the scalaz monad transformer.
 * A reimplementation of package rngStandalone
   using fpinscala.state.State. 
 
-### src/test/scala/fpinscala/state/randTest.scala
-* Program to exercise package fpinscala.rand.
-
-### src/test/scala/fpinscala/state/candyMachines/candyMachines.scala
-* Standalone application to model candy dispensing machines, 
-
-* Based on FPinScala exercise 6.11.  Using this
-  as I grock the State monad.
+### Program [candyMachine](candyMachine.scala)
+* Standalone application to model a candy dispensing machine. 
+* Based on FPinScala exercise 6.11.

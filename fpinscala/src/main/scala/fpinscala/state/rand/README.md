@@ -13,3 +13,7 @@ From chapter 6.
 
 ### [fpinscala.state.rand package object](package.scala)
 * Used to define the rand type alias at the rand package level.
+
+### Program [randTest](randTest.scala)
+* Program to exercise package fpinscala.rand.
+

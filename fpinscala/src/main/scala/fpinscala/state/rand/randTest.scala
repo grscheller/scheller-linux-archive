@@ -3,18 +3,18 @@
  *
  *  Deliberately not importing fpinscala.state
  *  since I feel it is an implementation detail
- *  of the fpinscala.rand package.
+ *  of the fpinscala.state.rand package.
  *
  *  At least initialy, repeat tests done in
  *  the fpinscala.test.chap06.rngStandalone
  *  package.
  *
  */
-package fpinscala.chap06.rand
+package fpinscala.chap06.state.rand
 
 import fpinscala.state.rand.{Rand,RNG,LCG}
 
-object RandTest {
+object randTest {
 
   val rng42 = LCG(42)
   val rng666 = LCG(666)

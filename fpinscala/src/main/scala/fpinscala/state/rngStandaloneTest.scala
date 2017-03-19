@@ -3,7 +3,7 @@ package fpinscala.chap06.rngStandalone
 import fpinscala.rngStandalone.{RNG, LCG}
 import fpinscala.rngStandalone.RNG.Rand
 
-object RNGTest {
+object rngStandaloneTest {
 
   val rng42 = LCG(42)
   val rng666 = LCG(666)

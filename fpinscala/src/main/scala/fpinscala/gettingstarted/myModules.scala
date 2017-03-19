@@ -1,4 +1,4 @@
-package fpinscala.test.chap02.gettingstarted
+package fpinscala.chap02.gettingstarted
 
 // Comment - start off with something familiar to OO programmer
 /*

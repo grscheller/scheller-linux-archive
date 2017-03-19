@@ -1,4 +1,4 @@
-package fpinscala.test.chap02.gettingstarted
+package fpinscala.chap02.gettingstarted
 
 /*
    Refactored version of MyModule.

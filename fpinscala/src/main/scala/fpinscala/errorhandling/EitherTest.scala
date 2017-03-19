@@ -1,4 +1,4 @@
-package fpinscala.test.chap04.errorhandling
+package fpinscala.chap04.errorhandling
 
 import fpinscala.errorhandling._
 import fpinscala.errorhandling.Either._

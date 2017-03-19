@@ -1,4 +1,4 @@
-package fpinscala.test.chap06.rngStandalone
+package fpinscala.chap06.rngStandalone
 
 import fpinscala.rngStandalone.{RNG, LCG}
 import fpinscala.rngStandalone.RNG.Rand

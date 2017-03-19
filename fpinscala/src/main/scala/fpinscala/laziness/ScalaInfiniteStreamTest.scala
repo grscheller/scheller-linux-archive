@@ -1,4 +1,4 @@
-package fpinscala.test.chap05.laziness
+package fpinscala.chap05.laziness
 
 import scala.collection.immutable.Stream.{cons, from}
 

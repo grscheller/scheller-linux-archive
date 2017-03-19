@@ -6,15 +6,11 @@
  *    CandyMachineTest object as a namespace.
  *
  *    Only reason for the package I am puttng it
- *    into is for grouping all the chapter 6 test
+ *    into is for grouping all the chapter 6
  *    programs together.
  *
- *    Thought about putting this into an
- *    app directory along side main and test,
- *    but this would requre some non-trivial
- *    SBT changes.
  */
-package fpinscala.test.chap06.candyMachines
+package fpinscala.chap06.candyMachines
 
 import fpinscala.state.State
 

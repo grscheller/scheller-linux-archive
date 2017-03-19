@@ -1,4 +1,4 @@
-package fpinscala.test.chap04.errorhandling
+package fpinscala.chap04.errorhandling
 
 import scala.util.{Try, Success, Failure}
 

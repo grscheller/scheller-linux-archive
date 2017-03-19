@@ -1,5 +1,5 @@
 /** Package to test the fpinscala.rand package and 
- *  indirectly fpinscala.state.
+ *  indirectly fpinscala.state
  *
  *  Deliberately not importing fpinscala.state
  *  since I feel it is an implementation detail
@@ -10,7 +10,7 @@
  *  package.
  *
  */
-package fpinscala.test.chap06.rand
+package fpinscala.chap06.rand
 
 import fpinscala.state.rand.{Rand,RNG,LCG}
 

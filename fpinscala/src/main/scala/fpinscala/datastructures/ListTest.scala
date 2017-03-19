@@ -1,4 +1,4 @@
-package fpinscala.test.chap03.datastructures
+package fpinscala.chap03.datastructures
 
 import fpinscala.datastructures._
 

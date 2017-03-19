@@ -1,4 +1,4 @@
-package fpinscala.test.chap05.laziness
+package fpinscala.chap05.laziness
 
 import fpinscala.laziness._
 import fpinscala.laziness.Stream._

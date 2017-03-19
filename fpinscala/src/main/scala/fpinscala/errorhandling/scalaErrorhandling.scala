@@ -37,7 +37,7 @@ object Parsing {
 
 }
 
-object ScalaErrorhandling{
+object scalaErrorhandling{
 
   // Define some utility functions
   /**

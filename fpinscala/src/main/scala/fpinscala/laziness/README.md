@@ -8,8 +8,26 @@ Implementing a Stream (Lazy List) data structure while working<br>
 through the exercises in  "Functional Programming in Scala"<br>
 by Paul Chiusana and Runar Bjarnason.
 
-### [fpinscala.laziness.Stream](Stream.scala)
+### Trait [fpinscala.laziness.Stream](Stream.scala)
 * Implement a lazy list, or stream, using a trait and case classes.
+
+### Program [StreamTest](StreamTest.scala)
+* A program that exercises fpinscala.laziness.Stream.
+
+### Program [infiniteStreamTest](infiniteStreamTest.scala)
+* Using infinite streams with fpinscala.laziness.Stream.
+
+### Program [scalaInfiniteStreamTest](scalaInfiniteStreamTest.scala)
+* Using infinite streams with standard scala libraries.
+
+### Program [scanRightTest](scanRightTest.scala)
+* Test scanRight with fpinscala.laziness.Stream.
+
+### Program [hasSubsequenceStreamTest](hasSubsequenceStreamTest.scala)
+* Test hasSubsequenceStreamTest with fpinscala.laziness.Stream.
+
+### Program [foldLeftTest](foldLeftTest.scala)
+* Compare foldLeft vs foldRight with fpinscala.laziness.Stream.
 
 Exercises teaching the distinction between laziness and<br>
 non-strictness.  A function being lazy means it only evaluates<br>
@@ -27,5 +45,5 @@ the recursion is this laziness/non-strictness.  It allows for very<br>
 efficient Stream compositions.
 
 I have also added a withFilter method to enable guards in "for"<br>
-comprhensions in an efficient manner.  I modeled this after what<br>
+comprehensions in an efficient manner.  I modeled this after what<br>
 was done scala.Option.

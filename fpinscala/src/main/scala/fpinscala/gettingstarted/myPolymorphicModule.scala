@@ -1,7 +1,7 @@
 package fpinscala.chap02.gettingstarted
 
 /*
-   Refactored version of MyModule.
+   Refactored version of myModules made polymorphic.
 */
 object MyPolymorphicModule {
 

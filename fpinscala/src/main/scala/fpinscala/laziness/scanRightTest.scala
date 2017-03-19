@@ -3,7 +3,7 @@ package fpinscala.chap05.laziness
 import fpinscala.laziness._
 import fpinscala.laziness.Stream._
 
-object ScanRightTest {
+object scanRightTest {
 
   // Some test data
   val fiveToOne = range(5, 0)

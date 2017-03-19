@@ -5,7 +5,7 @@ import scala.collection.immutable.Stream.{cons, from}
 /** Repeat first half of InfiniteStreamTest but use
  *  Stream class from Scala Collections.
  */
-object ScalaInfiniteStreamTest {
+object scalaInfiniteStreamTest {
 
   // Infinite data structure - infinite Stream of 42's
   val fortyTwos: Stream[Int] = cons(42, fortyTwos)

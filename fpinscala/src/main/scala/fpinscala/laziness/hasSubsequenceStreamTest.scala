@@ -3,7 +3,7 @@ package fpinscala.chap05.laziness
 import fpinscala.laziness._
 import fpinscala.laziness.Stream._
 
-object HasSubsequenceStreamTest {
+object hasSubsequenceStreamTest {
 
   def main(args: Array[String]): Unit = {
 

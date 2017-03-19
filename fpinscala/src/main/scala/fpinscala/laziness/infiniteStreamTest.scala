@@ -4,7 +4,7 @@ import fpinscala.laziness._
 import fpinscala.laziness.Stream._
 
 
-object InfiniteStreamTest {
+object infiniteStreamTest {
 
   // Infinite data structure - infinite Stream of 42's
   val fortyTwos: Stream[Int] = cons(42, fortyTwos)

@@ -3,7 +3,7 @@ package fpinscala.laziness
 /** Implement a lazy list
  *
  * @author    "Geoffrey Scheller <geoffrey@scheller.com>"
- * @version   1.0
+ * @version   1.1
  * @since     1.0
  */
 sealed trait Stream[+A] { self =>

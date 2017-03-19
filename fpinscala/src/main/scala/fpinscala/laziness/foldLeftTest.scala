@@ -3,7 +3,7 @@ package fpinscala.chap05.laziness
 import fpinscala.laziness._
 import fpinscala.laziness.Stream._
 
-object FoldLeftTest {
+object foldLeftTest {
 
   // Some test data
   val oneTo100 = range(1, 101)

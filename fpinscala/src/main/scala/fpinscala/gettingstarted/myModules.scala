@@ -9,7 +9,7 @@ package fpinscala.chap02.gettingstarted
 
 */
 /** Documentation comment for MyModule */
-object MyModule {
+object myModule {
 
   // Note that "if ... else ..." is a an expression
   //   and returns a value, Int in this case, but
@@ -42,9 +42,9 @@ object MyModule {
 /*
    Refactored version of MyModule.
 */
-object MyModuleRefactored {
+object myModuleRefactored {
 
-  import MyModule._
+  import myModule._
 
   // Standard Lisp accumulator trick.
   //   Uses tail recursion optimization

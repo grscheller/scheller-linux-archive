@@ -4,7 +4,7 @@ package fpinscala.chap02.gettingstarted
    Currying and partial application
 */
 
-object HigherOrder {
+object higherOrder {
 
   def partial1[A,B,C](a: A, f: (A,B) => C): B => C = b => f(a, b)
   def partial2[A,B,C](b: B, f: (A,B) => C): A => C = a => f(a, b)

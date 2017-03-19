@@ -37,7 +37,7 @@ object OptionParse {
    *  of Doubles if all can be converted.
    */  
   def parseDoubles1(ss: List[String]): Option[List[Double]] =
-    sequence1(ss map (s => Try(s.toDouble)))
+    sequence(ss map (s => Try(s.toDouble)))
 
   /** 
    *  Take a list of strings and return an Option of a List

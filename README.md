@@ -31,7 +31,7 @@ text files with information on a variety of topics.
   techniques.
 * I put these in my ~/bin directory.
 
-### 2. [fpInScalaBook](fpInScalaBook/)
+### 2. [fpinscala](fpinscala/)
 * Scala project where I work through the exercises
   in the book "Functional Programming in Scala"
   by Paul Chiusana and Runar Bjarnason.

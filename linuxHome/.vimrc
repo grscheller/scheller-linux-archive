@@ -12,11 +12,8 @@ syntax off
 " use utf-8
 set encoding=utf-8
 set fileencoding=utf-8
-" Don't use TABS!!!, replace with
-" 4 spaces when <tab> key is pressed.
-"   When editing makefiles or other archaic files
-"   where real tabs are "special",
-"   use <ctrl-v><tab> to actually add a real tab.
+" Don't use TABS!!!, replace with 4 spaces when <tab> key is pressed.
+" Use <ctrl-v><tab> to actually add a real tab.
 set tabstop=4
 set shiftwidth=4
 set expandtab

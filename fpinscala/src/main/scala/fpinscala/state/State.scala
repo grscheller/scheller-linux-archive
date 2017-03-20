@@ -73,7 +73,7 @@ case class State[S,+A](run: S => (A,S)) {
    *    Included here more to illustrate
    *    the use case of get and set.
    */
-  def modifyState(f: S => S): State[S, Unit] =
+  def modify(f: S => S): State[S, Unit] =
     for {
       s <- get
       _ <- set(f(s))

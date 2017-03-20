@@ -31,19 +31,40 @@ object candyMachine {
 
   /** Locking states of a candy machine */
   sealed trait LockState
-  case object Open extends LockState
-  case object Locked extends LockState
+  case object Unlocked extends LockState
+  case object   Locked extends LockState
 
-  /** Machine represents the State of a candy machine. */
+  /** Machine represents the state of a candy machine. */
   case class Machine(  locked: LockState
                     , candies: Candies
                     ,   coins: Coins    )
 
-//  def simulation(inputs: List[Input]): State[Machine,(Coins, Candies)] =
+  def update(i: Input)(m: Machine): ((Coins, Candies), Machine) = 
+    (i, m) match {
+      case (_, Machine(_, 0, _)) => ((m.coins, m.candies), m)
+      case (Turn, Machine(  Locked, _, _)) => ((m.coins, m.candies), m)
+      case (Coin, Machine(Unlocked, _, _)) => ((m.coins, m.candies), m)
+      case (Turn, Machine(Unlocked, candy, coin)) => {
+        val mm = Machine(Locked, candy-1, coin)
+        ((mm.coins, mm.candies), mm)
+      }
+      case (Coin, Machine(Locked, candy, coin)) => {
+        val mm = Machine(Unlocked, candy, coin+1)
+        ((mm.coins, mm.candies), mm)
+      }
+    }
+
+/* Work in progress - Maybe what I want is a list of machines, not (Coins, Candies) */
+//  def simulation(inputs: List[Input]): State[Machine, List[(Coins, Candies)]] =
+//    State.sequence(inputs.map(State.unit[Machine,(Coins, Candies)](State(update(_: Input): Machine => ((Coins, Candies), Machine)))))
+//
+//    State.sequence(inputs.map(State.unit[Machine,(Coins, Candies)](State(update(_)))))
 
   def main(args: Array[String]): Unit = {
 
     val initState = Machine(Locked, candies=100, coins=20)
+
+    println("\nWork in progress.\n")
     
   }
 }

@@ -27,8 +27,7 @@ text files with information on a variety of topics.
 ## Software projects:
 
 ### 1. [bash-utils](bash-utils/)
-* Simple, but utilitarian, bash scripts illustrating bash scripting
-  techniques.
+* Simple, but utilitarian, bash scripts illustrating bash scripting techniques.
 * I put these in my ~/bin directory.
 
 ### 2. [fpinscala](fpinscala/)
@@ -45,15 +44,14 @@ text files with information on a variety of topics.
 
 ### 4. [pythagTriples](pythagTriples/)
 * Haskell project that generates Pythagorean triples.
-* As much about the mathematics of Pythagorean triples
-  as it is an exercise to learn Haskell stack.
+* Mathematical factoids about Pythagorean triples.
+* Also an exercise for me to learn Haskell stack.
 
 ### 5. [matlab](matlab/)
 * MATLAB and MuPad projects.
 
 ### 6. [pureMath](pureMath/)
-* A mathematics library centered around integer arithmetic
-  written in Python.
+* A mathematics library centered around integer arithmetic written in Python.
 * An old project of mine back when I first learned Python.
 
 ### 7. [linuxHome](linuxHome/)

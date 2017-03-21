@@ -29,9 +29,9 @@ Both algorithms only print triples with no common factors, that is `gcd(a,b,c) =
    ```
        a^2 + b^2 = c^2  where gcd(a, b, c) = 1 and 0 < a < b < c
    ```
-   you only need to check any two of `a, b, c` because you can factor
-   the common factor to show the the square of the other (and
-   hence the other itself) has the same common factor.
+   you only need to check any two of `a, b, c` because you can factor<br>
+   the common factor to show the the square of the other (and hence<br>
+   the other itself) has the same common factor.
 
    Geometrically this is the right choice since as right triangles
    ```
@@ -46,11 +46,11 @@ Both algorithms only print triples with no common factors, that is `gcd(a,b,c) =
 
    but the square root of `2` is not rational!
 
-3. The ordered algorthm generates all possible pythagorithms in
-   lexiconical order, that is `a < b < c`.
+3. The ordered algorthm generates all possible triples<br>
+   in lexiconical order, that is `a < b < c`.
 
-   As `b` gets larger, eventually the difference in length beween
-   `c` and `b` is less than `1`.
+   As `b` gets larger, eventually the difference in length<br>
+   beween `c` and `b` is less than `1`.
    ```
                   *
                   *    *       c
@@ -76,14 +76,14 @@ Both algorithms only print triples with no common factors, that is `gcd(a,b,c) =
    ```
    From running code, we see that both <= cases happen.
 
-4. Running code it seems that the hypotence `c` is alwaya odd.
+4. Running code it seems that the hypotence `c` is alwaya odd.<br>
    To see that this is universally true:
 
-   We know not both `a` and `b` even, otherwise `a, b, c` not in lowest
-   terms.  If one even and the other odd, then `c` is odd.
+   We know not both `a` and `b` even, otherwise `a, b, c` not in<br>
+   lowest terms.  If one even and the other odd, then `c` is odd.
 
-   But what about the case if `a` and `b` both odd?  That would
-   imply `c` could be even.  Concider this case,
+   But what about the case if `a` and `b` both odd?  That<br>
+   would imply `c` could be even.  Concider this case,
 
    ```
       a^2 + b^2 = c^2
@@ -102,14 +102,13 @@ Both algorithms only print triples with no common factors, that is `gcd(a,b,c) =
       [(m^2 - n^2, 2*m*n, m^2 + n^2) | m <- [1 ..] , n <- [1 .. m-1]]
    ```
 
-   Also seems to produce results where `gcd(a,b,c) > 1`
+   Also seems to produce results where `gcd(a,b,c) > 1`<br>
    like `(8, 6, 10)` and `(40, 42, 58)`.
 
-   I used this result for a faster algorithm and will use
-   test/Spec.hs to compare the results.  So far the fast
-   algorithm seems complete, but it not clear yet how far
-   you have to take it out to ensure you catch all triples
-   for a given a.  Also, if you sort the results of the fast
-   algorithm, is there a point that the cost of sorting is
+   I used this result for a faster algorithm and will use<br>
+   test/Spec.hs to compare the results.  So far the fast<br>
+   algorithm seems complete, but it not clear yet how far<br>
+   you have to take it out to ensure you catch all triples<br>
+   for a given a.  Also, if you sort the results of the fast<br>
+   algorithm, is there a point that the cost of sorting is<br>
    so high that the ordered algorithm wins out?
-

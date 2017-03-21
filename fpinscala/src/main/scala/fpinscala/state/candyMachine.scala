@@ -41,18 +41,21 @@ object candyMachine {
                     , candies: Candies
                     ,   coins: Coins    )
 
-  def update(i: Input)(m: Machine): Machine = 
+  /** Based on an Input, select next candy machine state. */
+  def selectUpdate(i: Input)(m: Machine): Machine = 
     (i, m) match {
       case (_, Machine(_, 0, _)) => m
       case (Turn, Machine(  Locked, _, _)) => m
       case (Coin, Machine(Unlocked, _, _)) => m
-      case (Turn, Machine(Unlocked, candy, coin)) => Machine(Locked, candy-1, coin)
-      case (Coin, Machine(Locked, candy, coin)) => Machine(Unlocked, candy, coin+1)
+      case (Turn, Machine(Unlocked, candy, coin)) =>
+        Machine(  Locked, candy-1, coin)
+      case (Coin, Machine(  Locked, candy, coin)) =>
+        Machine(Unlocked, candy, coin+1)
     }
 
   def simulation(inputs: List[Input]): State[Machine, (Coins, Candies)] =
     for {
-      _ <- set(Machine(Locked, candies=20, coins=0))
+      _ <- sequence(inputs map { input => modify(selectUpdate(input)) })
       m <- get
     } yield (m.coins, m.candies)
 
@@ -64,19 +67,19 @@ object candyMachine {
 
     println()
     print("Initial State of candy machie is "); println(initState)
-    print("First set inputs are "); println(inputs1)
-    print("First set inputs are "); println(inputs2)
 
     val ((coin1, candy1), m1) = simulation(inputs1).run(initState)
     val ((coin2, candy2), m2) = simulation(inputs2).run(m1)
 
-    println("\nAfter the first set of inputs, there are "
+    print("\nFirst set inputs are "); println(inputs1 + ".")
+    println("After the first set of inputs, the candy machine has "
             + candy1 + " candies and " + coin1 + " coins.")
-    println("The candy machine is now in state " + m1 + ".")
+    println("The candy machine is now in state: " + m1)
 
-    println("\nAfter the second set of inputs, there are "
+    print("\nSecond set of inputs are "); println(inputs2 + ".")
+    println("After the second set of inputs, the candy machine has "
             + candy2 + " candies and " + coin2 + " coins.")
-    println("The candy machine is now in state " + m2 + ".")
+    println("The candy machine is now in state: " + m2)
 
     println()
 

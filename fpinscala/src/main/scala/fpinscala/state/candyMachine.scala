@@ -21,6 +21,8 @@ import fpinscala.state.State
 
 object candyMachine {
 
+  import State._
+
   type Coins = Int
   type Candies = Int
 
@@ -39,32 +41,44 @@ object candyMachine {
                     , candies: Candies
                     ,   coins: Coins    )
 
-  def update(i: Input)(m: Machine): ((Coins, Candies), Machine) = 
+  def update(i: Input)(m: Machine): Machine = 
     (i, m) match {
-      case (_, Machine(_, 0, _)) => ((m.coins, m.candies), m)
-      case (Turn, Machine(  Locked, _, _)) => ((m.coins, m.candies), m)
-      case (Coin, Machine(Unlocked, _, _)) => ((m.coins, m.candies), m)
-      case (Turn, Machine(Unlocked, candy, coin)) => {
-        val mm = Machine(Locked, candy-1, coin)
-        ((mm.coins, mm.candies), mm)
-      }
-      case (Coin, Machine(Locked, candy, coin)) => {
-        val mm = Machine(Unlocked, candy, coin+1)
-        ((mm.coins, mm.candies), mm)
-      }
+      case (_, Machine(_, 0, _)) => m
+      case (Turn, Machine(  Locked, _, _)) => m
+      case (Coin, Machine(Unlocked, _, _)) => m
+      case (Turn, Machine(Unlocked, candy, coin)) => Machine(Locked, candy-1, coin)
+      case (Coin, Machine(Locked, candy, coin)) => Machine(Unlocked, candy, coin+1)
     }
 
-/* Work in progress - Maybe what I want is a list of machines, not (Coins, Candies) */
-//  def simulation(inputs: List[Input]): State[Machine, List[(Coins, Candies)]] =
-//    State.sequence(inputs.map(State.unit[Machine,(Coins, Candies)](State(update(_: Input): Machine => ((Coins, Candies), Machine)))))
-//
-//    State.sequence(inputs.map(State.unit[Machine,(Coins, Candies)](State(update(_)))))
+  def simulation(inputs: List[Input]): State[Machine, (Coins, Candies)] =
+    for {
+      _ <- set(Machine(Locked, candies=20, coins=0))
+      m <- get
+    } yield (m.coins, m.candies)
 
   def main(args: Array[String]): Unit = {
 
     val initState = Machine(Locked, candies=100, coins=20)
+    val inputs1 = List(Turn, Coin, Coin, Turn, Turn, Coin)
+    val inputs2 = List(Turn, Coin, Coin, Turn, Turn, Coin, Turn)
 
-    println("\nWork in progress.\n")
-    
+    println()
+    print("Initial State of candy machie is "); println(initState)
+    print("First set inputs are "); println(inputs1)
+    print("First set inputs are "); println(inputs2)
+
+    val ((coin1, candy1), m1) = simulation(inputs1).run(initState)
+    val ((coin2, candy2), m2) = simulation(inputs2).run(m1)
+
+    println("\nAfter the first set of inputs, there are "
+            + candy1 + " candies and " + coin1 + " coins.")
+    println("The candy machine is now in state " + m1 + ".")
+
+    println("\nAfter the second set of inputs, there are "
+            + candy2 + " candies and " + coin2 + " coins.")
+    println("The candy machine is now in state " + m2 + ".")
+
+    println()
+
   }
 }

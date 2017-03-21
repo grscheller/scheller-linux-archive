@@ -30,8 +30,9 @@ import State._
  *        hence the distinction is just an
  *        implementation detail.
  *
- *  The get and set combinators
- *  are used to manipulate the state.
+ *  The get and set combinators in the companion object
+ *  are used to manipulate the state.  They are what
+ *  makes this the "State" monad.
  *  
  */
 case class State[S,+A](run: S => (A,S)) {
@@ -54,30 +55,6 @@ case class State[S,+A](run: S => (A,S)) {
 
   def both[B](rb: State[S,B]): State[S,(A,B)] =
     map2(rb) { (_, _) }
-
-  // These next two method are what makes
-  // this the State Monad.
-
-  /** Return the current state as the value. */
-  def get: State[S,S] = State(s => (s, s))
-
-  /** Manually set a state.
-   *
-   *    Ignore previous state,
-   *    return a meaningless value.
-   */
-  def set(s: S): State[S,Unit] = State(_ => ((), s))
-
-  /** Modify the state with a function,
-   *
-   *    Included here more to illustrate
-   *    the use case of get and set.
-   */
-  def modify(f: S => S): State[S, Unit] =
-    for {
-      s <- get
-      _ <- set(f(s))
-    } yield ()
 
   /** Run the action, extract the value, ignore next state.
    *
@@ -120,5 +97,29 @@ object State {
     fs.reverse.foldLeft(unit[S,List[A]](Nil)) {
       (acc, f) => f.map2(acc)(_ :: _)
     }
+
+  /** Get the state.
+   *
+   *  In the run action, return the
+   *  current state as the value.
+   */
+  def get[S]: State[S,S] = State(s => (s, s))
+
+  /** Manually set a state.
+   *
+   *  The run action ignores previous state,
+   *  returns the canonical meaningless value.
+   */
+  def set[S](s: S): State[S,Unit] = State(_ => ((), s))
+
+  /** Modify the state with a function.
+   *
+   *  Illustrates the use case of get and set.
+   */
+  def modify[S](f: S => S): State[S, Unit] =
+    for {
+      s <- get
+      _ <- set(f(s))
+    } yield ()
 
 }

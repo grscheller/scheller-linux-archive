@@ -8,8 +8,11 @@ reimplementating what was done in fpinscala.rngStandalone.
 
 From chapter 6.
 
-### [RNG and LCG classes](RNG.scala)
-* Define abstract class RNG and the LCG implementation.
+### Class [RNG](https://github.com/grscheller/scheller-linux-archive/blob/d41fbbba704573d44c0c9821554915fb134af584/fpinscala/src/main/scala/fpinscala/state/rand/RNG.scala#L15-L17)
+* Abstract base class for random number generators.
+
+### Class [LCG](https://github.com/grscheller/scheller-linux-archive/blob/d41fbbba704573d44c0c9821554915fb134af584/fpinscala/src/main/scala/fpinscala/state/rand/RNG.scala#L131-L143)
+* Linear Congruence Generator implementation for RNG.
 
 ### [fpinscala.state.rand package object](package.scala)
 * Used to define the rand type alias at the rand package level.

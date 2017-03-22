@@ -112,11 +112,17 @@ II. Getting a Git Repository
            git://
            user@server:path/to/repo.git      (this uses ssh)
 
-    3. Setting up a shared repository:
+    3. Setting up a local shared repository:
 
-          git init --bare ourProject.git
+       Lets assume everyone is in the repos group
 
-       Initialize an empty Git repository, but omit the working 
+          $ umask 0007
+          $ ls -ld /share/repos
+          drwxrws---. 7 repos repos 4096 Dec 12 09:17 /share/repos
+          $ cd /share/repos
+          $ git init --bare ourProject.git
+
+       This initializes an empty Git repository, but omit the working 
        directory.  Shared repositories should always be created with
        the --bare flag.  The ourProject.git directory will be a
        subdirectory.  (Equiv to a .git directory, but without the
@@ -124,30 +130,38 @@ II. Getting a Git Repository
        repository as a storage facility as opposed to a development
        environment.
 
-    4. Now connect up our empty naked repository to somewhere where
+       Now connect up our empty naked repository to somewhere where
        we have done some prior development work:
 
           cd ourProject.git
-          git remote add --fetch --tags localDevel ~/Devel/local/myProject
+          git remote add localDevel /home/schelleg/devel/myProject
+          git fetch localDevel
+          git fetch --tags localDevel
 
        This will bring in all the branches and tags.
        In the localDevel development environment repo, I like to reference
        our new colaboritive repo as origin:
 
-          git remote rm origin      <- if already set to point elsewhere
-          git remote add origin ~/Repo/ourProject.git
+          cd /home/schelleg/devel/myProject
+          git remote rm origin
+          git remote add origin /share/repos/ourProject.git
 
-    5. I found it better to create the empty shared repository, clone it, 
-       and then add the initial files to the clone and push it back.
+       Make sure your umask is set so that all the files in ourProject.git
+       don't get created without the necessary group permissions.  GIT will
+       function, but with, at first, subtly bizzare behavior. 
+
+    4. If you are starting a new project, setting up a shared repo is
+       a bit easier.  Create the the bare shared repository, clone it,
+       add the initial files to the clone and push it back to the shared repo.
 `
-          git clone schelleg@us.mhpcc.hpc.mil:projects/DVS.git
-          cp DVS_150605/* DVS
-          cd DVS
+          git clone /share/repos/ourProject.git
+          cp ourProject_150605/* ourProject
+          cd ourProject
           git add *
           git commit
           git push origin master
 
-    6. To "rename" the directory that a GIT repository is in, first
+    5. To "rename" the directory that a GIT repository is in, first
        note that that git does not care about the name of the directory
        the repository is in. The client just needs to know where to point.
 
@@ -166,7 +180,7 @@ II. Getting a Git Repository
           git branch -u origin/master
           git fetch origin
 
-    7. Cloning from another working repo.
+    6. Cloning from another working repo.
 
        Let's say I have a working repo in ~/Devel/SDT
 
@@ -208,11 +222,11 @@ II. Getting a Git Repository
        a working copy.  (Just make sure you do this in ~/temp/SDT and not
        in ~/Devel/SDT !!!)
 
-    8. Fetch command updates local copies of remote branches.
+    7. Fetch command updates local copies of remote branches.
 
           git fetch origin
 
-       will update information of local copies of remote branches.
+       will update information of local copies of all remote branches.
 
           git fetch --all
 
@@ -456,6 +470,21 @@ VII. Git branch:
 
            git push origin :the_remote_branch
 
+    9. Figuring out what exactly your branches are
+       actually tracking:
+
+          $ git branch -vv
+            car-mhf         b819996 [origin/car-mhf] Fixed awkward language in a comment to make more clear.
+            goldsdb         41d7446 [origin/goldsdb] The initial View Table now contains 1 empty row.
+            master          28f7355 [origin/master] Up dates Resources/DTIC_GIT_Notes.txt with notes on:
+          * scheller-master 2c7336f [scheller/master: ahead 1] An updater to the root README.md file.
+
+          $ git remote -v
+            origin  https://geoffrey.scheller@repos.vdl.afrl.af.mil/git/astrodynamics/astrodynamics.git (fetch)
+            origin  https://geoffrey.scheller@repos.vdl.afrl.af.mil/git/astrodynamics/astrodynamics.git (push)
+            scheller    ../../../scheller-linux-archive/ (fetch)
+            scheller    ../../../scheller-linux-archive/ (push)
+
 VIII. Git checkout:
 
     The git checkout command lets you navigate between branches.  
@@ -490,6 +519,36 @@ VIII. Git checkout:
        be a bit more specific:
 
            git checkout -b some_branch remote-name/some_branch
+
+    5. Lets say we have two remotes each with a branch with
+       same name.  
+
+           $ git branch -r
+             origin/copperDB
+             origin/dmc_run
+             origin/master
+             origin/spaceRad
+             scheller/master
+
+       And we are already tracking origin/master.
+
+          $ git branch
+            copperDB
+            dmc_run
+          * master
+
+       How do we checkout scheller/master?
+       We give it another name:
+
+          git checkout -b scheller-master --track scheller/master
+
+       Now we have,
+
+          $ git branch
+            copperDB
+            dmc_run
+            master
+          * scheller-master
 
 IX. Git merge:
 
@@ -668,9 +727,23 @@ X. Syncing repositories:
         Now, the "git status" may tell us we can't just do a fast
         foreward.  In that case, create a new local branch to track
         the remote branch and do a git merge (see IX).
-           
 
-     9. GIT push (push local changes elsewhere):
+     9. The command,
+
+           git pull 
+
+        is actually the same as doing
+
+           git fetch
+           git merge origin
+
+        what you are actually merging into your working directory
+        is a local copy of the remote repo.  You are "tracking"
+        the local copy.  If pull requires a password, then the
+        fetch will too, but not the merge.  The git fetch is syncing
+        your local copy with what is on the remote.
+
+    10. GIT push (push local changes elsewhere):
 
            git push origin <branch>
            git push origin master
@@ -703,7 +776,7 @@ X. Syncing repositories:
 
            git push <RemoteName> --tag
 
-    10. GIT push (to GITHUB):
+    11. GIT push (to GITHUB):
 
         Cloning from GITHUB sets the URL to origin as
 
@@ -729,6 +802,12 @@ X. Syncing repositories:
          I think the issue is the olde version of git CentOS 6.8 uses, 
          but it might also be related to firewall/proxy issues.
 
+         Interesting factoid: When I changed the name of the repo from
+                              scheller-linux-environment to scheller-linux-archive,
+                              above value for remote.origin.url still worked, but
+                              changing the repo name part of it to something random
+                              like, like scheller-linux-foofoo, failed. 
+  
 XI. Tagging:
 
      1. List available tags.

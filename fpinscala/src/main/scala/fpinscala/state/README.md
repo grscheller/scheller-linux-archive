@@ -20,12 +20,10 @@ very similar to the scalaz monad transformer.
 * Program to exercise package fpinscala.rngStandalone.
 
 ### Case class [fpinscala.state.State](State.scala)
-* Abstracting out the State Monad from
-  what was done in rngStandalone.scala.
+* Abstracting out the State Monad from what was done in rngStandalone.scala.
 
 ### Package [fpinscala.state.rand](rand/)
-* A reimplementation of package rngStandalone
-  using fpinscala.state.State. 
+* A reimplementation of package rngStandalone using fpinscala.state.State. 
 
 ### Program [candyMachine](candyMachine.scala)
 * Standalone application to model a candy dispensing machine. 

@@ -2,14 +2,14 @@
 
 Theses are the bash utilities I put into my Linux ~/bin directory.
 
-### path
+### [path](path)
 * Spreads $PATH out in a more user readable form.
 * Output more appropriate for use as input to other commands.
   ```
   path | grep home
   realPath $(path)
   ```
-### pathTrim
+### [pathTrim](pathTrim)
 * Used in my .bash_profile.  Useful when $HOME and/or<br>
   bash_profile are/is shared between several systems.
 * Trims off duplicate entries and non-existant director $PATH
@@ -18,7 +18,7 @@ Theses are the bash utilities I put into my Linux ~/bin directory.
 
   Example: PATH=$(~/bin/pathTrim $PATH)
   ```
-### realPath
+### [realPath](realPath)
 * Resolve symlinks and print out the real path for each<br>
   path given on the commandline.  Example:
   ```
@@ -28,10 +28,10 @@ Theses are the bash utilities I put into my Linux ~/bin directory.
   ```
   realPath $(whence java javac scala python cc gcc ghc)
   ```
-### rt
+### [rt](rt)
 * Launch rtorrent Bit-Torrent peer-to-peer ncurses based CLI program.
 
-### spin
+### [spin](spin)
 * Spin a curser around.
 * Handy to keep ssh connections alive
   ```
@@ -39,17 +39,17 @@ Theses are the bash utilities I put into my Linux ~/bin directory.
   ```
   Hit any key, except \<space\> or \<enter\>, to terminate.
 
-### viewJarManifest
+### [viewJarManifest](viewJarManifest)
 * View the manifest list of a *.jar file.
   ```
   Usage: viewJarManifest someJarFile.jar
   ```
-### whence
+### [whence](whence)
 * Drill down through $PATH to look for files or directories.
 * Like ksh builtin whence, except doesn't stop after finding first instance.
 * Handles spaces in file names and directories.
 * Shell patterns supported.
   ```
-  Usage: Whence file1 file2 ...
-         Whence 'pyth*' 'ghc*' 'filename with spaces'
+  Usage: whence file1 file2 ...
+         whence 'pyth*' 'ghc*' 'filename with spaces'
   ```

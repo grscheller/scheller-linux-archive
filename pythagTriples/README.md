@@ -1,9 +1,11 @@
-# A Pythagorean Triple generation program implemented in Haskell using the stack buildtool.
+# A Pythagorean Triple generation program
 
 A Pythagoean Triple is a tuple `(a, b, c)` such that `a^2 + b^2 = c^2`.
 
-This program generates all possible pythagorean triples such
-that `gcd(a, b, c) = 1` and `a, b, c > 0`.
+This program generates all possible pythagorean triples<br>
+such that `gcd(a, b, c) = 1` and `a, b, c > 0`.
+
+Implemented in Haskell using the stack buildtool.
 
 ## Usage:
 ```
@@ -24,20 +26,20 @@ pythagTriples [-o|-f|-fs|-h] number
 Both algorithms only print triples with no common factors, that is `gcd(a,b,c) = 1`.
 
 ## Some design considerations:
-1. These algorithms generate pathagorean triples with no common
-     factors.
+1. These algorithms generate pathagorean triples with no common factors.
    ```
-       a^2 + b^2 = c^2  where gcd(a, b, c) = 1 and 0 < a < b < c
+       a^2 + b^2 = c^2  where gcd(a, b, c) = 1
+                          and 0 < a < b < c
    ```
    you only need to check any two of `a, b, c` because you can factor<br>
-   the common factor to show the the square of the other (and hence<br>
-   the other itself) has the same common factor.
+   out the common factors of any two to show the the square of the other<br>
+   (and henced the other itself) has the same common factors.
 
    Geometrically this is the right choice since as right triangles
    ```
        (3, 4, 5)` and `(6, 8, 10)` and `(4, 3, 5)
    ```
-   are similar and hence the same except for scale or orientation.
+   are similar and thus the same except for scale or orientation.
 
 2. There is no such thing as a equilateral pyathogorean triangle.
    ```
@@ -60,7 +62,7 @@ Both algorithms only print triples with no common factors, that is `gcd(a,b,c) =
                   * * * * * * * * * * * * * 
                          vary b
    ```
-   As `b` gets bigger, eventially `c - b < 1` => no more triples.
+   Thus showing, `c - b < 1` => no more triples.
    ```
       a^2 + b^2 = c^2
       a^2 = c^2 - b^2 = (c-b)*(c+b) < c + b
@@ -70,14 +72,14 @@ Both algorithms only print triples with no common factors, that is `gcd(a,b,c) =
       a^2 - 2*b < 1
       b > (a^2 - 1)/2
    ```
-   Therefore, we only need to check values of b for
+   Therefore, we only need to check values of b for which
    ```
       a+1 <= b <= (a^2 - 1)/2
    ```
    From running code, we see that both <= cases happen.
 
-4. Running code it seems that the hypotence `c` is alwaya odd.<br>
-   To see that this is universally true:
+4. Running code seems to show that the hypotence `c` is alwaya odd.<br>
+   Let's show that this is universally true:
 
    We know not both `a` and `b` even, otherwise `a, b, c` not in<br>
    lowest terms.  If one even and the other odd, then `c` is odd.
@@ -107,7 +109,7 @@ Both algorithms only print triples with no common factors, that is `gcd(a,b,c) =
 
    I used this result for a faster algorithm and will use<br>
    test/Spec.hs to compare the results.  So far the fast<br>
-   algorithm seems complete, but it not clear yet how far<br>
+   algorithm seems complete, but it is not yet clear how far<br>
    you have to take it out to ensure you catch all triples<br>
    for a given a.  Also, if you sort the results of the fast<br>
    algorithm, is there a point that the cost of sorting is<br>

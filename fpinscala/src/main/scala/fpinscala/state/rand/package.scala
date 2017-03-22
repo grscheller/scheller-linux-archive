@@ -15,8 +15,6 @@ package fpinscala.state
  *        package.scala file for the scala package.
  */
 package object rand {
-
   type Rand[A] = fpinscala.state.State[RNG,A]
   val Rand = fpinscala.state.State
-
 }

@@ -3,10 +3,10 @@
 ## Used in lieu of browser bookmarks.
 
 * Personal home page for my bookmarks and password schemas.
-* I try and keep content (html) and style (css) as separate as possile.
+* Keep content (html) and style (css) as separate as possile.
 * Don't want to have to "sync" and passwords between various browsers/systems.
-* I just set my homepage in my browser to ~/info/Web/homepage.
-* I push these files to my various Linux and Windows systems I use,
+* Set homepage in browser to ~/info/Web/homepage.
+* I push these files to my various Linux and Windows systems I user.,
 * See [linuxHome](../../linuxHome/) project to see how I push to Linux systems.
 
 ## Files:
@@ -20,7 +20,7 @@
 ### [homepage.html](http://htmlpreview.github.com/?https://github.com/grscheller/scheller-linux-archive/blob/master/info/Web/homepage.html)
 * Above rendered as HTML.
 
-### style.css
+### [style.css](style.css)
 * All formating done here.
 * Optimize for my vision problems - dark background.
 

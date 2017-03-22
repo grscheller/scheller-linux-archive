@@ -25,23 +25,26 @@ systems share the same home directory via NFS.
 * I have scaled down the example .bashrc and .bash_profile
   files contained in this project somewhat.
 
-##The scripts:
+## User scripts:
 ### [pushHome](bin/pushHome)
 * Transfer linuxHome package to your various linux systems.
-
 * Run this on the system you maintain the projects git repo.
-
-* Changes to this script don't get picked up in
+* Changes to this script don't get picked up in<br>
   your ~/bin directory until the next time it is run.
 
 ### [installHome](bin/installHome)
-* Installs linuxHome package locally and then into your
+* Installs linuxHome package locally and then into your<br>
   home directory.
 
-* When you initially bootstrap this on a new system,
-  you may need to extract this script from what
+* When you initially bootstrap this on a new system,<br>
+  you may need to extract this script from what<br>
   pushHome deposits into the ~/catch directory.
 
-* Changes to this script don't get picked up in
+* Changes to this script don't get picked up in<br>
   your ~/bin directory until the next time it is run.
+
+## Internal scripts:
+### [install_linuxHome](install_linuxHome)
+* Installs linuxHome package locally and then into your<br>
+  home directory.
 

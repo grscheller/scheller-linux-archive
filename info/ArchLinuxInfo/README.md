@@ -1,4 +1,4 @@
-#Arch Linux specific information.
+# Arch Linux specific information.
 
 ### [xfce_configure.txt](xfce_configure.txt)
 * XFCE Desktop GUI environment configuration,

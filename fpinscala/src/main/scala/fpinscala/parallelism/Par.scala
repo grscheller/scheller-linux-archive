@@ -1,29 +1,14 @@
 package fpinscala.parallelism
 
-/** Par Case Class:
+/** Initial "representation" for Par object.
  *
+ *  Note: Methods commented out because only
+ *        classes can have undefined methods,
+ *        not singleton objects.
  */
-case class Par[A](a: A) {
-  // Nobody home???
-  //
-  // Signatures the book gave indicated that all
-  // the methods go into the companion object.
-  // Without that hint, I probably would have put
-  // map2 and run here.
-  //
-  // A quick peek at the book exercise template
-  // showed only a companion object.  In retrospect,
-  // having a Par case class makes no sense. What
-  // exactly sould pattern matching produce?  Par does
-  // not contain a value; it contains something far
-  // less substantial.
-  // 
-}
-
-/** Utility functions for State case class.  */
 object Par {
 
-  def unit[A](a: A): Par[A] = Par(a)
+//  def unit[A](a: A): Par[A]
 
 //  def map2[A,B,C](pa: Par[A], pb: Par[B])(f: (A,B) => C): Par[C]
 

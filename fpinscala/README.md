@@ -26,7 +26,7 @@ authors.
 ### [fpinscala.state](src/main/scala/fpinscala/state/)
 * Chapter 6: Purely functional state
 
-### fpinscala.parallelism
+### fpinscala.parallelism(src/main/scala/fpinscala/parallelism/)
 * Chapter 7: Purely functional parallelism
 
 ### fpinscala.testing

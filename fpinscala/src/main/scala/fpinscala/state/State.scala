@@ -1,7 +1,5 @@
 package fpinscala.state
 
-import State._
-
 /** State Case Class:
  *
  *  For dealing with stateful programs in

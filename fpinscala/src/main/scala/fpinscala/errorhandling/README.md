@@ -9,15 +9,13 @@ working through the exercises in  "Functional Programming in Scala"<br>
 by Paul Chiusana and Runar Bjarnason.
 
 ### Trait [fpinscala.errorhandling.Option](Option.scala)
-* A datatype containing a successful value or 
-  indicating a failure occured.
+* Datatype indicating a successful value or failure.
 
 ### Program [OptionTest](OptionTest.scala)
-* A program that parses to exercise fpinscala.errorhandling.Option.
+* Program that parses to exercise fpinscala.errorhandling.Option.
 
 ### Trait [fpinscala.errorhandling.Either](Either.scala)
-* A datatype containing either one or another
-  of two possible types of values.
+* Datatype containing a value of either one of two possible types.
 
 ### Program [EitherTest](EitherTest.scala)
 * A program that parses to exercise fpinscala.errorhandling.Either.

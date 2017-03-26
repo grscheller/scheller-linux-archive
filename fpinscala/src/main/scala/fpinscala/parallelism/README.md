@@ -10,6 +10,6 @@ Exploring how to do concurrent processing in a purely functional way.
 * Type alias to produce a future parallel computation.
 * Defined in the Par Standalone (Utility) Object.
 
-### Standalone Object [Par](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/parallelism/Par.scala#L6-L79)
+### Standalone Object [`Par`](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/parallelism/Par.scala#L6-L79)
 * Utility object for the Par type alias.
-* Provides a namespace for `Par[]` type alias and its related functions. 
+* Provides a namespace for `Par[A]` type alias and its related functions. 

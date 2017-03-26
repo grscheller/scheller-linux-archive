@@ -1,5 +1,3 @@
-# Functional Programming in Scala Book Exercises
-
 ## Functional data structures
 
 Chapter 3.

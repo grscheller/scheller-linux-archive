@@ -1,5 +1,3 @@
-# Functional Programming in Scala Book Exercises
-
 ## Handling errors without exceptions.
 
 Chapter 4.

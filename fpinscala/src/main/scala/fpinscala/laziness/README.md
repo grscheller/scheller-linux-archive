@@ -1,5 +1,3 @@
-# Functional Programming in Scala Book Exercises
-
 ## Strictness and laziness
 
 Chapter 5.

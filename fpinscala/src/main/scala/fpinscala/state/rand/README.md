@@ -1,9 +1,7 @@
-# Functional random number generator.
+## Functional random number generator
 
-## Package fpinscala.rand
-
-Implementing random number generation package rand
-using the fpinscala.state.State Monad.  Basically,
+Implementing random number generation package rand<br>
+using the fpinscala.state.State Monad.  Basically,<br>
 reimplementating what was done in fpinscala.rngStandalone.
 
 From chapter 6.

@@ -1,5 +1,3 @@
-# Functional Programming in Scala Book Exercises
-
 ## Functional design and combinator libraries
 
 Chapter 6.

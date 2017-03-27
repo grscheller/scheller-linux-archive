@@ -4,7 +4,7 @@ Chapter 2.
 
 Learning functional concepts like higher order functions, tail<br>
 recursion, polymorphic functions, scala singleton objects, currying<br>
-and uncurrying while working through the exercises in "Functionali<br>
+and uncurrying while working through the exercises in "Functional<br>
 Programming in Scala" by Paul Chiusana and Runar Bjarnason.
 
 ### Program [myModule](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/gettingstarted/myModules.scala#L12-L40)
@@ -26,7 +26,7 @@ concepts.  "Module" is not a scala term, it is my attempt to convey<br>
 using singleton objects as a namespaces.  I am not using Scala's<br>
 Object Oriented features in any way.
 
-The use of "chap02" in the qualified package names is being used to<br>
-group SBT 'run' and 'test:run' tasks together by chapter number.<br>
-Unlike Java, Scala does not require the directory structure to<br>
-mirror the package structure.
+The use of "chap02" in the qualified package names, for the programs<br>
+that either test or exercise the libraries, is to group SBT 'run' and<br>
+'test:run' tasks together by chapter number.  Unlike Java, Scala doesn't<br>
+require the directory structure to mirror the package structure.

@@ -29,5 +29,5 @@ ADT's.  Also, the important concept of referential transparency is<br>
 further explored.  Java exceptions are shown to not be referential<br>
 transparent.
 
-Methods are now being defined in the traits
-as opposed to in the companion objects.
+Methods are now being defined in the traits as opposed to<br>
+within the companion objects.

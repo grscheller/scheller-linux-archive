@@ -2,7 +2,6 @@ package fpinscala.parallelism
 
 import java.util.concurrent.{Future,ExecutorService}
 import java.util.concurrent.{Callable,TimeUnit}
-import scala.util.{Try, Success, Failure}
 
 /** Par object.
  *

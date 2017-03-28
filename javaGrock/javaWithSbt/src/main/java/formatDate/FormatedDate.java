@@ -1,3 +1,5 @@
+package formatDate;
+
 import java.util.Date;
 import java.util.Locale;
 import java.text.DateFormat;
@@ -14,7 +16,7 @@ class FormatedDate {
     Date now = new Date();
     DateFormat df =
         DateFormat.getDateInstance(DateFormat.LONG, Locale.FRANCE);
-    System.out.println(df.format(now));
+    System.out.println("\nToday in French: " + df.format(now) + "\n");
   }
 
 }

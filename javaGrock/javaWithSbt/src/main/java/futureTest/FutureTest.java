@@ -8,10 +8,13 @@ import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+
 /**
  * Java program to show how to use futures in Java.
  *
- * Code intially taken from this blog:
+ * Code initially taken from this blog:
  * http://javarevisited.blogspot.com/2015/01/how-to-use-future-and-futuretask-in-Java.html
  *
  */
@@ -24,11 +27,18 @@ public class FutureTest {
     long input = 20;
 
     FactorialCalculator task = new FactorialCalculator(input);
+
     System.out.println("Submitting Task ...");
-
     Future<Long> future = threadpool.submit(task);
-
     System.out.println("Task is submitted");
+
+    long factorialPre = -42;
+    try {
+        factorialPre = future.get(18L, TimeUnit.MILLISECONDS);
+    } catch (TimeoutException ex) {
+        System.out.println("Timed out!!!!  ");
+    }
+    System.out.println("Factorial of " + input + " is " + factorialPre);
 
     while (!future.isDone()) {
       System.out.println("Task is not completed yet....");

@@ -88,8 +88,8 @@ object Option {
    *  General purpose function that converts from exception
    *  based APIs to an Option oriented one.
    */
-  def Try[A](a: => A): Option[A] =      // Lazy evaluation so argument
-    try Some(a)                         // is evaluated in the try block.
+  def Try[A](a: => A): Option[A] =   // Lazy evaluation so argument
+    try Some(a)                      // is evaluated in the try block.
     catch { case e: Exception => None }
 
   // In real life I would probably just use the map directly.

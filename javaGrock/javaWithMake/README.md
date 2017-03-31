@@ -1,16 +1,12 @@
 # Java with Make.
-Wrote this while back when I was getting
-frustrated using Netbeans as my java IDE.
-Wanted to see if GNU Make was a viable build
-tool for java.  What here is just a rudimentary
-start.  I might come back some day to continue
-when I better understand the java ecosystem.
+Wrote this while back when I was getting frustrated using Netbeans<br>
+as my java IDE.  Wanted to see if GNU Make was a viable build tool<br>
+for java.  What here is just a rudimentary start.  I might come back<br>
+some day to continue when I better understand the java ecosystem.<br>
 
-I wish to get this to the point of providing
-a Make based build skeleton that could be
-compatible with an IDE.
+Someday this might get to the point of providing a Make based build<br> skeleton that could be compatible with an IDE.
 
-In the age of SBT, Make is probably dead.
+In the age of SBT, Make for Java is probably dead.
 
 ## To build:
 ```

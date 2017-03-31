@@ -1,11 +1,12 @@
 /*
  * The purpose of this program is to try to get lambdas to
- * work by using an object designed to be a bit more functional.
+ * work by using an object which is designed to be a bit
+ * more functional.
  *
  * Program to determine if input arguments,
- * parsed as unsigned longs. are prime.
+ * parsed as unsigned longs, are prime.
  *
- * Note: Java does not seem to handle unsigned types.
+ * Note: Java does not seem to implement unsigned types.
  *
  * @author Geoffrey Scheller
  */

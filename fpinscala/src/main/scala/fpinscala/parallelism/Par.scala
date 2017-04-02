@@ -1,9 +1,9 @@
 package fpinscala.parallelism
 
 import java.util.concurrent.{Future,ExecutorService}
-import java.util.concurrent.{Callable,TimeUnit}
+import java.util.concurrent.{Callable,TimeUnit,CancellationException}
+import java.time.Instant
 import java.time.Duration
-import java.time.Instant.now
 //import scala.util.{Try, Success, Failure}
 
 /** Par object.
@@ -24,11 +24,11 @@ object Par {
 
     def get(timeout: Long, units: TimeUnit): A = get
 
-    def isDone = true
+    def isDone: Boolean = true
 
-    def isCancelled = false
+    def isCancelled: Boolean = false
 
-    def cancel(evenIfRunning: Boolean): Boolean = true
+    def cancel(evenIfRunning: Boolean): Boolean = false
 
   }
 
@@ -36,15 +36,15 @@ object Par {
    *
    *  Does not actually use the underlying java or OS
    *  multi-threading mechanisms.  The Par it returns
-   *  is a constant function and does not depend on
-   *  whatever (es: ExecutorService) is passed to it.  
+   *  is a constant function not depending on the
+   *  (es: ExecutorService) passed to it.  
    *
    */
   def unit[A](a: A): Par[A] = (es: ExecutorService) => UnitFuture(a)
 
   /** Lazy version of unit
    *
-   *  Evaluates its argument in a separate thread
+   *  Evaluates its argument in a separate thread,
    *  only if required.
    *
    */
@@ -101,7 +101,7 @@ object Par {
    *  What I can do directly here to respect the "time out" 
    *  contract for get method of Future is limited
    *  since the Par API has no apriori mechanisms 
-   *  for adding timeouts to the parallel calculation.
+   *  for adjusting timeouts to the parallel calculation.
    *
    *  Looking at the book's answer key solution, the 
    *  trick is to wrap the futures I am passed into
@@ -117,20 +117,90 @@ object Par {
       Map2Future(af, bf, f)
     }
 
-  /** Par.map2 helper class.
+  /** Map2Future helper class for Par.map2 method.
    *
    *  Wrap the two futures into another future so
    *  that f can be evaluated after get is called.
    *
+   *  Design Choices:
+   *  1. Final value cached, implementation prevents repeated
+   *     re-evaluations.
+   *  2. Use case f pure. If f has side effects, they will only
+   *     happen the first time a get method on the future is called. 
+   *  3. Likewise, any side effects of futures af and bf are 
+   *     similarly surpressed.
+   *  4. If f is a long running function, the time out contract
+   *     can still be violated.
+   *  5. Ability to "uncancel" itself in the event an actual value
+   *     is eventually computed.  This could conceivably happen if
+   *     f is long running and/or lazy in one of its arguments.
+   *  6. @throws annontations for Java capatibility.
+   *  7. Trying to make this future usable to Java clients, or
+   *     more iperitive Scala code, makes its implementation more
+   *     problematic.
+   *     
    */
   private final
-  //case class Map2Future[A,B,C](af: Future[A],
-  //                             bf: Future[B],
-  //                              f: (A,B) => C) extends Future[C] {
-  def Map2Future[A,B,C](af: Future[A],
-                        bf: Future[B],
-                         f: (A,B) => C):  Future[C] = {
+  case class Map2Future[A,B,C](af: Future[A],
+                               bf: Future[B],
+                                f: (A,B) => C
+                              ) extends Future[C] {
 
-    UnitFuture(f(af.get, bf.get))    // Stub implemetation.
+    // Internal state -
+    private var done: Boolean = false
+    private var cancelled: Boolean = false
+    private var value: Option[C] = None
+
+    @throws(classOf[CancellationException])
+    def get(): C =
+      if (cancelled)
+        throw new CancellationException()
+      else
+        value getOrElse {
+          value = Some(f(af.get, bf.get))
+          done = true
+          value.get
+        }
+
+    @throws(classOf[CancellationException])
+    def get(timeout: Long, units: TimeUnit): C =
+      if (cancelled)
+        throw new CancellationException()
+      else
+        value getOrElse {
+          val timeoutNS = TimeUnit.NANOSECONDS.convert(timeout, units)
+          val t0 = System.nanoTime
+          val av = af.get(timeoutNS, TimeUnit.NANOSECONDS)
+          val t1 = System.nanoTime
+          val newTimeOut1 = timeoutNS - (t1 - t0)
+          val bv = bf.get(timeoutNS - (t1 - t0), TimeUnit.NANOSECONDS)
+          value = Some(f(av, bv))
+          done = true
+          value.get
+        }
+
+    def isDone = done
+
+    def isCancelled = cancelled
+
+    def cancel(evenIfRunning: Boolean): Boolean = {
+      if (done) {
+        cancelled = false  // Fix the unlikely race condition
+        cancelled          // if we actually got a result?
+      } else if (cancelled) {
+        cancelled
+      } else {
+        // Not sure about cancelling these underlying futures.
+        // In functional code that gets handed a passed down
+        // es, yes, for efficiency reasons.
+        // In imperitive code, other enities, unrelated to
+        // this particular future, could still use them.
+        val af_cancelled = af.cancel(evenIfRunning)
+        val bf_cancelled = bf.cancel(evenIfRunning)
+        cancelled = af_cancelled || bf_cancelled
+        cancelled
+      }
+    }
+
   }
 }

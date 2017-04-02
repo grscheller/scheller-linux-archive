@@ -2394,3 +2394,24 @@ Purpose: To indicate what was done to create gauss17 and
      # pacman -Su
      $ sudo pacman -Syu
 
+04-02-2017:
+  Today, after "sudo pacman -Syu", I had
+
+    $ ls /etc | grep pacnew
+    group.pacnew
+    gshadow.pacnew
+    passwd.pacnew
+    shadow.pacnew
+
+  My heart skipped...
+
+  I checked my e-mail for announcements and the Arch-Linux Wiki,
+  (actually I did a DuckDuckGo search on "arch linux shadow.pacnew")
+  and found that the only changes, as shown in git, are the removal
+  of hard-coded uuidd and dbus users, which would get added back
+  by the dbus and libutil-linux packages.  
+
+  The initial response from the wiki was "Standard answer: Ignore
+  group/passwd pacnew files."
+
+  Going forward, I will defer to the gods.

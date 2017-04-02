@@ -27,40 +27,43 @@ text files with information on a variety of topics.
 ## Software projects:
 
 ### 1. [bash-utils](bash-utils/)
-* Simple, but utilitarian, bash scripts illustrating bash scripting techniques.
+* Simple, but utilitarian, bash scripts illustrating<br>
+  bash scripting techniques.
 * I put these in my ~/bin directory.
 
 ### 2. [fpinscala](fpinscala/)
-* Scala project where I work through the exercises
-  in the book "Functional Programming in Scala"
-  by Paul Chiusana and Runar Bjarnason.
-* The book is more about learning Functional Programming than
-  the Scala language per say.
-* This project trys to do both.
+* Scala project where I work through the exercises in the book<br>
+  "Functional Programming in Scala" by Paul Chiusana and Runar
+  Bjarnason.
+* The book is more about learning Functional Programming than the<br>
+  Scala language per say.
+* In this project I try to do both.
 
 ### 3. [grockScala](grockScala/)
-* Document factoids about the Scala language, so that
+* Document factoids about the Scala language, so that<br>
   I don't have to rediscover most of what I forget.
 
-### 4. [pythagTriples](pythagTriples/)
+### 4. [javaGrock](javaGrock/)
+* An attempt to learn Java coming at it from a Python and Scala
+  perspective.
+* Not exactly sure the direction this project will take.
+* May split out into different projects.
+
+### 5. [linuxHome](linuxHome/)
+* Based on the infrastructure I use at work to keep my Linux<br>
+  environment synced across the half dozen workstations and super<br>
+  computers which I use.
+
+### 6. [pythagTriples](pythagTriples/)
 * Haskell project that generates Pythagorean triples.
 * Mathematical factoids about Pythagorean triples.
 * Also an exercise for me to learn Haskell stack.
 
-### 5. [matlab](matlab/)
-* MATLAB and MuPad projects.
-
-### 6. [pureMath](pureMath/)
-* A mathematics library centered around integer arithmetic written in Python.
+### 7. [pureMath](pureMath/)
+* A mathematics library centered around integer arithmetic.
 * An old project of mine back when I first learned Python.
 
-### 7. [linuxHome](linuxHome/)
-* Based on the infrastructure I use at work to
-  keep my Linux environment synced across the
-  half dozen workstations which I use.
-
-### 8. [javaGrock](javaGrock/)
-* An attempt to learn Java coming at it from a Python and Scala
-  perspective.
+### 8. [matlab](matlab/)
+* MATLAB and MuPad projects.
 
 -Geoffrey Scheller

@@ -4,7 +4,6 @@ import java.util.concurrent.{Future,ExecutorService}
 import java.util.concurrent.{Callable,TimeUnit,CancellationException}
 import java.time.Instant
 import java.time.Duration
-//import scala.util.{Try, Success, Failure}
 
 /** Par object.
  *

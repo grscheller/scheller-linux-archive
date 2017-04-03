@@ -1,7 +1,7 @@
 # scheller-linux-archive
 
 Contains notes on topics regarding Linux utilities, environment<br>
-configuration, system administration, Also included are software<br>
+configuration, system administration.  Also included are software<br>
 projects that have been useful to me learning software development<br>
 topics.
 
@@ -16,13 +16,12 @@ This directory is a fairly free form collection of<br>
 text files with information on a variety of topics.
 
 1. Arch Linux System Admin Notes
-2. CentOS6 for the unempowered (no root)
+2. CentOS6 without root privs
 3. GIT notes
-4. Bash environment configuration
-5. SSH configuration
-6. Vim notes
+4. Vim notes
+5. Bash environment configuration
+6. SSH configuration
 7. Private HTML Homepage 
-8. Bash scripting
 
 ## Software projects:
 
@@ -51,13 +50,12 @@ text files with information on a variety of topics.
 
 ### 5. [linuxHome](linuxHome/)
 * Based on the infrastructure I use at work to keep my Linux<br>
-  environment synced across the half dozen workstations and super<br>
-  computers which I use.
+  environment synced across the workstations and supercomputers I use.
 
 ### 6. [pythagTriples](pythagTriples/)
 * Haskell project that generates Pythagorean triples.
 * Mathematical factoids about Pythagorean triples.
-* Also an exercise for me to learn Haskell stack.
+* Also used to help me learn Haskell stack.
 
 ### 7. [pureMath](pureMath/)
 * A mathematics library centered around integer arithmetic.

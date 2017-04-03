@@ -3,24 +3,24 @@
 In glorious text format, for easy grepping.
 
 ### [ArchLinuxAdminLogs](ArchLinuxAdminLogs/) directory
-* Contains date ordered admin logs documenting the
-  steps I took to create and administer Arch Linux.
+* Contains date ordered admin logs documenting the steps I took to<br>
+  create and administer Arch Linux.
 
 ### [ArchLinuxInfo](ArchLinuxInfo/) directory
 * Contains Arch Linux specific information.
 
 ### [BashEnvConf](BashEnvConf/) directory
 * Contains example .bash* and other configuration files.
-* For these to fully work, the Bash scripts in the
-  [bash-utils](../bash-utils/) project need to be
+* For these to fully work, the Bash scripts in the<br>
+  [bash-utils](../bash-utils/) project need to be<br>
   put into your ~/bin directory.
 
 ### [BashInfo.txt](BashInfo.txt)
 * My personal Bash notes/cheatsheet.
 
 ### [CentOS6Info](CentOS6Info)
-* End user software development topics,
-  oriented to those without root privs.
+* End user software development topics, oriented to those without<br>
+  root privileges.
 
 ### [GITnotes.txt](GITnotes)
 * Pretty much everything I know about GIT.

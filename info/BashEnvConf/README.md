@@ -1,9 +1,9 @@
 # Bash Environment Configuration
 
 * This directory contains example .bash* and other configuration files.
-* For these to fully work, the Bash scripts in the
-  [bash-utils](../../bash-utils) directory need to be put into your
-  ~/bin directory.
+* For these to fully work, the Bash scripts in the<br>
+  [bash-utils](../../bash-utils) directory need to<br>
+  be put into your ~/bin directory.
 
 ## Background:
 ### CentOS6 Versions:
@@ -21,6 +21,6 @@ GIT repos and when disk drive space was expensive.  Developers would<br>
 share the same set of CVS or SCCS source code control files.
 
 ### Arch Linux Versions:
-For [ARCH Linux](https://www.archlinux.org/), I have no need to "override"<br>
-what ARCH gives me in the official repos.
+For [ARCH Linux](https://www.archlinux.org/), I have no need to<br>
+"override" what ARCH gives me in the official repos.
 

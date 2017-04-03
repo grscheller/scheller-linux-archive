@@ -2,7 +2,7 @@
 
 Theses are the bash utilities I put into my Linux ~/bin directory.
 
-### [path](path)
+### [Path](Path)
 * Spreads $PATH out in a more user readable form.
 * Output more appropriate for use as input to other commands.
   ```
@@ -46,7 +46,8 @@ Theses are the bash utilities I put into my Linux ~/bin directory.
   ```
 ### [whence](whence)
 * Drill down through $PATH to look for files or directories.
-* Like ksh builtin whence, except doesn't stop after finding first instance.
+* Like ksh builtin whence, except doesn't stop after finding
+  first instance.
 * Handles spaces in file names and directories.
 * Shell patterns supported.
   ```

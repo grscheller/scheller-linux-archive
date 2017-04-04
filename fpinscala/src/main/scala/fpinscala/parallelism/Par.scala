@@ -2,8 +2,6 @@ package fpinscala.parallelism
 
 import java.util.concurrent.{Future,ExecutorService}
 import java.util.concurrent.{Callable,TimeUnit,CancellationException}
-import java.time.Instant
-import java.time.Duration
 
 /** Par object.
  *

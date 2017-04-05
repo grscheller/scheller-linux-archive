@@ -1,7 +1,11 @@
 package fpinscala.parallelism
 
-import java.util.concurrent.{Future,ExecutorService}
-import java.util.concurrent.{Callable,TimeUnit,CancellationException}
+import java.util.concurrent.Future
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.TimeUnit
+import java.util.concurrent.CancellationException
+import java.util.concurrent.ExecutionException
+import java.util.concurrent.TimeoutException
 
 /** Par object.
  *
@@ -104,7 +108,6 @@ object Par {
    *  trick is to wrap the futures I am passed into
    *  another future object.
    *
-   *  Here is my starting point.
    */
   def map2[A,B,C](a: Par[A], b: Par[B])(f: (A,B) => C): Par[C] =
     (es: ExecutorService) => {
@@ -122,19 +125,16 @@ object Par {
    *  Design Choices:
    *  1. Final value cached, implementation prevents repeated
    *     re-evaluations.
-   *  2. Use case f pure. If f has side effects, they will only
-   *     happen the first time a get method on the future is called. 
-   *  3. Likewise, any side effects of futures af and bf are 
-   *     similarly surpressed.
-   *  4. If f is a long running function, the time out contract
+   *  2. If f is a long running function, the time out contract
    *     can still be violated.
-   *  5. Ability to "uncancel" itself in the event an actual value
-   *     is eventually computed.  This could conceivably happen if
-   *     f is long running and/or lazy in one of its arguments.
-   *  6. @throws annontations for Java capatibility.
-   *  7. Trying to make this future usable to Java clients, or
-   *     more iperitive Scala code, makes its implementation more
-   *     problematic.
+   *  3. @throws annontations are for Java capatibility.
+   *  4. Follows Java Future API.  Book's version violates
+   *     both isDone and cancel contracts.
+   *  5. Suffers same defect as does book's version -
+   *     The future doesn't start computing its value until a
+   *     blocking get method is called.  The common Java
+   *     use case using an event loop to check the future's 
+   *     isDone method won't work.
    *     
    */
   private final
@@ -143,61 +143,100 @@ object Par {
                                 f: (A,B) => C
                               ) extends Future[C] {
 
-    // Internal state -
+    // Internal state:
+    @volatile private var cancelled: Boolean = false
     private var done: Boolean = false
-    private var cancelled: Boolean = false
     private var value: Option[C] = None
 
+    // Perform the calculation
+    private 
+    def calculate(): Unit = {
+      value = Some(f(af.get, bf.get))
+      done = true
+    }
+
+    // Perform the calculation with timeouts
+    private 
+    def calculate(timeout: Long, units: TimeUnit): Unit = {
+      val timeoutNS = TimeUnit.NANOSECONDS.convert(timeout, units)
+      val t0 = System.nanoTime
+      val av = af.get(timeoutNS, TimeUnit.NANOSECONDS)
+      val t1 = System.nanoTime
+      val newTimeOut1 = timeoutNS - (t1 - t0)
+      val bv = bf.get(timeoutNS - (t1 - t0), TimeUnit.NANOSECONDS)
+      value = Some(f(av, bv))
+      done = true
+    }
+
     @throws(classOf[CancellationException])
+    @throws(classOf[ExecutionException])
+    @throws(classOf[InterruptedException])
     def get(): C =
       if (cancelled)
         throw new CancellationException()
       else
         value getOrElse {
-          value = Some(f(af.get, bf.get))
-          done = true
-          value.get
+          calculate()
+          if (cancelled)
+            throw new CancellationException()
+          else
+            value.get
         }
 
     @throws(classOf[CancellationException])
+    @throws(classOf[ExecutionException])
+    @throws(classOf[InterruptedException])
+    @throws(classOf[TimeoutException])
     def get(timeout: Long, units: TimeUnit): C =
       if (cancelled)
         throw new CancellationException()
       else
         value getOrElse {
-          val timeoutNS = TimeUnit.NANOSECONDS.convert(timeout, units)
-          val t0 = System.nanoTime
-          val av = af.get(timeoutNS, TimeUnit.NANOSECONDS)
-          val t1 = System.nanoTime
-          val newTimeOut1 = timeoutNS - (t1 - t0)
-          val bv = bf.get(timeoutNS - (t1 - t0), TimeUnit.NANOSECONDS)
-          value = Some(f(av, bv))
-          done = true
-          value.get
+          calculate(timeout, units)
+          if (cancelled)
+            throw new CancellationException()
+          else
+            value.get
         }
 
+    /** Returns true if completed or has been cancelled. */
     def isDone = done
 
+    /** Test if future cancelled.
+      *
+      *  Returns true if future successfully
+      *  cancelled before completion.
+      *
+      */
     def isCancelled = cancelled
 
-    def cancel(evenIfRunning: Boolean): Boolean = {
+    /** Cancel the future.
+     *
+     *  The return value means the command was
+     *  successful, not the isCancelled state.
+     *
+     *  Note: Futures af and bf are not visible to code outside
+     *        the context of the Par in which they are defined.
+     *
+     *  Note: From the Java API
+     *     1. Can't cancel if done.
+     *     2. Return false if already cancelled.
+     *     3. If future is cancelled, its isDone
+     *        method returns true.
+     */
+    def cancel(evenIfRunning: Boolean): Boolean =
       if (done) {
-        cancelled = false  // Fix the unlikely race condition
-        cancelled          // if we actually got a result?
+          false
       } else if (cancelled) {
-        cancelled
+          false
       } else {
-        // Not sure about cancelling these underlying futures.
-        // In functional code that gets handed a passed down
-        // es, yes, for efficiency reasons.
-        // In imperitive code, other enities, unrelated to
-        // this particular future, could still use them.
-        val af_cancelled = af.cancel(evenIfRunning)
-        val bf_cancelled = bf.cancel(evenIfRunning)
-        cancelled = af_cancelled || bf_cancelled
-        cancelled
+          val af_cancelled = af.cancel(evenIfRunning)
+          val bf_cancelled = bf.cancel(evenIfRunning)
+          cancelled = af_cancelled || bf_cancelled
+          if (cancelled) {
+            done = true
+            true
+          } else false
       }
-    }
-
   }
 }

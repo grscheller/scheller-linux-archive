@@ -120,7 +120,7 @@ object ParTest {
 
     // Test Map2Future isDone, isCancelled, and cancel methods.
     val fibParameter2 = 45L
-    println("\nTest isDone Future method es gives us:")
+    println("\nTest isDone method of future given by the es:")
     val longRunner1 = Par.lazyUnit(fibPoor(fibParameter2))
     val longRunner1Fut = Par.run(es)(longRunner1)
 

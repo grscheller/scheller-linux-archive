@@ -113,7 +113,6 @@ object Par {
     (es: ExecutorService) => {
       val af = a(es)
       val bf = b(es)
-
       Map2Future(af, bf, f)
     }
 
@@ -127,14 +126,15 @@ object Par {
    *     re-evaluations.
    *  2. If f is a long running function, the time out contract
    *     can still be violated.
-   *  3. @throws annontations are for Java capatibility.
-   *  4. Follows Java Future API.  Book's version violates
-   *     both isDone and cancel contracts.
-   *  5. Suffers same defect as does book's version -
-   *     The future doesn't start computing its value until a
-   *     blocking get method is called.  The common Java
-   *     use case using an event loop to check the future's 
-   *     isDone method won't work.
+   *  3. The future doesn't start computing its value until either:
+   *     - A blocking get method is called.
+   *     - The isDone method is involked.
+   *     The later case is to enable the common Java use case
+   *     of using an event loop to periodically check the
+   *     future's isDone method.
+   *  4. Follows Java Future API more closely than book answerkey version.
+   *     Book's version violates both isDone and cancel contracts.
+   *  5. @throws annontations are for Java capatibility.
    *     
    */
   private final
@@ -144,27 +144,30 @@ object Par {
                               ) extends Future[C] {
 
     // Internal state:
-    @volatile private var cancelled: Boolean = false
+    private var hasStarted: Boolean = false
+    private var cancelled: Boolean = false
     private var done: Boolean = false
-    private var value: Option[C] = None
+    @volatile private var value: Option[C] = None
 
     // Perform the calculation
     private 
     def calculate(): Unit = {
-      value = Some(f(af.get, bf.get))
+      hasStarted = true
+      val finalValue = f(af.get, bf.get)
+      value = Some(finalValue)
       done = true
     }
 
     // Perform the calculation with timeouts
     private 
     def calculate(timeout: Long, units: TimeUnit): Unit = {
+      hasStarted = true
       val timeoutNS = TimeUnit.NANOSECONDS.convert(timeout, units)
       val t0 = System.nanoTime
       val av = af.get(timeoutNS, TimeUnit.NANOSECONDS)
       val t1 = System.nanoTime
-      val newTimeOut1 = timeoutNS - (t1 - t0)
-      val bv = bf.get(timeoutNS - (t1 - t0), TimeUnit.NANOSECONDS)
-      value = Some(f(av, bv))
+      val finalValue = f(av, bf.get(timeoutNS - (t1 - t0), TimeUnit.NANOSECONDS))
+      value = Some(finalValue)
       done = true
     }
 
@@ -199,8 +202,18 @@ object Par {
             value.get
         }
 
-    /** Returns true if completed or has been cancelled. */
-    def isDone = done
+    /** Returns true if completed or has been cancelled.
+     *
+     *    To facilitate the use case of testing the future's 
+     *    isDone method in an event loop, kickoff a calculation
+     *    if the isDone method called before one of the get
+     *    methods are called.
+     *
+     */
+    def isDone = {
+      if ( ! hasStarted && ! isCancelled ) new Thread(() => calculate()).start()
+      done
+    }
 
     /** Test if future cancelled.
       *

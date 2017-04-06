@@ -24,15 +24,15 @@ object ParTest {
 
     // Done before exercise 7.3
 
-    val a100 = Par.unit[Int](100)
-    val b500 = Par.unit(500: Int)
-    val  c50 = Par.unit(50)
+    val a100 = unit[Int](100)
+    val b500 = unit(500: Int)
+    val  c50 = unit(50)
 
-    val ab = Par.map2(a100, b500)(_ + _)
-    val abc = Par.fork((Par.map2(ab, c50)(_ - _)))
+    val ab = map2(a100, b500)(_ + _)
+    val abc = fork((map2(ab, c50)(_ - _)))
 
     val es = Executors.newFixedThreadPool(6)
-    val abcFuture = Par.run(es)(abc)
+    val abcFuture = run(es)(abc)
 
     println("\n(100 + 500) - 50 = " + abcFuture.get)
 
@@ -43,15 +43,15 @@ object ParTest {
     val fibParameter1 = 43L
 
     println("\nCreate Par via unit.")
-    val fibu = Par.unit(fibPoor(fibParameter1))
+    val fibu = unit(fibPoor(fibParameter1))
     println("Par created.")
 
     println("\nCreate Par via lazyUnit.")
-    val fiblu = Par.lazyUnit(fibPoor(fibParameter1))
+    val fiblu = lazyUnit(fibPoor(fibParameter1))
     println("Par created.")
 
     println("\nCreate Future from unit.")
-    val fibuFuture = Par.run(es)(fibu)
+    val fibuFuture = run(es)(fibu)
     println("Future created.")
 
     println("\nGet value of Future from unit value.")
@@ -59,7 +59,7 @@ object ParTest {
     println("fibPoor(" + fibParameter1 + ") = " + fibuValue)
 
     println("\nRun Future from lazyUnit.")
-    val fibluFuture = Par.run(es)(fiblu)
+    val fibluFuture = run(es)(fiblu)
     println("Future created.")
 
     println("\nGet value of Future from lazyUnit value.")
@@ -68,85 +68,109 @@ object ParTest {
 
     // Calculate in parallel
     println("\nRecalculate with some parallelism.")
-    val fibMinus4 = Par.lazyUnit(fibPoor(fibParameter1 - 4))
-    val fibMinus3 = Par.lazyUnit(fibPoor(fibParameter1 - 3))
-    val fibMinus2 = Par.map2(fibMinus4, fibMinus3)(_ + _)
-    val fibMinus1 = Par.map2(fibMinus3, fibMinus2)(_ + _)
-    val fibMinus0 = Par.map2(fibMinus2, fibMinus1)(_ + _)
+    val fibMinus4 = lazyUnit(fibPoor(fibParameter1 - 4))
+    val fibMinus3 = lazyUnit(fibPoor(fibParameter1 - 3))
+    val fibMinus2 = map2(fibMinus4, fibMinus3)(_ + _)
+    val fibMinus1 = map2(fibMinus3, fibMinus2)(_ + _)
+    val fibMinus0 = map2(fibMinus2, fibMinus1)(_ + _)
     print("The " + fibParameter1 + " Fibonacci number: ")
-    println(Par.run(es)(fibMinus0).get)
+    println(run(es)(fibMinus0).get)
 
     // Test order of execution.
     println("\nTest order of execution:")
 
-    val par1: Par[Int] = Par.lazyUnit {
+    val par1: Par[Int] = lazyUnit {
       print("<step1>")
       100
     }
-    val par2: Par[Int] = Par.unit {
+    val par2: Par[Int] = unit {
       print("<step2>")
       140
     }
-    val par3: Par[Int] = Par.lazyUnit {
+    val par3: Par[Int] = lazyUnit {
       print("<step3>")
       2
     }
-    val par4 = Par.map2(par2, par1)((x,y) => {
+    val par4 = map2(par2, par1)((x,y) => {
       print("<step4>")
       x - y
     })
-    val par5 = Par.map2(par4, par3)((x,y) => {
+    val par5 = map2(par4, par3)((x,y) => {
       print("<step5>")
       x + y
     })
-    val par6 = Par.map2(par4, par2)((x,y) => {
+    val par6 = map2(par4, par2)((x,y) => {
       print("<step6>")
       x * y
     })
     print("<run>")
-    println(Par.run(es)(par5).get)
-    println(Par.run(es)(par5).get)
-    println(Par.run(es)(par4).get)
-    println(Par.run(es)(par6).get)
-    val fut5 = Par.run(es)(par5)
+    println(run(es)(par5).get)
+    println(run(es)(par5).get)
+    println(run(es)(par4).get)
+    println(run(es)(par6).get)
+    val fut5 = run(es)(par5)
     println(fut5.get)
     println(fut5.get)
-    val fut1 = Par.run(es)(par1)
+    val fut1 = run(es)(par1)
     println(fut1.get)
     println(fut1.get)
-    val fut2 = Par.run(es)(par2)
+    val fut2 = run(es)(par2)
     println(fut2.get)
     println(fut2.get)
 
-    // Test Map2Future isDone, isCancelled, and cancel methods.
+    // Test isDone method for future provided by the es.
     val fibParameter2 = 45L
-    println("\nTest isDone method of future given by the es:")
-    val longRunner1 = Par.lazyUnit(fibPoor(fibParameter2))
-    val longRunner1Fut = Par.run(es)(longRunner1)
 
-    while (!longRunner1Fut.isDone) {
+    println("\nTest isDone method of future given to us by the es:")
+    val longRunner1 = lazyUnit(fibPoor(fibParameter2))
+    val longRunner1_Fut = run(es)(longRunner1)
+
+    while (!longRunner1_Fut.isDone) {
       println("Task not done.")
       Thread.sleep(1000)
     }
     print("The " + fibParameter2 + " Fibonacci number: ")
-    println(longRunner1Fut.get)
+    println(longRunner1_Fut.get)
 
     println("\nTest isDone Future method for Map2Future:")
-    val notUsed = Par.unit(42L)
-    val longRunner2 = Par.map2(longRunner1, notUsed)((x, y) => x)
-    val longRunner2Fut = Par.run(es)(longRunner1)
+    val ultimateAns = unit(42L)
+    val longRunner2 = map2(longRunner1, ultimateAns)((x, y) => x)
+    val longRunner2_Fut = run(es)(longRunner2)
 
-    /* Need to fix Map2Future !!!
-     *   It does not start calculation until the 
-     *   get method is called.  It should start 
-     *   the calculation when run method called.
-     */
-//      while (!longRunner2Fut.isDone) {
-//        println("Task not done.")
-//        Thread.sleep(1000)
-//    }
+    while (!longRunner2_Fut.isDone) {
+      println("Task not done.")
+      Thread.sleep(1000)
+    }
     print("The " + fibParameter2 + " Fibonacci number: ")
-    println(longRunner2Fut.get)
+    println(longRunner2_Fut.get)
+    print("The " + fibParameter2 + " Fibonacci number: ")
+    println(longRunner2_Fut.get)
+
+    val longRunner3 = map2(ultimateAns, longRunner1)((x, _) => x)
+    val longRunner3_Fut = run(es)(longRunner3)
+
+    print("The ultimate answer to life, the universe, and everything is ")
+    print(longRunner3_Fut.get)
+    println(".")
+
+    // Test isCancelled, and cancel methods.
+    println("\nTry cancelling isDone futures:")
+    val futureDoneES = longRunner1_Fut
+    val futureDoneMap2 = longRunner2_Fut
+
+    println("futureDoneES.isDone: " + futureDoneES.isDone)
+    println("futureDoneES.isCancelled: " + futureDoneES.isCancelled)
+    println("futureDoneES.cancel(false): " + futureDoneES.cancel(false))
+    println("futureDoneES.isCancelled: " + futureDoneES.isCancelled)
+    println("futureDoneES.cancel(true): " + futureDoneES.cancel(true))
+    println("futureDoneES.isCancelled: " + futureDoneES.isCancelled)
+    println()
+    println("futureDoneMap2.isDone: " + futureDoneMap2.isDone)
+    println("futureDoneMap2.isCancelled: " + futureDoneMap2.isCancelled)
+    println("futureDoneMap2.cancel(false): " + futureDoneMap2.cancel(false))
+    println("futureDoneMap2.isCancelled: " + futureDoneMap2.isCancelled)
+    println("futureDoneMap2.cancel(true): " + futureDoneMap2.cancel(true))
+    println("futureDoneMap2.isCancelled: " + futureDoneMap2.isCancelled)
 
     es.shutdown
 

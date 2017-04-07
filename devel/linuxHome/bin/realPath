@@ -1,0 +1,73 @@
+#!/bin/bash
+#
+# Resolve symlinks and print out the real path for each
+# path given on the commandline.
+#
+# Usage: realPath /path/to/first/item another/path/to/second/item
+#
+# Works well with whence -
+#
+#     realPath $(whence java javac scala python cc gcc ghc)
+#
+# Written by Geoffrey Scheller
+#
+
+#
+# Takes a path to the ultimate target and
+# recursively resolves all the symlinks.
+#
+#   Called only in the context of the target
+#   known to exist but known not to be a directory.
+#
+function rabbitHole() {
+  Path="$1"
+  if [[ -L $Path ]]
+  then
+      # Basename a symlink
+      symBase="$(basename "$Path")"
+      symDir="$(dirname "$Path")"
+      (
+        cd "$symDir"
+        longLS="$(ls -l $symBase)"
+        target="${longLS#*-> }"
+        rabbitHole "$target"
+      )
+  else
+      # Basename not a symlink - end recursion
+      dirName="$(dirname "$Path")"
+      echo -n $( (cd "$dirName"; pwd -P) )
+      echo /$(basename "$Path")
+  fi
+}
+
+for currentPath in "$@"
+do
+  if [[ -e ${currentPath} ]]
+  then
+      # The eventual target exists.
+      if [[ -d ${currentPath} ]]
+      then
+          # A directory or a chain of symlinks to a directory.
+          (
+             cd "${currentPath}"
+             pwd -P
+          )
+      else
+          # Eventually, currentPath gets us to something other
+          # than a directory - we need to chase things down a
+          # recursive rabbit hole.
+          rabbitHole "${currentPath}"
+      fi
+  else
+      # Nothing at the end of the rabbit hole, or circular links,
+      # or insufficient permissions along path..
+      if [[ -L ${currentPath} ]]
+      then
+          # Broken symlink
+          echo ">>>ENCOUNTERED BROKEN SYMLINKS FOR: ${currentPath}" >&2
+      else
+          # Target does not exist
+          echo ">>>DOES NOT EXIST OR INSUFFICIENT PERMISSIONS: ${currentPath}" >&2
+      fi
+  fi
+done

@@ -1,0 +1,15 @@
+#!/bin/bash
+#
+# Launch rtorrent Bit-Torrent peer-to-peer
+# ncurses based CLI program.
+#
+#   So that the "terminal line discipline" does not
+#   highjack ^S and ^Q, need to do some stty magic.
+#
+# Written by Geoffrey Scheller 
+#
+SavedSttySettings=$(stty -g)
+stty stop undef
+stty start undef
+/usr/bin/rtorrent
+stty $SavedSttySettings

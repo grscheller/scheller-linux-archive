@@ -1,0 +1,166 @@
+﻿Group Management:
+
+  To list the groups your login belongs to, use either:
+    groups [username]
+      The first one listed is your current default group.
+    id [username]
+
+  Start a new shell with a different default group:
+    newgrp dscfp
+
+  To force all new files in a directory structure to be put in
+  a certain user group, use the chmod command:
+    chmod g=swrx dirname
+      Any files created in that directory will be associated with
+      the group of that directory.
+
+  To give group write permission to all files in a directory structure:
+    chmod -R g+w
+  To take away permissions from other:
+    chmod -R o-rwx
+
+  To set your shell's (bash & variants) default file creation mask
+  so that both user and group have sufficient permissions, use umask:
+    umask 0007
+      This will take away read, write, and execute permision
+      from others when new files are created.  It will also 
+      give the same permissions to files to other members of
+      the group as the owner of the file has.
+
+  To change group owner on files:
+    chgrp [-R] files
+
+
+Secure Shell:
+
+  Loging into a remote Unix system:
+    ssh username@host_name
+  If login names are the same:
+    ssh hostname
+
+  Copying files between systems:
+    scp [[user1@]host1:]filename1 [[user2@]host2:]filename2
+    scp [[user1@]host1:]filename1 [user2@]host2:
+    scp -r dirname host2:
+    scp -r dirname host2:/path/to/newdirname
+    scp file1 file2 file3 host2:
+  Relative paths in file names are relative to user's home directory.
+  Default target location is user's home directory.
+
+  Logging in without using password:
+    On each host, starting from your home directory,
+       cd .ssh
+       ssh-keygen -t rsa -b 2048
+    This will create a file called id_rsa.pub which will need to be
+    appended to your authorized_keys file.
+       cat id_rsa.pub >> authorized_keys
+    I try to keep one identical copy on each of my unix machines.  I will
+    copy this file to another trusted unix host and distribute it to the
+    rest from there.
+
+Version Info:
+
+  To determine what type of Unix you are using, use the uname command:
+     uname -a
+
+   But, what distribution is it?
+
+   If it is a Redhat system then:   cat /etc/redhat-release
+   If it is Ubuntu:   cat /etc/issue
+
+
+Uses for /dev device files:
+
+  Writing to the "bit bucket" /dev/null always suceeds:
+     $ echo hello > /dev/null
+     $ echo $?
+     0
+  Get rid of annoying error messages:
+     ls /dog 2> /dev/null
+  Reading from /dev/null always gives EOF (End of File):
+     $ od -c < /dev/null
+     0000000
+
+  To generate a 1 MB file of null bytes '\0':
+     dd if=/dev/zero of=foobar count=1024 bs=1024
+  To generate a 1 GB file of null bytes '\0':
+     dd if=/dev/zero of=foobar count=1G bs=1
+
+  To generate a file with 32 random bytes:
+     dd if=/dev/random of=foobar count=32 bs=1
+  The /dev/random will block if there is not enough entropy in
+  its data pool.  Use urandom instead if you want want non-blocking IO.
+  /dev/urandom will use a pseudo-random generator if the entropy pool
+  gets low:
+     dd if=/dev/urandom of=foobar count=1G bs=1
+  The dd or data-dump command, in the olde days, was used to read and
+  write to tape drives.
+
+  To test code output error handling use /dev/full:
+    $ echo hello > /dev/full
+    bash: echo: write error: No space left on device
+
+To completely scrub all environment variables in bash:
+  env -i /bin/bash --noprofile --norc
+
+To turn cpu throttleing off:
+  CentOS:
+  To see how fast processor is running:
+     sudo cat /sys/devices/system/cpu/cpu*/cpufreq/cpuinfo_cur_freq
+  Temporarily turn off throttling:
+     sudo service cpuspeed stop
+  Permanently turn off cpu throttling:
+     sudo chkconfig cpuspeed off
+  Note: Above two commands will cause the cpufreq directory to disappear, but 
+        you can get this info from:
+           cat /proc/cpuinfo
+
+  Fedora command (Not sure for CentOS):
+     /usr/bin/cpufreq-selector -g performance
+
+Bash tricks:
+  Send only stderr down pile:
+     cmd1 2>&1 >/dev/null | cmd2
+  Swap stderr and stdout:
+     cmd1 3>&2 2>&1 >&3 | cmd2
+
+To type Unicode characters into a Linux Gnome Terminal:
+  Example, to type λ at a linux gnome-terminal, 
+  type <ctrl+shift+u>00b3<return>.
+  Cut and paste works great!
+
+To distribute something in gzip tar format:
+  To make the "tarball",
+     tar cvzf Infostuff.tar.gz Info/
+  To get a table of contents,
+     tar tvf Infostuff.tar.gz
+  To unpack the "tarball",
+     tar xvf Infostuff.tar.gz
+
+View boot messages after system is booted:
+  dmesg
+
+The Unix grep command has -B and -A options that
+will print a number of lines before and after
+the matching line.  These options eliminate about
+90% of the use cases for the Unix sed command.
+
+Linux CUPS printer commands:
+  To list default printer,
+     lpstat -d
+  To show your current print jobs,
+     lpstat
+     lpstat -l
+  To show the "accepting state" of printers,
+     lpstat -a
+  To print a file,
+     lp filename
+  Send std out to printer, print two copies,
+     echo 'Test of printer' | lp -n2
+
+Linux mailx  command:
+  To Read mail,
+     mailx
+  To send mail with attachmented file and subject line to
+  address in shell variable ME,
+     echo "Homepage attached" | mailx -s "Home page" -a Homepage.html $ME

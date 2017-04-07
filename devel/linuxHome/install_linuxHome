@@ -1,0 +1,75 @@
+#!/bin/bash
+#
+# Installs my Unix/Linux environment into my home directory.
+
+export DOT_FILES BIN_SCRIPTS 
+
+###
+### First install the bash setup files.
+DOT_FILES='
+    .bashrc
+    .bashrc_grsTemps
+    .bash_profile
+    .bash_logout
+    .inputrc
+    .vimrc
+    .wgetrc
+'
+
+cp -f $DOT_FILES ~
+(cd ~; chmod 440 $DOT_FILES)
+
+###
+### Make sure ~/catch and ~/pitch are there
+[[ -d ~/catch ]] || mkdir ~/catch
+[[ -d ~/pitch ]] || mkdir ~/pitch
+
+###
+### Now install ~/bin scripts.
+cd ./bin
+[[ -d ~/bin ]] || mkdir ~/bin
+chmod 750 ~/bin
+
+BIN_SCRIPTS='
+    installHome
+    pushHome
+    realPath
+    whence
+'
+
+# Scripts
+cp -f $BIN_SCRIPTS ~/bin
+(cd ~/bin; chmod 555 $BIN_SCRIPTS; chmod 554 pushHome installHome)
+
+cd ..   # Get out of bin
+
+###
+### Now install tracked directories into ~/info.
+###   Good only for flat directory structures,
+###   unless we manually fix subdirectory permisions 
+###   as we do for info/Another.
+cd ./info
+[[ -d ~/info ]] || mkdir ~/info
+chmod 750 ~/info
+
+Info_Dirs='
+    Web
+    Another
+'
+for Info_Dir in $Info_Dirs
+do
+    [[ -d ~/info/$Info_Dir ]] || mkdir ~/info/$Info_Dir
+    chmod -R u+rwx ~/info/$Info_Dir
+    cp -Rf $Info_Dir ~/info
+    chmod -R go-wx ~/info/$Info_Dir
+    chmod -R g+r ~/info/$Info_Dir
+    chmod g+x ~/info/$Info_Dir
+    chmod u-wx ~/info/$Info_Dir/*
+done
+# Manually fix sub-directories for ~/info/Another
+chmod u-wx $(ls -dA ~/info/Another/.* | sed '/\/\.\{1,2\}$/d')
+chmod u+wx ~/info/Another/bin
+chmod g+x ~/info/Another/bin
+chmod ug+x-w ~/info/Another/bin/*
+
+cd ..   # Get out of info

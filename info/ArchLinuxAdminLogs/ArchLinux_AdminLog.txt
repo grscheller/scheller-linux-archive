@@ -1,0 +1,2355 @@
+Purpose: To indicate what was done to create gauss17 and 
+         the rational behind it.
+
+2016-07-04:
+  Installed ArchLinux on Acer E-14 Laptop (E5-491G-70PX).
+  Created a UEFI/GPT x86-64 system with a 4 core i7 Intel
+  Processor (6700HQ).  Laptop has a 2 channel NVIDEA
+  GEFORCE 940M graphics chipset 2GB Memory.
+    Pacman: base, base-devel
+      (during install)
+    Pacman: intel-ucode
+      (for updating microcode - unconfigured)
+
+  Disks: sda1 -> /boot  512 MiB
+         sda2 -> /       64 GiB
+         sda3 -> Swap    16 GiB
+         sda4 -> /home  741 GiB
+
+         Filesystem      Size  Used Avail Use% Mounted on
+           dev          3.9G     0  3.9G   0% /dev
+           run          3.9G  760K  3.9G   1% /run
+           /dev/sda2     63G  1.2G   59G   2% /
+           tmpfs        3.9G     0  3.9G   0% /dev/shm
+           tmpfs        3.9G     0  3.9G   0% /sys/fs/cgroup
+           /dev/sda1    511M   27M  485M   6% /boot
+           tmpfs        3.9G     0  3.9G   0% /tmp
+           /dev/sda4    839G   73M  796G   1% /home
+           tmpfs        788M     0  788M   0% /run/user/1000
+
+  I made SWAP so large so that if I am doing some
+  mathematical modeling where I am using almost all of the
+  memory, I can hibernate the machine and pick up where I
+  left off.  I sized it for 16GiB memory, system currently
+  has 8GiB.
+
+  Only problem I had with the install was configuring the
+  boot loader.  The Arch Linux Wikis are excellent, but
+  dropped the ball on that point.  Using systemd-boot as
+  the boot loader with "secure boot" turned off.
+
+  Used primarily the Arch Linux Beginners Guide for the
+  install:
+    https://wiki.archlinux.org/index.php/Beginners_guide
+
+  Created geoff as the first user.
+
+2016-07-07:
+  Out of the blue, ethernet not configured.  Had to bring up
+  DHCP manually via: dhcpcd enp3s0f1
+
+2016-07-07:
+  Install dns utilities:
+
+  Commands:
+    pacman -Syu
+    pacman -Syu dnsutils
+
+    Pacman: dnsutils
+
+  Some useful utilities got installed from the bind-tools
+  subpackage:
+    /usr/bin/arpaname
+    /usr/bin/delv
+    /usr/bin/dig
+    /usr/bin/genrandom
+    /usr/bin/host
+    /usr/bin/nslookup
+    /usr/bin/nsupdate
+
+  A lot of other utils from bind-tools regarding secure DNS.
+
+  I got the bind-tools name from the pacman install output.
+  I got the names of the files instlled via:
+
+    pacman -Qlq bind-tools
+
+  The dates of files installed are retro,
+  not installed date.
+
+2016-07-08:
+  Installed GIT and Python3:
+    Pacman: git, python, ipython, python-nose
+
+2016-07-08:
+  Currently using the open source drivers for the graphics
+  cards as well as the integrated graphics chipset.
+
+    # lspci -k | grep -A 2 -E "(VGA|3D)"
+    00:02.0 VGA compatible controller: Intel Corporation
+      Skylake Integrated Graphics (rev 06)
+    Subsystem: Acer Incorporated [ALI] Device 0979
+    Kernel driver in use: i915
+    --
+    01:00.0 3D controller: NVIDIA Corporation GM108M
+      [GeForce 940M] (rev a2)
+    Subsystem: Acer Incorporated [ALI] Device 097a
+    Kernel modules: nouveau
+
+  I am going to wait until after I install X before
+  monkeying around with the NVIDIA drivers.  That way if X
+  does not work, I know it is not because of these drivers.
+  Some extra Xorg.conf configurations will be needed as well
+  as configuring a pacman hook for when the driver gets
+  updated.
+
+2016-07-08:
+  Added the sudo package, used the visudo command to edit
+  /etc/sudoers.  Enable members of the wheel group to use
+  sudo.  Added geoff login to wheel group via
+  "usermod -G wheel geoff".  Also uncommented the lines
+  that will allow sudo to function cleanly with X11 GUIs
+  (If I were trying to make a hardened system I would not
+  do this).  As a result, sudo keeps $Home the same as the
+  sudoer, not root's home.
+
+    Pacman: sudo
+
+  Note: In future, if I want to add user geoff to other
+        groups, I need to do
+          usermod -aG group1,group2,group3 geoff
+        otherwise, without the -a, geoff would be removed
+        from wheel.
+
+2016-07-08:
+  Starting process to install GUI environment.  Installing
+  xinit, startx and a default xinitrc file.
+    Pacman: xorg-xinit
+
+  Thought this might drag all of X in, it doesn't.
+
+  After extensive reading of Arch-Wiki and several aborted
+  pacman attemps, decided to install NVIDIA drivers first.
+  NVIDIA drivers were given as dependency choices and the
+  other choices were more for legacy support.
+    Pacman: nvidia, nvidia-libgl  
+
+  Had to choose between 2 libraries, xf86-input-evdev and
+  xf86-input-libinput.  The former would require a synaptics
+  touch pad package.  The later is a wrapper for libinput
+  (used by Wayland), and is a wrapper for X11 to use the
+  library.  Better touch pad support.  I chose the latter.
+
+  Reboot for changes to take effect.
+
+  From diffs on dmegs from this and prvious reboot:
+
+    >  nvidia: module license 'NVIDIA' taints kernel.
+    >  Disabling lock debugging due to kernel taint
+    >  nvidia 0000:01:00.0: enabling device (0406 -> 0407)
+    >  nvidia-nvlink: Nvlink Core is being initialized,
+         major device number 242
+    >  NVRM: loading NVIDIA UNIX x86_64 Kernel Module
+         367.27  Thu Jun  9 18:53:27 PDT 2016
+    >  nvidia-modeset: Loading NVIDIA Kernel Mode Setting
+          Driver for UNIX platforms  367.27 Thu Jun  9
+          18:24:10 PDT 2016
+    >  Loading driver
+    <  nouveau 0000:01:00.0: enabling device (0406 -> 0407)
+    <  nouveau 0000:01:00.0: unknown chipset (118070a2)
+    <  nouveau: probe of 0000:01:00.0 failed with error -12
+
+  Looks like the NVIDIA drivers were picked up.
+
+  From NVIDIA's website, NVIDIA recommends using a
+  persistence daemon to keep cards active during headless
+  operations, i.e. to keep cards active when there is no
+  X-Windows to do so.  This can save seconds starting up
+  and shutting down card when used by clients.  Clients
+  attach a GPU by openning it's device file and detach
+  device file.  To simulate graphics environment without
+  incurring the overhead, the persistence daemon runs in
+  the background and sleeps with the device files open.
+  Daemon uses libnvidia-cfg.so to provide a RPC interface
+  to control the persistence mode of each GPU individually.
+
+    $ lspci -k | egrep -A 2 "(VGA|3D)"
+    00:02.0 VGA compatible controller: Intel Corporation
+      Skylake Integrated Graphics (rev 06)
+    Subsystem: Acer Incorporated [ALI] Device 0979
+    Kernel driver in use: i915
+    --
+    01:00.0 3D controller: NVIDIA Corporation
+       GM108M [GeForce 940M] (rev a2)
+    Subsystem: Acer Incorporated [ALI] Device 097a
+    Kernel driver in use: nvidia
+
+  See /usr/share/doc/nvidia/README for lots of good
+  information - same info I found on NVIDIA's website.
+
+  Created the following aliases in geoff's .bashrc file:
+    # NVIDIA Daemon to keep card active
+    #  when not running X-Windows
+    alias nv-pd='sudo nvidia-persistenced --user geoff --persistence-mode'
+
+    # Activate and Deactivate respectfully.
+    #   Communicates with above daemon if running, otherwise
+    #   directly with card in a deprecated manner.
+    alias nv-off='sudo nvidia-smi -pm 0'
+    alias nv-on='sudo nvidia-smi -pm 1'
+
+2016-07-09:
+  Figured out how to turn ethernet on by default:
+
+    systemctl enable dhcpcd
+
+2016-07-09:
+  Added ALSA (Advanced Linux Sound Architecture) Utilities:
+    Pacman: alsa-utils
+
+  Note: For more advanced sound cards, the alsa-firmware
+        package might be needed.  Note: PulseAudio can serve
+        as a proxy to ALSA.  I used alsamixer from command
+        line (CLI/NCURSES) to unmute and adjust the volumei
+        of the speakers and headphones.  Turned on the mike,
+        left at 0.0dB.
+
+  Tested speakers with: speaker-test -c 2
+  both speakers and headphones work.  
+
+2016-07-09:
+  Attempting to install GNOME Desktop
+    Pacman: gnome, gnome-extra gnome-tweak-tool
+
+  I created a .initrc file that esentially does an
+  "exec gnome-session".
+
+  When I do "startx" or "startx gnome" or
+  "startx '.xinitrc gnome'" I see laptop video mode
+  shift but X fails to launch.
+
+  Error message /var/log/Xorg.0.log:
+    [ 29387.537] (EE) Failed to initialize GLX extension
+      (Compatible NVIDIA X driver not found)
+
+  I think the problem is that I have a hybrid NVIDIA/Intel
+  GPU called NVIDIA Optimus.  Basically, "NVIDIA Optimus is
+  a technology that allows an Intel integrated GPU and
+  discrete NVIDIA GPU to be built into and accessed by a
+  laptop".  Arch Linux Wiki has a section called "NVIDIA
+  Optimus" that I need to work through.  
+
+    Pacman: nvidia, nvidia-libgl, xorg-xrandr
+
+  First two are reinstalls, last one I am not sure if it was
+  previously dragged in.
+
+  Reboot.
+
+    # lspci | egrep "(VGA|3D)"
+    00:02.0 VGA compatible controller: Intel Corporation
+      Skylake Integrated Graphics (rev 06)
+    01:00.0 3D controller: NVIDIA Corporation GM108M
+      [GeForce 940M] (rev a2)
+
+  Created /etc/X11/xorg.conf file with contents:
+
+    Section "Module"
+        Load "modesetting"
+    EndSection
+
+    Section "Device"
+        Identifier "nvidia"
+        Driver "nvidia"
+        BusID "PCI:1:0:0"
+        Option "AllowEmptyInitialConfiguration"
+    EndSection
+
+  Added first two lines to /home/geoff/.xinitrc whose
+  contents now are:
+
+    xrandr --setprovideeroutputsource modesetting NVIDIA-0
+    xrandr --auto
+
+    session=${1:-gnome}
+
+    case $session in
+       gnome          ) exec gnome-session;;
+       gnome-classic  ) exec gnome-session --session=gnome-classic;;
+         *) exec $1;;
+    esac
+
+  Reboot
+
+  X server with Gnome Desktop now works.  For some reason
+  gnome-terminal does not start.  Might be missing fonts?
+
+2016-07-09:
+  Try and fix gnome-terminal problem.
+
+  Lets try installing a bunch of fonts.
+
+  From the Arch Linux Wiki recomendations page, I installed
+  a bunch of true type fonts.  Did not fix gnome-terminal
+  problem.
+    Pacman: ttf-dejavu
+
+  The Locale may not be set up correctly.
+
+    # localectl set-locale LANG="en_US.UTF-8"
+    # reboot
+
+  This didn't work either.
+
+  The problem is that gnome-terminal and gnome-files 
+  both need a start up script,
+  etc/X11/xinit/xinitrc.d/50-systemd-user.sh, to spin up
+  some daemon processes for these gnome "apps" to work.
+  I am not sure if this is a systemd or .xinitrc thing.
+  If I were using a display manager, everything would
+  probably work out of the box.
+
+  I will punt on this for now, I have more important things
+  to configure.
+
+2016-07-09:
+  Installed firefox.
+    Pacman: firefox
+
+2016-07-10:
+  So that I have a working gui desktop environment, I will
+  install XFCE.
+    Pacman: xfce4 xfce4-goodies
+
+  Update .xinitrc by adding the case clause 
+
+    xfce  ) exec startxfce4;;
+
+  and making xfce the default choice.  Maybe there is a
+  similar start up script for gnome?
+
+  XFCE is quick, responsive, and effortless to config.
+  Simple, not just easy.  No X-tearing when I ran firefox
+  and CTRL-ALT-Fn between virtual terminals, as happened
+  with gnome.  
+
+2016-07-10:
+  Installed ACPI power management 
+    Pacman: acpi
+
+  Logs in /etc/X11/xorg.conf indicate acpid not being
+  spun up.  Need to configure it.
+
+2016-07-10:
+  Installing vim.  Created vi alias for vim for geoff but
+  not for root.
+    Pacman: gvim
+
+  Also, created /root/.bash_profile for root.  The file
+  /root/.bashrc does not get sourced for login shells by
+  default.  I use .bash_profile to do this in the standard
+  way like Ubuntu and CentOS do.
+
+2016-07-10:
+  Installed OpenSSH package.  Verified OpenSSL was
+  previosly installed as a dependency.
+
+    Pacman: openssh
+
+  Editted /etc/ssh/sshd_config:
+
+    PermitRootLogin no
+    Port 30303
+    PasswordAuthentication no
+    ChallengeResponseAuthentication no (already set)
+
+    There are two possible systemd services for sshd,
+    sshd.service and sshd.socket.  The second one is
+    prefered (first one has sshd itself sitting on the
+    port forking children - used on systems with high
+    ssh usage).
+
+    Configure systemd to listen for sshd trafic
+    on port 30303:
+
+      # systemctl edit --full sshd.socket
+
+    where we changed ListenStream=22 to ListenStream=30303
+
+    Enable on boot:
+
+      # systemctl enable sshd.socket  
+
+    Able to configure passwordless ssh logins between
+    gauss17 and my work CentOS 6 workstation rygar.
+
+2016-07-11:
+  Preparing to configure the Wireless networking.
+
+  First install command line utilities:
+
+    Pacman: iw, wpa_supplicant
+
+  Wireless interfase is wlp2s0 (from "ip link" and "iw dev")
+
+    # lspci -k
+    > ...
+    > Network controller: Qualcomm Atheros Device 0042
+        (rev 30)
+    > Subsystem: Lite-On Communications Inc Device 1806
+    > Kernel driver in use: ath10k_pci
+    > Kernel modules: ath10k_pci
+    > ... 
+
+    $ dmesg | grep firmware
+    > [    8.075814] ath10k_pci 0000:02:00.0: Direct
+        firmware load
+    for ath10k/cal-pci-0000:02:00.0.bin failed with error -2
+    > [    8.435541].  ath10k_pci 0000:02:00.0: firmware ver
+        WLAN.TF.1.0-00267-1 api 5 features ignore-otp crc32
+        79cea2c7
+    > [   11.127725] ath10k_pci 0000:02:00.0 wlp2s0: renamed
+        from wlan0
+
+  I am able to query my home wireless router via
+  "iw dev wlp2s0 scan", so, I assume all drivers are
+  configured correctly dispite conflicting info from
+  first dmesg.
+            
+2016-07-12:
+  Removed gnome desktop.
+
+    # pacman -Rsu gnome gnome-extra gnome-tweak-tool
+
+    Pacman:(Remove) gnome gnome-extra gnome-tweak-tool
+
+  Disk space on / partition went 9% -> 6%.
+  (0.03 * 63.4G = 1.9G used by Gnome)
+
+2016-07-13:
+  Install final packages to get wireless working in XFCE.
+  Following the Arch Linux wireless installation guide.
+    Pacman: wicd wicd-gtk xfce4-notifyd
+
+2016-07-14:
+  Finish configuring wicd for use with XFCE:
+
+    # systemctl is-enabled wicd
+    disabled
+
+    # systemctl enable wicd
+    Created symlinks
+
+    /usr/lib/systemd/system/wicd.service →
+    /etc/systemd/system/dbus-org.wicd.daemon.service
+
+    /usr/lib/systemd/system/wicd.service →
+    /etc/systemd/system/multi-user.target.wants/wicd.service
+
+    Pacman: python2-notify xfce4-notifyd
+
+    # systemctl is-enabled dhcpcd
+    enabled
+
+    # systemctl disable dhcpcd
+    Removed /etc/systemd/system/multi-user.target.wants/dhcpcd.service.
+
+    # usermod -aG users geoff
+
+  Reboot.
+
+  Wireless now works in a totally automated way in XFCE.
+  If not running X, you will need to at least bring up
+  dhcpcd via "sudo systemctl start dhcpcd" with eithernet
+  cable plugged in.  While possibible to use wicd and
+  wpa_supplicant to probe and configure network directly,
+  wicd-cli can be used to do so.  Arch Linux Wiki claims
+  that once familiar with tle wicd-cli command line tools,
+  it is as simple as the GUI tools. 
+
+  (2016-08-21: Turns out Wicd will bring up a network form
+   CLI-land at boot time, without having to manually start 
+   dhcpcd, if the network was prior configured to be
+   automatically connected to via the GUI in the system
+   tray.)
+
+2016-07-14:
+  Installed SBT for scala development.  Had it drag in jre8
+  as opposed jre7.
+    Pacman: sbt
+
+2016-07-14:
+  Installed a java8 development environment.
+    Pacman:  jdk8-openjdk openjdk8-doc java-openjfx java-openjfx-doc
+
+2016-07-16:
+  How to install packages from AUR (Arch User Repository),
+  from the Arch_User_Repository of the Arch Linux Wiki:
+
+  1. Acquire the tarball which contains the PKGBUILD and
+     possibly other required files, like systemd units
+     and patches (but often not the actual code).
+  2. Extract the tarball (preferably in a directory set
+     aside just for builds from the AUR) with
+     tar -xvf pkgname.tar.gz.
+  3. Verify that the PKGBUILD and accompanying files are
+     not malicious or untrustworthy.
+  4. Run makepkg -sri in the directory where the files are
+     saved. This will download the code, resolve the
+     dependencies with pacman,
+     compile it, package it, install the package, and
+     finally remove the build-time dependencies, which
+     are no longer needed.
+
+2016-07-16:
+  Install google-chrome from AUR:
+
+    $ git clone https://aur.archlinux.org/google-chrome.git 
+
+  This accomplished steps 1 and 2 above.  Doing this as user
+  geoff in /home/geoff/build/AUR/google-chrome_build.  Looks
+  like it will install in /opt/google/chrome but with some
+  infrastructure (fonts, man pages, docs, licenses, icons)
+  in /usr/share.
+
+  Above created the following files: PKGBUILD,
+                                     google-chrome.install
+                                     google-chrome-stable.sh
+
+  Now do step 4.
+
+     $ makepkg -sri
+
+  Asked for root password.  Also asked
+  if I wanted it installed, I said yes.
+
+2016-07-17:
+  Installed VLC and some optional dependencies.
+    Pacman: vlc qt4 libcdio 
+
+2016-07-17:
+  Installed shotwell.  For simple touch and image enhancing.
+  Also a photo organizer.
+    Pacman: shotwell 
+
+2016-07-17:
+  Was going to install evince, but the install was about to
+  to drag in almost 1G of gnome infrastructure.  Installed
+  muPDF instead.
+    Pacman: mupdf
+
+2016-07-17:
+  Installed gimp image retouching,ffmpeg composition,
+  and authoring.
+    Pacman: gimp 
+
+2016-07-17:
+  Installed Libre-Office with some latex support.
+    Pacman: libreoffice-fresh libreoffice-extension-texmaths libreoffice-extension-writer2latex 
+
+2016-07-17:
+  Installed youtube-dl and some optional dependencies
+  (ffmpeg already installed).
+    Pacman: yt-download
+    Pacman: rtmpdump atomicparsley
+ 
+2016-07-17:
+  Minimal Haskell install from official repos:
+    Pacman: ghc cabal-install happy alex
+
+  There are a lot of additional Haskell commponents that could
+  be installed.  Best to wait until I am back into programming
+  with Haskell.  I intend to avoid using cabal unless absolutley
+  necessary - and then only on the end user level.
+
+2016-07-17:
+  Sound not working.
+
+  Installed Pulseaudio with recomended dependency.
+    Pacman: pulseaudio
+    Pacman: pulseaudio-alsa
+
+  Tried installing xfce volume control.
+    Pacman: xfce4-mixer
+
+  Put on top panel.  Seems inoperative.
+
+  Try putting login in audio group, still does not work.
+
+    # usermod -aG audio geoff
+
+  Tried using alsamixer and "speaker-test -c 2" both as
+  geoff and root.  Doesn't work.  Both in GUI and out.
+  Did work before, try uninstalling pulse audio.
+
+    # pacman -R pulseaudio pulseaudio-alsa
+
+    Pacman:(Remove) pulseaudio pulseaudio-alsa
+
+  Reboot
+
+  Didn't work for geoff, but it did if I had root run XFCE
+  desktop.  So I shutdown X as root, logged out, back in as
+  geoff, and low and behold, it worked!  Lets see what
+  happens after a reboot and I login as geoff.
+
+  Reboot
+
+  Sound works when under XFCE as geoff.  I have no idea what
+  I could have done to fix things.  
+
+  So at this point, pulseaudio not installed.
+
+2016-07-20:
+  Installed Gnome Keyring in preparation of getting
+  removeable media to automount.  Decided to let XFCE to
+  handle this instead of configuring underlying mechanisms.
+    Pacman: gnome-keyring
+
+2016-07-20:
+  Decided to go with evince as my go to PDF reader.
+    Pacman: evince 
+
+2016-07-20:
+  Install Thunar Volume Manager.
+
+  The gvfs package provides a VFS API to GLib applications.
+  Provides a "local" implemtation via POSIX, but also
+  provides implementations that go beyond that and allow to
+  access files and storage using many protocols, such as
+  ftp, http, sftp, dav, nfs. It also provides support for
+  trash folders, for cd burning and for monitoring
+  interesting devices and volumes on the computer.
+    Pacman: gvfs
+    Pacman: thunar-volman
+
+2016-07-20:
+  Installed bash-completion for convinence.
+    Pacman: bash-completion
+
+2016-07-20:
+  Figured out why acpid not running, I did not install it.
+    Pacman: acpi acpid
+
+  acpi is a userland program to report events,
+
+    $ acpi
+    Battery 0: Full, 100%
+
+    $ systemctl is-enabled acpid
+    disabled
+    $ sudo systemctl enable acpid
+
+  Reboot
+
+    $ systemctl status acpid
+    ● acpid.service - ACPI event daemon
+       Loaded: loaded (/usr/lib/systemd/system/acpid.service; enabled; vendor preset: disabled)
+       Active: active (running) since Thu 2016-07-21 00:53:58 MDT; 9min ago
+         Docs: man:acpid(8)
+     Main PID: 381 (acpid)
+        Tasks: 1 (limit: 512)
+       CGroup: /system.slice/acpid.service
+               └─381 /usr/bin/acpid --foreground --netlink
+
+    Jul 21 00:53:58 gauss17 systemd[1]: Started ACPI event daemon.
+    Jul 21 00:53:59 gauss17 acpid[381]: starting up with netlink and the input layer
+    Jul 21 00:53:59 gauss17 acpid[381]: 1 rule loaded
+    Jul 21 00:53:59 gauss17 acpid[381]: waiting for events: event logging is off
+    Jul 21 00:54:48 gauss17 acpid[381]: client connected from 645[0:1000]
+    Jul 21 00:54:48 gauss17 acpid[381]: 1 client rule loaded
+    Jul 21 00:54:49 gauss17 acpid[381]: client connected from 645[0:1000]
+    Jul 21 00:54:49 gauss17 acpid[381]: 1 client rule loaded
+
+2016-07-21:
+  Installed etherape:
+    Pacman: etherape
+
+2016-07-22:
+  Installed claws-mail:
+    Pacman: claws-mail
+    Pacman: postfix
+
+  I had to install postfix (sendmail replacement) in order to
+  get claws-mail to interact with my local mail.
+
+    # systemctl enable postfix
+
+  So far have not changed the settings in /etc/postfix/main.cf
+  from their default vaules,
+
+2016-07-22:
+  Installed Scala compiler version 2.11.8 so that I can run 
+  scala outside the context of SBT.
+    Pacman: scala scala-docs scala-sources
+
+2016-07-22:
+  Installed wget utility to get web content from CLI.
+    Pacman: wget
+
+2016-07-23:
+  Noticed that XFCE infrastructure is mounting my removable
+  USB HD read only.  Need to fix this.  Will try to do this 
+  within XFCE before managing removable media in the
+  underlying Linux.  (Am I just lazy?  It would be educational
+  to do such, but I don't really need access to the removable
+  HD outside the GUI environment.)
+
+  Actually, things stay mounted once one exits XFCE.
+
+  I final got to the bottom of my USB hard drive issues.  
+  The USB HD is NTFS formatted.  It just didn't occur to
+  me that it had an MS proprietary format.  All was needed
+  was to install NTFS filesystem driver and utilities
+  package.
+    Pacman: gvfs-afc
+    Pacman: ntfs-3g
+
+  The former package, gvfs-afs, gives Apple iOS devices
+  access to system similar to what is done in Mac OS X.
+  Maybe I should investigate if similar hooks exist for
+  android.
+
+2016-07-24:
+  Occationally system hangs on boot just after the message:
+
+    Starting Load/Save RF Kill Switch Status...
+
+  I found this on a message board (forgot where) -
+
+    "Be warned that things happen asynchronously ... When
+     you manage to log in, check journalctl -b (last boot)
+     as root and look for timeouts, failures and dependency
+     faults.
+
+     The stuff with rfkill and bluetooth is very volatile
+     and unpredictable. It never happens the same way.
+
+     If you find out who's fault it is, you can then make a
+     copy of the .service file in /etc/systemd/system/ and
+     modify it to make it less strict. We can help if this
+     is the case."
+
+  Therefore, I am not going to worry about it.
+
+  On the last boot, jounalctl -b shows some potential
+  problems with the builtin camera:
+
+    uvcvideo: Found UVC 1.00 device HD WebCam (1bcf:2c81)
+    uvcvideo 1-9:1.0: Entity type for entity Extension 4 was not initialized!`
+    uvcvideo 1-9:1.0: Entity type for entity Extension 3 was not initialized!
+    uvcvideo 1-9:1.0: Entity type for entity Processing 2 was not initialized!
+    uvcvideo 1-9:1.0: Entity type for entity Camera 1 was not initialized!
+    input: HD WebCam as /devices/pci0000:00/0000:00:14.0/usb1/1-9/1-9:1.0/input/input11
+    usbcore: registered new interface driver uvcvideo
+    USB Video Class driver (1.1.1)
+
+  Not sure what these mean.
+
+  Also, some problems I noted before on the NVIDIA drivers:
+
+    Jul 24 15:43:34 gauss17 kernel: nvidia: module license 'NVIDIA' taints kernel.
+    Jul 24 15:43:34 gauss17 kernel: Disabling lock debugging due to kernel taint
+    ...
+    Jul 24 15:43:34 gauss17 kernel: nvidia 0000:01:00.0: enabling device (0406 -> 0407)
+    Jul 24 15:43:34 gauss17 kernel: nvidia-nvlink: Nvlink Core is being initialized, major device number 242
+    Jul 24 15:43:34 gauss17 kernel: NVRM: loading NVIDIA UNIX x86_64 Kernel Module  367.35  Mon Jul 11 23:14:21 PDT 2016
+
+  After bouncing around on the internet, I beleive these are related to
+  the nvidia drives not being able to work with the Optimus features
+  of the card and that the nvidia-beta drivers address the problem.
+  I will investigate installing them from AUR.  This "beta" version
+  has been around for about 3 years so should be stable enough.
+
+2016-07-25:
+  Installed GIMP help files.
+    Pacman: gimp-help-en
+
+2016-07-25:
+  Getting NVIDIA Optimus to work on this laptop: NO!!!!
+
+  Stay away from the beta NVIDIA drivers, sometimes they can 
+  be more out of date than the official ones in extra.
+
+  The standard way of using "Optimus technology" with the NVIDIA
+  drivers is to use the Bumblebee package (aside: lots of
+  Transformmers references - Prime is another package to get
+  Optimus working with open source drivers).
+
+  From the Bumblebee FAQ:
+
+    "Bumblebee is an effort to make NVIDIA Optimus enabled laptops
+    work in GNU/Linux systems. Such feature involves two graphics
+    cards with two different power consumption profiles plugged in
+    a layered way sharing a single framebuffer."
+
+  Bumblebee's use case is by disabling the nvidia card, power is
+  saved. This improves battery life. If you need more graphical
+  performance, Bumblebee can run the program using the Nvidia card.
+
+  My use case: Can I use my Nvidia card only? I don't care about
+               power consumption.  When X not running, I want to
+               use the card for CUDA programming.
+
+  I "think" this is what is happening now...how can I be sure?
+  There is no way to "turn off" either the on board chip set or
+  the NVIDIA card in the BIOS.  There is something called
+  "reverse PRIME", which denpends on David Airlie's PRIME that
+  can run NVIDIA card only (compatible with nouveau and nvidia
+  drives - assuming if supported by the card).
+
+  I am "assuming" that the nvidia drive works the NVIDIA
+  card only and ignores the Intel chip set.
+
+2016-07-26:
+  Here is confirmation that the Nouveau drivers are not running.
+
+    $ lsmod | egrep -i '(nvidia|nouveau)'
+    nvidia_drm             45056  1
+    nvidia_modeset        757760  3 nvidia_drm
+    nvidia              11182080  56 nvidia_modeset
+    drm_kms_helper        114688  2 i915,nvidia_drm
+    drm                   294912  8 i915,drm_kms_helper,nvidia_drm
+
+  But the system is seeing both cards:
+
+    $ ls /dev/dri
+    card0  card1  controlD64  renderD128  renderD129
+
+  I beleive these lines in my ~/.xinitrc file is telling X to
+  use the NVIDIA card:
+
+    xrandr --setprovideroutputsource modesetting NVIDIA-0
+    xrandr --auto 
+
+  Direct Rendering Manager (DRM) is interesting.  Wikipedia
+  has a good article:
+
+    "The Direct Rendering Manager (DRM) is a subsystem of the Linux
+     kernel responsible for interfacing with GPUs of modern video
+     cards. DRM exposes an API that user space programs can use to
+     send commands and data to the GPU, and perform operations such
+     as configuring the mode setting of the display. DRM was first
+     developed as the kernel space component of the X Server's Direct
+     Rendering Infrastructure, but since then it has been used by
+     other graphic stack alternatives such as Wayland.
+
+     User space programs can use the DRM API to command the GPU to
+     do hardware accelerated 3D rendering, video decoding as well as
+     GPGPU computing."
+
+  Before this, userspace programs usually assumed that each were the 
+  only entity touching the GPU.  Each set resources in its own way,
+  most times ending catastrophically.
+
+  I am assuming that David Airlie's Prime work will eventually
+  be folded into DRM and I will not try to "add" it.  In the
+  Windows laptop environment, Optimus use case is that the 
+  integrated chipset is primarily responsible for the video
+  rendering and that only certain "blessed" programs (usually
+  video games) have access to the NVIDIA GPU.  Once GPU processing
+  is complete, "frame buffers?" are PCI bus'ed over to the integrated 
+  chipset for display.  This is done for power management reasons.
+
+  Here is more confirmation that X is only using the NVIDIA GPU -
+  the contents of /etc/X11/xorg.conf are:
+
+    Section "Module"
+        Load "modesetting"
+    EndSection
+
+    Section "Device"
+        Identifier "nvidia"
+        Driver "nvidia"
+        BusID "PCI:1:0:0"
+        Option "AllowEmptyInitialConfiguration"
+    EndSection
+
+  The Intel chipset is not even mentioned. If anything "fancy"
+  was being done regarding offloading graphics rendering, both
+  cards would have had to been configured here.
+
+2016-07-26:
+  The line
+     kernel: nvidia: module license 'NVIDIA' taints kernel
+  from journalctl -b only means that the nvidia driver does not
+  have a GPL or equivalent license.
+
+2016-07-28:
+  From journalctl, there are error
+  messages from gauss17 postfix/local:
+
+    [8753]: warning: hash:/etc/postfix/aliases:
+              lookup of 'geoff' failed
+    [8754]: error: open database /etc/postfix/aliases.db:
+              No such file or directory
+    [8754]: warning: hash:/etc/postfix/aliases is unavailable.
+            open database /etc/postfix/aliases.db:
+              No such file or directory
+
+  Gives me a direction to look for why local mail delievery
+  is failing.
+
+2016-07-29:
+  Installed Vorbis-OGG related tools.
+    Pacman: vorbis-tools mp32ogg pyvorbis recordmydesktop vorbisgain
+    Pacman: libffado celt jack
+
+2016-07-30:
+  To be able to manage gnome-keyring from userland, install seahorse.
+    Pacman: seahorse
+
+  Install an Erlang development environment.
+    Pacman: erlang elixir erlang-docs erlang-unixodbc rebar yaws
+
+2016-07-31:
+  Erlang can use GPU.  Also, first steps to get GPU to work
+  for number crunching in general.  I was going to install what 
+  was needed for NVIDIA CUDA, but this proprietary package 
+  currently does not work for gcc 6.0+.  I will attempt to 
+  install what is needed for the Open Source equivalent,
+  openCL.
+    Pacman: erlang-cl
+    Pacman: libclc opencl-headers opencl-nvidia luxmark 
+
+2016-08-01:
+  Some journalctl chatter to indicate gnome-keyring failing.
+    ... org.gnome.keyring.SystemPrompter[853]: (gcr-prompter:1196):
+          Gtk-WARNING **: cannot open display:
+    ... dbus-daemon[853]: Activated service
+          'org.gnome.keyring.SystemPrompter' failed:
+           Process org.gnome.keyring.SystemPrompter exited with status 1
+    ... gnome-keyring-daemon[867]: couldn't initialize prompt:
+           GDBus.Error:org.freedesktop.DBus.Error.Spawn.ChildExited: 
+           Process org.gnome.keyring.SystemPrompter exited with status 1
+
+  Maybe being started too soon, before GUI sufficiently brought up?
+
+  Added the line
+    dbus-update-activation-environment --systemd DISPLAY
+  to the xfce case so that dbus knows what the display is
+  in /home/geoff/.xinitrc.
+
+  Now, gnome-keyring failing due to
+    gnome-keyring-daemon[6053]: couldn't access control socket:
+       /run/user/1000/keyring/control: No such file or directory
+
+  So, the prompt thing was fixed but seems to be missing a
+  configuration file?
+
+2016-08-03:
+  Enabled dhcpcd on boot, since wicd might need it.
+    sudo systemctl enable dhcpcd
+
+  This is currently not necessary in the Heritage Center since WICD
+  manually configures that interface.  Need to test out with my
+  apartment wireless/ether_cable and coffee shop.
+
+2016-08-03:
+  Made changes to PAM configuration files so that gnome-keyring
+  automatically starts on xfce login.  Created the directory 
+    /home/geoff/info/ArchLinux/admin/Config_Files/
+  to track system changes if they get stepped on.  I changed
+  the files "login" and "passwd" in /etc/pam.d based on info
+  from Arch Linux wiki.
+
+  Also, reset default gnome-keyring and geoff linux password
+  to agree.  Also as geoff tweaked session-managers startup
+  applications to start up all the gnome-keyring component.
+
+  Chrome is still asking me for the keyring password when
+  started for the first time.  Do I need to fire it off manually
+  in the .xinitrc scripts or is org.gnome.keyring.SystemPrompter
+  still broken?
+
+  There was a typo in /etc/pam.d/login which was not autostarting
+  the gnome_keyring deamon.  Fixed it.  Now when I login at the
+  console daemon is now running.  Chrome still making me type in
+  keyring password to "unlock" the keyring.
+
+  Was able to get the hulu password saved and relogged in 
+  with it in Chrome.  Firefox doesn't seem to be using it.
+  Able to view and potentially manupulate hulu password
+  in the keyring with seahorse.
+
+  I will just live for now having to manually unlock the
+  keyring with my login password.
+
+2016-08-03:
+  I am seeing both Intel and NVIDIA controllers
+
+    $ lspci | egrep 'VGA|NVIDIA'
+    00:02.0 VGA compatible controller: Intel Corporation HD Graphics
+      530 (rev 06)
+    01:00.0 3D controller: NVIDIA Corporation GM108M [GeForce 940M]
+      (rev a2)
+
+  I beleive the NVIDIA proprietary drivers are functioning correctly.
+
+  My question is: Am I just using the NVIDIA GPU only or is it
+  functioning in some sort of OPTIMUS mode where the Intel chipset
+  is plumbed into the display and the NVIDIA GPU does rendering
+  that gets ported over to Intel chipset via PCI bus?  Most info I
+  find indicates the former, but many Optimus branded laptops don't
+  connect the NVIDIA GPU in anyway to video output.  Sort of a poor
+  man's Tesla card. 
+
+  To finially get to the bottom of this,
+    Pacman: mesa-demos nvdock nvidia-settings
+
+  Running the command
+
+    $ glxinfo | grep NVIDIA
+    server glx vendor string: NVIDIA Corporation
+    client glx vendor string: NVIDIA Corporation
+    OpenGL vendor string: NVIDIA Corporation
+    OpenGL core profile version string: 4.5.0 NVIDIA 367.35
+    OpenGL core profile shading language version string: 4.50 NVIDIA
+    OpenGL version string: 4.5.0 NVIDIA 367.35
+    OpenGL shading language version string: 4.50 NVIDIA
+    OpenGL ES profile version string: OpenGL ES 3.2 NVIDIA 367.35
+
+  with and without the grep, seems to indicate that only the
+  NVIDIA GPU is at play.  I have plumbed X into using only the
+  NVIDIA card.  The Intel chipset is just sitting there, so 
+  the NVIDIA card is talking directly with the LCD laptop display.
+  Running nvidia-settings also indicates that the NVIDIA GPU is 
+  talking directly to the display.  Various internet blogs indicate
+  that under Linux only one of the chipsets of an OPTIMUS laptop
+  is being used at anyone time.
+
+2016-08-03:
+  Went ahead and installed CUDA infrastructure into /opt/cuda/.
+    Pacman: cuda pycuda-headers python-pycuda
+
+  This dragged in gcc 5.4.0 since CUDA doesn't seem to be working
+  with gcc 6.0+ right now.
+
+2016-08-03:
+  Disabled dhcpcd on boot, since it is giving me trouble with wireless
+  connections.
+    sudo systemctl disable dhcpcd
+
+  I seem to have problems connecting to wireless networks 
+  when dhcpcd enabled at boot.  Autoconnect networks connect on
+  the link level even without starting XFCE.  So, I added an alias
+  to geoff's .bashrc
+    alias dhcp='sudo systemctl start dhcpcd'
+  to start the deamon and give interfaces IP addresses via DHCP
+  if I don't want to use X.
+ 
+2016-08-05:
+  Decided to install pulseaudio.  Seems to be becoming the defacto
+  standard in Linux desktop environments.
+
+  When running vlc from terminal I see the following error messages:
+
+    [00000000020430c8] pulse audio output error: PulseAudio server
+       connection failure: Connection refused
+    [0000000001f5a148] core libvlc: Running vlc with the default
+       interface.Use 'cvlc' to use vlc without interface.
+
+  otherwise, vlc works fine.
+
+  Before installing, I am reading up on pulseaudio and listing
+  some factoids:
+ 
+    Features Pulseaudio gives you.
+      Networking support (P2P and server mode)
+      Per-application volume controls
+      Better cross-platform support
+      Dynamic latency adjustment, which can be used to save power
+
+    The main command to configure a running server is pacmdr.:
+      Use pacmd --help
+
+    The Arch Linux Pulseaudio troubleshooting guide sometimes
+      fixes problems via alsa-mixer and other utilities in
+      the alsa-utils package.
+
+    Should be started automatically by desktop environment, but
+    can be started and stopped manually.
+      $ pulseaudio --start
+      $ pulseaudio --kill
+
+    Some of its components have been split out into different packages.
+      pulseaudio-alsa package:
+        Will allow pulseaudio and ALSA to peacefully coexist with
+        pulseaudio in charge (recommended).  This will allow ALSA
+        devices to use pulseaudio instead of the hardware directly
+        and locking other clients out.
+
+      paprefs package:
+        GTK GUI for general daemon configuration.
+
+      pavucontrol package:
+        GTK GUI for advanced volume control.
+
+      ponymix and pamixer-git(AUR):
+        Console (CLI) mixers similar to pavucontrol.
+
+      pasystray(AUR), pasystray-git(AUR):
+        System tray apps exist.
+
+  There is a Bluetooth headset setup Arch Linux wiki.  Unless
+  one installs older packages from AUR, a bluetooth head set 
+  will only use pulseaudio,  See the wiki if you ever need to
+  go bluetooth.
+    Pacman: pulseaudio pulseaudio-alsa paprefs pavucontrol ponymix 
+
+  Reboot.  No configuration.
+
+  Marked subjective improvement.  Now vlc error stream is:
+    [0000000000fae148] core libvlc: Running vlc with the default
+       interface. Use 'cvlc' to use vlc without interface.
+
+2016-08-05:
+  ogg123 stopped working.  Had to change /etc/libao.conf
+
+    from:
+      default_driver=alsa
+      dev=default
+
+    to:
+      default_driver=pulse
+
+  See https://bbs.archlinux.org/viewtopic.php?id=158070
+
+  Things now just work.  Even from the console, running ogg123 will
+  cause pulseaudio daemon to come up.  From thunar clicking on a 
+  music file brings up vlc.  I am happy.
+
+2016-08-05:
+  Postfix was not working because it was completely unconfigured.
+
+  I configured it for local delievery only.  See the directory
+    /home/geoff/info/ArchLinux/admin/Config_Files/etc/postfix
+  for what I did.
+
+  One key step was to run the newaliases cmd as root.  I did it
+  from /etc/postfix directory, don't know if location matters.
+  It created the /etc/postfix/aliases.db file.
+
+    $ file /etc/postfix/aliases.db 
+    /etc/postfix/aliases.db: Berkeley DB (Hash, version 9,
+                                          native byte-order)
+
+  Local mail delievery now works!  Mail for root gets sent
+  to geoff.  Configured all nonlocal email to fail.  The mailx
+  command works.
+
+2016-08-06:
+  Configured Claws mail also snags the local mail out 
+  of /var/spool/mail/geoff.
+ 
+2016-08-11:
+  Install Clojure.  Optional dependency rlwrap permits REPL  
+  to use readline library.
+    Pacman: clojure rlwrap
+
+2016-08-13:
+  Installed Lieningen Clojure development environment into
+  geoff userland.  Lieningen similar to SBT, so probably
+  won't use either system Clojure nor system Scala.
+
+  Downloaded a shell script called lein and installed it
+  in the geoff ~/local/bin directory.
+
+    cd ~/local/bin directory
+    wget https://raw.github.com/technomancy/leiningen/stable/bin/lein
+
+  ~/bin is for "my stuff"; ~/local/bin is for "other's stuff" I
+  build/configure; and ~/opt is for external programs/suites I
+  install.  The later two used like /usr/local and /opt except
+  done in userland.  So far Arch Linux pacman has put nothing in 
+  /usr/local.  Since now that I am not a totally "unempowered" 
+  user, maybe /usr/local is a better place than ~/local for this
+  type of stuff.  Maybe done via my own pacman packages?
+
+2016-08-13:
+  Installed zip and unzip utilities.
+    Pacman: zip unzip
+
+2016-08-13:
+  Attempting to install and configure the rtorrent client.
+    Pacman: rtorrent libtorrent tmux
+
+  The libtorrent library probably not necessary.  tmux allows
+  terminals to be unassociated and reassociated with an
+  x-windows session.  Similar to screen, not sure how it will 
+  be used.  Under the geoff user, created a ~/.rtorrent.rc
+  file and configured it using the Arch Linux rtorrent wiki.
+  In the rc file was the line
+    session = /home/geoff/.rtorrent.session
+  where I decided to name a directory that enables rtorrent to
+  "remebers things" different than the default name of .session,
+  and created it too.  Also created watch and torrent directories
+  too, also configured in .rtorrent.rc.
+
+  After all this, I realized, that for any of this to work, I
+  will need to be able to setup a "port forward" on whatever
+  router is connecting me to the Internet.  
+
+2016-08-14:
+  Installed ABS (Arch Build System) to give me the ability to
+  build packages locally that pacman -Syu ... install.  Similar
+  in many ways to FreeBSD Ports Collection except that instead of
+  installing it, it creates a package that I can use pacman to
+  install.
+    Pacman: abs
+
+2016-08-14:
+  Got rtorrent to work with the help of a tutorial:
+
+    https://harbhag.wordpress.com/2010/06/30/tutorial-using-rtorrent-on-linux-like-a-pro/
+
+  The ncurses program rtorrent uses ^S and ^Q, so I had to do some
+  stty magic in the /home/geoff/bin/rt wrapper script to turn off
+  their special flow control meaning.  The program needs an 
+  *.torrent file to know what to download.  Able to paste an
+  URL to a *.torrent file into the CLI as well as navigate to a
+  *.torrent file I saves in the file system.
+
+  Also possible to configure rtorrent to pick up *.torrent files
+  from a ~/watch directory and deliever downloads to a ~/torrent 
+  directory.
+
+  In a misguided attempt to configure rtorrent as a systemd service,
+  I installed a prerequisite for the AUR rtorrent-systemd package.
+    Pacman: xorg-xhost
+
+  This AUR is more for headless servers running many instances of
+  rtorrent.  Also, the use case of tmux and screens - where you are
+  running rtorrent in a terminal on a server and attach the terminal
+  to various X-servers.
+
+2016-08-14:
+  Installed a variety of DVD related software.
+    Pacman: libdvdcss libdvdnav brasero unrar handbrake handbrake-cli
+
+2016-08-19:
+  Installed TOR (2nd generation onion router) and ARM (Anonymizing
+  Relay Monitor.
+    Pacman: tor arm
+
+  as first steps in anonymous internet browsing (other activity?).
+
+  Don't Torrent over TOR!  Torrent is already secure, all others 
+  can deduce is that you are using it.  Torrent is a bandwidth
+  hog, also, using it over TOR can compromise TOR!
+
+  Advise for the paranoid:  Don't enable or install plugins into
+  the Tor browser.  Watch for https (Tor Browser tries to force
+  https).  Don't trust what you download and don't view it while
+  online (do not ignore this!!!).  There is a PDF viewer built
+  into the Tor browser.  The more Tor users you are around, the
+  harder to reverse engineer what you are up to.
+
+  See:
+    https://www.torproject.org/download/download.html#warningi
+
+  Installed tor-browser via AUR:
+    https://aur.archlinux.org/tor-browser-bin.git
+
+  Build failed due to:
+    ERROR: One or more PGP signatures could not be verified!
+
+  As per tor-browser website I ran
+    gpg --keyserver pgp.mit.edu --recv-keys 2E1AC68ED40814E0
+
+  Built and installed.
+
+  Questions: What is role of SOCKS5 and do I need to install it?
+
+2016-08-19:
+  All the bit torrent sites using something called magnet links.
+  I want the actual .torrent files.  There is an AUR called
+  "magnet2torrent", but when I tried to build it, it had a missing
+  dependencyr, python-libtorrent-rasterbar, which does not seem 
+  to be in the AUR anymore.
+
+  Anycase, python-libtorrent-rasterbar seems to be on the way
+  to be deprecated.  I'll install a better C++ library replacement
+  and wait and see if magnet2torrent gets updated to use it:
+    Pacman: libtorrent-rasterbar
+
+2016-08-19:
+  Installed a space "shoot-em-up" game called astromenace.
+    Pacman: astromenace
+
+2016-08-20:
+  Heres how to check the mouse polling interval.  Both mice
+  are USB mice.
+
+  To get their address:
+
+    $ lsusb
+    Bus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+    Bus 001 Device 004: ID 1bcf:2c81 Sunplus Innovation Technology Inc. 
+    Bus 001 Device 003: ID 04ca:3015 Lite-On Technology Corp. 
+    Bus 001 Device 002: ID 046d:c52f Logitech, Inc. Unifying Receiver
+    Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+
+  Item 3 my touchpad, item 4 is my cordless Logitech mouse.
+  In what follows, Ivl is the update interval.
+  (Aside: Item 2 is my video camera.  Its update interval is 16ms)
+  
+    $ sudo grep -B3 -A7 046d.*c52f /sys/kernel/debug/usb/devices
+    T:  Bus=01 Lev=01 Prnt=01 Port=02 Cnt=01 Dev#=  2 Spd=12   MxCh= 0
+    D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 8 #Cfgs=  1
+    P:  Vendor=046d ProdID=c52f Rev=30.00
+    S:  Manufacturer=Logitech
+    S:  Product=USB Receiver
+    C:* #Ifs= 2 Cfg#= 1 Atr=a0 MxPwr= 98mA
+    I:* If#= 0 Alt= 0 #EPs= 1 Cls=03(HID  ) Sub=01 Prot=02 Driver=usbhid
+    E:  Ad=81(I) Atr=03(Int.) MxPS=   8 Ivl=2ms
+    I:* If#= 1 Alt= 0 #EPs= 1 Cls=03(HID  ) Sub=00 Prot=00 Driver=usbhid
+    E:  Ad=82(I) Atr=03(Int.) MxPS=  20 Ivl=2ms
+
+    $ sudo grep -B3 -A7 04ca.*3015 /sys/kernel/debug/usb/devices
+    T:  Bus=01 Lev=01 Prnt=01 Port=06 Cnt=02 Dev#=  3 Spd=12   MxCh= 0
+    D:  Ver= 2.01 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
+    P:  Vendor=04ca ProdID=3015 Rev= 0.01
+    C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=100mA
+    I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+    E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
+    E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+    E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+    I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+    E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+
+  Therefore, the Logitech mouse gets updated every 2ms and
+  the touch pad gets updated every 1ms.  These are excellent
+  and nothing needs to be adjusted.  Polling rates of about
+  10ms can affect game performance.
+
+  The Arch Linux Mouse polling rate Wiki covers how to change
+  the polling rate via systool and modprobe.
+
+2016-08-20:
+  Tried to install a game called aquaria from two AUR,
+  aquaria-ose and aquaria-hib.  Now, aquaria-ose is an open source
+  engine, built and installed no problem.  But, aquaria-hib is
+  a wrapper for the commercial data files for the game.  Needs
+  the actual data files from the Humble Bundle release.  The only
+  "sources" for these is the manufacturer or questionally legal
+  torrent sites.  Torrent sights business model seems to be
+  for you to pay to avoid their black hat spy/adware/captcha ware.
+  Lifetime memberships to sights that only been around for a
+  year and "popular" for the last couple of months?  Sounds like
+  a site about ready to be shut down.
+
+  I have no desire to steal anyone's intellectual property nor pay
+  real money for things not really important, like games.
+
+  I uninstalled the game-engine:
+    $ sudo pacman -Rsu aquaria-ose
+
+  Leason learned: So far, the only torrent "culture" I have found
+    is one looking to ripoff the naive.  Have not yet found any
+    equivalent to the pre-internet BBS culture.
+
+  Along the way, I did manage to install cmake as a dependency.
+    Pacman: cmake 
+
+2016-08-21:
+  I am concerned that the Internet is becoming some sort of
+  new corporate/government controlled mass media.  Especially
+  chilling is the influence certain buiness interests are 
+  having on the W3C standards organization.  DRM is a disgrace.
+
+  Culture is important.  Several computer cultures evolved into
+  an Internet culture - crushing the monopoly of broadcast/cable
+  media control of public information access.  I need to stay
+  connected to any evolving post-consumerized hidden internet
+  cultures.  Unempowered academics created ArXiv is an important
+  example of such a (not so hidden) subculture, this time against
+  the academic journals designed to keep outsiders out.  Regular 
+  "Google" searches don't pick up this type of technical info.
+
+  Next step, I will examine Tor website https://www.torproject.org/
+  for clues to any evolving, possible hidden, clutures I need to
+  be aware of.  Also, learn the tools needed for to navigate such
+  cultures.  Starting with arm.
+
+2016-08-22:
+  Very good technical information on Tor website, with links to
+  academic technical papers.
+
+  Topics to follow up on:
+  1. Hidden services
+  2. Zooko's Triangle relating to hidden services names:
+       - Human Readable
+       - Decentralized
+       - Secure
+     Zooko Wilcox-O'Hearn conjecture is that no single kind of
+     name can achive more than two.
+  3. Replace traditional VPNs, which reveal the exact amount and
+     timing of communication. Which locations have employees working
+     late? Which locations have employees consulting job-hunting
+     websites? Which research divisions are communicating with the
+     company's patent lawyers?
+  4. ARM (Anonymizing Relay Monitor): The arm command works similarly
+     to how top works for system usage.  Provides statistics for
+        - bandwidth, cpu, and memory usage
+        - relay circuit configuration
+        - logging events
+        - connection details (ip, hostname, figerprint, consensus data)
+  5. Atlas: https://atlas.torproject.org/
+     Site providing an overview of the Tor network.
+  6. STEM: Python controller library for Tor.  
+
+2016-08-22:
+  Configured WICD to use google's DNS 8.8.8.8 over comcast's
+  DNS 75.75.75.75 on the Heritage Center's two working WIFI
+  hotspots.  Not sure if I can trust Google any more than
+  Comcast.  Need to research.
+
+2016-08-28:
+  Some games and a flight simulator that were installed.
+    Pacman: flightgear 0ad 0ad-data
+
+2016-08-29:
+  Installed some Haskell Arch Linux packages.
+    Pacman: haskell-gtk haskell-connection 
+    Pacman: haskell-comonad
+    Pacman: haskell-contravariant haskell-contravariant-extras
+    Pacman: haskell-free
+    Pacman: haskell-juicypixels
+
+  Quite a bit of the Haskell ecosystem was pulled in when I
+  installed these.
+
+2016-08-30:
+  Installed Haskell packages needed to use comonads.
+    Pacman: haskell-project-template
+    Pacman: haskell-haddock-api haskell-haddock-library
+    Pacman: ghc-mod haskell-ghc-mod
+
+  This will allow the use of comonads but not quite enough
+  to use codo notation.  The codo-notation Cabal package does
+  not seem to be made into an Arch Linux pacman package.
+
+2016-09-01:
+  Installed a modern Lisp called Racket.
+    Pacman: racket racket-doc
+
+  Formally known as PLT-Scheme.  Very good beginner tutorials and
+  documentation.  Might be a good first language for my children.
+  Wish to compare it to Clojure, also a LISP.  If you familiar with
+  Racket, it makes learnin Haskell a lot easier.
+
+2016-09-04:
+  Seems regular search engines more useful then tor search
+  engines for finding *.onion sites.
+
+  Note to paranoid: Use the tor browser for this, even
+                    if you are using DuckDuckGo.
+
+2016-09-05:
+  Noticed that "man cabal" fails due to read error.  A few
+  files in /usr/share/man/man1 have wrong permissions.  Here
+  is how I found them:
+
+  # cd /usr/share/man/man1
+  # ls -l | egrep -v '(\-rw\-r\-\-r\-\-|^l|^total)'
+  -rw------- 1 root root   1045 Aug  6 00:31 cabal.1.gz
+  -rwxr-xr-x 1 root root   2055 Jun 22 20:32 google-chrome.1.gz
+  -r--r--r-- 1 root root    557 Mar  2  2016 ldns-config.1.gz
+  -r--r--r-- 1 root root  76592 Aug 20 14:19 mail.1.gz
+  -r--r--r-- 1 root root   3139 Jun 29  2014 shell-quote.1p.gz
+  -r--r--r-- 1 root root   1869 Dec  7  2015 toast.1.gz
+
+  To get just the names:
+
+  # ls -l | egrep -v '(\-rw\-r\-\-r\-\-|^l|^total)' | sed 's/.* //'
+  cabal.1.gz
+  google-chrome.1.gz
+  ldns-config.1.gz
+  mail.1.gz
+  shell-quote.1p.gz
+  toast.1.gz
+
+  To fix the problem:
+
+  # chmod 644 $(ls -l | egrep -v '(\-rw\-r\-\-r\-\-|^l|^total)' | sed 's/.* //')
+
+2016-09-10:
+  Installed non-free media decodings for gstreamer library.
+    Pacman: gst-libav
+
+  I noticed this as a missing optional dependency when doing
+  some "pacman -Qi".  
+
+2016-09-11:
+  Installed X-Screensaver.
+    Pacman: xscreensaver
+
+  I can now lock my screen in the coffee shop with a Ctrl-Alt-l.
+  Hundreds of screen savers, set up randomly.  
+
+2016-09-11:
+  Noticed that
+    $ pacman -Qi mesa
+    ...
+    Optional Deps : opengl-man-pages: for the OpenGL API man pages
+                    mesa-vdpau: for accelerated video playback
+                    libva-mesa-driver: for accelerated video playback
+    ...
+
+  So I am missing some video capability.
+
+2016-09-12:
+  Install opengl man pages and some accelerated playback functions.
+    Pacman: opengl-man-pages
+    Pacman: mesa-vdpau libva-mesa-driver
+
+  The last two are optional dependecies for the mesa package.
+  Mesa is an open source implementation of opengl.
+
+2016-09-12:
+  From the Arch Linux hardware accelleration wiki:
+    - For Intel Graphics use VA-API
+    - For NVIDIA cards use VDPAU
+    - For AMD cards you can use both (with mesa)
+
+  There are two specific types of drivers for VA-API and VDPAU
+    - libva-vdpau-driver, which uses VDPAU as a backend for VA-API.
+    - libvdpau-va-gl, which uses VA-API as a backend for VDPAU.
+    - For pre-2007 cards see XvMC.
+
+  Tip: It is recommended to install and configure both VA-API
+       and VDPAU to achieve support in different scenarios,
+       e.g. Flash doesn't support VA-API but can use the
+       VDPAU VA-API backend.
+
+  Warning: Do not use libva-vdpau-driver and libvdpau-va-gl
+           together as it will create an (infinite) loop between
+           VA-API and VDPAU, which will result in something either
+           really bad or really fun. But if you try it anyway
+           please share your experiences.
+
+  OK, for my NVIDIA video card and proprietary drivers, I need use
+  the VDPAU facing toward hardware and libva-vdpau-drive for an 
+  interface to VA-API applications.  The mesa stuff is implementing
+  OpenGL.
+
+  Currently:
+    $ pacman -Ss nvidia-utils
+    ...
+    extra/nvidia-utils 370.28-1 [installed]
+        NVIDIA drivers utilities
+
+    $ pacman -Ss libva-vdpau-driver
+    extra/libva-vdpau-driver 0.7.4-2
+        VDPAU backend for VA API`
+
+    $ pacman -Ss libvdpau-va-gl
+    community/libvdpau-va-gl 0.4.0-1
+        VDPAU driver with OpenGL/VAAPI backend
+
+  So, install libva-vdpau-driver:
+    Pacman: libva-vdpau-driver
+    Pacman: vdpauinfo
+
+  Reboot to see what got picked up.
+
+    $ vainfo
+    libva info: VA-API version 0.39.2
+    libva info: va_getDriverName() returns 0
+    libva info: Trying to open /usr/lib/dri/nvidia_drv_video.so
+    libva info: Found init function __vaDriverInit_0_35
+    Floating point exception (core dumped)
+
+    $ vdpauinfo
+    display: :0.0   screen: 0
+    Error creating VDPAU device: 1
+
+  Something is wrong.  X seems to be functional.
+
+2016-09-13:
+  I "guessed" I would not need the AUR firmware package
+  nouveau-fm.
+
+  Actually I guessed right.  Building and installing this package
+  just installed data files into /usr/lib/firmware/nouveau where
+  it will probably just sit since I am not using the nouveau driver.
+
+  After some digging through internet blogs, the errors above
+  with vainfo and vdpauinfo, are due to my GEFORCE 940M Optimus
+  video card.  It does not have on board video decoding.  I have
+  two choices, use the Intel chipset to do this (requires going
+  to the open source Nouveau drivers - the NVIDIA drivers package
+  blacklists the Nouveau drivers) or just let the CPU do the
+  decoding.
+
+  So, uninstalled packages that the NVIDIA card doesn't support,
+    Pacman:(Remove) mesa-vdpau libva-mesa-driver libva-vdpau-driver 
+
+  Running vlc:
+    Playing DVD - load average: 0.41, 0.41, 0.32
+    Playing MP4 - load average: 0.91, 0.56, 0.38
+  So, system not even sweating.
+
+2016-09-17:
+  Installing Perl6 via the rakudo AUR package.
+
+  First install some optional dependencies:
+    Pacman: gdb, valgrind
+
+  Now, rakudo-git package depends moarvm-git and nap-git from
+  the AUR.  Tried pulling down rakudo-git and building it,
+  but failed due to above missing dependencies.
+
+    $ git clone https://aur.archlinux.org/rakudo-git.git
+    $ git clone https://aur.archlinux.org/moarvm.git
+    $ git clone https://aur.archlinux.org/nqp.git
+    $ cd moarvm
+    $ makepkg -sri
+    $ cd ../nqp/
+    $ makepkg -sri
+    $ cd ../rakudo-git/
+    $ makepkg -sri
+    ===SORRY!===
+    The nqp-m binary is too old
+
+    To automatically clone (git) and build a copy of NQP 2016.09,
+    try re-running Configure.pl with the '--gen-moar' option.
+    Or, use '--prefix=' to explicitly specify the path where
+    the NQP and MoarVM executables can be found that are use to
+    build Rakudo.
+
+    ==> ERROR: A failure occurred in build().
+        Aborting...
+
+  The npq last updated 2016-08-31.
+
+    $ cd ../npq
+    $ git -fetch origin
+    $ git status
+    On branch master
+    Your branch is up-to-date with 'origin/master'.
+    Untracked files:
+      (use "git add <file>..." to include in what will be committed)
+    
+        nqp-2016.08.1-1-any.pkg.tar.xz
+        nqp-2016.08.1.tar.gz
+        pkg/
+        src/
+
+    nothing added to commit but untracked files present
+    (use "git add" to track)
+
+  OK, the AUR repo version of npq is out of date.
+
+  Is it possible to build rakudo against my versions in ~/local?
+
+  First, get the AUR versions I just installed out of the way.  See
+  if I can install what was pulled in from AUR into ~/local.  (Doing
+  another makepkg will fail since I remove the prerequisits.)
+
+    $ sudo pacman -Rsu nqp moarvm
+    $ cd src/rakudo
+    $ perl Configure.pl --prefix=/home/geoff/local/ --backend=moar --gen-moar
+
+  Well, the first thing the build does is clone npq, go figure.
+  Installed a new version of nqp intp ~/local/bin.
+
+    $ make test
+    $ make install
+
+  This time all the tests suceeded.
+
+  Perl6 seems to work,  still complains that I should do a
+  `panda install Readline`, so lets get panda working.  Using
+  the AUR version might require some forcing, so I won't do
+  that.  See if the github version will now build.
+
+    $ cd ~/build/Perl_6/panda
+    $ git status
+    $ rm -rf .panda-work
+
+  Now, both
+
+    $ perl6 bootstrap.pl
+    $ perl6 bootstrap.pl --prefix="/home/geoff/local"
+
+  fail in the same way as before.
+
+  Give up until perl6 more stable on Arch.
+
+2016-09-23:
+  Installed pypy for python3 with optional tk dependency.
+    Pacman: pypy3, tk
+
+  Find all pythagorian triples whose sides are less than 1500.
+
+    pypy3: 11.6047 seconds
+    andaconda python 3: 122.9877 seconds
+
+  The JIT compiler makes pure python code run very fast.  As
+  I understand it, does not do much for things with C under-
+  -the-hood like numpy.
+
+2016-09-25:
+  Noticed that after a system shutdown with the command
+
+    $ sudo shutdown -h now
+
+  from the X environment resulted with the wireless not
+  coming up after the reboot.  Nor could I find any wireless
+  access points in the coffee shop until after the next 
+  reboot.  Once wireless access established, everything the
+  same as before when system rebooted.  Bringing X down 
+  properly must save "something" "somewhere" to enable the
+  network to come up on reboot before anyone logs in.
+
+2016-10-13:
+  Been lazy lately and have not kept up on this log lately.
+  Going through my shell history to reconstruct what I have
+  been up to.
+
+  Decided to use stack as my Haskell programming environment.
+  Everything will be local to my regular user "geoff".  The
+  Haskell Platform website now recommends the use of stack.
+
+  Uninstalled system wide ghc and lots of haskell "stuff"
+  I used Pacman to install to get comonads to work.
+
+    Pacman(Remove): haskell-gtk haskell-connection haskell-comonad
+    Pacman(Remove): haskell-contravariant haskell-contravariant-extras
+    Pacman(Remove): haskell-free haskell-juicypixels
+    Pacman(Remove): haskell-project-template haskell-haddock-api
+    Pacman(Remove): haskell-haddock-library ghc-mod haskell-ghc-mod
+    Pacman(Remove): ghc cabal-install happy alex
+
+  From userland, installed stack to /usr/local/bin via
+
+    $ curl -sSL https://get.haskellstack.org/ | sh
+
+  It asked for sudo password once while installing it.  On CentOS, this
+  trys to use yum (yuck!).  See userland_Adminlog.txt for my
+  adventures with stack.
+
+  Other stuff installed -
+
+    Pacman: mplayer
+    Pacman: whois
+
+2016-10-15:
+  I may have lost some information in this file due to updating
+  this file with a version of it in my scheller-linux-environment
+  GitHub repo.  To avoid this confusion in the future, I created
+  the following symlink:
+
+    $ cd ~/info/ArchLinux/admin
+    $ ln -s ~/devel/scheller-linux-environment/info/ArchLinuxAdminLogs
+
+  so now there will only be one copy of my admin logs.  There is
+  another subdirectory ~/info/ArchLinux/admin/Config that
+  contains specific info about the changes I have made to the
+  system configuration files, for example
+
+    $ ls ~/info/ArchLinux/admin/Config_Files/etc/pam.d
+    login  login_orig  passwd  passwd_orig
+
+  Unfortunately, I can't share this with the rest of the world 
+  due to security reasons.
+
+2016-10-22:
+  Installed speedtest-cli and iperf to measure internet bandwidth.
+
+    Pacman: speedtest-cli iperf
+
+  speedtest-cli is a python script that gives a command-line-interface
+  to the http://www.zdnet.com/broadband-speedtest/ website.  I find it
+  alot more easy and user friendly than the actual website.  
+
+  iperf is both a client and server that can perform TCP speed test
+  between two systems.
+
+    On server run: $ iperf -s
+    On client run: $ iperf -c host
+
+  where host is IP of server.  Man page for iperf is quite complete.
+  Can also run UDP tests.
+
+2016-10-24:
+  Something wrong with XFCE gui environment.  Not working smoothly.
+
+2016-10-25:
+  Over last few days I noticed XFCE gui environment getting
+  slower, terminals & browser windows failed to spin up.
+
+  Previously, I have noticed that I am getting quite a 
+  few Thunar related daemon processes spun up:
+
+    Thunar --sm-client-id 2c76304e3-138f-44e2-9910-e77c65e60ab5 --daemon
+
+  Well, today GUI-land unusable and several hundred of them are
+  running. 
+
+  I don't know if this has anything to do with it, but the
+  XFCE gui environment really started steadily going downhill
+  after a pacman update that brought in gtk/gtk3 stuff.
+
+2016-10-25:
+  Try uninstalling Thunar related stuff:
+
+    Pacman(Remove): thunar thunar-archive-plugin
+    Pacman(Remove): thunar-media-tags-pluggin thunar-volman
+
+  Before reinstalling, I rebooted.  Not only was Thunar file
+  manager still there, but all the daemon processes too.
+  XFCE-DE still barely usable.  Punt on the reinstall for
+  now, but I suspect I will need thunar-volman to mount
+  my external HD.
+
+2016-10-26:
+  GUI-land completely unusable until I slew off hundreds of
+  these Thunar deamon processes via:
+
+    $ ((jj = 2600)); while (( jj++ < 2826))
+    > do
+    >    kill -15 $jj
+    > done
+
+  in another virtural console.  I left 6 of them running.
+  Now, the desktop environment is functioning as it should.
+
+  There is nothing on internet about XFCE/Thunar issues and
+  a pacman update when I logged on didn't drag in any possibly
+  related gtk/thunar/xfce updates.
+
+2016-10-26:
+  I going to research completely redoing my XFCE Desktop 
+  Environment.  I think I will bring in a Display Manager.
+  This, I hope, will make my system more "convensional" and
+  thus more close to a tested "configuration."
+
+2016-10-26:
+  Installed lightdm display manager
+
+    Pacman: lightdm lightdm-gtk-greater
+
+  and some optional dependencies
+
+    Pacman: accountsservice xorg-server-xephyr
+
+  and enabled it
+
+    $ sudo systemctl enable lightdm
+
+  reboot
+
+  As I suspected, dark screen.  I will need to figure out
+  how to configure it to use the NVIDIA card like I did
+  for startx in my ~/.xinitrc file.
+
+  But!!! when I jump over to another virtual terminal, and
+  run startx, XFCE spins up perfectly with only one
+  instance of '/usr/bin/thunar --daemon' running!
+
+2016-10-26:
+  No wireless running.  Lets disable lightdm.
+
+    $ sudo systemctl disable lightdm
+
+  and reboot.
+
+  System came back up, started xfce via startx, network
+  configured again, but 7 'Thunar --sm-client-id ... --daemon'
+  were spun up.
+
+  Interesting...
+
+2016-10-26:
+  Every time a "shutdown" from within Xfce, but not "log out",
+  the next time I startx, I get one more of these 
+  'Thunar --sm-client-id ... --daemon' running.  I am up to 11 
+  of these now.  I will look into Xfce startup configurations.
+
+2016-10-27:
+  Finally fixed Xfce GUI-land problems.
+
+  Revisionist history to follow (took a while to work out):
+
+  In 'Sessions and Startup' Xfce config gui, checked 'Prompt
+  on logout' and unchecked 'Launch thunar in daemon mode'.
+  Killed off all the running Thunar Daemons.  On 'Log Out' 
+  checked 'Save session for future logins'.
+
+  On reboot, now only one Thunar runs in Daemon mode.
+
+  So, I have an unconfigured display manager installed that
+  I have disabled.  In retrospect, I could have fixed original
+  problem with kill command and gui settings.
+
+  Never had to reinstall thunar, thunar-archive-plugin,
+  thunar-media-tags-pluggin, and thunar-volman.  My external
+  hard drive mounts just fine.
+
+2016-11-16:
+  Updated Google Chrome,
+
+    $ cd ~/build/AUR/google-chrome_build/google-chrome
+    $ git pull origin
+    $ makepkg -sri
+
+2016-11-19:
+  I "Uninstalled" anaconda via
+
+    $ cd ~/opt
+    $ rm -rf anaconda3/
+
+  I am finding the Ipython that comes with Arch much better
+  configured "out of the box."  Also, I like the direction
+  that pypy is taking the language better than that of the
+  python scientific stack.  There are too many old fossils
+  in the scientific community unwilling to leave Python 2.7
+  in the dust.
+
+2016-11-21:
+  Noticed /etc/bashrc.pacnew and /etc/local.gen.pacnew files.
+
+  I simply replaced /etc/bashrc with the first, the only
+  difference was with prompts, which I override anyway.
+
+  Replaced /etc/local.gen with new version after uncommenting
+  the line 
+
+    #en_US.UTF-8 UTF-8  
+
+  Also /etc/ssh/sshd_config.pacnew, after editting in changes
+  to new version, the only differences now are
+
+    # diff sshd_config sshd_config.pacnew 
+    1c1
+    < # $OpenBSD: sshd_config,v 1.98 2016/02/17 05:29:04 djm Exp $
+    ---
+    > # $OpenBSD: sshd_config,v 1.99 2016/07/11 03:19:44 tedu Exp $
+    38d37
+    < # obsoletes QuietMode and FascistLogging
+
+  so, I replaced it too.
+
+  Finally, I replaced /etc/pacman.d/mirrorlist with latest 
+  version.  I uncommented the Worldwide, Canadian, and US
+  servers.  Will continue to do this periodically in future
+  without noting it in this log file.
+
+2016-11-25:
+  Uninstalled flightgear because its data file too big for slow
+  coffee shop internat connection making "pacman -Syu" too slow.
+  Maintainers might consider breaking up data file into smaller
+  chunks. 
+
+    Pacman(Remove): flightgear flightgear-data
+
+  Added a git repo viewer,
+
+    Pacman: gitg
+
+2016-12-05:
+  Uninstalled 0AD due to data files taking too long to down
+  load on slow connections.
+
+    Pacman(Remove): 0ad 0ad-data
+
+2016-12-17:
+  Installed blender.
+
+    Pacman: blender
+
+2016-12-17:
+  Reset the timezone to East Coast.
+
+    $ timedatectl list-timezones | grep America/Ne
+    America/New_York
+ 
+    $ sudo timedatectl set-timezone America/New_York
+
+2016-12-17:
+  Noticed system time about 4 minutes behind my cell
+  phone's time.  Install network time deamon ntpd.
+
+    Pacman: ntp
+
+  When I went to figure out how to turn it on, I discovered
+  that systemd has a simple client only time deamon built in,
+  so I will use it instead.
+
+    Pacman(Remove): ntp
+
+  Now configuren systemd to use ntp time:
+
+    $ sudo timedatectl set-ntp true
+ 
+2016-12-28:
+  Installed the C++ Boost library header files.
+
+    Pacman: boost
+
+  The boost libraries, boost-libs, were already installed.
+  
+  When building software with Boost, -I or -L flags not
+  needed since headers and libs are installed under /usr/include
+  and /usr/lib repectively.
+
+2017-01-11:
+  Noticed that both chrome and firefox not displaying asian
+  character sets correctly.  Type installing more fonts.
+
+    Pacman: texlive-langjapanese texlive-langchinese
+
+  Did not help.  I got these via:
+
+    $ pacman -Ss font | less
+
+  and looked for "chinese" and "japanese".
+
+  Gnu's gnu-free-fonts, which are a set of free OpenType fonts
+  covering the Unicode character set, are installed.
+
+    Pacman: ttf-croscore
+
+  Above are Chrome OS core fonts, also did not help.
+
+    Pacman: adobe-source-han-sans-cn-fonts
+    Pacman: adobe-source-han-sans-jp-fonts
+    Pacman: adobe-source-han-sans-kr-fonts
+    Pacman: adobe-source-han-sans-otc-fonts
+    Pacman: adobe-source-han-sans-tw-fonts
+    Pacman: opendesktop-fonts otf-ipafont
+    Pacman: ttf-mph-2b-damase ttf-sazanami
+    Pacman: ttf-hannom ttf-hannom ttf-baekmuk
+    Pacman: ttf-hanazono wqy-bitmapfont wqy-microhei
+    Pacman: wqy-microhei-lite wqy-zenhei
+
+  Installed everything Chinese, Japanese, and Korean
+  font wise I could find.  Now Baidu displays correctly
+  in Chrome and Firefox.
+
+2017-01-19:
+  Changed time back to Mountain time.
+
+    $ sudo timedatectl set-timezone America/Denver
+
+  Note: Clock in XFCE gui did not update until I 
+        restarted the XFCE session.
+
+2017-01-25:
+  Installed bc.  GNU extension to POSIX command line
+  calculator/math language.
+
+    Pacman: bc
+
+  Need to set scale to something greater than 0 for
+  division to make sense.  When scale = 0, then
+  the % operator is the integer mod operator with
+  the usual C language negative value behavior for %.
+
+2017-01-28:
+  Installed exiftool to extract metadata from files.
+
+    Pacman: perl-image-exiftool
+
+  Installed this to ensure that JPG files uploaded to
+  Facebook did not contain GPS metadata.  This perl
+  script seems to work on a large variety of file types.
+
+2017-01-28:
+  Installed Markdown.pl perl script to render markdown
+  files (like GitHub README.md files) as html.
+
+    Pacman: perl-text-markdown
+
+  Use -html4tags to render as HTML as opposed to XML,
+  example -
+
+    $ Markdown.pl -html4tags README.md > README.html
+
+  For more info see:
+
+    https://daringfireball.net/projects/markdown/
+
+  Unfortunately, this version does not quite work the
+  same as what GitHub does.
+
+2017-01-29:
+  Installing Haskell Stack infrastructure and the Stack
+  build tool from the Arch Linux repos
+
+    Pacman: stack haskell-stack
+
+2017-02-01:
+  Found the following orphaned packages,
+
+    $ pacman -Qtdq
+    cmake
+    colord
+    elfutils
+    enet
+    gloox
+    gstreamer0.10-base-plugins
+    id3lib
+    js17
+    libgnomeui
+    libkeybinder2
+    libnm-glib
+    miniupnpc
+    python-path
+    vte
+
+  Removed them via,
+
+    $ sudo pacman -Rns $(pacman -Qtdq)
+
+  Here is what actually got removed,
+
+    gnome-mime-data-2.18.0-7, gnome-vfs-2.24.4-10,
+    gstreamer0.10-0.10.36-4, gstreamer0.10-base-0.10.36-3,
+    jsoncpp-1.8.0-1, libbonobo-2.32.1-4, libbonoboui-2.24.5-3,
+    libgnome-2.32.1-6, libgnome-data-2.32.1-6,
+    libgnome-keyring-3.12.0-2, libgusb-0.2.9-1,
+    libidl2-0.8.14-4, libnm-1.6.0-4, libuv-1.10.2-1,
+    orbit2-2.14.19-3, cmake-3.7.2-1, colord-1.3.4-1,
+    elfutils-0.168-1, enet-1.3.13-1, gloox-1.0.17-1,
+    gstreamer0.10-base-plugins-0.10.36-3, id3lib-3.8.3-16,
+    js17-17.0.0-4  libgnomeui-2.24.5-2, libkeybinder2-0.3.1-1,
+    libnm-glib-1.6.0-4, miniupnpc-2.0-1, python-path-8.2.1-1,
+    vte-0.28.2-8
+
+2017-02-01:
+  List all foreign (usually AUR) packages:
+
+    $ pacman -Qmq
+    banshee
+    dropbox
+    gdata-sharp
+    google-chrome
+    gudev-sharp
+    moarvm
+    nouveau-fw
+    nqp
+    pyogg
+    pyvorbis
+    rtorrent-systemd
+    tor-browser-bin
+
+  I will go through these to see which to update and which 
+  to remove.
+
+    sudo pacman -Rsu nouveau-fw    <- Don't need (see above).
+    sudo pacman -Rsu moarvm nqp    <- Clutter from perl6 build attemp.
+
+    sudo pacman -Rsu google-chrome <- Remove AUR built chrome.
+    sudo pacman -Syu chromium      <- Replace with chromium
+
+      But now have to chromium-widevine from AUR so Netflix 
+      will work (sorry rms, i'm a bad boy).
+
+        $ cd ~/build/AUR
+        $ git clone https://aur.archlinux.org/chromium-widevine.git
+        $ cd chromium-widevine
+        $ makepkg -sri
+
+    Pacman: chromium
+
+    I'll continue with this later.
+
+2017-02-03:
+  Can't seem to be able to remove net-tools:
+
+    $ sudo pacman -Rsu net-tools
+    [sudo] password for geoff: 
+    checking dependencies...
+    warning: removing net-tools from target list
+    there is nothing to do
+
+    $ pacman -Ss net-tools
+    core/net-tools 1.60.20160710git-1 [installed]
+        Configuration tools for Linux networking
+
+    $ whence ifconfig
+    /usr/bin/ifconfig
+
+  The only tools I regularly used was ipconfig and netstat.
+
+      For ipconfig, use:
+
+        $ ip addr
+        $ ip link
+    
+      For netstat, use
+
+        $ ss
+        $ ip route
+
+  The warning is due to the -Rs option.  With -R, -s means to recursively 
+  remove all dependencies provided:
+
+    1. They are not required by any other packages.
+    2. They were not explicity installed.
+
+  The command
+
+    $ pacman -Sii net-tools
+
+  shows that net-tools is a dependency for 21 installed packages, one of
+  which is wicd.
+
+  Therefore, after net-tools was removed from the list of packages
+  to be removed, there was "nothing to do".
+
+2017-02-04:
+  Installed haveged, a daemon that generates system entropy;
+
+  This speeds up critical operations in cryptographic programs
+  such as gnupg (including the generation of new keyrings).
+
+    Pacman: haveged 
+
+    $ sudo systemctl start haveged
+    $ sudo systemctl enable haveged
+
+2017-02-04:
+  Enabled Intel microcode updates:
+
+    $ cat /boot/loader/entries/arch.conf 
+    title Arch Linux
+    linux /vmlinuz-linux
+    initrd /intel-ucode.img
+    initrd /initramfs-linux.img
+    options root=PARTUUID=fd153bda-5bf1-4a49-9728-4f
+
+  Added the 3rd line above.  I finally configured the intel-ucode
+  package I installed back in 2016-07-04.
+
+  Configuration from Arch Linux Wiki:
+    https://wiki.archlinux.org/index.php/Microcode
+
+  The file /boot/intel-ucode.img last updated 2016-11-15.
+
+2017-02-15:
+  Installed strace and ltrace to track system and shared
+  library calls of executables.
+
+    Pacman: strace ltrace
+
+  Installed dnstracer, a command which determines where a
+  given Domain Name Server (DNS) gets its information from,
+  and follows the chain of DNS servers back to the servers
+  which know the data.
+
+    Pacman: dnstracer
+
+2017-02-19:
+  I have been using either the XFCE menus to power off/reboot
+  the system or "sudo shutdown" command when not in X.  I
+  looked into more "native" ways to do these things in Arch.
+  After 10's of minutes, I did not find anything definitive
+  on this topic in the Arch Wikis.  Based on what I read in
+  the systemctl man pages I tried, probably foolishly, from
+  within an XFCE session:
+
+    $ systemctl poweroff
+
+  The system went down very fast.  When I rebooted, the
+  command "ip link" showed no wireless interface.  Bringing
+  up XFCE and several reboots did not bring back the wireless
+  interface.  The "dmesg | grep firmware" command did not
+  indicate that any of the ath10k drivers were loaded.  
+
+  After I did the following, I had my wireless interface
+  back:
+
+    $ systemctl is-enabled wicd
+    enabled
+    $ sudo systemctl disable wicd
+    ...
+    $ sudo systemctl enable wicd
+    ...
+
+  After a reboot, all was fine.  I have no idea whether the
+  above commands had any effect or the system would have
+  "fixed itself" as I have seen it do before.
+
+  Also, when I brought Chromium up, it complained it was
+  improperly shutdown.
+
+  Now,
+
+    $ loginctl show-session $XDG_SESSION_ID --property=Active
+    Active=yes
+    $ loginctl show-session $XDG_SESSION_ID --property=Remote
+    Remote=no
+
+  according to the general trobleshooting page on Arch Wiki,
+  this indicates that regular users can use the following
+  commands (from the cmdline or put in menus):
+
+    systemctl poweroff
+    systemctl reboot
+    systemctl hibernate
+    systemctl suspend
+
+  assuming the following:
+
+    1. systemd and polkit installed
+    2. A polkit authentication agent installed, in my
+       case it is polkit-gnome.  There is one for XFCE,
+       but it is in AUR.
+
+  What I have been using to shutdown and reboot the system 
+  are commands from a System V compatibility package:
+
+    $ pacman -Qlq  systemd-sysvcompat
+    ...
+    /usr/bin/halt
+    /usr/bin/init
+    /usr/bin/poweroff
+    /usr/bin/reboot
+    /usr/bin/runlevel
+    /usr/bin/shutdown
+    /usr/bin/telinit
+    ...
+
+  The man pages for these commands have the following -
+
+    Note: These are legacy commands available
+          for compatibility only.
+
+  I don't know, the native commands don't seem to play nice
+  with XFCE and the System V ones are deprecated.
+
+  Posted this question on Arch Linux Newbie Corner Wiki:
+
+    https://bbs.archlinux.org/viewtopic.php?id=223345
+
+  Got some useful feedback.
+
+02-20-2017:
+  Figured out why LibreOffice spell checker not working,
+  no English dictionary.
+
+    Pacman: hunspell-en
+
+  Might as well add other functionality too.  
+
+  For hyphenation rules:
+
+    Pacman: hyphen-en
+
+  Both hunspell and hyphen packages already installed.
+
+  For grammer checking,
+
+    Pacman: languagetool
+
+  For Thesaurus,
+
+    Pacman: libmythes mythes-en
+
+  Spelling and thesaurus features now work, but not spotting
+  obvious grammer mistakes.

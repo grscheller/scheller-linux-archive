@@ -1,0 +1,438 @@
+Purpose: For things installed locally as an unprivalleged user.
+
+2016-07-29:
+  Installed Anaconda Python into /home/geoff/opt/anaconda3.
+    Adjusted .bash_profile to put it in the path before
+    system python.
+
+    $ /home/geoff/opt/anaconda3/bin/python --version
+    Python 3.5.2 :: Anaconda 4.1.1 (64-bit)
+
+    $ /usr/bin/python --version
+    Python 3.5.2
+
+    $ /usr/bin/python2 --version
+    Python 2.7.12
+
+2016-08-01:
+  For scanning journalctl output, some useful options -
+    journalctl -f : follows like tail -f
+    journalctl -x : Augment log lines with explanation texts
+
+  For querying installed packages -
+    pacman -Qet : List all explicitly installed packages
+
+2016-08-17:
+  Added a simplistic ~/.vimrc file containing the following:
+    syntax off
+    set encoding=utf-8
+    set fileencoding=utf-8
+    set tabstop=4
+    set shiftwidth=4
+    set expandtab
+
+  It also contains comments explaining what I want to accomplish.
+
+2016-08-30:
+  Configured Cabal to install Haskell Cabal packages into geoff
+  home directory for Cabal packages not yet rolled into Arch
+  Linux Pacman packages.
+
+    $ mkdir -p .cabal/bin
+    $ cabal update
+
+  Installed codo-notation Cabal package
+
+    $ cabal install codo-notation
+
+    Cabal001: codo-notation
+
+  Note: Cabal is "NOT" a true package manager.  Subsequent
+    "cabal installs" can break previous ones.  This is known
+    as "Cabal Hell."
+
+    1. Cabal can install packages globally - NEVER DO THIS!!!
+    2. Be prepared to blow away the .cabal directory and
+       start over.
+    3. Possible to do Cabal on a per project basis using Cabal
+       sandboxws.  I wish to avoid this.  Also, periodically
+       monitor if Arch Linux Repos pick up these Cabal packages.
+    4. Like I did with Pacman, using "Cabal#:" so that I know
+       what I have currently installed via Cabal.  Use
+
+         $ grep 'Cabal...:' userland_Adminlog.txt
+
+       to get the list of Cabal installs.  Starting the
+       count at 001.
+
+  Cabal man page says that it is "cabal - a system for building
+  and packaging Haskell libraries and programs".
+
+2016-09-16:
+  Perl6 is "finally?" stable enough to try out.  There seems to
+  be two AUR's for it, rakudo and rakudo-star.  Much confusion
+  for which to use.  So, by passing AUR and install locally.
+
+  Installed the rakudo-star-2016.07 tarball into /home/geoff/local.
+  Built a perl6 that seems to work.  Some minor problems with the
+  regression tests when I built it (missing tests I think?).  When
+  I run perl6, it suggests I use for line editting either:
+    1. panda install Readline
+    2. panda install Linenoise
+    3. use rlwrap
+
+  But, panda not installed!  So, I cloned it from git-hub following
+  the directions from there.
+
+    $ git clone --recursive git://github.com/tadzik/panda.git
+
+  and followed README.md instructions build it using my shinny
+  new perl6.  Build fails to complete, but without "errors."
+
+  Now, the first thing suggested in README.md is to use a perl5
+  based utility called rakudobrew to build and install it.  This
+  seems to be similar to sbt abd lien in its use case.  Cloned
+  it directly into ~/.rakudobrew.
+
+    $ git clone https://github.com/tadzik/rakudobrew ~/.rakudobrew
+
+  Now, I tried to use it to build the package manager panda:
+
+    $ rakudobrew build panda
+
+  It complains that I have not told it what version of perl6 to use.
+  Why not the only bloody one on the path???  Then I realize that
+  I am dealing with something like sbt or lien, which wants to
+  itself build or install whatever perl6 version I indicate.
+
+2016-09-17:
+  I decided to change the use case of ~/local.  It is more likely
+  that Arch packages will (eventually) be more up-to-date than
+  anything I build, I will put ~/local/bin just before ~/bin
+  on my path.  (At work, I've been stuck on outdated CentOS 6.7
+  for way, way, way too long.)
+
+  Now, my Linux path is:
+
+    $ ~/bin/path
+    /home/geoff/.cabal/bin
+    /home/geoff/opt/anaconda3/bin
+    /usr/local/sbin
+    /usr/local/bin
+    /usr/bin
+    /opt/cuda/bin
+    /usr/lib/jvm/default/bin
+    /usr/bin/site_perl
+    /usr/bin/vendor_perl
+    /usr/bin/core_perl
+    /home/geoff/local/bin
+    /home/geoff/local/share/perl6/site/bin
+    /home/geoff/bin
+    .
+
+2016-09-17:
+  Back to Perl6, after some digging, the rakudo-star AUR package
+  is broken and rakudo package last updated 2016-08-20.  I'll
+  go with rakudo (see guass17_AdminLog.txt).
+
+2016-10-13:
+  Using stack as my build tool for Haskell -
+
+  Installed into /usr/local/bin via.
+
+    $ curl -sSL https://get.haskellstack.org/ | sh
+
+  Install ghc locally to your home directory:
+
+    $ stack setup
+
+  Created a stack "sandbox" and using with git.
+
+    $ stack --resolver ghc-7.10.3 new pythagTriples simple
+    cd pythagTriples
+    git init
+    git add develLog.txt LICENSE Setup.hs pythagTriples.cabal
+    git add stack.yaml src/Main.hs
+    vi develLog.txt
+    git status
+    git commit
+
+  Later, created a .gitignore file based on what was recommended
+  by Chris Allen in 'https://www.howistart.org/posts/haskell/1'.
+
+    $ cat .gitignore
+    dist
+    dist-*
+    cabal-dev
+    *.o
+    *.hi
+    *.chi
+    *.chs.h
+    *.dyn_o
+    *.dyn_hi
+    .hpc
+    .hsenv
+    .cabal-sandbox/
+    cabal.sandbox.config
+    *.prof
+    *.aux
+    *.hp
+    *.eventlog
+    .stack-work/
+    *.swp
+
+  Run ghci outside of a project:
+
+    $ stack ghci
+    Run from outside a project, using implicit global project config
+    Using resolver: lts-7.1 from implicit global project's config file:
+        /home/geoff/.stack/global-project/stack.yaml
+    Configuring GHCi with the following packages:
+    GHCi, version 8.0.1: http://www.haskell.org/ghc/  :? for help
+    Loaded GHCi configuration from /tmp/ghci7977/ghci-script
+    Prelude>
+
+  Run another version of ghci outside of a project:
+
+    $ stack --resolver ghc-7.10.3 ghci
+    Run from outside a project, using implicit global project config
+    Using resolver: ghc-7.10.3 specified on command line
+    Configuring GHCi with the following packages:
+    GHCi, version 7.10.3: http://www.haskell.org/ghc/  :? for help
+    Prelude>
+
+  OK, I need to figure out which version I should be using.  Seems
+  that the lts-7.1 is using a newer version of GHCi than ghc-7.10.3!
+  Until I am better "educated", I'll stick to lts-7.1.
+
+2016-10-15:
+  The latest long term support version of Haskell on Stackage,
+  https://www.stackage.org/, is LTS Haskell 7.3 (ghc-8.0.1).  The
+  defaults stack generates in stack.yaml are really out of date.
+  The lts-3.5 on Arch Linux caused me a lot of confussion, but it
+  did tell me that the only supported versions of ghc for OS
+  key 'linux64-ncurses6' are GhcVersion 7.10.3, GhcVersion 8.0.1.
+
+  So, I'll stick with lts-7.3 until the next LTS release.
+
+  Globally I installed lts-7.3 via
+
+    $ stack --resolver lts-7.3 setup
+
+  and made lts-7.3 the default  by editing
+  ~/.stack/global-project/stack.yaml, where the non-comment
+  contents of this file are now:
+
+    extra-package-dbs: []
+    packages: []
+    extra-deps: []
+    resolver: lts-7.3
+
+  Now, a comment in this file directs me to the file
+  ~/.stack/config.yaml as being the default template for
+  new projects.  This file refers to the website
+  http://docs.haskellstack.org/en/stable/yaml_configuration/
+  for how to configure this file.  After consulting this
+  website, the contents of ~/.stack/config.yaml are now:
+
+    templates:
+      params:
+        author-email: geoffrey@scheller.com
+        author-name: 'Geoffrey Scheller'
+        copyright: 'Copyright: (c) 2016 Geoffrey R. Scheller'
+        github-username: grscheller
+
+  I left the param 'category: value' off until I understand
+  it better.  Seems that it should be set on a per project
+  basis anyway.
+
+2016-10-15:
+  When creating a new stack project, use
+
+    $ stack new foofoo new-template
+
+  This will create:
+    LICENSE
+    Setup.hs
+    foofoo.cabal
+    stack.yaml
+    app/Main.hs
+    src/Lib.hs
+    test/Spec.hs
+
+  This seems a much better starting point than the ones I
+  fumbled to create above.
+
+  Aside: Don't know why it put it in the Web category?
+
+2016-10-16:
+  Seems that the Haskell/Stack world has moved onto lts-7.4.
+
+  I saw this when I tried to build something with stack.
+
+  Updated stack itself:
+
+    $ stack update
+
+2016-10-20:
+  Updated stack to use lts-7.4 when outside a project:
+
+  Changed
+
+    resolver: lts-7.3
+
+  in ~/.stack/global-project/stack.yaml
+
+2016-18-2016:
+  Change the X keymappings to make Caps-Lock a second Escape key.
+
+  Rt Click desktop ->
+    Applications -> Settings -> Sessions and Startup ->
+      Application Autostart tab
+
+      Now add the following entry:
+
+      Name: Keymapping
+      Description: Make caps-lock an escape key
+      Command: xmodmap -e "clear Lock" -e "keysym Caps_Lock = Escape"
+
+  Restart X.
+
+2017-01-29:
+  I had noticed that some package (I think haskell-cmark)
+  required ghc 8.0.1-1 as a dependency.  Also noticed that
+  the version of stack in the Arch Repos was later than
+  the one I previous installed in /usr/local.
+
+  Removed previous stack Haskell infrastructure.
+
+    $ rm -rf ~/.stack
+    $ rm ~/.local/bin/{cabal,happy,alex}
+    # rm /usr/local/bin/stack
+
+  Installed stack and haskell-stack packages with
+  pacman.  Initialized new sandbox into my home
+  directory.
+
+    $ stack setup
+
+  and created a new project with
+
+    $ stack new junkTest simple
+
+  From the stack.yaml file, I see the following
+
+    resolver: lts-7.18
+    # require-stack-version: ">=1.3"
+
+  Also,
+
+    $ whence ghc
+    /usr/bin/ghc
+
+    $ stack exec whence ghc
+    /home/geoff/.stack/programs/x86_64-linux/ghc-ncurses6-8.0.1/bin/ghc
+    /usr/bin/ghc
+
+  Running stack the first time created a default YAML file
+
+    ~/.stack/global-project/stack.yaml
+
+  With the following non-comment content:
+
+    flags: {}
+    extra-package-dbs: []
+    packages: []
+    extra-deps: []
+    resolver: lts-7.18
+
+  Versions of ghc
+
+    $ /usr/bin/ghc --version
+    The Glorious Glasgow Haskell Compilation System, version 8.0.1
+
+    $ ~/.stack/programs/x86_64-linux/ghc-ncurses6-8.0.1/bin/ghc --version
+    The Glorious Glasgow Haskell Compilation System, version 8.0.1
+
+  Finally I editted the file
+
+    ~/.stack/config.yaml
+
+  as follows
+
+    templates:
+      params:
+        author-name: geoffrey@scheller.com
+        author-email: 'Geoffrey Scheller'
+        copyright: 'Copyright: (c) 2017 Geoffrey R. Scheller'
+        github-username: grscheller
+        category: 'Learning Haskell'
+
+  From these sites:
+
+    https://docs.haskellstack.org
+    https://haskell-lang.org/tutorial/stack-build
+
+  I got the following:
+
+    We define project to mean a directory that contains a
+    stack.yaml file, which specifies how to build a set of
+    cabal packages.  We define package to be a package with
+    a .cabal file.
+
+    A cabal package is identified by a single .cabal file, and
+    has 0 or 1 libraries, and 0 or more executables, test suites,
+    and benchmarks.
+
+    A Stack project has 1 or more cabal packages, and can build
+    them all at the same time.
+
+  Initialize a new project with
+
+    $ stack new junkTest simple
+
+  Build the project with
+
+    $ stack build
+
+  Test the project with
+
+    $ stack test
+
+  Install the project with
+
+    $ stack install
+
+    For the simple project, this just installs
+    the executable into ~/.local/bin
+
+  An existing Cabal package can be initialize
+  a stack.yaml file to use Stack via
+
+    $ stack init
+
+  inside the directory with the package's .cabal file.
+  Stack will attempt to determine a package set compatible
+  with the packages requested in the .cabal file.
+
+  To get all sorts of configuration info, use
+
+    $ stack path
+
+  To find out the versions of libraries which stack installed
+
+    $ stack list-dependencies
+    base 4.9.0.0
+    junkTest3 0.1.0.0
+
+2017-02-01:
+  Installed networking components.
+
+    Pacman: python2-iwscan python2-wpactrl
+
+  Noticed following warnings in /var/log/wicd/wicd.log - 
+
+    2017/01/21 19:50:13 :: WARNING: python-iwscan not found, falling back to using iwlist scan.
+    2017/01/21 19:50:13 :: WARNING: python-wpactrl not found, falling back to using wpa_cli.
+
+  At several wifi hotspots, not all, I've had to configure static IP addresses.

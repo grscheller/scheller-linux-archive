@@ -1,0 +1,11 @@
+#!/bin/bash
+#
+# Usage viewJarManifest someJarFile.jar
+#
+# Written by Geoffrey Scheller
+#
+
+if (( $# == 1 ))
+then
+    unzip -p ${1} META-INF/MANIFEST.MF
+fi

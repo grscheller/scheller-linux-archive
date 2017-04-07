@@ -1,0 +1,12 @@
+#!/bin/bash
+# Spread $PATH out in a more user readable form.
+#
+# Usage path
+#
+# Written by Geoffrey Scheller
+#
+IFS=':'
+for P in $PATH
+do
+    echo $P
+done

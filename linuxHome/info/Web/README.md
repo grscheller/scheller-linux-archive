@@ -1,21 +1,28 @@
-# Private Homepage Example
-Stub version of what I do in [info/Web](../../../info/Web).
+# Example work homepage (Stub version)
 
 I use a variety of different browsers and don't want to have to<br>
 "sync" my book marks and passwords schemas between them.  I push<br>
 these files to my various Linux systems and then just set my<br>
-homepage in my browser to ~/info/Web/homepage.
+homepage in my browser to ~/info/Web/workHomepage.
 
 ## Files:
-### [homepage.html](homepage.html)
-* Information content.
+### [workHomepage.html](workHomepage.html)
+* Information and links for work.
 * Basically an HTML table organizing topics.
 * Kept as simple as possible to facilitate monkey
   see - monkey do updating.
 * Easily resized with Ctrl= and Ctrl-.
 * CtrlShift+ and CtrlShift_ also work to resize.
 
-### [homepage.html](http://htmlpreview.github.com/?https://github.com/grscheller/scheller-linux-archive/blob/master/linuxHome/info/Web/homepage.html)
+### [homepage.html](http://htmlpreview.github.com/?https://github.com/grscheller/scheller-linux-archive/blob/master/linuxHome/info/Web/workHomepage.html)
+* Same as above except rendered as HTML.
+
+### [personalHomepage.html](personalHomepage.html)
+* Personnal homepage.
+* Linked from work version.
+* Less trivial example can be found here [info/Web](../../../info/Web).
+
+### [personalHomepage.html](http://htmlpreview.github.com/?https://github.com/grscheller/scheller-linux-archive/blob/master/linuxHome/info/Web/personalHomepage.html)
 * Same as above except rendered as HTML.
 
 ### style.css
@@ -30,4 +37,3 @@ homepage in my browser to ~/info/Web/homepage.
 
 ### [Portmanteau](http://htmlpreview.github.com/?https://github.com/grscheller/scheller-linux-archive/blob/master/linuxHome/info/Web/Portmanteau.html)
 * Same as above except rendered as HTML.
-

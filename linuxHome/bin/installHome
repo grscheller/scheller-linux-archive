@@ -8,7 +8,8 @@
 # Written by Geoffrey Scheller
 #
 
-# If on rygar, just install it.
+# If on rygar, just install it.  The mouthful `drxrytl410kzv'
+# is actually the real name of rygar.
 comp=$(hostname)
 if [[ ${comp%%.*} == "drxrytl410kzv" ]] 
 then
@@ -18,7 +19,7 @@ then
 fi
 
 # Check if a new package is ready, if so, install into ~/devel
-# and then inatall that into ~.
+# and then install that into ~.
 cd ~/catch
 if (( $? == 0 )) && [[ -d linuxHome ]]
 then

@@ -209,9 +209,21 @@ object Par {
      *    if the isDone method called before one of the get
      *    methods are called.
      *
+     *    Calculation is done in another thread so isDone 
+     *    does not block.
+     *
      */
     def isDone = {
-      if ( ! hasStarted && ! isCancelled ) new Thread(() => calculate()).start()
+      if ( ! hasStarted && ! isCancelled )
+        new Thread( () =>
+          try {
+            calculate()
+          } catch {
+            case ex: TimeoutException      => 
+            case ex: CancellationException => 
+            case ex: InterruptedException  => 
+            case ex: ExecutionException    => 
+          } ).start()
       done
     }
 

@@ -1,6 +1,6 @@
 # Basic Scala Language Constructs:
 
-## Scala's "splat" equivalents: splat.scala
+## 1. Scala's "splat" equivalents: [splat.scala](splat.scala)
 Languages like Python and Ruby have a syntactic sugar to pass an<br>
 array or tuple into a fixed or variable-arity function.
 
@@ -15,13 +15,12 @@ In Python:
    >>> f(*x)
    10
 ```
-The code in the splat object in [splat.scala](splat.scala)<br>
-explores similar constructs in scala.
+The code in the splat object in splat.scala explores
+similar constructs in scala.
 
-It makes sense to "splat" variable length datastructures into<br>
-variadic functions.  Also to "splat" tuples into fixed-arity<br>
-functions.  Other combinations seem to me more naturally handled<br>
-by unpacking and repacking.
+It makes sense to "splat" variable length datastructures into variadic<br>
+functions.  Also to "splat" tuples into fixed-arity functions.  Other<br>
+combinations seem to me more naturally handled by unpacking and repacking.
 
 To "splat" a variable length datastructure into a variadic function:
 ```

@@ -2,8 +2,8 @@
 
 A Pythagoean Triple is a tuple `(a, b, c)` such that `a^2 + b^2 = c^2`.
 
-This program generates all possible pythagorean triples<br>
-such that `gcd(a, b, c) = 1` and `a, b, c > 0`.
+This program generates all possible pythagorean triples where
+`gcd(a, b, c) = 1` and `a, b, c > 0`.
 
 Implemented in Haskell using the stack buildtool.
 
@@ -23,7 +23,8 @@ pythagTriples [-o|-f|-fs|-h] number
     -fs Use fast algorithm, but sort results a < b < c.
     -h  Print help message.
 ```   
-Both algorithms only print triples with no common factors, that is `gcd(a,b,c) = 1`.
+Both algorithms only print triples with no common factors,
+that is `gcd(a,b,c) = 1`.
 
 ## Some design considerations:
 1. These algorithms generate pathagorean triples with no common factors.
@@ -48,10 +49,10 @@ Both algorithms only print triples with no common factors, that is `gcd(a,b,c) =
 
    but the square root of `2` is not rational!
 
-3. The ordered algorthm generates all possible triples<br>
-   in lexiconical order, that is `a < b < c`.
+3. The ordered algorthm generates all possible triples in lexiconical order,<br>
+   that is `a < b < c`.
 
-   As `b` gets larger, eventually the difference in length<br>
+   As `b` gets larger, eventually the difference in length
    beween `c` and `b` is less than `1`.
    ```
                   *
@@ -62,7 +63,7 @@ Both algorithms only print triples with no common factors, that is `gcd(a,b,c) =
                   * * * * * * * * * * * * * 
                          vary b
    ```
-   Thus showing, `c - b < 1` => no more triples.
+   Hence, `c - b < 1` => no more triples.
    ```
       a^2 + b^2 = c^2
       a^2 = c^2 - b^2 = (c-b)*(c+b) < c + b
@@ -78,14 +79,15 @@ Both algorithms only print triples with no common factors, that is `gcd(a,b,c) =
    ```
    From running code, we see that both <= cases happen.
 
-4. Running code seems to show that the hypotence `c` is alwaya odd.<br>
+4. Running code seems to show that the hypotence `c` is alwaya odd.
+
    Let's show that this is universally true:
 
    We know not both `a` and `b` even, otherwise `a, b, c` not in<br>
    lowest terms.  If one even and the other odd, then `c` is odd.
 
-   But what about the case if `a` and `b` both odd?  That<br>
-   would imply `c` could be even.  Concider this case,
+   But what about the case if `a` and `b` both odd?  That would imply `c`<br>
+   could be even.  Concider this case,
 
    ```
       a^2 + b^2 = c^2
@@ -107,10 +109,9 @@ Both algorithms only print triples with no common factors, that is `gcd(a,b,c) =
    Also seems to produce results where `gcd(a,b,c) > 1`<br>
    like `(8, 6, 10)` and `(40, 42, 58)`.
 
-   I used this result for a faster algorithm and will use<br>
-   test/Spec.hs to compare the results.  So far the fast<br>
-   algorithm seems complete, but it is not yet clear how far<br>
-   you have to take it out to ensure you catch all triples<br>
-   for a given a.  Also, if you sort the results of the fast<br>
-   algorithm, is there a point that the cost of sorting is<br>
-   so high that the ordered algorithm wins out?
+   I used this result for a faster algorithm and will use test/Spec.hs to<br>
+   compare the results.  So far the fast algorithm seems complete, but it<br>
+   is not yet clear to me how far out you have to compute values to ensure<br>
+   you catch all triples for a given a.  Also, if you sort the results of<br>
+   the fast algorithm, is there a point that the cost of sorting is so high<br>
+   that the ordered algorithm wins out?

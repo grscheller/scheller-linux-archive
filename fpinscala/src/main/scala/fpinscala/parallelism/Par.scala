@@ -138,9 +138,9 @@ object Par {
    *     
    */
   private final
-  case class Map2Future[A,B,C](af: Future[A],
-                               bf: Future[B],
-                                f: (A,B) => C
+  case class Map2Future[A,B,C]( af: Future[A]
+                              , bf: Future[B]
+                              ,  f: (A,B) => C
                               ) extends Future[C] {
 
     // Internal state:
@@ -213,7 +213,7 @@ object Par {
      *    does not block.
      *
      */
-    def isDone = {
+    def isDone: Boolean = {
       if ( ! hasStarted && ! isCancelled )
         new Thread( () =>
           try {
@@ -233,7 +233,7 @@ object Par {
       *  cancelled before completion.
       *
       */
-    def isCancelled = cancelled
+    def isCancelled: Boolean = cancelled
 
     /** Cancel the future.
      *

@@ -6,8 +6,8 @@ Theses are the bash utilities I put into my Linux ~/bin directory.
 * Spreads $PATH out in a more user readable form.
 * Output more appropriate for use as input to other commands.
   ```
-  path | grep home
-  realPath $(path)
+  Path | grep home
+  realPath $(Path)
   ```
 ### [pathTrim](pathTrim)
 * Used in my .bash_profile.  Useful when $HOME and/or<br>

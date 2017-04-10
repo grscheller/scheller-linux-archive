@@ -23,7 +23,7 @@ XFCE-TERMINAL:
     Text Select color: #500032
             Bold Text: #FF5A00
 
-  Columns = 76
+  Columns = 78
   Rows = 18
 
 GNOME-KEYRING:

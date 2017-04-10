@@ -1,7 +1,6 @@
 # linuxHome
-This project is a stripped down version of the Linux environment
-syncingi<br>
- mechanisms I use at work.
+This project is a stripped down version of the Linux environment syncing<br>
+mechanisms I use at work.
 
 ## Description:
 Mechanism to share a common set of Linux Bash configuration files between<br>

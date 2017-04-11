@@ -4,5 +4,4 @@
 * XFCE Desktop GUI environment configuration.
 
 ### [unempowered.txt](unempowered.txt)
-* Useful commands and factoids that can be done without either<br>
-  root or sudo access.
+* Useful commands and factoids that generally don't require root access.

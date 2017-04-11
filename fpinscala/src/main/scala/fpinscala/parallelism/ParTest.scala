@@ -15,10 +15,11 @@ import Par._
  */
 object ParTest {
 
-  // Model expensive calculations with a
-  // non tail recursive Fibonacci function.
-  def fibPoor(n: Long): Long =
-    if (n < 2) n else fibPoor(n-1) + fibPoor(n-2)
+  // Model an expensive calculations with
+  // a less than stellar implementations
+  // of the factorial functon.
+  def fib(n: Long): Long =
+    if (n < 2) n else fib(n-1) + fib(n-2)
 
   def main(args: Array[String]): Unit = {
 
@@ -44,11 +45,11 @@ object ParTest {
     print("\nCompare Par.unit vs. Par.lazyUnit:")
 
     println("\nCreate Par via unit.")
-    val fibu = unit(fibPoor(fibParameter1))
+    val fibu = unit(fib(fibParameter1))
     println("Par created.")
 
     println("\nCreate Par via lazyUnit.")
-    val fiblu = lazyUnit(fibPoor(fibParameter1))
+    val fiblu = lazyUnit(fib(fibParameter1))
     println("Par created.")
 
     println("\nCreate Future from unit.")
@@ -57,7 +58,7 @@ object ParTest {
 
     println("\nGet value of Future from unit value.")
     val fibuValue = fibuFuture.get
-    println("fibPoor(" + fibParameter1 + ") = " + fibuValue)
+    println("fib(" + fibParameter1 + ") = " + fibuValue)
 
     println("\nRun Future from lazyUnit.")
     val fibluFuture = run(es)(fiblu)
@@ -65,13 +66,13 @@ object ParTest {
 
     println("\nGet value of Future from lazyUnit value.")
     val fibluValue = fibluFuture.get
-    println("fibPoor(" + fibParameter1 + ") = " + fibluValue)
+    println("fib(" + fibParameter1 + ") = " + fibluValue)
 
     // Calculate in parallel
     println("\nRecalculate with some parallelism.")
 
-    val fibMinus4 = lazyUnit(fibPoor(fibParameter1 - 4))
-    val fibMinus3 = lazyUnit(fibPoor(fibParameter1 - 3))
+    val fibMinus4 = lazyUnit(fib(fibParameter1 - 4))
+    val fibMinus3 = lazyUnit(fib(fibParameter1 - 3))
     val fibMinus2 = map2(fibMinus4, fibMinus3)(_ + _)
     val fibMinus1 = map2(fibMinus3, fibMinus2)(_ + _)
     val fibMinus0 = map2(fibMinus2, fibMinus1)(_ + _)
@@ -125,7 +126,7 @@ object ParTest {
     // Test isDone method for future provided by the es.
     println("\nTest isDone method of future given to us by the es:")
 
-    val longRunner1 = lazyUnit(fibPoor(fibParameter2))
+    val longRunner1 = lazyUnit(fib(fibParameter2))
     val longRunner1_Fut = run(es)(longRunner1)
 
     while (!longRunner1_Fut.isDone) {
@@ -184,7 +185,7 @@ object ParTest {
     // Test isCancelled, and cancel methods for a running future.
     println("\nTry cancelling a future which is running:")
 
-    val longRunner4 = lazyUnit(fibPoor(fibParameter3))
+    val longRunner4 = lazyUnit(fib(fibParameter3))
     val longRunner4_Fut = run(es)(longRunner4)
 
     println("longRunner4_Fut.isDone: "        + longRunner4_Fut.isDone       )
@@ -199,8 +200,8 @@ object ParTest {
     // Test isCancelled, and cancel methods for a running map2 future.
     println("\nTry cancelling map2 future which just started running:")
 
-    val longRunner5 = map2( lazyUnit(fibPoor(fibParameter3))
-                          , lazyUnit(fibPoor(fibParameter2))
+    val longRunner5 = map2( lazyUnit(fib(fibParameter3))
+                          , lazyUnit(fib(fibParameter2))
                           )(_ - _)
     val longRunner5_Fut = run(es)(longRunner5)
 
@@ -231,8 +232,8 @@ object ParTest {
     // Test isCancelled, and cancel methods for a longer running map2 future.
     println("\nAfter a while, try cancelling map2 future:")
 
-    val longRunner6 = map2( lazyUnit(fibPoor(fibParameter3))
-                          , lazyUnit(fibPoor(fibParameter2))
+    val longRunner6 = map2( lazyUnit(fib(fibParameter3))
+                          , lazyUnit(fib(fibParameter2))
                           )(_ - _)
     val longRunner6_Fut = run(es)(longRunner6)
 
@@ -265,8 +266,8 @@ object ParTest {
     // Test isCancelled, and cancel methods for a not yet running map2 future.
     println("\nTry cancelling map2 future which is not yet running:")
 
-    val longRunner7 = map2( lazyUnit(fibPoor(fibParameter3))
-                          , lazyUnit(fibPoor(fibParameter2))
+    val longRunner7 = map2( lazyUnit(fib(fibParameter3))
+                          , lazyUnit(fib(fibParameter2))
                           )(_ - _)
     val longRunner7_Fut = run(es)(longRunner7)
 
@@ -291,8 +292,8 @@ object ParTest {
     // Test get with timeout after a get.
     println("\nTry get with timeout after a get:")
 
-    val longRunner8 = map2( lazyUnit(fibPoor(fibParameter3))
-                          , lazyUnit(fibPoor(fibParameter2))
+    val longRunner8 = map2( lazyUnit(fib(fibParameter3))
+                          , lazyUnit(fib(fibParameter2))
                           )(_ - _)
     val longRunner8_Fut = run(es)(longRunner8)
 
@@ -304,8 +305,8 @@ object ParTest {
     // Test get with too short timeout, followed by get.
     println("\nTry get with too short timeout, followed by get:")
 
-    val longRunner9 = map2( lazyUnit(fibPoor(fibParameter3))
-                          , lazyUnit(fibPoor(fibParameter2))
+    val longRunner9 = map2( lazyUnit(fib(fibParameter3))
+                          , lazyUnit(fib(fibParameter2))
                           )(_ - _)
     val longRunner9_Fut = run(es)(longRunner9)
 
@@ -325,8 +326,8 @@ object ParTest {
     println("\nlazyUnits can cause some data sharing between futures from")
     println("the same Par, the second future's get method returns immediately:")
 
-    val longRunner10 = map2( lazyUnit(fibPoor(fibParameter3))
-                           , lazyUnit(fibPoor(fibParameter2))
+    val longRunner10 = map2( lazyUnit(fib(fibParameter3))
+                           , lazyUnit(fib(fibParameter2))
                            )(_ - _)
     val longRunner10_Fut1 = run(es)(longRunner9)
     val longRunner10_Fut2 = run(es)(longRunner9)

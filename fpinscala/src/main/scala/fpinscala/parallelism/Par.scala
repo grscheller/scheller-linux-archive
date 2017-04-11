@@ -9,6 +9,17 @@ import java.util.concurrent.TimeoutException
 
 /** Par object.
  *
+ *  For now Par is just a type alias.
+ *
+ *  The members of the Par companion object allow
+ *  parallel calculations to be defined in a pure way.
+ *  Par.run will produce a function that when given a
+ *  java.util.concurrent.ExecutorService will produce
+ *  a java.util.concurrent.Future.
+ *
+ *  Usage in code:
+ *    import fpinscala.parallelism.Par._
+ *
  */
 object Par {
 
@@ -22,15 +33,10 @@ object Par {
    */
   private final
   case class UnitFuture[A](get: A) extends Future[A] {
-
     def get(timeout: Long, units: TimeUnit): A = get
-
     def isDone: Boolean = true
-
     def isCancelled: Boolean = false
-
     def cancel(evenIfRunning: Boolean): Boolean = false
-
   }
 
   /** Wrap a constant value in a Par. 

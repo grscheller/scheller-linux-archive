@@ -6,15 +6,24 @@ import Par._
 
 import scala.collection.immutable.Stream.{cons, from}
 
-/** Test fpinscala.parallelism.Par object
+/** Implement an exponential Taylor series exapansion,
+ *  using fpinscala.parallelism.Par.
  *
+ *  Actually, this calculation I concocted only uses
+ *  one thread from the thread pool over and over again.
+ *
+ *  By slipping in an extra .map(fork(_)) into the calculation
+ *  after the .map(en(_)), I see that I need a dedicated
+ *  thread for each fork.  This presents some deadlocking
+ *  problems with our API (pre section 7.4.4).
  *
  */
 object ExpParTest {
 
-  /** Construct a parallel exponential calculation */
+  // Construct a parallel exponential calculation
   def expPar(x: Double, maxTerm: Int): Par[Double] = {
 
+    // nth term of the exponential Taylor series about 0
     def en(n: Int): Par[Double] =
       n match {
         case  0 =>  unit(1.0)
@@ -33,28 +42,34 @@ object ExpParTest {
 
     def pow(x: Double, n: Int): Double = {
       lazy val xs: Stream[Double] = cons(x, xs)
-      xs.take(n).foldRight(1.0) {_ * _}
+      xs.take(n).foldLeft(1.0) {_ * _}
     }
 
-    // Use a stream to construct a parallel calculation
+    // Use a stream to construct the parallel calculation
+    //   Using foldRight sums smallest numbers in the series
+    //   first.  Minimizes round off error.  
     from(0).take(maxTerm + 1)
            .map(en(_))
-           .foldRight(unit(0.0))((term, sum) =>
-              map2(term, sum)(_ + _))
-
+           .foldRight(unit(0.0))((term, sum) => map2(term, sum)(_ + _))
   }
 
   def main(args: Array[String]): Unit = {
 
-    val es = Executors.newFixedThreadPool(4)
+    val es = Executors.newFixedThreadPool(1)
 
-    print("\nrun(es)(expPar(1.0, 30)).get = ")
-    println(run(es)(expPar(1.0, 30)).get)
-
-    es.shutdown
-
+    print("\nrun(es)(expPar(1.0, 20)).get = ")
+    println(run(es)(expPar(1.0, 20)).get)
     print("scala.math.exp(1.0) = ")
     println(scala.math.exp(1.0))
+
+    print("\nrun(es)(expPar(10.0, 20)).get = ")
+    println(run(es)(expPar(10.0, 20)).get)
+    print("run(es)(expPar(10.0, 172)).get = ")
+    println(run(es)(expPar(10.0, 172)).get)
+    print("scala.math.exp(10.0) = ")
+    println(scala.math.exp(10.0))
+
+    es.shutdown
 
     println()
 

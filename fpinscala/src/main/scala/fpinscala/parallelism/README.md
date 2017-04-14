@@ -16,3 +16,8 @@ by Paul Chiusana and Runar Bjarnason.
 
 ### Program [ParTest](ParTest.scala)
 * Program to exercise fpinscala.parallelism.Par. 
+
+### Program [ExpParTest](ExpParTest.scala)
+* Program to create a Par to calculate the exponential function.
+* It is quite quick, despite me not trying to optimize it at all.
+* Actually, it only ever uses one thread from the thread pool at any one time.

@@ -77,7 +77,7 @@ object Par {
     * functional interface.
     *
     */
-  def run[A](s: ExecutorService)(a: Par[A]): Future[A] = a(s)
+  def run[A](es: ExecutorService)(a: Par[A]): Future[A] = a(es)
 
   /** Mark a calculation to be done in a parallel thread
    *  when the resulting Future is eventially evaluated.
@@ -101,14 +101,6 @@ object Par {
    *
    *  Function not evaluated in a separate thread.  To
    *  do that, use `fork(map2(a,b)(f))'
-   *
-   *  Also, a Par returns a Future, not necessarily a
-   *  UnitFuture, so I am restricted to the Future API.
-   *
-   *  What I can do directly here to respect the "time out" 
-   *  contract for get method of Future is limited
-   *  since the Par API has no apriori mechanisms 
-   *  for adjusting timeouts to the parallel calculation.
    *
    *  Looking at the book's answer key solution, the 
    *  trick is to wrap the futures I am passed into

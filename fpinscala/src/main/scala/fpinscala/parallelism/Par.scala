@@ -23,21 +23,39 @@ import java.util.concurrent.TimeoutException
  */
 object Par {
 
+  /** Par type alias. */
   type Par[A] = ExecutorService => Future[A]
 
-  /** Par helper class to wrap a constant value into a Future.
+  /** Par.fork marks a calculation, in the resulting Future, to be
+   *  done in a parallel thread.
    *
-   *  Does not use the underlying es (ExecutorService),
-   *  basically, born done.
+   *  In Java 8, Future now has a functional interface. 
+   *
+   *  Before java 8, I would have had to define fork like
+   *  def fork[A](a: => Par[A]): Par[A] =
+   *    es => es.submit(new Callable[A] { def call = a(es).get })
+   *
+   *  For backward compatibility, an instance of an interface
+   *  containing a single abstract method (SAM) can be
+   *  used anywhere a function object is expected.  So, above
+   *  implementation of fork would still work in Java 8.
    *
    */
-  private final
-  case class UnitFuture[A](get: A) extends Future[A] {
-    def get(timeout: Long, units: TimeUnit): A = get
-    def isDone: Boolean = true
-    def isCancelled: Boolean = false
-    def cancel(evenIfRunning: Boolean): Boolean = false
-  }
+  def fork[A](a: => Par[A]): Par[A] =
+    es => es.submit(() => a(es).get)
+
+  /** Return a Future for a parallel calculation.
+    *
+    * The run method does not return the final value of
+    * type A, but an imperitive java wee beasty called
+    * a Future.  You will need to use its get method
+    * to actually get the value of type A.
+    *
+    * The run method returns the Future right away.  The
+    * Future's get method blocks until the value is available.
+    *
+    */
+  def run[A](es: ExecutorService)(a: Par[A]): Future[A] = a(es)
 
   /** Wrap a constant value in a Par. 
    *
@@ -57,54 +75,14 @@ object Par {
    */
   def lazyUnit[A](a: => A): Par[A] = fork(unit(a))
 
-  /** Return a Future for a parallel calculation.
-    *
-    * The run method does not return the final value of
-    * type A, but an imperitive java wee beasty called
-    * a Future.  You will need to use its get method
-    * to actually get the value of type A.
-    *
-    * The run method returns the Future right away.  The
-    * Future's get method blocks until the value is available.
-    *
-    * So, run is functional code which returns a Future[A].
-    * This could be useful if you had to pass it to existing
-    * java code.
-    *
-    * In scala code, I would guess best practices would be
-    * to either push these Futures to the "outside edge" of
-    * the program or completely encapsulate them in a
-    * functional interface.
-    *
-    */
-  def run[A](es: ExecutorService)(a: Par[A]): Future[A] = a(es)
-
-  /** Mark a calculation to be done in a parallel thread
-   *  when the resulting Future is eventially evaluated.
-   *
-   *  In Java 8, Future now has a functional interface. 
-   *
-   *  Before java 8, I would have had to define fork like
-   *  def fork[A](a: => Par[A]): Par[A] =
-   *    es => es.submit(new Callable[A] { def call = a(es).get })
-   *
-   *  For backward compatibility, an instance of an interface
-   *  containing a single abstract method (SAM) can be
-   *  used anywhere a function object is expected.  So, above
-   *  implementation of fork would still work.
-   *
-   */
-  def fork[A](a: => Par[A]): Par[A] =
-    es => es.submit(() => a(es).get)
-
-  /** Combined two parallel computations with a function.
+  /** Par.map2 combines two parallel computations with a function.
    *
    *  Function not evaluated in a separate thread.  To
    *  do that, use `fork(map2(a,b)(f))'
    *
    *  Looking at the book's answer key solution, the 
    *  trick is to wrap the futures I am passed into
-   *  another future object.
+   *  another future object, Map2Future.
    *
    */
   def map2[A,B,C](a: Par[A], b: Par[B])(f: (A,B) => C): Par[C] =
@@ -113,6 +91,24 @@ object Par {
       val bf = b(es)
       Map2Future(af, bf, f)
     }
+
+  //
+  // Par private Future helper classes:
+  //
+
+  /** UnitFuture helper class for Par.unit method.
+   *
+   *  Does not use the underlying es (ExecutorService),
+   *  basically, born done.
+   *
+   */
+  private final
+  case class UnitFuture[A](get: A) extends Future[A] {
+    def get(timeout: Long, units: TimeUnit): A = get
+    def isDone: Boolean = true
+    def isCancelled: Boolean = false
+    def cancel(evenIfRunning: Boolean): Boolean = false
+  }
 
   /** Map2Future helper class for Par.map2 method.
    *
@@ -164,7 +160,8 @@ object Par {
       val t0 = System.nanoTime
       val av = af.get(timeoutNS, TimeUnit.NANOSECONDS)
       val t1 = System.nanoTime
-      val finalValue = f(av, bf.get(timeoutNS - (t1 - t0), TimeUnit.NANOSECONDS))
+      val finalValue =
+        f(av, bf.get(timeoutNS - (t1 - t0), TimeUnit.NANOSECONDS))
       value = Some(finalValue)
       done = true
     }

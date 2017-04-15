@@ -205,7 +205,12 @@ object Par {
      *    methods are called.
      *
      *    Calculation is done in another thread so isDone 
-     *    does not block.
+     *    does not block.  Can't use Par.fork directly here
+     *    unless I explicitly pass the es to the Map2Future
+     *    case class.
+     *
+     *    Swallows all exceptions for compatibility with the
+     *    Java Futures trait.
      *
      */
     def isDone: Boolean = {

@@ -197,7 +197,7 @@ object Par {
             value.get
         }
 
-    /** Returns true if completed or has been cancelled.
+    /** Map2Future.isDone returns true if completed or has been cancelled.
      *
      *    To facilitate the use case of testing the future's 
      *    isDone method in an event loop, kickoff a calculation
@@ -235,7 +235,7 @@ object Par {
       */
     def isCancelled: Boolean = cancelled
 
-    /** Cancel the future.
+    /** Map2Future.cancel cancels the future.
      *
      *  The return value means the command was
      *  successful, not the isCancelled state.
@@ -254,14 +254,20 @@ object Par {
           false
       } else if (cancelled) {
           false
-      } else {
-          val af_cancelled = af.cancel(evenIfRunning)
-          val bf_cancelled = bf.cancel(evenIfRunning)
+      } else if (! hasStarted) {
+          cancelled = true
+          done = true
+          af.cancel(evenIfRunning)
+          bf.cancel(evenIfRunning)
+          true
+      } else if (evenIfRunning) {
+          val af_cancelled = af.cancel(true)
+          val bf_cancelled = bf.cancel(true)
           cancelled = af_cancelled || bf_cancelled
           if (cancelled) {
             done = true
             true
           } else false
-      }
+      } else false
   }
 }

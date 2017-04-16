@@ -284,6 +284,8 @@ Purpose: To indicate what was done to create gauss17 and
   X server with Gnome Desktop now works.  For some reason
   gnome-terminal does not start.  Might be missing fonts?
 
+  See note on 2017-04-15 for some more NVIDIA Optimus insight.
+
 2016-07-09:
   Try and fix gnome-terminal problem.
 
@@ -798,8 +800,8 @@ Purpose: To indicate what was done to create gauss17 and
   can run NVIDIA card only (compatible with nouveau and nvidia
   drives - assuming if supported by the card).
 
-  I am "assuming" that the nvidia drive works the NVIDIA
-  card only and ignores the Intel chip set.
+  I am "assuming" that the nvidia driver works the NVIDIA
+  card only and ignores the Intel chip set. (see 2017-04-15)
 
 2016-07-26:
   Here is confirmation that the Nouveau drivers are not running.
@@ -2448,3 +2450,24 @@ Purpose: To indicate what was done to create gauss17 and
   Moral - When doing pacman -Syu, if you see a kernel upgrade 
           without an accompanning nvdia upgrade, wait a few
           days to see if one comes along.
+
+2017-04-15:
+  I have some additional insight into what is going on with the 
+  Nvidia 940M Optimus inabled card which came with this laptop.
+
+  From the following website with reference to Windows 7:
+
+  http://www.tomshardware.com/forum/368288-33-disable-nvidia-optimus-nvidia-card
+
+  "I've got a solution for you, but I don't know if you're gonna like it.
+   Optimus is integrated into your windows, so the only way to get rid of
+   it is to reinstall normal Windows 7 version (not the one that came with
+   your laptop; though, the same key will work of course)."
+
+  My guess is that ACER also hacked up the UFI firmware to not allow the
+  "enduser to screw things up" by disabling either GPU because Acer's
+  hacked up Optimus drivers assume both Nvidia and Intel video hardware
+  are in place.
+
+  The only use case for Optimus is for business endusers who frequently
+  take 6 hour airline flights.

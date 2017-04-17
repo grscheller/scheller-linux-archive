@@ -92,6 +92,9 @@ object Par {
       Map2Future(af, bf, f)
     }
 
+  /** Evaluate a function asynchronously */
+  def asyncF[A,B](f: A => B): A => Par[B] = (a: A) => lazyUnit(f(a))
+
   //
   // Par private Future helper classes:
   //

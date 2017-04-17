@@ -12,8 +12,11 @@ import Par._
  *  java.util.concurrent.Future's in a purely
  *  functional way.
  *
+ *  Started after initial implementation of
+ *  fpinscala.parallelism package.
+ *
  */
-object ParTest {
+object ParTest1 {
 
   // Model an expensive calculations with
   // a less than stellar implementations
@@ -32,7 +35,12 @@ object ParTest {
     val ab = map2(a100, b500)(_ + _)
     val abc = fork((map2(ab, c50)(_ - _)))
 
-    val es = Executors.newFixedThreadPool(6)
+    // For  1 thread  -> 85 seconds
+    // For  2 threads -> 58 seconds
+    // For  3 threads -> 58 seconds
+    // For  4 threads -> 52 seconds
+    // For 10 threads -> 52 seconds
+    val es = Executors.newFixedThreadPool(4)
     val abcFuture = run(es)(abc)
 
     println("\n(100 + 500) - 50 = " + abcFuture.get)

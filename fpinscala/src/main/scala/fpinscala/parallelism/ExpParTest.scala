@@ -17,6 +17,8 @@ import scala.collection.immutable.Stream.{cons, from}
  *  thread for each fork.  This presents some deadlocking
  *  problems with our API (pre section 7.4.4).
  *
+ *  Done before exercise 7.4.
+ *
  */
 object ExpParTest {
 

@@ -92,8 +92,28 @@ object Par {
       Map2Future(af, bf, f)
     }
 
+  /** Implement map in terms of map2 */
+  def map[A,B](a: Par[A])(f: A => B): Par[B] =
+    map2(a, unit(()))((a,_) => f(a))
+
   /** Evaluate a function asynchronously */
   def asyncF[A,B](f: A => B): A => Par[B] = (a: A) => lazyUnit(f(a))
+
+  /** Change a list of pars into a par of a list. */
+  def sequence[A](ps: List[Par[A]]): Par[List[A]] =
+    ps.foldRight(unit(Nil: List[A]))(map2(_, _)(_ :: _))
+
+  /** Create a calcultion to map over a list in parallel
+   *  
+   *  Book sugggestion regarding the fork.  The parMap function
+   *  will return immediately even for very long lists.
+   *
+   *  The parallel calculation is sort of a lazy data structure 
+   *  which finishes constructing itself while it is being run.
+   *
+   */
+  def parMap[A,B](as: List[A])(f: A => B): Par[List[B]] = 
+    fork(sequence(as.map(asyncF(f))))
 
   //
   // Par private Future helper classes:

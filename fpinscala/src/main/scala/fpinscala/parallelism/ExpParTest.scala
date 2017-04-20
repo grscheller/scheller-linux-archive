@@ -6,11 +6,11 @@ import Par._
 
 import scala.collection.immutable.Stream.{cons, from}
 
-/** Two implementations for exponential Taylor series exapansion,
+/** Compare different implementations for exponential Taylor series exapansion.
  *
  *  Using fpinscala.parallelism.Par.
  *
- *  Both sum smallest numbers in the series
+ *  Sum smallest numbers in the series
  *  first to minimizes round off error.  
  *
  */
@@ -22,30 +22,20 @@ object ExpParTest {
    */
   def expParStream(x: Double, maxTerm: Int): Par[Double] = {
 
+    lazy val xs: Stream[Double] = cons(x, xs)
+
     /** Par for nth term of the Taylor series about 0 */
-    def en(n: Int): Par[Double] =
+    def enPar(n: Int): Par[Double] =
       n match {
         case  0 =>  unit(1.0)
         case  1 =>  unit(x)
         case nn =>  lazyUnit(powx(nn)/fact(nn))
       }
 
-    def fact(m: Int): Double = {
-      def loop(accum: Double, mm: Int): Double = 
-        mm match {
-          case 0   => accum
-          case mm  => loop(mm*accum, mm - 1)
-        }
-      loop(1.0, m)
-    }
-
-    def powx(n: Int): Double = {
-      lazy val xs: Stream[Double] = cons(x, xs)
-      xs.take(n).foldLeft(1.0) {_ * _}
-    }
+    def powx(n: Int): Double = xs.take(n).foldLeft(1.0) {_ * _}
 
     from(0).take(maxTerm + 1)
-           .map(en(_))
+           .map(enPar(_))
            .foldRight(unit(0.0))((term, sum) => map2(term, sum)(_ + _))
   }
 
@@ -58,16 +48,8 @@ object ExpParTest {
     /** nth term of the Taylor series about 0 */
     def en(n: Int): Double = powx(n)/fact(n)
 
-    def fact(m: Int): Double = {
-      def loop(accum: Double, mm: Int): Double = 
-        mm match {
-          case 0   => accum
-          case mm  => loop(mm*accum, mm - 1)
-        }
-      loop(1.0, m)
-    }
-
     def powx(n: Int): Double = {
+      @annotation.tailrec
       def loop(accum: Double, nn: Int): Double = 
         nn match {
           case 0  => accum
@@ -82,34 +64,145 @@ object ExpParTest {
 
   }
 
+  /** Exponential function.
+   *  
+   *   Done without Pars.
+   *
+   */
+  def expFun(x: Double, maxTerm: Int): Double = {
+
+    /** nth term of the Taylor series about 0 */
+    def en(n: Int): Double = powx(n)/fact(n)
+
+    def powx(n: Int): Double = {
+      @annotation.tailrec
+      def loop(accum: Double, nn: Int): Double = 
+        nn match {
+          case 0  => accum
+          case nn => loop(x*accum, nn - 1)
+        }
+      loop(1.0, n)
+    }
+
+    val countDown = List.iterate(maxTerm, maxTerm + 1)(_ - 1)
+    countDown.map(en _).foldLeft(0.0)(_ + _)
+
+  }
+
+  //* Done imperitively to see if I can beat the parallelism. */
+  def expLoopFun(x: Double, maxTerm: Int): Double = {
+
+    import scala.math.pow
+
+    var jj = maxTerm
+    var factjj = fact(maxTerm)
+    var accum = 0.0
+    while (jj > 1) {
+      accum = accum + pow(x, jj)/factjj
+      factjj = factjj/jj
+      jj = jj - 1
+    }
+    accum + 1.0 + x
+
+  }
+
+  //* Compute factorial - no idiot checking. */
+  def fact(m: Int): Double = {
+    @annotation.tailrec
+    def loop(accum: Double, mm: Int): Double = 
+      mm match {
+        case 0   => accum
+        case mm  => loop(mm*accum, mm - 1)
+      }
+    loop(1.0, m)
+  }
+
+  /** Parse input args to determine number of threads in ES */
+  def parseArgs(args: Array[String]): Int =
+    if (args.length == 0) 6
+    else args(0).toInt
+
   def main(args: Array[String]): Unit = {
 
-    val es = Executors.newFixedThreadPool(2)
+    val es = Executors.newFixedThreadPool(parseArgs(args))
 
-    print("\nscala.math.exp(1.0) = ")
-    println(scala.math.exp(1.0))
+    println()
+
+    print("scala.math.exp(1.0) = ")
+    println {
+      val t0 = System.nanoTime
+      val hold = scala.math.exp(1.0)
+      val t1 = System.nanoTime
+      hold + " in " + (t1 - t0)/1000.0 + " μs."
+    }
     print("run(es)(expParStream(1.0, 20)).get = ")
-    println(run(es)(expParStream(1.0, 20)).get)
+    println {
+      val t0 = System.nanoTime
+      val hold = run(es)(expParStream(1.0, 20)).get
+      val t1 = System.nanoTime
+      hold + " in " + (t1 - t0)/1000.0 + " μs."
+    }
     print("run(es)(expParMap(1.0, 20)).get = ")
-    println(run(es)(expParMap(1.0, 20)).get)
+    println {
+      val t0 = System.nanoTime
+      val hold = run(es)(expParMap(1.0, 20)).get
+      val t1 = System.nanoTime
+      hold + " in " + (t1 - t0)/1000.0 + " μs."
+    }
+    print("expFun(1.0, 20) = ")
+    println {
+      val t0 = System.nanoTime
+      val hold = expFun(1.0, 20)
+      val t1 = System.nanoTime
+      hold + " in " + (t1 - t0)/1000.0 + " μs."
+    }
+    print("expLoopFun(1.0, 20) = ")
+    println {
+      val t0 = System.nanoTime
+      val hold = expLoopFun(1.0, 20)
+      val t1 = System.nanoTime
+      hold + " in " + (t1 - t0)/1000.0 + " μs."
+    }
 
     println()
 
-    print("scala.math.exp(10.0) = ")
-    println(scala.math.exp(10.0))
-    print("run(es)(expParStream(10.0, 20)).get = ")
-    println(run(es)(expParStream(10.0, 20)).get)
-    print("run(es)(expParMap(10.0, 20)).get = ")
-    println(run(es)(expParMap(10.0, 20)).get)
+    print("scala.math.exp(0.42) = ")
+    println {
+      val t0 = System.nanoTime
+      val hold = scala.math.exp(0.42)
+      val t1 = System.nanoTime
+      hold + " in " + (t1 - t0)/1000.0 + " μs."
+    }
+    print("run(es)(expParStream(0.42, 20)).get = ")
+    println {
+      val t0 = System.nanoTime
+      val hold = run(es)(expParStream(0.42, 20)).get
+      val t1 = System.nanoTime
+      hold + " in " + (t1 - t0)/1000.0 + " μs."
+    }
+    print("run(es)(expParMap(0.42, 20)).get = ")
+    println {
+      val t0 = System.nanoTime
+      val hold = run(es)(expParMap(0.42, 20)).get
+      val t1 = System.nanoTime
+      hold + " in " + (t1 - t0)/1000.0 + " μs."
+    }
+    print("expFun(0.42, 20) = ")
+    println {
+      val t0 = System.nanoTime
+      val hold = expFun(0.42, 172)
+      val t1 = System.nanoTime
+      hold + " in " + (t1 - t0)/1000.0 + " μs."
+    }
+    print("expLoopFun(0.42, 20) = ")
+    println {
+      val t0 = System.nanoTime
+      val hold = expLoopFun(0.42, 20)
+      val t1 = System.nanoTime
+      hold + " in " + (t1 - t0)/1000.0 + " μs."
+    }
 
     println()
-
-    print("scala.math.exp(10.0) = ")
-    println(scala.math.exp(10.0))
-    print("run(es)(expParStream(10.0, 172)).get = ")
-    println(run(es)(expParStream(10.0, 172)).get)
-    print("run(es)(expParMap(10.0, 172)).get = ")
-    println(run(es)(expParMap(10.0, 172)).get)
 
     es.shutdown
 

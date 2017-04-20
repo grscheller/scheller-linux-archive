@@ -18,7 +18,7 @@ object ParTest2 {
 
   def main(args: Array[String]): Unit = {
 
-    val es = Executors.newFixedThreadPool(5)
+    val es = Executors.newFixedThreadPool(6)
 
     var fibParam = 46L
 
@@ -37,6 +37,48 @@ object ParTest2 {
       val t1 = System.nanoTime
       "is " + hold + " in " + (t1 - t0)/1000000000.0 + " seconds."
     }
+
+    // Test Par.sequence
+    println("\nTest Par.sequence:")
+    
+    val listPars: List[Par[Long]] =
+      List.iterate(0, (fibParam + 1).toInt)(_ + 1) map (parFibF(_))
+
+    val parList = sequence(listPars)
+    val fibNumbersFuture = run(es)(parList)
+    var fibNumbers: List[Long] = Nil
+    val timeOut = 5  // Seconds
+    try {
+        // Comment/uncomment for different senarios.
+        if (fibNumbersFuture.isDone)
+          println("Future is done.")
+        else
+          println("Future is not done.")
+        Thread.sleep(2000)  // Sleep 2 seconds.
+        // Thread.sleep(5000)  // Sleep 5 seconds.
+        fibNumbersFuture.cancel(false)
+        // fibNumbersFuture.cancel(true)
+        fibNumbers = fibNumbersFuture.get(timeOut, TimeUnit.SECONDS)
+        // fibNumbersFuture.cancel(false)
+        // fibNumbersFuture.cancel(true)
+    } catch {
+        case ex: TimeoutException =>
+          println("Timed out! " + timeOut + " seconds not enough.")
+        case ex: CancellationException =>
+          println("I've been cancelled!")
+    } finally {
+        if (fibNumbersFuture.isDone)
+          println("Future is done.")
+        else
+          println("Future is not done.")
+        if (fibNumbersFuture.isCancelled)
+          println("Future is cancelled.")
+        else
+          println("Future is not cancelled.")
+        if (! fibNumbersFuture.isCancelled)
+          fibNumbers = fibNumbersFuture.get()
+    }
+    for (fibNumber <- fibNumbers) println(fibNumber)
 
     es.shutdown
 

@@ -115,6 +115,21 @@ object Par {
   def parMap[A,B](as: List[A])(f: A => B): Par[List[B]] = 
     fork(sequence(as.map(asyncF(f))))
 
+  /** Filter elements of a list in parallel. */
+  def parFilter[A](as: List[A])(f: A => Boolean): Par[List[A]] = {
+
+    def ff(a: A): Option[A] =
+      if (f(a)) Some(a)
+      else None
+
+    map(parMap(as)(ff))(_.foldRight(Nil: List[A])((aa, aas) =>
+      aa match {
+        case None => aas
+        case Some(a) => a :: aas
+      }))
+
+  }
+
   //
   // Par private Future helper classes:
   //

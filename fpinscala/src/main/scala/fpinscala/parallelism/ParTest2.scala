@@ -18,7 +18,7 @@ object ParTest2 {
 
   def main(args: Array[String]): Unit = {
 
-    val es = Executors.newFixedThreadPool(6)
+    val es = Executors.newFixedThreadPool(4)
 
     var fibParam = 46L
 
@@ -79,6 +79,30 @@ object ParTest2 {
           fibNumbers = fibNumbersFuture.get()
     }
     for (fibNumber <- fibNumbers) println(fibNumber)
+
+    // Test Par.parFilter
+    println("\nTest Par.parFilter:")
+
+    import fpinscala.state.rand.{Rand,RNG,LCG}  
+
+    val shortList = List(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16)
+    val parNo2or3Mults =
+      parFilter(shortList)((x: Int) => x % 2 != 0 && x % 3 != 0)
+    println("\nFilter out multiples of 2 and 3: ")
+    println(run(es)(parNo2or3Mults).get)
+
+    def makeRandomList(lt: Int, len: Int) =
+      Rand.sequence(List.fill(len)(RNG.nonNegativeLessThan(lt)))
+
+    println("\nFilter out odds from a list of non-neg random Ints < 100:")
+    val randList = makeRandomList(100, 1000)(LCG(234))
+    val futEvenRandList = run(es)(parFilter(randList)(_ % 2 == 0))
+    val evenRandList = futEvenRandList.get
+    println(evenRandList)
+    print("\nrandList.length = ")
+    println(randList.length)
+    print("evenRandList.length = ")
+    println(evenRandList.length)
 
     es.shutdown
 

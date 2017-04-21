@@ -2471,3 +2471,29 @@ Purpose: To indicate what was done to create gauss17 and
 
   The only use case for Optimus is for business endusers who frequently
   take 6 hour airline flights.
+
+2017-04-18:
+  Getting Blu-Ray to work.
+
+  Following -> https://wiki.archlinux.org/index.php/Blu-ray
+
+    Pacman: libaacs libbluray
+
+  From http://www.labdv.com/aacs/ download KEYDB.cfg and copy it
+  to the ~/.config/aacs directory.
+
+    $ mkdir ~/.config/aacs; cd ~/.config/aacs
+    $ wget http://www.labdv.com/aacs/KEYDB.cfg
+
+  From the Arch Linux Wiki:
+  "BD+ mainly works by adding errors to the video stream, not enough
+   to make it unwatchable due to constant artifacting." Requires
+   downloading "fixup" tables from the internet.  There is an AUR library
+   to fix this, but "libbdplus stopped working a long time ago, and
+   for right now there's no open source method of playing discs with
+   BD+ protection."
+
+  Start playback with vlc via command line
+
+    $ vlc bluray://dev/sr0
+    $ vlc bluray://dev/sr1

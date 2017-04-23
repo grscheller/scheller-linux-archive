@@ -85,7 +85,8 @@ object Par {
    *  another future object, Map2Future.
    *
    */
-  def map2[A,B,C](a: Par[A], b: Par[B])(f: (A,B) => C): Par[C] =
+  def map2[A,B,C]( a: Par[A]
+                 , b: Par[B])(f: (A,B) => C): Par[C] =
     (es: ExecutorService) => {
       val af = a(es)
       val bf = b(es)
@@ -95,6 +96,30 @@ object Par {
   /** Implement map in terms of map2 */
   def map[A,B](a: Par[A])(f: A => B): Par[B] =
     map2(a, unit(()))((a,_) => f(a))
+
+  def map3[A,B,C,D]( a: Par[A]
+                   , b: Par[B]
+                   , c: Par[C])(f: (A,B,C) => D): Par[D] = 
+    map2(fork(map2(a, b)((_, _))), c)((p, c) => f(p._1, p._2, c))
+
+  def map4[A,B,C,D,E]( a: Par[A]
+                     , b: Par[B]
+                     , c: Par[C]
+                     , d: Par[D])(f: (A,B,C,D) => E): Par[E] = 
+    map2( fork(map2(a, b)((_, _)))
+        , fork(map2(c, d)((_, _)))) {
+      (p1, p2) => f(p1._1, p1._2, p2._1, p2._2 )
+    }
+
+  def map5[A,B,C,D,E,F]( a: Par[A]
+                       , b: Par[B]
+                       , c: Par[C]
+                       , d: Par[D]
+                       , e: Par[E])(f: (A,B,C,D,E) => F): Par[F] = 
+    map2( fork(map3(a, b, c)((_, _, _)))
+        , fork(map2(d, e)((_, _)))) {
+      (t, p) => f(t._1, t._2, t._3, p._1, p._2)
+    }
 
   /** Evaluate a function asynchronously */
   def asyncF[A,B](f: A => B): A => Par[B] = (a: A) => lazyUnit(f(a))

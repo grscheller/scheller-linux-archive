@@ -2497,3 +2497,109 @@ Purpose: To indicate what was done to create gauss17 and
 
     $ vlc bluray://dev/sr0
     $ vlc bluray://dev/sr1
+
+2017-04-24:
+  Pacman failure today.
+
+    $ sudo pacman -Syu
+    [sudo] password for geoff: 
+    :: Synchronizing package databases...
+     core is up to date
+     extra is up to date
+     community is up to date
+    :: Starting full system upgrade...
+    warning: openimageio: local (1.7.13-1) is newer than community (1.7.10-2)
+    resolving dependencies...
+    looking for conflicting packages...
+    error: failed to prepare transaction (could not satisfy dependencies)
+    :: banshee: installing libsoup (2.58.0-1) breaks dependency 'libsoup-gnome'
+
+  Lets address error first.  Let's uninstall banshee, I never use it.
+
+    $ sudo pacman -Rsu banshee
+    $ sudo pacman -Syu          # Now works.
+
+  The pacman update was huge, will reboot after putting back some optional
+  dependencies the pacman -Rsu removed. 
+
+    $ sudo pacman -Syu mono libgme libmtp webkitgtk2
+
+  Took several reboots before system sorted itself out, kernel update
+  snuck by me.
+
+  Now, "pacman -Syu" just giving me the warning, so lets address that.
+
+    $ pacman -Qi openimageio
+    ...
+    Required By     : blender  luxmark  openshadinglanguage
+    ...
+    $ sudo pacman -Syu openimageio blender luxmark openshadinglanguage
+    :: Synchronizing package databases...
+     core is up to date
+     extra is up to date
+     community is up to date
+    warning: downgrading package openimageio (1.7.13-1 => 1.7.10-2)
+    warning: blender-17:2.78.c-3 is up to date -- reinstalling
+    warning: luxmark-3.1-4 is up to date -- reinstalling
+    warning: openshadinglanguage-1.7.5-1 is up to date -- reinstalling
+    :: Starting full system upgrade...
+    resolving dependencies...
+    looking for conflicting packages...
+
+    Packages (4) blender-17:2.78.c-3  luxmark-3.1-4  openimageio-1.7.10-2
+                 openshadinglanguage-1.7.5-1
+    ...              
+
+  Now, "sudo pacman -Syu" comes up with no warnings or errors.
+
+  Later in the day, "pacman -Syu" updated openimageio to 1.7.13-2.
+
+2017-04-24:
+  Enabling DoD CAC reader and certificates.  From Arch Wiki Common
+  Access Card page.
+
+    $ sudo pacman -Syu ccid opensc
+    $ sudo pacman -Syu pcsc-tools     # Optional
+
+  From /etc/opensc.conf uncomment, in two places, the line
+
+    # enable_pinpad = false;
+
+  Now, enable the service,
+
+    $ sudo systemctl enable pcscd.service
+
+  From http://iase.disa.mil/pki-pke/Pages/tools.aspx
+  download:
+
+    Trust Store" ->
+      "PKI CA Certificate Bundles: PKCS#7" ->
+         "For DoD PKI Only - Version 5.0" (ZIP Download)
+
+  I downloaded them to ~/info/CAC/Certificates_PKCS7_v5.0u1_DoD.zip
+  and unzipped it.
+
+  Using pscs_scan utility, a Dell CAC keyboard works, Cherry CAC
+  reader does not.  pscs_scan identifies when I plug the Dell
+  keyboard in and when I insert and remove CAC.
+
+  Configured Firefox browser - installed certs in this order:
+
+    1. DoD_Root_CA_2__0x05__DoD_Root_CA_2.cer
+    2. DoD_Root_CA_2__0x05__DoD_Root_CA_3.cer
+    3. DoD_Root_CA_2__0x05__DoD_Root_CA_4.cer
+    4. Certificates_PKCS7_v5.0u1_DoD.pem.p7b
+
+  Note: Based on info/CAC/Certificates_PKCS7_v5.0u1_DoD/README.txt,
+        I deviated from the Wiki and for #4 above installed the
+        pem version instead of the der version.
+
+  Missed this step:
+
+    Preferences ->
+      Advanced ->
+        Certificates tab ->
+          Secuity Divices ->
+            Browse for /usr/lib/opensc-pkcs11.so
+
+  Unfortunately, Firefox fails to load module.  Punt for now.   

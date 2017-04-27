@@ -7,9 +7,9 @@
 * Don't want to have to "sync" password schemas between my various<br>
   browsers and computer systems.
 * Set homepage in browser to ~/info/Web/homepage.
-* I push these files to my various Linux and Windows systems I user.
-* See [linuxHome](../../linuxHome/) project to see how I push to<br>
-  my Linux systems.
+* I push these files to my various Linux and Windows systems I use at work.
+* See [linuxHome](../../linuxHome/) project to see how I push these to my<br>
+  various Linux systems.
 
 ## Files:
 ### [homepage.html](homepage.html)

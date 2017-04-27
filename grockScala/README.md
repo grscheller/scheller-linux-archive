@@ -1,6 +1,7 @@
 # Basic Scala Language Constructs:
 
-Explore Scala language and build constructions.<br><br>
+Explore Scala language and build constructions.<br>
+
 For now separate SBT builds, heading toward a hierarchical SBT build.
 
 ## 1. Scala's "splat" equivalents: [splat.scala](splat/splat.scala)
@@ -53,7 +54,7 @@ Builds scala code into a "fat" jar file so that all an end user needs is<br>
 a functioning java runtime environment.  This will includes everything in<br>
 the jar file, including the Scala runtime libraries.<br>
 
-This uses sbt-assembly.<br>
+This uses [stb-assembly](https://github.com/sbt/sbt-assembly)<br>
 
 To build the fat jar file, 
 ```

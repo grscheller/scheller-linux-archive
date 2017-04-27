@@ -8,7 +8,7 @@
   browsers and computer systems.
 * Set homepage in browser to ~/info/Web/homepage.
 * I push these files to my various Linux and Windows systems I use at work.
-* See [linuxHome](../../linuxHome/) project to see how I push these to my<br>
+* See [linuxHome](../../linuxHome/) project to see how I push these to my
   various Linux systems.
 
 ## Files:

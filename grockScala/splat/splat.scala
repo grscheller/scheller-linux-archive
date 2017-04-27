@@ -1,13 +1,13 @@
-package grockScala
+package grockScala.Splat
 
 object splat {
 
-  // For variadic functions, a splat type construct exists
-  // for variable length datastructures.
+  // For variadic functions, a splat type construct
+  // exists for variable length datastructures.
   def bar(xs: Double*) = xs.foldLeft(0: Double) {_ + _}
 
   // For fixed-arity functions, we can accomplish splat 
-  // functionality for tuples:
+  // splat functionality for tuples:
   def foo(n: Int, x: Double, y: Double): Double = n*x + y
 
   def fooC(n: Int)(x: Double)(y: Double): Double = n*x + y
@@ -25,9 +25,6 @@ object splat {
     val ys: List[Double]  =  List(1,2,3,4,5)
     val ss: Stream[Double] = ys.toStream
 
-    print("xs = "); println(xs.toString)  // Java objects are brain dead.
-                                          // Who but the compiler cares
-                                          // what the bloody reference is?
     println("xs = Array(1.0, 2.0, 3.0, 4.0, 5.0)")
     print("ys = "); println(ys)
     print("ss = "); println(ss)

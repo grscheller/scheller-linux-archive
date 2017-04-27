@@ -1,6 +1,9 @@
 # Basic Scala Language Constructs:
 
-## 1. Scala's "splat" equivalents: [splat.scala](splat.scala)
+Explore Scala language and build constructions.<br><br>
+For now separate SBT builds, heading toward a hierarchical SBT build.
+
+## 1. Scala's "splat" equivalents: [splat.scala](splat/splat.scala)
 Languages like Python and Ruby have a syntactic sugar to pass an<br>
 array or tuple into a fixed or variable-arity function.
 
@@ -35,12 +38,30 @@ To "splat" a tuple into a curried function:
    val a3 = Function.uncurried(fooC _) tupled (42, 3.0, "fred")
 ```
 
-To compile the code, 
+To compile outside the sbt build, 
 ```
-   $ scalac splat.scala
+   $ cd splat
+   $ scala grockScala.Splat.splat
 ```
 To run,
 ```
-   $ scala grockScala.splat  
+   $ scala Splat.splat  
 ```
 
+## 2. Building scala code to run as a "Java App":
+Builds scala code into a "fat" jar file so that all an end user needs is<br>
+a functioning java runtime environment.  This will includes everything in<br>
+the jar file, including the Scala runtime libraries.<br>
+
+This uses sbt-assembly.<br>
+
+To build the fat jar file, 
+```
+   $ cd onejar
+   $ sbt assembly
+```
+To run,
+```
+   $ java -jar target/scala-2.12/onejar-assembly-0.1-SNAPSHOT.jar
+```
+All it is is a stupid hello world program.

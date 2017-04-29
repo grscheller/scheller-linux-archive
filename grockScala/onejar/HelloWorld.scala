@@ -1,8 +1,10 @@
 package grockScala.HelloWorld {
 
-  object HW {
+  import grockScala.HelloWorldUtil.HW
+
+  object Main {
     def main(args: Array[String]) {
-      println("Hello World!")
+      println(HW.hw)
     }
   }
 

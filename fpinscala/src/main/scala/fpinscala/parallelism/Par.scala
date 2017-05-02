@@ -75,6 +75,10 @@ object Par {
    */
   def lazyUnit[A](a: => A): Par[A] = fork(unit(a))
 
+  /** Evaluate a function asynchronously */
+  def asyncF[A,B](f: A => B): A => Par[B] =
+    a => lazyUnit(f(a))
+
   /** Par.map2 combines two parallel computations with a function.
    *
    *  Function not evaluated in a separate thread.  To
@@ -93,15 +97,17 @@ object Par {
       Map2Future(af, bf, f)
     }
 
-  /** Implement map in terms of map2 */
+  /** Map a function into a parallel calculation.  */
   def map[A,B](a: Par[A])(f: A => B): Par[B] =
     map2(a, unit(()))((a,_) => f(a))
 
+  /** Combine three parallel computations with a function. */
   def map3[A,B,C,D]( a: Par[A]
                    , b: Par[B]
                    , c: Par[C])(f: (A,B,C) => D): Par[D] = 
     map2(fork(map2(a, b)((_, _))), c)((p, c) => f(p._1, p._2, c))
 
+  /** Combine four parallel computations with a function. */
   def map4[A,B,C,D,E]( a: Par[A]
                      , b: Par[B]
                      , c: Par[C]
@@ -111,6 +117,7 @@ object Par {
       (p1, p2) => f(p1._1, p1._2, p2._1, p2._2 )
     }
 
+  /** Combine five parallel computations with a function. */
   def map5[A,B,C,D,E,F]( a: Par[A]
                        , b: Par[B]
                        , c: Par[C]
@@ -121,20 +128,26 @@ object Par {
       (t, p) => f(t._1, t._2, t._3, p._1, p._2)
     }
 
-  /** Evaluate a function asynchronously */
-  def asyncF[A,B](f: A => B): A => Par[B] = (a: A) => lazyUnit(f(a))
+  def sequenceBalanced[A](ps: IndexedSeq[Par[A]]): Par[IndexedSeq[A]] =
+    fork {
+      if (ps.isEmpty)
+        unit(Vector())
+      else if (ps.length == 1)
+        map(ps.head)(a => Vector(a))
+      else {
+        val (lps,rps) = ps.splitAt(ps.length/2)
+        map2(sequenceBalanced(lps), sequenceBalanced(rps))(_ ++ _)
+      }
+    }
 
   /** Change a list of pars into a par of a list. */
   def sequence[A](ps: List[Par[A]]): Par[List[A]] =
-    ps.foldRight(unit(Nil: List[A]))(map2(_, _)(_ :: _))
+    map(sequenceBalanced(ps.toIndexedSeq))(_.toList)
 
   /** Create a calcultion to map over a list in parallel
-   *  
+   * 
    *  Book sugggestion regarding the fork.  The parMap function
    *  will return immediately even for very long lists.
-   *
-   *  The parallel calculation is sort of a lazy data structure 
-   *  which finishes constructing itself while it is being run.
    *
    */
   def parMap[A,B](as: List[A])(f: A => B): Par[List[B]] = 

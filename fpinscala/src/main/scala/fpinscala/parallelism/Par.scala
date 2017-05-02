@@ -85,7 +85,8 @@ object Par {
    *  another future object, Map2Future.
    *
    */
-  def map2[A,B,C](a: Par[A], b: Par[B])(f: (A,B) => C): Par[C] =
+  def map2[A,B,C]( a: Par[A]
+                 , b: Par[B])(f: (A,B) => C): Par[C] =
     (es: ExecutorService) => {
       val af = a(es)
       val bf = b(es)
@@ -96,37 +97,6 @@ object Par {
   def map[A,B](a: Par[A])(f: A => B): Par[B] =
     map2(a, unit(()))((a,_) => f(a))
 
-  /** Evaluate a function asynchronously */
-  def asyncF[A,B](f: A => B): A => Par[B] =
-    a => lazyUnit(f(a))
-
-  /** Change a list of pars into a par of a list. */
-  def sequence1[A](ps: List[Par[A]]): Par[List[A]] =
-    ps.foldRight(unit(Nil: List[A]))(map2(_, _)(_ :: _))
-
-  // fork the head
-  def sequence2[A](ps: List[Par[A]]): Par[List[A]] =
-    ps.foldRight(unit(Nil: List[A]))((pa: Par[A], pla: Par[List[A]]) =>
-      map2(fork(pa), pla)(_ :: _))
-
-  // fork the tail
-  def sequence3[A](ps: List[Par[A]]): Par[List[A]] =
-    ps.foldRight(unit(Nil: List[A]))((pa: Par[A], pla: Par[List[A]]) =>
-      map2(pa, fork(pla))(_ :: _))
-
-  // Let's go fork crazy
-  def sequence4[A](ps: List[Par[A]]): Par[List[A]] =
-    ps.foldRight(unit(Nil: List[A]))((pa: Par[A], pla: Par[List[A]]) =>
-      map2(fork(pa), fork(pla))(_ :: _))
-
-  //Book's sequenceRight
-  def sequence5[A](ps: List[Par[A]]): Par[List[A]] =
-    ps match {
-      case Nil    => unit(Nil)
-      case h :: t => map2(h, fork(sequence5(t)))(_ :: _)
-    }
-
-  //Book's sequenceBalanced
   def sequenceBalanced[A](ps: IndexedSeq[Par[A]]): Par[IndexedSeq[A]] =
     fork {
       if (ps.isEmpty)
@@ -139,108 +109,24 @@ object Par {
       }
     }
 
-  // Book's sequence
+  /** Change a list of pars into a par of a list. */
   def sequence[A](ps: List[Par[A]]): Par[List[A]] =
     map(sequenceBalanced(ps.toIndexedSeq))(_.toList)
+
+  /** Evaluate a function asynchronously */
+  def asyncF[A,B](f: A => B): A => Par[B] =
+    a => lazyUnit(f(a))
 
   /** Create a calcultion to map over a list in parallel
    * 
    *  Book sugggestion regarding the fork.  The parMap function
    *  will return immediately even for very long lists.
    *
-   *  The parallel calculation is sort of a lazy data structure 
-   *  which finishes constructing itself while it is being run.
-   *
    */
-  def parMap1[A,B](as: List[A])(f: A => B): Par[List[B]] = 
-    fork(sequence1(as.map(asyncF(f))))
-
-  def parMap2[A,B](as: List[A])(f: A => B): Par[List[B]] = 
-    fork(sequence2(as.map(asyncF(f))))
-
-  def parMap3[A,B](as: List[A])(f: A => B): Par[List[B]] = 
-    fork(sequence3(as.map(asyncF(f))))
-
-  def parMap4[A,B](as: List[A])(f: A => B): Par[List[B]] = 
-    fork(sequence4(as.map(asyncF(f))))
-
-  def parMap5[A,B](as: List[A])(f: A => B): Par[List[B]] = 
-    fork(sequence5(as.map(asyncF(f))))
-
   def parMap[A,B](as: List[A])(f: A => B): Par[List[B]] = 
     fork(sequence(as.map(asyncF(f))))
 
   /** Filter elements of a list in parallel. */
-  def parFilter1[A](as: List[A])(f: A => Boolean): Par[List[A]] = {
-
-    def ff(a: A): Option[A] =
-      if (f(a)) Some(a)
-      else None
-
-    map(parMap1(as)(ff))(_.foldRight(Nil: List[A])((aa, aas) =>
-      aa match {
-        case None => aas
-        case Some(a) => a :: aas
-      }))
-
-  }
-
-  def parFilter2[A](as: List[A])(f: A => Boolean): Par[List[A]] = {
-
-    def ff(a: A): Option[A] =
-      if (f(a)) Some(a)
-      else None
-
-    map(parMap2(as)(ff))(_.foldRight(Nil: List[A])((aa, aas) =>
-      aa match {
-        case None => aas
-        case Some(a) => a :: aas
-      }))
-
-  }
-
-  def parFilter3[A](as: List[A])(f: A => Boolean): Par[List[A]] = {
-
-    def ff(a: A): Option[A] =
-      if (f(a)) Some(a)
-      else None
-
-    map(parMap3(as)(ff))(_.foldRight(Nil: List[A])((aa, aas) =>
-      aa match {
-        case None => aas
-        case Some(a) => a :: aas
-      }))
-
-  }
-
-  def parFilter4[A](as: List[A])(f: A => Boolean): Par[List[A]] = {
-
-    def ff(a: A): Option[A] =
-      if (f(a)) Some(a)
-      else None
-
-    map(parMap4(as)(ff))(_.foldRight(Nil: List[A])((aa, aas) =>
-      aa match {
-        case None => aas
-        case Some(a) => a :: aas
-      }))
-
-  }
-
-  def parFilter5[A](as: List[A])(f: A => Boolean): Par[List[A]] = {
-
-    def ff(a: A): Option[A] =
-      if (f(a)) Some(a)
-      else None
-
-    map(parMap5(as)(ff))(_.foldRight(Nil: List[A])((aa, aas) =>
-      aa match {
-        case None => aas
-        case Some(a) => a :: aas
-      }))
-
-  }
-
   def parFilter[A](as: List[A])(f: A => Boolean): Par[List[A]] = {
 
     def ff(a: A): Option[A] =

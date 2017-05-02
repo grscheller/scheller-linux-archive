@@ -18,7 +18,7 @@ object ParTest2 {
 
   def main(args: Array[String]): Unit = {
 
-    val es = Executors.newFixedThreadPool(4)
+    val es = Executors.newFixedThreadPool(550)
 
     var fibParam = 46L
 
@@ -95,7 +95,7 @@ object ParTest2 {
       Rand.sequence(List.fill(len)(RNG.nonNegativeLessThan(lt)))
 
     println("\nFilter out odds from a list of non-neg random Ints < 100:")
-    val randList = makeRandomList(100, 1000)(LCG(234))
+    val randList = makeRandomList(100, 500)(LCG(234))
     val futEvenRandList = run(es)(parFilter(randList)(_ % 2 == 0))
     val evenRandList = futEvenRandList.get
     println(evenRandList)

@@ -119,7 +119,7 @@ object ExpParTest {
 
   /** Parse input args to determine number of threads in ES */
   def parseArgs(args: Array[String]): Int =
-    if (args.length == 0) 6
+    if (args.length == 0) 35
     else args(0).toInt
 
   def main(args: Array[String]): Unit = {

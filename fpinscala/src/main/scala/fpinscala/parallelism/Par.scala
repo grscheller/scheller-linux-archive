@@ -105,15 +105,14 @@ object Par {
   def map3[A,B,C,D]( a: Par[A]
                    , b: Par[B]
                    , c: Par[C])(f: (A,B,C) => D): Par[D] = 
-    map2(fork(map2(a, b)((_, _))), c)((p, c) => f(p._1, p._2, c))
+    map2(map2(a, b)((_, _)), c)((p, c) => f(p._1, p._2, c))
 
   /** Combine four parallel computations with a function. */
   def map4[A,B,C,D,E]( a: Par[A]
                      , b: Par[B]
                      , c: Par[C]
                      , d: Par[D])(f: (A,B,C,D) => E): Par[E] = 
-    map2( fork(map2(a, b)((_, _)))
-        , fork(map2(c, d)((_, _)))) {
+    map2(map2(a, b)((_, _)), map2(c, d)((_, _))) {
       (p1, p2) => f(p1._1, p1._2, p2._1, p2._2 )
     }
 
@@ -123,8 +122,7 @@ object Par {
                        , c: Par[C]
                        , d: Par[D]
                        , e: Par[E])(f: (A,B,C,D,E) => F): Par[F] = 
-    map2( fork(map3(a, b, c)((_, _, _)))
-        , fork(map2(d, e)((_, _)))) {
+    map2(map3(a, b, c)((_, _, _)), map2(d, e)((_, _))) {
       (t, p) => f(t._1, t._2, t._3, p._1, p._2)
     }
 

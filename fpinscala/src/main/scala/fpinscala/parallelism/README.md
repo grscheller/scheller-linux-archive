@@ -14,10 +14,19 @@ by Paul Chiusana and Runar Bjarnason.
 * Utility object for the `Par[A]` type alias.
 * Provides a namespace for `Par[A]` type alias and its related functions. 
 
-### Program [ParTest](ParTest.scala)
-* Program to exercise fpinscala.parallelism.Par. 
+### Standalone Object [`ParUtils`](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/parallelism/ParUtils.scala)
+* Par related functions of a less general nature.
 
-### Program [ExpParTest](ExpParTest.scala)
+### Program [ParTest1](exerciseCode/ParTest1.scala)
+### Program [ParTest1](exerciseCode/ParTest1.scala)
+* Program to exercise fpinscala.parallelism.Par 
+
+### Program [ParTest2](exerciseCode/ParTest2.scala)
+* Program to exercise fpinscala.parallelism.Par 
+
+### Program [ParTest3](exerciseCode/ParTest3.scala)
+* Program to exercise fpinscala.parallelism.{Par,ParUtils}
+
+### Program [ExpParTest](exerciseCode/ExpParTest.scala)
 * Program to create a Par to calculate the exponential function.
-* It is quite quick, despite me not trying to optimize it at all.
-* Actually, it only ever uses one thread from the thread pool at any one time.
+* Purpose is to explore composing parallel calculations.

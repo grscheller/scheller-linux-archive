@@ -14,15 +14,18 @@ very similar to the scalaz monad transformer.
 * A random number generation package.
 * Created while working through the book exercises.
 
-### Program [rngStandaloneTest](rngStandaloneTest.scala)
+### Program [rngStandaloneTest](exerciseCode/rngStandaloneTest.scala)
 * Program to exercise package fpinscala.rngStandalone.
 
 ### Case class [fpinscala.state.State](State.scala)
 * Abstracting out the State Monad from what was done in rngStandalone.scala.
 
+### Companion object [fpinscala.state.State](State.scala)
+* Abstracting out the State Monad from what was done in rngStandalone.scala.
+
 ### Package [fpinscala.state.rand](rand/)
 * A reimplementation of package rngStandalone using fpinscala.state.State. 
 
-### Program [candyMachine](candyMachine.scala)
+### Program [candyMachine](exerciseCode/candyMachine.scala)
 * Standalone application to model a candy dispensing machine. 
 * Based on FPinScala exercise 6.11.

@@ -9,22 +9,22 @@ by Paul Chiusana and Runar Bjarnason.
 ### Trait [fpinscala.laziness.Stream](Stream.scala)
 * Implement a lazy list, or stream, using a trait and case classes.
 
-### Program [StreamTest](StreamTest.scala)
+### Program [StreamTest](exerciseCode/StreamTest.scala)
 * A program that exercises fpinscala.laziness.Stream.
 
-### Program [infiniteStreamTest](infiniteStreamTest.scala)
+### Program [infiniteStreamTest](exerciseCode/infiniteStreamTest.scala)
 * Using infinite streams with fpinscala.laziness.Stream.
 
-### Program [scalaInfiniteStreamTest](scalaInfiniteStreamTest.scala)
+### Program [scalaInfiniteStreamTest](exerciseCode/scalaInfiniteStreamTest.scala)
 * Using infinite streams with standard scala libraries.
 
-### Program [scanRightTest](scanRightTest.scala)
+### Program [scanRightTest](exerciseCode/scanRightTest.scala)
 * Test scanRight with fpinscala.laziness.Stream.
 
-### Program [hasSubsequenceStreamTest](hasSubsequenceStreamTest.scala)
+### Program [hasSubsequenceStreamTest](exerciseCode/hasSubsequenceStreamTest.scala)
 * Test hasSubsequenceStreamTest with fpinscala.laziness.Stream.
 
-### Program [foldLeftTest](foldLeftTest.scala)
+### Program [foldLeftTest](exerciseCode/foldLeftTest.scala)
 * Compare foldLeft vs foldRight with fpinscala.laziness.Stream.
 
 Exercises teaching the distinction between laziness and<br>

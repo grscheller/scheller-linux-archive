@@ -21,5 +21,5 @@ From chapter 6.
 ### Class [LCG](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/state/rand/RNG.scala#L103-L143)
 * Linear Congruence Generator implementation for RNG.
 
-### Program [randTest](randTest.scala)
+### Program [randTest](../exerciseCode/randTest.scala)
 * Program to exercise package fpinscala.rand.

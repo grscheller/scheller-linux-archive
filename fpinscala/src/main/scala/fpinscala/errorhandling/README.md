@@ -9,16 +9,16 @@ by Paul Chiusana and Runar Bjarnason.
 ### Trait [fpinscala.errorhandling.Option](Option.scala)
 * Datatype indicating a successful value or failure.
 
-### Program [OptionTest](OptionTest.scala)
+### Program [OptionTest](exerciseCode/OptionTest.scala)
 * Program that parses to exercise fpinscala.errorhandling.Option.
 
 ### Trait [fpinscala.errorhandling.Either](Either.scala)
 * Datatype containing a value of either one of two possible types.
 
-### Program [EitherTest](EitherTest.scala)
+### Program [EitherTest](exerciseCode/EitherTest.scala)
 * A program that parses to exercise fpinscala.errorhandling.Either.
 
-### Program [scalaErrorhandling](scalaErrorhandling.scala)
+### Program [scalaErrorhandling](exerciseCode/scalaErrorhandling.scala)
 * Parsing and error handling using the scala libraries.
 * Does not use fpinscala.errorhandling.
 

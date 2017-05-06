@@ -126,6 +126,7 @@ object Par {
       (t, p) => f(t._1, t._2, t._3, p._1, p._2)
     }
 
+  /** Change an IndexedSeq of pars into a par of a IndexedSeq. */
   def sequenceBalanced[A](ps: IndexedSeq[Par[A]]): Par[IndexedSeq[A]] =
     fork {
       if (ps.isEmpty)
@@ -138,7 +139,7 @@ object Par {
       }
     }
 
-  /** Change a list of pars into a par of a list. */
+  /** Change a List of pars into a par of a List. */
   def sequence[A](ps: List[Par[A]]): Par[List[A]] =
     map(sequenceBalanced(ps.toIndexedSeq))(_.toList)
 
@@ -165,6 +166,43 @@ object Par {
       }))
 
   }
+
+  /** Sum an IndexedSeq of par[Double] into a par of the sum. */
+  def sumDoublesBalanced(ps: IndexedSeq[Par[Double]]): Par[Double] =
+    fork {
+      if (ps.isEmpty)
+        unit(0.0)
+      else if (ps.length == 1)
+        map(ps.head)(a => a)
+      else {
+        val (lps,rps) = ps.splitAt(ps.length/2)
+        map2(sumDoublesBalanced(lps), sumDoublesBalanced(rps))(_ + _)
+      }
+    }
+
+  /** Parallel calculation to sum an IndexedSeq[Double] */
+  def sumDoublesParallel(xs: IndexedSeq[Double]): Par[Double] =
+    sumDoublesBalanced(xs.map(unit(_)))
+
+  /** Parallel Calculation to find the maximum
+   *  of an IndexedSeq of par[Int].
+   */
+  def maxIntsBalanced(ps: IndexedSeq[Par[Int]]): Par[Int] =
+    fork {
+      val size = ps.size
+      size match {
+        case 1 => ps(0)
+        case 2 => map2(ps(0), ps(1))(
+                    (p0, p1) => if (p0 < p1) p1 else p0)
+        case _ => { val (l,r) = ps.splitAt(size/2)
+                    map2(maxIntsBalanced(l), maxIntsBalanced(r))(
+                      (l, r) => if (l < r) r else l) }
+      }
+    }
+
+  /** Parallel calculation for the max of an IndexedSeq[Double] */
+  def maxIntsParallel(xs: IndexedSeq[Int]): Par[Int] =
+    maxIntsBalanced(xs.map(unit(_)))
 
   //
   // Par private Future helper classes:

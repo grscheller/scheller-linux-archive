@@ -17,10 +17,10 @@ very similar to the scalaz monad transformer.
 ### Program [rngStandaloneTest](exerciseCode/rngStandaloneTest.scala)
 * Program to exercise package fpinscala.rngStandalone.
 
-### Case class [fpinscala.state.State](State.scala)
+### Case class [fpinscala.state.State](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/state/State.scala#L36-L77)
 * Abstracting out the State Monad from what was done in rngStandalone.scala.
 
-### Companion object [fpinscala.state.State](State.scala)
+### Companion object [fpinscala.state.State](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/state/State.scala#L80-L123)
 * Abstracting out the State Monad from what was done in rngStandalone.scala.
 
 ### Package [fpinscala.state.rand](rand/)

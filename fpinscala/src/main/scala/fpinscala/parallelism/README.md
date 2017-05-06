@@ -25,10 +25,9 @@ by Paul Chiusana and Runar Bjarnason.
 * This Future can be passed to Java code.
 * Some thread blocking issues.
 
-### Standalone Object [`ParUtils`](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/parallelism/ParUtils.scala#L11-L52)
+### Standalone Object [`ParUtils`](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/parallelism/ParUtils.scala)
 * Par related functions of a less general nature.
 
-### Program [ParTest1](exerciseCode/ParTest1.scala)
 ### Program [ParTest1](exerciseCode/ParTest1.scala)
 * Program to exercise fpinscala.parallelism.Par 
 

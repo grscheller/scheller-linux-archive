@@ -1,8 +1,8 @@
 package fpinscala.chap07.parallelism
 
 import java.util.concurrent._
-import fpinscala.parallelism.Par
-import Par._
+import fpinscala.parallelism.Par._
+import fpinscala.parallelism.ParUtils._
 
 /** Test fpinscala.parallelism.Par object
  *

@@ -29,7 +29,7 @@ final object Par {
   /** Par.fork marks a calculation, in the resulting Future, to be
    *  done in a parallel thread.
    *
-   *  In Java 8, Future now has a functional interface. 
+   *  In Java 8+, Future now has a functional interface. 
    *
    *  Before java 8, I would have had to define fork like
    *  def fork[A](a: => Par[A]): Par[A] =
@@ -79,7 +79,7 @@ final object Par {
   def asyncF[A,B](f: A => B): A => Par[B] =
     a => lazyUnit(f(a))
 
-  /** Par.map2 combines two parallel computations with a function.
+  /** Combine two parallel computations with a function.
    *
    *  Function not evaluated in a separate thread.  To
    *  do that, use `fork(map2(a,b)(f))'
@@ -126,22 +126,32 @@ final object Par {
       (t, p) => f(t._1, t._2, t._3, p._1, p._2)
     }
 
-  /** Change an IndexedSeq of pars into a par of a IndexedSeq. */
-  def sequenceBalanced[A](ps: IndexedSeq[Par[A]]): Par[IndexedSeq[A]] =
+  /** Apply a binary operator across an indexable collection in parallel.
+   *
+   *    Note: For efficiency, collection assumed nonempty.
+   */
+  def balancedBinComp[A](ps: IndexedSeq[Par[A]])(binOp: (A,A) => A): Par[A] =
     fork {
-      if (ps.isEmpty)
-        unit(Vector())
-      else if (ps.length == 1)
-        map(ps.head)(a => Vector(a))
+      if (ps.size == 1)
+        ps(0)
       else {
-        val (lps,rps) = ps.splitAt(ps.length/2)
-        map2(sequenceBalanced(lps), sequenceBalanced(rps))(_ ++ _)
+        val (lps,rps) = ps.splitAt(ps.size/2)
+        map2(balancedBinComp(lps)(binOp), balancedBinComp(rps)(binOp))(binOp)
       }
+    }
+
+  /** Change an IndexedSeq of Pars into a Par of an IndexedSeq.  */
+  def sequenceIndexedSeq[A](ps: IndexedSeq[Par[A]]): Par[IndexedSeq[A]] =
+    if (ps.isEmpty)
+      unit(IndexedSeq())
+    else {
+      val pv = ps.map(map(_)(a => IndexedSeq(a)))
+      balancedBinComp(pv)(_ ++ _)
     }
 
   /** Change a List of pars into a par of a List. */
   def sequence[A](ps: List[Par[A]]): Par[List[A]] =
-    map(sequenceBalanced(ps.toIndexedSeq))(_.toList)
+    map(sequenceIndexedSeq(ps.toVector))(_.toList)
 
   /** Create a calcultion to map over a list in parallel
    * 

@@ -2,7 +2,6 @@ package fpinscala.chap07.parallelism
 
 import java.util.concurrent._
 import fpinscala.parallelism.Par._
-import fpinscala.parallelism.ParUtils._
 
 /** Test fpinscala.parallelism.Par object
  *
@@ -41,6 +40,22 @@ object ParTest3 {
                   if (maxL < maxR) maxR else maxL }
     }
   }
+
+  // Parallel versions of above two functions
+
+  /** Parallel calculation to sum an IndexedSeq[Double] */
+  def sumDoublesParallel(xs: IndexedSeq[Double]): Par[Double] =
+    if (xs.isEmpty)
+      unit(0.0)
+    else
+      balancedBinComp(xs.map(unit(_)))(_ + _)
+
+  /** Parallel calculation to sum an IndexedSeq[Double] */
+  def maxIntsParallel(xs: IndexedSeq[Int]): Par[Int] =
+    if (xs.isEmpty)
+      throw new IllegalArgumentException("IndexedSeq must be non-empty")
+    else
+      balancedBinComp(xs.map(unit(_))) { (l, r) => if (l < r) r else l }
 
   def main(args: Array[String]): Unit = {
 

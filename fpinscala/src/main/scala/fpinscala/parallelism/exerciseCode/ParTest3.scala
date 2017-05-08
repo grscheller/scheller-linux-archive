@@ -32,8 +32,9 @@ object ParTest3 {
   def maxInts(ints: IndexedSeq[Int]): Int = {
     val size = ints.size
     size match {
+      case 0 => throw new IllegalArgumentException(
+                  "IndexedSeq must be non-empty")
       case 1 => ints(0)
-      case 2 => if (ints(0) < ints(1)) ints(1) else ints(0)
       case _ => { val (l,r) = ints.splitAt(size/2)
                   val maxL = maxInts(l)
                   val maxR = maxInts(r)

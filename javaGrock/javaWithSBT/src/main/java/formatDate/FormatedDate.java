@@ -5,9 +5,7 @@ import java.util.Locale;
 import java.text.DateFormat;
 
 /**
- *  The standard java hello world program.
- *
- *    Start off with something we know will compile.
+ *  Start off with something we know will compile.
  *
  */
 class FormatedDate {

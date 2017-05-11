@@ -163,7 +163,7 @@ final object Par {
     fork(sequence(as.map(asyncF(f))))
 
   /** Filter elements of a list in parallel. */
-  def parFilter[A](as: List[A])(f: A => Boolean): Par[List[A]] = {
+  def parFilter1[A](as: List[A])(f: A => Boolean): Par[List[A]] = {
 
     def ff(a: A): Option[A] =
       if (f(a)) Some(a)
@@ -174,8 +174,18 @@ final object Par {
         case None => aas
         case Some(a) => a :: aas
       }))
-
   }
+
+  /** Filter elements of a list in parallel - Books version. */
+  def parFilter2[A](as: List[A])(f: A => Boolean): Par[List[A]] = {
+    val pars = as map {
+      asyncF(a => if (f(a)) List(a) else List())
+    }
+    map(sequence(pars))(_.flatten)
+  }
+
+  /** Filter elements of a list in parallel. */
+  def parFilter[A] = parFilter1[A] _
 
   //
   // Par private Future helper classes:

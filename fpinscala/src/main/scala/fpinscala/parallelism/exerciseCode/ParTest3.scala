@@ -53,13 +53,13 @@ object ParTest3 {
   /** Parallel calculation to sum an IndexedSeq[Double] */
   def maxIntsParallel(xs: IndexedSeq[Int]): Par[Int] =
     if (xs.isEmpty)
-      throw new IllegalArgumentException("IndexedSeq must be non-empty")
+      throw new IllegalArgumentException("Max of an empty collection")
     else
       balancedBinComp(xs.map(unit(_))) { (l, r) => if (l < r) r else l }
 
   def main(args: Array[String]): Unit = {
 
-    val es = Executors.newFixedThreadPool(10)
+    val es = Executors.newFixedThreadPool(100)
 
     val fibParameter = 43L
 
@@ -118,6 +118,121 @@ object ParTest3 {
     print("maxInts(vecInt) = "); println(maxInts(vecInt))
     print("run(es)(maxIntsParallel(vecInt)).get = ")
     println(run(es)(maxIntsParallel(vecInt)).get)
+
+    // More numerically instensive tests for the parallel
+    // and non-parallel methods to be compared.
+    println("\nNumerically intensive tests:\n")
+
+    val bigList = List.range[Long](fibParameter, 0, -1)
+    val smallList = List.range[Long](fibParameter+2, fibParameter-3, -1)
+
+    println {
+      print("smallList map fib = \n  ")
+      val t0 = System.nanoTime
+      val hold = smallList map fib
+      val t1 = System.nanoTime
+      hold + " in " + (t1 - t0)/1000000000.0 + " seconds\n"
+    }
+ 
+    println {
+      print("run(es)(parMap(smallList)(fib)).get = \n  ")
+      val t0 = System.nanoTime
+      val hold = run(es)(parMap(smallList)(fib)).get
+      val t1 = System.nanoTime
+      hold + " in " + (t1 - t0)/1000000000.0 + " seconds\n"
+    }
+
+    println {
+      print("\nbigList map fib = \n  ")
+      val t0 = System.nanoTime
+      val hold = bigList map fib
+      val t1 = System.nanoTime
+      hold + " in " + (t1 - t0)/1000000000.0 + " seconds\n"
+    }
+ 
+    println {
+      print("run(es)(parMap(bigList)(fib)).get = \n  ")
+      val t0 = System.nanoTime
+      val hold = run(es)(parMap(bigList)(fib)).get
+      val t1 = System.nanoTime
+      hold + " in " + (t1 - t0)/1000000000.0 + " seconds\n"
+    }
+ 
+    val foo: Par[List[Long]] =
+      map(sequence(bigList map asyncF(fib)))(a => a.filter(_ % 2 == 0))
+
+    val bar: Par[List[Long]] =
+      map(parMap(bigList)(fib))(a => a.filter(_ % 2 == 0))
+
+    println {
+      print("\nmap with asyncF  = ")
+      val t0 = System.nanoTime
+      val hold = run(es)(foo).get
+      val t1 = System.nanoTime
+      hold + " in " + (t1 - t0)/1000000000.0 + " seconds\n"
+    }
+ 
+    println {
+      print("calc with parMap = ")
+      val t0 = System.nanoTime
+      val hold = run(es)(bar).get
+      val t1 = System.nanoTime
+      hold + " in " + (t1 - t0)/1000000000.0 + " seconds\n"
+    }
+ 
+    val baz1 = parFilter1(bigList)(a => fib(a)%2 == 0)
+    val baz2 = parFilter2(bigList)(a => fib(a)%2 == 0)
+
+    println {
+      print("\ncalc with parFilter1 = ")
+      val t0 = System.nanoTime
+      val hold = run(es)(baz1).get
+      val t1 = System.nanoTime
+      hold + " in " + (t1 - t0)/1000000000.0 + " seconds\n"
+    }
+ 
+    println {
+      print("calc with parFilter2 = ")
+      val t0 = System.nanoTime
+      val hold = run(es)(baz2).get
+      val t1 = System.nanoTime
+      hold + " in " + (t1 - t0)/1000000000.0 + " seconds\n"
+    }
+
+    println {
+      print("without parallelism  = ")
+      val t0 = System.nanoTime
+      val hold = bigList filter { a => fib(a)%2 == 0 }
+      val t1 = System.nanoTime
+      hold + " in " + (t1 - t0)/1000000000.0 + " seconds\n"
+    }
+
+    val boz1 = parFilter1(smallList)(a => fib(a)%2 == 0)
+    val boz2 = parFilter2(smallList)(a => fib(a)%2 == 0)
+
+    println {
+      print("\ncalc with parFilter1 = ")
+      val t0 = System.nanoTime
+      val hold = run(es)(boz1).get
+      val t1 = System.nanoTime
+      hold + " in " + (t1 - t0)/1000000000.0 + " seconds\n"
+    }
+ 
+    println {
+      print("calc with parFilter2 = ")
+      val t0 = System.nanoTime
+      val hold = run(es)(boz2).get
+      val t1 = System.nanoTime
+      hold + " in " + (t1 - t0)/1000000000.0 + " seconds\n"
+    }
+
+    println {
+      print("without parallelism  = ")
+      val t0 = System.nanoTime
+      val hold = smallList filter { a => fib(a)%2 == 0 }
+      val t1 = System.nanoTime
+      hold + " in " + (t1 - t0)/1000000000.0 + " seconds\n"
+    }
 
     es.shutdown
 

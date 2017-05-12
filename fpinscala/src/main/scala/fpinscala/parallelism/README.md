@@ -10,15 +10,15 @@ by Paul Chiusana and Runar Bjarnason.
 * Type alias to produce a future parallel computation.
 * Defined in the `Par` Standalone (Utility) Object.
 
-### Standalone Object [`Par`](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/parallelism/Par.scala#L24-L348)
+### Standalone Object [`Par`](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/parallelism/Par.scala#L24-L368)
 * Utility object for the `Par[A]` type alias.
 * Provides a namespace for `Par[A]` type alias and its related functions. 
 
-### Private Case Class [`UnitFuture`](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/parallelism/Par.scala#L180-L186)
+### Private Case Class [`UnitFuture`](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/parallelism/Par.scala#L194-L206)
 * Wraps a value in a Future.
 * Future is basically born "done."
 
-### Private Case Class [`Map2Future`](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/parallelism/Par.scala#L188-L347)
+### Private Case Class [`Map2Future`](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/parallelism/Par.scala#L208-L367)
 * Future used by the Par.map2 method.
 * Combines two parallel calculations with a function.
 * Compatible with the java.util.concurrent.Future API.
@@ -32,8 +32,12 @@ by Paul Chiusana and Runar Bjarnason.
 * Program to exercise fpinscala.parallelism.Par 
 
 ### Program [ParTest3](exerciseCode/ParTest3.scala)
-* Program to exercise fpinscala.parallelism.{Par,ParUtils}
+* Program to exercise fpinscala.parallelism.Par
 
 ### Program [ExpParTest](exerciseCode/ExpParTest.scala)
 * Program to create a Par to calculate the exponential function.
 * Purpose is to explore composing parallel calculations.
+
+### Program [Sleepy](exerciseCode/Sleepy.scala)
+* Program to exercise fpinscala.parallelism.Par.parMap
+* Seeing effect of limiting thread number without deadlocking.

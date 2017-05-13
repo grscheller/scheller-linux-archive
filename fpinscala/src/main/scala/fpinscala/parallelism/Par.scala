@@ -23,39 +23,30 @@ import java.util.concurrent.TimeoutException
  */
 final object Par {
 
-  /** Par type alias. */
-  type Par[A] = ExecutorService => Future[A]
-
-  /** Par.fork marks a calculation, in the resulting Future, to be
-   *  done in a parallel thread.
-   *
-   *  In Java 8+, Future now has a functional interface. 
-   *
-   *  Before java 8, I would have had to define fork like
-   *  def fork[A](a: => Par[A]): Par[A] =
-   *    es => es.submit(new Callable[A] { def call = a(es).get })
-   *
-   *  For backward compatibility, an instance of an interface
-   *  containing a single abstract method (SAM) can be
-   *  used anywhere a function object is expected.  So, above
-   *  implementation of fork would still work in Java 8.
-   *
+  /** Type alias for any function that, when give a
+   *  java.util.concurrent.ExecutorService, produces an
+   *  object adhering to the java.util.concurrent.Future
+   *  interface.
    */
-  def fork[A](a: => Par[A]): Par[A] =
-    es => es.submit(() => a(es).get)
+  type Par[A] = ExecutorService => Future[A]
 
   /** Return a Future for a parallel calculation.
     *
     * The run method does not return the final value of
-    * type A, but an imperitive java wee beasty called
-    * a Future.  You will need to use its get method
+    * type A, but an imperitive java wee beasty of type
+    * Future[A].  You will need to use its get method
     * to actually get the value of type A.
     *
     * The run method returns the Future right away.  The
     * Future's get method blocks until the value is available.
     *
+    * For now, just a convienance function for function application.
+    * A place holder in case we turn Par into a legitimate Type.
+    *
     */
   def run[A](es: ExecutorService)(a: Par[A]): Future[A] = a(es)
+
+  // The 3 Basic combinators which define parallel calculations.
 
   /** Wrap a constant value in a Par. 
    *
@@ -66,18 +57,6 @@ final object Par {
    *
    */
   def unit[A](a: A): Par[A] = (es: ExecutorService) => UnitFuture(a)
-
-  /** Lazy version of unit
-   *
-   *  Evaluates its argument in a separate thread,
-   *  only if required.
-   *
-   */
-  def lazyUnit[A](a: => A): Par[A] = fork(unit(a))
-
-  /** Evaluate a function asynchronously */
-  def asyncF[A,B](f: A => B): A => Par[B] =
-    a => lazyUnit(f(a))
 
   /** Combine two parallel computations with a function.
    *
@@ -97,9 +76,41 @@ final object Par {
       Map2Future(af, bf, f)
     }
 
+  /** Par.fork marks a calculation, in the resulting Future, to be
+   *  done in a parallel thread.
+   *
+   *  In Java 8+, Future now has a functional interface. 
+   *
+   *  Before java 8, I would have had to define fork like
+   *  def fork[A](a: => Par[A]): Par[A] =
+   *    es => es.submit(new Callable[A] { def call = a(es).get })
+   *
+   *  For backward compatibility, an instance of an interface
+   *  containing a single abstract method (SAM) can be
+   *  used anywhere a function object is expected.  So, above
+   *  implementation of fork would still work in Java 8.
+   *
+   */
+  def fork[A](a: => Par[A]): Par[A] =
+    es => es.submit(() => a(es).get)
+
+  // Other combinators in terms of the above three.
+
+  /** Lazy version of unit
+   *
+   *  Evaluates its argument in a separate thread,
+   *  only if required.
+   *
+   */
+  def lazyUnit[A](a: => A): Par[A] = fork(unit(a))
+
+  /** Evaluate a function asynchronously */
+  def asyncF[A,B](f: A => B): A => Par[B] =
+    a => lazyUnit(f(a))
+
   /** Map a function into a parallel calculation.  */
   def map[A,B](a: Par[A])(f: A => B): Par[B] =
-    map2(a, unit(()))((a,_) => f(a))
+    map2(a, unit( () ))((a, _) => f(a))
 
   /** Combine three parallel computations with a function. */
   def map3[A,B,C,D]( a: Par[A]

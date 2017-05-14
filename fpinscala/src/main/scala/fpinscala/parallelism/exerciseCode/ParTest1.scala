@@ -1,10 +1,9 @@
 package fpinscala.chap07.parallelism
 
 import java.util.concurrent._
-import fpinscala.parallelism.Par
-import Par._
+import fpinscala.parallelism.BlockingPar._
 
-/** Test fpinscala.parallelism.Par object
+/** Test fpinscala.parallelism.Blocking object
  *
  *  This is an imperitive application using
  *  java.concurent based constructs.  It also

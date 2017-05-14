@@ -1,9 +1,9 @@
 package fpinscala.chap07.parallelism
 
 import java.util.concurrent._
-import fpinscala.parallelism.Par._
+import fpinscala.parallelism.BlockingPar._
 
-/** Test fpinscala.parallelism.Par object
+/** Test fpinscala.parallelism.Blocking object
  *
  *  Post Exercise 7.6
  *
@@ -59,7 +59,8 @@ object ParTest3 {
 
   def main(args: Array[String]): Unit = {
 
-    val es = Executors.newFixedThreadPool(100)
+    // val es = Executors.newFixedThreadPool(100)
+    val es = Executors.newCachedThreadPool()
 
     val fibParameter = 43L
 

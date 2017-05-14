@@ -2,9 +2,9 @@ package fpinscala.chap07.parallelism
 
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
-import fpinscala.parallelism.Par._
+import fpinscala.parallelism.BlockingPar._
 
-/** Test fpinscala.parallelism.Par object
+/** Test fpinscala.parallelism.Blocking object
  *
  *  Before section 7.4
  *

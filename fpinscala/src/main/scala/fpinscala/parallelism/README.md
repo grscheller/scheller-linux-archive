@@ -6,19 +6,18 @@ Exploring how to do concurrent processing in a purely functional way<br>
 while working through the exercises in "Functional Programming in Scala"<br>
 by Paul Chiusana and Runar Bjarnason.
 
-### Type alias [`Par[A]`](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/parallelism/Par.scala#L26-L31)
-* Type alias to produce a future parallel computation.
-* Defined in the `Par` Standalone (Utility) Object.
+### Trait [`Par[A]`](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/parallelism/Par.scala#L10-L13)
+* Used to define future parallel computations and run them.
 
-### Standalone Object [`Par`](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/parallelism/Par.scala#L24-L379)
+### Companon Object [`Par`](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/parallelism/Par.scala#L15-L216)
 * Utility object for the `Par[A]` type alias.
 * Provides a namespace for `Par[A]` type alias and its related functions. 
 
-### Private Case Class [`UnitFuture`](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/parallelism/Par.scala#L205-L217)
+### Private Case Class [`UnitFuture`](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/parallelism/Par.scala#L218-L230)
 * Wraps a value in a Future.
 * Future is basically born "done."
 
-### Private Case Class [`Map2Future`](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/parallelism/Par.scala#L219-L378)
+### Private Case Class [`Map2Future`](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/parallelism/Par.scala#L232-L392)
 * Future used by the Par.map2 method.
 * Combines two parallel calculations with a function.
 * Compatible with the java.util.concurrent.Future API.

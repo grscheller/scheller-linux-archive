@@ -7,184 +7,9 @@ import java.util.concurrent.CancellationException
 import java.util.concurrent.ExecutionException
 import java.util.concurrent.TimeoutException
 
+/** Trait used to define calculations with parallelism. */
 sealed trait Par[A] {
   private[parallelism] def apply(es: ExecutorService): Future[A]
-}
-
-/** UnitFuture helper class for Par.unit method.
-  *
-  *  Does not use the underlying es (ExecutorService),
-  *  basically, born done.
-  *
-  */
- private[parallelism] 
- case class UnitFuture[A](get: A) extends Future[A] {
-   def get(timeout: Long, units: TimeUnit): A = get
-   def isDone: Boolean = true
-   def isCancelled: Boolean = false
-   def cancel(evenIfRunning: Boolean): Boolean = false
-  }
-
-/** Map2Future helper class for Par.map2 method.
- *
- *  Wrap the two futures into another future so
- *  that f can be evaluated after get is called.
- *
- *  Design Choices:
- *  1. Final value cached, implementation prevents repeated
- *     re-evaluations.
- *  2. If f is a long running function, the time out contract
- *     can still be violated.
- *  3. The future doesn't start computing its value until either:
- *     - A blocking get method is called.
- *     - The isDone method is involked.
- *     The later case is to enable the common Java use case
- *     of using an event loop to periodically check the
- *     future's isDone method.
- *  4. Follows Java Future API more closely than book answerkey version.
- *     Book's version violates both isDone and cancel contracts.
- *  5. @throws annontations are for Java capatibility.
- *     
- */
-private[parallelism] 
-case class Map2Future[A,B,C]( af: Future[A]
-                            , bf: Future[B]
-                            ,  f: (A,B) => C
-                            ) extends Future[C] {
-
-  // Internal state:
-  private var hasStarted: Boolean = false
-  private var cancelled: Boolean = false
-  private var done: Boolean = false
-  @volatile private var value: Option[C] = None
-
-  // Perform the calculation
-  private 
-  def calculate(): Unit = {
-    hasStarted = true
-    val finalValue = f(af.get, bf.get)
-    value = Some(finalValue)
-    done = true
-  }
-
-  // Perform the calculation with timeouts
-  private 
-  def calculate(timeout: Long, units: TimeUnit): Unit = {
-    hasStarted = true
-    val timeoutNS = TimeUnit.NANOSECONDS.convert(timeout, units)
-    val t0 = System.nanoTime
-    val av = af.get(timeoutNS, TimeUnit.NANOSECONDS)
-    val t1 = System.nanoTime
-    val finalValue =
-      f(av, bf.get(timeoutNS - (t1 - t0), TimeUnit.NANOSECONDS))
-    value = Some(finalValue)
-    done = true
-  }
-
-  @throws(classOf[CancellationException])
-  @throws(classOf[ExecutionException])
-  @throws(classOf[InterruptedException])
-  def get(): C =
-    if (cancelled)
-      throw new CancellationException()
-    else
-      value getOrElse {
-        calculate()
-        if (cancelled)
-          throw new CancellationException()
-        else
-          value.get
-      }
-
-  @throws(classOf[CancellationException])
-  @throws(classOf[ExecutionException])
-  @throws(classOf[InterruptedException])
-  @throws(classOf[TimeoutException])
-  def get(timeout: Long, units: TimeUnit): C =
-    if (cancelled)
-      throw new CancellationException()
-    else
-      value getOrElse {
-        calculate(timeout, units)
-        if (cancelled)
-          throw new CancellationException()
-        else
-          value.get
-      }
-
-  /** Map2Future.isDone returns true if completed or has been cancelled.
-   *
-   *    To facilitate the use case of testing the future's 
-   *    isDone method in an event loop, kickoff a calculation
-   *    if the isDone method called before one of the get
-   *    methods are called.
-   *
-   *    Calculation is done in another thread so isDone 
-   *    does not block.  Can't use Par.fork directly here
-   *    unless I explicitly pass the es to the Map2Future
-   *    case class.
-   *
-   *    Swallows all exceptions for compatibility with the
-   *    Java Futures trait.
-   *
-   */
-  def isDone: Boolean = {
-    if ( ! hasStarted && ! isCancelled )
-      new Thread( () =>
-        try {
-          calculate()
-        } catch {
-          case ex: TimeoutException      => 
-          case ex: CancellationException => 
-          case ex: InterruptedException  => 
-          case ex: ExecutionException    => 
-        } ).start()
-    done
-  }
-
-  /** Test if future cancelled.
-   *
-   *  Returns true if future successfully
-   *  cancelled before completion.
-   *
-   */
-  def isCancelled: Boolean = cancelled
-
-  /** Map2Future.cancel cancels the future.
-   *
-   *  The return value means the command was
-   *  successful, not the isCancelled state.
-   *
-   *  Note: Futures af and bf are not visible to code outside
-   *        the context of the Par in which they are defined.
-   *
-   *  Note: From the Java API
-   *     1. Can't cancel if done.
-   *     2. Return false if already cancelled.
-   *     3. If future is cancelled, its isDone
-   *        method returns true.
-   */
-  def cancel(evenIfRunning: Boolean): Boolean =
-    if (done) {
-        false
-    } else if (cancelled) {
-        false
-    } else if (! hasStarted) {
-        cancelled = true
-        done = true
-        af.cancel(evenIfRunning)
-        bf.cancel(evenIfRunning)
-        true
-    } else if (evenIfRunning) {
-        val af_cancelled = af.cancel(true)
-        val bf_cancelled = bf.cancel(true)
-        cancelled = af_cancelled || bf_cancelled
-        if (cancelled) {
-          done = true
-          true
-        } else false
-    } else false
-
 }
 
 /** Par companion object.
@@ -387,5 +212,181 @@ object Par {
 
   /** Filter elements of a list in parallel. */
   def parFilter[A] = parFilter1[A] _
+
+}
+
+/** UnitFuture helper class for Par.unit method.
+  *
+  *  Does not use the underlying es (ExecutorService),
+  *  basically, born done.
+  *
+  */
+ private[parallelism] 
+ case class UnitFuture[A](get: A) extends Future[A] {
+   def get(timeout: Long, units: TimeUnit): A = get
+   def isDone: Boolean = true
+   def isCancelled: Boolean = false
+   def cancel(evenIfRunning: Boolean): Boolean = false
+  }
+
+/** Map2Future helper class for Par.map2 method.
+ *
+ *  Wrap the two futures into another future so
+ *  that f can be evaluated after get is called.
+ *
+ *  Design Choices:
+ *  1. Final value cached, implementation prevents repeated
+ *     re-evaluations.
+ *  2. If f is a long running function, the time out contract
+ *     can still be violated.
+ *  3. The future doesn't start computing its value until either:
+ *     - A blocking get method is called.
+ *     - The isDone method is involked.
+ *     The later case is to enable the common Java use case
+ *     of using an event loop to periodically check the
+ *     future's isDone method.
+ *  4. Follows Java Future API more closely than book answerkey version.
+ *     Book's version violates both isDone and cancel contracts.
+ *  5. @throws annontations are for Java capatibility.
+ *     
+ */
+private[parallelism] 
+case class Map2Future[A,B,C]( af: Future[A]
+                            , bf: Future[B]
+                            ,  f: (A,B) => C
+                            ) extends Future[C] {
+
+  // Internal state:
+  private var hasStarted: Boolean = false
+  private var cancelled: Boolean = false
+  private var done: Boolean = false
+  @volatile private var value: Option[C] = None
+
+  // Perform the calculation
+  private 
+  def calculate(): Unit = {
+    hasStarted = true
+    val finalValue = f(af.get, bf.get)
+    value = Some(finalValue)
+    done = true
+  }
+
+  // Perform the calculation with timeouts
+  private 
+  def calculate(timeout: Long, units: TimeUnit): Unit = {
+    hasStarted = true
+    val timeoutNS = TimeUnit.NANOSECONDS.convert(timeout, units)
+    val t0 = System.nanoTime
+    val av = af.get(timeoutNS, TimeUnit.NANOSECONDS)
+    val t1 = System.nanoTime
+    val finalValue =
+      f(av, bf.get(timeoutNS - (t1 - t0), TimeUnit.NANOSECONDS))
+    value = Some(finalValue)
+    done = true
+  }
+
+  @throws(classOf[CancellationException])
+  @throws(classOf[ExecutionException])
+  @throws(classOf[InterruptedException])
+  def get(): C =
+    if (cancelled)
+      throw new CancellationException()
+    else
+      value getOrElse {
+        calculate()
+        if (cancelled)
+          throw new CancellationException()
+        else
+          value.get
+      }
+
+  @throws(classOf[CancellationException])
+  @throws(classOf[ExecutionException])
+  @throws(classOf[InterruptedException])
+  @throws(classOf[TimeoutException])
+  def get(timeout: Long, units: TimeUnit): C =
+    if (cancelled)
+      throw new CancellationException()
+    else
+      value getOrElse {
+        calculate(timeout, units)
+        if (cancelled)
+          throw new CancellationException()
+        else
+          value.get
+      }
+
+  /** Map2Future.isDone returns true if completed or has been cancelled.
+   *
+   *    To facilitate the use case of testing the future's 
+   *    isDone method in an event loop, kickoff a calculation
+   *    if the isDone method called before one of the get
+   *    methods are called.
+   *
+   *    Calculation is done in another thread so isDone 
+   *    does not block.  Can't use Par.fork directly here
+   *    unless I explicitly pass the es to the Map2Future
+   *    case class.
+   *
+   *    Swallows all exceptions for compatibility with the
+   *    Java Futures trait.
+   *
+   */
+  def isDone: Boolean = {
+    if ( ! hasStarted && ! isCancelled )
+      new Thread( () =>
+        try {
+          calculate()
+        } catch {
+          case ex: TimeoutException      => 
+          case ex: CancellationException => 
+          case ex: InterruptedException  => 
+          case ex: ExecutionException    => 
+        } ).start()
+    done
+  }
+
+  /** Test if future cancelled.
+   *
+   *  Returns true if future successfully
+   *  cancelled before completion.
+   *
+   */
+  def isCancelled: Boolean = cancelled
+
+  /** Map2Future.cancel cancels the future.
+   *
+   *  The return value means the command was
+   *  successful, not the isCancelled state.
+   *
+   *  Note: Futures af and bf are not visible to code outside
+   *        the context of the Par in which they are defined.
+   *
+   *  Note: From the Java API
+   *     1. Can't cancel if done.
+   *     2. Return false if already cancelled.
+   *     3. If future is cancelled, its isDone
+   *        method returns true.
+   */
+  def cancel(evenIfRunning: Boolean): Boolean =
+    if (done) {
+        false
+    } else if (cancelled) {
+        false
+    } else if (! hasStarted) {
+        cancelled = true
+        done = true
+        af.cancel(evenIfRunning)
+        bf.cancel(evenIfRunning)
+        true
+    } else if (evenIfRunning) {
+        val af_cancelled = af.cancel(true)
+        val bf_cancelled = bf.cancel(true)
+        cancelled = af_cancelled || bf_cancelled
+        if (cancelled) {
+          done = true
+          true
+        } else false
+    } else false
 
 }

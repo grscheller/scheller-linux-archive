@@ -8,96 +8,102 @@ import java.util.concurrent.ExecutionException
 import java.util.concurrent.TimeoutException
 
 /** Trait used to define calculations with parallelism. */
-sealed trait Par[A] {
+sealed trait Par[A] { self =>
+
+  import Par._
+
+  /** Internally, Par behaves like a function. */
   private[parallelism] def apply(es: ExecutorService): Future[A]
-}
 
-/** Par companion object.
- *
- *  The members of the Par companion object allow
- *  parallel calculations to be defined in a pure way.
- *  Par.run will produce a function that when given a
- *  java.util.concurrent.ExecutorService will produce
- *  a java.util.concurrent.Future.
- *
- *  Usage in code:
- *    import fpinscala.parallelism.NonBlocking._
- *
- */
-object Par {
-
-  /** Return a Future for a parallel calculation.
-    *
-    * The run method does not return the final value of
-    * type A, but an imperitive java wee beasty of type
-    * Future[A].  You will need to use its get method
-    * to actually get the value of type A.
-    *
-    * The run method returns the Future right away.  The
-    * Future's get method blocks until the value is available.
-    *
-    * For now, just a convienance function for function application.
-    * A place holder in case we turn Par into a legitimate Type.
-    *
-    */
-  def run[A](es: ExecutorService)(a: Par[A]): Future[A] = a(es)
-
-  // The 3 Basic combinators which define parallel calculations.
-
-  /** Wrap a constant value in a Par. 
+  /** Perform the parallel calculation described by the Par.
    *
-   *  Does not actually use the underlying java or OS
-   *  multi-threading mechanisms.  The Par it returns
-   *  is a constant function not depending on the
-   *  (es: ExecutorService) passed to it.  
+   *  The run method does not return the final value of
+   *  type A, but an imperitive java wee beasty of type
+   *  Future[A].  You will need to use its get method
+   *  to actually get the value of type A.
    *
    */
-  def unit[A](a: A): Par[A] =
-    new Par[A] {
-      def apply(es: ExecutorService) = UnitFuture(a)
-    }
+  def run(es: ExecutorService): Future[A] = this(es)
 
   /** Combine two parallel computations with a function.
    *
    *  Function not evaluated in a separate thread.  To
    *  do that, use `fork(map2(a,b)(f))'
    *
-   *  Looking at the book's answer key solution, the 
-   *  trick is to wrap the futures I am passed into
-   *  another future object, Map2Future.
-   *
    */
-  def map2[A,B,C](a: Par[A], b: Par[B])(f: (A,B) => C): Par[C] =
+  def map2[B,C](pb: Par[B])(f: (A,B) => C): Par[C] =
     new Par[C] {
       def apply(es: ExecutorService) = {
-        val af = a(es)
-        val bf = b(es)
+        val af = self(es)
+        val bf = pb(es)
         Map2Future(af, bf, f)
       }
     }
 
-  /** Par.fork marks a calculation, in the resulting Future, to be
-   *  done in a parallel thread.
+  // map2 related methods:
+
+  /** Map a function into a parallel calculation.  */
+  def map[B](f: A => B): Par[B] =
+    this.map2(unit(())) {
+      (a, _) => f(a)
+    }
+
+  /** Combine three parallel computations with a function. */
+  def map3[B,C,D]( pb: Par[B]
+                 , pc: Par[C])(f: (A,B,C) => D): Par[D] = 
+    this.map2(pb)((_,_)).map2(pc) {
+      (t, c) => f(t._1, t._2, c)
+    }
+
+  /** Combine four parallel computations with a function. */
+  def map4[B,C,D,E]( pb: Par[B]
+                   , pc: Par[C]
+                   , pd: Par[D])(f: (A,B,C,D) => E): Par[E] = 
+    this.map3(pb, pc)((_,_,_)).map2(pd) {
+      (t, d) => f(t._1, t._2, t._3, d)
+    }
+
+  /** Combine five parallel computations with a function. */
+  def map5[B,C,D,E,F]( pb: Par[B]
+                     , pc: Par[C]
+                     , pd: Par[D]
+                     , pe: Par[E])(f: (A,B,C,D,E) => F): Par[F] = 
+    this.map4(pb, pc, pd)((_,_,_,_)).map2(pe) {
+      (t, e) => f(t._1, t._2, t._3, t._4, e)
+    }
+
+}
+
+/** Par companion object */
+object Par {
+
+  /** Par.fork marks a calculation to be done in a parallel thread.
    *
    *  In Java 8+, Future now has a functional interface. 
    *
-   *  Before java 8, I would have had to define fork like
-   *  def fork[A](a: => Par[A]): Par[A] =
-   *    es => es.submit(new Callable[A] { def call = a(es).get })
-   *
-   *  For backward compatibility, an instance of an interface
-   *  containing a single abstract method (SAM) can be
-   *  used anywhere a function object is expected.  So, above
-   *  implementation of fork would still work in Java 8.
+   *  Before java 8, I would have had to pass a
+   *    new Callable[A] { def call = a(es).get }
+   *  anonymous inner class to the es submit method.
    *
    */
-  def fork[A](a: => Par[A]): Par[A] =
+  def fork[A](pa: => Par[A]): Par[A] =
     new Par[A] {
       def apply(es: ExecutorService) =
-        es.submit(() => a(es).get)
+        es.submit(() => pa(es).get)
     }
-    
-  // Other combinators in terms of the above three.
+ 
+  /** Wrap a constant value in a Par. 
+   *
+   *  Does not actually use the underlying java or OS
+   *  multi-threading mechanisms.  The Par it returns
+   *  does not depending on the (es: ExecutorService)
+   *  passed to the run method.  
+   *
+   */
+  def unit[A](a: A): Par[A] =
+    new Par[A] {
+      def apply(es: ExecutorService) = UnitFuture(a)
+    }
 
   /** Lazy version of unit
    *
@@ -113,43 +119,10 @@ object Par {
 
   /** Delay instantiation of a computation,
    *  at run time, only if needed.
-   *
-   *  If I were anticipating Par becoming a
-   *  proper object, es => run(es)(pa)
-   *
    */
   def delay[A](pa: => Par[A]): Par[A] =
     new Par[A] {
       def apply(es: ExecutorService) = pa(es)
-    }
-
-  /** Map a function into a parallel calculation.  */
-  def map[A,B](a: Par[A])(f: A => B): Par[B] =
-    map2(a, unit( () ))((a, _) => f(a))
-
-  /** Combine three parallel computations with a function. */
-  def map3[A,B,C,D]( a: Par[A]
-                   , b: Par[B]
-                   , c: Par[C])(f: (A,B,C) => D): Par[D] = 
-    map2(map2(a, b)((_, _)), c)((p, c) => f(p._1, p._2, c))
-
-  /** Combine four parallel computations with a function. */
-  def map4[A,B,C,D,E]( a: Par[A]
-                     , b: Par[B]
-                     , c: Par[C]
-                     , d: Par[D])(f: (A,B,C,D) => E): Par[E] = 
-    map2(map2(a, b)((_, _)), map2(c, d)((_, _))) {
-      (p1, p2) => f(p1._1, p1._2, p2._1, p2._2 )
-    }
-
-  /** Combine five parallel computations with a function. */
-  def map5[A,B,C,D,E,F]( a: Par[A]
-                       , b: Par[B]
-                       , c: Par[C]
-                       , d: Par[D]
-                       , e: Par[E])(f: (A,B,C,D,E) => F): Par[F] = 
-    map2(map3(a, b, c)((_, _, _)), map2(d, e)((_, _))) {
-      (t, p) => f(t._1, t._2, t._3, p._1, p._2)
     }
 
   /** Apply a binary operator across an indexable collection in parallel.
@@ -162,7 +135,7 @@ object Par {
         ps(0)
       else {
         val (lps,rps) = ps.splitAt(ps.size/2)
-        map2(balancedBinComp(lps)(binOp), balancedBinComp(rps)(binOp))(binOp)
+        balancedBinComp(lps)(binOp).map2(balancedBinComp(rps)(binOp))(binOp)
       }
     }
 
@@ -171,13 +144,13 @@ object Par {
     if (ps.isEmpty)
       unit(IndexedSeq())
     else {
-      val pv = ps.map(map(_)(a => IndexedSeq(a)))
+      val pv = ps.map(_.map(a => IndexedSeq(a)))
       balancedBinComp(pv)(_ ++ _)
     }
 
   /** Change a List of pars into a par of a List. */
   def sequence[A](ps: List[Par[A]]): Par[List[A]] =
-    map(sequenceIndexedSeq(ps.toVector))(_.toList)
+    sequenceIndexedSeq(ps.toVector) map (_.toList)
 
   /** Create a calcultion to map over a list in parallel
    * 
@@ -186,7 +159,7 @@ object Par {
    *
    */
   def parMap[A,B](as: List[A])(f: A => B): Par[List[B]] = 
-    fork(sequence(as.map(asyncF(f))))
+    fork(sequence(as map (asyncF(f))))
 
   /** Filter elements of a list in parallel. */
   def parFilter1[A](as: List[A])(f: A => Boolean): Par[List[A]] = {
@@ -195,11 +168,15 @@ object Par {
       if (f(a)) Some(a)
       else None
 
-    map(parMap(as)(ff))(_.foldRight(Nil: List[A])((aa, aas) =>
-      aa match {
-        case None => aas
-        case Some(a) => a :: aas
-      }))
+    parMap(as)(ff) map {
+      _.foldRight(Nil: List[A]) {
+        (aa, aas) =>
+          aa match {
+            case None => aas
+            case Some(a) => a :: aas
+          }
+      }
+    }
   }
 
   /** Filter elements of a list in parallel - Books version. */
@@ -207,7 +184,7 @@ object Par {
     val pars = as map {
       asyncF(a => if (f(a)) List(a) else List())
     }
-    map(sequence(pars))(_.flatten)
+    sequence(pars) map (_.flatten)
   }
 
   /** Filter elements of a list in parallel. */

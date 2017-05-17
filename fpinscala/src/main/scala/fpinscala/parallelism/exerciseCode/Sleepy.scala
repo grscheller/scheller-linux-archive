@@ -16,7 +16,7 @@ object Sleepy {
     println {
       print(comment)
       val t0 = System.nanoTime
-      val hold = run(es)(par).get
+      val hold = par.run(es).get
       val t1 = System.nanoTime
       hold + " in " + (t1 - t0)/1000000000.0 + " seconds"
     }
@@ -48,7 +48,7 @@ object Sleepy {
       m
     }
 
-    val parSleep = map(parMap(myList)(sleepy))(_.foldLeft(0)(_ + _))
+    val parSleep = parMap(myList)(sleepy) map {_.foldLeft(0)(_ + _)}
     val deepSleep = (l: List[Int]) => (l map sleepy).foldLeft(0)(_ + _)
 
     println()

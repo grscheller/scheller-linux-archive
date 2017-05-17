@@ -30,15 +30,16 @@ object ParTest2 {
     // Test Par.asyncF method.
     val parFibF = asyncF(fib)
 
+    val fibMinus4 = parFibF(fibParam - 4)
     val fibMinus3 = parFibF(fibParam - 3)
-    val fibMinus2 = map2(fibMinus3, parFibF(fibParam - 4))(_ + _)
-    val fibMinus1 = map2(fibMinus2, fibMinus3)(_ + _)
-    val fibMinus0 = map2(fibMinus2, fibMinus1)(_ + _)
+    val fibMinus2 = fibMinus3.map2(fibMinus4) {_ + _}
+    val fibMinus1 = fibMinus2.map2(fibMinus3) {_ + _}
+    val fibMinus0 = fibMinus1.map2(fibMinus2) {_ + _}
 
     print("\nThe " + fibParam + "th Fibonacci number ")
     println {
       val t0 = System.nanoTime
-      val hold = run(es)(fibMinus0).get
+      val hold = fibMinus0.run(es).get
       val t1 = System.nanoTime
       "is " + hold + " in " + (t1 - t0)/1000000000.0 + " seconds.\n"
     }
@@ -50,7 +51,7 @@ object ParTest2 {
       List.iterate(0, (fibParam + 1).toInt)(_ + 1) map (parFibF(_))
 
     val parList = sequence(listPars)
-    val fibNumbersFuture = run(es)(parList)
+    val fibNumbersFuture = parList.run(es)
     var fibNumbers: List[Long] = Nil
     val timeOut = 5  // Seconds
     try {
@@ -104,7 +105,7 @@ object ParTest2 {
     val parNo2or3Mults =
       parFilter(shortList)((x: Int) => x % 2 != 0 && x % 3 != 0)
     println("Filter out multiples of 2 and 3: ")
-    println(run(es_A)(parNo2or3Mults).get)
+    println(parNo2or3Mults.run(es_A).get)
 
     // Less trivial Par.parFilter test.
     println("\n\nTest Par.parFilter with short calculations:\n")
@@ -113,7 +114,7 @@ object ParTest2 {
 
     // Test 1:
     print("Time parFilter with " + numThreads_A + " threads: ")
-    val futEvenRandList_1A = run(es_A)(parFilter(randList)(_ % 2 == 0))
+    val futEvenRandList_1A = parFilter(randList)(_ % 2 == 0).run(es_A)
     println {
       val t0 = System.nanoTime
       val hold = futEvenRandList_1A.get
@@ -131,7 +132,7 @@ object ParTest2 {
 
     // Test 2:
     print("Time parFilter with " + numThreads_A + " threads: ")
-    val futEvenRandList_2A = run(es_A)(parFilter(randList)(_ % 5 == 0))
+    val futEvenRandList_2A = parFilter(randList)(_ % 5 == 0).run(es_A)
     println {
       val t0 = System.nanoTime
       val hold = futEvenRandList_2A.get
@@ -149,7 +150,7 @@ object ParTest2 {
 
     // Test 3:
     print("Time parFilter with " + numThreads_B + " threads: ")
-    val futEvenRandList_3B = run(es_B)(parFilter(randList)(_ % 2 == 0))
+    val futEvenRandList_3B = parFilter(randList)(_ % 2 == 0).run(es_B)
     println {
       val t0 = System.nanoTime
       val hold = futEvenRandList_3B.get
@@ -167,7 +168,7 @@ object ParTest2 {
 
     // Test 4:
     print("Time parFilter with " + numThreads_B + " threads: ")
-    val futEvenRandList_4B = run(es_B)(parFilter(randList)(_ % 3 == 0))
+    val futEvenRandList_4B = parFilter(randList)(_ % 3 == 0).run(es_B)
     println {
       val t0 = System.nanoTime
       val hold = futEvenRandList_4B.get
@@ -195,7 +196,7 @@ object ParTest2 {
     val fibParms = List.range(0,46) map (_.toLong)
 
     print("Time parMap with " + numThreads_fib + " threads:  ")
-    val futFib = run(es_fib)(parMap(fibParms)(fib))
+    val futFib = parMap(fibParms)(fib).run(es_fib)
     println {
       val t0 = System.nanoTime
       val hold = futFib.get

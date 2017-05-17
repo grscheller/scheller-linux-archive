@@ -36,7 +36,7 @@ object ExpParTest {
 
     from(0).take(maxTerm + 1)
            .map(enPar(_))
-           .foldRight(unit(0.0))((term, sum) => map2(term, sum)(_ + _))
+           .foldRight(unit(0.0))((term, sum) => term.map2(sum)(_ + _))
   }
 
   /** Construct a parallel exponential calculation via parMap.
@@ -60,7 +60,7 @@ object ExpParTest {
 
     val countDown = List.iterate(maxTerm, maxTerm + 1)(_ - 1)
     val parList = parMap(countDown)(en(_))
-    map(parList)(_.foldLeft(0.0)(_ + _))
+    parList map { _.foldLeft(0.0)(_ + _) }
 
   }
 
@@ -128,36 +128,36 @@ object ExpParTest {
 
     println()
 
-    print("scala.math.exp(1.0) = ")
     println {
+      print("scala.math.exp(1.0) = ")
       val t0 = System.nanoTime
       val hold = scala.math.exp(1.0)
       val t1 = System.nanoTime
       hold + " in " + (t1 - t0)/1000.0 + " μs."
     }
-    print("run(es)(expParStream(1.0, 20)).get = ")
     println {
+      print("expParStream(1.0, 20).run(es).get = ")
       val t0 = System.nanoTime
-      val hold = run(es)(expParStream(1.0, 20)).get
+      val hold = expParStream(1.0, 20).run(es).get
       val t1 = System.nanoTime
       hold + " in " + (t1 - t0)/1000.0 + " μs."
     }
-    print("run(es)(expParMap(1.0, 20)).get = ")
     println {
+      print("expParMap(1.0, 20).run(es).get = ")
       val t0 = System.nanoTime
-      val hold = run(es)(expParMap(1.0, 20)).get
+      val hold = expParMap(1.0, 20).run(es).get
       val t1 = System.nanoTime
       hold + " in " + (t1 - t0)/1000.0 + " μs."
     }
-    print("expFun(1.0, 20) = ")
     println {
+      print("expFun(1.0, 20) = ")
       val t0 = System.nanoTime
       val hold = expFun(1.0, 20)
       val t1 = System.nanoTime
       hold + " in " + (t1 - t0)/1000.0 + " μs."
     }
-    print("expLoopFun(1.0, 20) = ")
     println {
+      print("expLoopFun(1.0, 20) = ")
       val t0 = System.nanoTime
       val hold = expLoopFun(1.0, 20)
       val t1 = System.nanoTime
@@ -166,36 +166,36 @@ object ExpParTest {
 
     println()
 
-    print("scala.math.exp(0.42) = ")
     println {
+      print("scala.math.exp(0.42) = ")
       val t0 = System.nanoTime
       val hold = scala.math.exp(0.42)
       val t1 = System.nanoTime
       hold + " in " + (t1 - t0)/1000.0 + " μs."
     }
-    print("run(es)(expParStream(0.42, 20)).get = ")
     println {
+      print("expParStream(0.42, 20).run(es).get = ")
       val t0 = System.nanoTime
-      val hold = run(es)(expParStream(0.42, 20)).get
+      val hold = expParStream(0.42, 20).run(es).get
       val t1 = System.nanoTime
       hold + " in " + (t1 - t0)/1000.0 + " μs."
     }
-    print("run(es)(expParMap(0.42, 20)).get = ")
     println {
+      print("expParMap(0.42, 20).run(es).get = ")
       val t0 = System.nanoTime
-      val hold = run(es)(expParMap(0.42, 20)).get
+      val hold = expParMap(0.42, 20).run(es).get
       val t1 = System.nanoTime
       hold + " in " + (t1 - t0)/1000.0 + " μs."
     }
-    print("expFun(0.42, 20) = ")
     println {
+      print("expFun(0.42, 20) = ")
       val t0 = System.nanoTime
       val hold = expFun(0.42, 172)
       val t1 = System.nanoTime
       hold + " in " + (t1 - t0)/1000.0 + " μs."
     }
-    print("expLoopFun(0.42, 20) = ")
     println {
+      print("expLoopFun(0.42, 20) = ")
       val t0 = System.nanoTime
       val hold = expLoopFun(0.42, 20)
       val t1 = System.nanoTime

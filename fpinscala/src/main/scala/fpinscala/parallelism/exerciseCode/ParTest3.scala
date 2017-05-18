@@ -82,13 +82,13 @@ object ParTest3 {
       , fooPar2
       , barPar1
       , barPar2)((_,_,_,_,_))
-    val foobar5Fut = foobar5Par.run(es)
+    val foobar5Fut = foobar5Par.future(es)
 
     print("\nfoobar5Fut.get() = "); println(foobar5Fut.get)
 
     val foobar3Par = fooPar0.map3(fooPar1, fooPar2)((_,_,_))
-    val foobar3Fut1 = foobar3Par.run(es)
-    val foobar3Fut2 = foobar3Par.run(es)
+    val foobar3Fut1 = foobar3Par.future(es)
+    val foobar3Fut2 = foobar3Par.future(es)
     print("foobar3Fut1.get() = "); println(foobar3Fut1.get)
     print("foobar3Fut2.get() = "); println(foobar3Fut2.get)
 
@@ -96,7 +96,7 @@ object ParTest3 {
         fooPar1.map(_.toDouble)
       , fooPar2.map(_.toDouble)
       , barPar3 )(combine4)
-    val foobar4Fut = foobar4Par.run(es)
+    val foobar4Fut = foobar4Par.future(es)
     print("foobar4Fut.get() = "); println(foobar4Fut.get)
 
     // Simple tests for the parallel and non-parallel
@@ -109,13 +109,13 @@ object ParTest3 {
     print("\nvecDouble = "); println(vecDouble)
 
     print("sumDoubles(vecDouble) = "); println(sumDoubles(vecDouble))
-    print("sumDoublesParallel(vecDouble).run(es).get = ")
-    println(sumDoublesParallel(vecDouble).run(es).get)
+    print("sumDoublesParallel(vecDouble).run(es) = ")
+    println(sumDoublesParallel(vecDouble).run(es))
 
     print("\nvecInt = "); println(vecInt)
     print("maxInts(vecInt) = "); println(maxInts(vecInt))
-    print("maxIntsParallel(vecInt).run(es).get = ")
-    println(maxIntsParallel(vecInt).run(es).get)
+    print("maxIntsParallel(vecInt).run(es) = ")
+    println(maxIntsParallel(vecInt).run(es))
 
     // More numerically instensive tests for the parallel
     // and non-parallel methods to be compared.
@@ -133,9 +133,9 @@ object ParTest3 {
     }
  
     println {
-      print("parMap(smallList)(fib).run(es).get = \n  ")
+      print("parMap(smallList)(fib).run(es) = \n  ")
       val t0 = System.nanoTime
-      val hold = parMap(smallList)(fib).run(es).get
+      val hold = parMap(smallList)(fib).run(es)
       val t1 = System.nanoTime
       hold + " in " + (t1 - t0)/1000000000.0 + " seconds\n"
     }
@@ -149,9 +149,9 @@ object ParTest3 {
     }
  
     println {
-      print("parMap(bigList)(fib).run(es).get = \n  ")
+      print("parMap(bigList)(fib).run(es) = \n  ")
       val t0 = System.nanoTime
-      val hold = parMap(bigList)(fib).run(es).get
+      val hold = parMap(bigList)(fib).run(es)
       val t1 = System.nanoTime
       hold + " in " + (t1 - t0)/1000000000.0 + " seconds\n"
     }
@@ -169,7 +169,7 @@ object ParTest3 {
     println {
       print("\nmap with asyncF  = ")
       val t0 = System.nanoTime
-      val hold = foo.run(es).get
+      val hold = foo.run(es)
       val t1 = System.nanoTime
       hold + " in " + (t1 - t0)/1000000000.0 + " seconds\n"
     }
@@ -177,7 +177,7 @@ object ParTest3 {
     println {
       print("calc with parMap = ")
       val t0 = System.nanoTime
-      val hold = bar.run(es).get
+      val hold = bar.run(es)
       val t1 = System.nanoTime
       hold + " in " + (t1 - t0)/1000000000.0 + " seconds\n"
     }
@@ -188,7 +188,7 @@ object ParTest3 {
     println {
       print("\ncalc with parFilter1 = ")
       val t0 = System.nanoTime
-      val hold = baz1.run(es).get
+      val hold = baz1.run(es)
       val t1 = System.nanoTime
       hold + " in " + (t1 - t0)/1000000000.0 + " seconds\n"
     }
@@ -196,7 +196,7 @@ object ParTest3 {
     println {
       print("calc with parFilter2 = ")
       val t0 = System.nanoTime
-      val hold = baz2.run(es).get
+      val hold = baz2.run(es)
       val t1 = System.nanoTime
       hold + " in " + (t1 - t0)/1000000000.0 + " seconds\n"
     }
@@ -215,7 +215,7 @@ object ParTest3 {
     println {
       print("\ncalc with parFilter1 = ")
       val t0 = System.nanoTime
-      val hold = boz1.run(es).get
+      val hold = boz1.run(es)
       val t1 = System.nanoTime
       hold + " in " + (t1 - t0)/1000000000.0 + " seconds\n"
     }
@@ -223,7 +223,7 @@ object ParTest3 {
     println {
       print("calc with parFilter2 = ")
       val t0 = System.nanoTime
-      val hold = boz2.run(es).get
+      val hold = boz2.run(es)
       val t1 = System.nanoTime
       hold + " in " + (t1 - t0)/1000000000.0 + " seconds\n"
     }

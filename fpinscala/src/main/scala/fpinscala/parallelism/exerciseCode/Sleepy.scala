@@ -16,7 +16,7 @@ object Sleepy {
     println {
       print(comment)
       val t0 = System.nanoTime
-      val hold = par.run(es).get
+      val hold = par.run(es)
       val t1 = System.nanoTime
       hold + " in " + (t1 - t0)/1000000000.0 + " seconds"
     }

@@ -16,14 +16,28 @@ sealed trait Par[A] { self =>
   private[parallelism] def apply(es: ExecutorService): Future[A]
 
   /** Perform the parallel calculation described by the Par.
-   *
-   *  The run method does not return the final value of
-   *  type A, but an imperitive java wee beasty of type
-   *  Future[A].  You will need to use its get method
-   *  to actually get the value of type A.
+   *  
+   *    Returns the final value.
+   *    Blocks until value is available.
    *
    */
-  def run(es: ExecutorService): Future[A] = this(es)
+  def run(es: ExecutorService): A = this(es).get
+
+  /** Return a Future for the parallel calculation described by the Par. */
+  def future(es: ExecutorService): Future[A] = {
+    val fut = this(es)
+    fut.isDone
+    fut
+  }
+ 
+  /** Return a "Lazy Future" for the parallel calculation.
+   *
+   *  This future is lazy in the sense that the calculation 
+   *  is not started unless its isDone or one of the get
+   *  methods are called.
+   *
+   */
+  def frozenFuture(es: ExecutorService): Future[A] = this(es)
 
   /** Combine two parallel computations with a function.
    *
@@ -82,14 +96,14 @@ object Par {
    *  In Java 8+, Future now has a functional interface. 
    *
    *  Before java 8, I would have had to pass a
-   *    new Callable[A] { def call = a(es).get }
+   *    new Callable[A] { def call = pa(es).get }
    *  anonymous inner class to the es submit method.
    *
    */
   def fork[A](pa: => Par[A]): Par[A] =
     new Par[A] {
       def apply(es: ExecutorService) =
-        es.submit(() => pa(es).get)
+      es.submit(() => pa(es).get)
     }
  
   /** Wrap a constant value in a Par. 
@@ -198,12 +212,12 @@ object Par {
   *  basically, born done.
   *
   */
- private[parallelism] 
- case class UnitFuture[A](get: A) extends Future[A] {
-   def get(timeout: Long, units: TimeUnit): A = get
-   def isDone: Boolean = true
-   def isCancelled: Boolean = false
-   def cancel(evenIfRunning: Boolean): Boolean = false
+  private[parallelism] 
+  case class UnitFuture[A](get: A) extends Future[A] {
+    def get(timeout: Long, units: TimeUnit): A = get
+    def isDone: Boolean = true
+    def isCancelled: Boolean = false
+    def cancel(evenIfRunning: Boolean): Boolean = false
   }
 
 /** Map2Future helper class for Par.map2 method.

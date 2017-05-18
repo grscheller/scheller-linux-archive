@@ -36,7 +36,7 @@ object ParTest1 {
     val abc = fork(ab.map2(c50)(_ - _))
 
     val es = Executors.newFixedThreadPool(4)
-    val abcFuture = abc.run(es)
+    val abcFuture = abc.future(es)
 
     println("\n(100 + 500) - 50 = " + abcFuture.get)
 
@@ -56,7 +56,7 @@ object ParTest1 {
     println("Par created.")
 
     println("\nCreate Future from unit.")
-    val fibuFuture = fibu.run(es)
+    val fibuFuture = fibu.future(es)
     println("Future created.")
 
     println("\nGet value of Future from unit value.")
@@ -64,7 +64,7 @@ object ParTest1 {
     println("fib(" + fibParameter1 + ") = " + fibuValue)
 
     println("\nRun Future from lazyUnit.")
-    val fibluFuture = fiblu.run(es)
+    val fibluFuture = fiblu.future(es)
     println("Future created.")
 
     println("\nGet value of Future from lazyUnit value.")
@@ -80,7 +80,7 @@ object ParTest1 {
     val fibMinus1 = fibMinus3.map2(fibMinus2)(_ + _)
     val fibMinus0 = fibMinus2.map2(fibMinus1)(_ + _)
     print("The " + fibParameter1 + " Fibonacci number: ")
-    println(fibMinus0.run(es).get)
+    println(fibMinus0.future(es).get)
 
     // Test order of execution.
     println("\nTest order of execution:")
@@ -97,18 +97,21 @@ object ParTest1 {
       print("<step3>")
       2
     }
+    print("<map2>")
     val par4 = par2.map2(par1) {
       (x,y) => {
         print("<step4>")
         x - y
       }
     }
+    print("<map2>")
     val par5 = par4.map2(par3) {
       (x,y) => {
         print("<step5>")
         x + y
       }
     }
+    print("<map2>")
     val par6 = par4.map2(par2) {
       (x,y) => {
         print("<step6>")
@@ -116,24 +119,30 @@ object ParTest1 {
       }
     }
     print("<run>")
-    println(par5.run(es).get)
+    println(par5.run(es))
     print("<run>")
-    println(par5.run(es).get)
+    println(par5.run(es))
     print("<run>")
-    println(par4.run(es).get)
+    println(par4.run(es))
     print("<run>")
-    println(par6.run(es).get)
-    print("<run>")
-    val fut5 = par5.run(es)
+    println(par6.run(es))
+    print("<future>")
+    val fut5 = par5.future(es)
+    print("<get>")
     println(fut5.get)
+    print("<get>")
     println(fut5.get)
-    print("<run>")
-    val fut1 = par1.run(es)
+    print("<future>")
+    val fut1 = par1.future(es)
+    print("<get>")
     println(fut1.get)
+    print("<get>")
     println(fut1.get)
-    print("<run>")
-    val fut2 = par2.run(es)
+    print("<future>")
+    val fut2 = par2.future(es)
+    print("<get>")
     println(fut2.get)
+    print("<get>")
     println(fut2.get)
 
     val fibParameter2 = 45L
@@ -142,7 +151,7 @@ object ParTest1 {
     println("\nTest isDone method of future given to us by the es:")
 
     val longRunner1 = lazyUnit(fib(fibParameter2))
-    val longRunner1_Fut = longRunner1.run(es)
+    val longRunner1_Fut = longRunner1.future(es)
 
     while (!longRunner1_Fut.isDone) {
       println("Task not done.")
@@ -156,7 +165,7 @@ object ParTest1 {
 
     val ultimateAns = unit(42L)
     val longRunner2 = longRunner1.map2(ultimateAns) {(x, y) => x}
-    val longRunner2_Fut = longRunner2.run(es)
+    val longRunner2_Fut = longRunner2.frozenFuture(es)
 
     while (!longRunner2_Fut.isDone) {
       println("Task not done.")
@@ -169,7 +178,7 @@ object ParTest1 {
 
     // Syntax check
     val longRunner3 = ultimateAns.map2(longRunner1) {(x, _) => x}
-    val longRunner3_Fut = longRunner3.run(es)
+    val longRunner3_Fut = longRunner3.future(es)
 
     print("The ultimate answer to life, the universe, and everything is ")
     print(longRunner3_Fut.get)
@@ -201,7 +210,7 @@ object ParTest1 {
     println("\nTry cancelling a future which is running:")
 
     val longRunner4 = lazyUnit(fib(fibParameter3))
-    val longRunner4_Fut = longRunner4.run(es)
+    val longRunner4_Fut = longRunner4.frozenFuture(es)
 
     println("longRunner4_Fut.isDone: "        + longRunner4_Fut.isDone       )
     println("longRunner4_Fut.isCancelled: "   + longRunner4_Fut.isCancelled  )
@@ -217,7 +226,7 @@ object ParTest1 {
 
     val longRunner5 = lazyUnit(fib(fibParameter3)).map2(
                         lazyUnit(fib(fibParameter2)))(_ - _)
-    val longRunner5_Fut = longRunner5.run(es)
+    val longRunner5_Fut = longRunner5.future(es)
 
     try {
         print("longRunner5_Fut.isDone: ")
@@ -248,7 +257,7 @@ object ParTest1 {
 
     val longRunner6 = lazyUnit(fib(fibParameter3)).map2(
                         lazyUnit(fib(fibParameter2)))(_ - _)
-    val longRunner6_Fut = longRunner6.run(es)
+    val longRunner6_Fut = longRunner6.future(es)
 
     try {
         print("longRunner6_Fut.isDone: ")
@@ -281,7 +290,7 @@ object ParTest1 {
 
     val longRunner7 = lazyUnit(fib(fibParameter3)).map2(
                         lazyUnit(fib(fibParameter2)))(_ - _)
-    val longRunner7_Fut = longRunner7.run(es)
+    val longRunner7_Fut = longRunner7.frozenFuture(es)
 
     try {
         print("longRunner7_Fut.isCancelled: ")
@@ -306,7 +315,7 @@ object ParTest1 {
 
     val longRunner8 = lazyUnit(fib(fibParameter3)).map2(
                         lazyUnit(fib(fibParameter2)))(_ - _)
-    val longRunner8_Fut = longRunner8.run(es)
+    val longRunner8_Fut = longRunner8.frozenFuture(es)
 
     print("longRunner8_Fut.get() = ")
     println(longRunner8_Fut.get()  )
@@ -318,7 +327,7 @@ object ParTest1 {
 
     val longRunner9 = lazyUnit(fib(fibParameter3)).map2(
                         lazyUnit(fib(fibParameter2)))(_ - _)
-    val longRunner9_Fut = longRunner9.run(es)
+    val longRunner9_Fut = longRunner9.frozenFuture(es)
 
     try {
         print("longRunner9_Fut.get(4, TimeUnit.SECONDS) = ")
@@ -338,8 +347,8 @@ object ParTest1 {
 
     val longRunner10 = lazyUnit(fib(fibParameter3)).map2(
                          lazyUnit(fib(fibParameter2)))(_ - _)
-    val longRunner10_Fut1 = longRunner9.run(es)
-    val longRunner10_Fut2 = longRunner9.run(es)
+    val longRunner10_Fut1 = longRunner9.frozenFuture(es)
+    val longRunner10_Fut2 = longRunner9.frozenFuture(es)
 
     print("longRunner10_Fut1.get = "); println(longRunner10_Fut1.get)
     print("longRunner10_Fut2.get = "); println(longRunner10_Fut2.get)

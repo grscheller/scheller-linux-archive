@@ -39,7 +39,7 @@ object ParTest2 {
     print("\nThe " + fibParam + "th Fibonacci number ")
     println {
       val t0 = System.nanoTime
-      val hold = fibMinus0.run(es).get
+      val hold = fibMinus0.run(es)
       val t1 = System.nanoTime
       "is " + hold + " in " + (t1 - t0)/1000000000.0 + " seconds.\n"
     }
@@ -51,7 +51,7 @@ object ParTest2 {
       List.iterate(0, (fibParam + 1).toInt)(_ + 1) map (parFibF(_))
 
     val parList = sequence(listPars)
-    val fibNumbersFuture = parList.run(es)
+    val fibNumbersFuture = parList.frozenFuture(es)
     var fibNumbers: List[Long] = Nil
     val timeOut = 5  // Seconds
     try {
@@ -105,7 +105,7 @@ object ParTest2 {
     val parNo2or3Mults =
       parFilter(shortList)((x: Int) => x % 2 != 0 && x % 3 != 0)
     println("Filter out multiples of 2 and 3: ")
-    println(parNo2or3Mults.run(es_A).get)
+    println(parNo2or3Mults.run(es_A))
 
     // Less trivial Par.parFilter test.
     println("\n\nTest Par.parFilter with short calculations:\n")
@@ -114,7 +114,7 @@ object ParTest2 {
 
     // Test 1:
     print("Time parFilter with " + numThreads_A + " threads: ")
-    val futEvenRandList_1A = parFilter(randList)(_ % 2 == 0).run(es_A)
+    val futEvenRandList_1A = parFilter(randList)(_ % 2 == 0).frozenFuture(es_A)
     println {
       val t0 = System.nanoTime
       val hold = futEvenRandList_1A.get
@@ -132,7 +132,7 @@ object ParTest2 {
 
     // Test 2:
     print("Time parFilter with " + numThreads_A + " threads: ")
-    val futEvenRandList_2A = parFilter(randList)(_ % 5 == 0).run(es_A)
+    val futEvenRandList_2A = parFilter(randList)(_ % 5 == 0).frozenFuture(es_A)
     println {
       val t0 = System.nanoTime
       val hold = futEvenRandList_2A.get
@@ -150,7 +150,7 @@ object ParTest2 {
 
     // Test 3:
     print("Time parFilter with " + numThreads_B + " threads: ")
-    val futEvenRandList_3B = parFilter(randList)(_ % 2 == 0).run(es_B)
+    val futEvenRandList_3B = parFilter(randList)(_ % 2 == 0).frozenFuture(es_B)
     println {
       val t0 = System.nanoTime
       val hold = futEvenRandList_3B.get
@@ -168,7 +168,7 @@ object ParTest2 {
 
     // Test 4:
     print("Time parFilter with " + numThreads_B + " threads: ")
-    val futEvenRandList_4B = parFilter(randList)(_ % 3 == 0).run(es_B)
+    val futEvenRandList_4B = parFilter(randList)(_ % 3 == 0).frozenFuture(es_B)
     println {
       val t0 = System.nanoTime
       val hold = futEvenRandList_4B.get
@@ -196,7 +196,7 @@ object ParTest2 {
     val fibParms = List.range(0,46) map (_.toLong)
 
     print("Time parMap with " + numThreads_fib + " threads:  ")
-    val futFib = parMap(fibParms)(fib).run(es_fib)
+    val futFib = parMap(fibParms)(fib).frozenFuture(es_fib)
     println {
       val t0 = System.nanoTime
       val hold = futFib.get

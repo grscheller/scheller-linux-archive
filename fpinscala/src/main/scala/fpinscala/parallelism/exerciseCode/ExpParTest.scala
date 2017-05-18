@@ -136,16 +136,16 @@ object ExpParTest {
       hold + " in " + (t1 - t0)/1000.0 + " μs."
     }
     println {
-      print("expParStream(1.0, 20).run(es).get = ")
+      print("expParStream(1.0, 20).run(es) = ")
       val t0 = System.nanoTime
-      val hold = expParStream(1.0, 20).run(es).get
+      val hold = expParStream(1.0, 20).run(es)
       val t1 = System.nanoTime
       hold + " in " + (t1 - t0)/1000.0 + " μs."
     }
     println {
-      print("expParMap(1.0, 20).run(es).get = ")
+      print("expParMap(1.0, 20).run(es) = ")
       val t0 = System.nanoTime
-      val hold = expParMap(1.0, 20).run(es).get
+      val hold = expParMap(1.0, 20).run(es)
       val t1 = System.nanoTime
       hold + " in " + (t1 - t0)/1000.0 + " μs."
     }
@@ -174,16 +174,16 @@ object ExpParTest {
       hold + " in " + (t1 - t0)/1000.0 + " μs."
     }
     println {
-      print("expParStream(0.42, 20).run(es).get = ")
+      print("expParStream(0.42, 20).run(es) = ")
       val t0 = System.nanoTime
-      val hold = expParStream(0.42, 20).run(es).get
+      val hold = expParStream(0.42, 20).run(es)
       val t1 = System.nanoTime
       hold + " in " + (t1 - t0)/1000.0 + " μs."
     }
     println {
-      print("expParMap(0.42, 20).run(es).get = ")
+      print("expParMap(0.42, 20).run(es) = ")
       val t0 = System.nanoTime
-      val hold = expParMap(0.42, 20).run(es).get
+      val hold = expParMap(0.42, 20).run(es)
       val t1 = System.nanoTime
       hold + " in " + (t1 - t0)/1000.0 + " μs."
     }

@@ -102,8 +102,7 @@ object Par {
    */
   def fork[A](pa: => Par[A]): Par[A] =
     new Par[A] {
-      def apply(es: ExecutorService) =
-      es.submit(() => pa(es).get)
+      def apply(es: ExecutorService) = es.submit(() => pa(es).get)
     }
  
   /** Wrap a constant value in a Par. 
@@ -143,15 +142,18 @@ object Par {
    *
    *    Note: For efficiency, collection assumed nonempty.
    */
-  def balancedBinComp[A](ps: IndexedSeq[Par[A]])(binOp: (A,A) => A): Par[A] =
-    fork {
-      if (ps.size == 1)
-        ps(0)
+  def balancedBinComp[A](ps: IndexedSeq[Par[A]])(binOp: (A,A) => A): Par[A] = {
+
+    def balanced(pars: IndexedSeq[Par[A]]): Par[A] =
+      if (pars.size == 1)
+        fork(pars(0))
       else {
-        val (lps,rps) = ps.splitAt(ps.size/2)
-        balancedBinComp(lps)(binOp).map2(balancedBinComp(rps)(binOp))(binOp)
+        val (lpars, rpars) = pars.splitAt(pars.size/2)
+        balanced(lpars).map2(balanced(rpars))(binOp)
       }
-    }
+
+    fork(balanced(ps))
+  }
 
   /** Change an IndexedSeq of Pars into a Par of an IndexedSeq.  */
   def sequenceIndexedSeq[A](ps: IndexedSeq[Par[A]]): Par[IndexedSeq[A]] =
@@ -176,7 +178,7 @@ object Par {
     fork(sequence(as map (asyncF(f))))
 
   /** Filter elements of a list in parallel. */
-  def parFilter1[A](as: List[A])(f: A => Boolean): Par[List[A]] = {
+  def parFilter[A](as: List[A])(f: A => Boolean): Par[List[A]] = {
 
     def ff(a: A): Option[A] =
       if (f(a)) Some(a)
@@ -192,17 +194,6 @@ object Par {
       }
     }
   }
-
-  /** Filter elements of a list in parallel - Books version. */
-  def parFilter2[A](as: List[A])(f: A => Boolean): Par[List[A]] = {
-    val pars = as map {
-      asyncF(a => if (f(a)) List(a) else List())
-    }
-    sequence(pars) map (_.flatten)
-  }
-
-  /** Filter elements of a list in parallel. */
-  def parFilter[A] = parFilter1[A] _
 
 }
 
@@ -378,6 +369,7 @@ case class Map2Future[A,B,C]( af: Future[A]
           done = true
           true
         } else false
-    } else false
+    } else
+        false
 
 }

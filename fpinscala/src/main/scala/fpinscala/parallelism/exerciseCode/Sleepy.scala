@@ -32,11 +32,13 @@ object Sleepy {
 
   def main(args: Array[String]): Unit = {
 
-    val threadNum1 = 65
-    val threadNum2 = 100
+    val threadNum1 = 40
+    val threadNum2 = 60
+    val threadNum3 = 80
 
     val es1 = Executors.newFixedThreadPool(threadNum1)
     val es2 = Executors.newFixedThreadPool(threadNum2)
+    val es3 = Executors.newFixedThreadPool(threadNum3)
 
     val myList = List[Int](42, 1, 69, 12, 17, 29, 76, 21, 26, 121, 21, 100,
                            45, 99, 86, 37, 13, 4, 37, 72, 9,  53, 103,  17,
@@ -55,10 +57,12 @@ object Sleepy {
 
     timePar(parSleep, es1, s"Threaded sleep with ${threadNum1} threads: ")
     timePar(parSleep, es2, s"Threaded sleep with ${threadNum2} threads: ")
+    timePar(parSleep, es3, s"Threaded sleep with ${threadNum3} threads: ")
     timeIt(deepSleep, myList, "Serial sleep: ")
   
     es1.shutdown
     es2.shutdown
+    es3.shutdown
 
     println()
 

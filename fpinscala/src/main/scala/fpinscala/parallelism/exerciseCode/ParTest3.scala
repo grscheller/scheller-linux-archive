@@ -182,25 +182,16 @@ object ParTest3 {
       hold + " in " + (t1 - t0)/1000000000.0 + " seconds\n"
     }
  
-    val baz1 = parFilter1(bigList)(a => fib(a)%2 == 0)
-    val baz2 = parFilter2(bigList)(a => fib(a)%2 == 0)
+    val baz = parFilter(bigList)(a => fib(a)%2 == 0)
 
     println {
-      print("\ncalc with parFilter1 = ")
+      print("\ncalc with parFilter = ")
       val t0 = System.nanoTime
-      val hold = baz1.run(es)
+      val hold = baz.run(es)
       val t1 = System.nanoTime
       hold + " in " + (t1 - t0)/1000000000.0 + " seconds\n"
     }
  
-    println {
-      print("calc with parFilter2 = ")
-      val t0 = System.nanoTime
-      val hold = baz2.run(es)
-      val t1 = System.nanoTime
-      hold + " in " + (t1 - t0)/1000000000.0 + " seconds\n"
-    }
-
     println {
       print("without parallelism  = ")
       val t0 = System.nanoTime
@@ -209,25 +200,16 @@ object ParTest3 {
       hold + " in " + (t1 - t0)/1000000000.0 + " seconds\n"
     }
 
-    val boz1 = parFilter1(smallList)(a => fib(a)%2 == 0)
-    val boz2 = parFilter2(smallList)(a => fib(a)%2 == 0)
+    val boz = parFilter(smallList)(a => fib(a)%2 == 0)
 
     println {
-      print("\ncalc with parFilter1 = ")
+      print("\ncalc with parFilter = ")
       val t0 = System.nanoTime
-      val hold = boz1.run(es)
+      val hold = boz.run(es)
       val t1 = System.nanoTime
       hold + " in " + (t1 - t0)/1000000000.0 + " seconds\n"
     }
  
-    println {
-      print("calc with parFilter2 = ")
-      val t0 = System.nanoTime
-      val hold = boz2.run(es)
-      val t1 = System.nanoTime
-      hold + " in " + (t1 - t0)/1000000000.0 + " seconds\n"
-    }
-
     println {
       print("without parallelism  = ")
       val t0 = System.nanoTime

@@ -44,7 +44,7 @@ text files with information on a variety of topics.
 ### 4. [grockScalaz](grockScalaz/)
 * Document factoids about Scalaz.
 
-### 5. [javaGrock](javaGrock/)
+### 5. [grockJava](grockJava/)
 * An attempt to learn Java coming at it from a Python and Scala perspective.
 * Not exactly sure the direction this project will take.
 

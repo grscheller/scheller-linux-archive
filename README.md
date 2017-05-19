@@ -39,29 +39,29 @@ text files with information on a variety of topics.
 * In this project I try to do both.
 
 ### 3. [grockScala](grockScala/)
-* Document factoids about the Scala language, so that<br>
-  I don't have to rediscover most of what I forget.
+* Document factoids about the Scala language
 
-### 4. [javaGrock](javaGrock/)
-* An attempt to learn Java coming at it from a Python and Scala
-  perspective.
+### 4. [grockScalaz](grockScalaz/)
+* Document factoids about Scalaz.
+
+### 5. [javaGrock](javaGrock/)
+* An attempt to learn Java coming at it from a Python and Scala perspective.
 * Not exactly sure the direction this project will take.
-* May split out into different projects.
 
-### 5. [linuxHome](linuxHome/)
-* Based on the infrastructure I use at work to keep my Linux<br>
-  environment synced across the workstations and supercomputers I use.
+### 6. [linuxHome](linuxHome/)
+* Keep Linux environment synced across workstations and supercomputers.
+* Based on the infrastructure I use at work.
 
-### 6. [pythagTriples](pythagTriples/)
+### 7. [pythagTriples](pythagTriples/)
 * Haskell project that generates Pythagorean triples.
 * Mathematical factoids about Pythagorean triples.
 * Also used to help me learn Haskell stack.
 
-### 7. [pureMath](pureMath/)
+### 8. [pureMath](pureMath/)
 * A mathematics library centered around integer arithmetic.
 * An old project of mine back when I first learned Python.
 
-### 8. [matlab](matlab/)
+### 9. [matlab](matlab/)
 * MATLAB and MuPad projects.
 
 -Geoffrey Scheller

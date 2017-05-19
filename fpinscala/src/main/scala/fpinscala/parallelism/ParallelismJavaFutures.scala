@@ -1,13 +1,32 @@
-package fpinscala.parallelism
+/** Parallel calculations package using java compatible Futures.
+ *
+ *    The Par trait is used to define a parallel calculation
+ *    and once defined, perform it.
+ *
+ *    The Par.run method blocks and returns a value.
+ *
+ *    The Par.future methods hands back a Future compatble
+ *    with the java.util.concurrent.Future API.  The future
+ *    produced is designed to be 100% compatible with Java code.
+ *
+ *    The Par.frozenFuture returns a "lazy future" in the sense
+ *    that it does not start the calculation until the isDone
+ *    method or one of its get methods is involked.
+ *
+ *    The price we pay for this Java compatibility, is that
+ *    our Par[A] type is invariant, not covarient.
+ *
+ *    Current version has deadlocking issues with threadpools
+ *    with a fixed number of threads.  (Bit of a thread hog.)
+ *
+ */
+package fpinscala.parallelism.javaFutures
 
-import java.util.concurrent.Future
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.TimeUnit
-import java.util.concurrent.CancellationException
-import java.util.concurrent.ExecutionException
+import java.util.concurrent.{Future, ExecutorService, TimeUnit}
+import java.util.concurrent.{CancellationException, ExecutionException}
 import java.util.concurrent.TimeoutException
 
-/** Trait used to define calculations with parallelism. */
+/** Par Trait. */
 sealed trait Par[A] { self =>
 
   import Par._

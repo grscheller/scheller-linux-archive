@@ -1,8 +1,9 @@
 package fpinscala.chap07.parallelism
 
 import java.util.concurrent._
-import fpinscala.parallelism._
-import fpinscala.parallelism.Par._
+//import fpinscala.parallelism.javaFutures.Par
+import fpinscala.parallelism.Par
+import Par._
 
 import scala.collection.immutable.Stream.{cons, from}
 

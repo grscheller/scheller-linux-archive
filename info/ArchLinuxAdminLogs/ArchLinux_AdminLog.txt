@@ -2603,3 +2603,22 @@ Purpose: To indicate what was done to create gauss17 and
             Browse for /usr/lib/opensc-pkcs11.so
 
   Unfortunately, Firefox fails to load module.  Punt for now.   
+
+2017-05-20:
+  From Arch Linux website, www.archlinux.org, it is stated that
+  ca-certicates-utils need manual intervention:
+
+    # pacman -Syuw                           # download packages
+    # rm /etc/ssl/certs/ca-certificates.crt  # remove conflicting file
+    # pacman -Su                             # perform upgrade
+
+  So, package is installed and symlink still there, hmmm...
+
+  Is the symlink suppose to be there or not?  So,
+
+    $ sudo pacman -Syuw ca-certificates-utils
+    $ sudo rm /etc/ssl/certs/ca-certificates.crt
+    $ sudo pacman -Syu ca-certificates-utils
+
+  Pacman warned me it was reinstalling package.  Symlink was recreated.
+

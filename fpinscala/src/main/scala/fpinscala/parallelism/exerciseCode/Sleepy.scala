@@ -2,7 +2,6 @@ package fpinscala.chap07.parallelism
 
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
-//import fpinscala.parallelism.javaFutures.Par
 import fpinscala.parallelism.Par
 import Par._
 
@@ -33,21 +32,19 @@ object Sleepy {
 
   def main(args: Array[String]): Unit = {
 
-    val threadNum1 = 40
-    val threadNum2 = 60
-    val threadNum3 = 80
+    val threadNum1 = 1
+    val threadNum2 = 2
+    val threadNum3 = 10
+    val threadNum4 = 20
+    val threadNum5 = 50
 
-    val es1 = Executors.newFixedThreadPool(threadNum1)
-    val es2 = Executors.newFixedThreadPool(threadNum2)
-    val es3 = Executors.newFixedThreadPool(threadNum3)
-
-    val myList = List[Int](42, 1, 69, 12, 17, 29, 76, 21, 26, 121, 21, 100,
+    val myList = List[Int](42, 1, 69, 12, 17, 29, 76, 21, 26, 81, 21, 100,
                            45, 99, 86, 37, 13, 4, 37, 72, 9,  53, 103,  17,
-                           21, 164, 14, 173, 18, 12,   1, 67, 11,  52, 113,
-                           23, 45, 118,  11, 82,  3,  12, 65, 12,  19, 45 )
+                           21, 164, 14, 200, 18, 12,   1, 67, 11,  52, 113,
+                           23, 45, 118,  11, 82, 35,  12, 65, 12,  19, 45 )
 
     val sleepy = (m: Int) => {
-      Thread.sleep(m * 10) // nap time
+      Thread.sleep(m * 10)   // nap time
       m
     }
 
@@ -56,14 +53,27 @@ object Sleepy {
 
     println()
 
+    val es1 = Executors.newFixedThreadPool(threadNum1)
     timePar(parSleep, es1, s"Threaded sleep with ${threadNum1} threads: ")
-    timePar(parSleep, es2, s"Threaded sleep with ${threadNum2} threads: ")
-    timePar(parSleep, es3, s"Threaded sleep with ${threadNum3} threads: ")
-    timeIt(deepSleep, myList, "Serial sleep: ")
-  
     es1.shutdown
+
+    val es2 = Executors.newFixedThreadPool(threadNum2)
+    timePar(parSleep, es2, s"Threaded sleep with ${threadNum2} threads: ")
     es2.shutdown
+
+    val es3 = Executors.newFixedThreadPool(threadNum3)
+    timePar(parSleep, es3, s"Threaded sleep with ${threadNum3} threads: ")
     es3.shutdown
+
+    val es4 = Executors.newFixedThreadPool(threadNum4)
+    timePar(parSleep, es4, s"Threaded sleep with ${threadNum4} threads: ")
+    es4.shutdown
+
+    val es5 = Executors.newFixedThreadPool(threadNum5)
+    timePar(parSleep, es5, s"Threaded sleep with ${threadNum5} threads: ")
+    es5.shutdown
+
+    timeIt(deepSleep, myList, "Serial sleep: ")
 
     println()
 

@@ -5,23 +5,33 @@
  *
  *    The Par.run method blocks and returns a value.
  *
- *    Current version has deadlocking issues with threadpools
- *    with a fixed number of threads.  (Bit of a thread hog.)
- *
  */
 package fpinscala.parallelism
 
-import java.util.concurrent.{ExecutorService, Future, TimeUnit}
-import java.util.concurrent.{CancellationException, ExecutionException}
-import java.util.concurrent.TimeoutException
+import java.util.concurrent.{CountDownLatch, ExecutorService, Future}
+import java.util.concurrent.atomic.AtomicReference
+
+/** Register a "Callback" for a parallel calculation
+ *
+ *    Made private due to unit, fork, and map2
+ *    having to know how to deal with ParFutures.
+ *
+ *    Made private[parallelism] to potentially allow other
+ *    code in this package to provide an API for clients
+ *    to register multiple callbacks.
+ *
+ */
+private[parallelism]
+sealed trait ParFuture[+A] {
+  def apply(cb: A => Unit): Unit
+}
 
 /** Par Trait. */
-sealed trait Par[A] { self =>
+sealed trait Par[+A] { self =>
 
   import Par._
 
-  /** Internally, Par behaves like a function. */
-  private[parallelism] def apply(es: ExecutorService): Future[A]
+  def apply(es: ExecutorService): ParFuture[A]
 
   /** Perform the parallel calculation described by the Par.
    *  
@@ -29,7 +39,16 @@ sealed trait Par[A] { self =>
    *    Blocks until value is available.
    *
    */
-  def run(es: ExecutorService): A = this(es).get
+  def run(es: ExecutorService): A = {
+    val ref = new AtomicReference[A]
+    val latch = new CountDownLatch(1)
+    this(es) {
+      a => ref.set(a)
+      latch.countDown
+    }
+    latch.await
+    ref.get
+  }
 
   /** Combine two parallel computations with a function.
    *
@@ -39,11 +58,25 @@ sealed trait Par[A] { self =>
    */
   def map2[B,C](pb: Par[B])(f: (A,B) => C): Par[C] =
     new Par[C] {
-      def apply(es: ExecutorService) = {
-        val af = self(es)
-        val bf = pb(es)
-        Map2Future(af, bf, f)
-      }
+      def apply(es: ExecutorService) =
+        new ParFuture[C] {
+          def apply(cb: C => Unit): Unit = {
+            var ar: Option[A] = None
+            var br: Option[B] = None
+
+            val combiner = Actor[Either[A,B]](es) {
+              case Left(a) => br match {
+                case None    => ar = Some(a)
+                case Some(b) => eval(es)(cb(f(a, b))) }
+              case Right(b) => ar match {
+                case None    => br = Some(b)
+                case Some(a) => eval(es)(cb(f(a, b))) }
+            }
+
+            self(es) { a => combiner !  Left(a) }
+            pb(es)   { b => combiner ! Right(b) }
+          }
+        }
     }
 
   // map2 related methods:
@@ -83,10 +116,23 @@ sealed trait Par[A] { self =>
 /** Par companion object */
 object Par {
 
+  /** fork and map2 helper function,
+   *
+   *  Returns value of type java.util.concurrent.Future[Unit],
+   *  which we totally ignore.  The asychronous value is returned
+   *  via a side effect in the Par.run method.
+   *
+   */
+  private def eval[A](es: ExecutorService)(r: => Unit): Future[Unit] =
+    es.submit[Unit](() => r)
+
   /** Par.fork marks a calculation to be done in a parallel thread.  */
   def fork[A](pa: => Par[A]): Par[A] =
     new Par[A] {
-      def apply(es: ExecutorService) = es.submit(() => pa(es).get)
+      def apply(es: ExecutorService) =
+        new ParFuture[A] {
+          def apply(cb: A => Unit) = eval(es)(pa(es)(cb))
+        }
     }
  
   /** Wrap a constant value in a Par. 
@@ -99,7 +145,10 @@ object Par {
    */
   def unit[A](a: A): Par[A] =
     new Par[A] {
-      def apply(es: ExecutorService) = UnitFuture(a)
+      def apply(es: ExecutorService) =
+        new ParFuture[A] {
+          def apply(cb: A => Unit) = cb(a)
+        }
     }
 
   /** Lazy version of unit
@@ -110,21 +159,23 @@ object Par {
    */
   def lazyUnit[A](a: => A): Par[A] = fork(unit(a))
 
-  /** Evaluate a function asynchronously. */
-  def asyncF[A,B](f: A => B): A => Par[B] =
-    a => lazyUnit(f(a))
-
   /** Delay instantiation of a computation,
    *  at run time, only if needed.
+   *
    */
   def delay[A](pa: => Par[A]): Par[A] =
     new Par[A] {
       def apply(es: ExecutorService) = pa(es)
     }
 
+  /** Evaluate a function asynchronously. */
+  def asyncF[A,B](f: A => B): A => Par[B] =
+    a => lazyUnit(f(a))
+
   /** Apply a binary operator across an indexable collection in parallel.
    *
    *    Note: For efficiency, collection assumed nonempty.
+   *
    */
   def balancedBinComp[A](ps: IndexedSeq[Par[A]])(binOp: (A,A) => A): Par[A] = {
 
@@ -178,55 +229,5 @@ object Par {
       }
     }
   }
-
-}
-
-// Will morph this into to something that does not extend Future
-private[parallelism] sealed
-trait ParFuture[A] extends Future[A] {
-  private[parallelism]
-  def apply(k: A => Unit): Unit
-  def isCancelled: Boolean = false
-  def cancel(evenIfRunning: Boolean): Boolean = false
-}
-
-/** UnitFuture helper class for Par.unit method.
-  *
-  *  Does not use the underlying es (ExecutorService),
-  *  basically, born done.
-  *
-  */
-  private[parallelism] 
-  case class UnitFuture[A](get: A) extends ParFuture[A] {
-    def apply(k: A => Unit): Unit = (k: A) => println("<<<UnitFuture>>>")
-    def get(timeout: Long, units: TimeUnit): A = get
-    def isDone: Boolean = true
-  }
-
-/** Map2Future helper class for Par.map2 method.
- *
- *  Wrap the two futures into another future so
- *  that f can be evaluated after get is called.
- *
- */
-private[parallelism] 
-case class Map2Future[A,B,C]( af: Future[A]
-                            , bf: Future[B]
-                            ,  f: (A,B) => C
-                            ) extends ParFuture[C] {
-
-  var done: Boolean = false
-  @volatile private var value: Option[C] = None
-
-  def apply(k: C => Unit): Unit = (k: C) => println("<<<Map2Future>>>")
-
-  def get(): C =
-    value getOrElse {
-      value = Some(f(af.get, bf.get))
-      done = true
-      value.get
-    }
-  def get(timeout: Long, units: TimeUnit): C = get
-  def isDone: Boolean = done
 
 }

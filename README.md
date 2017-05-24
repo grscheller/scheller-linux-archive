@@ -61,7 +61,4 @@ text files with information on a variety of topics.
 * A mathematics library centered around integer arithmetic.
 * An old project of mine back when I first learned Python.
 
-### 9. [matlab](matlab/)
-* MATLAB and MuPad projects.
-
 -Geoffrey Scheller

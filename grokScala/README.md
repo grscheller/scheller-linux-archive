@@ -85,7 +85,7 @@ To run,
    $ scala Splat.splat  
 ```
 
-## 4. Scala code blocks: [codeblocks.scala](codeblocks/codeblocks.scala)
+## 4. Scala code blocks: [codeblocks](codeblocks/)
 Scala code blocks are interesting closures.  This project is to explore<br>
 code blocks as functions.
 
@@ -119,4 +119,6 @@ before the lambda were executed only once as expected when the code block<br>
 was first run, but statements after the lambda get executed each time `dog`
 was executed.  Though the  return value of `dog` is indead `()`.
 
-
+## 5. Scala oop: [oop](oop/)
+Exploring Scala OOP features.  When OOP works, it is not bad.  I just don't<br>
+like it when it handcuffs me.

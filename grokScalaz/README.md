@@ -1,6 +1,6 @@
 # Understanding the Scalaz Package:
 
-Explore Scalaz language and build constructions.<br>
+Explore Scalaz language and build constructions.
 
 ## 1. Hierarchical SBT build.
 To compile all projects,

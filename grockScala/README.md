@@ -85,3 +85,38 @@ To run,
    $ scala Splat.splat  
 ```
 
+## 4. Scala code blocks: [codeblocks.scala](codeblocks/codeblocks.scala)
+Scala code blocks are interesting closures.  This project is to explore<br>
+code blocks as functions.
+
+I found something I thought peculiar while in the scala REPL:<br>
+```
+    scala> val dog = {
+         |   println("This is run just once.")
+         |   var fido = 5
+         |   (a: Int) => fido = fido + a
+         |   println("fido is " + fido)
+         | }
+    This is run just once.
+    dog: Int => Unit = <function1>
+    
+    scala> dog(2)
+    fido is 7
+
+    scala> dog(5)
+    fido is 12
+
+    scala> val hold = dog(10)
+    fido is 22
+    hold: Unit = ()
+```
+If you put a single lambda in the middle of a code block, my expectation<br>
+was that the lambda would be ignored and I'd get back just `()` as the<br>
+the value of `dog`, which comes from the last println function call in<br>
+the code block.  Instead, its return value is a `function1` where the<br>
+statements after the lambda become part of the `function1`.  Statements<br>
+before the lambda were executed only once as expected when the code block<br>
+was first run, but statements after the lambda get executed each time `dog`
+was executed.  Though the  return value of `dog` is indead `()`.
+
+

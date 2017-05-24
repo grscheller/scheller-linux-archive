@@ -7,10 +7,12 @@ lazy val commonSettings = Seq(
 
 lazy val root = (project in file("."))
   .aggregate(
-       splat
-     , onejar)
+       codeblocks
+     , onejar
+     , oop
+     , splat)
 
-lazy val splat = (project in file("splat"))
+lazy val codeblocks = (project in file("codeblocks"))
   .settings(
       commonSettings)
 
@@ -18,4 +20,12 @@ lazy val onejar = (project in file("onejar"))
   .settings(
       commonSettings
     , mainClass in assembly := Some("grockScala.HelloWorld.Main"))
+
+lazy val oop = (project in file("oop"))
+  .settings(
+      commonSettings)
+
+lazy val splat = (project in file("splat"))
+  .settings(
+      commonSettings)
 

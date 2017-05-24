@@ -1,9 +1,8 @@
 package grockScala.codeblocks 
 
 // defs and vals are really quite similar, in Scala they
-// share the same namespace and I can implement defs in
-// terms of vals of codeblocks returning lambdas.  In the
-// underlying java implementation, probably other way around.
+// share the same namespace and I can implement "defs"
+// in terms of vals of codeblocks returning lambdas.
 
 object DefsViaVals {
 
@@ -14,6 +13,11 @@ object DefsViaVals {
 
   val object0Val = {
     print("<object0Val enter>")
+    42
+  }
+
+  lazy val object0LazyVal = {
+    print("<object0LazyVal enter>")
     42
   }
 
@@ -41,6 +45,11 @@ object DefsViaVals {
       42
     }
 
+    lazy val main0LazyVal = {
+      print("<main0LazyVal enter>")
+      42
+    }
+
     def main1Def(a: Int) = {
       print("<main1Def enter>")
       a + 1
@@ -60,9 +69,14 @@ object DefsViaVals {
 
     print("\nmain0Val = "); println(main0Val)
     print("object0Val = "); println(object0Val)
+    print("main0LazyVal = "); println(main0LazyVal)
+    print("object0LazyVal = "); println(object0LazyVal)
+    print("main0LazyVal = "); println(main0LazyVal)
+    print("object0LazyVal = "); println(object0LazyVal)
     print("main1Val(10) = "); println(main1Val(10))
     print("object1Val(10) = "); println(object1Val(10))
 
+    println()
   }
 
 }

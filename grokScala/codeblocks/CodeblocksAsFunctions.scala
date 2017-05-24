@@ -71,6 +71,7 @@ object CodeblocksAsFunctions {
     print("\ngoat = "); println(goat)
     print("mainGoat = "); println(mainGoat)
 
+    println()
   }
 
 }

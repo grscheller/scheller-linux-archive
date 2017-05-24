@@ -16,7 +16,7 @@ run one project,
    $ sbt splat/run
 ```
 
-## 2. Building scala code to run as a "Java App":
+## 2. Building scala code to run as a "Java App": [onejar](onejar/)
 Builds scala code into a "fat" jar file so that all an end user needs is<br>
 a functioning java runtime environment.  This will includes everything in<br>
 the jar file, including the Scala runtime libraries.<br>
@@ -80,7 +80,7 @@ To compile outside the sbt build,
    $ cd splat
    $ scala grockScala.Splat.splat
 ```
-To run,
+To run outside sbt build,,
 ```
    $ scala Splat.splat  
 ```

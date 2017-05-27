@@ -23,7 +23,7 @@ import java.util.concurrent.atomic.AtomicReference
  */
 private[parallelism]
 sealed trait ParFuture[+A] {
-  def apply(cb: A => Unit): Unit
+  def apply(cb: A => Unit, onError: Throwable => Unit): Unit
 }
 
 /** Par Trait. */
@@ -40,14 +40,22 @@ sealed trait Par[+A] { self =>
    *
    */
   def run(es: ExecutorService): A = {
+
+    var exceptionThrown: Option[Throwable] = None
     val ref = new AtomicReference[A]
     val latch = new CountDownLatch(1)
-    this(es) {
-      a => ref.set(a)
-      latch.countDown
-    }
+
+    val exceptionalCondition: Throwable => Unit =
+      (ex: Throwable) => {
+        exceptionThrown = Some(ex)
+        latch.countDown
+      } 
+
+    self(es)({ a => ref.set(a)
+               latch.countDown }, exceptionalCondition)
+
     latch.await
-    ref.get
+    exceptionThrown map (throw _) getOrElse ref.get
   }
 
   /** Combine two parallel computations with a function.
@@ -60,21 +68,23 @@ sealed trait Par[+A] { self =>
     new Par[C] {
       def apply(es: ExecutorService) =
         new ParFuture[C] {
-          def apply(cb: C => Unit): Unit = {
+          def apply(cb: C => Unit, onError: Throwable => Unit): Unit = {
+
             var ar: Option[A] = None
             var br: Option[B] = None
 
-            val combiner = Actor[Either[A,B]](es) {
-              case Left(a) => br match {
-                case None    => ar = Some(a)
-                case Some(b) => eval(es)(cb(f(a, b))) }
-              case Right(b) => ar match {
-                case None    => br = Some(b)
-                case Some(a) => eval(es)(cb(f(a, b))) }
-            }
+            val combiner = Actor[Either[A,B]](es)( {
+                case Left(a) => br match {
+                  case None    => ar = Some(a)
+                  case Some(b) => eval(es)(cb(f(a, b))) }
+                case Right(b) => ar match {
+                  case None    => br = Some(b)
+                  case Some(a) => eval(es)(cb(f(a, b))) }
+              }, onError ) 
 
-            self(es) { a => combiner !  Left(a) }
-            pb(es)   { b => combiner ! Right(b) }
+            self(es)({ a => combiner ! Left(a) }, onError)
+            pb(es)({ b => combiner ! Right(b) }, onError)
+
           }
         }
     }
@@ -83,14 +93,14 @@ sealed trait Par[+A] { self =>
 
   /** Map a function into a parallel calculation.  */
   def map[B](f: A => B): Par[B] =
-    this.map2(unit(())) {
+    self.map2(unit(())) {
       (a, _) => f(a)
     }
 
   /** Combine three parallel computations with a function. */
   def map3[B,C,D]( pb: Par[B]
                  , pc: Par[C])(f: (A,B,C) => D): Par[D] = 
-    this.map2(pb)((_,_)).map2(pc) {
+    self.map2(pb)((_,_)).map2(pc) {
       (t, c) => f(t._1, t._2, c)
     }
 
@@ -98,7 +108,7 @@ sealed trait Par[+A] { self =>
   def map4[B,C,D,E]( pb: Par[B]
                    , pc: Par[C]
                    , pd: Par[D])(f: (A,B,C,D) => E): Par[E] = 
-    this.map3(pb, pc)((_,_,_)).map2(pd) {
+    self.map3(pb, pc)((_,_,_)).map2(pd) {
       (t, d) => f(t._1, t._2, t._3, d)
     }
 
@@ -107,7 +117,7 @@ sealed trait Par[+A] { self =>
                      , pc: Par[C]
                      , pd: Par[D]
                      , pe: Par[E])(f: (A,B,C,D,E) => F): Par[F] = 
-    this.map4(pb, pc, pd)((_,_,_,_)).map2(pe) {
+    self.map4(pb, pc, pd)((_,_,_,_)).map2(pe) {
       (t, e) => f(t._1, t._2, t._3, t._4, e)
     }
 
@@ -123,7 +133,8 @@ object Par {
    *  via a side effect in the Par.run method.
    *
    */
-  private def eval[A](es: ExecutorService)(r: => Unit): Future[Unit] =
+  private
+  def eval[A](es: ExecutorService)(r: => Unit): Future[Unit] =
     es.submit[Unit](() => r)
 
   /** Par.fork marks a calculation to be done in a parallel thread.  */
@@ -131,7 +142,8 @@ object Par {
     new Par[A] {
       def apply(es: ExecutorService) =
         new ParFuture[A] {
-          def apply(cb: A => Unit) = eval(es)(pa(es)(cb))
+          def apply(cb: A => Unit , onError: Throwable => Unit) =
+             eval(es)( pa(es)(cb, onError) )
         }
     }
  
@@ -140,14 +152,17 @@ object Par {
    *  Does not actually use the underlying java or OS
    *  multi-threading mechanisms.  The Par it returns
    *  does not depending on the (es: ExecutorService)
-   *  passed to the run method.  
+   *  passed to the run method.
+   *
+   *  Also, we ignore onError due to simplicity of
+   *  the cb we set in the Par.run method.
    *
    */
   def unit[A](a: A): Par[A] =
     new Par[A] {
       def apply(es: ExecutorService) =
         new ParFuture[A] {
-          def apply(cb: A => Unit) = cb(a)
+          def apply(cb: A => Unit, onError: Throwable => Unit) = cb(a)
         }
     }
 
@@ -159,8 +174,8 @@ object Par {
    */
   def lazyUnit[A](a: => A): Par[A] = fork(unit(a))
 
-  /** Delay instantiation of a computation,
-   *  at run time, only if needed.
+  /** Delay instantiation of part of a computation
+   *  until run time, and then only if needed.
    *
    */
   def delay[A](pa: => Par[A]): Par[A] =

@@ -8,7 +8,7 @@ import Par._
  *
  *  Started after exercise 7.4
  */
-object ParTest2 {
+object ParJavaFutures2 {
 
   import fpinscala.state.rand.{Rand,RNG,LCG}  
 

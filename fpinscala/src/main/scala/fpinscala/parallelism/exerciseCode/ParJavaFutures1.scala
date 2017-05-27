@@ -16,7 +16,7 @@ import Par._
  *  fpinscala.parallelism package.
  *
  */
-object ParTest1 {
+object ParJavaFutures1 {
 
   // Model an expensive calculations with
   // a less than stellar implementations

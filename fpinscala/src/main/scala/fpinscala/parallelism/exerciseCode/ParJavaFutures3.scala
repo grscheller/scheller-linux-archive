@@ -9,7 +9,7 @@ import Par._
  *  Post Exercise 7.6
  *
  */
-object ParTest3 {
+object ParJavaFutures3 {
 
   // Model an expensive calculations with
   // a less than stellar implementations

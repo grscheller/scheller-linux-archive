@@ -32,11 +32,9 @@ object Sleepy {
 
   def main(args: Array[String]): Unit = {
 
-    val threadNum1 = 1
-    val threadNum2 = 2
-    val threadNum3 = 10
-    val threadNum4 = 20
-    val threadNum5 = 50
+    var es: ExecutorService = null
+
+    val numThreads = List(1, 2, 5, 10, 20, 50)
 
     val myList = List[Int](42, 1, 69, 12, 17, 29, 76, 21, 26, 81, 21, 100,
                            45, 99, 86, 37, 13, 4, 37, 72, 9,  53, 103,  17,
@@ -53,27 +51,15 @@ object Sleepy {
 
     println()
 
-    val es1 = Executors.newFixedThreadPool(threadNum1)
-    timePar(parSleep, es1, s"Threaded sleep with ${threadNum1} threads: ")
-    es1.shutdown
-
-    val es2 = Executors.newFixedThreadPool(threadNum2)
-    timePar(parSleep, es2, s"Threaded sleep with ${threadNum2} threads: ")
-    es2.shutdown
-
-    val es3 = Executors.newFixedThreadPool(threadNum3)
-    timePar(parSleep, es3, s"Threaded sleep with ${threadNum3} threads: ")
-    es3.shutdown
-
-    val es4 = Executors.newFixedThreadPool(threadNum4)
-    timePar(parSleep, es4, s"Threaded sleep with ${threadNum4} threads: ")
-    es4.shutdown
-
-    val es5 = Executors.newFixedThreadPool(threadNum5)
-    timePar(parSleep, es5, s"Threaded sleep with ${threadNum5} threads: ")
-    es5.shutdown
-
     timeIt(deepSleep, myList, "Serial sleep: ")
+
+    numThreads foreach {
+      threadNum => {
+        es = Executors.newFixedThreadPool(threadNum)
+        timePar(parSleep, es, s"Threaded sleep with ${threadNum} threads: ")
+        es.shutdown
+      }
+    }
 
     println()
 

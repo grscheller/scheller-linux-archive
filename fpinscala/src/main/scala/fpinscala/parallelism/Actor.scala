@@ -39,8 +39,10 @@ import annotation.tailrec
  * @param strategy Execution strategy
  * @tparam A       The type of messages accepted by this actor.
  */
-final class Actor[A](strategy: Strategy)(handler: A => Unit, onError: Throwable => Unit = throw(_)) {
-  self =>
+final
+class Actor[A](strategy: Strategy)
+              ( handler: A => Unit
+              , onError: Throwable => Unit) {
 
   private val tail = new AtomicReference(new Node[A]())
   private val suspended = new AtomicInteger(1)
@@ -104,7 +106,7 @@ object Actor {
   /** Create an `Actor` backed by the given `ExecutorService`. */
   def apply[A]( es: ExecutorService )
               ( handler: A => Unit
-              , onError: Throwable => Unit = throw(_) ): Actor[A] =
+              , onError: Throwable => Unit): Actor[A] =
     new Actor(Strategy.fromExecutorService(es))(handler, onError)
 }
 

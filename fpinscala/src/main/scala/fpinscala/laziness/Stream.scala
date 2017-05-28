@@ -93,11 +93,12 @@ sealed trait Stream[+A] { self =>
    *  @note Return value generated from stream elements
    *        left to right.
    *  @note Not infinite Stream safe.
+   *  @note unchecked match used to gag harmless compiler warning.
    *  
    */
   def foldLeft[B](z: B)(f: (B, A) => B): B = {
     var accum = (z, self)
-    while (accum._2 != Empty) accum = accum._2 match {
+    while (accum._2 != Empty) accum = (accum._2: @unchecked) match {
       case Cons(h, t) => (f(accum._1, h()), t())
     }
     accum._1

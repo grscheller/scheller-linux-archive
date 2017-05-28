@@ -18,9 +18,14 @@ object List {
       case _ => l
     }
 
-  /** Return first element of List - partial function */
+  /** Return first element of List - partial function
+   *
+   *  @note Well known that head of an empty list fails.
+   *  @note Unchecked match used to gag compiler warning.
+   *
+   */
   def head[A](l: List[A]): A =
-    l match {
+    (l: @unchecked) match {
       case Cons(h, t) => h
     }
 
@@ -70,10 +75,12 @@ object List {
   /** Remove last element in list - not a total function since
    *  the empty list has no last element to remove.
    *
-   *  @note Will cause a compiler warning.  Also, will cause stackoverflow.
+   *  @note Well known that init is not a total functon.
+   *  @note Unchecked match used to gag compiler warning.
+   *  @note Sensitive to stackoverflow.
    */
   def init[A](l: List[A]): List[A] = 
-    l match {
+    (l: @unchecked) match {
       case Cons(h1, Cons(h2, Nil)) => Cons(h1, Nil)
       case Cons(h1, Cons(h2, rest)) => Cons(h1, Cons(h2, init(rest)))
       case Cons(h, Nil) => Nil
@@ -86,7 +93,11 @@ object List {
   def productR1(xs: List[Double]) = foldRightUnsafe(xs, 1.0)(_ * _) 
 
   // Exercise 3.7
-  /** Right fold with short circuit logic */
+  /** Right fold with short circuit logic
+   *
+   *  @note Names zero and one based on analogy to a multiplcative group.
+   *
+   */
   def foldRightSC[A,B](xs: List[A], zero: A, one: B)(f: (A, B) => B): B =
     xs match {
       case Nil => one

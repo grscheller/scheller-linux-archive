@@ -755,6 +755,12 @@ X. Syncing repositories:
        fetch will too, but not the merge.  The git fetch is syncing
        your local copy with what is on the remote.
 
+       More explicitly,
+
+         git checkout master             <- or whatever branch
+         git fetch origin                <- fetch all tracked upstream changes
+         git merge origin/master         <- local copy of upstream branch
+
    10. GIT push (push local changes elsewhere):
 
          git push origin <branch>
@@ -954,6 +960,20 @@ XIII. GIT revision history tools:
                       three way merge
 
     6. Look into git-rev-list and git-show-branch.
+
+    7. Find all the "roots" of a repo,
+
+         $ git rev-list --max-parents=0 HEAD
+         4a0c3cff3b6d192effeb44bc2d8429c5e9f85825
+         6e886a1b01a10f39b53bf8b90dba4c73625f4353
+
+    8. Finding the first commit a file appeared,
+
+         $ git log --oneline -- Actor.scala | tail -n 1
+         d71adde Implemented book's nonblocking fpinscala.parallelism package.
+         Blocking version now package fpinscala.parallelism.javaFutures.
+
+       Then search for equivalent of "d71adde" in a git log.
 
 XIV. Debug options:
 

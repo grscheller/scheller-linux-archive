@@ -1,5 +1,5 @@
-Purpose: Useful commands and factoids that can be 
-         done without root or sudo access.
+Purpose: Useful commands and factoids most of which
+         that can be done without root or sudo access.
 
 Journalctl:
   For scanning journalctl output, some useful options,
@@ -34,6 +34,9 @@ Pacman:
   To search for packages, not necessarily installed,
     pacman -Ss regex : search for terms in package database
 
+  Download packages without installing,
+    sudo pacman -Syuw
+
 Systemctl:
   System maintenance,
     systemctl --failed
@@ -44,8 +47,8 @@ Hostnamectl:
        Static hostname: gauss17
              Icon name: computer-laptop
                Chassis: laptop
-            Machine ID: 89e16dfa61c540876d1da444b85a9cbb
-               Boot ID: a28fe2b64d714a7bba86a45ff91f2d9c
+            Machine ID: 89e16dfa61c542876d1da424b85a9cbb
+               Boot ID: a28fe2b54d714a7bb6a4288ff91f2d9c
       Operating System: Arch Linux
                 Kernel: Linux 4.10.1-1-ARCH
           Architecture: x86-64

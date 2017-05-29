@@ -189,7 +189,12 @@ of doing things; it just that I don't know EMACS that well.
 
      $ head -n -5 Filename
 
-   Note: tail is duel to head with first replaced with last.
+   Note: tail is similar but not quite duel,
+
+     $ tail -n 2 Filename
+     $ tail -n -2 Filename
+
+   both print out the last 2 lines of Filename.
 
    Prints out last 3 lines of Filename after last 5 lines have
    been stripped off.

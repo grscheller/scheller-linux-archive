@@ -15,6 +15,7 @@ run one project,
 ```
    $ sbt splat/run
 ```
+make sure you launch sbt from the root grokScala directory.
 
 ## 2. Building scala code to run as a "Java App": [onejar](onejar/)
 Builds scala code into a "fat" jar file so that all an end user needs is<br>
@@ -122,3 +123,7 @@ was executed.  Though the  return value of `dog` is indead `()`.
 ## 5. Scala oop: [oop](oop/)
 Exploring Scala OOP features.  When OOP works, it is not bad.  I just don't<br>
 like it when it handcuffs me.
+
+## 6. Parallelism with Scala: [parallelism](parallelism/)
+Exploring multithreading/concurrent constructs in Scala.
+

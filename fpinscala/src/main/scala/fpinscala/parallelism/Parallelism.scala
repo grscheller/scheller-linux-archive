@@ -8,13 +8,14 @@
  */
 package fpinscala.parallelism
 
-import java.util.concurrent.{CountDownLatch, ExecutorService, Future}
+import java.util.concurrent.{CountDownLatch, Future}
+import java.util.concurrent.{ExecutorService => ES}
 import java.util.concurrent.atomic.AtomicReference
 
 /** Register a "Callback" for a parallel calculation
  *
  *    Made private due to unit, fork, and map2
- *    having to know how to deal with ParFutures.
+ *    needing to know how to create ParFutures.
  *
  *    Made private[parallelism] to potentially allow other
  *    code in this package to provide an API for clients
@@ -31,15 +32,18 @@ sealed trait Par[+A] { self =>
 
   import Par._
 
-  def apply(es: ExecutorService): ParFuture[A]
+  def apply(es: ES): ParFuture[A]
 
   /** Perform the parallel calculation described by the Par.
    *  
    *    Returns the final value.
    *    Blocks until value is available.
    *
+   *    Throws exception, which client is responsible to catch,
+   *    when an error condition occurs.
+   *
    */
-  def run(es: ExecutorService): A = {
+  def run(es: ES): A = {
 
     var exceptionThrown: Option[Throwable] = None
     val ref = new AtomicReference[A]
@@ -66,21 +70,21 @@ sealed trait Par[+A] { self =>
    */
   def map2[B,C](pb: Par[B])(f: (A,B) => C): Par[C] =
     new Par[C] {
-      def apply(es: ExecutorService) =
+      def apply(es: ES) =
         new ParFuture[C] {
           def apply(cb: C => Unit, onError: Throwable => Unit): Unit = {
 
-            var ar: Option[A] = None
+            var al: Option[A] = None
             var br: Option[B] = None
 
-            val combiner = Actor[Either[A,B]](es)( {
+            val combiner = Actor[Either[A,B]](es)({
                 case Left(a) => br match {
-                  case None    => ar = Some(a)
-                  case Some(b) => eval(es)(cb(f(a, b))) }
-                case Right(b) => ar match {
+                  case None    => al = Some(a)
+                  case Some(b) => eval(es)(cb(f(a, b)), onError)}
+                case Right(b) => al match {
                   case None    => br = Some(b)
-                  case Some(a) => eval(es)(cb(f(a, b))) }
-              }, onError ) 
+                  case Some(a) => eval(es)(cb(f(a, b)), onError)}
+              }, onError) 
 
             self(es)({ a => combiner ! Left(a) }, onError)
             pb(es)({ b => combiner ! Right(b) }, onError)
@@ -134,16 +138,21 @@ object Par {
    *
    */
   private
-  def eval[A](es: ExecutorService)(r: => Unit): Future[Unit] =
-    es.submit[Unit](() => r)
+  def eval[A](es: ES)(r: => Unit , onError: Throwable => Unit): Future[Unit] =
+    es.submit[Unit] { () =>
+      try { r
+      } catch {
+        case ex: Throwable => onError(ex) 
+      }
+    }
 
   /** Par.fork marks a calculation to be done in a parallel thread.  */
   def fork[A](pa: => Par[A]): Par[A] =
     new Par[A] {
-      def apply(es: ExecutorService) =
+      def apply(es: ES) =
         new ParFuture[A] {
           def apply(cb: A => Unit , onError: Throwable => Unit) =
-             eval(es)( pa(es)(cb, onError) )
+             eval(es)(pa(es)(cb, onError), onError)
         }
     }
  
@@ -151,18 +160,19 @@ object Par {
    *
    *  Does not actually use the underlying java or OS
    *  multi-threading mechanisms.  The Par it returns
-   *  does not depending on the (es: ExecutorService)
-   *  passed to the run method.
-   *
-   *  Also, we ignore onError due to simplicity of
-   *  the cb we set in the Par.run method.
+   *  does not depending on the (es: ES) passed to the
+   *  run method.
    *
    */
   def unit[A](a: A): Par[A] =
     new Par[A] {
-      def apply(es: ExecutorService) =
+      def apply(es: ES) =
         new ParFuture[A] {
-          def apply(cb: A => Unit, onError: Throwable => Unit) = cb(a)
+          def apply(cb: A => Unit, onError: Throwable => Unit) =
+            try { cb(a)
+            } catch {
+              case ex: Throwable => onError(ex) 
+            }
         }
     }
 
@@ -180,7 +190,7 @@ object Par {
    */
   def delay[A](pa: => Par[A]): Par[A] =
     new Par[A] {
-      def apply(es: ExecutorService) = pa(es)
+      def apply(es: ES) = pa(es)
     }
 
   /** Evaluate a function asynchronously. */

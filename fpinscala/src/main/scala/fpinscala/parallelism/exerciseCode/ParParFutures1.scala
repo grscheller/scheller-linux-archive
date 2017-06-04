@@ -44,9 +44,6 @@ object ParParFutures1 {
 
     println()
 
-    println(parDiv42( nonZero).run(es))
-    println(parDiv42(withZero).run(es))
-
     println(Try { parDiv42( nonZero).run(es) })
     println(Try { parDiv42(withZero).run(es) })
 

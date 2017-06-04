@@ -2622,3 +2622,40 @@ Purpose: To indicate what was done to create gauss17 and
 
   Pacman warned me it was reinstalling package.  Symlink was recreated.
 
+2017-06-02:
+  After a "sudo pacman -Syu", the SBT REPL stopped working correctly.
+  Error message indicated that sbt failed to create a terminal.
+  From /var/log/pacman.log the only thing that might relate to this was
+
+  [2017-06-02 13:03] [ALPM] upgraded ncurses (6.0+20170429-1 -> 6.0+20170527-1)
+
+  So,
+
+    $ cd /var/cache/pacman/pkg
+
+    $ ls -tr ncurses-* | tail -3
+    ncurses-6.0+20170401-1-x86_64.pkg.tar.xz
+    ncurses-6.0+20170429-1-x86_64.pkg.tar.xz
+    ncurses-6.0+20170527-1-x86_64.pkg.tar.xz
+
+    $ sudo pacman -U ncurses-6.0+20170429-1-x86_64.pkg.tar.xz
+
+  This downgrade temporarily fixed the problem.  For now, I will just pull down
+  the pacman tarballs to /var/cache/pacman/pkg with "sudo pacman -Syuw" and
+  wait for either an ncurses or sbt upgrade.
+
+2017-06-04:
+  Pacman update followed by a downgrade of ncurses package,
+
+    $ cd /var/cache/pacman/pkg
+    $ sudo pacman -Syuw
+
+  Nothing new ncurses/sbt wise,
+
+    $ sudo pacman -Syu
+
+  SBT broken again, so downgrade ncurses again,
+
+    $ sudo pacman -U ncurses-6.0+20170429-1-x86_64.pkg.tar.xz
+
+  SBT now works again.

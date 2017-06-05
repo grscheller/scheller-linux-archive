@@ -11,6 +11,3 @@ make sure you launch sbt from the root grokScalaz directory.
 
 ## 2. Using [Scalaz from Scala REPL via SBT](scalazREPL/):
 
-## 3. Parallelism with Scalaz: [parallelism](parallelism/)
-Exploring higher level oncurrence constructs with Scalaz.
-

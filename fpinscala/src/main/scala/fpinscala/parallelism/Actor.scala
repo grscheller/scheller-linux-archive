@@ -16,7 +16,6 @@ import java.util.concurrent.atomic.{AtomicInteger, AtomicReference}
 import java.util.concurrent.ExecutorService
 import annotation.tailrec
 
-
 /** Processes messages of type A, one at a time. Messages are submitted
  *  to the actor with the ! method. Processing is typically performed
  *  asynchronously, this is controlled by the provided strategy.
@@ -43,6 +42,9 @@ final
 class Actor[A](strategy: Strategy)
               ( handler: A => Unit
               , onError: Throwable => Unit) {
+
+  private class Node[A](var a: A = null.asInstanceOf[A])
+                            extends AtomicReference[Node[A]]
 
   private val tail = new AtomicReference(new Node[A]())
   private val suspended = new AtomicInteger(1)
@@ -98,15 +100,12 @@ class Actor[A](strategy: Strategy)
   }
 }
 
-private 
-class Node[A](var a: A = null.asInstanceOf[A]) extends AtomicReference[Node[A]]
-
 object Actor {
 
   /** Create an `Actor` backed by the given `ExecutorService`. */
   def apply[A]( es: ExecutorService )
               ( handler: A => Unit
-              , onError: Throwable => Unit): Actor[A] =
+              , onError: Throwable => Unit ): Actor[A] =
     new Actor(Strategy.fromExecutorService(es))(handler, onError)
 }
 

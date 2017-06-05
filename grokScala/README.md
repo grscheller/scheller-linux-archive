@@ -121,9 +121,12 @@ was first run, but statements after the lambda get executed each time `dog`
 was executed.  Though the  return value of `dog` is indead `()`.
 
 ## 5. Scala oop: [oop](oop/)
-Exploring Scala OOP features.  When OOP works, it is not bad.  I just don't<br>
-like it when it handcuffs me.
+Exploring Scala OOP features.  When an OOP model fits the problem, it is not<br>
+bad.  I just don't like it when it handcuffs me.
 
 ## 6. Parallelism with Scala: [parallelism](parallelism/)
 Exploring multithreading/concurrent constructs in Scala.
 
+It seems that Actors from the Scala standard library have been dropped in<br>
+favor of akka Actors.  Also, the standard library now has a Promises<br>
+implementation, which is very different that the one removed from Scalaz.

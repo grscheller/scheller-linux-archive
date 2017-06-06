@@ -3,39 +3,18 @@ package fpinscala.chap07.parallelism
 import scala.util.{Try, Success, Failure}
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import java.util.concurrent.TimeoutException
 import fpinscala.parallelism.Par
-// import fpinscala.parallelism.javaFutures.Par
-//   and increase threadpool to 15
 import Par._
 
-/** Test fpinscala.parallelism.Blocking object
- *
- *  Before section 7.4
- *
- */
+/** Test fpinscala.parallelism.Par */
 object ParParFutures1 {
-
-  def timePar[A](par: Par[A], es: ExecutorService, comment: String): Unit =
-    println {
-      print(comment)
-      val t0 = System.nanoTime
-      val hold = par.run(es)
-      val t1 = System.nanoTime
-      hold + " in " + (t1 - t0)/1000000000.0 + " seconds"
-    }
-
-  def timeIt[A,B](it: A => B, arg: A, comment: String): Unit =
-    println {
-      print(comment)
-      val t0 = System.nanoTime
-      val hold = it(arg)
-      val t1 = System.nanoTime
-      hold + " in " + (t1 - t0)/1000000000.0 + " seconds"
-    }
 
   def main(args: Array[String]): Unit = {
 
     val es = Executors.newFixedThreadPool(4)
+
+    // Test parMap error handling
 
     val parDiv42 = (l: List[Int]) => parMap(l)(42/_)
 
@@ -46,6 +25,37 @@ object ParParFutures1 {
 
     println(Try { parDiv42( nonZero).run(es) })
     println(Try { parDiv42(withZero).run(es) })
+
+    println()
+
+    // Test flatMap via choice
+    def slowBool(b: Boolean): Boolean = { Thread.sleep(1000); b }    
+    def noBool(b: Boolean): Boolean = { Thread.sleep(1000); throw(new TimeoutException) }    
+
+    val myChoice = choice(asyncF(slowBool)(5 < 7))(
+        asyncF(print(_: String))("5 is less than 7 => ")
+      , asyncF(print(_: String))("5 is not less than 7 => ")
+      )
+
+    val noChoice = choice(asyncF(noBool)(5 < 7))(
+        asyncF(print(_: String))("5 is less than 7 => ")
+      , asyncF(print(_: String))("5 is not less than 7 => ")
+      )
+
+    val badChoice = choice(asyncF(slowBool)(5 < 7))(
+        asyncF((_: String) => throw(new Exception("bad choice")))("5 is less than 7 => ")
+      , asyncF(print(_: String))("5 is not less than => 7")
+      )
+
+    val luckyChoice = choice(asyncF(slowBool)(5 < 7))(
+        asyncF(print(_: String))("5 is less than 7 => ")
+      , asyncF((_: String) => throw(new Exception("lucky choice")))("5 is not less than 7 => ")
+      )
+
+    println(Try { myChoice.run(es) })
+    println(Try { noChoice.run(es) })
+    println(Try { badChoice.run(es) })
+    println(Try { luckyChoice.run(es) })
 
     println()
 

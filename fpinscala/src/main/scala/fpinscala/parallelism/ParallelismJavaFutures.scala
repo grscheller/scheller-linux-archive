@@ -105,6 +105,11 @@ sealed trait Par[A] { self =>
       (t, e) => f(t._1, t._2, t._3, t._4, e)
     }
 
+  /** flatMap. */
+  def flatMap[B](f: A => Par[B]): Par[B] =
+    new Par[B] {
+      def apply(es: ExecutorService) = f(self(es).get)(es)
+    }
 }
 
 /** Par companion object */
@@ -117,7 +122,7 @@ object Par {
    *  Before java 8, I would have had to pass a
    *    new Callable[A] { def call = pa(es).get }
    *  anonymous inner class to the es submit method.
-   *
+   *ES
    */
   def fork[A](pa: => Par[A]): Par[A] =
     new Par[A] {
@@ -213,6 +218,12 @@ object Par {
       }
     }
   }
+
+  def choice[A](pred: Par[Boolean])(t: Par[A], f: Par[A]): Par[A] =
+    pred.flatMap {
+      case true  => t
+      case false => f
+    }
 
 }
 

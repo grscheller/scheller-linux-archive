@@ -49,14 +49,14 @@ sealed trait Par[+A] { self =>
     val ref = new AtomicReference[A]
     val latch = new CountDownLatch(1)
 
-    val exceptionalCondition: Throwable => Unit =
+    val onError: Throwable => Unit =
       (ex: Throwable) => {
         exceptionThrown = Some(ex)
         latch.countDown
       } 
 
     self(es)({ a => ref.set(a)
-               latch.countDown }, exceptionalCondition)
+               latch.countDown }, onError)
 
     latch.await
     exceptionThrown map (throw _) getOrElse ref.get
@@ -125,6 +125,18 @@ sealed trait Par[+A] { self =>
       (t, e) => f(t._1, t._2, t._3, t._4, e)
     }
 
+  /** flatMap. */
+  def flatMap[B](f: A => Par[B]): Par[B] = 
+    new Par[B] {
+      def apply(es: ES) =
+        new ParFuture[B] {
+          def apply(cb: B => Unit, onError: Throwable => Unit): Unit = 
+            try { cb(f(self.run(es)).run(es))
+            } catch {
+              case ex: Throwable => onError(ex) 
+            }
+        }
+    }
 }
 
 /** Par companion object */
@@ -254,5 +266,11 @@ object Par {
       }
     }
   }
+
+  def choice[A](pred: Par[Boolean])(t: Par[A], f: Par[A]): Par[A] =
+    pred.flatMap {
+      case true  => t
+      case false => f
+    }
 
 }

@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicReference
 
 /** Register a "Callback" for a parallel calculation
  *
- *    Made private due to unit, fork, and map2
+ *    Made private due to unit, fork, map2, flatMap
  *    needing to know how to create ParFutures.
  *
  *    Made private[parallelism] to potentially allow other
@@ -62,13 +62,56 @@ sealed trait Par[+A] { self =>
     exceptionThrown map (throw _) getOrElse ref.get
   }
 
+  /** flatMap - implemented as a new primitive
+   *
+   *  The only way to get an `A' to apply f is to
+   *  call a Par's run method.  Abstracts the idea
+   *  of producing a new Par from the result of 
+   *  another Par.
+   *  
+   */
+  def flatMap[B](f: A => Par[B]): Par[B] = 
+    new Par[B] {
+      def apply(es: ES) =
+        new ParFuture[B] {
+          def apply(cb: B => Unit, onError: Throwable => Unit): Unit = 
+            try { cb(f(self.run(es)).run(es))
+            } catch {
+              case ex: Throwable => onError(ex) 
+            }
+        }
+    }
+
   /** Combine two parallel computations with a function.
    *
    *  Function not evaluated in a separate thread.  To
    *  do that, use `fork(map2(a,b)(f))'
    *
    */
-  def map2[B,C](pb: Par[B])(f: (A,B) => C): Par[C] =
+  def map2[B,C]: Par[B] => ((A,B) => C) => Par[C] = map2_viaActor
+
+  // map2 implementations:
+
+  /** Map2 implementation via flatMap.
+   *
+   *  Beautifully simple, but poor parallel performance.
+   *  The problem is that we have a blocking ParFuture
+   *  wrapped in another blocking ParFuture.
+   *  1. Serializes any calculation that uses it.
+   *  2. Deadlocks on fixed size threadpools with 
+   *     less than 4 threads.
+   *
+   */
+  def map2_viaFlatMap[B,C](pb: Par[B])(f: (A,B) => C): Par[C] =
+    self.flatMap { (a: A) => pb.flatMap { (b: B) => unit(f(a, b)) } }
+
+  /** Map2 implementation via actors.
+   *
+   *  Non-blocking implementation of map2 where the arguments
+   *  to f are evaluated in parallel.  Threadsafe.
+   *
+   */
+  def map2_viaActor[B,C](pb: Par[B])(f: (A,B) => C): Par[C] =
     new Par[C] {
       def apply(es: ES) =
         new ParFuture[C] {
@@ -101,6 +144,12 @@ sealed trait Par[+A] { self =>
       (a, _) => f(a)
     }
 
+  /** Map a function into a parallel calculation.  */
+  def map_viaFlatMap[B](f: A => B): Par[B] =
+    self.map2_viaFlatMap(unit(())) {
+      (a, _) => f(a)
+    }
+
   /** Combine three parallel computations with a function. */
   def map3[B,C,D]( pb: Par[B]
                  , pc: Par[C])(f: (A,B,C) => D): Par[D] = 
@@ -125,18 +174,6 @@ sealed trait Par[+A] { self =>
       (t, e) => f(t._1, t._2, t._3, t._4, e)
     }
 
-  /** flatMap. */
-  def flatMap[B](f: A => Par[B]): Par[B] = 
-    new Par[B] {
-      def apply(es: ES) =
-        new ParFuture[B] {
-          def apply(cb: B => Unit, onError: Throwable => Unit): Unit = 
-            try { cb(f(self.run(es)).run(es))
-            } catch {
-              case ex: Throwable => onError(ex) 
-            }
-        }
-    }
 }
 
 /** Par companion object */

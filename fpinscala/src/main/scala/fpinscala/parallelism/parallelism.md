@@ -3,14 +3,14 @@ The fpinscala.parallelism package is the non-blocking, Actor based concurency<br
 API that the book "Functional Programming in Scala" gently leads you to develop.<br>
 My version includes error handling.
 
-### Trait [`parallelism.Par[+A]`](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/parallelism/Parallelism.scala#L30-L140)
+### Trait [`parallelism.Par[+A]`](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/parallelism/Parallelism.scala#L30-L177)
 * Used to define future parallel computations and run them.
 * The `Par.run` method is the only way for client code to extract a value.
 * Does not provide Future objects to clients as parallelism.javaFutures does.
 * Use case is for client code to apply the blocking run method as last step.
 * The run method is not intended to be used internally within the package.
 
-### Companon Object [`parallelism.Par`](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/parallelism/Parallelism.scala#L142-L276)
+### Companon Object [`parallelism.Par`](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/parallelism/Parallelism.scala#L179-L313)
 * Utility methods for the `parallelism.Par[A]` trait.
 
 ### Private Abstract Trait [`parallelism.ParFuture[+A]`](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/parallelism/Parallelism.scala#L15-L28)

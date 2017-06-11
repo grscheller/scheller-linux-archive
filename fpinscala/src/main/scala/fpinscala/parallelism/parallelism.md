@@ -10,7 +10,7 @@ My version includes error handling.
 * Use case is for client code to apply the blocking run method as last step.
 * The run method is not intended to be used internally within the package.
 
-### Companon Object [`parallelism.Par`](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/parallelism/Parallelism.scala#L179-L313)
+### Companon Object [`parallelism.Par`](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/parallelism/Parallelism.scala#L179-L319)
 * Utility methods for the `parallelism.Par[A]` trait.
 
 ### Private Abstract Trait [`parallelism.ParFuture[+A]`](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/parallelism/Parallelism.scala#L15-L28)

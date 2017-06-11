@@ -22,7 +22,8 @@
  */
 package fpinscala.parallelism.javaFutures
 
-import java.util.concurrent.{Future, ExecutorService, TimeUnit}
+import java.util.concurrent.{Future, TimeUnit}
+import java.util.concurrent.{ExecutorService => ES}
 import java.util.concurrent.{CancellationException, ExecutionException}
 import java.util.concurrent.TimeoutException
 
@@ -32,7 +33,7 @@ sealed trait Par[A] { self =>
   import Par._
 
   /** Internally, Par behaves like a function. */
-  private[parallelism] def apply(es: ExecutorService): Future[A]
+  private[parallelism] def apply(es: ES): Future[A]
 
   /** Perform the parallel calculation described by the Par.
    *  
@@ -40,10 +41,10 @@ sealed trait Par[A] { self =>
    *    Blocks until value is available.
    *
    */
-  def run(es: ExecutorService): A = this(es).get
+  def run(es: ES): A = this(es).get
 
   /** Return a Future for the parallel calculation described by the Par. */
-  def future(es: ExecutorService): Future[A] = {
+  def future(es: ES): Future[A] = {
     val fut = this(es)
     fut.isDone
     fut
@@ -56,7 +57,7 @@ sealed trait Par[A] { self =>
    *  methods are called.
    *
    */
-  def frozenFuture(es: ExecutorService): Future[A] = this(es)
+  def frozenFuture(es: ES): Future[A] = this(es)
 
   /** Combine two parallel computations with a function.
    *
@@ -66,7 +67,7 @@ sealed trait Par[A] { self =>
    */
   def map2[B,C](pb: Par[B])(f: (A,B) => C): Par[C] =
     new Par[C] {
-      def apply(es: ExecutorService) = {
+      def apply(es: ES) = {
         val af = self(es)
         val bf = pb(es)
         Map2Future(af, bf, f)
@@ -108,8 +109,9 @@ sealed trait Par[A] { self =>
   /** flatMap. */
   def flatMap[B](f: A => Par[B]): Par[B] =
     new Par[B] {
-      def apply(es: ExecutorService) = f(self(es).get)(es)
+      def apply(es: ES) = f(self(es).get)(es)
     }
+
 }
 
 /** Par companion object */
@@ -126,7 +128,7 @@ object Par {
    */
   def fork[A](pa: => Par[A]): Par[A] =
     new Par[A] {
-      def apply(es: ExecutorService) = es.submit(() => pa(es).get)
+      def apply(es: ES) = es.submit(() => pa(es).get)
     }
  
   /** Wrap a constant value in a Par. 
@@ -139,7 +141,13 @@ object Par {
    */
   def unit[A](a: A): Par[A] =
     new Par[A] {
-      def apply(es: ExecutorService) = UnitFuture(a)
+      def apply(es: ES) = UnitFuture(a)
+    }
+
+  /** join */
+  def join[A](ppa: Par[Par[A]]): Par[A] =
+    new Par[A] {
+      def apply(es: ES) = (ppa.run(es))(es)
     }
 
   /** Lazy version of unit
@@ -159,7 +167,7 @@ object Par {
    */
   def delay[A](pa: => Par[A]): Par[A] =
     new Par[A] {
-      def apply(es: ExecutorService) = pa(es)
+      def apply(es: ES) = pa(es)
     }
 
   /** Apply a binary operator across an indexable collection in parallel.

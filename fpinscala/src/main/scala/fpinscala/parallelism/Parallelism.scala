@@ -201,7 +201,7 @@ object Par {
       def apply(es: ES) =
         new ParFuture[A] {
           def apply(cb: A => Unit , onError: Throwable => Unit) =
-             eval(es)(pa(es)(cb, onError), onError)
+            eval(es)(pa(es)(cb, onError), onError)
         }
     }
  
@@ -223,6 +223,12 @@ object Par {
               case ex: Throwable => onError(ex) 
             }
         }
+    }
+
+  /** join */
+  def join[A](ppa: Par[Par[A]]): Par[A] =
+    new Par[A] {
+      def apply(es: ES) = (ppa.run(es))(es)
     }
 
   /** Lazy version of unit

@@ -25,16 +25,13 @@ has deadlocking problems with fixed size threadpools and is a thread hog.
 
 ##These are exercise packages fpinscala.parallelism.javaFutures:
 
-### Program [ParTest1](exerciseCode/ParTest1.scala)
+### Program [ParJavaFutures1](exerciseCode/ParJavaFutures1.scala)
 * Program to exercise package fpinscala.parallelism.javaFutures
 
-### Program [ParTest2](exerciseCode/ParTest2.scala)
+### Program [ParJavaFutures2](exerciseCode/ParJavaFutures2.scala)
 * Program to exercise package fpinscala.parallelism.javaFutures
 
-### Program [ParTest3](exerciseCode/ParTest3.scala)
-* Program to exercise package fpinscala.parallelism.javaFutures
-
-### Program [ParTest4](exerciseCode/ParTest4.scala)
+### Program [ParJavaFutures3](exerciseCode/ParJavaFutures3.scala)
 * Program to exercise package fpinscala.parallelism.javaFutures
 
 ### Program [ParJavaFutures4](exerciseCode/ParJavaFutures4.scala)

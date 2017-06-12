@@ -34,7 +34,7 @@ object Sleepy {
 
     var es: ExecutorService = null
 
-    val numThreads = List(50, 20, 10, 5, 4, 3, 2, 1)
+    val numThreads = List(100, 50, 20, 10, 5, 4, 3, 2, 1)
 
     val myList = List[Int](42, 1, 69, 12, 17, 29, 76, 21, 26, 81, 21, 100,
                            45, 99, 86, 37, 13, 4, 37, 72, 9,  53, 103,  17,

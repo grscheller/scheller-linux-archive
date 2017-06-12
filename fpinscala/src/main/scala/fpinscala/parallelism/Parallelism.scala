@@ -225,7 +225,15 @@ object Par {
         }
     }
 
-  /** join */
+  /** join (flatten)
+   *    
+   *    join as in threads, flatten as in monads
+   *
+   *    run(es) to get a Par[A] back, 
+   *    then apply es again so that the
+   *    new Par's apply method gives
+   *    back a ParFuture[A].
+   */
   def join[A](ppa: Par[Par[A]]): Par[A] =
     new Par[A] {
       def apply(es: ES) = (ppa.run(es))(es)
@@ -259,15 +267,16 @@ object Par {
    */
   def balancedBinComp[A](ps: IndexedSeq[Par[A]])(binOp: (A,A) => A): Par[A] = {
 
-    def balanced(pars: IndexedSeq[Par[A]]): Par[A] =
+    def balanced(pars: IndexedSeq[Par[A]]): Par[A] = fork {
       if (pars.size == 1)
-        fork(pars(0))
+        pars(0)
       else {
         val (lpars, rpars) = pars.splitAt(pars.size/2)
         balanced(lpars).map2(balanced(rpars))(binOp)
       }
+    }
 
-    fork(balanced(ps))
+    balanced(ps)
   }
 
   /** Change an IndexedSeq of Pars into a Par of an IndexedSeq.  */

@@ -176,15 +176,16 @@ object Par {
    */
   def balancedBinComp[A](ps: IndexedSeq[Par[A]])(binOp: (A,A) => A): Par[A] = {
 
-    def balanced(pars: IndexedSeq[Par[A]]): Par[A] =
+    def balanced(pars: IndexedSeq[Par[A]]): Par[A] = fork {
       if (pars.size == 1)
-        fork(pars(0))
+        pars(0)
       else {
         val (lpars, rpars) = pars.splitAt(pars.size/2)
         balanced(lpars).map2(balanced(rpars))(binOp)
       }
+    }
 
-    fork(balanced(ps))
+    balanced(ps)
   }
 
   /** Change an IndexedSeq of Pars into a Par of an IndexedSeq.  */

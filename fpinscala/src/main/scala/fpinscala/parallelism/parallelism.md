@@ -10,7 +10,7 @@ My version includes error handling.
 * Use case is for client code to apply the blocking run method as last step.
 * The run method is not intended to be used internally within the package.
 
-### Companon Object [`parallelism.Par`](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/parallelism/Parallelism.scala#L179-L319)
+### Companon Object [`parallelism.Par`](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/parallelism/Parallelism.scala#L179-L328)
 * Utility methods for the `parallelism.Par[A]` trait.
 
 ### Private Abstract Trait [`parallelism.ParFuture[+A]`](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/parallelism/Parallelism.scala#L15-L28)
@@ -60,4 +60,13 @@ entering its event loop, and writes to the same location before suspending.
 
 ### Program [ParParFutures1](exerciseCode/ParParFutures1.scala)
 * Program to Par.flatMap including error handling
+
+### Program [ParParFutures2](exerciseCode/ParParFutures2.scala)
+* Program to exercise package fpinscala.parallelism:
+
+### Program [ParParFutures3](exerciseCode/ParParFutures3.scala)
+* Program to exercise package fpinscala.parallelism:
+
+### Program [ParParFutures4](exerciseCode/ParParFutures4.scala)
+* Program to exercise package fpinscala.parallelism:
 

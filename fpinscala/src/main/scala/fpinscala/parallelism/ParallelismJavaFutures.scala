@@ -144,7 +144,7 @@ object Par {
       def apply(es: ES) = UnitFuture(a)
     }
 
-  /** join */
+  /** join (flatten) */
   def join[A](ppa: Par[Par[A]]): Par[A] =
     new Par[A] {
       def apply(es: ES) = (ppa.run(es))(es)

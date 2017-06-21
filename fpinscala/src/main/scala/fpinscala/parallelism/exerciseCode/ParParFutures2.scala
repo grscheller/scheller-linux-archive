@@ -18,16 +18,16 @@ object ParParFutures2 {
     
     val es = Executors.newFixedThreadPool(numThreads)
 
-    // Simple test map2_viaActors vs map2_viaFlatMap
+    // Simple test map2ViaActors vs map2ViaFlatMap
 
-    println("\nSimple map2_viaActor vs map2_viaFlatMap comparison:")
-    val map2_viaActor_42 = unit(22).map2_viaActor(unit(20))(_ + _)
-    val map2_viaFlatMap_42 = unit(22).map2_viaFlatMap(unit(20))(_ + _)
+    println("\nSimple map2ViaActor vs map2ViaFlatMap comparison:")
+    val map2_viaActor_42 = unit(22).map2ViaActor(unit(20))(_ + _)
+    val map2_viaFlatMap_42 = unit(22).map2ViaFlatMap(unit(20))(_ + _)
 
     println(s"map2_viaActor_42 -> ${map2_viaActor_42.run(es)}")
     println(s"map2_viaFlatMap_42 -> ${map2_viaFlatMap_42.run(es)}")
 
-    // Contrived test map2_viaActors(default) vs map2_viaFlatMap
+    // Contrived test map2ViaActors(default) vs map2ViaFlatMap
     //
     // Not much difference timewise, both fast and can be
     // done with a threadpool of 1.
@@ -38,31 +38,67 @@ object ParParFutures2 {
     // that program gets stack cranky for threadpools greater
     // than 8.
 
-    println("\nContrived map2_viaActor vs map2_viaFlatMap comparison:")
-    val list1to2000 = (1 to 2000).toList
+    println("\nContrived map2ViaActor vs map2ViaFlatMap comparison:")
+    val list1to1000 = (1 to 1000).toList
 
-    val foo = list1to2000.map(unit(_) map ((ii: Int) => 
+    val viaMap2 = list1to1000.map(unit(_) map ((ii: Int) => 
       ii % 42)).foldLeft(unit(0))((p1: Par[Int], p2: Par[Int]) => 
         p1.map2(p2)(_ + _)) map { println(_: Int) }
 
-    foo.run(es)
+    viaMap2.run(es)
 
-    val bar = list1to2000.map(unit(_) map_viaFlatMap ((ii: Int) => 
+    val viaFlatMap = list1to1000.map(unit(_) mapViaFlatMap ((ii: Int) => 
       ii % 42)).foldLeft(unit(0))((p1: Par[Int], p2: Par[Int]) => 
-        p1.map2_viaFlatMap(p2)(_ + _)) map { println(_: Int) }
+        p1.map2ViaFlatMap(p2)(_ + _)) map { println(_: Int) }
 
-    bar.run(es)
+    viaFlatMap.run(es)
 
     // Stack crankier if instead I put these back-to-back
     //   foo.run(es)
     //   bar.run(es)
-
+    //
     // but not if I instead do
     //   val foobar = (foo.run(es), bar.run(es))
     //   print(foobar)
-
+    //
     // nor if I instead do
     //   print((foo.run(es), bar.run(es)))
+
+    // Compare flatMap implementations
+
+    val makeSlowBoolPar = (bool: Boolean) => lazyUnit { 
+      Thread.sleep(2000)
+      bool
+    }
+
+    val makeSlowAnsPar = (ans: String) => lazyUnit { 
+      Thread.sleep(2000)
+      ans
+    }
+
+    println("\nCompare flatMap implementations (~4 seconds each):")
+
+    val withoutJoin = choice(makeSlowBoolPar(true))(
+        makeSlowAnsPar("True choice")
+      , makeSlowAnsPar("False choice"))
+
+    println(s"without join -> ${withoutJoin.run(es)}")
+
+    val withJoin = choiceViaJoin(makeSlowBoolPar(false))(
+        makeSlowAnsPar("True choice")
+      , makeSlowAnsPar("False choice"))
+
+    println(s"with join -> ${withJoin.run(es)}")
+
+    println("\nCompare join implementations (~4 seconds each):")
+
+    val ppb1: Par[Par[Boolean]] = makeSlowBoolPar(true) map makeSlowBoolPar
+    val ppb2: Par[Par[Boolean]] = makeSlowBoolPar(true) map makeSlowBoolPar
+    val ppb3: Par[Par[Boolean]] = makeSlowBoolPar(true) map makeSlowBoolPar
+
+    println(s"join via outside -> ${joinBlockingOutside(ppb2).run(es)}")
+    println(s"join via inside -> ${joinBlockingInside(ppb3).run(es)}")
+    println(s"join via flatMap -> ${joinViaFlatMap(ppb1).run(es)}")
 
     println()
 

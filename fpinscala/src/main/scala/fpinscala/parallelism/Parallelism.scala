@@ -70,7 +70,12 @@ sealed trait Par[+A] { self =>
    *  another Par.
    *  
    */
-  def flatMap[B](f: A => Par[B]): Par[B] = 
+  def flatMap[B]: (A => Par[B]) => Par[B] = flatMapPrimitive
+
+  // flatMap implementations:
+
+  /** flatMap - implemented as a new primitive. */
+  def flatMapPrimitive[B](f: A => Par[B]): Par[B] = 
     new Par[B] {
       def apply(es: ES) =
         new ParFuture[B] {
@@ -82,13 +87,16 @@ sealed trait Par[+A] { self =>
         }
     }
 
+  /** flatMap - implemented join. */
+  def flatMapViaJoin[B](f: A => Par[B]): Par[B] = join(self.map(f))
+
   /** Combine two parallel computations with a function.
    *
    *  Function not evaluated in a separate thread.  To
    *  do that, use `fork(map2(a,b)(f))'
    *
    */
-  def map2[B,C]: Par[B] => ((A,B) => C) => Par[C] = map2_viaActor
+  def map2[B,C]: Par[B] => ((A,B) => C) => Par[C] = map2ViaActor
 
   // map2 implementations:
 
@@ -102,7 +110,7 @@ sealed trait Par[+A] { self =>
    *     less than 4 threads.
    *
    */
-  def map2_viaFlatMap[B,C](pb: Par[B])(f: (A,B) => C): Par[C] =
+  def map2ViaFlatMap[B,C](pb: Par[B])(f: (A,B) => C): Par[C] =
     self.flatMap { (a: A) => pb.flatMap { (b: B) => unit(f(a, b)) } }
 
   /** Map2 implementation via actors.
@@ -111,7 +119,7 @@ sealed trait Par[+A] { self =>
    *  to f are evaluated in parallel.  Threadsafe.
    *
    */
-  def map2_viaActor[B,C](pb: Par[B])(f: (A,B) => C): Par[C] =
+  def map2ViaActor[B,C](pb: Par[B])(f: (A,B) => C): Par[C] =
     new Par[C] {
       def apply(es: ES) =
         new ParFuture[C] {
@@ -145,8 +153,8 @@ sealed trait Par[+A] { self =>
     }
 
   /** Map a function into a parallel calculation.  */
-  def map_viaFlatMap[B](f: A => B): Par[B] =
-    self.map2_viaFlatMap(unit(())) {
+  def mapViaFlatMap[B](f: A => B): Par[B] =
+    self.map2ViaFlatMap(unit(())) {
       (a, _) => f(a)
     }
 
@@ -229,15 +237,43 @@ object Par {
    *    
    *    join as in threads, flatten as in monads
    *
-   *    run(es) to get a Par[A] back, 
-   *    then apply es again so that the
-   *    new Par's apply method gives
-   *    back a ParFuture[A].
    */
-  def join[A](ppa: Par[Par[A]]): Par[A] =
+  def join[A]: Par[Par[A]] => Par[A] = joinViaFlatMap
+
+  /** join via run
+   *
+   *  Block on outside Par
+   *
+   *  run(es) to get a Par[A] back, 
+   *  then apply es again so that the
+   *  new Par's apply method gives
+   *  back a ParFuture[A].
+   */
+  def joinBlockingOutside[A](ppa: Par[Par[A]]): Par[A] =
     new Par[A] {
       def apply(es: ES) = (ppa.run(es))(es)
     }
+
+  /** join via map
+   *
+   *  Block on inside Par
+   *
+   *  run(es) on the inside Par[A]
+   *  to return an A making the
+   *  outside Par a Par[A]
+   */
+  def joinBlockingInside[A](ppa: Par[Par[A]]): Par[A] =
+    new Par[A] {
+      def apply(es: ES) = (ppa map (_.run(es)))(es)
+    }
+
+  /** join via flatMap
+   *
+   *  Really that simple???
+   *
+   */
+  def joinViaFlatMap[A](ppa: Par[Par[A]]): Par[A] =
+    ppa flatMap { (pa: Par[A]) => pa }
 
   /** Lazy version of unit
    *
@@ -319,10 +355,17 @@ object Par {
     }
   }
 
+  /** Boolean choice function via flatMap */
   def choice[A](pred: Par[Boolean])(t: Par[A], f: Par[A]): Par[A] =
     pred.flatMap {
       case true  => t
       case false => f
     }
 
+  /** Boolean choice function via flatMapViaJoin */
+  def choiceViaJoin[A](pred: Par[Boolean])(t: Par[A], f: Par[A]): Par[A] =
+    pred.flatMapViaJoin {
+      case true  => t
+      case false => f
+    }
 }

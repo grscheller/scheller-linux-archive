@@ -12,7 +12,7 @@ object ParJavaFutures4 {
 
   def main(args: Array[String]): Unit = {
 
-    val es = Executors.newFixedThreadPool(15)
+    val es = Executors.newFixedThreadPool(20)
 
     // Test parMap error handling
 

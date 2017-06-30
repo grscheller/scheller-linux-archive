@@ -112,9 +112,9 @@ of doing things; it just that I don't know EMACS that well.
    To append instead of overwriting
      $ cmd >> /peth/to/file
 
-   To through away output
+   To throw away output
      $ cmd > /dev/null
-   To through away error messages
+   To throw away error messages
      $ cmd 2> /dev/null
    Throw away both
      $ cmd > /dev/null 2>&1

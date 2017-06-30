@@ -44,6 +44,10 @@ Purpose: To indicate what was done to create gauss17 and
 
   Created geoff as the first user.
 
+  [[ Note from 2017-06-26: Rebuilt system - see below on
+     this date for a better description of the steps involved
+     that I gloss over above. ]]
+
 2016-07-07:
   Out of the blue, ethernet not configured.  Had to bring up
   DHCP manually via: dhcpcd enp3s0f1
@@ -824,6 +828,10 @@ Purpose: To indicate what was done to create gauss17 and
     xrandr --setprovideroutputsource modesetting NVIDIA-0
     xrandr --auto 
 
+  [[ Note from 2017-06-29: The extra/nvidia package blacklists
+     the Nouveau drivers. The Intel Chipset just sits there
+     with Linux having no drivers to use them. ]]
+
   Direct Rendering Manager (DRM) is interesting.  Wikipedia
   has a good article:
 
@@ -1034,11 +1042,7 @@ Purpose: To indicate what was done to create gauss17 and
 
   I seem to have problems connecting to wireless networks 
   when dhcpcd enabled at boot.  Autoconnect networks connect on
-  the link level even without starting XFCE.  So, I added an alias
-  to geoff's .bashrc
-    alias dhcp='sudo systemctl start dhcpcd'
-  to start the deamon and give interfaces IP addresses via DHCP
-  if I don't want to use X.
+  the link level even without starting XFCE.
  
 2016-08-05:
   Decided to install pulseaudio.  Seems to be becoming the defacto
@@ -2659,3 +2663,550 @@ Purpose: To indicate what was done to create gauss17 and
     $ sudo pacman -U ncurses-6.0+20170429-1-x86_64.pkg.tar.xz
 
   SBT now works again.
+
+2017-06-11:
+  Brought ncurses up-to-date.  Temporarily fixing SBT/ncurses problem by puting the
+  following in my geoff login's ~/.bashrc file,
+
+    regExForXtermType='xterm.*'
+    [[ $TERM =~ $regExForXtermType ]] && TERM=xterm
+
+2017-06-20:
+  Going to Upgrade the system by adding a Solid State Hard Drive and
+  increasing memory to 16GiB.
+
+  Some problems to work around:
+    1. This Acer E-14 Laptop (E5-491G-70PX) will require removing the
+       motherboard for these upgrades.
+    2. I forgot the UEFI firmware password.
+    3. The only place to put the SD HD is to replace the DVD drive.
+
+  So, I will have a computer repair shop install the upgrades and hopefully
+  break into the UEFI firmwere and reset password.  
+
+  Since I will nolonger have the internal DVD drive, I will need a USB thumb
+  drive for emergency system recovery/access instead of booting off the DVD
+  for such.
+
+2017-06-24:
+  Had a small computer shop in Bethlehem PA,
+
+    Suoer Geek Computers
+    Owner - J. Powell
+    http://supergeekcomputers.com
+    484-202-0260
+
+  upgrade memory to 16GB (8GBx2 DDRL) and replace the internal DVD drive
+  with an 128GB SSD.  They easily broke into the UEFI firmware and changed
+  the boot order to
+
+    1. USB Thumbdrive
+    2. New SSD hard drive
+
+  Unfortuately, they could not reset the UEFI firmware password without
+  knowing the old one.  They did give me a link to a website that would
+  allow me to break in if I needed.
+
+    http://www.tech-faq.com/how-do-i-reset-an-acer-bios-password.html
+
+  They also gave me a 16GB thumbdrive with the latest bootable image
+  of Arch Linux on it.
+
+2017-06-26:
+  Instead of moving / to the new drive, I decided to just install a fresh
+  version of Arch.  This may clear out some old cruft too.  The procedure
+  follows the "readme" file on the bootable thumb drive, which closely
+  follows the Arch wiki beginners guide.
+
+  Approximate intended disk layout:
+
+    New SSD hardrive:
+      sda1 -> /boot     512 MiB
+      sda2 -> /          63 GiB
+
+    Old hardrive:
+      sdb1 -> <unused>  512 MiB  [Kept for comparison]
+      sdb2 -> /extra     64 GiB  [Old / comparison for now]
+      sdb3 -> Swap       16 GiB
+      sdb4 -> /home     741 GiB
+
+  From paper notes I took during install:
+
+  Boot off of the thumbdrive, ethernet cable plugged in,
+
+    # parted -l
+    # timedatectl set-nyp true
+    # parted /dev/sda
+    (parted) mklabel gpt
+    (parted) mkpart ESP fat32 1MiB 513MiB
+    (parted) set boot on
+    (parted) mkpart primary ext4 513MiB 100%
+    (parted) print
+    Number  Start   End    Size  File System  Name  Flags
+       1    1049KB  538MB  537MB    fat32           boot, esp
+       2     538MB  128GB  127GB     ext4
+    # mkfs.ext4 /dev/sda2
+    # mkfs.fat  /dev/sda1
+    # mount /dev/sda2 /mnt
+    # mkdir /mnt/home
+    # mount /dev/sdb4 /mnt/home
+    # mkdir /mnt/boot
+    # mount /dev/sda1 /mnt/boot
+    # mkdir /mnt/extra
+    # mount /dev/sdb2 /mnt/extra
+
+  Editted out all non-US/Canada services from /etc/pacman.d/mirrorlist.
+
+    # pacstrap /mnt base base-devel
+    # genfstab -U /mnt >> /mnt/etc/fstab
+    # arch-chroot /mnt
+    # ln -sf /usr/share/zoneinfo/America/New_York /etc/localtime
+    # hwclock --systohc
+
+  Uncomment line `#en_US.UTF-8 UTF-8' in the file /etc/locale.gen
+
+    # locale-gen
+    # echo -n 'LANG=en_US.UTF-8' > /etc/locale.conf
+    # echo -n gauss17 > /etc/hostname
+
+  Configure /etc/host (with tabs):
+
+    127.0.0.1   localhost.localdomaini  localhost
+	::          localhost.localdomain   localhost
+	127.0.1.1   gauss17.localdomain     gauss17
+
+    # passwd
+    # ^D
+
+  Reboot with USB thumbdrive,
+
+    # mount /dev/sda2 /mnt
+    # mount /dev/sda1 /mnt/boot
+    # arch-chroot /mnt
+    # bootctl --path=/boot install
+
+  Reboot without USB thumbdrive, system failed to boot, forgot
+  details.
+
+  Reboot thumbdrive, mount and compare /dev/sda1 to /dev/sdb1.  BAsed on the
+  differences, I did:
+ 
+  Updated /boot/loader/loader.conf to be (old version commented out)
+
+    default arch
+    timeout 5
+    editor 0
+    #default 03ab3a86a6b046d1bb4b74b0d52e0e5c-*
+
+  Copied /boot/loader/entries/arch.conf to the new partition,
+
+    title Arch Linux
+    linux /vmlinuz-linux
+    initrd /initramfs-linux.img
+    options root=PARTUUID=fd153bda-5bf1-4a49-9728-4fb11b660949 rw
+
+  These were the only differences, apart from the extra/intel-ucode
+  package stuff.  The "magic number" fd153bda-5bf1-4a49-9728-4fb11b660949
+  looks problematic.  Indeed, as is it tries to mount /dev/sdb2 instead
+  of /dev/sda2 as root.  This results in failure loading kernel modules.
+
+    # find /dev -name fd153bda-5bf1-4a49-9728-4fb11b660949
+    /dev/disk/by-partuuid/fd153bda-5bf1-4a49-9728-4fb11b660949
+
+    # ls /dev/disk/by-partuuid/
+    3beb0f61-e57c-4686-bb35-7ed414194442  8d5e9cb9-1823-46e7-9150-885713ef5fc3
+    8a759be3-bd72-44f3-b29c-894eaaa75c30  d6793ae6-1f23-4895-942a-6714e7a06de6
+    8d391102-8cbb-4b07-a767-516b7e3bbe94  fd153bda-5bf1-4a49-9728-4fb11b660949
+
+  These are the unique identifies for the 6 partitions I created.  Booting
+  from the thumbdrive and mounting each via the mount cmd, I found that
+  the d6793ae6-1f23-4895-942a-6714e7a06de6 is the partuuid I need.  Changed
+  last line of /boot/loader/entries/arch.conf to
+
+    options root=PARTUUID=d6793ae6-1f23-4895-942a-6714e7a06de6 rw
+
+  and system booted.
+
+2017-06-26:
+  Added geoff user to system via,
+
+    # useradd -d /home/geoff -c "Geoffrey Scheller" -m geoff
+    # passwd geoff
+
+  Since /home/geoff directory already existed, the skeleton files from
+  /etc/skel were not copied.  The UID for geoff login created was 1000,
+  so I did not have to change ownership of the files in /home/geoff.
+
+  Added geoff to wheel group in preparation of adding sudo package,
+
+    # usermod -aG wheel geoff
+
+2017-06-26:
+  To make sure I am mounting what I should be,
+
+    $ df -h
+    Filesystem      Size  Used Avail Use% Mounted on
+    dev             7.8G     0  7.8G   0% /dev
+    run             7.8G  1.2M  7.8G   1% /run
+    /dev/sda2       117G  6.5G  104G   6% /
+    tmpfs           7.8G     0  7.8G   0% /dev/shm
+    tmpfs           7.8G     0  7.8G   0% /sys/fs/cgroup
+    /dev/sda1       511M   33M  479M   7% /boot
+    tmpfs           7.8G   12K  7.8G   1% /tmp
+    /dev/sdb4       839G   52G  745G   7% /home
+    /dev/sdb2        63G   41G   20G  68% /extra
+    tmpfs           1.6G  8.0K  1.6G   1% /run/user/1000
+
+2017-06-26:
+  Get ethernet working,
+
+    # ip addr
+    1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+        link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+        inet 127.0.0.1/8 scope host lo
+           valid_lft forever preferred_lft forever
+        inet6 ::1/128 scope host
+           valid_lft forever preferred_lft forever
+    2: enp3s0f1: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
+        link/ether f0:76:1c:cc:c1:05 brd ff:ff:ff:ff:ff:ff
+    3: wlp2s0: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
+        link/ether ac:e0:10:8a:3d:85 brd ff:ff:ff:ff:ff:ff
+ 
+  Good start, linux is seeing the ethernet card.  Now turn on DHCP
+
+    # systemctl enable dhcpcd
+
+  Reboot,
+
+    # systemctl reboot
+
+  Now check network,
+
+    $ ip addr
+    1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+        link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+        inet 127.0.0.1/8 scope host lo
+           valid_lft forever preferred_lft forever
+        inet6 ::1/128 scope host
+           valid_lft forever preferred_lft forever
+    2: enp3s0f1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+        link/ether f0:76:1c:cc:c1:05 brd ff:ff:ff:ff:ff:ff
+        inet 192.168.1.47/24 brd 192.168.1.255 scope global enp3s0f1
+           valid_lft forever preferred_lft forever
+        inet6 fe80::3703:10a7:6c97:d350/64 scope link
+           valid_lft forever preferred_lft forever
+    3: wlp2s0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc mq state DOWN group default qlen 1000
+        link/ether ac:e0:10:8a:3d:85 brd ff:ff:ff:ff:ff:ff
+
+    $ ping 8.8.8.8
+    PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+    64 bytes from 8.8.8.8: icmp_seq=1 ttl=47 time=48.5 ms
+    64 bytes from 8.8.8.8: icmp_seq=2 ttl=47 time=61.6 ms
+    64 bytes from 8.8.8.8: icmp_seq=3 ttl=47 time=95.4 ms
+    64 bytes from 8.8.8.8: icmp_seq=4 ttl=47 time=73.9 ms
+    64 bytes from 8.8.8.8: icmp_seq=5 ttl=47 time=60.3 ms
+
+2017-06-26:
+  Now do a system upgrade,
+
+    # pacman -Syu
+
+  and follow some of what I did above to install stuff,
+
+    # pacman -Syu git python ipython python-nose
+    # pacman -Syu sudo
+
+  Where I used visudo to allow users of the wheel group to use sudo without
+  requiring their password.  I also resticted commands to the suggested secure
+  path "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" instead
+  of the user's path.  Also uncommented the "env_keep" lines to allow sudo to
+  work cleanly with the users X11 GUI environment.
+
+  Install power management tools,
+
+    $ sudo pacman -Syu acpi acpid
+    $ sudo systemctl enable acpid
+
+2017-06-27:
+  Get wireless working; get XFCE working -
+
+  Bring in nvidia drivers,
+
+    $ sudo pacman -Syu nvidia libglvnd xorg-xrandr
+
+  This dragged in Wayland and alot of other Xorg stuff.
+
+    # cp /extra/etc/X11/xorg.conf /etc/X11
+
+  Reboot.
+
+  Install XFCE,
+
+    $ sudo pacman -Syu xfce4 xfce4-goodies
+
+  and vim and gvim
+
+    $ sudo pacman -Syu gvim
+
+  Reboot.
+
+  XFCE GUI environment seems sharper than before.
+
+  Finally, install wireless related utilities -
+
+    $ sudo pacman -Syu iw wpa_supplicant wicd wicd-gtk xfce4-notifyd
+    $ sudo systemctl disable dhcpcd
+
+  Reboot.
+
+  No WIFI interface, wicd also not running.  Try fixing 2nd one first,
+  even though first might be causing 2nd?
+
+    $ sudo systemctl enable wicd
+
+  Reboot.
+
+  At the console,
+
+    $ ip addr
+
+    1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+        link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+        inet 127.0.0.1/8 scope host lo
+           valid_lft forever preferred_lft forever
+        inet6 ::1/128 scope host
+           valid_lft forever preferred_lft forever
+    2: enp3s0f1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+        link/ether f0:76:1c:cc:c1:05 brd ff:ff:ff:ff:ff:ff
+        inet 192.168.1.47/24 brd 192.168.1.255 scope global enp3s0f1
+           valid_lft forever preferred_lft forever
+        inet6 fe80::f276:1cff:fecc:c105/64 scope link
+           valid_lft forever preferred_lft forever
+    3: wlp2s0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc mq state DOWN group default qlen 1000
+        link/ether ac:e0:10:8a:3d:85 brd ff:ff:ff:ff:ff:ff
+
+  So, wicd has taken over the management of the ethernet.
+
+  Now bring X back up,
+
+    $ startx
+
+  I see home wireless network.  Lets see if I can copy over the old
+  wireless settings,
+
+    $ sudo cp /extra/etc/wicd/wireless-settings.conf /etc/wicd
+
+  Several reboots.
+
+  Wicd now reliably bring up wireless network on reboot, even when not
+  running under X.  About ~30% of time, wlp2s0 does not come up.  One
+  time system failed to boot due to the old rfkill issue.
+
+2017-06-27:
+  Installed firefox,
+
+    $ sudo pacman -Syu firefox
+
+  This brought in hunspell, so I might as well drag hunspell universe
+  in for Libre-Office.
+
+    $ sudo pacman -Syu hunspell-en hyphen-en languagetool libmythes mythes-en
+
+  And this brought in an open-jdk java8 runtime environment.  Might as well
+  bring in the development environment too.
+
+    $ sudo pacman -Syu jdk8-openjdk openjdk8-doc java-openjfx java-openjfx-doc
+
+  Some optional media decodings as suggested for dependencies of above,
+
+    $ sudo pacman -Syu gst-libav gst-plugins-good gst-plugins-base
+
+  Install vlc,
+
+    $ sudo pacman -Syu vlc
+    $ sudo pacman -Syu libdvdcss lirc libcdio ttf-freefont qt4
+    $ sudo pacman -Syu libdc1394 libva-vdpau-driver vcdimager lua-socket
+
+  Install youtube-dl and evince,
+
+    $ sudo pacman -Syu youtube-dl evince
+    $ sudo pacman -Syu texlive-core texlive-bin
+    $ sudo pacman -Syu lyx
+    $ sudo pacman -Syu imagemagick-doc
+
+  Install claws e-mail and extras
+
+    $ sudo pacman -Syu claws-mail claws-mail-themes clawsker
+    $ sudo pacman -Syu dillo
+
+  Install wget, curl already installed.
+
+    $ sudo pacman -Syu wget
+
+  Install Etherape network monitoring tool,
+
+    $ sudo pacman -Syu etherape
+
+2017-06-27:
+  Install pulseaudio software,
+
+    $ sudo pacman -Syu pulseaudio pulseaudio-alsa paprefs pavucontrol ponymix
+
+  as notes above show, some extra configuration is needed.
+
+2017-06-27:
+  Install SBT,
+
+    $ sudo pacman -Syu sbt
+
+  Install Rust locally fot geoff login,
+
+    $ curl -f https://sh.rustup.rs > rust.sh
+    $ chmod u+x rust.sh
+    $ ./rust.sh
+
+  $ ls -l ~/.cargo/bin
+  total 79828
+  -rwxr-xr-x 7 geoff geoff 11676416 Jun 27 20:06 cargo
+  -rwxr-xr-x 7 geoff geoff 11676416 Jun 27 20:06 rls
+  -rwxr-xr-x 7 geoff geoff 11676416 Jun 27 20:06 rustc
+  -rwxr-xr-x 7 geoff geoff 11676416 Jun 27 20:06 rustdoc
+  -rwxr-xr-x 7 geoff geoff 11676416 Jun 27 20:06 rust-gdb
+  -rwxr-xr-x 7 geoff geoff 11676416 Jun 27 20:06 rust-lldb
+  -rwxr-xr-x 7 geoff geoff 11676416 Jun 27 20:06 rustup
+
+  Refine changes to ~/.bash_profile where rust.sh put ~/.cargo/bin on PATH.
+
+2017-06-28:
+  Reset timezone to Mountain time,
+
+    $ timedatectl list-timezones | grep Denver
+    America/Denver
+
+    $ sudo timedatectl set-timezone America/Denver
+
+  Use Systemd built-in NTP deamon
+
+    $ sudo timedatectl set-ntp true
+
+2017-06-28:
+  Finish configuring pulseaudio, try running XFCE as root,
+
+    $ su -
+    $ cp /home/geoff/.xinitrc .
+    $ startx
+
+  VLC won't run as root.  Log out and log into XFCE as geoff.  Still
+  no sound with VLC.
+
+    $ pulseaudio --start
+
+  Still no sound, "fiddle" with VLC controls, got sound.
+  Restart vlc, got sound immediately.
+
+  Reboot, log into XFCE as geoff, VLC works with sound off-the-bat.
+
+  Well, next time I rebuild the system, I will try to nail down exactly
+  what in the above trashing made pulseaudio work.
+
+  Note, doesn't seem to be a /etc/libao.conf to edit (see 2016-08-05).   
+
+  But, ... when I went to install vorbis-tools,
+
+    $ sudo pacman -Syu vorbis-tools
+
+  It pulled in the libao package containing /etc/libao.conf.  Made same
+  changes to it as before,
+
+    from:
+      default_driver=alsa
+      dev=default
+
+    to:
+      default_driver=pulse
+
+  Reboot,
+
+  Now ogg123 works from commandline outside of X as well as in X.
+
+2017-06-28:
+  Installed NTFS drives to be able to write to ntfs file systems,
+  (see 2016-07-23).
+
+    $ sudo pacman -Syu gvfs-afc ntfs-3g
+
+  Able to read/write to my external NTFS formatted hard drive.
+
+2017-06-28:
+  Installed speedtest and iperf (see 2017-06-28 for more details).
+
+    $ sudo pacman -Syu speedtest-cli iperf
+
+2017-06-28:
+  Installed daemon that generates system entropy;
+
+    $ sudo pacman -Syu haveged 
+    $ sudo systemctl enable haveged
+
+2017-06-28:
+  Installing Haskell Stack build tool.
+
+    $ sudo pacman -Syu stack 
+
+2017-06-28:
+  Gave root minimal .bashrc and .bash_profile
+
+  /root/bash_profile:
+
+    [[ -f ~/.bashrc ]] && . ~/.bashrc
+
+  /root/bashrc:
+
+     set -o vi
+
+2017-06-29:
+  Going back through these notes, here are topics I wish to hit,
+
+    2016-07-17 libreoffice
+    2016-07-20 bash-completion
+    2016-07-22 postfix
+    2016-08-05 configure postfix
+    2016-07-29 mp32ogg, pulseaudio-jack
+    2016-07-30 seahorse
+    2016-08-13 zip, unzip
+    2016-08-14 brasero
+    2016-09-11 xscreensaver
+    2017-02-04 intel-ucode + configure it
+    2017-02-15: strace ltrace + dnstracer
+    2017-04-18 configure blu-ray
+    pypy3
+    dropbox
+
+2017-06-29:
+  An announcement on the Arch Linux Wiki page dated ???
+  indicates that NVIDIA Optimus cards now work without extra
+  configuration.
+
+  So, I removed extra configuration from ~/.xinitrc added above
+  to get Optimus card to work.  Content of file now
+
+    session=${1:-xfce}
+
+    case $session in
+        gnome          ) exec gnome-session;;
+        gnome-classic  ) exec gnome-session --session=gnome-classic;;
+        xfce           ) exec startxfce4;;
+        *              ) exec $1;;
+    esac
+
+  After this change, XFCE seems to come up faster.
+
+  Also, gnome-keyring was not installed.  The Arch Linux PGP keyring,
+  core/archlinux-keyring was installed instead.  That is why I did not
+  repeat the PAM configuratons mentioned on 2016-08-03.
+
+  Finally, removed /etc/X11/xorg.conf that I put in place earlier.  I
+  believe, except for perhaps ~/.xinitrc, XFCE completely unconfigured
+  and using NVIDIA card.  On enduser level, XFCE still personalized
+  from previous incarnation.
+

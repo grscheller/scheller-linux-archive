@@ -2769,11 +2769,14 @@ Purpose: To indicate what was done to create gauss17 and
     # echo -n 'LANG=en_US.UTF-8' > /etc/locale.conf
     # echo -n gauss17 > /etc/hostname
 
-  Configure /etc/host (with tabs):
+  Configure /etc/hosts (with tabs):
 
     127.0.0.1   localhost.localdomaini  localhost
 	::          localhost.localdomain   localhost
 	127.0.1.1   gauss17.localdomain     gauss17
+
+    [[ See postfix configuration on 2017-06-30, changed /etc/hosts
+       for newaliases.  Also, never was quite sure about the 127.0.1.1 ]]
 
     # passwd
     # ^D
@@ -3167,20 +3170,20 @@ Purpose: To indicate what was done to create gauss17 and
 2017-06-29:
   Going back through these notes, here are topics I wish to hit,
 
-    2016-07-17 libreoffice
-    2016-07-20 bash-completion
-    2016-07-22 postfix
-    2016-08-05 configure postfix
-    2016-07-29 mp32ogg, pulseaudio-jack
-    2016-07-30 seahorse
-    2016-08-13 zip, unzip
-    2016-08-14 brasero
-    2016-09-11 xscreensaver
-    2017-02-04 intel-ucode + configure it
-    2017-02-15: strace ltrace + dnstracer
-    2017-04-18 configure blu-ray
-    pypy3
-    dropbox
+    2016-07-17 libreoffice-fresh              x
+    2016-07-20 bash-completion                x
+    2016-07-22 postfix                        x
+    2016-08-05 configure postfix              x
+    2016-07-29 mp32ogg, pulseaudio-jack       x
+    2016-07-30 seahorse                       x
+    2016-08-13 zip, unzip                     x
+    2016-08-14 brasero                        x
+    2016-09-11 xscreensaver                   x
+    2017-02-04 intel-ucode + configure it     x
+    2017-02-15: strace ltrace + dnstracer     x
+    2017-04-18 configure blu-ray              x
+    pypy3                                     x
+    dropbox                                   x
 
 2017-06-29:
   An announcement on the Arch Linux Wiki page dated ???
@@ -3209,4 +3212,253 @@ Purpose: To indicate what was done to create gauss17 and
   believe, except for perhaps ~/.xinitrc, XFCE completely unconfigured
   and using NVIDIA card.  On enduser level, XFCE still personalized
   from previous incarnation.
+
+2017-06-30:
+  Today I updated the steps from 2017-06-26 that I took paper notes
+  on.
+
+  Will continue making updates for the items I mentioned on 2017-06-29.
+
+    $ sudo pacman -Syu bash-completion zip unzip strace ltrace dns-tracer
+    $ sudo pacman -Syu seahorse brasero
+    $ sudo pacman -Syu mp32ogg pulseaudio-jack
+    $ sudo pacman -Syu libreoffice-fresh
+    $ sudo pacman -Syu xscreensaver
+    $ sudo pacman -Syu pypy3
+
+  The following will need some extra configuration.
+
+    $ sudo pacman -Syu libaacs   (for bluray)
+    $ sudo pacman -Syu postfix
+    $ sudo pacman -Syu intel-ucode
+
+2017-06-30:
+  To configure intel-ucode, added 3rd line to
+  /boot/loader/entries/arch.conf/boot/loader/entries/arch.conf
+
+    title Arch Linux
+    linux /vmlinuz-linux
+    initrd /intel-ucode.img
+    initrd /initramfs-linux.img
+    options root=PARTUUID=d6793ae6-1f23-4895-942a-6714e7a06de6 rw
+
+  Comparing 
+
+    $ journalctl -xb
+
+  before and after addition of above line, we now have on reboot
+
+    Jun 30 17:01:03 gauss17 kernel: microcode: microcode updated early to revision 0xba, date = 2017-04-09
+
+  Thus confirming that intel microcode is being updated.
+
+2017-06-30:
+  Configure postfix.
+
+    aliases_orig(<)  aliases(>):
+      < #root:		you
+      > root:		geoff
+
+    diff main.cf_orig(<)  main.cf(>):
+      > myhostname = gauss17
+      > mydomain = localdomain
+      < #myorigin = $myhostname
+      > myorigin = $myhostname
+      < #inet_interfaces = $myhostname, localhost
+      > inet_interfaces = $myhostname, localhost
+      > mydestination = $myhostname, localhost.$mydomain, localhost
+      > mynetworks_style = host
+      > 
+      > # Added by geoff so that external mail errors out and
+      > # does not get stuck in a queue forever
+      > #
+      > default_transport = error:outside mail is not deliverable
+
+  Also changed /etc/hosts to
+
+    127.0.0.1   localhost.localdomain   localhost   gauss17
+    ::1         localhost.localdomain   localhost   gauss17
+
+  (with tabs) to make newaliases command happy.
+
+    # cd /etc/postfix/
+    # newaliases
+
+  Finally turn it on for next reboot,
+
+    # systemctl enable postfix
+
+  Reboot.
+
+  Works with mailx and Claws Mail.  Claws Mail removes it
+  from /var/spool/mail/geoff.  Also, root's email gets
+  forwarded to the geoff user.
+
+2017-07-01:
+  Following Blu-Ray configuration from 2017-04-18.
+
+    $ cd ~/.config/aacs 
+    $ mv KEYDB.cfg KEYDB.cfg_old
+    $ wget http://www.labdv.com/aacs/KEYDB.cfg
+    $ ls -s -h
+    total 5.1M
+    2.8M KEYDB.cfg	2.4M KEYDB.cfg_old
+
+2017-07-01:
+  Up to now, everything installed on the rebuilt system has been from
+  the official Arch Repos.  I wish to install Dropbox from AUR.
+
+  Note: News item on www.archlinux.org/ - abs deprecated, use asp
+        instead.  I have installed neither.
+
+  Finally, install Dropbox from AUR:
+
+    $ mkdir ~/build/Dropbox; cd ~/build/Dropbox
+    $ git clone https://aur.archlinux.org/dropbox.git
+    $ cd dropbox/
+    $ git fetch; git status
+    On branch master
+    Your branch is up-to-date with 'origin/master'.
+    nothing to commit, working tree clean
+    $ makepkg -sri
+
+    Lets see if this install and the config info in my home
+    directory enough to kick off dropbox:
+
+    Reboot.
+
+    And it worked, Dropbox app in the top right system tray.
+
+2017-07-01:
+  Install Shotwell.
+
+    $sudo pacman -Syu shotwell
+
+2017-07-01:
+  I consider the SSD hardrive and 16GiB memory upgdades complete.
+
+  I only reinstalled the tools I am actually using or want at hand.
+
+  To help enable a future rebuild to go faster,
+
+  All explcitly installed packages:
+
+    $ pacman -Qet
+    acpi 1.7-1
+    acpid 2.0.28-1
+    autoconf 2.69-4
+    automake 1.15-2
+    bison 3.0.4-2
+    brasero 3.12.1-2
+    claws-mail-themes 20140629-1
+    clawsker 1.0.1-1
+    dnstracer 1.9-5
+    dropbox 29.4.20-1
+    etherape 0.9.15-1
+    evince 3.24.0+8+ga8363215-1
+    fakeroot 1.21-2
+    firefox 54.0.1-1
+    flex 2.6.4-1
+    gtk-xfce-engine 2.10.1-1
+    gvim 8.0.0628-1
+    haveged 1.9.1-2
+    hunspell-en 2017.01.22-2
+    hyphen-en 2.8.8-1
+    intel-ucode 20170511-1
+    iperf 2.0.9-1
+    iputils 20161105.1f2bb12-2
+    ipython 5.3.0-1
+    iw 4.9-1
+    java-openjfx-doc 8.u121-1
+    jfsutils 1.1.15-4
+    languagetool 3.7-1
+    libaacs 0.9.0-1
+    libreoffice-fresh 5.3.4-1
+    licenses 20140629-2
+    logrotate 3.12.2-1
+    ltrace 0.7.3-2
+    lyx 2.2.3-2
+    make 4.2.1-2
+    man-db 2.7.6.1-2
+    man-pages 4.11-1
+    mousepad 0.4.0-2
+    mp32ogg 0.11-10
+    mythes-en 20060306-3
+    nano 2.8.5-1
+    netctl 1.12-2
+    nvidia 381.22-3
+    openjdk8-doc 8.u131-1
+    orage 4.12.1-3
+    pacman 5.0.2-1
+    paprefs 0.9.10-6
+    patch 2.7.5-1
+    pciutils 3.5.4-1
+    pcmciautils 018-7
+    pkg-config 0.29.2-1
+    ponymix 5-1
+    procps-ng 3.3.12-1
+    pulseaudio-jack 10.0-3
+    pypy3 5.8.0-1
+    reiserfsprogs 3.6.25-1
+    ristretto 0.8.2-1
+    sbt 1:0.13.13-1
+    seahorse 3.20.0+94+g4c671a78-1
+    shotwell 2:0.26.2-1
+    speedtest-cli 1.0.6-1
+    stack 1.4.0-98
+    strace 4.17-1
+    sudo 1.8.20.p2-1
+    unzip 6.0-12
+    usbutils 008-1
+    vi 1:070224-2
+    vlc 2.2.6-1
+    wget 1.19.1-2
+    which 2.21-2
+    xfburn 0.5.4-3
+    xfce4-appfinder 4.12.0-4
+    xfce4-artwork 0.1.1a_git20110420-4
+    xfce4-battery-plugin 1.1.0-1
+    xfce4-clipman-plugin 1.4.1-1
+    xfce4-cpufreq-plugin 1.1.3-1
+    xfce4-cpugraph-plugin 1.0.5-4
+    xfce4-datetime-plugin 0.7.0-1
+    xfce4-dict 0.8.0-1
+    xfce4-diskperf-plugin 2.6.1-1
+    xfce4-eyes-plugin 4.4.5-1
+    xfce4-fsguard-plugin 1.1.0-1
+    xfce4-genmon-plugin 4.0.0-1
+    xfce4-mailwatch-plugin 1.2.0-7
+    xfce4-mount-plugin 1.1.2-1
+    xfce4-mpc-plugin 0.5.0-1
+    xfce4-netload-plugin 1.3.1-1
+    xfce4-notes-plugin 1.8.1-2
+    xfce4-power-manager 1.6.0.41.g9daecb5-1
+    xfce4-pulseaudio-plugin 0.2.5+30+g1c7b487-1
+    xfce4-screenshooter 1.9.1-1
+    xfce4-sensors-plugin 1.2.6-3
+    xfce4-session 4.12.1-7
+    xfce4-settings 4.12.1-1
+    xfce4-smartbookmark-plugin 0.5.0-1
+    xfce4-systemload-plugin 1.2.1-1
+    xfce4-taskmanager 1.2.0-1
+    xfce4-terminal 0.8.5.1-1
+    xfce4-time-out-plugin 1.0.2-2
+    xfce4-timer-plugin 1.6.0-4
+    xfce4-verve-plugin 1.1.0-1
+    xfce4-wavelan-plugin 0.6.0-1
+    xfce4-weather-plugin 0.8.9-1
+    xfce4-whiskermenu-plugin 1.7.2-2
+    xfce4-xkb-plugin 0.7.1-2
+    xfdesktop 4.12.4-1
+    xfwm4-themes 4.10.0-2
+    xorg-xrandr 1.5.0-1
+    youtube-dl 2017.06.25-1
+    zip 3.0-7
+
+    I think some of these are from package bundles like xfce and xfice-goodies.
+
+  All foreign packages:
+
+    $ pacman -Qmq
+    dropbox
 

@@ -1,14 +1,12 @@
 # scheller-linux-archive
 
-Contains notes on topics regarding Linux utilities, environment<br>
-configuration, system administration.  Also included are software<br>
-projects that have been useful to me learning software development<br>
-topics.
+My personnal archive of functional based software development projects<br>
+as well as information on Linux/Bash environment configuration.
 
 The primary purpose of this GitHub repo is to capture what I learn<br>
-in a way that helps me stay up to speed on a topic.  I try to<br>
-maintain additional infrastructure so that this information may be<br>
-of some marginal use to others.
+in a way that helps me stay up to speed on a topic.  I try to maintain<br>
+additional infrastructure so that this information may be of some marginal<br>
+use to others.
 
 ## [info](info/) directory:
 
@@ -26,8 +24,7 @@ text files with information on a variety of topics.
 ## Software projects:
 
 ### 1. [bash-utils](bash-utils/)
-* Simple, but utilitarian, bash scripts illustrating<br>
-  bash scripting techniques.
+* Simple, but utilitarian, bash scripts illustrating bash scripting techniques.
 * I put these in my ~/bin directory.
 
 ### 2. [fpinscala](fpinscala/)

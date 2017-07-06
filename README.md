@@ -4,9 +4,9 @@ My personnal archive of functional based software development projects<br>
 as well as information on Linux/Bash environment configuration.
 
 The primary purpose of this GitHub repo is to capture what I learn<br>
-in a way that helps me stay up to speed on a topic.  I try to maintain<br>
-additional infrastructure so that this information may be of some marginal<br>
-use to others.
+in a way that helps me stay up to speed on a topic.  I maintain<br>
+additional infrastructure so that this information may be of some<br>
+marginal use to others.
 
 ## [info](info/) directory:
 

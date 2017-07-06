@@ -3462,3 +3462,55 @@ Purpose: To indicate what was done to create gauss17 and
     $ pacman -Qmq
     dropbox
 
+2017-07-03:
+  Something is pulling in gnome-keyring,
+
+    $ pacman -Ss keyring | grep -A 1 '\[installed\]'
+    core/archlinux-keyring 20170611-1 [installed]
+        Arch Linux PGP keyring
+    extra/gnome-keyring 1:3.20.0+57+g9db67ef6-1 (gnome) [installed]
+        Stores passwords and encryption keys
+
+  Lets see what it is,
+
+    $ pacman -Sii gnome-keyring
+    Repository      : extra
+    Name            : gnome-keyring
+    Groups          : gnome
+    Depends On      : gcr  libcap-ng  pam
+    Optional Deps   : None
+    Required By     : deepin-daemon  geary  seahorse  sugar
+    Optional For    : chromium  deja-dup  git  libgnome-keyring  libsecret
+                      lifereamate-session-manager  mysql-workbench
+                      remmina  xfce4-session
+
+  Looks like seahorse brought it in,
+
+    $ pacman -Sii seahorse
+    Repository      : extra
+    Description     : GNOME application for managing PGP keys.
+    Depends On      : gtk3  gcr  libsecret  libsoup  desktop-file-utils  dconf
+                      gpgme  gnome-keyring
+
+  Since I don't want multiple PGP keyring infrastructures running 
+  around,
+
+    $ sudo pacman -R seahorse gnome-keyring
+
+  After reboot, Claws e-mail is still asking me for PGP passphase 
+  when I send e-mail with PGP signature.
+
+2017-07-06:
+  Install ldns package which replaces functionality of the deprecated
+  former core/dnsutils package.
+
+    $ sudo pacman -Syu ldns
+
+  The drill program replces dig and hosts, and to a lesser extent the
+  nslookup package.  The getent program is a better replacement to
+  the nslookup command than drill.
+
+  The old System V dns utilities were deprecated several years ago.
+  There is a compatibility package I choose not to instll this time
+  around.  These compatibity utilities are closely associated with
+  Bind.

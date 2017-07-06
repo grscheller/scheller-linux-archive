@@ -53,6 +53,44 @@ Hostnamectl:
                 Kernel: Linux 4.10.1-1-ARCH
           Architecture: x86-64
 
+DNSUTILS replacements:
+  No longer have nslookup, dig, and host.
+
+  getent replaces nslookup -
+
+    $ getent hosts 8.8.8.8
+    8.8.8.8         google-public-dns-a.google.com
+
+    $ getent hosts dns1.fast.net
+    205.147.200.114 dns1.corp.fast.net dns1.fast.net
+
+    $ getent hosts www.fast.net
+    64.80.108.108   www.fast.net
+
+    $ getent hosts www.google.comm; echo $?
+    2
+
+  From the core/ldns package, drill replaces dig, hosts.
+
+    $ drill dns1.fast.net
+    ;; ->>HEADER<<- opcode: QUERY, rcode: NOERROR, id: 6512
+    ;; flags: qr rd ra ; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 0 
+    ;; QUESTION SECTION:
+    ;; dns1.fast.net.	IN	A
+    
+    ;; ANSWER SECTION:
+    dns1.fast.net.	86400	IN	CNAME	dns1.corp.fast.net.
+    dns1.corp.fast.net.	86400	IN	A	205.147.200.114
+    
+    ;; AUTHORITY SECTION:
+    
+    ;; ADDITIONAL SECTION:
+    
+    ;; Query time: 414 msec
+    ;; SERVER: 192.168.0.1
+    ;; WHEN: Thu Jul  6 17:54:18 2017
+    ;; MSG SIZE  rcvd: 71
+
 POSIX:
   Get linux kernel version:
     uname -r

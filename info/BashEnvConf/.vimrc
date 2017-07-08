@@ -15,8 +15,12 @@ set fileencoding=utf-8
 " Don't use TABS!!!, replace with
 " 4 spaces when <tab> key is pressed.
 "   When editing makefiles or other archaic files
-"   where real tabs are "special",
+"   where real tabs are "special," 
 "   use <ctrl-v><tab> to actually add a real tab.
 set tabstop=4
 set shiftwidth=4
 set expandtab
+" Set the default language to US English for spell checking.
+" To turn on spell checking while in vim,  `:set spell'.
+" To turn off,                             `:set spell'.
+set spelllang=en_us

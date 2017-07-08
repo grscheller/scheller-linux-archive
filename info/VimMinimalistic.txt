@@ -2,17 +2,17 @@ Vim - Vi improved (minimalistic)
 
 1. Configuration:
 
-  My go to text editor of choice in vim.  All I want out
+  My go to text editor of choice is vim.  All I want out
   of vim is the ability to edit text files in terminal
   windows in a unicode aware way.  I want my editing
   sessions to be CLI centric but still integrate well
   into the Linux GUI environment.  I do not want to change
   vim into a gui editor.  Nor use it as an IDE.
   
-  Out of the box, vim highjacks the mouse from the terminal
+  Out of the box, vim hijacks the mouse from the terminal
   emulator (usually xfce4-terminal or gnome-terminal) so
   that the mouse will reposition the cursor.  This is
-  especially anoying because now I have to precisely position
+  especially annoying because now I have to precisely position
   the cursor before pasting.  If I want this behavior, I will
   use gvim instead.
   
@@ -44,11 +44,11 @@ Vim - Vi improved (minimalistic)
   middle-click title bar to drop them to bottom of the Z-order.
   This enables me to interact with vim in a small area of a
   terminal window while having another windows on top.  This
-  is increadibly useful.  You are not constantly having to juggle
+  is incredibly useful.  You are not constantly having to juggle
   windows around nor do you need a 42" monitor.
 
   In vim I find the Caps-Lock key annoying since it is easy to
-  accidently hit and commands like j or J do much different
+  accidentally hit and commands like j or J do much different
   things.  Since this is much more annoying to me than the use
   case for Caps-Lock, I remap the key to be a second escape key.
   My left pinky is much happier.  This can be done through the
@@ -78,7 +78,7 @@ Vim - Vi improved (minimalistic)
       f<char>   move forward to next <char> on current line
       ;         move forward to target of last f command
       ,         move backward to target of last f command
-      3f<char>  move forward to 3rd occurance of <char> on line
+      3f<char>  move forward to 3rd occurrence of <char> on line
       /pattern<ret>    Search forward for pattern (pattern can be
                        a regular expression).
       ?pattern<ret>    search backwards for pattern
@@ -109,6 +109,7 @@ Vim - Vi improved (minimalistic)
    You can use named buffers to store text.
 
      'adw  delete word and put in buffer a
+     'A2yy yank 2 lines and append to buffer a
      'sd$  delete to end of line and put in buffer "s"
      'sp   paste contents of buffer "s" after cursor
      'aP   paste contents of buffer "a" before cursor
@@ -136,7 +137,7 @@ Vim - Vi improved (minimalistic)
      c$   change text to end of line
      5cc  change next 5 lines
      5C   change next 5 lines
-     c^   change text before cursor, excuding initial white space
+     c^   change text before cursor, excluding initial white space
      ~    change case of current character, advance one character,
             stay in command mode
      r    change current character to next character typed,
@@ -153,7 +154,7 @@ Vim - Vi improved (minimalistic)
    These can be used to linearly undo and redo edits.  Sort
    of like the arrow buttons in a web browser.
 
-   Aside: It is posible in vim to navigate entire edit
+   Aside: It is possible in vim to navigate entire edit
           trees, though I never felt the need to learn
           how.
 
@@ -163,12 +164,12 @@ Vim - Vi improved (minimalistic)
 6. Line editor commands:
 
    Vim is an open source version of the Unix editor vi,
-   which is a CLI visual version of the Berkley Unix
-   line editor ex, which itself is a reimplementation of
+   which is a CLI visual version of the Berkeley Unix
+   line editor ex, which itself is a re-implementation of
    the AT&T Unix line editor ed. 
 
-   On really old terminals, essentually line printers with
-   keyboards, the desendents of teletypes, you edited files
+   On really old terminals, essentially line printers with
+   keyboards, the descendants of teletypes, you edited files
    one line at a time.
 
    Use the : command to enter a line editor command.  The
@@ -194,7 +195,7 @@ Vim - Vi improved (minimalistic)
 
 7. Dealing with non-printable characters:
 
-   To see non-printable charactersr,
+   To see non-printable characters,
 
      :set list
 
@@ -209,11 +210,23 @@ Vim - Vi improved (minimalistic)
 
      .    repeat the last command
 
-   This is frequently used in conjuction with the n command.
+   This is frequently used in conjunction with the n command.
    The command is the last regular vim command mode command
    that changed text, not a line editor command.
 
-9. End remarks:
+9. Spell checking:
+
+   To set the default language to US English for spell checking,
+   put the following into your ~/.vimrc file,
+
+     set spelllang=en_us
+
+   To turn on and off spell checking while in vim,
+
+     :set spell
+     :set nospell
+
+10. End remarks:
 
    Editors like vim or emacs are very powerful.  I have just
    scratched the surface of what is possible with vim.  I
@@ -222,14 +235,14 @@ Vim - Vi improved (minimalistic)
    is provided with WYSIWYG editors, or even context sensitive
    editors provided by IDEs.
 
-   There is a backward capatibility mode that forces vim to
+   There is a backward compatibility mode that forces vim to
    behave very much like vi -> vim -C.  I think this is a too
    reactionary approach and not sure all of its ramifications.
    All I can say is that it does not make vim a clone of
    System V vi.  Nor do I want it to be.
 
    I do not like colored syntax highlighting.  If it did
-   something useful like destinguish different scopes, 
+   something useful like distinguish different scopes, 
    then I might reconsider.  Otherwise, I just waste time
    adjusting the colors so that I can read the code.  The
    only language I found it useful is MATLAB when using

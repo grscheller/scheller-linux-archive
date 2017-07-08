@@ -3514,3 +3514,30 @@ Purpose: To indicate what was done to create gauss17 and
   There is a compatibility package I choose not to instll this time
   around.  These compatibity utilities are closely associated with
   Bind.
+
+2017-07-06:
+  Installed rust tool chain.
+
+    $ sudo pacman -Syu rustup
+    $ pacman -Qlq rustup
+    /usr/
+    /usr/bin/
+    /usr/bin/cargo
+    /usr/bin/rls
+    /usr/bin/rust-gdb
+    /usr/bin/rust-lldb
+    /usr/bin/rustc
+    /usr/bin/rustdoc
+    /usr/bin/rustup
+    /usr/share/
+    /usr/share/bash-completion/
+    /usr/share/bash-completion/completions/
+    /usr/share/bash-completion/completions/rustup
+    /usr/share/fish/
+    /usr/share/fish/completions/
+    /usr/share/fish/completions/rustup.fish
+    /usr/share/zsh/
+    /usr/share/zsh/site-functions/
+    /usr/share/zsh/site-functions/_rustup
+
+  I was not expecting to get the compiler centrally installed.

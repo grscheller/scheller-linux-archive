@@ -35,11 +35,11 @@ The problems are that booleans and ints are being conflated, assignment<br>
 returns the value being assigned, the < operator is left associative, and<br>
 the syntax is misleading.  See the paper, [The Seven Deadly
 Sins](http://users.monash.edu/~damian/papers/PDF/SevenDeadlySins.pdf)
-where I got this example<br>
+where I got this example.<br>
 
 I think Rust will become the C for the 21st Century.
 
-## 2. First Rust toolchain [baby steps](babySteps/):
+## 2. First steps Rust toolchain - [baby steps](babySteps/):
 Create a new project with a main function,
 ```
    $ cargo new --bin babySteps
@@ -50,7 +50,7 @@ babySteps directory it created as a git repo with .git file.  I put a copy<br>
 of the .gitignore file it would have created in the babySteps directory.
 
 The source code it created was the canonical "Hello World" program in the<br>
-file src/main.rs,
+file `src/main.rs`,
 ```
    fn main() {
        println!("Hello, world!");
@@ -79,3 +79,21 @@ Executable can be run from the commandline,
    $ ./target/debug/babySteps 
    Hello, world!
 ```
+To just build,
+```
+   $ cargo build
+```
+Both the run and build targets build a "debug" version.
+
+To build or run a "release" version with full optimization,
+```
+   $ cargo build --release
+   $ cargo run --release
+```
+The executable is `./target/release/babySteps`.
+
+## 3. Guessing game - [guessing_game](guessing_game/):
+Guessing game example taken from the official Rust 
+[book](https://doc.rust-lang.org/book/second-edition/ch02-00-guessing-game-tutorial.html).
+
+I have added comments to the code documenting language features.

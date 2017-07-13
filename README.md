@@ -45,16 +45,20 @@ text files with information on a variety of topics.
 * An attempt to learn Java coming at it from a Python and Scala perspective.
 * Not exactly sure the direction this project will take.
 
-### 6. [linuxHome](linuxHome/)
+### 6. [grockRust](grockRust/)
+* Learn Rust as a systems language.
+* Learn Rust as a general purpose programming language.
+
+### 7. [linuxHome](linuxHome/)
 * Keep Linux environment synced across workstations and supercomputers.
 * Based on the infrastructure I use at work.
 
-### 7. [pythagTriples](pythagTriples/)
+### 8. [pythagTriples](pythagTriples/)
 * Haskell project that generates Pythagorean triples.
 * Mathematical factoids about Pythagorean triples.
 * Also used to help me learn Haskell stack.
 
-### 8. [pureMath](pureMath/)
+### 9. [pureMath](pureMath/)
 * A mathematics library centered around integer arithmetic.
 * An old project of mine back when I first learned Python.
 

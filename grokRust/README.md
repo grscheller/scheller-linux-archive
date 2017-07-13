@@ -1,4 +1,4 @@
-# Coming up to speed with the Rust systems programming language:
+# Rust systems programming language:
 
 Explore the Rust toolchain and come up to speed with the language.
 
@@ -34,12 +34,12 @@ and not,
 The problems are that booleans and ints are being conflated, assignment<br>
 returns the value being assigned, the < operator is left associative, and<br>
 the syntax is misleading.  See the paper, [The Seven Deadly
-Sins](http://users.monash.edu/~damian/papers/PDF/SevenDeadlySins.pdf)
-where I got this example.<br>
+Sins of Introductory Programming Language Design](http://users.monash.edu/~damian/papers/PDF/SevenDeadlySins.pdf)<br>
+where I got this example.
 
 I think Rust will become the C for the 21st Century.
 
-## 2. First steps Rust toolchain - [baby steps](babySteps/):
+## 2. First steps Rust toolchain - [babySteps](babySteps/):
 Create a new project with a main function,
 ```
    $ cargo new --bin babySteps

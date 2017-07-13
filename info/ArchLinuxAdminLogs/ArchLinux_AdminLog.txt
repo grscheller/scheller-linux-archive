@@ -3541,3 +3541,16 @@ Purpose: To indicate what was done to create gauss17 and
     /usr/share/zsh/site-functions/_rustup
 
   I was not expecting to get the compiler centrally installed.
+
+2017-07-11:
+  Reinstalled chrome since firefox could not view Netflix.
+
+    $ cd ~/build/AUR/google-chrome_build/google-chrome
+    $ git pull
+    $ makepkg -sri
+
+  Now all foreign packages,
+
+    $ pacman -Qmq
+    dropbox
+    google-chrome

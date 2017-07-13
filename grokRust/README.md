@@ -97,3 +97,6 @@ Guessing game example taken from the official Rust
 [book](https://doc.rust-lang.org/book/second-edition/ch02-00-guessing-game-tutorial.html).
 
 I have added comments to the code documenting language features.
+
+## 4. Fibonacci program - [fibonacci](fibonacci/):
+Program to compute the nth Fiboncci number.

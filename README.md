@@ -35,17 +35,17 @@ text files with information on a variety of topics.
   Scala language per say.
 * In this project I try to do both.
 
-### 3. [grockScala](grockScala/)
+### 3. [grokScala](grokScala/)
 * Document factoids about the Scala language
 
-### 4. [grockScalaz](grockScalaz/)
+### 4. [grokScalaz](grokScalaz/)
 * Document factoids about Scalaz.
 
-### 5. [grockJava](grockJava/)
+### 5. [grokJava](grokJava/)
 * An attempt to learn Java coming at it from a Python and Scala perspective.
 * Not exactly sure the direction this project will take.
 
-### 6. [grockRust](grockRust/)
+### 6. [grokRust](grokRust/)
 * Learn Rust as a systems language.
 * Learn Rust as a general purpose programming language.
 

@@ -14,6 +14,11 @@ and to get information on individual commands
     man git-add
     man git-info
 
+or using the --help option to git
+
+    git --help
+    git clone --help
+
 Some resources I used for these notes:
 http://www.git-scm.com/book/en/v2   (ProGIT book)
 https://www.atlassian.com/git/tutorials/setting-up-a-repository
@@ -46,7 +51,7 @@ I. Getting started and some configuration.
     
     3. To customize editor:
     
-         git config --global core.editor vi
+         git config --global core.editor vim
 
     4. Set default merge behavior to diff3:
 
@@ -236,6 +241,15 @@ II. Getting a Git Repository
        track remote branches.  You must do a "git checkout" for each new
        branch you want to track.  The "git pull --all" command will
        only pull from branches you currently track.
+
+    8. Overiding global configurations when cloning a repo:
+
+         $ git clone -c user.email=me@myotheremail.com \
+             -c http.sslcainfo=/home/geoff/.ssh/Cert_dropbox_wont_have.crt \
+             -c http.verify=true \
+             https://aur.archlinux.org/dropbox.git
+
+       You can use --config instead of -c.
 
 III. Lifecycle of files:
 

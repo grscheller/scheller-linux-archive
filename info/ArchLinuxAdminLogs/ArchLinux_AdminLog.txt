@@ -3554,3 +3554,19 @@ Purpose: To indicate what was done to create gauss17 and
     $ pacman -Qmq
     dropbox
     google-chrome
+
+2017-07-13:
+  Optimize the pacman database.
+
+    $ sudo pacman-optimize
+
+  Bash script attempts to localize the many small files that make up
+  the pacman database. 
+
+2017-07-13:
+  Figured out how to hibernate the system.
+
+    $ systemctl hybrid-sleep
+
+  Works as a regular user.  System completely powers off.  Powers back up
+  very fast, even though the gauss17 swap partian is on the slow HD.

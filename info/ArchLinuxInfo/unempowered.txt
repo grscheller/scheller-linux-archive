@@ -3,20 +3,29 @@ Purpose: Useful commands and factoids most of which
 
 Journalctl:
   For scanning journalctl output, some useful options,
-    journalctl -f : follows like tail -f
-    journalctl -x : Augment log lines with explanation texts
+    journalctl -f   // follows like tail -f
+    journalctl -x   // augment log lines with explanation texts
+    journalctl -b   // since last boot
 
   System maintenance,
-    journalctl -p 3 -xb : Look for high priority errors.
+    journalctl -p 3 -xb   // Look for high priority errors since last boot.
+
+Systemctl:
+  Poweroff or restart system (when other users not logged on),
+    systemctl reboot
+    systemctl poweroff
+
+  System maintenance,
+    systemctl --failed
 
 Pacman:
   For querying installed packages,
-    pacman -Qet : List all explicitly installed packages
-    pacman -Q   : List all installed packages
-    pacman -Qi net-tools : Get information on net-tools package
-    pacman -Qlq tor  : List files associated with tor package
-    pacman -Qmq : List all foreign (usually AUR) packages
-    pacman -Q | grep '^linux ' : Get Linux kernel version
+    pacman -Qet   // List all explicitly installed packages
+    pacman -Q     // List all installed packages
+    pacman -Qi net-tools   // Get information on net-tools package
+    pacman -Qlq tor  // List files associated with tor package
+    pacman -Qmq      // List all foreign (usually AUR) packages
+    pacman -Q | grep '^linux '   // Get Linux kernel version
 
   Find the package which owns a particular file,
     pacman -Qo /etc/profile
@@ -32,14 +41,10 @@ Pacman:
     /var/log/pacman.log
 
   To search for packages, not necessarily installed,
-    pacman -Ss regex : search for terms in package database
+    pacman -Ss regex   // search for terms in package database
 
   Download packages without installing,
     sudo pacman -Syuw
-
-Systemctl:
-  System maintenance,
-    systemctl --failed
 
 Hostnamectl:
   Get info on an Arch System,

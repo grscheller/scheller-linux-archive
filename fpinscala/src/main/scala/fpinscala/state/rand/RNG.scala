@@ -98,6 +98,21 @@ object RNG {
           Rand.unit(ii % n)
     }
 
+  /** Random Int within the range start <= random_variable < end
+   *
+   *    Pathological cases:
+   *      If start = end, always generate start.
+   *      If statt > end, generate start >= randome_variable > end
+   *
+   */
+  def exclusiveIntRange(start: Int, end: Int): Rand[Int] = {
+    val len = if (start != end) end - start else 1
+    val sign = len/len.abs
+    nonNegativeLessThan(len.abs) map {
+      (ii: Int) => start + sign*ii
+    }
+  }
+
 }
 
 /** Extend RNG by Implementing the same Linear Congruence

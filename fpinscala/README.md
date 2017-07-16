@@ -29,7 +29,7 @@ authors.
 ### [fpinscala.parallelism](src/main/scala/fpinscala/parallelism/)
 * Chapter 7: Purely functional parallelism
 
-### fpinscala.testing
+### [fpinscala.testing](src/main/scala/fpinscala/testing/)
 * Chapter 8: Property-based testing
 
 ### fpinscala.parsing

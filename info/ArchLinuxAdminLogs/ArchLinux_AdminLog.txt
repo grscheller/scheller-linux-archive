@@ -3570,3 +3570,10 @@ Purpose: To indicate what was done to create gauss17 and
 
   Works as a regular user.  System completely powers off.  Powers back up
   very fast, even though the gauss17 swap partian is on the slow HD.
+
+2017-07-16:
+  Swapped in mirrorlist.pacnew and used the command
+
+     $ rankmirrors -v /etc/pacman.d/mirrorlist
+
+  to rank the US, Canada, and German servers.

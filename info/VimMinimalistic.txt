@@ -15,6 +15,15 @@ Vim - Vi improved (minimalistic)
   especially annoying because now I have to precisely position
   the cursor before pasting.  If I want this behavior, I will
   use gvim instead.
+
+  While in vim, you can turn off this mouse stealing behavior
+  via,
+
+    :set mouse=
+
+  and turn it back on via,
+
+    :set mouse=n
   
   The following simplistic ~/.vimrc file will prevent this
   mouse stealing:

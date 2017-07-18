@@ -1,6 +1,6 @@
 ## Property-based testing
 
-Chapter 7.
+Chapter 8.
 
 Exploring how to decouple the specification of program behavior from<br>
 the creation of test cases while working through the exercises in<br>

@@ -57,8 +57,54 @@ object RNG {
   /** Generate an even random integer between
    *  0 and Int.maxValue (inclusive).
    */
-  def nonNegativeEven: Rand[Int] =
-   nonNegativeInt.map(i => i - i%2)
+  def nonNegativeEvenInt: Rand[Int] =
+   nonNegativeInt map { ii => ii - ii%2 }
+
+  /** Random action non-negative Int less than n
+   *
+   *    1. Keeps things uniformly distributed over
+   *       the range of the random variable even
+   *       in the case n does not evenly divide
+   *       the integer value Int.MaxValue + 1.
+   *    2. Algorithm assumes that n > 0.
+   *    3. Stack overflow can happen if n < 0.
+   *    4. For n = 0, you will get a divide by 0
+   *       runtime java.lang.ArithmeticException.
+   *    5. For efficiency, client responsible to
+   *       ensure that n > 0.
+   *
+   *    Caller be warned, don't call with n <= 0.
+   *
+   */
+  def nonNegativeIntLessThan(n: Int): Rand[Int] = 
+    nonNegativeInt flatMap { ii =>
+      val mod = ii % n
+      if (ii + ((n-1) - mod) >= 0)
+        Rand.unit(mod)
+      else
+        nonNegativeIntLessThan(n)
+    }
+
+  /** Random Int within the range start <= random_variable < end
+   *
+   *    Pathological cases:
+   *      If start = end, always generate start.
+   *      If statt > end, generate start >= randome_variable > end
+   *
+   *    Works great unless (end - start) > Int.Maxvalue, then things
+   *    no longer transparently simple.  If only java had unsigned types!
+   *
+   *    Idea: if start >= end then you just get start???
+   *    Idea: return an Option??? Throw exception??? 
+   *
+   */
+  def exclusiveIntRange(start: Int, end: Int): Rand[Int] = {
+    val len = if (start != end) end - start else 1
+    val sign = len/len.abs
+    nonNegativeIntLessThan(len.abs) map {
+      (ii: Int) => start + sign*ii
+    }
+  }
 
   /** Generate a random Double between
    *  0 (inclusive) and 1 (exclusive).
@@ -68,50 +114,9 @@ object RNG {
     nonNegativeInt map { _.toDouble/d }
   }
 
-  /** Random action non-negative Int less than n
-   *
-   *    1. Keeps things uniformly distributed over
-   *       the range of the random variable even
-   *       in the case n does not evenly divide
-   *       the integer value Int.MaxValue + 1.
-   *    2. For n = 0, you will get a divide by 0
-   *       runtime java.lang.ArithmeticException.
-   *    3. In "production code" I could replace
-   *       n in the function body with n.abs,
-   *       but this may mask a bug elsewhere.
-   *       Better to range check if n <= 0 and
-   *       throw some sort of range exception.
-   *    4. Or, if performance is important and you
-   *       are programming for people who are not
-   *       idiots, have the client responsible
-   *       for range checking.
-   *
-   *    Caller be warned, don't call with n <= 0.
-   *
-   */
-  def nonNegativeLessThan(n: Int): Rand[Int] = 
-    nonNegativeInt flatMap {
-      (ii: Int) =>
-        if (ii + (n-1) < 0)
-          nonNegativeLessThan(n)
-        else
-          Rand.unit(ii % n)
-    }
-
-  /** Random Int within the range start <= random_variable < end
-   *
-   *    Pathological cases:
-   *      If start = end, always generate start.
-   *      If statt > end, generate start >= randome_variable > end
-   *
-   */
-  def exclusiveIntRange(start: Int, end: Int): Rand[Int] = {
-    val len = if (start != end) end - start else 1
-    val sign = len/len.abs
-    nonNegativeLessThan(len.abs) map {
-      (ii: Int) => start + sign*ii
-    }
-  }
+  /** Generate a random boolean */
+  def boolean: Rand[Boolean] =
+    int map {ii => ii % 2 == 0}
 
 }
 

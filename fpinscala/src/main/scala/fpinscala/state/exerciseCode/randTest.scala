@@ -56,12 +56,12 @@ object randTest {
     print("emptyList = "); println(emptyList)
     print("sixList = ");   println(sixList)
 
-    // Test nonNegativeEven
+    // Test nonNegativeEvenInt
     println("\nTest nonNegativeEven:")
-    val (evenA, rngA) = RNG.nonNegativeEven.run(rng42)
-    val (evenB, rngB) = RNG.nonNegativeEven.run(rngA)
-    val (evenC, rngC) = RNG.nonNegativeEven.run(rngB)
-    val (evenD, rngD) = RNG.nonNegativeEven.run(rngC)
+    val (evenA, rngA) = RNG.nonNegativeEvenInt.run(rng42)
+    val (evenB, rngB) = RNG.nonNegativeEvenInt.run(rngA)
+    val (evenC, rngC) = RNG.nonNegativeEvenInt.run(rngB)
+    val (evenD, rngD) = RNG.nonNegativeEvenInt.run(rngC)
     print("\nevenA = "); println(evenA)
     print("evenB = "); println(evenB)
     print("evenC = "); println(evenC)
@@ -124,24 +124,24 @@ object randTest {
     print("\n10 Ints: ")
     RNG.ints(10)(rng666) foreach {x => print(x + " ")}
 
-    // Test nonNegativeLessThan
+    // Test RNG.nonNegativeIntLessThan
 
     def baz(num: Int, lt: Int): Rand[List[Int]] = 
-      Rand.sequence(List.fill(num)(RNG.nonNegativeLessThan(lt)))
+      Rand.sequence(List.fill(num)(RNG.nonNegativeIntLessThan(lt)))
 
     print("\n100 random non-neg Ints less than 20")
-    println(" (using nonNegativeLessThan):")
+    println(" (using RNG.nonNegativeIntLessThan):")
     for (ii <- baz(100, 10)(rng42)) {print(ii + " ")}
 
     print("\n50 random non-neg Ints less than 200000000")
-    println(" (using nonNegativeLessThan):")
+    println(" (using RNG.nonNegativeIntLessThan):")
     for (ii <- baz(50, 200000000)(rng42)) {println(ii)}
 
     // Test map and map2
     println("\nTest map and map2 by throwing dice:\n")
 
     def dieRollFM: Rand[Int] =
-      RNG.nonNegativeLessThan(6).map(_ + 1)
+      RNG.nonNegativeIntLessThan(6).map(_ + 1)
 
     def twoDiceRollFM: Rand[Int] =
       dieRollFM.map2(dieRollFM)(_ + _)
@@ -160,16 +160,16 @@ object randTest {
      *  List's length.
      */
     def makeRandList1(lt: Int): Rand[List[Int]] = for {
-      n   <- RNG.nonNegativeLessThan(lt)
-      d   <- RNG.nonNegativeLessThan(n)
+      n   <- RNG.nonNegativeIntLessThan(lt)
+      d   <- RNG.nonNegativeIntLessThan(n)
       ns  <- RNG.ints(n)
     } yield ns map { _.abs % (d + 1) }
 
     // Repeat without the for comprehension
 
     def makeRandList2(lt: Int): Rand[List[Int]] =
-      RNG.nonNegativeLessThan(lt) flatMap { n =>
-        RNG.nonNegativeLessThan(n) flatMap { d =>
+      RNG.nonNegativeIntLessThan(lt) flatMap { n =>
+        RNG.nonNegativeIntLessThan(n) flatMap { d =>
           RNG.ints(n) map { ns =>
             ns map { _.abs % (d + 1) }
           }

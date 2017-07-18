@@ -14,14 +14,21 @@ import fpinscala.state.rand.{Rand,RNG,LCG} // Remove implementation detail.
 
 object prelimGenTest {
 
-  val rng30 = LCG(30)
-  val rng1492 = LCG(1492)
+  val rng30: RNG = LCG(30)
 
   def main(args: Array[String]): Unit = {
 
-    val foo = Gen.choose(42, 50)
+    val foo = Gen.choose(20, 31)
+
+    // Spit one value out
     print("foo.sample(rng30) = "); println(foo.sample(rng30))
-    print("foo.sample(rng1492) = "); println(foo.sample(rng1492))
+
+    // Now imperitively, turn the crank
+    var pair = (0, rng30)
+    for (ii <- 1 to 100) {
+      pair = foo.sample.run(pair._2)
+      println(pair._1)
+    }
 
     println()
 

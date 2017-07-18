@@ -296,13 +296,10 @@ object RNG {
       g(a)(rng1)
     }
 
-  def nonNegativeLessThan(n: Int): Rand[Int] = 
-    flatMap(nonNegativeInt) {
-      (ii: Int) =>
-        if (ii + (n-1) < 0)
-          nonNegativeLessThan(n)
-        else
-          unit(ii % n)
+  def nonNegativeLessThan(n: Int): Rand[Int] =
+    flatMap(nonNegativeInt) { ii =>
+        val mod = ii % n
+        if (ii + ((n-1) - mod) >= 0) unit(mod) else nonNegativeLessThan(n)
     }
 
 // Implement map and map2 in terms of flatMap

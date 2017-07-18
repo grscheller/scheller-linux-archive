@@ -294,7 +294,7 @@ of doing things; it just that I don't know EMACS that well.
 
 8. Default values for shell variables:
 
-   Use a := instead of = to specify a default value for a shell variable,
+   Use := within the {} to specify a default value for a shell variable,
    if it is unset.
 
       $ PIE="Apple Pie"
@@ -369,7 +369,8 @@ of doing things; it just that I don't know EMACS that well.
       $ (cap=picard; echo $cap and $snd)
       picard and spock
 
-      # But not to a child process (which happens to be another instance of bash)
+      # But not to a child process (which in this case happens to be 
+      #                             just another instance of bash)
       $ bash -c 'echo $cap and $snd'
       kirk and
 
@@ -533,16 +534,31 @@ of doing things; it just that I don't know EMACS that well.
 
 16. Editting differences between vi/vim and bash in vi mode:
 
+    Use 
+
+      $ set -o vi
+
+    to switch from the default emacs bass cmdline editing mode.
+
     You can edit a command with vi by esc-v , this in
     particularly useful in editting multiline commands.
 
-    Some differences from vim are:
+    Some differences from vim while in command mode are:
 
       cntl-k  delete from cursor to end of line
       cntl-u  delete from before cursor beginning of line
-      k         move to previous command in history (beginning of line)
-      j         move to next line in history (beginning of line)
+      k           move to previous command in history (beginning of line)
+      up-arrow    move to previous command in history (beginning of line)
+      j           move to next line in history (beginning of line)
+      down-arror  move to next line in history (beginning of line)
       #         prepend # to current line and put in history
+
+    while in type mode:
+
+      up-arrow    move to previous command in history (end of line)
+      down-arror  move to next line in history (end of line)
+
+    and in either command or typing mode:
 
       ctrl-r    reverse search history, <ret> to execute, <esc> to edit
       ctrl-s    forward search history, <ret> to execute, <esc> to edit

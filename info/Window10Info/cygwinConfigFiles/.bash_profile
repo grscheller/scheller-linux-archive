@@ -3,11 +3,13 @@
 #
 #  Configure initial environment of my login shells.
 #
-#    Essentually, reconfigure what is handed
-#    to me by /etc/profile.
+#  Locate: /home/user_name   (cygwin name)
+#          C:\cygwin64\home\user_name   (Windows name)
 #
 #  Note: Non-existent path and duplicate path elements
-#        will be dealt with near end of script.
+#        will be dealt with near end of script.  You
+#        will need the bash scripts from the bash-utils
+#        project into /home/user_name/bin
 #
 
 # Configure interactive shells.

@@ -1,4 +1,8 @@
-## Start in my Documents directory
+## Put this file in the Documents/WindowsPowerShell folder.
+#
+#  Powershell will start in your "home" directory, which is
+#  usually C:\Users\your_user_name, the one above Documents.
+#
 
 ## Modify the Path environmental variable
 #  Put the JDK I installed before any native Java
@@ -97,10 +101,10 @@ ni -path alias:fm -value "C:\Windows\explorer.exe"
 #  and run the command:
 #      Set-ExecutionPolicy Unrestricted
 #  Then as your regular user run the commands:
-#      cd,, .\Documents\WindowsPowerShell\
+#      cd .\Documents\WindowsPowerShell\
 #      Unblock-File Microsoft.PowerShell_profile.ps1
 #  Now when powershell is launched, this file will configure your
 #  powershell environment.
 #
 #  You have made Windows more useful, and your regular user more powerful,
-#  but remember: "With great power comes great responsibilities."
+#  but remember: "With great power comes great responsibility."

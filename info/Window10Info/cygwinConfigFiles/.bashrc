@@ -4,6 +4,10 @@
 #  Configure Cygwin to integrate well with Windows
 #  but not necessarily with Powershell. 
 #
+#  Locate: /home/user_name   (cygwin name)
+#          C:\cygwin64\home\user_name   (Windows name)
+#
+#
 
 ## If not running interactively, don't configure anything.
 if [[ $- != *i* ]]

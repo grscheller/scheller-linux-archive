@@ -1,5 +1,7 @@
 // Explore low level concurency mechanismism.
 
+package grokScala.parallelism
+
 object LowlevelThreads {
   
   def main(args: Array[String]): Unit = {

@@ -1,6 +1,6 @@
-package grockScala.HelloWorld {
+package grokScala.HelloWorld {
 
-  import grockScala.HelloWorldUtil.HW
+  import grokScala.HelloWorldUtil.HW
 
   object Main {
     def main(args: Array[String]) {

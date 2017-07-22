@@ -7,7 +7,7 @@ reimplementating what was done in fpinscala.rngStandalone.
 From chapter 6.
 
 ### Type alias [rand](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/state/rand/package.scala#L18-L19)
-* Used to define the rand type alias at the rand package level.
+* Used to define the Rand type alias at the rand package level.
 * Using val Rand = fpinscala.state.State so the compiler can find the companion object.
 * User code needs to use `new` key word to distinguish constructor from potential factory methods.
 * Defined in the [rand](package.scala) package object.

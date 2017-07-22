@@ -1,4 +1,4 @@
-package grockScala.codeblocks 
+package grokScala.codeblocks 
 
 // defs and vals are really quite similar, in Scala they
 // share the same namespace and I can implement "defs"

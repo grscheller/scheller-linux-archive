@@ -1,4 +1,4 @@
-package grockScala.Splat
+package grokScala.Splat
 
 object splat {
 

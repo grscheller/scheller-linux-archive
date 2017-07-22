@@ -38,12 +38,10 @@ case class State[S,+A](run: S => (A,S)) {
   import State.unit
 
   def flatMap[B](g: A => State[S,B]): State[S,B] =
-    State(
-      s => {
+    State { s =>
         val (a, s1) = run(s)
         g(a) run s1
-      }
-    )
+    }
 
   def map[B](f: A => B): State[S,B] =
     flatMap {a => unit(f(a))}

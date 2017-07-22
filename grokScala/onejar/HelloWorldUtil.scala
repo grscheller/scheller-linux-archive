@@ -1,4 +1,4 @@
-package grockScala.HelloWorldUtil {
+package grokScala.HelloWorldUtil {
 
   object HW {
     val hw: String = "Hello, World!"

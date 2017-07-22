@@ -1,4 +1,4 @@
-package grockScala.codeblocks 
+package grokScala.codeblocks 
 
 // Having a single Lambda anywhere in a code block
 // turns it into a function1.

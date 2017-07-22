@@ -1,4 +1,4 @@
-package grockScala.codeblocks 
+package grokScala.codeblocks 
 
 // Currying with code blocks.
 // Both cb and lamb are of type

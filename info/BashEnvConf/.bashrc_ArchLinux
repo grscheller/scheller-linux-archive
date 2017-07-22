@@ -8,11 +8,18 @@
 ## If not running interactively, don't configure anything.
 if [[ $- != *i* ]]
 then
-    # Count number of times file sourced noninteractively
-    export BASHRC_NON_INTERACTIVE=${BASHRC_NON_INTERACTIVE:=0}
-    ((BASHRC_NON_INTERACTIVE++))
-    return
+  # Reverse engineering
+  # Count number of times file sourced noninteractively
+  export BASHRC_NON_INTERACTIVE=${BASHRC_NON_INTERACTIVE:=0}
+  ((BASHRC_NON_INTERACTIVE++))
+  return
 fi
+
+export BASHRC_SOURCED_INTERACTIVELY=${BASHRC_SOURCED_INTERACTIVELY:=0}
+
+## Temporary fix until ncurses/sbt incompatibility properly fixed
+regExForXtermType='xterm.*'
+[[ $TERM =~ $regExForXtermType ]] && TERM=xterm
 
 ## Bash customizations when running interactively
 
@@ -91,9 +98,6 @@ alias fm='(/usr/bin/thunar &)'
 # Terminal which inherits environment of parent shell
 alias tm='(/usr/bin/xfce4-terminal --disable-server &)'
 
-# Have root start dhcpcd domain name service
-alias dhcp='sudo systemctl start dhcpcd'
-
 # PDF Reader
 function ev() {
   ( /usr/bin/evince "$@" &>/dev/null & )
@@ -108,5 +112,4 @@ function gc() {
 #eval "$(stack --bash-completion-script stack)"
 
 ## Count number of time file sourced interactively
-export BASHRC_SOURCED_INTERACTIVELY=${BASHRC_SOURCED_INTERACTIVELY:=0}
 ((BASHRC_SOURCED_INTERACTIVELY++))

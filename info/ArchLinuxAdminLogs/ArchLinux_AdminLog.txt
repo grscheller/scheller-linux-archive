@@ -3577,3 +3577,15 @@ Purpose: To indicate what was done to create gauss17 and
      $ rankmirrors -v /etc/pacman.d/mirrorlist
 
   to rank the US, Canada, and German servers.
+
+2017-07-22:
+  Uninstalled sbt,
+
+    $ sudo pacman -Rsu sbt
+
+  and installed sbt version 0.13.15 locally into ~/opt/sbt.  I wanted
+  my sbt builds to be more consistent across my various Linux and
+  Windows10 operating systems.
+
+  Actually, Arch sbt version downloaded sbt version I used under Windows10
+  based on a project/build.properties file I committed to my GITHUB repo.

@@ -154,7 +154,7 @@ the [fpinscala package](../fpinscala).
 
 ## 9. Package objects: [grokScala.grok.rand](grok/src/main/scala/grok/packageWide/)
 In scala, types cannot be defined outside of classes/objects.  They are<br>
-features that is part of Scala's OO system - see page 457 of Oderski's<br>
+features that are part of Scala's OO system - see page 457 of Oderski's<br>
 Programming in Scala, 3rd edition, on path dependent types.  Types are<br>
 members just like defs, vals, and vars.  Functional programmers use this<br>
 feature to implement type aliases.

@@ -23,13 +23,6 @@ object prelimGenTest {
     // Spit one value out
     print("foo.sample(rng30) = "); println(foo.sample(rng30))
 
-    // Now imperitively, turn the crank
-    var pair = (0, rng30)
-    for (ii <- 1 to 100) {
-      pair = foo.sample.run(pair._2)
-      println(pair._1)
-    }
-
     println()
 
   }

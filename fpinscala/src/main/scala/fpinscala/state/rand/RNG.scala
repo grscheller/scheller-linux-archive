@@ -1,13 +1,13 @@
 /** Implemented the RNG and LCG classes
  *  for the package fpinscala.state.rand.
  *
- *  Note: Rand is a type alias for
- *        fpinscala.state.State[RNG, A].
- *        We define this package-wide in
- *        the rand package object.
+ *  Note: Rand is a case class contining 
+ *        a fpinscala.state.State[RNG, A].
  *  
  */
 package fpinscala.state.rand
+
+import fpinscala.state.State
 
 /** Base class for the RNG class for
  *  pseudo-random number generators.
@@ -32,13 +32,8 @@ object RNG {
    *    For the LCG subclass, this mapping is uniform, i.e.
    *    it is equally likey to get any possible Int value.
    *
-   *  Note: Have to use the "new" keyword otherwise the
-   *    compiler thinks I am trying to use the apply
-   *    method on the State companion object instead of
-   *    the State[RNG, Int] case class constructor.
-   *
    */
-  def int: Rand[Int] = new Rand[Int](_.nextInt)
+  def int: Rand[Int] = Rand[Int](State(_.nextInt))
 
   /** Random action to generate a list of Int */
   def ints(count: Int): Rand[List[Int]] =
@@ -47,12 +42,12 @@ object RNG {
   /** Generate a random integer between
    *  0 and Int.maxValue (inclusive).
    */
-  def nonNegativeInt: Rand[Int] = new Rand(rng =>
+  def nonNegativeInt: Rand[Int] = Rand(State(rng =>
     rng.nextInt match {
       case (ran, rng2) if ran >= 0            => ( ran, rng2)
       case (ran, rng2) if ran == Int.MinValue => (   0, rng2)
       case (ran, rng2)                        => (-ran, rng2)
-    })
+    }))
 
   /** Generate an even random integer between
    *  0 and Int.maxValue (inclusive).

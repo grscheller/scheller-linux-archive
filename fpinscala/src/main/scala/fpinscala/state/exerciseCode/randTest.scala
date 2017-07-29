@@ -5,9 +5,9 @@
  *  since I feel it is an implementation detail
  *  of the fpinscala.state.rand package.
  *
- *  At least initialy, repeat tests done in
- *  the fpinscala.test.chap06.rngStandalone
- *  package.
+ *  Since I changed the nature of Rand from an
+ *  "is a state action" to a "has a state action",
+ *  I am dropping the lower level state run tests.
  *
  */
 package fpinscala.chap06.state.rand
@@ -18,54 +18,14 @@ object randTest {
 
   val rng42 = LCG(42)
   val rng666 = LCG(666)
+  val rng777 = LCG(777)
 
   def main(args: Array[String]): Unit = {
 
-    // See if fpinscala.state namespace in scope
     print("\nrng42 = "); println(rng42)
 
     print("RNG.nonNegativeInt(rng42)  = ")
     println(RNG.nonNegativeInt(rng42))
-
-    // Imperitively generate 10 random doubles d, 0.0 <= d < 1.0,
-    println("\nImperitively print ten random doubles in [0,1):")
-
-    var rngVar: RNG = rng42
-    var kk = 0
-    while (kk < 10) {
-      kk = kk + 1
-      val pair = RNG.double.run(rngVar)
-      val ranD = pair._1
-      rngVar = pair._2
-      println(ranD)
-    }
-
-    // Repeat again manually but done more functionally.
-    println("\nUse a Stream to print ten random doubles in [0,1):")
-
-    val getNextRanPair = (x: (Double, RNG)) => RNG.double.run(x._2)
-    val rngS = Stream.iterate(RNG.double.run(rng42))(getNextRanPair) map (_._1) take 10
-    for (ranDouble <- rngS) println(ranDouble)
-
-    // Test ints
-    println("\nTest ints:")
-    val (  twoList, rng1) = RNG.ints(2).run(rng42)
-    val (emptyList, rng2) = RNG.ints(0).run(rng1)
-    val (  sixList,  _  ) = RNG.ints(6).run(rng2)
-    print("\ntwoList = "); println(twoList)
-    print("emptyList = "); println(emptyList)
-    print("sixList = ");   println(sixList)
-
-    // Test nonNegativeEvenInt
-    println("\nTest nonNegativeEven:")
-    val (evenA, rngA) = RNG.nonNegativeEvenInt.run(rng42)
-    val (evenB, rngB) = RNG.nonNegativeEvenInt.run(rngA)
-    val (evenC, rngC) = RNG.nonNegativeEvenInt.run(rngB)
-    val (evenD, rngD) = RNG.nonNegativeEvenInt.run(rngC)
-    print("\nevenA = "); println(evenA)
-    print("evenB = "); println(evenB)
-    print("evenC = "); println(evenC)
-    print("evenD = "); println(evenD)
 
     // Test map and map2
     println("\nTest map and map2 by throwing dice:")
@@ -76,88 +36,92 @@ object randTest {
     def twoDiceRoll: Rand[Int] =
       dieRoll.map2(dieRoll)(_ + _)
 
-    // Some manuel rolls to start off
-    println("\nManually roll 2 dice 4 times:")
-    val (twoDiceRoll1, rngR1) = twoDiceRoll.run(rngD)
-    val (twoDiceRoll2, rngR2) = twoDiceRoll.run(rngR1)
-    val (twoDiceRoll3, rngR3) = twoDiceRoll.run(rngR2)
-    val (twoDiceRoll4, rngR4) = twoDiceRoll.run(rngR3)
-    print("twoDiceRoll1 = "); println(twoDiceRoll1)
-    print("twoDiceRoll2 = "); println(twoDiceRoll2)
-    print("twoDiceRoll3 = "); println(twoDiceRoll3)
-    print("twoDiceRoll4 = "); println(twoDiceRoll4)
-
-    // Auto-roll some dice
-    println("\nAuto roll 2 dice 10 times:")
+    // Roll some dice
+    println("Auto rolling 2 dice 10 and 20 times -")
 
     val diceRolls10 = List.fill(10)(twoDiceRoll)
     val rollSome10 = Rand.sequence(diceRolls10)
-    print("rollSome10(rngD) = ");
-    println(rollSome10(rngD))
+    val diceRolls20 = List.fill(20)(twoDiceRoll)
+    val rollSome20 = Rand.sequence(diceRolls20)
+    print("rollSome10(rng42) = ");
+    println(rollSome10(rng42))
+    print("rollSome20(rng777) = ");
+    println(rollSome20(rng777))
 
     // Test how stack-safe is sequence.
-    def averageDiceRoll(numRolls: Int): Rand[Double] = {
+    println("\nTest stack-safety of Rand.sequence:")
+    def averageTwoDiceRoll(numRolls: Int): Rand[Double] = {
       val diceRolls = Rand.sequence(List.fill(numRolls)(twoDiceRoll))
       diceRolls map { _.sum.toDouble/numRolls }
     }
+
+    print("averageTwoDiceRoll(10)(rng42) = ")
+    println(averageTwoDiceRoll(10)(rng42))
+    print("averageTwoDiceRoll(10)(rng666) = ")
+    println(averageTwoDiceRoll(10)(rng666))
+    print("averageTwoDiceRoll(10)(rng777) = ")
+    println(averageTwoDiceRoll(10)(rng777))
+    print("averageTwoDiceRoll(100)(rng42) = ")
+    println(averageTwoDiceRoll(100)(rng42))
+    print("averageTwoDiceRoll(100)(rng666) = ")
+    println(averageTwoDiceRoll(100)(rng666))
+    print("averageTwoDiceRoll(100)(rng777) = ")
+    println(averageTwoDiceRoll(100)(rng777))
+    print("averageTwoDiceRoll(2000)(rng42) = ")
+    println(averageTwoDiceRoll(2000)(rng42))
+    print("averageTwoDiceRoll(2000)(rng666) = ")
+    println(averageTwoDiceRoll(2000)(rng666))
+    print("averageTwoDiceRoll(2000)(rng777) = ")
+    println(averageTwoDiceRoll(2000)(rng777))
     
-    println("\nAuto roll 2 dice large number of times and find average:")
-    var myPair: (Double,RNG) = (0.0, rng42)
-    for (numToRoll <- List(10, 10, 10, 10, 10, 500, 500, 500, 500, 500,
-                           2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000)) {
-      myPair = averageDiceRoll(numToRoll).run(myPair._2)
-      println("Average of " + numToRoll + " two dice rolls is " + myPair._1)
-    }
+    // Look at ints.
+    println("\nLook at ints:")
 
-    // Look at ints again.
-    println("\nLook at ints again:\n")
-
-    print("Compare with different RNGs:")
+    print("Compare with different RNGs -")
     val tenInts1 = RNG.ints(10)(rng42)
     val tenInts2 = RNG.ints(10)(rng666)
     print("\n10 Ints: "); tenInts1.foreach(x => print(x + " "))
     print("\n10 Ints: "); tenInts2.foreach(x => print(x + " "))
 
-    print("\n\nCompare different syntax:")
+    print("\n\nCompare different syntax -")
     print("\n10 Ints: ")
     RNG.ints(10)(rng666).foreach(x => print(x + " "))
     print("\n10 Ints: ")
-    RNG.ints(10)(rng666) foreach {x => print(x + " ")}
+    RNG.ints(10)(rng666) foreach { x => print(x + " ") }
 
     // Test RNG.nonNegativeIntLessThan
+    print("\n\nTest RNG.nonNegativeIntLessThan and ")
+    println("Rand.sequence:")
 
     def baz(num: Int, lt: Int): Rand[List[Int]] = 
       Rand.sequence(List.fill(num)(RNG.nonNegativeIntLessThan(lt)))
 
-    print("\n100 random non-neg Ints less than 20")
-    println(" (using RNG.nonNegativeIntLessThan):")
+    print("100 random non-neg Ints less than 10")
+    println(" (using RNG.nonNegativeIntLessThan) -")
     for (ii <- baz(100, 10)(rng42)) {print(ii + " ")}
 
-    print("\n50 random non-neg Ints less than 200000000")
-    println(" (using RNG.nonNegativeIntLessThan):")
+    print("\n\n50 random non-neg Ints less than 200000000")
+    println(" (using RNG.nonNegativeIntLessThan) -")
     for (ii <- baz(50, 200000000)(rng42)) {println(ii)}
 
     // Test map and map2
-    println("\nTest map and map2 by throwing dice:\n")
-
-    def dieRollFM: Rand[Int] =
-      RNG.nonNegativeIntLessThan(6).map(_ + 1)
-
-    def twoDiceRollFM: Rand[Int] =
-      dieRollFM.map2(dieRollFM)(_ + _)
+    println("\nTest Rand.sequence by throwing dice:")
 
     def throwSome(num: Int): Rand[List[Int]] =
-      Rand.sequence(List.fill(num)(twoDiceRollFM))
+      Rand.sequence(List.fill(num)(twoDiceRoll))
 
     print("throwSome(20)(rng42) = ")
     println(throwSome(20)(rng42))
 
     // Lets try a for comprehension:
+    println("\nTest Rand for comprehensions:")
 
     /** Return a random action that will
      *  product a List of length less than lt
-     *  and whose values are bounded by the
-     *  List's length.
+     *  and whose values are bounded by a 
+     *  random int less than the List's length.
+     *
+     *  This function is a bit contrived.
      */
     def makeRandList1(lt: Int): Rand[List[Int]] = for {
       n   <- RNG.nonNegativeIntLessThan(lt)
@@ -176,14 +140,14 @@ object randTest {
         }
       }
 
-    println("\nMake some length/value bounded List[Int]:")
+    println("Make some length/value bounded List[Int] -")
 
     val myRandListFor10 = makeRandList1(10)
     val myRandListFlatmap10 = makeRandList2(10)
     val myRandListFor20 = makeRandList1(20)
     val myRandListFlatmap20 = makeRandList2(20)
 
-    print("\nmyRandListFor10(rng42) = ")
+    print("myRandListFor10(rng42) = ")
     println(myRandListFor10(rng42))
     print("myRandListFlatmap10(rng42) = ")
     println(myRandListFlatmap10(rng42))

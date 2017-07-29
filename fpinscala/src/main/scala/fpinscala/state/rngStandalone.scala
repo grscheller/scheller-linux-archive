@@ -283,11 +283,11 @@ object RNG {
    */
   def nonNegativeLessThanManual(n: Int): Rand[Int] =
     rng1 => {
-      val (i, rng2) = nonNegativeInt(rng1)
-      if (i + (n-1) < 0)
+      val (ii, rng2) = nonNegativeInt(rng1)
+      if (ii + (n-1) < 0)
         nonNegativeLessThanManual(n)(rng2)
       else
-        (i % n, rng2)
+        (ii % n, rng2)
     }
 
   def flatMap[A,B](f: Rand[A])(g: A => Rand[B]): Rand[B] = 

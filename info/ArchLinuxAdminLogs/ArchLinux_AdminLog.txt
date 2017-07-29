@@ -3589,3 +3589,129 @@ Purpose: To indicate what was done to create gauss17 and
 
   Actually, Arch sbt version downloaded sbt version I used under Windows10
   based on a project/build.properties file I committed to my GITHUB repo.
+
+2017-07-27:
+  Replace Wicd with NetworkManager.
+
+  NetworkManager was developed by Redhat and is the default in Gnome.
+  In case I go to 3G internet solution, NetworkManager has support for
+  this.  Better support VPN, which also might be a future possibility.
+  Also, hope this cures having to configure static IP's in some
+  wifi hotspots.
+
+    $ sudo pacman -Syu networkmanager nm-connection-editor \
+                       networkmanager-dispatcher-sshd dhclient 
+
+  First two items needed for functionality.  Haven't reconfigured sshd
+  since the rebuild, hence third item.  Forth item for requesting a
+  routeable IPv6 address.
+
+  I am guessing second item replaces package network-manager-applet 
+  mentioned in the Network-Manager Arch Wiki. [Bad guess]
+
+  Now, unconfigure Wicd an configure NetworkManager:
+
+    $ sudo systemctl disable wicd
+    Removed /etc/systemd/system/dbus-org.wicd.daemon.service.
+    Removed /etc/systemd/system/multi-user.target.wants/wicd.service.
+
+    $ sudo systemctl enable NetworkManager
+    Created symlink /etc/systemd/system/dbus-org.freedesktop.NetworkManager.service → /usr/lib/systemd/system/NetworkManager.service.
+    Created symlink /etc/systemd/system/multi-user.target.wants/NetworkManager.service → /usr/lib/systemd/system/NetworkManager.service.
+    Created symlink /etc/systemd/system/dbus-org.freedesktop.nm-dispatcher.service → /usr/lib/systemd/system/NetworkManager-dispatcher.service.
+
+  Reboot.
+
+    $ journalctl -b | egrep  "dhc"
+    Jul 27 11:55:40 gauss17 NetworkManager[375]: <info>  [1501178140.2879] dhcp-init: Using DHCP client 'dhclient'
+
+  a good sign.
+
+  When I log into XFCE, looks like the network applet in my top panel
+  is Wicd specific, gives warning message: "Could not connect to
+  wicd's D-Bus interface..."
+
+  Missing
+
+    $ pacman -Ss network-manager-applet
+    extra/network-manager-applet 1.8.2-1
+        Applet for managing network connections
+
+  So, lets try bringing the wifi connection back up via nmcli:
+
+  For info,
+
+    $ man nmcli
+    $ man nmcli-examples
+
+  List devices to connect to (-p for pretty),
+
+    $ nmcli -p device wifi list
+    ============================
+      Wi-Fi scan list (wlp2s0)
+    ============================
+    *  SSID         MODE   CHAN  RATE       SIGNAL  BARS  SECURITY 
+    --------------------------------------------------------------------
+       MotoG3 8195  Infra  1     54 Mbit/s  52      ▂▄__  WPA2     
+       2100-429     Infra  1     54 Mbit/s  29      ▂___  WPA2 
+
+  The nmcli-examples page has a good example of a NetworkManager dispatcher
+  script to make Ethernet and Wi-Fi mutually exclusive.
+
+  Examples seem more ethernet oriented.  Don't see getting around having to
+  configure text files, so I will punt and go back to Wicd to pacman
+  in the missing network-manager-applet package.
+
+  Installed network-manager-applet
+
+    $ sudo pacman -Syu network-manager-applet
+
+  and reconfigured system back to NetworkManager.
+
+  XFCE did not know anything about nm-applet until I ran it from the
+  command line.  After that, it integrated itself into my XFCE
+  startup settings.  Just clicking on a wifi connection does not
+  bring up a configuration menu, I had to configure through the
+  "Connect to hidden WiFi Network" menu.  Deactivated the Wicd applet
+  counterpart to nm-applet.
+
+2017-07-29:
+  Made Ethernet and WiFi mutually exclusive.  Plugging in an Ethernet
+  cable causes WiFi to go into Airplane mode.
+
+  Put the following script,
+
+    #!/bin/bash
+    #
+    # Added by grscheller to make Ethernet and WiFi
+    # mutually exclusive.  Code taken from example 12
+    # of the nmcli-examples man page.
+    #
+    export LC_ALL=C
+
+    enable_disable_wifi ()
+    {
+        result=$(nmcli dev | grep "ethernet" | grep -w "connected")
+        if [ -n "$result" ]
+        then
+            nmcli radio wifi off
+        else
+            nmcli radio wifi on
+        fi
+    }
+
+    if [ "$2" = "up" ]
+    then
+        enable_disable_wifi
+    fi
+
+    if [ "$2" = "down" ]
+    then
+        enable_disable_wifi
+    fi
+
+  Into /etc/NetworkManager/dispatcher.d/70-wifi-wired-exclusive
+
+    $ sudo chmod 700 /etc/NetworkManager/dispatcher.d/70-wifi-wired-exclusive
+    $ ls -l /etc/NetworkManager/dispatcher.d/70-wifi-wired-exclusive 
+    -rwx------ 1 root root 469 Jul 29 11:02 /etc/NetworkManager/dispatcher.d/70-wifi-wired-exclusive

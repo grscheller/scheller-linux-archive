@@ -6,7 +6,8 @@ package fpinscala.state
  *  a purely functional way.
  *
  *  Abstracting what I did for the RNG
- *  pseudo-random number generators.
+ *  pseudo-random number generator trait
+ *  in package fpinscala.rngStandalone.
  *
  *  Use case for RNG whould be to use
  *
@@ -89,11 +90,6 @@ object State {
    */
   def unit[S,A](a: A): State[S,A] = State(s => (a, s))
 
-  def sequence[S,A](fs: List[State[S,A]]): State[S,List[A]] =
-    fs.reverse.foldLeft(unit[S,List[A]](Nil)) {
-      (acc, f) => f.map2(acc)(_ :: _)
-    }
-
   /** Get the state.
    *
    *  In the run action, return the
@@ -117,5 +113,45 @@ object State {
       s <- get
       _ <- set(f(s))
     } yield ()
+
+  def sequenceSimple[S,A](fs: List[State[S,A]]): State[S,List[A]] =
+    fs.reverse.foldLeft(unit[S,List[A]](Nil)) {
+      (acc, f) => f.map2(acc)(_ :: _)
+    }
+
+  /** Combine an indexable collection of state actions into
+   *  a single state action via a binary operator.
+   *
+   *    Note: For efficiency, collection assumed nonempty.
+   */
+  def balancedBinComp[S,A](stateActions: IndexedSeq[State[S,A]])
+                          (binOp: (A,A) => A): State[S,A] = {
+
+    def balanced(sas: IndexedSeq[State[S,A]]): State[S,A] =
+      if (sas.size == 1)
+        sas(0)
+      else {
+        val (lsas, rsas) = sas.splitAt(sas.size/2)
+        balanced(lsas).map2(balanced(rsas))(binOp)
+      }
+
+    balanced(stateActions)
+  }
+
+  /** Change an IndexedSeq of state actions into
+   *  a state action of an IndexedSeq.
+   */
+  def sequenceIndexedSeq[S,A](
+    stateActions: IndexedSeq[State[S,A]]): State[S,IndexedSeq[A]] =
+      if (stateActions.isEmpty)
+        unit(IndexedSeq())
+      else {
+        val randV = stateActions.map(_.map(a => IndexedSeq(a)))
+        balancedBinComp(randV)(_ ++ _)
+      }
+
+  /** Change a List of state actions into a state action of a List. */
+  def sequence[S,A](stateActions: List[State[S,A]]): State[S,List[A]] =
+    sequenceIndexedSeq(stateActions.toVector) map (_.toList)
 
 }

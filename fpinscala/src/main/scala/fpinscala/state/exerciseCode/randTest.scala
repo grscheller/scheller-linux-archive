@@ -73,6 +73,12 @@ object randTest {
     println(averageTwoDiceRoll(2000)(rng666))
     print("averageTwoDiceRoll(2000)(rng777) = ")
     println(averageTwoDiceRoll(2000)(rng777))
+    print("averageTwoDiceRoll(50000)(rng42) = ")
+    println(averageTwoDiceRoll(50000)(rng42))
+    print("averageTwoDiceRoll(50000)(rng666) = ")
+    println(averageTwoDiceRoll(50000)(rng666))
+    print("averageTwoDiceRoll(50000)(rng777) = ")
+    println(averageTwoDiceRoll(50000)(rng777))
     
     // Look at ints.
     println("\nLook at ints:")

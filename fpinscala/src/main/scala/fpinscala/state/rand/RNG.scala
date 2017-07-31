@@ -36,18 +36,17 @@ object RNG {
   def int: Rand[Int] = Rand[Int](State(_.nextInt))
 
   /** Random action to generate a list of Int */
-  def ints(count: Int): Rand[List[Int]] =
-    Rand.sequence(List.fill(count)(int))
+  def ints(count: Int): Rand[List[Int]] = Rand.sequence(List.fill(count)(int))
 
   /** Generate a random integer between
    *  0 and Int.maxValue (inclusive).
    */
-  def nonNegativeInt: Rand[Int] = Rand(State(rng =>
-    rng.nextInt match {
-      case (ran, rng2) if ran >= 0            => ( ran, rng2)
-      case (ran, rng2) if ran == Int.MinValue => (   0, rng2)
-      case (ran, rng2)                        => (-ran, rng2)
-    }))
+  def nonNegativeInt: Rand[Int] = Rand(State(
+    rng => rng.nextInt match {
+        case (ran, rng2) if ran >= 0            => ( ran, rng2)
+        case (ran, rng2) if ran == Int.MinValue => (   0, rng2)
+        case (ran, rng2)                        => (-ran, rng2)
+      }))
 
   /** Generate an even random integer between
    *  0 and Int.maxValue (inclusive).
@@ -84,22 +83,40 @@ object RNG {
    *
    *    Pathological cases:
    *      If start = end, always generate start.
-   *      If statt > end, generate start >= randome_variable > end
+   *      If statt > end, generate start >= random_variable > end
    *
-   *    Works great unless (end - start) > Int.Maxvalue, then things
-   *    no longer transparently simple.  If only java had unsigned types!
-   *
-   *    Idea: if start >= end then you just get start???
-   *    Idea: return an Option??? Throw exception??? 
+   *    Logic is complicated by the JVM not having unsigned types!
    *
    */
-  def exclusiveIntRange(start: Int, end: Int): Rand[Int] = {
-    val len = if (start != end) end - start else 1
-    val sign = len/len.abs
-    nonNegativeIntLessThan(len.abs) map {
-      (ii: Int) => start + sign*ii
+  def exclusiveIntRange(start: Int, end: Int): Rand[Int] =
+    if (start > end) {
+        exclusiveIntRange(end, start) map { _ + 1 }
+    } else {
+        if (end - start >= 0) {
+            // Normal logic
+            val len = if (start != end) end - start else 1
+            nonNegativeIntLessThan(len) map { start + _ }
+        } else {
+            // integer difference > Int.MaxValue 
+            val neg = -start
+            val nonNeg = end
+            val distNonNeg = exclusiveIntRange(0, end)
+            if (start > Int.MinValue) {
+              val probNeg = neg.toDouble/(neg.toDouble + nonNeg.toDouble)
+              val distNeg = exclusiveIntRange(start, 0)
+              joint2(probNeg)(distNeg, distNonNeg)
+            } else {
+              // integer difference for negatives > Int.MaxValue
+              val distNegLow = exclusiveIntRange(Int.MinValue, Int.MinValue/2)
+              val distNegHigh = exclusiveIntRange(Int.MinValue/2, 0)
+              joint3(0.25, 0.25)(distNegLow, distNegHigh, distNonNeg)
+            }
+        }
     }
-  }
+
+  /** Generate a random boolean */
+  def boolean: Rand[Boolean] =
+    int map {ii => ii % 2 == 0}
 
   /** Generate a random Double between
    *  0 (inclusive) and 1 (exclusive).
@@ -109,9 +126,80 @@ object RNG {
     nonNegativeInt map { _.toDouble/d }
   }
 
-  /** Generate a random boolean */
-  def boolean: Rand[Boolean] =
-    int map {ii => ii % 2 == 0}
+  /** Weighted joint distribution of 2 distributon
+   *    dist1 with probability prob1
+   *    dist2 with probability 1 - prob2
+   */
+  def joint2[A](prob1: Double)(dist1: Rand[A], dist2: Rand[A]) =
+    double flatMap {
+      (prob: Double) =>
+        if (prob < prob1)
+          dist1
+        else
+          dist2
+    }
+
+  /** Weighted joint distribution of 3 distributon
+   *    dist1 with probability prob1
+   *    dist2 with probability prob2
+   *    dist3 with probability 1 - prob1 - prob2
+   */
+  def joint3[A](prob1: Double, prob2: Double)
+               (dist1: Rand[A], dist2: Rand[A], dist3: Rand[A]) =
+    double flatMap {
+      (prob: Double) =>
+        if (prob < prob1)
+          dist1
+        else if (prob < prob1 + prob2)
+          dist2
+        else
+          dist3
+    }
+
+  /** Weighted joint distribution of 4 distributon
+   *    dist1 with probability prob1
+   *    dist2 with probability prob2
+   *    dist3 with probability prob3
+   *    dist4 with probability 1 - prob1 - prob2 - prob3
+   */
+  def joint4[A](prob1: Double, prob2: Double, prob3: Double)
+               (dist1: Rand[A], dist2: Rand[A],
+                dist3: Rand[A], dist4: Rand[A]) =
+    double flatMap {
+      (prob: Double) =>
+        if (prob < prob1)
+          dist1
+        else if (prob < prob1 + prob2)
+          dist2
+        else if (prob < prob1 + prob2 + prob3)
+          dist3
+        else
+          dist4
+    }
+
+  /** Weighted joint distribution of 5 distributon
+   *    dist1 with probability prob1
+   *    dist2 with probability prob2
+   *    dist3 with probability prob3
+   *    dist3 with probability prob4
+   *    dist4 with probability 1 - prob1 - prob2 - prob3 - prob4
+   */
+  def joint5[A](prob1: Double, prob2: Double, prob3: Double, prob4: Double)
+               (dist1: Rand[A], dist2: Rand[A], dist3: Rand[A],
+                dist4: Rand[A], dist5: Rand[A]) =
+    double flatMap {
+      (prob: Double) =>
+        if (prob < prob1)
+          dist1
+        else if (prob < prob1 + prob2)
+          dist2
+        else if (prob < prob1 + prob2 + prob3)
+          dist3
+        else if (prob < prob1 + prob2 + prob3 + prob4)
+          dist4
+        else
+          dist5
+    }
 
 }
 

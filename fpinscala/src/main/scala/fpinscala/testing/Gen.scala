@@ -22,7 +22,7 @@ case class Gen[A](sample: Rand[A])
 
 object Gen {
   def choose(start: Int, stopExclusive: Int): Gen[Int] =
-    Gen(RNG.exclusiveIntRange(start, stopExclusive))
+    Gen(Rand.exclusiveIntRange(start, stopExclusive))
   // def listOf[A](a: Gen[A]): Gen[List[A]]
   // def forAll[A](a: Gen[A])(f: A => Boolean): Prop
 }

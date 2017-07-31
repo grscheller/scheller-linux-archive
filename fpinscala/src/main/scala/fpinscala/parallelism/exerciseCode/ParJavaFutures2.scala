@@ -14,7 +14,7 @@ object ParJavaFutures2 {
 
   // Utility function to create a bounded list of non-negative integers.
   def makeRandomList(lt: Int, len: Int) =
-    Rand.sequence(List.fill(len)(RNG.nonNegativeIntLessThan(lt)))
+    Rand.sequence(List.fill(len)(Rand.nonNegativeIntLessThan(lt)))
 
   // Model an expensive calculations with a less than
   // stellar implementations of the factorial functon.

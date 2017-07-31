@@ -24,14 +24,14 @@ object randTest {
 
     print("\nrng42 = "); println(rng42)
 
-    print("RNG.nonNegativeInt(rng42)  = ")
-    println(RNG.nonNegativeInt(rng42))
+    print("Rand.nonNegativeInt(rng42)  = ")
+    println(Rand.nonNegativeInt(rng42))
 
     // Test map and map2
     println("\nTest map and map2 by throwing dice:")
 
     def dieRoll: Rand[Int] =
-      RNG.nonNegativeInt.map(die => die % 6 + 1)
+      Rand.nonNegativeInt.map(die => die % 6 + 1)
 
     def twoDiceRoll: Rand[Int] =
       dieRoll.map2(dieRoll)(_ + _)
@@ -84,30 +84,30 @@ object randTest {
     println("\nLook at ints:")
 
     print("Compare with different RNGs -")
-    val tenInts1 = RNG.ints(10)(rng42)
-    val tenInts2 = RNG.ints(10)(rng666)
+    val tenInts1 = Rand.ints(10)(rng42)
+    val tenInts2 = Rand.ints(10)(rng666)
     print("\n10 Ints: "); tenInts1.foreach(x => print(x + " "))
     print("\n10 Ints: "); tenInts2.foreach(x => print(x + " "))
 
     print("\n\nCompare different syntax -")
     print("\n10 Ints: ")
-    RNG.ints(10)(rng666).foreach(x => print(x + " "))
+    Rand.ints(10)(rng666).foreach(x => print(x + " "))
     print("\n10 Ints: ")
-    RNG.ints(10)(rng666) foreach { x => print(x + " ") }
+    Rand.ints(10)(rng666) foreach { x => print(x + " ") }
 
-    // Test RNG.nonNegativeIntLessThan
-    print("\n\nTest RNG.nonNegativeIntLessThan and ")
+    // Test Rand.nonNegativeIntLessThan
+    print("\n\nTest Rand.nonNegativeIntLessThan and ")
     println("Rand.sequence:")
 
     def baz(num: Int, lt: Int): Rand[List[Int]] = 
-      Rand.sequence(List.fill(num)(RNG.nonNegativeIntLessThan(lt)))
+      Rand.sequence(List.fill(num)(Rand.nonNegativeIntLessThan(lt)))
 
     print("100 random non-neg Ints less than 10")
-    println(" (using RNG.nonNegativeIntLessThan) -")
+    println(" (using Rand.nonNegativeIntLessThan) -")
     for (ii <- baz(100, 10)(rng42)) {print(ii + " ")}
 
     print("\n\n50 random non-neg Ints less than 200000000")
-    println(" (using RNG.nonNegativeIntLessThan) -")
+    println(" (using Rand.nonNegativeIntLessThan) -")
     for (ii <- baz(50, 200000000)(rng42)) {println(ii)}
 
     // Test map and map2
@@ -130,17 +130,17 @@ object randTest {
      *  This function is a bit contrived.
      */
     def makeRandList1(lt: Int): Rand[List[Int]] = for {
-      n   <- RNG.nonNegativeIntLessThan(lt)
-      d   <- RNG.nonNegativeIntLessThan(n)
-      ns  <- RNG.ints(n)
+      n   <- Rand.nonNegativeIntLessThan(lt)
+      d   <- Rand.nonNegativeIntLessThan(n)
+      ns  <- Rand.ints(n)
     } yield ns map { _.abs % (d + 1) }
 
     // Repeat without the for comprehension
 
     def makeRandList2(lt: Int): Rand[List[Int]] =
-      RNG.nonNegativeIntLessThan(lt) flatMap { n =>
-        RNG.nonNegativeIntLessThan(n) flatMap { d =>
-          RNG.ints(n) map { ns =>
+      Rand.nonNegativeIntLessThan(lt) flatMap { n =>
+        Rand.nonNegativeIntLessThan(n) flatMap { d =>
+          Rand.ints(n) map { ns =>
             ns map { _.abs % (d + 1) }
           }
         }

@@ -24,9 +24,9 @@ case class Rand[+A](action: State[RNG,A]) {
   /** Produce a definite value by applying the random variable
    *  to a value of the underlying probability space.
    *
-   *  Random variable in the probability theory, not
-   *  in the "Fortran" sense of a function which produces
-   *  a "random" value.
+   *  Random variable as in probability theory, not in
+   *  the "Fortran" sense of a function which produces
+   *  a different "random" value whenever called.
    */
   def apply(s: RNG): A = action.run(s)._1
 
@@ -85,10 +85,13 @@ object Rand {
    *    32-bit signed integer values (Int).
    *
    *    For the LCG subclass, this mapping is uniform, i.e.
-   *    it is equally likey to get any possible Int value.
+   *    it is equally likely to get any possible Int value.
    *
    */
   def int: Rand[Int] = Rand[Int](State(_.nextInt))
+
+  /** Generate a random boolean */
+  def boolean: Rand[Boolean] = int map {ii => ii % 2 == 0}
 
   /** Random action to generate a list of Int */
   def ints(count: Int): Rand[List[Int]] = Rand.sequence(List.fill(count)(int))
@@ -169,10 +172,6 @@ object Rand {
         }
     }
 
-  /** Generate a random boolean */
-  def boolean: Rand[Boolean] =
-    int map {ii => ii % 2 == 0}
-
   /** Generate a random Double between
    *  0 (inclusive) and 1 (exclusive).
    */
@@ -185,7 +184,7 @@ object Rand {
    *    dist1 with probability prob1
    *    dist2 with probability 1 - prob2
    */
-  def joint2[A](prob1: Double)(dist1: Rand[A], dist2: Rand[A]) =
+  def joint2[A](prob1: Double)(dist1: Rand[A], dist2: Rand[A]): Rand[A] =
     double flatMap {
       (prob: Double) =>
         if (prob < prob1)
@@ -200,7 +199,7 @@ object Rand {
    *    dist3 with probability 1 - prob1 - prob2
    */
   def joint3[A](prob1: Double, prob2: Double)
-               (dist1: Rand[A], dist2: Rand[A], dist3: Rand[A]) =
+               (dist1: Rand[A], dist2: Rand[A], dist3: Rand[A]): Rand[A] =
     double flatMap {
       (prob: Double) =>
         if (prob < prob1)
@@ -219,7 +218,7 @@ object Rand {
    */
   def joint4[A](prob1: Double, prob2: Double, prob3: Double)
                (dist1: Rand[A], dist2: Rand[A],
-                dist3: Rand[A], dist4: Rand[A]) =
+                dist3: Rand[A], dist4: Rand[A]): Rand[A] =
     double flatMap {
       (prob: Double) =>
         if (prob < prob1)
@@ -241,7 +240,7 @@ object Rand {
    */
   def joint5[A](prob1: Double, prob2: Double, prob3: Double, prob4: Double)
                (dist1: Rand[A], dist2: Rand[A], dist3: Rand[A],
-                dist4: Rand[A], dist5: Rand[A]) =
+                dist4: Rand[A], dist5: Rand[A]): Rand[A] =
     double flatMap {
       (prob: Double) =>
         if (prob < prob1)

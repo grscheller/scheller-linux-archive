@@ -21,8 +21,17 @@ object Prop {
 case class Gen[A](sample: Rand[A])
 
 object Gen {
+
+  /** A "lazy" unit which always generates the same value. */
+  def unit[A](a: => A): Gen[A] = Gen(Rand.unit(a))
+
   def choose(start: Int, stopExclusive: Int): Gen[Int] =
     Gen(Rand.exclusiveIntRange(start, stopExclusive))
-  // def listOf[A](a: Gen[A]): Gen[List[A]]
-  // def forAll[A](a: Gen[A])(f: A => Boolean): Prop
+
+  def listOfN[A](n: Int, g: Gen[A]): Gen[List[A]] =
+    Gen(Rand.sequence(List.fill(n)(g.sample)))
+
+  def boolean: Gen[Boolean] = Gen(Rand.boolean)
+
 }
+

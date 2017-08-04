@@ -1,6 +1,7 @@
 /** Property based testing package.
  *
- *    
+ *   A library modelled after ScalaCheck's
+ *   interface and behavior. 
  *
  */
 package fpinscala.testing
@@ -18,7 +19,11 @@ object Prop {
   type SuccessCount = Int
 }
 
-case class Gen[A](sample: Rand[A])
+case class Gen[A](sample: Rand[A]){
+
+  def map[B](f: A => B): Gen[B] = Gen(sample map f)
+
+}
 
 object Gen {
 

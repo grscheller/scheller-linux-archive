@@ -1,11 +1,6 @@
 package fpinscala.laziness
 
-/** Implement a lazy list
- *
- * @author    "Geoffrey Scheller <geoffrey@scheller.com>"
- * @version   1.1
- * @since     1.0
- */
+/** Implement a lazy list */
 sealed trait Stream[+A] { self =>
 
   import Stream._
@@ -144,18 +139,26 @@ sealed trait Stream[+A] { self =>
 
   /** Append supertype stream */
   def :::#[B>:A](bs: Stream[B]): Stream[B] =
-    foldRight(bs)((a,as) => cons(a, as))          // Book ans way
+    foldRight(bs)((a,as) => cons(a, as))
 
-  /** Flatmap (Bind) for Streams */
+  /** Flatmap (Bind) for Streams
+   *
+   *  @note Book's answers implementation
+   *
+   */
   def flatMap1[B](f: A => Stream[B]): Stream[B] =
-    foldRight(empty[B])((a, bs) => f(a) #::: bs)  // Scala library way
+    foldRight(empty[B])((a, bs) => f(a) :::# bs)
 
-  /** Flatmap (Bind) for Streams */
+  /** Flatmap (Bind) for Streams
+   *
+   *  @note Scala Library's implementation
+   *
+   */
   def flatMap[B](f: A => Stream[B]): Stream[B] =
-    foldRight(empty[B])((a, bs) => f(a) :::# bs)  // Book answer way
+    foldRight(empty[B])((a, bs) => f(a) #::: bs)
 
-  /** Return the first element which matches a predicate */
-  def find(p: A => Boolean) =
+  /** Return Option to first element which matches a predicate */
+  def find(p: A => Boolean): Option[A] =
     filter(p).headOption
 
   def zipWith[B,C](that: Stream[B])(f: (A, B) => C): Stream[C] =

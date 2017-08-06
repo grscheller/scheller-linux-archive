@@ -1,7 +1,8 @@
 /** Property based testing package.
  *
- *   A library modelled after ScalaCheck's
- *   interface and behavior. 
+ *   A library modeled after ScalaCheck's
+ *   interface and behavior.  ScalaCheck itself
+ *   is modeled after Haskell's QuickCheck.
  *
  */
 package fpinscala.testing
@@ -19,9 +20,12 @@ object Prop {
   type SuccessCount = Int
 }
 
-case class Gen[A](sample: Rand[A]){
+case class Gen[A](sample: Rand[A]) {
 
   def map[B](f: A => B): Gen[B] = Gen(sample map f)
+
+  def flatMap[B](g: A => Gen[B]): Gen[B] =
+    Gen(sample.flatMap(a => g(a).sample))
 
 }
 

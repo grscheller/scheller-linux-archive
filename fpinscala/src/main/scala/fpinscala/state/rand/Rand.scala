@@ -93,13 +93,20 @@ object Rand {
   /** Generate a random boolean */
   def boolean: Rand[Boolean] = int map {ii => ii % 2 == 0}
 
+  /** Random action to generate a list from a random action */
+  def randList[A](count: Int, ra: Rand[A]): Rand[List[A]] =
+    sequence(List.fill(count)(ra))
+
   /** Random action to generate a list of Int */
-  def ints(count: Int): Rand[List[Int]] = Rand.sequence(List.fill(count)(int))
+  def ints(count: Int): Rand[List[Int]] = randList(count, int)
+
+  def nonNegIntsLessThan(count: Int, bound: Int): Rand[List[Int]] =
+    randList(count, nonNegIntLessThan(bound))
 
   /** Generate a random integer between
    *  0 and Int.maxValue (inclusive).
    */
-  def nonNegativeInt: Rand[Int] = Rand(State(
+  def nonNegInt: Rand[Int] = Rand(State(
     rng => rng.nextInt match {
         case (ran, rng2) if ran >= 0            => ( ran, rng2)
         case (ran, rng2) if ran == Int.MinValue => (   0, rng2)
@@ -109,8 +116,8 @@ object Rand {
   /** Generate an even random integer between
    *  0 and Int.maxValue (inclusive).
    */
-  def nonNegativeEvenInt: Rand[Int] =
-   nonNegativeInt map { ii => ii - ii%2 }
+  def nonNegEvenInt: Rand[Int] =
+   nonNegInt map { ii => ii - ii%2 }
 
   /** Random action non-negative Int less than n
    *
@@ -128,13 +135,13 @@ object Rand {
    *    Caller be warned, don't call with n <= 0.
    *
    */
-  def nonNegativeIntLessThan(n: Int): Rand[Int] = 
-    nonNegativeInt flatMap { ii =>
+  def nonNegIntLessThan(n: Int): Rand[Int] = 
+    nonNegInt flatMap { ii =>
       val mod = ii % n
       if (ii + ((n-1) - mod) >= 0)
-        Rand.unit(mod)
+        unit(mod)
       else
-        nonNegativeIntLessThan(n)
+        nonNegIntLessThan(n)
     }
 
   /** Random Int within the range start <= random_variable < end
@@ -153,7 +160,7 @@ object Rand {
         if (end - start >= 0) {
             // Normal logic
             val len = if (start != end) end - start else 1
-            nonNegativeIntLessThan(len) map { start + _ }
+            nonNegIntLessThan(len) map { start + _ }
         } else {
             // integer difference > Int.MaxValue 
             val neg = -start
@@ -177,7 +184,7 @@ object Rand {
    */
   def double: Rand[Double] = {
     val d = Int.MaxValue.toDouble + 1.0
-    nonNegativeInt map { _.toDouble/d }
+    nonNegInt map { _.toDouble/d }
   }
 
   /** Weighted joint distribution of 2 distributon

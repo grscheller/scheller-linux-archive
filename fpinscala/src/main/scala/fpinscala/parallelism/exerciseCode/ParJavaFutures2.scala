@@ -12,10 +12,6 @@ object ParJavaFutures2 {
 
   import fpinscala.state.rand.{Rand,RNG,LCG}  
 
-  // Utility function to create a bounded list of non-negative integers.
-  def makeRandomList(lt: Int, len: Int) =
-    Rand.sequence(List.fill(len)(Rand.nonNegativeIntLessThan(lt)))
-
   // Model an expensive calculations with a less than
   // stellar implementations of the factorial functon.
   def fib(n: Long): Long =
@@ -110,7 +106,7 @@ object ParJavaFutures2 {
     // Less trivial Par.parFilter test.
     println("\n\nTest Par.parFilter with short calculations:\n")
 
-    val randList = makeRandomList(100, 200)(LCG(234))
+    val randList = Rand.nonNegIntsLessThan(200, 100)(LCG(234))
 
     // Test 1:
     print("Time parFilter with " + numThreads_A + " threads: ")

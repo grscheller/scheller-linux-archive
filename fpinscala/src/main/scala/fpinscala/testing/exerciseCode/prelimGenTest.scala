@@ -21,6 +21,9 @@ object prelimGenTest {
 
   def main(args: Array[String]): Unit = {
 
+    // Some initial type experiments, before many
+    // convienence functions are defined.
+
     val gen20to30 = Gen.choose(20, 31)
 
     // Spit one value out
@@ -83,7 +86,29 @@ object prelimGenTest {
       println(genIntNone sample rng getOrElse 42)
     }
 
+    // Generate some random strings
+    
+    val genLowerCase = Gen.choose(97, 123) map (_.toChar)
+    val genUpperCase = Gen.choose(65,  90) map (_.toChar)
+    val genDigit     = Gen.choose(48,  58) map (_.toChar)
+
+    val genRandomChar = 
+      Gen(Rand.joint3(26.0/53.0, 26.0/53.0)( genLowerCase.sample
+                                           , genUpperCase.sample
+                                           , genDigit.sample ))
+
+    def genStringN(n: Int): Gen[String] = 
+      Gen.listOfN(n, genRandomChar) map { _.mkString }
+
+    val gen10RandomStrLt30: Gen[List[String]] =
+      Gen.listOfN(10
+        , Gen(Rand.nonNegIntLessThan(30)) flatMap genStringN _)
+
+    println("\nGenerate 10 random strings of random lengths < 30:")
+    for (str <- gen10RandomStrLt30 sample rng1) println(str)
+
     println()
 
   }
+
 }

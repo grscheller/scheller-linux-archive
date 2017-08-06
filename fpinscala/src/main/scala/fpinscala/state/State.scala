@@ -13,21 +13,13 @@ package fpinscala.state
  *
  *    type Rand[A] = State[RNG, A]
  *
+ *  or better yet
+ *
+ *    case class Rand[+A](action: State[RNG,A])
+ *
  *  instead of 
  *
  *    type Rand[A] = RNG => (A, RNG) 
- *
- *  where the lambda/Function1 is embedded
- *  in the state case class via the 
- *  State constuctor and is accessed via
- *  the run "method".
- *
- *  note: Actually, as far as the Scala language
- *        is concerned, run is a class member/property
- *        whose value happens to be of type S => (A,S).
- *        Members and methods share the same namespace,
- *        hence the distinction is just an
- *        implementation detail.
  *
  *  The get and set combinators in the companion object
  *  are used to manipulate the state.  They are what
@@ -52,26 +44,6 @@ case class State[S,+A](run: S => (A,S)) {
 
   def both[B](rb: State[S,B]): State[S,(A,B)] =
     map2(rb) { (_, _) }
-
-  /** Run the action, extract the value, ignore next state.
-   *
-   *    A convenience method to extract a final result
-   *    to avoid having to pattern match the value out.
-   *    Has the virtue of hiding the tuple used in
-   *    the implemention of the State monad.
-   *
-   *    Use case:
-   *      val a = action(s)
-   *      val a = action apply s
-   *
-   *    same as
-   *      val a = action.run(s)._1
-   *      val a = (action run s)._1
-   *      val (a, _) = action.run(s)
-   *      val (a, _) = action run s
-   *
-   */
-  def apply(s: S): A = run(s)._1
 
 }
 
@@ -114,6 +86,7 @@ object State {
       _ <- set(f(s))
     } yield ()
 
+  /** Original sequence implementation - stackoverflow cranky */
   def sequenceSimple[S,A](fs: List[State[S,A]]): State[S,List[A]] =
     fs.reverse.foldLeft(unit[S,List[A]](Nil)) {
       (acc, f) => f.map2(acc)(_ :: _)

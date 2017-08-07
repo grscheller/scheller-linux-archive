@@ -33,15 +33,18 @@ Pacman:
   Query orphan packages,
     pacman -Qtdq
 
-  Find installed packages depending on a package (net-tools
-  in this case),
+  Find packages depending on a package
     pacman -Sii net-tools
+
+  Find installed packages depending on an installed package
+    pacman -Qii net-tools
 
   Pacman logs stored here,
     /var/log/pacman.log
 
-  To search for packages, not necessarily installed,
+  To search for packages,
     pacman -Ss regex   // search for terms in package database
+    pacman -Qs regex   // search against the local database
 
   Download packages without installing,
     sudo pacman -Syuw

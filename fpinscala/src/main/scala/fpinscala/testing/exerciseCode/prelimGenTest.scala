@@ -32,35 +32,35 @@ object prelimGenTest {
 
     // Spit out 10 values
     println("\nTen random values from 20 to 30:")
-    for (ii <- Gen.listOfN(10, gen20to30).sample(rng1)) {
+    for (ii <- gen20to30.listOfN(Gen.unit(10)).sample(rng1)) {
       println(ii)
     }
 
-    // Spit out 10 random Booleans
-    println("\nTen random boolean values:")
-    for (ii <- Gen.listOfN(10, Gen.boolean).sample(rng1)) {
+    // Spit out between 5 and 10 random Booleans
+    println("\n5 to 10 random boolean values:")
+    for (ii <- Gen.boolean.listOfN(Gen.choose(5, 11)).sample(rng1)) {
       println(ii)
     }
 
-    // Generate 10 random pairs
+    // Generate 3 to 5 random pairs of Int
     def genPair[A](g: Gen[A]): Gen[(A,A)] =
-      Gen.listOfN(2, g) map { l => (l(0), l(1)) }
+      g listOfN Gen.unit(2) map { l => (l(0), l(1)) }
 
-    println("\nTen random pairs of Ints from 20 to 30:")
-    for (pairInt <- Gen.listOfN(10, genPair(gen20to30)) sample rng1) {
+    println("\n3 to 5 random pairs of Ints from 20 to 30:")
+    for (pairInt <- genPair(gen20to30) listOfN Gen.choose(3, 6) sample rng1) {
       println(pairInt)
     }
 
     // Test unit
     println("\nGenerate a slow 42 ten time:")
     val genFortyTwo = Gen.unit({Thread.sleep(1000); 42})
-    for (ii <- Gen.listOfN(10, genFortyTwo) sample rng1) {
+    for (ii <- genFortyTwo.listOfN(Gen.unit(10)) sample rng1) {
       println(ii)
     }
 
     // Gen[Option[A]] from Gen[A]
     def genMin(count: Int)(g: Gen[Int]): Gen[Option[Int]] =
-      Gen.listOfN(count, g) map {
+      g listOfN Gen.unit(count) map {
         (l: List[Int]) => Try(l.min).toOption
       }
 
@@ -98,11 +98,10 @@ object prelimGenTest {
                                            , genDigit.sample ))
 
     def genStringN(n: Int): Gen[String] = 
-      Gen.listOfN(n, genRandomChar) map { _.mkString }
+      genRandomChar listOfN Gen.unit(n) map { _.mkString }
 
     val gen10RandomStrLt30: Gen[List[String]] =
-      Gen.listOfN(10
-        , Gen(Rand.nonNegIntLessThan(30)) flatMap genStringN _)
+      Gen.choose(0, 31) flatMap (genStringN _) listOfN Gen.unit(10) 
 
     println("\nGenerate 10 random strings of random lengths < 30:")
     for (str <- gen10RandomStrLt30 sample rng1) println(str)

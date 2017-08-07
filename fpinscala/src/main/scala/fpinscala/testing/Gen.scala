@@ -27,6 +27,9 @@ case class Gen[A](sample: Rand[A]) {
   def flatMap[B](g: A => Gen[B]): Gen[B] =
     Gen(sample.flatMap(a => g(a).sample))
 
+  def listOfN(size: Gen[Int]): Gen[List[A]] =
+    size.flatMap(n => Gen(Rand.sequence(List.fill(n)(sample))))
+
 }
 
 object Gen {
@@ -37,10 +40,6 @@ object Gen {
   def choose(start: Int, stopExclusive: Int): Gen[Int] =
     Gen(Rand.exclusiveIntRange(start, stopExclusive))
 
-  def listOfN[A](n: Int, g: Gen[A]): Gen[List[A]] =
-    Gen(Rand.sequence(List.fill(n)(g.sample)))
-
   def boolean: Gen[Boolean] = Gen(Rand.boolean)
 
 }
-

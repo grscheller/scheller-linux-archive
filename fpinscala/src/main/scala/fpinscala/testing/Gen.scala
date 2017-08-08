@@ -22,13 +22,23 @@ object Prop {
 
 case class Gen[A](sample: Rand[A]) {
 
-  def map[B](f: A => B): Gen[B] = Gen(sample map f)
+  def flatMap[B](f: A => Gen[B]): Gen[B] =
+    Gen {sample flatMap { a => f(a).sample }}
 
-  def flatMap[B](g: A => Gen[B]): Gen[B] =
-    Gen(sample.flatMap(a => g(a).sample))
+  def map[B](f: A => B): Gen[B] = Gen {sample map f}
+
+  def map2[B,C](g: Gen[B])(f: (A,B) => C): Gen[C] =
+    Gen {sample.map2(g.sample)(f)}
 
   def listOfN(size: Gen[Int]): Gen[List[A]] =
-    size.flatMap(n => Gen(Rand.sequence(List.fill(n)(sample))))
+    size flatMap { n =>
+      Gen {Rand.sequence(List.fill(n)(sample))}
+    }
+
+  def indexedSeqOfN(size: Gen[Int]): Gen[IndexedSeq[A]] =
+    size flatMap { n =>
+      Gen {Rand.sequenceIndexedSeq(IndexedSeq.fill(n)(sample))}
+    }
 
 }
 

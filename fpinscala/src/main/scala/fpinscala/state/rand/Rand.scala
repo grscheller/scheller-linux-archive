@@ -12,14 +12,13 @@ import fpinscala.state.State
  */
 case class Rand[+A](action: State[RNG,A]) {
 
-  def flatMap[B](g: A => Rand[B]): Rand[B] =
-    Rand(action.flatMap(a => g(a).action))
+  def flatMap[B](f: A => Rand[B]): Rand[B] =
+    Rand {action flatMap { a => f(a).action }}
 
-  def map[B](f: A => B): Rand[B] =
-    Rand(action.map(f))
+  def map[B](f: A => B): Rand[B] = Rand {action map f}
 
   def map2[B,C](rv: Rand[B])(f: (A,B) => C): Rand[C] =
-    Rand(action.map2(rv.action)(f))
+    Rand {action.map2(rv.action)(f)}
 
   /** Produce a definite value by applying the random variable
    *  to a value of the underlying probability space.

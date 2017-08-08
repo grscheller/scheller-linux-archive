@@ -40,10 +40,12 @@ case class State[S,+A](run: S => (A,S)) {
     flatMap {a => unit(f(a))}
 
   def map2[B,C](sb: State[S,B])(f: (A,B) => C): State[S,C] =
-    flatMap {a => sb map {b => f(a, b)}}
+    flatMap { a =>
+      sb map {b => f(a, b)}
+    }
 
   def both[B](rb: State[S,B]): State[S,(A,B)] =
-    map2(rb) { (_, _) }
+    map2(rb) {(_, _)}
 
 }
 

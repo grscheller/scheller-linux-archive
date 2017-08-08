@@ -12,6 +12,7 @@ package fpinscala.chap08.testing
 import fpinscala.testing.{Gen,Prop}
 import fpinscala.state.rand.{Rand,RNG,LCG} // Remove implementation detail.
 import scala.util.{Try, Success, Failure}
+import scala.collection.mutable
 
 object prelimGenTest {
 
@@ -42,12 +43,22 @@ object prelimGenTest {
       println(ii)
     }
 
-    // Generate 3 to 5 random pairs of Int
-    def genPair[A](g: Gen[A]): Gen[(A,A)] =
+    // Generate 3 to 5 random pairs of Int - using listOfN
+    println("\n3 to 5 random pairs of Ints from 20 to 30 using listOfN:")
+
+    def genPair1[A](g: Gen[A]): Gen[(A,A)] =
       g listOfN Gen.unit(2) map { l => (l(0), l(1)) }
 
-    println("\n3 to 5 random pairs of Ints from 20 to 30:")
-    for (pairInt <- genPair(gen20to30) listOfN Gen.choose(3, 6) sample rng1) {
+    for (pairInt <- genPair1(gen20to30) listOfN Gen.choose(3, 6) sample rng1) {
+      println(pairInt)
+    }
+
+    // Generate 3 to 5 random pairs of Int - using map2
+    println("\n3 to 5 random pairs of Ints from 20 to 30 using map2:")
+
+    def genPair2[A](g: Gen[A]): Gen[(A,A)] = g.map2(g)((_, _)) 
+
+    for (pairInt <- genPair2(gen20to30) listOfN Gen.choose(3, 6) sample rng1) {
       println(pairInt)
     }
 
@@ -105,6 +116,42 @@ object prelimGenTest {
 
     println("\nGenerate 10 random strings of random lengths < 30:")
     for (str <- gen10RandomStrLt30 sample rng1) println(str)
+
+    // Test Gen.indexedSeqOfN class method
+    type DiceRoll = Gen[Int]
+    val dieRoll: DiceRoll = Gen.choose(1, 7)
+    val rollFiveDice: DiceRoll = 
+      dieRoll indexedSeqOfN Gen.unit(5) map {_.sum}
+    val rollFiveDiceTenToTwentyTimes =
+      rollFiveDice indexedSeqOfN Gen.choose(10, 21)
+
+    println("\nThrow 5 dice between 10 and 20 times:")
+    for (throwSome <- rollFiveDiceTenToTwentyTimes sample rng1) {
+      println(throwSome)
+    }
+    println("\nAgain, throw 5 dice between 10 and 20 times:")
+    for (throwSome <- rollFiveDiceTenToTwentyTimes sample rng2) {
+      println(throwSome)
+    }
+
+    val numTrials = 1000000
+    val freqFiveDiceRolls = mutable.Map[Int, Int]()
+    for (ii <- 5 to 30) { freqFiveDiceRolls += (ii -> 0) }
+    for (throw5 <- rollFiveDice indexedSeqOfN Gen.unit(numTrials) sample rng1) {
+      freqFiveDiceRolls(throw5) += 1
+    }
+    println(s"\nFrequency of 5 dice rolls, ${numTrials} samples:")
+    for (ii <- 5 to 30) 
+      if (ii < 10)
+        println(s" ${ii} -> ${freqFiveDiceRolls(ii)}")
+      else
+        println(s"${ii} -> ${freqFiveDiceRolls(ii)}")
+
+    // Test Gen.map2 class method
+    val twoDiceRoll = dieRoll.map2(dieRoll) { _ + _ }
+    val rollTwoDiceTenTimes = twoDiceRoll listOfN Gen.unit(20)
+    println("\nRoll 2 dice 20 times:")
+    println(rollTwoDiceTenTimes sample rng3)
 
     println()
 

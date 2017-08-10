@@ -60,21 +60,6 @@ Run code:
     $ sbt run
     $ sbt test:run
 ```
-The versions of sbt, scala, and java I am currently using:
-```
-    $ sbt sbtVersion
-    [info] Set current project to root (in build file:/home/geoff/devel/learn/learnScala/fpInScalaBook/)
-    [info] 0.13.13
-
-    $ sbt console
-    [info] Set current project to root (in build file:/home/geoff/devel/learn/learnScala/fpInScalaBook/)
-    [info] Starting scala interpreter...
-    [info] 
-    Welcome to Scala 2.12.1 (OpenJDK 64-Bit Server VM, Java 1.8.0_121).
-    Type in expressions for evaluation. Or try :help.
-
-    scala> 
-```
 My usual work flow is "continuous compile":
 ```
     $ sbt

@@ -1,5 +1,4 @@
 # scheller-linux-archive
-
 My personnal archive of functional based software development projects<br>
 as well as information on Linux/Bash environment configuration.
 
@@ -9,7 +8,6 @@ additional infrastructure so that this information may be of some<br>
 marginal use to others.
 
 ## [info](info/) directory:
-
 This directory is a fairly free form collection of<br>
 text files with information on a variety of topics.
 
@@ -22,7 +20,6 @@ text files with information on a variety of topics.
 7. Private HTML Homepage 
 
 ## Software projects:
-
 ### 1. [bash-utils](bash-utils/)
 * Simple, but utilitarian, bash scripts illustrating bash scripting techniques.
 * I put these in my ~/bin directory.
@@ -61,5 +58,8 @@ text files with information on a variety of topics.
 ### 9. [pureMath](pureMath/)
 * A mathematics library centered around integer arithmetic.
 * An old project of mine back when I first learned Python.
+
+## Community Code Conduct:
+Please read the [Code of Conduct](CODE_OF_CONDUCT.md) for more information.
 
 -Geoffrey Scheller

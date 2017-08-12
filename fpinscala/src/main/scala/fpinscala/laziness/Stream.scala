@@ -345,6 +345,7 @@ object Stream {
    *  @note The Option is used to determine when to
    *        terminate the stream, if ever.
    *  @note Elements in stream are generated left to right.
+   *  @note Like running a terminatable State Monad.
    *  
    */
   def unfold[A,S](s: S)(f: S => Option[(A, S)]): Stream[A] =

@@ -21,7 +21,7 @@ object ParJavaFutures2 {
 
     val es = Executors.newFixedThreadPool(550)
 
-    var fibParam = 46L
+    val fibParam = 46L
 
     // Test Par.asyncF method.
     val parFibF = asyncF(fib)

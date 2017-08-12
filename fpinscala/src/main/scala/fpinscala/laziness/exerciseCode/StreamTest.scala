@@ -327,11 +327,12 @@ object StreamTest{
     val numStrings = Stream("4", "0", "1", "bob", "2", "3")
     
     def numStringToCharStream(s: String): Stream[Char] = {
-      val sAsInt = try {
-        s.toInt
+      val sAsInt =
+        try {
+            s.toInt
         } catch {
-          case e: Exception => 0
-      }
+            case e: Exception => 0
+        }
 
       var outStream: Stream[Char] = empty
       for (ii <- 1 to sAsInt) {

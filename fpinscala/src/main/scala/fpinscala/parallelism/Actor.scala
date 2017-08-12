@@ -91,9 +91,9 @@ class Actor[A](strategy: Strategy)
     val n = t.get
     if (n ne null) {
       try {
-        handler(n.a)
+          handler(n.a)
       } catch {
-        case ex: Throwable => onError(ex)
+          case ex: Throwable => onError(ex)
       }
       if (i > 0) batchHandle(n, i - 1) else n
     } else t

@@ -80,9 +80,10 @@ sealed trait Par[+A] { self =>
       def apply(es: ES) =
         new ParFuture[B] {
           def apply(cb: B => Unit, onError: Throwable => Unit): Unit = 
-            try { cb(f(self.run(es)).run(es))
+            try {
+                cb(f(self.run(es)).run(es))
             } catch {
-              case ex: Throwable => onError(ex) 
+                case ex: Throwable => onError(ex) 
             }
         }
     }
@@ -197,9 +198,10 @@ object Par {
   private
   def eval[A](es: ES)(r: => Unit , onError: Throwable => Unit): Future[Unit] =
     es.submit[Unit] { () =>
-      try { r
+      try {
+          r
       } catch {
-        case ex: Throwable => onError(ex) 
+          case ex: Throwable => onError(ex) 
       }
     }
 
@@ -226,9 +228,10 @@ object Par {
       def apply(es: ES) =
         new ParFuture[A] {
           def apply(cb: A => Unit, onError: Throwable => Unit) =
-            try { cb(a)
+            try {
+                cb(a)
             } catch {
-              case ex: Throwable => onError(ex) 
+                case ex: Throwable => onError(ex) 
             }
         }
     }

@@ -355,15 +355,16 @@ case class Map2Future[A,B,C]( af: Future[A]
    */
   def isDone: Boolean = {
     if ( ! hasStarted && ! isCancelled )
-      new Thread( () =>
+      new Thread { () =>
         try {
-          calculate()
+            calculate()
         } catch {
-          case ex: TimeoutException      => 
-          case ex: CancellationException => 
-          case ex: InterruptedException  => 
-          case ex: ExecutionException    => 
-        } ).start()
+            case ex: TimeoutException      => 
+            case ex: CancellationException => 
+            case ex: InterruptedException  => 
+            case ex: ExecutionException    => 
+        }
+      }.start()
     done
   }
 

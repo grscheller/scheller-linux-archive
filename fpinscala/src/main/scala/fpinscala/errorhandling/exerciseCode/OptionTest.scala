@@ -143,11 +143,11 @@ object OptionTest {
     // First run naked 
     println("\nTest unlifted functions in try block:\n")
     try {
-      evalP2(5, 3.0, fun2, "fun2")
-      evalP2(5, 3.0, fun2_failable, "fun2_failable")
-      evalP2(10, 3.0, fun2_failable, "fun2_failable")
+        evalP2(5, 3.0, fun2, "fun2")
+        evalP2(5, 3.0, fun2_failable, "fun2_failable")
+        evalP2(10, 3.0, fun2_failable, "fun2_failable")
     } catch {
-      case e: Exception =>  println("An exception was caught, boohoohoo.\n")
+        case e: Exception =>  println("An exception was caught, boohoohoo.\n")
     }
 
     // Next, test Try 

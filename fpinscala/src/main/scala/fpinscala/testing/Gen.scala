@@ -30,15 +30,16 @@ object Prop {
 
   def forAll[A](g: Gen[A])(pred: A => Boolean): Prop = Prop {
     (n, rng) => sampleStream(g)(rng) zip Stream.from(0) take n map {
-      case (a, cnt: TestCount) => try {
-        if (pred(a))
-          Passed
-        else
-          Falsified(a.toString, cnt)
-      } catch {
-          case e: Exception => Falsified(buildMsg(a, e), cnt)
-      }
-    } find(_.isFalsified) getOrElse Passed
+      case (a, cnt: TestCount) =>
+        try {
+            if (pred(a))
+              Passed
+            else
+              Falsified(a.toString, cnt)
+        } catch {
+            case e: Exception => Falsified(buildMsg(a, e), cnt)
+        }
+      } find(_.isFalsified) getOrElse Passed
   }
 
   def sampleStream[A](g: Gen[A])(rngIn: RNG): Stream[A] =

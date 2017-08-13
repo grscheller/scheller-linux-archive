@@ -11,7 +11,31 @@ import fpinscala.state.rand.{Rand,RNG}
 import fpinscala.laziness.Stream
 import Prop._
 
-case class Prop(run: (TestCount, RNG) => Result)
+case class Prop(run: (TestCount, RNG) => Result) {
+
+  // Statistically questionable, passing same rng to second calculation.
+  def &&(p: Prop): Prop = Prop {
+    (n, rng) => run(n, rng) match {
+      case Passed => p.run(n, rng)
+      case x      => x
+    }
+  }
+
+  // Statistically questionable, passing same rng to second calculation.
+  def ||(p: Prop): Prop = Prop {
+    (n, rng) => run(n, rng) match {
+      case Falsified(failure, _) => p.tag(failure).run(n, rng)
+      case _                     => Passed
+    }
+  }
+
+  def tag(fail1: FailedCase) = Prop {
+    (n, rng) => run(n, rng) match {
+      case Falsified(fail2, cnt) => Falsified(s"${fail1}\n${fail2}", cnt)
+      case _                     => Passed
+    }
+  }
+}
 
 object Prop {
   type FailedCase = String

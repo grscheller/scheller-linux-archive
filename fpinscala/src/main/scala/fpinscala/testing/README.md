@@ -6,26 +6,26 @@ Exploring how to decouple the specification of program behavior from
 the creation of test cases while working through the exercises in
 "Functional Programming in Scala" by Paul Chiusana and Runar Bjarnason.
 
-### Package [fpinscala.testing](Gen.scala)
+### Package [fpinscala.testing](fpinScalaCheck.scala)
 * Package used for property based testing.
 
-### Trait Prop [fpinscala.testing.Prop](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/testing/Gen.scala)
-* Trait representing some property we wish to test.
-* Won't put line numbers in until I am done with chapter.
+### Case class Prop [fpinscala.testing.Prop](fpinScalaCheck.scala#L14-L38)
+* Represents some property we wish to test.
+* Won't always update line numbers until I am done with chapter.
 
-### Companion object [fpinscala.testing.Prop](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/testing/Gen.scala)
+### Companion object [fpinscala.testing.Prop](fpinScalaCheck.scala#L40-L79)
 * Used as a namespace for Prop related type aliases.
-* Won't put line numbers in until I am done with chapter.
+* Won't always update line numbers until I am done with chapter.
 
-### Case class [fpinscala.testing.Gen](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/testing/Gen.scala)
+### Case class [fpinscala.testing.Gen](fpinScalaCheck.scala#L81-L101)
 * Generator of test cases.
 * Wraps a fpinscala Rand[A] which is a State[RNG,A] type alias.
-* Won't put line numbers in until I am done with chapter.
+* Won't always update line numbers until I am done with chapter.
 
-### Companion object [fpinscala.testing.Gen](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/testing/Gen.scala)
-* Won't put line numbers in until I am done with chapter.
+### Companion object [fpinscala.testing.Gen](fpinScalaCheck.scala#L103-L123)
+* Won't always update line numbers until I am done with chapter.
 
-### Program [prelimGenTest](exerciseCode/prelimGenTest.scala)
+### Program [prelimGenTest](exerciseCode/fpinScalaCheckTest.scala)
 * Program to exercise package fpinscala.testing data types..
-* Actual use of the library will be done under test/ tree.
+* Actual use of the library will be done under the test/ source tree.
 

@@ -6,20 +6,24 @@ reimplementating what was done in fpinscala.rngStandalone.
 
 From chapter 6.
 
-### Type alias [rand](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/state/rand/package.scala#L18-L19)
-* Used to define the Rand type alias at the rand package level.
-* Using val Rand = fpinscala.state.State so the compiler can find the companion object.
-* User code needs to use `new` key word to distinguish constructor from potential factory methods.
-* Defined in the [rand](package.scala) package object.
-
-### Class [RNG](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/state/rand/RNG.scala#L12-L17)
+### Abstract Class [RNG](RNG.scala#L7-L12)
 * Abstract base class for random number generators.
+* Represents an underlying probability space for random variables.
+* Random variables implemented with Rand class.
 
-### Companion Object [RNG](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/state/rand/RNG.scala#L19-L101)
-* Companion object for for RNG and its subclasses.
-
-### Class [LCG](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/state/rand/RNG.scala#L103-L143)
+### Case Class [LCG](RNG.scala#L14-L54)
 * Linear Congruence Generator implementation for RNG.
+* Uses the same algoritm as java.util.Random and glibc.
+
+### Case Class [Rand](Rand.scala#L5-L32)
+* Random variable as in probability theory.
+* Not a "function" which produces a different "random" value whenever called.
+* The RNG Class represents the underlying probability space.
+
+### Companion Object [Rand](Rand.scala#L34-L264)
+* Contains utility functions for the Rand case class.
+* Contains various probability distributions.
+* Contains functions to create joint probaility distributions.
 
 ### Program [randTest](../exerciseCode/randTest.scala)
 * Program to exercise package fpinscala.rand.

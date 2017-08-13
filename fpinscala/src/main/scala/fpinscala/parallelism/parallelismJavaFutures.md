@@ -5,18 +5,18 @@ returns, futures which adhere to the Java Futures API.  The futures produced
 are designed to be interoperative with java source code.  This implementation
 has deadlocking problems with fixed size threadpools and is a thread hog.
 
-### Trait [`parallelism.javaFutures.Par[A]`](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/parallelism/ParallelismJavaFutures.scala#L30-L115)
+### Trait [`parallelism.javaFutures.Par[A]`](parallelismJavaFutures.scala#L30-L115)
 * Used to define future parallel computations and run them.
 
-### Companon Object [`parallelism.javaFutures.Par`](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/parallelism/ParallelismJavaFutures.scala#L117-L237)
+### Companon Object [`parallelism.javaFutures.Par`](parallelismJavaFutures.scala#L117-L237)
 * Utility methods for the `parallelism.javaFutures.Par[A]` trait.
 
-### Private Case Class [`parallelism.javaFutures.UnitFuture`](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/parallelism/ParallelismJavaFutures.scala#L239-L251)
+### Private Case Class [`parallelism.javaFutures.UnitFuture`](parallelismJavaFutures.scala#L239-L251)
 * Wraps a value in a future.
 * The future is basically born "done."
 * This Future can be passed to Java code.
 
-### Private Case Class [`parallelism.javaFutures.Map2Future`](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/parallelism/ParallelismJavaFutures.scala#L253-L414)
+### Private Case Class [`parallelism.javaFutures.Map2Future`](parallelismJavaFutures.scala#L253-L415)
 * Future used by the Par.map2 method.
 * Combines two parallel calculations with a function.
 * Compatible with the java.util.concurrent.Future API.

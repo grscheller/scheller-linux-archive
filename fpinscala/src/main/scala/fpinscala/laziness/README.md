@@ -6,11 +6,25 @@ Implementing a Stream (Lazy List) data structure while working
 through the exercises in  "Functional Programming in Scala"
 by Paul Chiusana and Runar Bjarnason.
 
-### Trait [fpinscala.laziness.Stream](Stream.scala)
+### Trait [fpinscala.laziness.Stream](Stream.scala#L4-L310)
 * Implement a lazy list, or stream, using a trait and case classes.
+
+### Case Object [Empty](Stream.scala#L311)
+* Represents the unique empty stream.
+* Subtype to all other Streams.
+* Together with Cons, an example of an Algebraic Data Type (ADT).
+
+### Case Class [Cons](Stream.scala#L312)
+* Represents a contravarient stream of type A.
+* Together with Empty, an example of an Algebraic Data Type (ADT).
 
 ### Program [StreamTest](exerciseCode/StreamTest.scala)
 * A program that exercises fpinscala.laziness.Stream.
+
+### Object [Stream](Stream.scala#L314-L420)
+* Companion object to the Stream trait.
+* Contains "smart" constructors.
+* Contains a variadic strict stream constuctor factory method (apply).
 
 ### Program [infiniteStreamTest](exerciseCode/infiniteStreamTest.scala)
 * Using infinite streams with fpinscala.laziness.Stream.

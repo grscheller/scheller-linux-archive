@@ -3,17 +3,17 @@ The fpinscala.parallelism package is the non-blocking, Actor based concurency
 API that the book "Functional Programming in Scala" gently leads you to develop.
 My version includes error handling.
 
-### Trait [`parallelism.Par[+A]`](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/parallelism/Parallelism.scala#L30-L186)
+### Trait [`parallelism.Par[+A]`](parallelism.scala#L30-L186)
 * Used to define future parallel computations and run them.
 * The `Par.run` method is the only way for client code to extract a value.
 * Does not provide Future objects to clients as parallelism.javaFutures does.
 * Use case is for client code to apply the blocking run method as last step.
 * The run method is not intended to be used internally within the package.
 
-### Companon Object [`parallelism.Par`](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/parallelism/Parallelism.scala#L188-L374)
+### Companon Object [`parallelism.Par`](parallelism.scala#L188-L374)
 * Utility methods for the `parallelism.Par[A]` trait.
 
-### Private Abstract Trait [`parallelism.ParFuture[+A]`](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/parallelism/Parallelism.scala#L15-L28)
+### Private Abstract Trait [`parallelism.ParFuture[+A]`](parallelism.scala#L15-L28)
 * A nonblocking "Future" which registers a callback for a parallel calculation.
 * Has no get method, doesn't actually return anything at all.
 * Actual return value is handled by an encapsulated side effect in run method.
@@ -21,7 +21,7 @@ My version includes error handling.
 * Use of the term "Future" maybe in line with various libraries.
 * Made private[parallelism]
 
-### Final Class [`Actor[A]`](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/parallelism/Actor.scala#L19-L101)
+### Final Class [`Actor[A]`](Actor.scala#L19-L101)
 * Processes messages of type A, one at a time.
 * Messages are submitted to the actor with the ! method.
 * Processing is typically performed asynchronously, the provided strategy.
@@ -33,13 +33,13 @@ even if the strategy runs the invocations of the handler on separate threads.
 This is achieved because the Actor reads a volatile memory location before
 entering its event loop, and writes to the same location before suspending.
 
-### Companion Object [`Actor`](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/parallelism/Actor.scala#L103-L110)
+### Companion Object [`Actor`](Actor.scala#L103-L110)
 * Provides factory method to produce an actor from an ExecutorService.
 
-### trait [`Strategy`](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/parallelism/Actor.scala#L112-L121)
+### trait [`Strategy`](Actor.scala#L112-L121)
 * When eventually instantiated, provides how to actually obtain a value.
 
-### Compaion Object [`Strategy`](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/parallelism/Actor.scala#L123-L142)
+### Compaion Object [`Strategy`](Actor.scala#L123-L142)
 * Provides two strategies
 * First one using an java.util.concurrent.ExecutorService
 * Strategy.fromExecutorService(es: ExecutiveService): Strategy

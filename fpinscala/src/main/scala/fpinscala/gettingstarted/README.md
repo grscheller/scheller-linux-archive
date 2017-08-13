@@ -7,17 +7,17 @@ recursion, polymorphic functions, scala singleton objects, currying
 and uncurrying while working through the exercises in "Functional
 Programming in Scala" by Paul Chiusana and Runar Bjarnason.
 
-### Program [myModule](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/gettingstarted/myModules.scala#L12-L40)
+### Program [myModule](myModules.scala#L11-L40)
 * Singleton object defined in the file myModules.scala.
 
-### Program [myModuleRefactored](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/gettingstarted/myModules.scala#L45-L74)
+### Program [myModuleRefactored](myModules.scala#L42-L81)
 * Extended version of myModule.
 * Also defined in myModules.scala.
 
-### Program [higherOrder](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/gettingstarted/higherOrder.scala#L7-L44)
+### Program [higherOrder](higherOrder.scala#L7-L44)
 * Explores using functions as first class ojects.
 
-### Program [myPolymorphicModule](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/gettingstarted/myPolymorphicModule.scala#L6-L90)
+### Program [myPolymorphicModule](myPolymorphicModule.scala#L3-L90)
 * Explores the FP concept of polymorphism.
 
 As a starting point, the book is using standalone objects as

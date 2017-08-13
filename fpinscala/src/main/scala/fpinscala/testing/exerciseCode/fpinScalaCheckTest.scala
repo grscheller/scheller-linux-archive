@@ -14,7 +14,7 @@ import fpinscala.state.rand.{Rand,RNG,LCG} // Remove implementation detail.
 import scala.util.{Try, Success, Failure}
 import scala.collection.mutable
 
-object prelimGenTest {
+object fpinScalaCheckTest {
 
   val rng1: RNG = LCG(1)
   val rng2: RNG = LCG(2)

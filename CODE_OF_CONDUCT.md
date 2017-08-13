@@ -22,7 +22,7 @@ In the interest of fostering an open and welcoming environment, we as
 contributors and maintainers pledge to making participation in our project and
 our community a harassment-free experience for everyone, regardless of age,
 body size, disability, ethnicity, gender identity and expression, level of 
-xperience, nationality, personal appearance, race, religion, or sexual identity
+experience, nationality, personal appearance, race, religion, or sexual identity
 and orientation.
 
 Examples of behavior contributing to creating a positive environment include:
@@ -72,6 +72,6 @@ deems appropriate to the circumstances.
 
 ## Attribution
 
-This Code of Conduct was editted down from the default boilerplate provided by
+This Code of Conduct was edited down from the default boilerplate provided by
 GitHub, which itself is based on the
 [Contributor Covenant](http://contributor-covenant.org/) code of conduct.

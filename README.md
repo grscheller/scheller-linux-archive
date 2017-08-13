@@ -1,14 +1,14 @@
 # scheller-linux-archive
-My personnal archive of functional based software development projects<br>
+My personal archive of functional based software development projects
 as well as information on Linux/Bash environment configuration.
 
-The primary purpose of this GitHub repo is to capture what I learn<br>
-in a way that helps me stay up to speed on a topic.  I maintain<br>
-additional infrastructure so that this information may be of some<br>
+The primary purpose of this GitHub repo is to capture what I learn
+in a way that helps me stay up to speed on a topic.  I maintain
+additional infrastructure so that this information may be of some
 marginal use to others.
 
 ## [info](info/) directory:
-This directory is a fairly free form collection of<br>
+This directory is a fairly free form collection of
 text files with information on a variety of topics.
 
 1. Arch Linux System Admin Notes
@@ -25,10 +25,9 @@ text files with information on a variety of topics.
 * I put these in my ~/bin directory.
 
 ### 2. [fpinscala](fpinscala/)
-* Scala project where I work through the exercises in the book<br>
-  "Functional Programming in Scala" by Paul Chiusana and Runar
-  Bjarnason.
-* The book is more about learning Functional Programming than the<br>
+* Scala project where I work through the exercises in the book
+  "Functional Programming in Scala" by Paul Chiusana and Runar Bjarnason.
+* The book is more about learning Functional Programming than the
   Scala language per say.
 * In this project I try to do both.
 
@@ -59,7 +58,11 @@ text files with information on a variety of topics.
 * A mathematics library centered around integer arithmetic.
 * An old project of mine back when I first learned Python.
 
-## Community Code Conduct:
-Please read the [Code of Conduct](CODE_OF_CONDUCT.md) for more information.
+## For more Info:
+Please read the
+[CONTRIBUTING](CONTRIBUTING.md)
+and
+[Code of Conduct](CODE_OF_CONDUCT.md)
+documents for more information.
 
 -Geoffrey Scheller

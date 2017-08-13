@@ -17,7 +17,7 @@ Consider code a beginner C programmer might write,
         return 0;
     }
 ```
-This program compiles without *even a warning message*, but when run<br>
+This program compiles without *even a warning message*, but when run
 surprises the programmer with the output,
 ```
    5
@@ -31,10 +31,10 @@ and not,
 ```
     if ( x = (0 || ((-10 < y) < 10)) ) {
 ```
-The problems are that booleans and ints are being conflated, assignment<br>
-returns the value being assigned, the < operator is left associative, and<br>
+The problems are that booleans and ints are being conflated, assignment
+returns the value being assigned, the < operator is left associative, and
 the syntax is misleading.  See the paper, [The Seven Deadly
-Sins of Introductory Programming Language Design](http://users.monash.edu/~damian/papers/PDF/SevenDeadlySins.pdf)<br>
+Sins of Introductory Programming Language Design](http://users.monash.edu/~damian/papers/PDF/SevenDeadlySins.pdf)
 where I got this example.
 
 I think Rust will become the C for the 21st Century.
@@ -45,11 +45,11 @@ Create a new project with a main function,
    $ cargo new --bin babySteps
         Created binary (application) `babySteps` project
 ```
-If I had not created it within a git repository, it would have set up the<br>
-babySteps directory it created as a git repo with .git file.  I put a copy<br>
+If I had not created it within a git repository, it would have set up the
+babySteps directory it created as a git repo with .git file.  I put a copy
 of the .gitignore file it would have created in the babySteps directory.
 
-The source code it created was the canonical "Hello World" program in the<br>
+The source code it created was the canonical "Hello World" program in the
 file `src/main.rs`,
 ```
    fn main() {
@@ -70,8 +70,8 @@ To build and run the code,
 ```
 Since I never intend to publish babyStrps, I will keep the name as is.
 
-This also created a Cargo.lock file.  This file contains the configuration<br>
-of the last successful complilation of the project.  I will add this file<br>
+This also created a Cargo.lock file.  This file contains the configuration
+of the last successful complilation of the project.  I will add this file
 to the Git repo.
 
 Executable can be run from the commandline,

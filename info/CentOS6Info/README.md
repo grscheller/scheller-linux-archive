@@ -7,7 +7,7 @@
 * Made no attempt to try and optimize these tools.
 
 ### [InstallHaskellStackLocally.txt](InstallHaskellStackLocally.txt)
-* The Haskell Stack people made installing stack locally into a<br>
+* The Haskell Stack people made installing stack locally into a
   home directory harder than it should be.
 * This guide shows you how to do this without root privileges.
 

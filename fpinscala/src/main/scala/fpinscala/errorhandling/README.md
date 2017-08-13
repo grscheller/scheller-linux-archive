@@ -2,8 +2,8 @@
 
 Chapter 4.
 
-Implementing Option and Either error handling data structures while<br>
-working through the exercises in  "Functional Programming in Scala"<br>
+Implementing Option and Either error handling data structures while
+working through the exercises in  "Functional Programming in Scala"
 by Paul Chiusana and Runar Bjarnason.
 
 ### Trait [fpinscala.errorhandling.Option](Option.scala)
@@ -22,12 +22,12 @@ by Paul Chiusana and Runar Bjarnason.
 * Parsing and error handling using the scala libraries.
 * Does not use fpinscala.errorhandling.
 
-Book exercises give practice with combinators.  Combinators are<br>
-higher order functions used to manipulate ADT's.  They allow you<br>
-to avoid having to pattern match on the internal structure of the<br>
-ADT's.  Also, the important concept of referential transparency is<br>
-further explored.  Java exceptions are shown to not be referential<br>
+Book exercises give practice with combinators.  Combinators are
+higher order functions used to manipulate ADT's.  They allow you
+to avoid having to pattern match on the internal structure of the
+ADT's.  Also, the important concept of referential transparency is
+further explored.  Java exceptions are shown to not be referential
 transparent.
 
-Methods are now being defined in the traits as opposed to<br>
+Methods are now being defined in the traits as opposed to
 within the companion objects.

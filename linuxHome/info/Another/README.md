@@ -2,7 +2,7 @@
 
 ## Purpose:
 This is an example directory to allow the script
-[install_linuxHome](../../install_linuxHome)<br>
+[install_linuxHome](../../install_linuxHome)
 to show what needs to be done when the ~/info directory
 has some structure.
 

@@ -2,17 +2,17 @@
 
 Chapter 7.
 
-Exploring how to do concurrent processing in a purely functional way<br>
-while working through the exercises in "Functional Programming in Scala"<br>
+Exploring how to do concurrent processing in a purely functional way
+while working through the exercises in "Functional Programming in Scala"
 by Paul Chiusana and Runar Bjarnason.
 
 ### Package [`parallelism.javaFutures`](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/parallelism/parallelismJavaFutures.md)
-The fpinscala.parallelism.javaFutures package internally uses, as well as<br>
-returns, futures which adhere to the Java Futures API.  The futures produced<br>
-are designed to be interoperative with java source code.  This implementation<br>
+The fpinscala.parallelism.javaFutures package internally uses, as well as
+returns, futures which adhere to the Java Futures API.  The futures produced
+are designed to be interoperative with java source code.  This implementation
 has deadlocking problems with fixed size threadpools and is quite a thread hog.
 
 ### Package [`parallelism`](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/parallelism/parallelism.md)
-The fpinscala.parallelism package is the non-blocking, Actor based concurency<br>
+The fpinscala.parallelism package is the non-blocking, Actor based concurency
 API that the book gently leads you to develop.
 

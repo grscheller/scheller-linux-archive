@@ -2,9 +2,9 @@
 
 Chapter 2.
 
-Learning functional concepts like higher order functions, tail<br>
-recursion, polymorphic functions, scala singleton objects, currying<br>
-and uncurrying while working through the exercises in "Functional<br>
+Learning functional concepts like higher order functions, tail
+recursion, polymorphic functions, scala singleton objects, currying
+and uncurrying while working through the exercises in "Functional
 Programming in Scala" by Paul Chiusana and Runar Bjarnason.
 
 ### Program [myModule](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/gettingstarted/myModules.scala#L12-L40)
@@ -20,13 +20,13 @@ Programming in Scala" by Paul Chiusana and Runar Bjarnason.
 ### Program [myPolymorphicModule](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/gettingstarted/myPolymorphicModule.scala#L6-L90)
 * Explores the FP concept of polymorphism.
 
-As a starting point, the book is using standalone objects as<br>
-namespaces.  This allows for a more classical introduction to FP<br>
-concepts.  "Module" is not a scala term, it is my attempt to convey<br>
-using singleton objects as a namespaces.  I am not using Scala's<br>
+As a starting point, the book is using standalone objects as
+namespaces.  This allows for a more classical introduction to FP
+concepts.  "Module" is not a scala term, it is my attempt to convey
+using singleton objects as a namespaces.  I am not using Scala's
 Object Oriented features in any way.
 
-The use of "chap02" in the qualified package names, for the programs<br>
-that either test or exercise the libraries, is to group SBT 'run' and<br>
-'test:run' tasks together by chapter number.  Unlike Java, Scala doesn't<br>
+The use of "chap02" in the qualified package names, for the programs
+that either test or exercise the libraries, is to group SBT 'run' and
+'test:run' tasks together by chapter number.  Unlike Java, Scala doesn't
 require the directory structure to mirror the package structure.

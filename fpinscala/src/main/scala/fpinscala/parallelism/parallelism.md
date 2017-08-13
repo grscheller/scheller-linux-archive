@@ -1,6 +1,6 @@
 ## Classes/Traits of fpinscala.parallelism:
-The fpinscala.parallelism package is the non-blocking, Actor based concurency<br>
-API that the book "Functional Programming in Scala" gently leads you to develop.<br>
+The fpinscala.parallelism package is the non-blocking, Actor based concurency
+API that the book "Functional Programming in Scala" gently leads you to develop.
 My version includes error handling.
 
 ### Trait [`parallelism.Par[+A]`](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/parallelism/Parallelism.scala#L30-L186)
@@ -27,10 +27,10 @@ My version includes error handling.
 * Processing is typically performed asynchronously, the provided strategy.
 
 ####Memory consistency guarantee:
-When each message is processed by the handler, any memory that it mutates is<br>
-guaranteed to be visible by the handler when it processes the next message,<br>
-even if the strategy runs the invocations of the handler on separate threads.<br>
-This is achieved because the Actor reads a volatile memory location before<br>
+When each message is processed by the handler, any memory that it mutates is
+guaranteed to be visible by the handler when it processes the next message,
+even if the strategy runs the invocations of the handler on separate threads.
+This is achieved because the Actor reads a volatile memory location before
 entering its event loop, and writes to the same location before suspending.
 
 ### Companion Object [`Actor`](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/parallelism/Actor.scala#L103-L110)

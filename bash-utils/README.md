@@ -10,7 +10,7 @@ Theses are the bash utilities I put into my Linux ~/bin directory.
   realPath $(Path)
   ```
 ### [pathTrim](pathTrim)
-* Used in my .bash_profile.  Useful when $HOME and/or<br>
+* Used in my .bash_profile.  Useful when $HOME and/or
   bash_profile are/is shared between several systems.
 * Trims off duplicate entries and non-existant director $PATH
   ```
@@ -19,7 +19,7 @@ Theses are the bash utilities I put into my Linux ~/bin directory.
   Example: PATH=$(~/bin/pathTrim $PATH)
   ```
 ### [realPath](realPath)
-* Resolve symlinks and print out the real path for each<br>
+* Resolve symlinks and print out the real path for each
   path given on the commandline.  Example:
   ```
   Usage: realPath /path/to/first/item another/path/to/second/item

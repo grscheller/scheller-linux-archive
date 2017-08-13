@@ -32,8 +32,8 @@ that is `gcd(a,b,c) = 1`.
        a^2 + b^2 = c^2  where gcd(a, b, c) = 1
                           and 0 < a < b < c
    ```
-   you only need to check any two of `a, b, c` because you can factor<br>
-   out the common factors of any two to show the the square of the other<br>
+   you only need to check any two of `a, b, c` because you can factor
+   out the common factors of any two to show the the square of the other
    (and henced the other itself) has the same common factors.
 
    Geometrically this is the right choice since as right triangles
@@ -49,7 +49,7 @@ that is `gcd(a,b,c) = 1`.
 
    but the square root of `2` is not rational!
 
-3. The ordered algorthm generates all possible triples in lexiconical order,<br>
+3. The ordered algorthm generates all possible triples in lexiconical order,
    that is `a < b < c`.
 
    As `b` gets larger, eventually the difference in length
@@ -83,10 +83,10 @@ that is `gcd(a,b,c) = 1`.
 
    Let's show that this is universally true:
 
-   We know not both `a` and `b` even, otherwise `a, b, c` not in<br>
+   We know not both `a` and `b` even, otherwise `a, b, c` not in
    lowest terms.  If one even and the other odd, then `c` is odd.
 
-   But what about the case if `a` and `b` both odd?  That would imply `c`<br>
+   But what about the case if `a` and `b` both odd?  That would imply `c`
    could be even.  Concider this case,
 
    ```
@@ -106,12 +106,12 @@ that is `gcd(a,b,c) = 1`.
       [(m^2 - n^2, 2*m*n, m^2 + n^2) | m <- [1 ..] , n <- [1 .. m-1]]
    ```
 
-   Also seems to produce results where `gcd(a,b,c) > 1`<br>
+   Also seems to produce results where `gcd(a,b,c) > 1`
    like `(8, 6, 10)` and `(40, 42, 58)`.
 
-   I used this result for a faster algorithm and will use test/Spec.hs to<br>
-   compare the results.  So far the fast algorithm seems complete, but it<br>
-   is not yet clear to me how far out you have to compute values to ensure<br>
-   you catch all triples for a given a.  Also, if you sort the results of<br>
-   the fast algorithm, is there a point that the cost of sorting is so high<br>
+   I used this result for a faster algorithm and will use test/Spec.hs to
+   compare the results.  So far the fast algorithm seems complete, but it
+   is not yet clear to me how far out you have to compute values to ensure
+   you catch all triples for a given a.  Also, if you sort the results of
+   the fast algorithm, is there a point that the cost of sorting is so high
    that the ordered algorithm wins out?

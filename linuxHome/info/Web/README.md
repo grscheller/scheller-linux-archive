@@ -1,8 +1,8 @@
 # Example work homepage (Stub version)
 
-I use a variety of different browsers and don't want to have to<br>
-"sync" my book marks and passwords schemas between them.  I push<br>
-these files to my various Linux systems and then just set my<br>
+I use a variety of different browsers and don't want to have to
+"sync" my book marks and passwords schemas between them.  I push
+these files to my various Linux systems and then just set my
 homepage in my browser to ~/info/Web/workHomepage.
 
 ## Files:
@@ -30,8 +30,8 @@ homepage in my browser to ~/info/Web/workHomepage.
 
 ### [Portmanteau](Portmanteau.html)
 * Contains password schemas I used
-* Organized as a column table, which I am not happy with.  I intend<br>
-  to change it to a row table since the "records" for each site are<br>
+* Organized as a column table, which I am not happy with.  I intend
+  to change it to a row table since the "records" for each site are
   kept together.
 
 ### [Portmanteau](http://htmlpreview.github.com/?https://github.com/grscheller/scheller-linux-archive/blob/master/linuxHome/info/Web/Portmanteau.html)

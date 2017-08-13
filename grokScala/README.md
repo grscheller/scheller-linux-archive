@@ -1,6 +1,6 @@
 # Basic Scala Language Constructs:
 
-Explore Scala language and build constructions.<br>
+Explore Scala language and build constructions.
 
 ## 1. Hierarchical SBT build.
 To compile all projects,
@@ -18,19 +18,19 @@ run one project,
 make sure you launch sbt from the root grokScala directory.
 
 ## 2. Multiple packages in single build: [grok](grok/)
-The above multiple projects (my term) in the hierarchical build compile<br>
-scala packages which are independent of each other in the sense that<br>
-dependencies between them must be configured like other local external<br>
-packages.  The grok project shows how to compile multiple packages in a way<br>
+The above multiple projects (my term) in the hierarchical build compile
+scala packages which are independent of each other in the sense that
+dependencies between them must be configured like other local external
+packages.  The grok project shows how to compile multiple packages in a way
 that allows SBT to "out-of-the-box" handle package dependencies among them.
 
 ## 3. Building scala code to run as a "Java App": [onejar](onejar/)
-Builds scala code into a "fat" jar file so that all an end user needs is<br>
+Builds scala code into a "fat" jar file so that all an end user needs is
 
-a functioning java runtime environment.  This will includes everything in<br>
-the jar file, including the Scala runtime libraries.<br>
+a functioning java runtime environment.  This will includes everything in
+the jar file, including the Scala runtime libraries.
 
-This uses [stb-assembly](https://github.com/sbt/sbt-assembly)<br>
+This uses [stb-assembly](https://github.com/sbt/sbt-assembly)
 
 To build the fat jar file, 
 ```
@@ -42,15 +42,15 @@ To run,
    $ java -jar onejar/target/scala-2.12/onejar-assembly-0.1-SNAPSHOT.jar 
    Hello World!
 ```
-All it is is a stupid hello world program, with added complexity to<br>
-illustrate how to indicate the default main class.<br>
+All it is is a stupid hello world program, with added complexity to
+illustrate how to indicate the default main class.
 
-To get this to work, I had to name the default main class Main.  Also, I<br>
-noticed that I had to manually trigger off a compile for assembly to pick<br>
+To get this to work, I had to name the default main class Main.  Also, I
+noticed that I had to manually trigger off a compile for assembly to pick
 the latest source code changes.
 
 ## 4. Scala's "splat" equivalents: [splat.scala](splat/splat.scala)
-Languages like Python and Ruby have a syntactic sugar to pass an<br>
+Languages like Python and Ruby have a syntactic sugar to pass an
 array or tuple into a fixed or variable-arity function.
 
 In Python:
@@ -67,8 +67,8 @@ In Python:
 The code in the splat object in splat.scala explores
 similar constructs in scala.
 
-It makes sense to "splat" variable length datastructures into variadic<br>
-functions.  Also to "splat" tuples into fixed-arity functions.  Other<br>
+It makes sense to "splat" variable length datastructures into variadic
+functions.  Also to "splat" tuples into fixed-arity functions.  Other
 combinations seem to me more naturally handled by unpacking and repacking.
 
 To "splat" a variable length datastructure into a variadic function:
@@ -95,10 +95,10 @@ To run outside sbt build,,
 ```
 
 ## 5. Scala code blocks: [codeblocks](codeblocks/)
-Scala code blocks are interesting closures.  This project is to explore<br>
+Scala code blocks are interesting closures.  This project is to explore
 code blocks as functions.
 
-I found something I thought peculiar while in the scala REPL:<br>
+I found something I thought peculiar while in the scala REPL:
 ```
     scala> val dog = {
          |   println("This is run just once.")
@@ -119,17 +119,17 @@ I found something I thought peculiar while in the scala REPL:<br>
     fido is 22
     hold: Unit = ()
 ```
-If you put a single lambda in the middle of a code block, my expectation<br>
-was that the lambda would be ignored and I'd get back just `()` as the<br>
-the value of `dog`, which comes from the last println function call in<br>
-the code block.  Instead, its return value is a `function1` where the<br>
-statements after the lambda become part of the `function1`.  Statements<br>
-before the lambda were executed only once as expected when the code block<br>
-was first run, but statements after the lambda get executed each time `dog`<br>
-was executed.  Though the  return value of `dog` is indead `()`.  Actually,<br>
+If you put a single lambda in the middle of a code block, my expectation
+was that the lambda would be ignored and I'd get back just `()` as the
+the value of `dog`, which comes from the last println function call in
+the code block.  Instead, its return value is a `function1` where the
+statements after the lambda become part of the `function1`.  Statements
+before the lambda were executed only once as expected when the code block
+was first run, but statements after the lambda get executed each time `dog`
+was executed.  Though the  return value of `dog` is indead `()`.  Actually,
 the lambda extends to the end of the code block.
 
-This means that the use of `self` as a synonym for `this` in class and trait<br>
+This means that the use of `self` as a synonym for `this` in class and trait
 definitions may not just be "Syntactic Sugar" but have deeper semantic meaning.
 ```
    trait Foo[+A] { self =>
@@ -138,14 +138,14 @@ definitions may not just be "Syntactic Sugar" but have deeper semantic meaning.
 ```
 
 ## 6. Scala oop: [oop](oop/)
-Exploring Scala OOP features.  When an OOP model fits the problem, it is not<br>
+Exploring Scala OOP features.  When an OOP model fits the problem, it is not
 bad.  I just don't like it when it handcuffs me.
 
 ## 7. Parallelism with Scala: [parallelism](parallelism/)
 Exploring multithreading/concurrent constructs in Scala.
 
-It seems that Actors from the Scala standard library have been dropped in<br>
-favor of akka Actors.  Also, the standard library now has a Promises<br>
+It seems that Actors from the Scala standard library have been dropped in
+favor of akka Actors.  Also, the standard library now has a Promises
 implementation, which is very different that the one removed from Scalaz.
 
 ## 8. State Monad: [grokScala.grok.state](grok/src/main/scala/grok/state/State.scala)
@@ -153,27 +153,27 @@ An implementation of the State Monad I took from my version of
 the [fpinscala package](../fpinscala).
 
 ## 9. Package objects: [grokScala.grok.rand](grok/src/main/scala/grok/packageWide/)
-In scala, types cannot be defined outside of classes/objects.  They are<br>
-features that are part of Scala's OO system - see page 457 of Oderski's<br>
-Programming in Scala, 3rd edition, on path dependent types.  Types are<br>
-members just like defs, vals, and vars.  Functional programmers use this<br>
+In scala, types cannot be defined outside of classes/objects.  They are
+features that are part of Scala's OO system - see page 457 of Oderski's
+Programming in Scala, 3rd edition, on path dependent types.  Types are
+members just like defs, vals, and vars.  Functional programmers use this
 feature to implement type aliases.
 
-Scala provides a mechanism to define a type alias at the package level.<br>
-They are defined in a package object.  There can only be one package object<br>
-per package.  By convention, the package object is put in a file named<br>
-package.scala located in the root directory of the package.  The package<br>
+Scala provides a mechanism to define a type alias at the package level.
+They are defined in a package object.  There can only be one package object
+per package.  By convention, the package object is put in a file named
+package.scala located in the root directory of the package.  The package
 object itself is part of the package's parent package.
 
 In the `grokScala.grok` package, `Rand[A]`, is a type alias for
-`state.State[RNG, A]`<br>
+`state.State[RNG, A]`
 It is defined package-wide in the file
 [package.scala](grok/src/main/scala/grok/rand/package.scala) located in the
-`rand`<br>
+`rand`
 package root directory, grok/src/main/scala/grok/rand/. 
 * Used to define the Rand type alias at the rand package level.
 * Using `val Rand = grokScala.grok.state.State` so the compiler can find the companion object.
 * User code needs to use `new` key word to distinguish constructor from the `State.apply` method.
 
-This is my original implimentation of `fpinscala.state.rand.Rand`.  I plan<br>
+This is my original implimentation of `fpinscala.state.rand.Rand`.  I plan
 to reimplemented it there as a case class containing a `State(RNG,A)`.

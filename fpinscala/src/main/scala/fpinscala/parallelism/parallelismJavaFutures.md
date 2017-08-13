@@ -1,8 +1,8 @@
 ## Classes/Traits of fpinscala.parallelism.javaFutures:
 
-The fpinscala.parallelism.javaFutures package internally uses, as well as<br>
-returns, futures which adhere to the Java Futures API.  The futures produced<br>
-are designed to be interoperative with java source code.  This implementation<br>
+The fpinscala.parallelism.javaFutures package internally uses, as well as
+returns, futures which adhere to the Java Futures API.  The futures produced
+are designed to be interoperative with java source code.  This implementation
 has deadlocking problems with fixed size threadpools and is a thread hog.
 
 ### Trait [`parallelism.javaFutures.Par[A]`](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/parallelism/ParallelismJavaFutures.scala#L30-L115)

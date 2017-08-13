@@ -1,11 +1,11 @@
 ## Functional Programming in Scala Book Exercises
 
-I'm working my way through "Functional Programming in Scala"<br>
-by Paul Chiusana and Runar Bjarnason to learn Scala.  Also, I am<br>
+I'm working my way through "Functional Programming in Scala"
+by Paul Chiusana and Runar Bjarnason to learn Scala.  Also, I am
 teaching myself SBT using the online
 [SBT reference manual](http://www.scala-sbt.org/).
 
-I have set up my own build.sbt file and am not using the canned SBT<br>
+I have set up my own build.sbt file and am not using the canned SBT
 setup supplied [here](https://github.com/fpinscala/fpinscala) by the
 authors.
 
@@ -79,5 +79,5 @@ My usual work flow is "continuous compile":
        .
     > run
 ```
-repeat, while I edit files, use Unix commands like grep and<br>
+repeat, while I edit files, use Unix commands like grep and
 find, and perform GIT commands in other terminal windows.

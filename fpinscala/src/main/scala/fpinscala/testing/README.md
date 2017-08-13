@@ -2,8 +2,8 @@
 
 Chapter 8.
 
-Exploring how to decouple the specification of program behavior from<br>
-the creation of test cases while working through the exercises in<br>
+Exploring how to decouple the specification of program behavior from
+the creation of test cases while working through the exercises in
 "Functional Programming in Scala" by Paul Chiusana and Runar Bjarnason.
 
 ### Package [fpinscala.testing](Gen.scala)

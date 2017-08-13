@@ -1,10 +1,10 @@
 ## Java with Make.
-Wrote this a while back when I was getting frustrated using Netbeans<br>
-as my java IDE.  Wanted to see if GNU Make was a viable alternative<br>
+Wrote this a while back when I was getting frustrated using Netbeans
+as my java IDE.  Wanted to see if GNU Make was a viable alternative
 for java.  What here is just a rudimentary start.
 
-I might come back someday to continue when I better understand the<br>
-java ecosystem.<br>
+I might come back someday to continue when I better understand the
+java ecosystem.
 
 In the age of SBT, using Make for Java is probably dead.
 

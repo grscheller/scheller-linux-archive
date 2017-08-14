@@ -33,7 +33,7 @@ In glorious UTF-8 format, for for maximal compatibility and easy grepping.
 * Everything I know about VIM (VI-iMproved).
 * How to configure VIM to play nice in a hybrid CLI/GUI workflow.
 
-### [Windows 10 Configuration](Window10Info.txt)
+### [Windows 10 Configuration](Windows10Info)
 * Powershell and Cygwin Configuration files.
 * Powershell GUI made to play nice with color inversion
   provided by the Magnifier accessibility tool.

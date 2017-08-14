@@ -1,6 +1,5 @@
 /** Implemented the RNG and LCG classes
  *  for the package fpinscala.state.rand.
- *
  */
 package fpinscala.state.rand
 

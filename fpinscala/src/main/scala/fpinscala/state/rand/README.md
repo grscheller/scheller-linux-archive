@@ -6,12 +6,12 @@ reimplementating what was done in fpinscala.rngStandalone.
 
 From chapter 6.
 
-### Abstract Class [RNG](RNG.scala#L7-L12)
+### Abstract Class [RNG](RNG.scala#L6-L11)
 * Abstract base class for random number generators.
 * Represents an underlying probability space for random variables.
 * Random variables implemented with Rand class.
 
-### Case Class [LCG](RNG.scala#L14-L54)
+### Case Class [LCG](RNG.scala#L13-L53)
 * Linear Congruence Generator implementation for RNG.
 * Uses the same algoritm as java.util.Random and glibc.
 

@@ -33,5 +33,12 @@ In glorious UTF-8 format, for for maximal compatibility and easy grepping.
 * Everything I know about VIM (VI-iMproved).
 * How to configure VIM to play nice in a hybrid CLI/GUI workflow.
 
+### [Windows 10 Configuration](Window10Info.txt)
+* Powershell and Cygwin Configuration files.
+* Powershell GUI made to play nice with color inversion
+  provided by the Magnifier accessibility tool.
+* Powershell context colors "turned off."  Very useful when overhead
+  projectors don't render colors well.
+
 ### [Web](Web) directory
 * Private homepage, used in lieu of browser bookmarks.

@@ -4,6 +4,9 @@
 #  usually C:\Users\your_user_name, the one above Documents.
 #
 
+## Print original Path
+"Original Path: " + $env:Path
+
 ## Modify the Path environmental variable
 #  Put the JDK I installed before any native Java
 $env:Path = "C:\Program Files\Java\jdk1.8.0_131\bin;$env:Path"
@@ -18,7 +21,7 @@ function prompt {
 }
 
 # Define something that behaves more like Posix ls -a
-#    gci lies to you if file attributes are hidden
+# gci cmdlet lies to you if file attributes are hidden
 function la {
     if ($args.count -eq 0) {
         Get-ChildItem -Force
@@ -28,7 +31,6 @@ function la {
         }
     }
 }
-
 
 # Print path in a list format (can be assigned to arrays)
 function path {
@@ -97,10 +99,46 @@ ni -path alias:fm -value "C:\Windows\explorer.exe"
 ## Show what version of PowerShell we are using
 "`nPowerShell Version = " +  $PSVersionTable.PSVersion.toString()
 
+## Turn off all context colors since these don't play well with me reversing
+#  my colors with the Magnifier accessibility tool.
+#
+#     In the shortcut for Powershell on my shortcut bar I 
+#        rt-click title bar -> Properties -> Colors
+#     Set Screen and Popup Background to 255, 255, 255 (This gets reversed to black)
+#     Set Screen and Popup Text color to   1,  36,  86 (Reverses to a pleasant yellow)
+#
+#  The following lines are from info I found on stack overflow.
+#
+$fgColor = "DarkMagenta"
+$bgColor = "White"
+Set-PSReadlineOption -TokenKind Parameter -ForegroundColor $fgColor -BackgroundColor $bgColor
+Set-PSReadlineOption -TokenKind String -ForegroundColor $fgColor -BackgroundColor $bgColor
+Set-PSReadlineOption -TokenKind Operator -ForegroundColor $fgColor -BackgroundColor $bgColor
+Set-PSReadlineOption -TokenKind Type -ForegroundColor $fgColor -BackgroundColor $bgColor
+Set-PSReadlineOption -TokenKind Variable -ForegroundColor $fgColor -BackgroundColor $bgColor
+Set-PSReadlineOption -TokenKind Number -ForegroundColor $fgColor -BackgroundColor $bgColor
+Set-PSReadlineOption -TokenKind Member -ForegroundColor $fgColor -BackgroundColor $bgColor
+Set-PSReadlineOption -TokenKind Command -ForegroundColor $fgColor -BackgroundColor $bgColor
+Set-PSReadlineOption -TokenKind Comment -ForegroundColor $fgColor -BackgroundColor $bgColor
+Set-PSReadlineOption -TokenKind Keyword -ForegroundColor $fgColor -BackgroundColor $bgColor
+Set-PSReadlineOption -ContinuationPromptForegroundColor $fgColor -ContinuationPromptBackgroundColor $bgColor
+Set-PSReadlineOption -EmphasisForegroundColor $fgColor -EmphasisBackgroundColor $bgColor
+Set-PSReadlineOption -ErrorForegroundColor $fgColor -ErrorBackgroundColor $bgColor
+(Get-Host).PrivateData.ErrorForegroundColor=$fgColor
+(Get-Host).PrivateData.ErrorBackgroundColor=$bgColor
+(Get-Host).PrivateData.WarningForegroundColor=$fgColor
+(Get-Host).PrivateData.WarningBackgroundColor=$bgColor
+(Get-Host).PrivateData.DebugForegroundColor=$fgColor
+(Get-Host).PrivateData.DebugBackgroundColor=$bgColor
+(Get-Host).PrivateData.VerboseForegroundColor=$fgColor
+(Get-Host).PrivateData.VerboseBackgroundColor=$bgColor
+(Get-Host).PrivateData.ProgressForegroundColor=$fgColor
+(Get-Host).PrivateData.ProgressBackgroundColor=$bgColor
+
 ## To be able to run this script, run powershell as the administrator
 #  and run the command:
 #      Set-ExecutionPolicy Unrestricted
-#  Then as your regular user run the commands:
+#  Then, as your regular user, run the commands:
 #      cd .\Documents\WindowsPowerShell\
 #      Unblock-File Microsoft.PowerShell_profile.ps1
 #  Now when powershell is launched, this file will configure your

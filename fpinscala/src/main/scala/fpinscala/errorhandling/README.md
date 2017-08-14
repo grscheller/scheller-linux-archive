@@ -6,13 +6,13 @@ Implementing Option and Either error handling data structures while
 working through the exercises in  "Functional Programming in Scala"
 by Paul Chiusana and Runar Bjarnason.
 
-### Trait [fpinscala.errorhandling.Option](Option.scala)
+### Trait [fpinscala.errorhandling.Option](Option.scala#L3-L79)
 * Datatype indicating a successful value or failure.
 
 ### Program [OptionTest](exerciseCode/OptionTest.scala)
 * Program that parses to exercise fpinscala.errorhandling.Option.
 
-### Trait [fpinscala.errorhandling.Either](Either.scala)
+### Trait [fpinscala.errorhandling.Either](Either.scala#L3-L66)
 * Datatype containing a value of either one of two possible types.
 
 ### Program [EitherTest](exerciseCode/EitherTest.scala)

@@ -18,6 +18,7 @@ text files with information on a variety of topics.
 5. Bash environment configuration
 6. SSH configuration
 7. Private HTML Homepage 
+8. Windows 10 Powershell and Cygwin configuration
 
 ## Software projects:
 ### 1. [bash-utils](bash-utils/)

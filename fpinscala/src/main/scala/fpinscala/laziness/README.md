@@ -18,13 +18,13 @@ by Paul Chiusana and Runar Bjarnason.
 * Represents a contravarient stream of type A.
 * Together with Empty, an example of an Algebraic Data Type (ADT).
 
-### Program [StreamTest](exerciseCode/StreamTest.scala)
-* A program that exercises fpinscala.laziness.Stream.
-
 ### Object [Stream](Stream.scala#L314-L420)
 * Companion object to the Stream trait.
 * Contains "smart" constructors.
 * Contains a variadic strict stream constuctor factory method (apply).
+
+### Program [StreamTest](exerciseCode/StreamTest.scala)
+* A program that exercises fpinscala.laziness.Stream.
 
 ### Program [infiniteStreamTest](exerciseCode/infiniteStreamTest.scala)
 * Using infinite streams with fpinscala.laziness.Stream.

@@ -20,8 +20,8 @@ case class Rand[+A](action: State[RNG,A]) {
   def map2[B,C](rv: Rand[B])(f: (A,B) => C): Rand[C] =
     Rand {action.map2(rv.action)(f)}
 
-  /** Produce a definite value by applying the random variable
-   *  to a value of the underlying probability space.
+  /** Produce a definite value by providing the random variable
+   *  with a value from the underlying probability space.
    *
    *  Random variable as in probability theory, not in
    *  the "Fortran" sense of a function which produces

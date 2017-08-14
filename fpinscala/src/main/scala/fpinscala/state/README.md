@@ -25,6 +25,10 @@ very similar to the scalaz monad transformer.
 
 ### Package [fpinscala.state.rand](rand/)
 * A reimplementation of package rngStandalone using fpinscala.state.State. 
+* Rand class represents a "Random Variable" while "RNG" a value from
+  the underlying probability domain space.
+* Given a RNG, a Rand produces a definite value.
+* Random variable as in probablity theory.
 
 ### Program [candyMachine](exerciseCode/candyMachine.scala)
 * Standalone application to model a candy dispensing machine. 

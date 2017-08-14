@@ -6,13 +6,13 @@ Implementing List and Binary Tree data structures while working
 through the exercises in "Functional Programming in Scala"
 by Paul Chiusana and Runar Bjarnason.
 
-### List trait in package [fpinscala.datastructures.List](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/datastructures/List.scala#L3-L6)
+### Trait List in package [fpinscala.datastructures.List](List.scala#L3-L6)
 * A strict Lisp-like Cons/Nil datastructure.
 
 ### Program [ListTest](exerciseCode/ListTest.scala)
 * Program to exercise fpinscala.datastructures.List
 
-### Tree trait in package [fpinscala.datastructures.Tree](https://github.com/grscheller/scheller-linux-archive/blob/master/fpinscala/src/main/scala/fpinscala/datastructures/Tree.scala#L3-L6)
+### Trait Tree in package [fpinscala.datastructures.Tree](Tree.scala#L3-L6)
 * A strict tree datastructure.
 * Data is stored in the leaves.
 

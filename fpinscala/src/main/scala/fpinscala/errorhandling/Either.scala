@@ -1,7 +1,7 @@
 package fpinscala.errorhandling
 
-/**
- * Implement Either ADT to handle error conditions.
+/**  Implement Either ADT to handle error conditions.
+ *
  *   In some respects, this data structure has some similarity
  *   to a union in the C programming language.  An area in memory
  *   can be one thing or another, but not both.  A crucial

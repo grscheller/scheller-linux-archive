@@ -7,21 +7,30 @@
  */
 package fpinscala.testing
 
+import fpinscala.state.State
 import fpinscala.state.rand.{Rand,RNG}
 import fpinscala.laziness.Stream
 import Prop._
 
 case class Prop(run: (TestCount, RNG) => Result) {
 
-  // Statistically questionable, passing same rng to second calculation.
+  // The && and || combinators pass the same RNG to the run
+  // methods of both Prop's. 
+  //
+  // Assuming that the Prop's are not "ad hoc" and were created
+  // by the forAll method, then if the Prop's come from the same
+  // underlying Gen, they will generate the same sequence of random values.
+
+  /** Combine two Prop's, both must hold */
   def &&(p: Prop): Prop = Prop {
+    
     (n, rng) => run(n, rng) match {
       case Passed => p.run(n, rng)
       case x      => x
     }
   }
 
-  // Statistically questionable, passing same rng to second calculation.
+  /** Combine two Prop's, at least one must hold */
   def ||(p: Prop): Prop = Prop {
     (n, rng) => run(n, rng) match {
       case Falsified(failure, _) => p.tag(failure).run(n, rng)
@@ -29,7 +38,7 @@ case class Prop(run: (TestCount, RNG) => Result) {
     }
   }
 
-  def tag(fail1: FailedCase) = Prop {
+  private def tag(fail1: FailedCase) = Prop {
     (n, rng) => run(n, rng) match {
       case Falsified(fail2, cnt) => Falsified(s"${fail1}\n${fail2}", cnt)
       case _                     => Passed

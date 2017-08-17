@@ -10,7 +10,7 @@
 package fpinscala.chap08.testing
 
 import fpinscala.testing.{Gen,Prop}
-import fpinscala.state.rand.{Rand,RNG,LCG} // Remove implementation detail.
+import fpinscala.state.rand.{Rand,RNG,LCG}
 import scala.util.{Try, Success, Failure}
 import scala.collection.mutable
 
@@ -64,7 +64,7 @@ object fpinScalaCheckTest {
 
     // Test unit
     println("\nGenerate a slow 42 ten time:")
-    val genFortyTwo = Gen.unit({Thread.sleep(1000); 42})
+    val genFortyTwo = Gen.unit({Thread.sleep(500); 42})
     for (ii <- genFortyTwo.listOfN(Gen.unit(10)) sample rng1) {
       println(ii)
     }
@@ -134,7 +134,7 @@ object fpinScalaCheckTest {
       println(throwSome)
     }
 
-    val numTrials = 1000000
+    val numTrials = 200000
     val freqFiveDiceRolls = mutable.Map[Int, Int]()
     for (ii <- 5 to 30) { freqFiveDiceRolls += (ii -> 0) }
     for (throw5 <- rollFiveDice indexedSeqOfN Gen.unit(numTrials) sample rng1) {
@@ -152,6 +152,155 @@ object fpinScalaCheckTest {
     val rollTwoDiceTenTimes = twoDiceRoll listOfN Gen.unit(20)
     println("\nRoll 2 dice 20 times:")
     println(rollTwoDiceTenTimes sample rng3)
+
+    // Test Prop.forAll method
+
+    println("\nTest a true and a false Prop:")
+    val twoDiceTrueProp  = Prop.forAll(twoDiceRoll)(ii => ii > 1 && ii < 13)
+    val twoDiceFalseProp = Prop.forAll(twoDiceRoll)(ii => ii > 2 && ii < 12)
+
+    print("twoDiceTrueProp.run(100, rng1): ")
+    println(twoDiceTrueProp.run(100, rng1))
+    print("twoDiceTrueProp.run(100, rng2): ")
+    println(twoDiceTrueProp.run(100, rng2))
+    print("twoDiceTrueProp.run(100, rng3): ")
+    println(twoDiceTrueProp.run(100, rng3))
+    print("twoDiceFalseProp.run(100, rng1): ")
+    println(twoDiceFalseProp.run(100, rng1))
+    print("twoDiceFalseProp.run(100, rng2): ")
+    println(twoDiceFalseProp.run(100, rng2))
+    print("twoDiceFalseProp.run(100, rng3): ")
+    println(twoDiceFalseProp.run(100, rng3))
+
+    println("\nCombine true and false Procs with && and ||:")
+    val twoDiceTrueProp1  = Prop.forAll(twoDiceRoll)(_ > 1)
+    val twoDiceTrueProp2  = Prop.forAll(twoDiceRoll)(_ < 13)
+    val twoDiceFalseProp1 = Prop.forAll(twoDiceRoll)(_ > 2)
+    val twoDiceFalseProp2 = Prop.forAll(twoDiceRoll)(_ < 12)
+
+    val procTrueAndTrue = twoDiceTrueProp1 && twoDiceTrueProp2
+    val procTrueOrTrue = twoDiceTrueProp1 || twoDiceTrueProp2
+    val procTrueAndFalse = twoDiceTrueProp1 && twoDiceFalseProp2
+    val procFalseAndTrue = twoDiceFalseProp1 && twoDiceTrueProp2
+    val procTrueOrFalse = twoDiceTrueProp1 || twoDiceFalseProp2
+    val procFalseOrTrue = twoDiceFalseProp1 || twoDiceTrueProp2
+    val procFalseAndFalse = twoDiceFalseProp1 && twoDiceFalseProp2
+    val procFalseOrFalse = twoDiceFalseProp1 || twoDiceFalseProp2
+
+    print("procTrueAndTrue.run(100, rng1): ")
+    println(procTrueAndTrue.run(100, rng1))
+    print("procTrueAndTrue.run(100, rng2): ")
+    println(procTrueAndTrue.run(100, rng2))
+    print("procTrueAndTrue.run(100, rng3): ")
+    println(procTrueAndTrue.run(100, rng3))
+    print("procTrueOrTrue.run(100, rng1): ")
+    println(procTrueOrTrue.run(100, rng1))
+    print("procTrueOrTrue.run(100, rng2): ")
+    println(procTrueOrTrue.run(100, rng2))
+    print("procTrueOrTrue.run(100, rng3): ")
+    println(procTrueOrTrue.run(100, rng3))
+
+    print("procTrueAndFalse.run(100, rng1): ")
+    println(procTrueAndFalse.run(100, rng1))
+    print("procTrueAndFalse.run(100, rng2): ")
+    println(procTrueAndFalse.run(100, rng2))
+    print("procTrueAndFalse.run(100, rng3): ")
+    println(procTrueAndFalse.run(100, rng3))
+    print("procTrueOrFalse.run(100, rng1): ")
+    println(procTrueOrFalse.run(100, rng1))
+    print("procTrueOrFalse.run(100, rng2): ")
+    println(procTrueOrFalse.run(100, rng2))
+    print("procTrueOrFalse.run(100, rng3): ")
+    println(procTrueOrFalse.run(100, rng3))
+
+    print("procFalseAndTrue.run(100, rng1): ")
+    println(procFalseAndTrue.run(100, rng1))
+    print("procFalseAndTrue.run(100, rng2): ")
+    println(procFalseAndTrue.run(100, rng2))
+    print("procFalseAndTrue.run(100, rng3): ")
+    println(procFalseAndTrue.run(100, rng3))
+    print("procFalseOrTrue.run(100, rng1): ")
+    println(procFalseOrTrue.run(100, rng1))
+    print("procFalseOrTrue.run(100, rng2): ")
+    println(procFalseOrTrue.run(100, rng2))
+    print("procFalseOrTrue.run(100, rng3): ")
+    println(procFalseOrTrue.run(100, rng3))
+
+    print("procFalseAndFalse.run(100, rng1): ")
+    println(procFalseAndFalse.run(100, rng1))
+    print("procFalseAndFalse.run(100, rng2): ")
+    println(procFalseAndFalse.run(100, rng2))
+    print("procFalseAndFalse.run(100, rng3): ")
+    println(procFalseAndFalse.run(100, rng3))
+    print("procFalseOrFalse.run(100, rng1): ")
+    println(procFalseOrFalse.run(100, rng1))
+    print("procFalseOrFalse.run(100, rng2): ")
+    println(procFalseOrFalse.run(100, rng2))
+    print("procFalseOrFalse.run(100, rng3): ")
+    println(procFalseOrFalse.run(100, rng3))
+
+    println("\nTest a Prop which throws an exception:")
+    val exceptionalProp = Prop.forAll(twoDiceRoll) {
+      ii => 42/(ii - 2) < 43
+    }
+
+    print("exceptionalProp.run(10, rng1): ")
+    println(exceptionalProp.run(10, rng1))
+    print("exceptionalProp.run(50, rng1): ")
+    println(exceptionalProp.run(50, rng1))
+    print("exceptionalProp.run(100, rng1): ")
+    println(exceptionalProp.run(100, rng1))
+
+    println("\nTest a failable Prop which could throw an exception:")
+    val failableExceptionalProp = Prop.forAll(twoDiceRoll) {
+      ii => 42/(ii - 2) < 42
+    }
+
+    print("failableExceptionalProp.run(10, rng3): ")
+    println(failableExceptionalProp.run(10, rng3))
+    print("failableExceptionalProp.run(10, rng1): ")
+    println(failableExceptionalProp.run(10, rng1))
+    print("failableExceptionalProp.run(20, rng1): ")
+    println(failableExceptionalProp.run(20, rng1))
+    print("failableExceptionalProp.run(10, rng2): ")
+    println(failableExceptionalProp.run(10, rng2))
+    print("failableExceptionalProp.run(20, rng2): ")
+    println(failableExceptionalProp.run(20, rng2))
+
+    println("\nCombining a failable Prop with an exceptional Prop:")
+    val procTrueOrExceptional = twoDiceTrueProp1 || exceptionalProp
+    val procExceptionalOrTrue = exceptionalProp || twoDiceTrueProp1 
+    val procTrueAndExceptional = twoDiceTrueProp1 && exceptionalProp
+    val procExceptionalAndTrue = exceptionalProp && twoDiceTrueProp1 
+    val procFalseOrExceptional = twoDiceFalseProp1 || exceptionalProp
+    val procExceptionalOrFalse = exceptionalProp || twoDiceFalseProp1 
+
+    print("procTrueOrExceptional.run(5, rng2): ")
+    println(procTrueOrExceptional.run(5, rng2))
+    print("procTrueOrExceptional.run(15, rng2): ")
+    println(procTrueOrExceptional.run(15, rng2))
+
+    print("procExceptionalOrTrue.run(5, rng2): ")
+    println(procExceptionalOrTrue.run(5, rng2))
+    print("procExceptionalOrTrue.run(15, rng2): ")
+    println(procExceptionalOrTrue.run(15, rng2))
+
+    print("procTrueAndExceptional.run(10, rng2): ")
+    println(procTrueAndExceptional.run(10, rng2))
+    print("procTrueAndExceptional.run(11, rng2): ")
+    println(procTrueAndExceptional.run(11, rng2))
+    print("procTrueAndExceptional.run(12, rng2): ")
+    println(procTrueAndExceptional.run(12, rng2))
+
+    print("procExceptionalAndTrue.run(5, rng2): ")
+    println(procExceptionalAndTrue.run(5, rng2))
+    print("procExceptionalAndTrue.run(15, rng2): ")
+    println(procExceptionalAndTrue.run(15, rng2))
+
+    print("procExceptionalOrFalse.run(15, rng2): ")
+    println(procExceptionalOrFalse.run(15, rng2))
+    print("procFalseOrExceptional.run(15, rng2): ")
+    println(procFalseOrExceptional.run(15, rng2))
 
     println()
 

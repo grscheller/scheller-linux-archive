@@ -7,9 +7,9 @@
  */
 package fpinscala.testing
 
-import fpinscala.state.State
 import fpinscala.state.rand.{Rand,RNG}
 import fpinscala.laziness.Stream
+
 import Prop._
 
 case class Prop(run: (TestCount, RNG) => Result) {
@@ -18,8 +18,9 @@ case class Prop(run: (TestCount, RNG) => Result) {
   // methods of both Prop's. 
   //
   // Assuming that the Prop's are not "ad hoc" and were created
-  // by the forAll method, then if the Prop's come from the same
-  // underlying Gen, they will generate the same sequence of random values.
+  // by the forAll method, and if both Prop's come from the same
+  // underlying Gen, then they will generate the same sequence
+  // of random values.
 
   /** Combine two Prop's, both must hold */
   def &&(p: Prop): Prop = Prop {
@@ -40,7 +41,7 @@ case class Prop(run: (TestCount, RNG) => Result) {
 
   private def tag(fail1: FailedCase) = Prop {
     (n, rng) => run(n, rng) match {
-      case Falsified(fail2, cnt) => Falsified(s"${fail1}\n${fail2}", cnt)
+      case Falsified(fail2, cnt) => Falsified(s"${fail1};${fail2}", cnt)
       case _                     => Passed
     }
   }
@@ -62,7 +63,7 @@ object Prop {
   }
 
   def forAll[A](g: Gen[A])(pred: A => Boolean): Prop = Prop {
-    (n, rng) => sampleStream(g)(rng) zip Stream.from(0) take n map {
+    (n, rng) => Gen.sampleStream(g)(rng) zip Stream.from(1) take n map {
       case (a, cnt: TestCount) =>
         try {
             if (pred(a))
@@ -72,18 +73,13 @@ object Prop {
         } catch {
             case e: Exception => Falsified(buildMsg(a, e), cnt)
         }
-      } find(_.isFalsified) getOrElse Passed
+    } find(_.isFalsified) getOrElse Passed
   }
 
-  def sampleStream[A](g: Gen[A])(rngIn: RNG): Stream[A] =
-    Stream.unfold(rngIn) {
-      rng => Some(g.sample.action.run(rng))
-    }
-
   private def buildMsg[A](a: A, e: Exception): FailedCase =
-    s"Test case: ${a}\n" +
-    s"generated an exception: ${e.getMessage}\n" +
-    s"stack trace:\n ${e.getStackTrace.mkString("\n")}"
+    s"\n>>> Test case with value: ${a}" +
+    s"\n>>> generated an exception: ${e.getMessage}" +
+    s"\n>>> stack trace: ${e.getStackTrace.mkString("\n>   ")}"
 
 }
 
@@ -123,10 +119,15 @@ object Gen {
   def union[A](gen1: Gen[A], gen2: Gen[A]): Gen[A] =
     Gen { Rand.joint2(0.5)(gen1.sample, gen2.sample) }
 
-  /** Pull 2 Generators with relative weights */
+  /** Pull from 2 Generators with relative weights */
   def weighted[A](g1: (Gen[A],Double), g2: (Gen[A],Double)): Gen[A] = {
     val prob1 = g1._2.abs/(g1._2.abs + g2._2.abs)
     Gen { Rand.joint2(prob1)(g1._1.sample, g2._1.sample) }
   }
+
+  def sampleStream[A](g: Gen[A])(rngIn: RNG): Stream[A] =
+    Stream.unfold(rngIn) {
+      rng => Some(g.sample.action.run(rng))
+    }
 
 }

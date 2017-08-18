@@ -302,7 +302,7 @@ object fpinScalaCheckTest {
     print("procFalseOrExceptional.run(15, rng2): ")
     println(procFalseOrExceptional.run(15, rng2))
 
-    println()
+    println("\nDone!\n")
 
   }
 

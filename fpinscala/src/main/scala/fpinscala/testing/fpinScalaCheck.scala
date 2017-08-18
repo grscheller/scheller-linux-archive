@@ -9,22 +9,23 @@ package fpinscala.testing
 
 import fpinscala.state.rand.{Rand,RNG}
 import fpinscala.laziness.Stream
+import scala.language.implicitConversions
 
+import Gen.unsized
 import Prop._
 
 case class Prop(run: (TestCount, RNG) => Result) {
 
   // The && and || combinators pass the same RNG to the run
-  // methods of both Prop's. 
+  // methods of both Props. 
   //
-  // Assuming that the Prop's are not "ad hoc" and were created
-  // by the forAll method, and if both Prop's come from the same
+  // Assuming that the Props are not "ad hoc" and were created
+  // by the forAll method, and if both Props come from the same
   // underlying Gen, then they will generate the same sequence
   // of random values.
 
   /** Combine two Prop's, both must hold */
   def &&(p: Prop): Prop = Prop {
-    
     (n, rng) => run(n, rng) match {
       case Passed => p.run(n, rng)
       case x      => x
@@ -83,7 +84,7 @@ object Prop {
 
 }
 
-case class Gen[A](sample: Rand[A]) {
+case class Gen[+A](sample: Rand[A]) {
 
   def flatMap[B](f: A => Gen[B]): Gen[B] =
     Gen {sample flatMap { a => f(a).sample }}
@@ -107,6 +108,8 @@ case class Gen[A](sample: Rand[A]) {
 
 object Gen {
 
+  implicit def unsized[A](g: Gen[A]): SGen[A] = SGen(_ => g)
+
   /** A "lazy" unit which always generates the same value. */
   def unit[A](a: => A): Gen[A] = Gen(Rand.unit(a))
 
@@ -115,7 +118,7 @@ object Gen {
 
   def boolean: Gen[Boolean] = Gen(Rand.boolean)
 
-  /** Pull from 2 Generators of the same type with equal likelyhod */
+  /** Pull from 2 Generators of the same type with equal likelihood */
   def union[A](gen1: Gen[A], gen2: Gen[A]): Gen[A] =
     Gen { Rand.joint2(0.5)(gen1.sample, gen2.sample) }
 
@@ -129,5 +132,22 @@ object Gen {
     Stream.unfold(rngIn) {
       rng => Some(g.sample.action.run(rng))
     }
+
+}
+
+case class SGen[+A](forSize: Int => Gen[A]) {
+
+  def apply(n: Int): Gen[A] = forSize(n)
+
+  def flatMap[B](f: A => SGen[B]): SGen[B] =
+    SGen { n =>
+      forSize(n) flatMap { a => f(a).forSize(n) }
+    }
+
+  def map[B](f: A => B): SGen[B] = SGen(forSize(_).map(f))
+
+  def map2[B,C](sg: SGen[B])(f: (A,B) => C): SGen[C] = SGen {
+    n => forSize(n).map2(sg.forSize(n))(f)
+  }
 
 }

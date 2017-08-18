@@ -11,8 +11,9 @@ lazy val root = (project in file("."))
 // Put build in Jar files if true.
 exportJars := false
 
-// Run scalac with deprecation flag
+// Run scalac with these flags
 scalacOptions += "-deprecation"
+scalacOptions += "-feature"
 
 // Tell scaladoc to process author tags
 scalacOptions in (Compile,doc) += "-author"

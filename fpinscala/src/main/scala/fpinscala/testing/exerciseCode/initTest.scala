@@ -3,8 +3,8 @@
  *  Some preliminary testing of the of content of the
  *  testing package itself.
  *
- *  Will actually use the package itself for property
- *  based testing under the test/ source code tree.
+ *  Will actually use the package for property
+ *  based testing under test/ source code trees.
  *
  */
 package fpinscala.chap08.testing
@@ -14,7 +14,7 @@ import fpinscala.state.rand.{Rand,RNG,LCG}
 import scala.util.{Try, Success, Failure}
 import scala.collection.mutable
 
-object fpinScalaCheckTest {
+object initTest {
 
   val rng1: RNG = LCG(1)
   val rng2: RNG = LCG(2)

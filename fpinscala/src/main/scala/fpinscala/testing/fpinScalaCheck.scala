@@ -99,10 +99,16 @@ case class Gen[+A](sample: Rand[A]) {
       Gen {Rand.sequence(List.fill(n)(sample))}
     }
 
+  def listOf: SGen[List[A]] =
+    SGen { n => listOfN(Gen.unit(n)) }
+
   def indexedSeqOfN(size: Gen[Int]): Gen[IndexedSeq[A]] =
     size flatMap { n =>
       Gen {Rand.sequenceIndexedSeq(IndexedSeq.fill(n)(sample))}
     }
+  
+  def indexedSeqOf: SGen[IndexedSeq[A]] =
+    SGen { n => indexedSeqOfN(Gen.unit(n)) }
 
 }
 

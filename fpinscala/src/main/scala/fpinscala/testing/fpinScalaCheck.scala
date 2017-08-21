@@ -14,7 +14,7 @@ import scala.language.implicitConversions
 import Gen.unsized
 import Prop._
 
-case class Prop(run: (TestCount, RNG) => Result) {
+case class Prop(run: (MaxSize, TestCount, RNG) => Result) {
 
   // The && and || combinators pass the same RNG to the run
   // methods of both Props. 
@@ -26,31 +26,35 @@ case class Prop(run: (TestCount, RNG) => Result) {
 
   /** Combine two Prop's, both must hold */
   def &&(p: Prop): Prop = Prop {
-    (n, rng) => run(n, rng) match {
-      case Passed => p.run(n, rng)
+    (max, n, rng) => run(max, n, rng) match {
+      case Passed => p.run(max, n, rng)
       case x      => x
     }
   }
 
   /** Combine two Prop's, at least one must hold */
   def ||(p: Prop): Prop = Prop {
-    (n, rng) => run(n, rng) match {
-      case Falsified(failure, _) => p.tag(failure).run(n, rng)
+    (max, n, rng) => run(max, n, rng) match {
+      case Falsified(failure, _) => p.tag(failure).run(max, n, rng)
       case _                     => Passed
     }
   }
 
   private def tag(fail1: FailedCase) = Prop {
-    (n, rng) => run(n, rng) match {
+    (max, n, rng) => run(max, n, rng) match {
       case Falsified(fail2, cnt) => Falsified(s"${fail1};${fail2}", cnt)
       case _                     => Passed
     }
   }
+
+  def apply(n: TestCount, rng: RNG): Result = run(n, n, rng)
+
 }
 
 object Prop {
   type FailedCase = String
   type TestCount = Int
+  type MaxSize   = Int
 
   sealed trait Result {
     def isFalsified: Boolean
@@ -63,8 +67,15 @@ object Prop {
     def isFalsified = true
   }
 
+  val passedProp = Prop { (_,_,_) => Passed }
+
+  private def buildMsg[A](a: A, e: Exception): FailedCase =
+    s"\n>>> Test case with value: ${a}" +
+    s"\n>>> generated an exception: ${e.getMessage}" +
+    s"\n>>> stack trace: ${e.getStackTrace.mkString("\n>   ")}"
+
   def forAll[A](g: Gen[A])(pred: A => Boolean): Prop = Prop {
-    (n, rng) => Gen.sampleStream(g)(rng) zip Stream.from(1) take n map {
+    (max, n, rng) => Gen.sampleStream(g)(rng) zip Stream.from(1) take n map {
       case (a, cnt: TestCount) =>
         try {
             if (pred(a))
@@ -77,14 +88,25 @@ object Prop {
     } find(_.isFalsified) getOrElse Passed
   }
 
-  private def buildMsg[A](a: A, e: Exception): FailedCase =
-    s"\n>>> Test case with value: ${a}" +
-    s"\n>>> generated an exception: ${e.getMessage}" +
-    s"\n>>> stack trace: ${e.getStackTrace.mkString("\n>   ")}"
+  def forAll[A](sg: SGen[A])(pred: A => Boolean): Prop = forAll(sg(_))(pred)
+
+  def forAll[A](f: Int => Gen[A])(pred: A => Boolean): Prop = Prop {
+    (max, n, rng) =>
+      val casesPerSize = (n + (max - 1))/max
+      val props: Stream[Prop] =
+        Stream.from(0) take (n.min(max)+1) map { i => forAll(f(i))(pred) }
+      val prop: Prop = (props map { p => Prop { (max1, _, rng1) =>
+          p.run(max1, casesPerSize, rng1)
+        }
+      }).foldLeft(passedProp)(_ && _)
+      prop.run(max, n, rng)
+  }
 
 }
 
 case class Gen[+A](sample: Rand[A]) {
+
+  import Gen._
 
   def flatMap[B](f: A => Gen[B]): Gen[B] =
     Gen {sample flatMap { a => f(a).sample }}
@@ -99,16 +121,20 @@ case class Gen[+A](sample: Rand[A]) {
       Gen {Rand.sequence(List.fill(n)(sample))}
     }
 
+  def listOfN(size: Int): Gen[List[A]] = listOfN(unit(size))
+
   def listOf: SGen[List[A]] =
-    SGen { n => listOfN(Gen.unit(n)) }
+    SGen { n => listOfN(n) }
 
   def indexedSeqOfN(size: Gen[Int]): Gen[IndexedSeq[A]] =
     size flatMap { n =>
       Gen {Rand.sequenceIndexedSeq(IndexedSeq.fill(n)(sample))}
     }
+
+  def indexedSeqOfN(size: Int): Gen[IndexedSeq[A]] = indexedSeqOfN(unit(size))
   
   def indexedSeqOf: SGen[IndexedSeq[A]] =
-    SGen { n => indexedSeqOfN(Gen.unit(n)) }
+    SGen { n => indexedSeqOfN(n) }
 
 }
 
@@ -134,9 +160,9 @@ object Gen {
     Gen { Rand.joint2(prob1)(g1._1.sample, g2._1.sample) }
   }
 
-  def sampleStream[A](g: Gen[A])(rngIn: RNG): Stream[A] =
-    Stream.unfold(rngIn) {
-      rng => Some(g.sample.action.run(rng))
+  def sampleStream[A](g: Gen[A])(rng: RNG): Stream[A] =
+    Stream.unfold(rng) {
+      rng1 => Some(g.sample.action.run(rng1))
     }
 
 }

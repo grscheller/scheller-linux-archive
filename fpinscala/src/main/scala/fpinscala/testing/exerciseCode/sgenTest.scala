@@ -47,6 +47,26 @@ object sgenTest {
       println()
     }
 
+    // Example from book (section 8.4.1)
+    val smallIntList = Gen.choose(-10, 11).listOf1
+    val maxProp = Prop.forAll(smallIntList) {
+      ns => 
+        val max = ns.max
+        ! ns.exists(_ > max)
+    }
+
+    Prop.run(maxProp)
+
+    println()
+
+    val falseProp = Prop.forAll(smallIntList) {
+      ns => 
+        val min = ns.min
+        ! ns.exists(_ > min + 10)
+    }
+
+    Prop.run(falseProp)
+
     println()
 
   }

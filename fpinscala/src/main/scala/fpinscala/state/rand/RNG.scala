@@ -1,7 +1,7 @@
-/** Implemented the RNG and LCG classes
- *  for the package fpinscala.state.rand.
- */
 package fpinscala.state.rand
+
+// Implemented the RNG and LCG classes
+// for the package fpinscala.state.rand.
 
 /** Base class for the RNG class for
  *  pseudo-random number generators.

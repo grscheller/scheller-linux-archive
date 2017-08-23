@@ -7,7 +7,7 @@
  */
 package fpinscala.testing
 
-import fpinscala.state.rand.{Rand,RNG}
+import fpinscala.state.rand.{Rand,RNG,LCG}
 import fpinscala.laziness.Stream
 import scala.language.implicitConversions
 
@@ -47,7 +47,8 @@ case class Prop(run: (MaxSize, TestCount, RNG) => Result) {
     }
   }
 
-  def apply(n: TestCount, rng: RNG): Result = run(n, n, rng)
+  def apply(max: MaxSize, cnt: TestCount, rng: RNG): Result = run(max, cnt, rng)
+  def apply(cnt: TestCount, rng: RNG): Result = run(cnt, cnt, rng)
 
 }
 
@@ -72,10 +73,14 @@ object Prop {
   private def buildMsg[A](a: A, e: Exception): FailedCase =
     s"\n>>> Test case with value: ${a}" +
     s"\n>>> generated an exception: ${e.getMessage}" +
-    s"\n>>> stack trace: ${e.getStackTrace.mkString("\n>   ")}"
+    s"\n>>> stack trace:\n> ${e.getStackTrace.mkString("\n> ")}"
 
+  def apply(run: (TestCount,RNG) => Result): Prop =
+    Prop { (_, n, rng) => run(n, rng) }
+
+  // Uses the above apply method
   def forAll[A](g: Gen[A])(pred: A => Boolean): Prop = Prop {
-    (max, n, rng) => Gen.sampleStream(g)(rng) zip Stream.from(1) take n map {
+    (n, rng) => Gen.sampleStream(g)(rng) zip Stream.from(0) take n map {
       case (a, cnt: TestCount) =>
         try {
             if (pred(a))
@@ -102,6 +107,18 @@ object Prop {
       prop.run(max, n, rng)
   }
 
+  def run( p: Prop
+         , maxSize: Int = 100
+         , testCases: Int = 100
+         , rng: RNG = LCG(System.currentTimeMillis) ): Unit =
+
+    p.run(maxSize, testCases, rng) match {
+      case Falsified(msg, n) =>
+        println(s"! Falsified after ${n} passed tests:${msg}")
+      case Passed =>
+        println(s"+ OK, passed ${testCases} tests.")
+    }
+
 }
 
 case class Gen[+A](sample: Rand[A]) {
@@ -116,15 +133,20 @@ case class Gen[+A](sample: Rand[A]) {
   def map2[B,C](g: Gen[B])(f: (A,B) => C): Gen[C] =
     Gen {sample.map2(g.sample)(f)}
 
+  /** Generates lists of type List[A] with random length */
   def listOfN(size: Gen[Int]): Gen[List[A]] =
     size flatMap { n =>
       Gen {Rand.sequence(List.fill(n)(sample))}
     }
 
+  /** Generate lists of type List[A] with a definite length */
   def listOfN(size: Int): Gen[List[A]] = listOfN(unit(size))
 
-  def listOf: SGen[List[A]] =
-    SGen { n => listOfN(n) }
+  /** SGen to produce lists Gens of List[A] of a definite length */
+  def listOf: SGen[List[A]] = SGen { n => listOfN(n) }
+
+  /** Like listOf, but don't produce empty lists */
+  def listOf1: SGen[List[A]] = SGen { n => listOfN(n.max(1)) }
 
   def indexedSeqOfN(size: Gen[Int]): Gen[IndexedSeq[A]] =
     size flatMap { n =>
@@ -133,8 +155,17 @@ case class Gen[+A](sample: Rand[A]) {
 
   def indexedSeqOfN(size: Int): Gen[IndexedSeq[A]] = indexedSeqOfN(unit(size))
   
-  def indexedSeqOf: SGen[IndexedSeq[A]] =
-    SGen { n => indexedSeqOfN(n) }
+  def indexedSeqOf: SGen[IndexedSeq[A]] = SGen { n => indexedSeqOfN(n) }
+  
+  def indexedSeqOf1: SGen[IndexedSeq[A]] =
+    SGen { n => indexedSeqOfN(n.max(1)) }
+
+  /** Convenience function to convert to an SGen.
+   *
+   *  Handles some edge cases the implicit def does
+   *  not work without type annotation hints.
+   */
+  def unsized: SGen[A] = SGen(_ => this)
 
 }
 
@@ -164,6 +195,12 @@ object Gen {
     Stream.unfold(rng) {
       rng1 => Some(g.sample.action.run(rng1))
     }
+
+  // Some convenience functions
+  def listOf[A](g: Gen[A]): SGen[List[A]] = g.listOf
+  def listOf1[A](g: Gen[A]): SGen[List[A]] = g.listOf1
+  def indexedSeqOf[A](g: Gen[A]): SGen[IndexedSeq[A]] = g.indexedSeqOf
+  def indexedSeqOf1[A](g: Gen[A]): SGen[IndexedSeq[A]] = g.indexedSeqOf1
 
 }
 

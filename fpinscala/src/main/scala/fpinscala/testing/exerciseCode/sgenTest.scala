@@ -47,8 +47,12 @@ object sgenTest {
       println()
     }
 
-    // Example from book (section 8.4.1)
+    // Example based on one from book (section 8.4.1)
+
+    // Generates nonempty lists of (ii: Int) where -10 <= ii <= 10
     val smallIntList = Gen.choose(-10, 11).listOf1
+
+    // A property that should obviously be true (for nonempty lists)
     val maxProp = Prop.forAll(smallIntList) {
       ns => 
         val max = ns.max
@@ -59,10 +63,11 @@ object sgenTest {
 
     println()
 
+    // A test that will fail for the case of a list containing -10 and 10.
     val falseProp = Prop.forAll(smallIntList) {
       ns => 
         val min = ns.min
-        ! ns.exists(_ > min + 10)
+        ! ns.exists(_ > min + 19)
     }
 
     Prop.run(falseProp)

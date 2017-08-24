@@ -47,6 +47,10 @@ case class Prop(run: (MaxSize, TestCount, RNG) => Result) {
     }
   }
 
+  // Initial convenience functions used in prototyping library.
+  // Not primary user interface, kept around to keep the initial
+  // exercisaCode scripts working.
+
   def apply(max: MaxSize, cnt: TestCount, rng: RNG): Result = run(max, cnt, rng)
   def apply(cnt: TestCount, rng: RNG): Result = run(cnt, cnt, rng)
 
@@ -107,6 +111,18 @@ object Prop {
       prop.run(max, n, rng)
   }
 
+  /** Primary user interface to launch testing.
+   *
+   *  @param p Property (Prop) to be tested.
+   *  @param maxsize Maximum "size" to be tested.  Here size could mean
+   *                 the size of the data structures or values within, depends
+   *                 how the Prop is defined.
+   *  @param testCases Number of testcases that need to be be conducted until
+   *                   the Prop is considered "passed."
+   *  @param rng The source of randomness.  Pass a definite value for
+   *             reproducible tests.
+   *  @note Test cases start small and work their way larger.
+   */
   def run( p: Prop
          , maxSize: Int = 100
          , testCases: Int = 100

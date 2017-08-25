@@ -122,13 +122,18 @@ object Rand {
    *
    *    1. Keeps things uniformly distributed over
    *       the range of the random variable even
-   *       in the case n does not evenly divide
+   *       in the case of n not evenly dividing
    *       the integer value Int.MaxValue + 1.
-   *    2. Algorithm assumes that n > 0.
+   *    2. The quantity ii + ((n-1) - mod) is the
+   *       the top of the "module band."  If it is
+   *       "negative" due to rollover, we redo the
+   *       calculation to keep the distribution
+   *       uniform.
+   *    3. Algorithm assumes that n > 0.
    *    3. Stack overflow can happen if n < 0.
-   *    4. For n = 0, you will get a divide by 0
+   *    5. For n = 0, you will get a divide by 0
    *       runtime java.lang.ArithmeticException.
-   *    5. For efficiency, client responsible to
+   *    6. For efficiency, client responsible to
    *       ensure that n > 0.
    *
    *    Caller be warned, don't call with n <= 0.

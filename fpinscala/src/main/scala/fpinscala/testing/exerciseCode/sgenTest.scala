@@ -59,9 +59,9 @@ object sgenTest {
         ! ns.exists(_ > max)
     }
 
-    Prop.run(maxProp)
+    println("Test a true property.")
 
-    println()
+    Prop.run(maxProp)
 
     // A test that will fail for the case of a list containing -10 and 10.
     val falseProp = Prop.forAll(smallIntList) {
@@ -70,7 +70,13 @@ object sgenTest {
         ! ns.exists(_ > min + 19)
     }
 
-    Prop.run(falseProp)
+    print("Test a property that can fail,")
+    println(" using different test parameters.")
+
+    Prop.run(falseProp)  // Defaults to maxSize = 100, testCases = 1000
+    Prop.run(falseProp, 100, 100)
+    Prop.run(falseProp, 100, 10000)
+    Prop.run(falseProp, 1000, 10)  // Never get to the larger test cases.
 
     println()
 

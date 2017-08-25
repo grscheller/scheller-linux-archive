@@ -122,10 +122,11 @@ object Prop {
    *  @param rng The source of randomness.  Pass a definite value for
    *             reproducible tests.
    *  @note Test cases start small and work their way larger.
+   *  @note Defaults to 10 tests per size.
    */
   def run( p: Prop
          , maxSize: Int = 100
-         , testCases: Int = 100
+         , testCases: Int = 1000
          , rng: RNG = LCG(System.currentTimeMillis) ): Unit =
 
     p.run(maxSize, testCases, rng) match {

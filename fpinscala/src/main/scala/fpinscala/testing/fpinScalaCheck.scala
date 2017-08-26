@@ -19,6 +19,14 @@ case class Prop(run: (MaxSize, TestCount, RNG) => Result) {
   // The && and || combinators pass the same RNG to the run
   // methods of both Props. 
   //
+  //   Need &&& and ||| that for use with forAll which chain
+  //   the RNG and add the success counts.
+  //
+  //   Need && and || more user oriented designed to work
+  //   with the same Gen/SGen hence passing the same RNG
+  //   to both sides, the whole chain counting as a single
+  //   test.
+  //
   // Assuming that the Props are not "ad hoc" and were created
   // by the forAll method, and if both Props come from the same
   // underlying Gen, then they will generate the same sequence
@@ -27,23 +35,24 @@ case class Prop(run: (MaxSize, TestCount, RNG) => Result) {
   /** Combine two Prop's, both must hold */
   def &&(p: Prop): Prop = Prop {
     (max, n, rng) => run(max, n, rng) match {
-      case Passed => p.run(max, n, rng)
-      case x      => x
+      case Passed  => p.run(max, n, rng)  // getting close, but must consider
+      case Proved  => p.run(max, n, rng)  // composition of Passed and Proven
+      case failure => failure             // more carefully
     }
   }
 
   /** Combine two Prop's, at least one must hold */
   def ||(p: Prop): Prop = Prop {
     (max, n, rng) => run(max, n, rng) match {
-      case Falsified(failure, _) => p.tag(failure).run(max, n, rng)
-      case _                     => Passed
+      case Falsified(failure, cnt) => p.tag(failure, cnt).run(max, n, rng)
+      case success                 => success
     }
   }
 
-  private def tag(fail1: FailedCase) = Prop {
+  private def tag(fail1: FailedCase, cnt1: TestCount) = Prop {
     (max, n, rng) => run(max, n, rng) match {
-      case Falsified(fail2, cnt) => Falsified(s"${fail1};${fail2}", cnt)
-      case _                     => Passed
+      case Falsified(fail2, cnt2) => Falsified(s"${fail1};${fail2}", cnt1+cnt2)
+      case success                => success
     }
   }
 
@@ -67,12 +76,16 @@ object Prop {
   case object Passed extends Result {
     def isFalsified = false
   }
+  case object Proved extends Result {
+    def isFalsified = false
+  }
   case class Falsified( failure:   FailedCase
                       , successes: TestCount) extends Result {
     def isFalsified = true
   }
 
   val passedProp = Prop { (_,_,_) => Passed }
+  val provedProp = Prop { (_,_,_) => Proved }
 
   private def buildMsg[A](a: A, e: Exception): FailedCase =
     s"\n>>> Test case with value: ${a}" +
@@ -111,6 +124,10 @@ object Prop {
       prop.run(max, n, rng)
   }
 
+  def check(p: => Boolean): Prop = Prop {
+    (_,_,_) => if (p) Proved else Falsified("()", 0)
+  }
+
   /** Primary user interface to launch testing.
    *
    *  @param p Property (Prop) to be tested.
@@ -134,6 +151,8 @@ object Prop {
         println(s"! Falsified after ${n} passed tests:${msg}")
       case Passed =>
         println(s"+ OK, passed ${testCases} tests.")
+      case Proved =>
+        println(s"+ OK, prove property.")
     }
 
 }

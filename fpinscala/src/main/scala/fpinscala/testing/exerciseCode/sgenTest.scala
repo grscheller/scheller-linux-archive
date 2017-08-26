@@ -70,7 +70,7 @@ object sgenTest {
         ! ns.exists(_ > min + 19)
     }
 
-    print("Test a property that can fail,")
+    print("\nTest a property that can fail,")
     println(" using different test parameters.")
 
     Prop.run(falseProp)  // Defaults to maxSize = 100, testCases = 1000

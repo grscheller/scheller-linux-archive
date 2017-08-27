@@ -14,29 +14,33 @@ import scala.language.implicitConversions
 import Gen.unsized
 import Prop._
 
+/** Case class representing a proprty to be tested.
+ *
+ *  The && and || combinators combine two Props into one.
+ *  They pass the same RNG to the run methods of both Props. 
+ *  If both Props are constructed from the same underlying
+ *  Gen or SGen, they will generate the same test cases for both.
+ *
+ *    For && both Props must succeed for each test case.
+ *    For || one or another must succeed for each test case.
+ *  
+ *  Need & and | combinators are used to run multiple independent
+ *  tests. (See the last Prop.forAll companion object
+ *  method for a use case.)  They are similar to the && and ||
+ *  combinators, but they chain RNGs and add the success counts.
+ *
+ *  I departed from the book's implementation and split into
+ *  two separate sets of `&& ||' and `& |' methods to relieve
+ *  what I thought of as dynamic tension between two really 
+ *  different use cases.
+ */
 case class Prop(run: (MaxSize, TestCount, RNG) => Result) {
-
-  // The && and || combinators pass the same RNG to the run
-  // methods of both Props. 
-  //
-  //   Need &&& and ||| that for use with forAll which chain
-  //   the RNG and add the success counts.
-  //
-  //   Need && and || more user oriented designed to work
-  //   with the same Gen/SGen hence passing the same RNG
-  //   to both sides, the whole chain counting as a single
-  //   test.
-  //
-  // Assuming that the Props are not "ad hoc" and were created
-  // by the forAll method, and if both Props come from the same
-  // underlying Gen, then they will generate the same sequence
-  // of random values.
 
   /** Combine two Prop's, both must hold */
   def &&(p: Prop): Prop = Prop {
     (max, n, rng) => run(max, n, rng) match {
       case Passed  => p.run(max, n, rng)  // getting close, but must consider
-      case Proved  => p.run(max, n, rng)  // composition of Passed and Proven
+      case Proved  => p.run(max, n, rng)  // composition of Passed and Proved
       case failure => failure             // more carefully
     }
   }
@@ -44,12 +48,38 @@ case class Prop(run: (MaxSize, TestCount, RNG) => Result) {
   /** Combine two Prop's, at least one must hold */
   def ||(p: Prop): Prop = Prop {
     (max, n, rng) => run(max, n, rng) match {
-      case Falsified(failure, cnt) => p.tag(failure, cnt).run(max, n, rng)
+      case Falsified(failure, _) => p.tag2(failure).run(max, n, rng)
+      case success               => success
+    }
+  }
+
+  private def tag2(fail1: FailedCase) = Prop {
+    (max, n, rng) => run(max, n, rng) match {
+      case Falsified(fail2, cnt) => Falsified(s"${fail1};${fail2}", cnt)
+      case success               => success
+    }
+  }
+
+  // Still need to chain RNGs
+  /** Run two Prop's with independent test cases, both must hold */
+  def &(p: Prop): Prop = Prop {
+    (max, n, rng) => run(max, n, rng) match {
+      case Passed  => p.run(max, n, rng)  // May need to pass success counts
+      case Proved  => p.run(max, n, rng)  // back for for Passwd and Proved
+      case failure => failure             // cases too.
+    }
+  }
+
+  // Still need to chain RNGs
+  /** Run two Prop's with independent test cases, at least one must hold */
+  def |(p: Prop): Prop = Prop {
+    (max, n, rng) => run(max, n, rng) match {
+      case Falsified(failure, cnt) => p.tag1(failure, cnt).run(max, n, rng)
       case success                 => success
     }
   }
 
-  private def tag(fail1: FailedCase, cnt1: TestCount) = Prop {
+  private def tag1(fail1: FailedCase, cnt1: TestCount) = Prop {
     (max, n, rng) => run(max, n, rng) match {
       case Falsified(fail2, cnt2) => Falsified(s"${fail1};${fail2}", cnt1+cnt2)
       case success                => success
@@ -120,7 +150,7 @@ object Prop {
       val prop: Prop = (props map { p => Prop { (max1, _, rng1) =>
           p.run(max1, casesPerSize, rng1)
         }
-      }).foldLeft(passedProp)(_ && _)
+      }).foldLeft(passedProp)(_ & _)
       prop.run(max, n, rng)
   }
 

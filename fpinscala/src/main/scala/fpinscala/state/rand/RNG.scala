@@ -3,11 +3,12 @@ package fpinscala.state.rand
 // Implemented the RNG and LCG classes
 // for the package fpinscala.state.rand.
 
-/** Base class for the RNG class for
- *  pseudo-random number generators.
- */
+/** RNG base class for pseudo-random number generators.  */
 abstract class RNG {
   def nextInt: (Int, RNG)
+  def nextRNG: (RNG, RNG) = nextInt match {
+      case (int, rng) => (rng, rng)
+  }
 }
 
 /** Extend RNG by Implementing the same Linear Congruence

@@ -262,6 +262,14 @@ object Gen {
       rng1 => Some(g.sample.action.run(rng1))
     }
 
+  def rngStream(rng: RNG): Stream[RNG] =
+    Stream.unfold(rng) {
+      rng1 => Some(rng1.nextRNG)
+    }
+ 
+  def sampleStreamRng[A](g: Gen[A])(rng: RNG): Stream[(A,RNG)] =
+    sampleStream(g)(rng) zip rngStream(rng)
+
   // Some convenience functions
   def listOf[A](g: Gen[A]): SGen[List[A]] = g.listOf
   def listOf1[A](g: Gen[A]): SGen[List[A]] = g.listOf1

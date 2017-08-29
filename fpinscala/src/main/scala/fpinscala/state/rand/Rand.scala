@@ -89,6 +89,9 @@ object Rand {
    */
   def int: Rand[Int] = Rand[Int](State(_.nextInt))
 
+  /** Useful when constructing State actions which generate RNGs */
+  def rng: Rand[RNG] = Rand[RNG](State(_.nextRNG))
+
   /** Generate a random boolean */
   def boolean: Rand[Boolean] = int map {ii => ii % 2 == 0}
 
@@ -105,12 +108,12 @@ object Rand {
   /** Generate a random integer between
    *  0 and Int.maxValue (inclusive).
    */
-  def nonNegInt: Rand[Int] = Rand(State(
-    rng => rng.nextInt match {
-        case (ran, rng2) if ran >= 0            => ( ran, rng2)
-        case (ran, rng2) if ran == Int.MinValue => (   0, rng2)
-        case (ran, rng2)                        => (-ran, rng2)
-      }))
+  def nonNegInt: Rand[Int] = Rand {
+    State { _.nextInt match {
+                case (ran, rng2) if ran >= 0            => ( ran, rng2)
+                case (ran, rng2) if ran == Int.MinValue => (   0, rng2)
+                case (ran, rng2)                        => (-ran, rng2) } }
+  }
 
   /** Generate an even random integer between
    *  0 and Int.maxValue (inclusive).

@@ -25,71 +25,81 @@ import Prop._
  *    For || one or another must succeed for each test case.
  *  
  *  Need & and | combinators are used to run multiple independent
- *  tests. (See the last Prop.forAll companion object
- *  method for a use case.)  They are similar to the && and ||
- *  combinators, but they chain RNGs and add the success counts.
+ *  tests.  They are similar to the && and || combinators, but they
+ *  chain RNGs and add the success counts.
  *
  *  I departed from the book's implementation and split into
  *  two separate sets of `&& ||' and `& |' methods to relieve
  *  what I thought of as dynamic tension between two really 
  *  different use cases.
+ *
+ *  // The &&, || and  &, | combinators combine "tests" and not
+ *  // "predicates".  "Prop" (like "RNG.nextInt") is a confusing
+ *  // name.  I may only need one set.  If I keep both, the second
+ *  // set may be have to become state actions.
  */
 case class Prop(run: (MaxSize, TestCount, RNG) => Result) {
 
   /** Combine two Prop's, both must hold */
   def &&(p: Prop): Prop = Prop {
     (max, n, rng) => run(max, n, rng) match {
-      case Passed  => p.run(max, n, rng)  // getting close, but must consider
-      case Proved  => p.run(max, n, rng)  // composition of Passed and Proved
-      case failure => failure             // more carefully
+      case Passed(m) => p.run(max, n, rng) match {
+          case Passed(r) => Passed(m + r)
+          case Proved    => Passed(m)
+          case falsified => falsified
+        }
+      case Proved  => p.run(max, n, rng)
+      case falsified => falsified
     }
   }
 
-  /** Combine two Prop's, at least one must hold */
   def ||(p: Prop): Prop = Prop {
     (max, n, rng) => run(max, n, rng) match {
-      case Falsified(failure, _) => p.tag2(failure).run(max, n, rng)
-      case success               => success
+      case Passed(m) => p.run(max, n, rng) match {
+          case Proved => Proved
+          case _ => Passed(m)
+        }
+      case Proved => Proved
+      case Falsified(fail1, m) => p.run(max, n, rng) match {
+          case Falsified(fail2, r) => Falsified(s"${fail1};${fail2}", m + r)
+          case success => success
+        }
     }
   }
 
-  private def tag2(fail1: FailedCase) = Prop {
-    (max, n, rng) => run(max, n, rng) match {
-      case Falsified(fail2, cnt) => Falsified(s"${fail1};${fail2}", cnt)
-      case success               => success
-    }
-  }
-
-  // Still need to chain RNGs
-  /** Run two Prop's with independent test cases, both must hold */
+  /** Prop which runs two independent test cases, both must hold */
   def &(p: Prop): Prop = Prop {
     (max, n, rng) => run(max, n, rng) match {
-      case Passed  => p.run(max, n, rng)  // May need to pass success counts
-      case Proved  => p.run(max, n, rng)  // back for for Passwd and Proved
-      case failure => failure             // cases too.
+      case Passed(m) => p.run(max, n, Rand.rng(rng)) match {
+          case Passed(r) => Passed(m + r)
+          case Proved    => Passed(m)
+          case falsified => falsified
+        }
+      case Proved  => p.run(max, n, Rand.rng(rng))
+      case falsified => falsified
     }
   }
 
-  // Still need to chain RNGs
+  // Repeat for || and simplify here to short circuit.
   /** Run two Prop's with independent test cases, at least one must hold */
   def |(p: Prop): Prop = Prop {
     (max, n, rng) => run(max, n, rng) match {
-      case Falsified(failure, cnt) => p.tag1(failure, cnt).run(max, n, rng)
-      case success                 => success
-    }
-  }
-
-  private def tag1(fail1: FailedCase, cnt1: TestCount) = Prop {
-    (max, n, rng) => run(max, n, rng) match {
-      case Falsified(fail2, cnt2) => Falsified(s"${fail1};${fail2}", cnt1+cnt2)
-      case success                => success
+      case Passed(m) => p.run(max, n, Rand.rng(rng)) match {
+          case Passed(r) => Passed(m.min(r))
+          case Proved => Proved
+          case _ => Passed(m)
+        }
+      case Proved => Proved
+      case Falsified(fail1, m) => p.run(max, n, Rand.rng(rng)) match {
+          case Falsified(fail2, r) => Falsified(s"${fail1};${fail2}", m + n)
+          case success => success
+        }
     }
   }
 
   // Initial convenience functions used in prototyping library.
   // Not primary user interface, kept around to keep the initial
   // exercisaCode scripts working.
-
   def apply(max: MaxSize, cnt: TestCount, rng: RNG): Result = run(max, cnt, rng)
   def apply(cnt: TestCount, rng: RNG): Result = run(cnt, cnt, rng)
 
@@ -103,7 +113,7 @@ object Prop {
   sealed trait Result {
     def isFalsified: Boolean
   }
-  case object Passed extends Result {
+  case class Passed(successes: TestCount) extends Result {
     def isFalsified = false
   }
   case object Proved extends Result {
@@ -114,7 +124,7 @@ object Prop {
     def isFalsified = true
   }
 
-  val passedProp = Prop { (_,_,_) => Passed }
+  val passedProp = Prop { (_,_,_) => Passed(0) }
   val provedProp = Prop { (_,_,_) => Proved }
 
   private def buildMsg[A](a: A, e: Exception): FailedCase =
@@ -128,29 +138,30 @@ object Prop {
   // Uses the above apply method
   def forAll[A](g: Gen[A])(pred: A => Boolean): Prop = Prop {
     (n, rng) => Gen.sampleStream(g)(rng) zip Stream.from(0) take n map {
-      case (a, cnt: TestCount) =>
+      case (a, m: TestCount) =>
         try {
             if (pred(a))
-              Passed
+              Passed(m)
             else
-              Falsified(a.toString, cnt)
+              Falsified(a.toString, m)
         } catch {
-            case e: Exception => Falsified(buildMsg(a, e), cnt)
+            case e: Exception => Falsified(buildMsg(a, e), m)
         }
-    } find(_.isFalsified) getOrElse Passed
+    } find(_.isFalsified) getOrElse Passed(n)
   }
 
   def forAll[A](sg: SGen[A])(pred: A => Boolean): Prop = forAll(sg(_))(pred)
 
+  // This one has a "hacky" feel to it.  It hijacks an infarstructure
+  // to do something a little different.
   def forAll[A](f: Int => Gen[A])(pred: A => Boolean): Prop = Prop {
     (max, n, rng) =>
       val casesPerSize = (n + (max - 1))/max
       val props: Stream[Prop] =
-        Stream.from(0) take (n.min(max)+1) map { i => forAll(f(i))(pred) }
+        Stream.from(0) take (n.min(max)) map { i => forAll(f(i))(pred) }
       val prop: Prop = (props map { p => Prop { (max1, _, rng1) =>
           p.run(max1, casesPerSize, rng1)
-        }
-      }).foldLeft(passedProp)(_ & _)
+        } }).foldLeft(passedProp)(_ && _)
       prop.run(max, n, rng)
   }
 
@@ -178,11 +189,11 @@ object Prop {
 
     p.run(maxSize, testCases, rng) match {
       case Falsified(msg, n) =>
-        println(s"! Falsified after ${n} passed tests:${msg}")
-      case Passed =>
-        println(s"+ OK, passed ${testCases} tests.")
+        println(s"! Falsified after ${n} passed tests:${msg}\n")
+      case Passed(m) =>
+        println(s"+ OK, passed ${m} tests.\n")
       case Proved =>
-        println(s"+ OK, prove property.")
+        println(s"+ OK, prove property.\n")
     }
 
 }
@@ -247,6 +258,8 @@ object Gen {
 
   def boolean: Gen[Boolean] = Gen(Rand.boolean)
 
+  def rng: Gen[RNG] = Gen(Rand.rng)
+
   /** Pull from 2 Generators of the same type with equal likelihood */
   def union[A](gen1: Gen[A], gen2: Gen[A]): Gen[A] =
     Gen { Rand.joint2(0.5)(gen1.sample, gen2.sample) }
@@ -262,13 +275,8 @@ object Gen {
       rng1 => Some(g.sample.action.run(rng1))
     }
 
-  def rngStream(rng: RNG): Stream[RNG] =
-    Stream.unfold(rng) {
-      rng1 => Some(rng1.nextRNG)
-    }
- 
   def sampleStreamRng[A](g: Gen[A])(rng: RNG): Stream[(A,RNG)] =
-    sampleStream(g)(rng) zip rngStream(rng)
+    sampleStream(g)(rng) zip sampleStream(Gen.rng)(rng)
 
   // Some convenience functions
   def listOf[A](g: Gen[A]): SGen[List[A]] = g.listOf

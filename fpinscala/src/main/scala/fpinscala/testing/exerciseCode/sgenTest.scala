@@ -59,7 +59,7 @@ object sgenTest {
         ! ns.exists(_ > max)
     }
 
-    println("Test a true property.")
+    println("Test a true property:")
 
     Prop.run(maxProp)
 
@@ -70,13 +70,14 @@ object sgenTest {
         ! ns.exists(_ > min + 19)
     }
 
-    print("\nTest a property that can fail,")
-    println(" using different test parameters.")
+    print("\nTest a property that occasionally fails,")
+    println(" using different test parameters:")
 
-    Prop.run(falseProp)  // Defaults to maxSize = 100, testCases = 1000
     Prop.run(falseProp, 100, 100)
+    Prop.run(falseProp)  // Defaults to maxSize = 100, testCases = 1000
     Prop.run(falseProp, 100, 10000)
     Prop.run(falseProp, 1000, 10)  // Never get to the larger test cases.
+    Prop.run(falseProp, 13, 37)
 
     println()
 

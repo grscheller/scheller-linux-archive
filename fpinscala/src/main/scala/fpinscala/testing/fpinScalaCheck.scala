@@ -141,11 +141,11 @@ object Prop {
 
     p.run(maxSize, testCases, rng) match {
       case Falsified(fail, n) =>
-        println(s"! Falsified after ${n} passed sized testcases:\n${fail}\n")
+        println(s"! Falsified after ${n} testcases:\n${fail}\n")
       case Passed =>
         println(s"+ OK, property passed ${testCases} test cases.\n")
       case Proved =>
-        println(s"+ OK, prove property.\n")
+        println(s"+ OK, proved property.\n")
     }
 
 }

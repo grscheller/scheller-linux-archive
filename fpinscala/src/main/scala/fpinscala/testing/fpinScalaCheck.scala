@@ -14,38 +14,25 @@ import scala.language.implicitConversions
 import Gen.unsized
 import Prop._
 
-/** Case class representing a proprty to be tested.
+/** Case class representing a test of a proprty.
  *
- *  The && and || combinators combine two Props into one.
+ *  The && and || combinators combine "tests" of properties
+ *  and should not be thought of as combining "predicates."
  *  They pass the same RNG to the run methods of both Props. 
  *  If both Props are constructed from the same underlying
  *  Gen or SGen, they will generate the same test cases for both.
  *
- *    For && both Props must succeed for each test case.
- *    For || one or another must succeed for each test case.
+ *  For && both Props must succeed for each test case.
+ *  For || one or another must succeed for each test case.
  *  
- *  Need & and | combinators are used to run multiple independent
- *  tests.  They are similar to the && and || combinators, but they
- *  chain RNGs and add the success counts.
- *
- *  I departed from the book's implementation and split into
- *  two separate sets of `&& ||' and `& |' methods to relieve
- *  what I thought of as dynamic tension between two really 
- *  different use cases.
- *
- *  // The &&, || and  &, | combinators combine "tests" and not
- *  // "predicates".  "Prop" (like "RNG.nextInt") is a confusing
- *  // name.  I may only need one set.  If I keep both, the second
- *  // set may be have to become state actions.
  */
 case class Prop(run: (MaxSize, TestCount, RNG) => Result) {
 
   /** Combine two Prop's, both must hold */
   def &&(p: Prop): Prop = Prop {
     (max, n, rng) => run(max, n, rng) match {
-      case Passed(m) => p.run(max, n, rng) match {
-          case Passed(r) => Passed(m + r)
-          case Proved    => Passed(m)
+      case Passed => p.run(max, n, rng) match {
+          case Passed | Proved => Passed
           case falsified => falsified
         }
       case Proved  => p.run(max, n, rng)
@@ -53,55 +40,21 @@ case class Prop(run: (MaxSize, TestCount, RNG) => Result) {
     }
   }
 
+  /** Combine two Prop's, at least one must hold */
   def ||(p: Prop): Prop = Prop {
     (max, n, rng) => run(max, n, rng) match {
-      case Passed(m) => p.run(max, n, rng) match {
+      case Passed => p.run(max, n, rng) match {
           case Proved => Proved
-          case _ => Passed(m)
+          case _ => Passed
         }
       case Proved => Proved
       case Falsified(fail1, m) => p.run(max, n, rng) match {
-          case Falsified(fail2, r) => Falsified(s"${fail1};${fail2}", m + r)
+          case Falsified(fail2, r) =>
+            Falsified(s"${fail1};\n${fail2}", m.min(r))
           case success => success
         }
     }
   }
-
-  /** Prop which runs two independent test cases, both must hold */
-  def &(p: Prop): Prop = Prop {
-    (max, n, rng) => run(max, n, rng) match {
-      case Passed(m) => p.run(max, n, Rand.rng(rng)) match {
-          case Passed(r) => Passed(m + r)
-          case Proved    => Passed(m)
-          case falsified => falsified
-        }
-      case Proved  => p.run(max, n, Rand.rng(rng))
-      case falsified => falsified
-    }
-  }
-
-  // Repeat for || and simplify here to short circuit.
-  /** Run two Prop's with independent test cases, at least one must hold */
-  def |(p: Prop): Prop = Prop {
-    (max, n, rng) => run(max, n, rng) match {
-      case Passed(m) => p.run(max, n, Rand.rng(rng)) match {
-          case Passed(r) => Passed(m.min(r))
-          case Proved => Proved
-          case _ => Passed(m)
-        }
-      case Proved => Proved
-      case Falsified(fail1, m) => p.run(max, n, Rand.rng(rng)) match {
-          case Falsified(fail2, r) => Falsified(s"${fail1};${fail2}", m + n)
-          case success => success
-        }
-    }
-  }
-
-  // Initial convenience functions used in prototyping library.
-  // Not primary user interface, kept around to keep the initial
-  // exercisaCode scripts working.
-  def apply(max: MaxSize, cnt: TestCount, rng: RNG): Result = run(max, cnt, rng)
-  def apply(cnt: TestCount, rng: RNG): Result = run(cnt, cnt, rng)
 
 }
 
@@ -113,7 +66,7 @@ object Prop {
   sealed trait Result {
     def isFalsified: Boolean
   }
-  case class Passed(successes: TestCount) extends Result {
+  case object Passed extends Result {
     def isFalsified = false
   }
   case object Proved extends Result {
@@ -124,11 +77,11 @@ object Prop {
     def isFalsified = true
   }
 
-  val passedProp = Prop { (_,_,_) => Passed(0) }
+  val passedProp = Prop { (_,_,_) => Passed }
   val provedProp = Prop { (_,_,_) => Proved }
 
   private def buildMsg[A](a: A, e: Exception): FailedCase =
-    s"\n>>> Test case with value: ${a}" +
+    s">>> Test case with value: ${a}" +
     s"\n>>> generated an exception: ${e.getMessage}" +
     s"\n>>> stack trace:\n> ${e.getStackTrace.mkString("\n> ")}"
 
@@ -141,19 +94,18 @@ object Prop {
       case (a, m: TestCount) =>
         try {
             if (pred(a))
-              Passed(m)
+              Passed
             else
               Falsified(a.toString, m)
         } catch {
             case e: Exception => Falsified(buildMsg(a, e), m)
         }
-    } find(_.isFalsified) getOrElse Passed(n)
+    } find(_.isFalsified) getOrElse Passed
   }
 
   def forAll[A](sg: SGen[A])(pred: A => Boolean): Prop = forAll(sg(_))(pred)
 
-  // This one has a "hacky" feel to it.  It hijacks an infarstructure
-  // to do something a little different.
+  // This one has a "hacky" feel to it.
   def forAll[A](f: Int => Gen[A])(pred: A => Boolean): Prop = Prop {
     (max, n, rng) =>
       val casesPerSize = (n + (max - 1))/max
@@ -161,7 +113,7 @@ object Prop {
         Stream.from(0) take (n.min(max)) map { i => forAll(f(i))(pred) }
       val prop: Prop = (props map { p => Prop { (max1, _, rng1) =>
           p.run(max1, casesPerSize, rng1)
-        } }).foldLeft(passedProp)(_ && _)
+        } }).foldLeft(provedProp)(_ && _)
       prop.run(max, n, rng)
   }
 
@@ -188,10 +140,10 @@ object Prop {
          , rng: RNG = LCG(System.currentTimeMillis) ): Unit =
 
     p.run(maxSize, testCases, rng) match {
-      case Falsified(msg, n) =>
-        println(s"! Falsified after ${n} passed tests:${msg}\n")
-      case Passed(m) =>
-        println(s"+ OK, passed ${m} tests.\n")
+      case Falsified(fail, n) =>
+        println(s"! Falsified after ${n} passed sized testcases:\n${fail}\n")
+      case Passed =>
+        println(s"+ OK, property passed ${testCases} test cases.\n")
       case Proved =>
         println(s"+ OK, prove property.\n")
     }
@@ -274,9 +226,6 @@ object Gen {
     Stream.unfold(rng) {
       rng1 => Some(g.sample.action.run(rng1))
     }
-
-  def sampleStreamRng[A](g: Gen[A])(rng: RNG): Stream[(A,RNG)] =
-    sampleStream(g)(rng) zip sampleStream(Gen.rng)(rng)
 
   // Some convenience functions
   def listOf[A](g: Gen[A]): SGen[List[A]] = g.listOf

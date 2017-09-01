@@ -59,8 +59,7 @@ object sgenTest {
         ! ns.exists(_ > max)
     }
 
-    println("Test a true property:")
-
+    println("Test a true property:\n")
     Prop.run(maxProp)
 
     // A test that will fail for the case of a list containing -10 and 10.
@@ -71,7 +70,7 @@ object sgenTest {
     }
 
     print("\nTest a property that occasionally fails,")
-    println(" using different test parameters:")
+    println(" using different test parameters:\n")
 
     Prop.run(falseProp, 100, 100)
     Prop.run(falseProp)  // Defaults to maxSize = 100, testCases = 1000

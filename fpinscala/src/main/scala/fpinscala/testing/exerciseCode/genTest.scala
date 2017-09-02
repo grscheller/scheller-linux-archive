@@ -1,10 +1,7 @@
 /** Package to test the fpinscala.testing package
  *
- *  Some preliminary testing of the of content of the
- *  testing package itself.
- *
- *  Will actually use the package for property
- *  based testing under test/ source code trees.
+ *  Preliminary testing of the of the Gen case class
+ *  in the fpinscala.testing package.
  *
  */
 package fpinscala.chap08.testing
@@ -14,7 +11,7 @@ import fpinscala.state.rand.{Rand,RNG,LCG}
 import scala.util.{Try, Success, Failure}
 import scala.collection.mutable
 
-object initTest {
+object genTest {
 
   val rng1: RNG = LCG(1)
   val rng2: RNG = LCG(2)

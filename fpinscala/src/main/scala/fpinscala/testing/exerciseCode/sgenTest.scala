@@ -1,10 +1,7 @@
 /** Package to test the fpinscala.testing package
  *
  *  Preliminary testing of the of the SGen case class
- *  in the testing package.
- *
- *  Will actually use the package itself for property
- *  based testing under test/ source code trees.
+ *  in the fpinscala.testing package.
  *
  */
 package fpinscala.chap08.testing

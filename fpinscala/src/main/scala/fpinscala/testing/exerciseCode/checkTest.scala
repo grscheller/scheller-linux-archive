@@ -1,10 +1,7 @@
 /** Package to test the fpinscala.testing package
  *
- *  Preliminary testing of the of the SGen case class
- *  in the testing package.
- *
- *  Will actually use the package itself for property
- *  based testing under test/ source code trees.
+ *  Test the Prop.check companion object method
+ *  in the fpinscala.testing package.
  *
  */
 package fpinscala.chap08.testing
@@ -44,7 +41,8 @@ object checkTest {
     run(check(true) && check(true) && check(true) && check(true))
 
     println("Check 4 separate false properties:")
-    println("run(check(false) && check(false) && check(false) && check(false)):")
+    print("run(check(false) && check(false) ")
+    println("&& check(false) && check(false)):")
     run(check(false) && check(false) && check(false) && check(false))
 
     // Mix in some other properties too.
@@ -64,32 +62,32 @@ object checkTest {
       }
     }
 
-    println("\n\nSee if 4 or less dice rolls sum less than 30.")
+    println("\nSee if 4 or less dice rolls sum less than 30.\n")
 
-    println("\nrun(dieRollsLT30 && check100DieRolls):")
+    println("run(dieRollsLT30 && check100DieRolls):")
     run(dieRollsLT30 && check100DieRolls, 4, 2000)
 
-    println("\nrun(check100DieRolls && dieRollsLT30):")
+    println("run(check100DieRolls && dieRollsLT30):")
     run(check100DieRolls && dieRollsLT30, 4, 2000)
 
-    println("\nrun(dieRollsLT30):")
+    println("run(dieRollsLT30):")
     run(dieRollsLT30, 4, 2000)
 
-    println("\nrun(check100DieRolls):")
+    println("run(check100DieRolls):")
     run(check100DieRolls, 4, 2000)
 
-    println("\n\nSee if 10 or less dice rolls sum less than 30.")
+    println("\nSee if 10 or less dice rolls sum less than 30.\n")
 
-    println("\nrun(dieRollsLT30 && check100DieRolls, 10, 2000):")
+    println("run(dieRollsLT30 && check100DieRolls, 10, 2000):")
     run(dieRollsLT30 && check100DieRolls, 10, 2000)
 
-    println("\nrun(check100DieRolls && dieRollsLT30, 10, 2000):")
+    println("run(check100DieRolls && dieRollsLT30, 10, 2000):")
     run(check100DieRolls && dieRollsLT30, 10, 2000)
 
-    println("\nrun(dieRollsLT30, 10, 2000):")
+    println("run(dieRollsLT30, 10, 2000):")
     run(dieRollsLT30, 10, 2000)
 
-    println("\nrun(check100DieRolls, 10, 2000):")
+    println("run(check100DieRolls, 10, 2000):")
     run(check100DieRolls, 10, 2000)
 
     println()

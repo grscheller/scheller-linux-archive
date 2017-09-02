@@ -9,23 +9,35 @@ the creation of test cases while working through the exercises in
 ### Package [fpinscala.testing](fpinScalaCheck.scala)
 * Package used for property based testing.
 
-### Case Class Prop [fpinscala.testing.Prop](fpinScalaCheck.scala#L14-L38)
+### Case Class Prop [fpinscala.testing.Prop](fpinScalaCheck.scala#L17-L59)
 * Represents some property we wish to test.
 * Won't always update line numbers until I am done with chapter.
 
-### Companion Object [fpinscala.testing.Prop](fpinScalaCheck.scala#L40-L79)
+### Companion Object [fpinscala.testing.Prop](fpinScalaCheck.scala#L61-L151)
 * Used as a namespace for Prop related type aliases.
 * Won't always update line numbers until I am done with chapter.
 
-### Case Class [fpinscala.testing.Gen](fpinScalaCheck.scala#L81-L101)
+### Case Class [fpinscala.testing.Gen](fpinScalaCheck.scala#L153-L199)
 * Generator of test cases.
-* Wraps a fpinscala Rand[A] which is a State[RNG,A] type alias.
+* Wraps a fpinscala Rand[A] which wraps a State[RNG,A].
 * Won't always update line numbers until I am done with chapter.
 
-### Companion Object [fpinscala.testing.Gen](fpinScalaCheck.scala#L103-L123)
+### Companion Object [fpinscala.testing.Gen](fpinScalaCheck.scala#L201-L236)
 * Won't always update line numbers until I am done with chapter.
 
-### Program [prelimGenTest](exerciseCode/fpinScalaCheckTest.scala)
-* Program to exercise package fpinscala.testing data types..
+### Case Class [fpinscala.testing.SGen](fpinScalaCheck.scala#L238-L253)
+* Generates a Gen of a given size.
+* A Gen can be converted to an SGen via an implicit def or its unsized method.
+* Won't always update line numbers until I am done with chapter.
+
+### Program [genTest](exerciseCode/genTest.scala)
+* Used as feedback while developing the Gen type.
 * Actual use of the library will be done under the test/ source tree.
+
+### Program [sgenTest](exerciseCode/sgenTest.scala)
+* Used as feedback while developing the SGen and Prop data types.
+
+### Program [checkTest](exerciseCode/checkTest.scala)
+* Used as feedback while developing the Prop.check method.
+* Used while adding Proved case class.
 

@@ -18,9 +18,10 @@ Communities, I'd spin these off as separate repos with an Open Source
 development model.
 
 As one may notice, I make frequent commits and plenty of comments both
-in my code and my GIT history.  I also put a lot of effort in maintaining
-useful README.md files.  I find this useful in documenting the
-evolution of the code and my thinking.  I like to make successive
-"git diff's" useful and am not afraid of showing all my "dirty laundry."
-Being able to reverse engineering the scaffolding is sometimes more
-useful than seeing the finished product in all its glory.
+in my code and my GIT history.  The main branch is more my working branch
+and less the release branch of a software project.  I also put a lot of
+effort in maintaining useful README.md files.  I find these practices
+useful in documenting the evolution of the code and my thinking.  I like
+to make successive "git diff's" useful and am not afraid of showing some
+"dirty laundry." Being able to reverse engineer the scaffolding is sometimes
+more useful than seeing the finished product in all its glory.

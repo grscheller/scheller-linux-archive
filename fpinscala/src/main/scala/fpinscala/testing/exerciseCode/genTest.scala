@@ -158,17 +158,17 @@ object genTest {
 
     println("\n\nRepeat using underlying run method:")
 
-    print("\ntwoDiceTrueProp.run(100, 100, rng1): ")
+    print("\ntwoDiceTrueProp.run(100, 100, rng1) = ")
     println(twoDiceTrueProp.run(100, 100, rng1))
-    print("twoDiceTrueProp.run(100, 10, rng1): ")
+    print("twoDiceTrueProp.run(100, 10, rng1) = ")
     println(twoDiceTrueProp.run(100, 10, rng1))
-    print("twoDiceTrueProp.run(10, 100, rng1): ")
+    print("twoDiceTrueProp.run(10, 100, rng1) = ")
     println(twoDiceTrueProp.run(10, 100, rng1))
-    print("\ntwoDiceFalseProp.run(100, 100, rng1): ")
+    print("\ntwoDiceFalseProp.run(100, 100, rng1) = ")
     println(twoDiceFalseProp.run(100, 100, rng1))
-    print("twoDiceFalseProp.run(100, 10, rng1): ")
+    print("twoDiceFalseProp.run(100, 10, rng1) = ")
     println(twoDiceFalseProp.run(100, 10, rng1))
-    print("twoDiceFalseProp.run(10, 100, rng1): ")
+    print("twoDiceFalseProp.run(10, 100, rng1) = ")
     println(twoDiceFalseProp.run(10, 100, rng3))
 
     println("\n\nCombine true and false Procs with && and ||:")
@@ -177,77 +177,77 @@ object genTest {
     val twoDiceFalseProp1 = Prop.forAll(twoDiceRoll)(_ > 2)
     val twoDiceFalseProp2 = Prop.forAll(twoDiceRoll)(_ < 12)
 
-    val procTrueAndTrue = twoDiceTrueProp1 && twoDiceTrueProp2
-    val procTrueOrTrue = twoDiceTrueProp1 || twoDiceTrueProp2
-    val procTrueAndFalse = twoDiceTrueProp1 && twoDiceFalseProp2
-    val procFalseAndTrue = twoDiceFalseProp1 && twoDiceTrueProp2
-    val procTrueOrFalse = twoDiceTrueProp1 || twoDiceFalseProp2
-    val procFalseOrTrue = twoDiceFalseProp1 || twoDiceTrueProp2
-    val procFalseAndFalse = twoDiceFalseProp1 && twoDiceFalseProp2
-    val procFalseOrFalse = twoDiceFalseProp1 || twoDiceFalseProp2
+    val propTrueAndTrue = twoDiceTrueProp1 && twoDiceTrueProp2
+    val propTrueOrTrue = twoDiceTrueProp1 || twoDiceTrueProp2
+    val propTrueAndFalse = twoDiceTrueProp1 && twoDiceFalseProp2
+    val propFalseAndTrue = twoDiceFalseProp1 && twoDiceTrueProp2
+    val propTrueOrFalse = twoDiceTrueProp1 || twoDiceFalseProp2
+    val propFalseOrTrue = twoDiceFalseProp1 || twoDiceTrueProp2
+    val propFalseAndFalse = twoDiceFalseProp1 && twoDiceFalseProp2
+    val propFalseOrFalse = twoDiceFalseProp1 || twoDiceFalseProp2
 
-    print("\nprocTrueAndTrue.run(100, 100, rng1): ")
-    println(procTrueAndTrue.run(100, 100, rng1))
-    print("procTrueAndTrue.run(100, 100, rng2): ")
-    println(procTrueAndTrue.run(100, 100, rng2))
-    print("procTrueAndTrue.run(100, 100, rng3): ")
-    println(procTrueAndTrue.run(100, 100, rng3))
-    print("\nprocTrueOrTrue.run(100, 100, rng1): ")
-    println(procTrueOrTrue.run(100, 100, rng1))
-    print("procTrueOrTrue.run(100, 100, rng2): ")
-    println(procTrueOrTrue.run(100, 100, rng2))
-    print("procTrueOrTrue.run(100, 100, rng3): ")
-    println(procTrueOrTrue.run(100, 100, rng3))
+    println("\npropTrueAndTrue.run(100, 100, rng1) = ")
+    println(propTrueAndTrue.run(100, 100, rng1))
+    println("propTrueAndTrue.run(100, 100, rng2) = ")
+    println(propTrueAndTrue.run(100, 100, rng2))
+    println("propTrueAndTrue.run(100, 100, rng3) = ")
+    println(propTrueAndTrue.run(100, 100, rng3))
+    println("\npropTrueOrTrue.run(100, 100, rng1) = ")
+    println(propTrueOrTrue.run(100, 100, rng1))
+    println("propTrueOrTrue.run(100, 100, rng2) = ")
+    println(propTrueOrTrue.run(100, 100, rng2))
+    println("propTrueOrTrue.run(100, 100, rng3) = ")
+    println(propTrueOrTrue.run(100, 100, rng3))
 
-    print("\nprocTrueAndFalse.run(100, 100, rng1): ")
-    println(procTrueAndFalse.run(100, 100, rng1))
-    print("procTrueAndFalse.run(100, 100, rng2): ")
-    println(procTrueAndFalse.run(100, 100, rng2))
-    print("procTrueAndFalse.run(100, 100, rng3): ")
-    println(procTrueAndFalse.run(100, 100, rng3))
-    print("\nprocTrueOrFalse.run(100, 100, rng1): ")
-    println(procTrueOrFalse.run(100, 100, rng1))
-    print("procTrueOrFalse.run(100, 100, rng2): ")
-    println(procTrueOrFalse.run(100, 100, rng2))
-    print("procTrueOrFalse.run(100, 100, rng3): ")
-    println(procTrueOrFalse.run(100, 100, rng3))
+    println("\npropTrueAndFalse.run(100, 100, rng1) = ")
+    println(propTrueAndFalse.run(100, 100, rng1))
+    println("propTrueAndFalse.run(100, 100, rng2) = ")
+    println(propTrueAndFalse.run(100, 100, rng2))
+    println("propTrueAndFalse.run(100, 100, rng3) = ")
+    println(propTrueAndFalse.run(100, 100, rng3))
+    println("\npropTrueOrFalse.run(100, 100, rng1) = ")
+    println(propTrueOrFalse.run(100, 100, rng1))
+    println("propTrueOrFalse.run(100, 100, rng2) = ")
+    println(propTrueOrFalse.run(100, 100, rng2))
+    println("propTrueOrFalse.run(100, 100, rng3) = ")
+    println(propTrueOrFalse.run(100, 100, rng3))
 
-    print("\nprocFalseAndTrue.run(100, 100, rng1): ")
-    println(procFalseAndTrue.run(100, 100, rng1))
-    print("procFalseAndTrue.run(100, 100, rng2): ")
-    println(procFalseAndTrue.run(100, 100, rng2))
-    print("procFalseAndTrue.run(100, 100, rng3): ")
-    println(procFalseAndTrue.run(100, 100, rng3))
-    print("\nprocFalseOrTrue.run(100, 100, rng1): ")
-    println(procFalseOrTrue.run(100, 100, rng1))
-    print("procFalseOrTrue.run(100, 100, rng2): ")
-    println(procFalseOrTrue.run(100, 100, rng2))
-    print("procFalseOrTrue.run(100, 100, rng3): ")
-    println(procFalseOrTrue.run(100, 100, rng3))
+    println("\npropFalseAndTrue.run(100, 100, rng1) = ")
+    println(propFalseAndTrue.run(100, 100, rng1))
+    println("propFalseAndTrue.run(100, 100, rng2) = ")
+    println(propFalseAndTrue.run(100, 100, rng2))
+    println("propFalseAndTrue.run(100, 100, rng3) = ")
+    println(propFalseAndTrue.run(100, 100, rng3))
+    println("\npropFalseOrTrue.run(100, 100, rng1) = ")
+    println(propFalseOrTrue.run(100, 100, rng1))
+    println("propFalseOrTrue.run(100, 100, rng2) = ")
+    println(propFalseOrTrue.run(100, 100, rng2))
+    println("propFalseOrTrue.run(100, 100, rng3) = ")
+    println(propFalseOrTrue.run(100, 100, rng3))
 
-    print("\nprocFalseAndFalse.run(100, 100, rng1): ")
-    println(procFalseAndFalse.run(100, 100, rng1))
-    print("procFalseAndFalse.run(100, 100, rng2): ")
-    println(procFalseAndFalse.run(100, 100, rng2))
-    print("procFalseAndFalse.run(100, 100, rng3): ")
-    println(procFalseAndFalse.run(100, 100, rng3))
-    print("\nprocFalseOrFalse.run(100, 100, rng1): ")
-    println(procFalseOrFalse.run(100, 100, rng1))
-    print("procFalseOrFalse.run(100, 100, rng2): ")
-    println(procFalseOrFalse.run(100, 100, rng2))
-    print("procFalseOrFalse.run(100, 100, rng3): ")
-    println(procFalseOrFalse.run(100, 100, rng3))
+    println("\npropFalseAndFalse.run(100, 100, rng1) = ")
+    println(propFalseAndFalse.run(100, 100, rng1))
+    println("propFalseAndFalse.run(100, 100, rng2) = ")
+    println(propFalseAndFalse.run(100, 100, rng2))
+    println("propFalseAndFalse.run(100, 100, rng3) = ")
+    println(propFalseAndFalse.run(100, 100, rng3))
+    println("\npropFalseOrFalse.run(100, 100, rng1) = ")
+    println(propFalseOrFalse.run(100, 100, rng1))
+    println("propFalseOrFalse.run(100, 100, rng2) = ")
+    println(propFalseOrFalse.run(100, 100, rng2))
+    println("propFalseOrFalse.run(100, 100, rng3) = ")
+    println(propFalseOrFalse.run(100, 100, rng3))
 
     println("\n\nTest a Prop which throws an exception:")
     val exceptionalProp = Prop.forAll(twoDiceRoll) {
       ii => 42/(ii - 2) < 43
     }
 
-    print("\nexceptionalProp.run(100, 10, rng1): ")
+    println("\nexceptionalProp.run(100, 10, rng1) = ")
     println(exceptionalProp.run(100, 10, rng1))
-    print("\nexceptionalProp.run(100, 50, rng1): ")
+    println("\nexceptionalProp.run(100, 50, rng1) = ")
     println(exceptionalProp.run(100, 50, rng1))
-    print("\nexceptionalProp.run(100, 100, rng1): ")
+    println("\nexceptionalProp.run(100, 100, rng1) = ")
     println(exceptionalProp.run(100, 100, rng1))
 
     println("\n\nTest a failable Prop which could throw an exception:")
@@ -255,51 +255,51 @@ object genTest {
       ii => 42/(ii - 2) < 42
     }
 
-    print("\nfailableExceptionalProp.run(100, 10, rng3): ")
-    println(failableExceptionalProp.run(100, 10, rng3))
-    print("\nfailableExceptionalProp.run(100, 10, rng1): ")
-    println(failableExceptionalProp.run(100, 10, rng1))
-    print("\nfailableExceptionalProp.run(100, 20, rng1): ")
-    println(failableExceptionalProp.run(100, 20, rng1))
-    print("\nfailableExceptionalProp.run(100, 10, rng2): ")
-    println(failableExceptionalProp.run(100, 10, rng2))
-    print("\nfailableExceptionalProp.run(100, 20, rng2): ")
-    println(failableExceptionalProp.run(100, 20, rng2))
+    println("\nProp.run(failableExceptionalProp, 100, 10, rng1):")
+    Prop.run(failableExceptionalProp, 100, 10, rng1)
+    println("\nProp.run(failableExceptionalProp, 100, 20, rng1):")
+    Prop.run(failableExceptionalProp, 100, 20, rng1)
+    println("\nProp.run(failableExceptionalProp, 100, 10, rng2):")
+    Prop.run(failableExceptionalProp, 100, 10, rng2)
+    println("\nProp.run(failableExceptionalProp, 100, 20, rng2):")
+    Prop.run(failableExceptionalProp, 100, 20, rng2)
+    println("\nProp.run(failableExceptionalProp, 100, 10, rng3):")
+    Prop.run(failableExceptionalProp, 100, 10, rng3)
 
     println("\n\nCombining a failable Prop with an exceptional Prop:")
-    val procTrueOrExceptional = twoDiceTrueProp1 || exceptionalProp
-    val procExceptionalOrTrue = exceptionalProp || twoDiceTrueProp1 
-    val procTrueAndExceptional = twoDiceTrueProp1 && exceptionalProp
-    val procExceptionalAndTrue = exceptionalProp && twoDiceTrueProp1 
-    val procFalseOrExceptional = twoDiceFalseProp1 || exceptionalProp
-    val procExceptionalOrFalse = exceptionalProp || twoDiceFalseProp1 
+    val propTrueOrExceptional = twoDiceTrueProp1 || exceptionalProp
+    val propExceptionalOrTrue = exceptionalProp || twoDiceTrueProp1 
+    val propTrueAndExceptional = twoDiceTrueProp1 && exceptionalProp
+    val propExceptionalAndTrue = exceptionalProp && twoDiceTrueProp1 
+    val propFalseOrExceptional = twoDiceFalseProp1 || exceptionalProp
+    val propExceptionalOrFalse = exceptionalProp || twoDiceFalseProp1 
 
-    print("\nprocTrueOrExceptional.run(100, 5, rng2): ")
-    println(procTrueOrExceptional.run(100, 5, rng2))
-    print("\nprocTrueOrExceptional.run(100, 15, rng2): ")
-    println(procTrueOrExceptional.run(100, 15, rng2))
+    println("\nProp.run(propTrueOrExceptional, 100, 5, rng2):")
+    Prop.run(propTrueOrExceptional, 100, 5, rng2)
+    println("\nProp.run(propTrueOrExceptional, 100, 15, rng2):")
+    Prop.run(propTrueOrExceptional, 100, 15, rng2)
 
-    print("\nprocExceptionalOrTrue.run(100, 5, rng2): ")
-    println(procExceptionalOrTrue.run(100, 5, rng2))
-    print("\nprocExceptionalOrTrue.run(100, 15, rng2): ")
-    println(procExceptionalOrTrue.run(100, 15, rng2))
+    println("\nProp.run(propExceptionalOrTrue, 100, 5, rng2):")
+    Prop.run(propExceptionalOrTrue, 100, 5, rng2)
+    println("\nProp.run(propExceptionalOrTrue, 100, 15, rng2):")
+    Prop.run(propExceptionalOrTrue, 100, 15, rng2)
 
-    print("\nprocTrueAndExceptional.run(100, 10, rng2): ")
-    println(procTrueAndExceptional.run(100, 10, rng2))
-    print("\nprocTrueAndExceptional.run(100, 11, rng2): ")
-    println(procTrueAndExceptional.run(100, 11, rng2))
-    print("\nprocTrueAndExceptional.run(100, 12, rng2): ")
-    println(procTrueAndExceptional.run(100, 12, rng2))
+    println("\nProp.run(propTrueAndExceptional, 100, 10, rng2):")
+    Prop.run(propTrueAndExceptional, 100, 10, rng2)
+    println("\nProp.run(propTrueAndExceptional, 100, 11, rng2):")
+    Prop.run(propTrueAndExceptional, 100, 11, rng2)
+    println("\nProp.run(propTrueAndExceptional, 100, 12, rng2):")
+    Prop.run(propTrueAndExceptional, 100, 12, rng2)
 
-    print("\nprocExceptionalAndTrue.run(100, 5, rng2): ")
-    println(procExceptionalAndTrue.run(100, 5, rng2))
-    print("\nprocExceptionalAndTrue.run(100, 15, rng2): ")
-    println(procExceptionalAndTrue.run(100, 15, rng2))
+    println("\nProp.run(propExceptionalAndTrue, 100, 5, rng2):")
+    Prop.run(propExceptionalAndTrue, 100, 5, rng2)
+    println("\nProp.run(propExceptionalAndTrue, 100, 15, rng2):")
+    Prop.run(propExceptionalAndTrue, 100, 15, rng2)
 
-    print("\nprocExceptionalOrFalse.run(100, 15, rng2): ")
-    println(procExceptionalOrFalse.run(100, 15, rng2))
-    print("\nprocFalseOrExceptional.run(100, 15, rng2): ")
-    println(procFalseOrExceptional.run(100, 15, rng2))
+    println("\nProp.run(propExceptionalOrFalse, 100, 15, rng2):")
+    Prop.run(propExceptionalOrFalse, 100, 15, rng2)
+    println("\nProp.run(propFalseOrExceptional, 100, 15, rng2):")
+    Prop.run(propFalseOrExceptional, 100, 15, rng2)
 
     println("\nDone!\n")
 

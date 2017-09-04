@@ -48,9 +48,9 @@ case class Prop(run: (MaxSize, TestCount, RNG) => Result) {
           case _ => Passed
         }
       case Proved => Proved
-      case Falsified(fail1, m) => p.run(max, n, rng) match {
-          case Falsified(fail2, r) =>
-            Falsified(s"${fail1};\n${fail2}", m.min(r))
+      case Falsified(fail1, except1, m) => p.run(max, n, rng) match {
+          case Falsified(fail2, except2, r) =>
+            Falsified(fail1 ::: fail2, except1 ::: except2,  m.min(r))
           case success => success
         }
     }
@@ -72,33 +72,31 @@ object Prop {
   case object Proved extends Result {
     def isFalsified = false
   }
-  case class Falsified( failure:   FailedCase
-                      , successes: TestCount) extends Result {
+  case class Falsified( failures:   List[FailedCase]
+                      , exceptions: List[Option[Throwable]]
+                      , successes:  TestCount) extends Result {
     def isFalsified = true
   }
 
   val passedProp = Prop { (_,_,_) => Passed }
   val provedProp = Prop { (_,_,_) => Proved }
-
-  private def buildMsg[A](a: A, e: Exception): FailedCase =
-    s">>> Test case with value: ${a}" +
-    s"\n>>> generated an exception: ${e.getMessage}" +
-    s"\n>>> stack trace:\n> ${e.getStackTrace.mkString("\n> ")}"
+  val failedProp = Prop { (_,_,_) => Falsified(List(), List(), 0) }
 
   def apply(run: (TestCount,RNG) => Result): Prop =
     Prop { (_, n, rng) => run(n, rng) }
 
-  // Uses the above apply method
+  // Uses the companion object Prop.apply method
+  // above to convert to a Prop case class.
   def forAll[A](g: Gen[A])(pred: A => Boolean): Prop = Prop {
     (n, rng) => Gen.sampleStream(g)(rng) zip Stream.from(0) take n map {
-      case (a, m: TestCount) =>
+      case (a, m) =>
         try {
             if (pred(a))
               Passed
             else
-              Falsified(a.toString, m)
+              Falsified(List(a.toString), List(None), m)
         } catch {
-            case e: Exception => Falsified(buildMsg(a, e), m)
+            case e: Exception => Falsified(List(a.toString), List(Some(e)), m)
         }
     } find(_.isFalsified) getOrElse Passed
   }
@@ -118,7 +116,7 @@ object Prop {
   }
 
   def check(p: => Boolean): Prop = Prop {
-    (_,_,_) => if (p) Proved else Falsified("()", 0)
+    (_,_,_) => if (p) Proved else Falsified(List(), List(), 0)
   }
 
   /** Primary user interface to launch testing.
@@ -140,12 +138,23 @@ object Prop {
          , rng: RNG = LCG(System.currentTimeMillis) ): Unit =
 
     p.run(maxSize, testCases, rng) match {
-      case Falsified(fail, n) =>
-        println(s"! Falsified after ${n} testcases:\n${fail}\n")
-      case Passed =>
-        println(s"+ OK, property passed ${testCases} test cases.\n")
       case Proved =>
-        println(s"+ OK, proved property.\n")
+          println(s"+ OK, proved property.")
+      case Passed =>
+          println(s"+ OK, property passed ${testCases} test cases.")
+      case Falsified(fL, oeL, n) => {
+          println(s"! Falsified after ${n} successful testcases.")
+          for ((f,oe) <- fL zip oeL) {
+            println(s"! Failed case:") 
+            println(s"!   ${f}") 
+            oe map { e =>
+              println(s"! generated exception:")
+              println(s"!   ${e}")
+              println(s"! with stack trace:")
+              println(s"!   ${e.getStackTrace.mkString("\n!   ")}")
+            }
+          }
+        }
     }
 
 }

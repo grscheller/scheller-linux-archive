@@ -69,13 +69,11 @@ object sgenTest {
     print("\nTest a property that occasionally fails,")
     println(" using different test parameters:\n")
 
-    Prop.run(falseProp, 100, 100)
-    Prop.run(falseProp)  // Defaults to maxSize = 100, testCases = 1000
-    Prop.run(falseProp, 100, 10000)
-    Prop.run(falseProp, 1000, 10)  // Never get to the larger test cases.
-    Prop.run(falseProp, 13, 37)
-
-    println()
+    Prop.run(falseProp, 100, 100); println()
+    Prop.run(falseProp); println()
+    Prop.run(falseProp, 100, 10000); println()
+    Prop.run(falseProp, 1000, 20); println()
+    Prop.run(falseProp, 13, 37); println()
 
   }
 

@@ -20,39 +20,57 @@ object checkTest {
 
     import Prop._
 
-    println("\n\nTest the predicates true and false.\n")
+    println("\nTest the predicates true and false.")
 
-    println("Check if true is true:")
+    println("\nCheck if true is true:")
     run(check(true))
 
-    println("Check if false is true:")
+    println("\nCheck if false is true:")
     run(check(false))
 
-    println("Check 4 separate properties:")
+    println("\n\nCheck 4 separate properties.\n")
     println("run(check(true) && check(true) && check(false) && check(true)):")
     run(check(true) && check(true) && check(false) && check(true))
 
-    println("Check a single property:")
+    println("\nCheck a single property.\n")
     println("run(check(true && true && false && true):")
     run(check(true && true && false && true))
 
-    println("Check 4 separate true properties:")
+    println("\nCheck 4 separate true properties.\n")
     println("run(check(true) && check(true) && check(true) && check(true)):")
     run(check(true) && check(true) && check(true) && check(true))
 
-    println("Check 4 separate false properties:")
+    println("\nCheck 4 separate false properties.\n")
     print("run(check(false) && check(false) ")
     println("&& check(false) && check(false)):")
     run(check(false) && check(false) && check(false) && check(false))
+
+    println("\nCheck some cases using ||.\n")
+    println("run(check(false) || check(false) || check(true) || check(false)):")
+    run(check(false) || check(false) || check(true) || check(false))
+
+    print("\nrun(check(false) || check(false) ||")
+    println(" check(false) || check(false)):")
+    run(check(false) || check(false) || check(false) || check(false))
+
+    println("\nCheck some more complicated cases.\n")
+    print("run((check(false) && check(true)) ||")
+    println(" (check(true) && check(false)):")
+    run((check(false) && check(true)) || (check(true) && check(false)))
+
+    print("\nrun((check(false) || check(true)) &&")
+    println(" (check(true) || check(false)):")
+    run((check(false) || check(true)) && (check(true) || check(false)))
 
     // Mix in some other properties too.
 
     type RollValues = Int
     type DiceRoll = Gen[RollValues]
     val dieRoll: DiceRoll = Gen.choose(1, 7)
-    val rollSomeDice: SGen[RollValues] = dieRoll.listOf1 map {
-                                           _.foldLeft(0)(_ + _)
-                                         }
+    val rollSomeDice: SGen[RollValues] =
+      dieRoll.listOf1 map {
+        _.foldLeft(0)(_ + _)
+      }
     val dieRollsLT30: Prop = forAll(rollSomeDice) { _ < 30 }
 
     // Provable Contrived property - change to an exhaustive test later
@@ -62,32 +80,32 @@ object checkTest {
       }
     }
 
-    println("\nSee if 4 or less dice rolls sum less than 30.\n")
+    println("\n\nSee if 4 or less dice rolls sum less than 30.")
 
-    println("run(dieRollsLT30 && check100DieRolls):")
+    println("\nrun(dieRollsLT30 && check100DieRolls):")
     run(dieRollsLT30 && check100DieRolls, 4, 2000)
 
-    println("run(check100DieRolls && dieRollsLT30):")
+    println("\nrun(check100DieRolls && dieRollsLT30):")
     run(check100DieRolls && dieRollsLT30, 4, 2000)
 
-    println("run(dieRollsLT30):")
+    println("\nrun(dieRollsLT30):")
     run(dieRollsLT30, 4, 2000)
 
-    println("run(check100DieRolls):")
+    println("\nrun(check100DieRolls):")
     run(check100DieRolls, 4, 2000)
 
-    println("\nSee if 10 or less dice rolls sum less than 30.\n")
+    println("\n\nSee if 10 or less dice rolls sum less than 30.")
 
-    println("run(dieRollsLT30 && check100DieRolls, 10, 2000):")
+    println("\nrun(dieRollsLT30 && check100DieRolls, 10, 2000):")
     run(dieRollsLT30 && check100DieRolls, 10, 2000)
 
-    println("run(check100DieRolls && dieRollsLT30, 10, 2000):")
+    println("\nrun(check100DieRolls && dieRollsLT30, 10, 2000):")
     run(check100DieRolls && dieRollsLT30, 10, 2000)
 
-    println("run(dieRollsLT30, 10, 2000):")
+    println("\nrun(dieRollsLT30, 10, 2000):")
     run(dieRollsLT30, 10, 2000)
 
-    println("run(check100DieRolls, 10, 2000):")
+    println("\nrun(check100DieRolls, 10, 2000):")
     run(check100DieRolls, 10, 2000)
 
     println()

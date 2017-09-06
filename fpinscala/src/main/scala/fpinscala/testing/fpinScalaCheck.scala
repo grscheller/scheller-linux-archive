@@ -103,10 +103,9 @@ object Prop {
 
   def forAll[A](sg: SGen[A])(pred: A => Boolean): Prop = forAll(sg(_))(pred)
 
-  // This one has a "hacky" feel to it.
   def forAll[A](f: Int => Gen[A])(pred: A => Boolean): Prop = Prop {
     (max, n, rng) =>
-      val casesPerSize = (n + (max - 1))/max
+      val casesPerSize = 1 + n/max.max(1)
       val props: Stream[Prop] =
         Stream.from(0) take (n.min(max)) map { i => forAll(f(i))(pred) }
       val prop: Prop = (props map { p => Prop { (max1, _, rng1) =>
@@ -114,6 +113,19 @@ object Prop {
         } }).foldLeft(provedProp)(_ && _)
       prop.run(max, n, rng)
   }
+
+  def forAllPow2Banded[A](sg: SGen[A])(pred: A => Boolean): Prop =
+    forAllPow2Banded(sg(_))(pred)
+
+  def forAllPow2Banded[A](f: Int => Gen[A])(pred: A => Boolean): Prop =
+    forAll(
+      n => n match {
+        case n if n == 0  => f(0)
+        case n => { 
+            val m = math.pow(2, n - 1).toInt
+            Gen.choose(m, 2*m).flatMap(f)
+          }
+      } )(pred)
 
   def check(p: => Boolean): Prop = Prop {
     (_,_,_) => if (p) Proved else Falsified(List(), List(), 0)
@@ -231,6 +243,7 @@ object Gen {
     Gen { Rand.joint2(prob1)(g1._1.sample, g2._1.sample) }
   }
 
+  // Helper functions for Prop.forAll
   def sampleStream[A](g: Gen[A])(rng: RNG): Stream[A] =
     Stream.unfold(rng) {
       rng1 => Some(g.sample.action.run(rng1))

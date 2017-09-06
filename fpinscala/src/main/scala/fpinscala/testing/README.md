@@ -13,19 +13,19 @@ the creation of test cases while working through the exercises in
 * Represents some property we wish to test.
 * Won't always update line numbers until I am done with chapter.
 
-### Companion Object [fpinscala.testing.Prop](fpinScalaCheck.scala#L61-L160)
+### Companion Object [fpinscala.testing.Prop](fpinScalaCheck.scala#L61-L172)
 * Used as a namespace for Prop related type aliases.
 * Won't always update line numbers until I am done with chapter.
 
-### Case Class [fpinscala.testing.Gen](fpinScalaCheck.scala#L162-L208)
+### Case Class [fpinscala.testing.Gen](fpinScalaCheck.scala#L174-L220)
 * Generator of test cases.
 * Wraps a fpinscala Rand[A] which wraps a State[RNG,A].
 * Won't always update line numbers until I am done with chapter.
 
-### Companion Object [fpinscala.testing.Gen](fpinScalaCheck.scala#L210-L245)
+### Companion Object [fpinscala.testing.Gen](fpinScalaCheck.scala#L222-L258)
 * Won't always update line numbers until I am done with chapter.
 
-### Case Class [fpinscala.testing.SGen](fpinScalaCheck.scala#L247-L262)
+### Case Class [fpinscala.testing.SGen](fpinScalaCheck.scala#L260-L275)
 * Generates a Gen of a given size.
 * A Gen can be converted to an SGen via an implicit def or its unsized method.
 * Won't always update line numbers until I am done with chapter.

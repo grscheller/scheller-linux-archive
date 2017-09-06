@@ -9,6 +9,8 @@ package fpinscala.chap08.testing
 import fpinscala.testing.{Gen,SGen,Prop}
 import fpinscala.state.rand.{Rand,RNG,LCG}
 
+import Prop._
+
 object sgenTest {
 
   val rng1: RNG = LCG(3141592653589793L)
@@ -50,17 +52,17 @@ object sgenTest {
     val smallIntList = Gen.choose(-10, 11).listOf1
 
     // A property that should obviously be true (for nonempty lists)
-    val maxProp = Prop.forAll(smallIntList) {
+    val maxProp = forAll(smallIntList) {
       ns => 
         val max = ns.max
         ! ns.exists(_ > max)
     }
 
     println("Test a true property:\n")
-    Prop.run(maxProp)
+    run(maxProp)
 
     // A test that will fail for the case of a list containing -10 and 10.
-    val falseProp = Prop.forAll(smallIntList) {
+    val falseProp = forAll(smallIntList) {
       ns => 
         val min = ns.min
         ! ns.exists(_ > min + 19)
@@ -69,11 +71,37 @@ object sgenTest {
     print("\nTest a property that occasionally fails,")
     println(" using different test parameters:\n")
 
-    Prop.run(falseProp, 100, 100); println()
-    Prop.run(falseProp); println()
-    Prop.run(falseProp, 100, 10000); println()
-    Prop.run(falseProp, 1000, 20); println()
-    Prop.run(falseProp, 13, 37); println()
+    run(falseProp, 100, 100); println()
+    run(falseProp); println()
+    run(falseProp, 100, 10000); println()
+    run(falseProp, 1000, 20); println()
+    run(falseProp, 13, 37); println()
+
+    // Example of a seldom failing test with fewer
+    // test cases but larger datastructures.
+
+    // Generates nonempty lists of (ii: Int) where -1000 <= ii <= 1000
+    val largeIntList = Gen.choose(-10000, 10001).listOf1
+
+    // A property that fails rarely
+    val seldomFailProp1 = forAll(largeIntList) {
+      ns => ! ns.exists(_ == 42)
+    }
+
+    // A property that fails rarely
+    val seldomFailProp2 = forAllPow2Banded(largeIntList) {
+      ns => ! ns.exists(_ == 42)
+    }
+
+    println("\nTest a property that seldom fails with Prop.forAll,")
+    println("run(seldomFailProp1, 10, 10000):")
+    run(seldomFailProp1, 10, 10000)
+
+    println("\nTest a property that seldom fails with Prop.forAllPow2Banded,")
+    println("run(seldomFailProp2, 10, 100):")
+    run(seldomFailProp2, 10, 1000)
+
+    println()
 
   }
 

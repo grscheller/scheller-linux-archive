@@ -27,13 +27,35 @@ object parallelismCheck {
 
     val es1 = Executors.newFixedThreadPool(4)
 
-    val pLaw = Prop.check {
+    val parLawSimple = Prop.check {
       val p1 = Par.unit(1) map {_ + 1}
       val p2 = Par.unit(2)
       p1.run(es1) == p2.run(es1)
     }
 
-    Prop.run(pLaw)
+    Prop.run(parLawSimple)
+
+    // Lift into the Par Monad.
+    println("\nRepeat test of law by lifting into Par monad.")
+    def parEqual[A](p1: Par[A], p2: Par[A]): Par[Boolean] =
+      p1.map2(p2) { _ == _ }
+
+    val parLawHandLifted = Prop.check {
+      parEqual( Par.unit(1) map { _ + 1 }
+              , Par.unit(2) ) run es1
+    }
+
+    Prop.run(parLawHandLifted)
+
+    // Lift into the Par Monad after putting in fpinscala.parallel package.
+    println("\nRepeat again after updating Par companion object.")
+
+    val parLawLifted = Prop.check {
+      Par.equal( Par.unit(1) map { _ + 1 }
+               , Par.unit(2) ) run es1
+    }
+
+    Prop.run(parLawLifted)
 
     es1.shutdown
 

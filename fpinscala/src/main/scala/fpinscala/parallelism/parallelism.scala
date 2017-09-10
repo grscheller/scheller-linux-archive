@@ -299,6 +299,9 @@ object Par {
   def asyncF[A,B](f: A => B): A => Par[B] =
     a => lazyUnit(f(a))
 
+  def equal[A](p1: Par[A], p2: Par[A]): Par[Boolean] =
+    p1.map2(p2) { _ == _ }
+
   /** Apply a binary operator across an indexable collection in parallel.
    *
    *    Note: For efficiency, collection assumed nonempty.

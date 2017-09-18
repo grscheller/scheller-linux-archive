@@ -2,7 +2,7 @@ package fpinscala.chap07.test.parallelism
 
 import java.util.concurrent.{ExecutorService => ES}
 import java.util.concurrent.Executors
-import fpinscala.parallelism.Par
+import fpinscala.parallelism.{Par,ParProp}
 import Par._
 
 import fpinscala.testing.{Gen,SGen,Prop}
@@ -54,15 +54,6 @@ object parallelismCheck {
 
     es1.shutdown
 
-    // Before possibly incorporating forAllPar into
-    // fpinscala.testing.Prop, try and figure out
-    // what the book is getting at.
-    //
-    // My initial take is that a type like Par is too specific, thus
-    // will commit the testing library to a specific implementation of
-    // parallel calculations.  Maybe it belongs in fpinscala.parallelism
-    // instead?
-
     // Create the threadpools
     val maxThreadNum = 8
     val threadPools: IndexedSeq[ES] =
@@ -80,19 +71,16 @@ object parallelismCheck {
       (Gen.unit(threadPools(0)), .25)
     )
 
-    def forAllPar[A](g: Gen[A])(f: A => Par[Boolean]): Prop =
-      Prop.forAll(g.map2(esPool)((_,_))) {
-        case (a,es) => f(a).run(es)
-      }
-
     // Test a true and a falsifiable proposition.
-    val fooTrue  = forAllPar(Gen.choose(10,20))(Par.asyncF(_ < 42))
-    val fooFalse = forAllPar(Gen.choose(1,43))(Par.asyncF(_ < 42))
+    val fooTrue  = ParProp.forAllPar( Gen.choose(10,20)
+                                    , esPool )(Par.asyncF(_ < 42))
+    val fooFalse = ParProp.forAllPar( Gen.choose(1,43)
+                                    , esPool )(Par.asyncF(_ < 42))
 
     // Run the tests.
-    println("\n\nTest forAllPar with something true.")
+    println("\n\nTest ParProp.forAllPar with something true.")
     Prop.run(fooTrue)
-    println("\nTest forAllPar with something falsifiable.")
+    println("\nTest ParProp.forAllPar with something falsifiable.")
     Prop.run(fooFalse)
 
     // Shut the threadpools down.

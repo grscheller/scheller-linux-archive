@@ -183,6 +183,9 @@ case class Gen[+A](sample: Rand[A]) {
   def map2[B,C](g: Gen[B])(f: (A,B) => C): Gen[C] =
     Gen {sample.map2(g.sample)(f)}
 
+  /** Lifted product of two generators. */
+  def **[B](g: Gen[B]): Gen[(A,B)] = this.map2(g)((_,_))
+
   /** Generates lists of type List[A] with random length */
   def listOfN(size: Gen[Int]): Gen[List[A]] =
     size flatMap { n =>
@@ -222,6 +225,11 @@ case class Gen[+A](sample: Rand[A]) {
 object Gen {
 
   implicit def unsized[A](g: Gen[A]): SGen[A] = SGen(_ => g)
+
+  /** Allows pattern matching of unlifted product of two generators. */
+  object ** {
+    def unapply[A,B](p: (A,B)) = Some(p)
+  }
 
   /** A "lazy" unit which always generates the same value. */
   def unit[A](a: => A): Gen[A] = Gen(Rand.unit(a))

@@ -233,3 +233,12 @@ gcd(a,b,c) = 1 and a, b, c > 0.
 2017-01-28:
   Create README.md for the GitHub repo.  Moved design consideration
   info formally here to there.
+
+2017-09-23:
+  In `stack.yaml`:
+    Updated resolver from: lts-7.18 to lts-9.5.
+
+  In `pythagTriples.cabal`:
+    Changed Licence from BSD3 to MIT.
+    Updated version to 0.2.0.0 due to license change.
+    Added -dynamic to gch-options

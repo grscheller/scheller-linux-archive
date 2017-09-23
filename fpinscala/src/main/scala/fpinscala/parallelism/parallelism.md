@@ -26,7 +26,7 @@ My version includes error handling.
 * Messages are submitted to the actor with the ! method.
 * Processing is typically performed asynchronously, the provided strategy.
 
-####Memory consistency guarantee:
+#### Memory consistency guarantee:
 When each message is processed by the handler, any memory that it mutates is
 guaranteed to be visible by the handler when it processes the next message,
 even if the strategy runs the invocations of the handler on separate threads.
@@ -46,12 +46,10 @@ entering its event loop, and writes to the same location before suspending.
 * Second one generates value in the existing thread
 * Strategy.sequential(): Strategy
 
-## fpinscala.parallelism testing framework:
-
-### Singleton object [ParProp](ParProp.scala*L13-30)
+### Singleton object [ParProp](ParProp.scala#L13-30)
 * For use with fpinscala.testing package
 
-##These programs exercise package fpinscala.parallelism:
+## These programs exercise package fpinscala.parallelism:
 
 ### Program [ExpParTest](exerciseCode/ExpParTest.scala)
 * Create a fpinscala.parallelism.Par to calculate the exponential function.
@@ -75,7 +73,7 @@ entering its event loop, and writes to the same location before suspending.
 ### Program [ParParFutures4](exerciseCode/ParParFutures4.scala)
 * Program to exercise package fpinscala.parallelism:
 
-##These programs test package fpinscala.parallelism:
+## These programs test package fpinscala.parallelism:
 
 ### Program [parallelismTest](../../../../test/scala/fpinscala/parallelism/parallelismTest.scala)
 * Property based testing for fpinscala.parallelism package.

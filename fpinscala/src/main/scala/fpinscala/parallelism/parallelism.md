@@ -46,6 +46,11 @@ entering its event loop, and writes to the same location before suspending.
 * Second one generates value in the existing thread
 * Strategy.sequential(): Strategy
 
+## fpinscala.parallelism testing framework:
+
+### Singleton object [ParProp](ParProp.scala*L13-30)
+* For use with fpinscala.testing package
+
 ##These programs exercise package fpinscala.parallelism:
 
 ### Program [ExpParTest](exerciseCode/ExpParTest.scala)
@@ -69,4 +74,9 @@ entering its event loop, and writes to the same location before suspending.
 
 ### Program [ParParFutures4](exerciseCode/ParParFutures4.scala)
 * Program to exercise package fpinscala.parallelism:
+
+##These programs test package fpinscala.parallelism:
+
+### Program [parallelismTest](../../../../test/scala/fpinscala/parallelism/parallelismTest.scala)
+* Property based testing for fpinscala.parallelism package.
 

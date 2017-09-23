@@ -11,9 +11,14 @@ import fpinscala.testing.{Prop, Gen}
 import Gen.**
 
 /** ParProp singleton object
+ *
+ *  Object containing a method for use with the testing package
+ *  fpiscala.testing for testing functionality specific to the
+ *  fpinscala.parallelism package.
  *  
  *  @note Implemented as a name space for an additional Prop "method."
  *  @note Saves the overhead of full-blown inheriting from Prop.
+ *
  */
 object ParProp {
 

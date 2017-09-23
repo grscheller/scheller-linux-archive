@@ -22,10 +22,10 @@ the creation of test cases while working through the exercises in
 * Wraps a fpinscala Rand[A] which wraps a State[RNG,A].
 * Won't always update line numbers until I am done with chapter.
 
-### Companion Object [fpinscala.testing.Gen](fpinScalaCheck.scala#L222-L258)
+### Companion Object [fpinscala.testing.Gen](fpinScalaCheck.scala#L225-L266)
 * Won't always update line numbers until I am done with chapter.
 
-### Case Class [fpinscala.testing.SGen](fpinScalaCheck.scala#L260-L275)
+### Case Class [fpinscala.testing.SGen](fpinScalaCheck.scala#L268-L283)
 * Generates a Gen of a given size.
 * A Gen can be converted to an SGen via an implicit def or its unsized method.
 * Won't always update line numbers until I am done with chapter.

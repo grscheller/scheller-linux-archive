@@ -46,7 +46,7 @@ entering its event loop, and writes to the same location before suspending.
 * Second one generates value in the existing thread
 * Strategy.sequential(): Strategy
 
-### Singleton object [ParProp](ParProp.scala#L13-30)
+### Singleton object [ParProp](ParProp.scala#L13-L30)
 * For use with fpinscala.testing package
 
 ## These programs exercise package fpinscala.parallelism:

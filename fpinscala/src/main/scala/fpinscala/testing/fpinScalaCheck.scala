@@ -143,6 +143,7 @@ object Prop {
    *             reproducible tests.
    *  @note Test cases start small and work their way larger.
    *  @note Defaults to 10 tests per size.
+   *
    */
   def run( p: Prop
          , maxSize: Int = 100
@@ -226,7 +227,11 @@ object Gen {
 
   implicit def unsized[A](g: Gen[A]): SGen[A] = SGen(_ => g)
 
-  /** Allows pattern matching of unlifted product of two generators. */
+  /** Allows pattern matching of the unlifted product of two generators.
+   *
+   *  @note Just a tuple of the unlifted values from each generator,
+   *  @note Even simplier, matches just a bloody tuple.
+   */
   object ** {
     def unapply[A,B](p: (A,B)) = Some(p)
   }

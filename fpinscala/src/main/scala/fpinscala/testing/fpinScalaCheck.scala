@@ -228,9 +228,7 @@ object Gen {
   implicit def unsized[A](g: Gen[A]): SGen[A] = SGen(_ => g)
 
   /** Allows pattern matching of the unlifted product of two generators.
-   *
-   *  @note Just a tuple of the unlifted values from each generator,
-   *  @note Even simplier, matches just a bloody tuple.
+   *    @note Simply matches just a tuple.
    */
   object ** {
     def unapply[A,B](p: (A,B)) = Some(p)
@@ -284,5 +282,8 @@ case class SGen[+A](forSize: Int => Gen[A]) {
   def map2[B,C](sg: SGen[B])(f: (A,B) => C): SGen[C] = SGen {
     n => forSize(n).map2(sg.forSize(n))(f)
   }
+
+  /** Lifted product of two generators. */
+  def **[B](sg: SGen[B]): SGen[(A,B)] = this.map2(sg)((_,_))
 
 }

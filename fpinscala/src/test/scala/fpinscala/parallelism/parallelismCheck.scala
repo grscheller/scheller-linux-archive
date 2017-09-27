@@ -8,7 +8,7 @@ import Par._
 import fpinscala.testing.{Gen,SGen,Prop}
 import fpinscala.state.rand.{Rand,RNG,LCG}
 
-object parallelismCheck1 {
+object parallelismCheck {
 
   def main(args: Array[String]): Unit = {
 

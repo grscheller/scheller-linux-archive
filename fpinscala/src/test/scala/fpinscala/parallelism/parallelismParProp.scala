@@ -8,7 +8,7 @@ import Par._
 import fpinscala.testing.{Gen,SGen,Prop}
 import fpinscala.state.rand.{Rand,RNG,LCG}
 
-object parallelismCheck2{
+object parallelismParProp{
 
   def main(args: Array[String]): Unit = {
 
@@ -25,8 +25,8 @@ object parallelismCheck2{
     // 20% of time give one of the fixed number threadpools
     // 80% of time give the unbounded one.
     val esPool = Gen.weighted(
-      (Gen.choose(1, maxThreadNum + 1) map threadPools, .20),
-      (Gen.unit(threadPools(0)), .80)
+      (Gen.choose(1, maxThreadNum + 1) map threadPools, .2),
+      (Gen.unit(threadPools(0)), .8)
     )
 
     def nap(n: Int): Double = {

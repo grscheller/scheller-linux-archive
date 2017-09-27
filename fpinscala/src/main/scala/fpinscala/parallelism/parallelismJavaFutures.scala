@@ -158,10 +158,6 @@ object Par {
    */
   def lazyUnit[A](a: => A): Par[A] = fork(unit(a))
 
-  /** Evaluate a function asynchronously. */
-  def asyncF[A,B](f: A => B): A => Par[B] =
-    a => lazyUnit(f(a))
-
   /** Delay instantiation of a computation,
    *  at run time, only if needed.
    */
@@ -169,6 +165,13 @@ object Par {
     new Par[A] {
       def apply(es: ES) = pa(es)
     }
+
+  /** Evaluate a function asynchronously. */
+  def asyncF[A,B](f: A => B): A => Par[B] =
+    a => lazyUnit(f(a))
+
+  def equal[A](p1: Par[A], p2: Par[A]): Par[Boolean] =
+    p1.map2(p2) { _ == _ }
 
   /** Apply a binary operator across an indexable collection in parallel.
    *

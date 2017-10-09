@@ -1,3 +1,11 @@
+{- NaturalNumber.hs
+
+   Haskell implementation of the Natural Numbers within the Haskell
+   type system using the Peano-Dedekind Axioms for arithmetic.
+ -} 
+
+module NaturalNumber where
+
 data NaturalNumber = Zero | S NaturalNumber
   deriving (Show)
 

@@ -46,20 +46,24 @@ text files with information on a variety of topics.
 * Learn Rust as a systems language.
 * Learn Rust as a general purpose programming language.
 
-### 7. [haskellParallelAndConcurrent](haskellParallelAndConcurrent)
+### 7. [haskellIntoProgramming](haskellIntoProgramming)
+* Working through examples and exercises from the Univ. of Chicago's
+  honors introduction to programming course sequence.
+
+### 8. [haskellParallelAndConcurrent](haskellParallelAndConcurrent)
 * Implementing examples inspired by Simon Marlow's book
   "Parallel and Concurrent Programming in Haskell."
 
-### 8. [linuxHome](linuxHome/)
+### 9. [linuxHome](linuxHome/)
 * Keep Linux environment synced across workstations and supercomputers.
 * Based on the infrastructure I use at work.
 
-### 9. [pythagTriples](pythagTriples/)
+### 10. [pythagTriples](pythagTriples/)
 * Haskell project that generates Pythagorean triples.
 * Mathematical factoids about Pythagorean triples.
 * Also used to help me learn Haskell stack.
 
-### 10. [pureMath](pureMath/)
+### 11. [pureMath](pureMath/)
 * A mathematics library centered around integer arithmetic.
 * An old project of mine back when I first learned Python.
 

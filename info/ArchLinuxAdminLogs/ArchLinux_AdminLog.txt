@@ -3715,3 +3715,23 @@ Purpose: To indicate what was done to create gauss17 and
     $ sudo chmod 700 /etc/NetworkManager/dispatcher.d/70-wifi-wired-exclusive
     $ ls -l /etc/NetworkManager/dispatcher.d/70-wifi-wired-exclusive 
     -rwx------ 1 root root 469 Jul 29 11:02 /etc/NetworkManager/dispatcher.d/70-wifi-wired-exclusive
+
+2017-09-29:
+  After a kernel update, system shutdown hangs waiting for two stopped jobs
+  to terminate.  One is a Network Manager process, the other WPA Supplement.
+
+  Tried uninstalling wicd and wicd-gtk.
+
+    $ sudo pacman -R wicd wicd-gtk, since it is unlikely I will return to them.
+    $ sudo pacnan -Syu
+
+  Did not help the stopped processes to terminate.
+
+2017-10-09:
+  The system hangs or takes long time to shut down, but not when I am not using wireless.
+  At the console, getting an error message from a kernel thread regarding something
+  "tainting the kernel."  It suggested a workarond to gag the message which I have tried:
+
+    # echo 0 > /proc/sys/kernel/hung_task_timeout_secs 
+
+  I'll see if this helps or is persistent across reboots.

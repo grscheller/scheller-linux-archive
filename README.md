@@ -46,7 +46,7 @@ text files with information on a variety of topics.
 * Learn Rust as a systems language.
 * Learn Rust as a general purpose programming language.
 
-### 7. [haskellIntoProgramming](haskellIntoProgramming)
+### 7. [haskellIntroProgramming](haskellIntroProgramming)
 * Working through examples and exercises from the Univ. of Chicago's
   honors introduction to programming course sequence.
 

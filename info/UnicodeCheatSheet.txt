@@ -1,0 +1,21 @@
+bottom: ⊥     Unicode: 22a5  8869
+top:    ⊤     Unicode: 22a4  8868
+lambda: λ     Unicode: 03bb  0955
+Lambda: Λ     Unicode: 039b  0923
+Gamma:  Γ     Unicode: 0393  0915
+
+In Python:
+  Convert Hex String to decimal Int:
+    >>> int("03bb", 16)
+    955
+  Convert an Int to a hex string:
+    >>> hex(955)
+    '0x3bb'
+
+Bash, vim and most modern linux terminal windows are unicode aware:
+    $ <ctrl>+<shift>+u03bb<ret>
+    $ λ
+but on the same line.
+
+Example super and subscripts:
+<U-03bb><U-2080><U-207f> -> λ₀ⁿ

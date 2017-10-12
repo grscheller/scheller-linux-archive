@@ -20,8 +20,9 @@ hold you by the hand.
 ## Exercises working through an Honors Intro to Programming sequence:
 * [Peano Arithmrtic](PeanoArithmetic/)
 
-## Personnal Notes
-The [Notes](Notes.md) I took while working through the material.
+## Some notes
+* The [Notes](notes/Notes.md) I took while working through the material.
+* [Haskell Language Summary](notes/HaskellLangRefSummary.md) I found.
 
 ## Original invitation to community on Haskell-Cafe:
 ```
@@ -108,4 +109,3 @@ The [Notes](Notes.md) I took while working through the material.
    Director of Undergraduate Studies for Computer Science
    The University of Chicago
 ```
-

@@ -1,64 +1,64 @@
 # Notes on Haskell 2010 Report.
-* A summary of the [HR][].  
+* A summary of the [Haskell 2010 Language Report][HR].  
 * Do not know where I downloaded the text version of this summary.
 * Converted to MarkDown by me.
 
-[HR]: https://www.haskell.org/onlinereport/haskell2010/ "Haskell 2010 Language Report"
+[HR]: https://www.haskell.org/onlinereport/haskell2010/ "Haskell 2010 Report"
 
 ## Part 1: Overview
 I. Top down structure (Gross overview):
-    A. Modules - top most level
-        1. Provides way to control namespaces
-        2. Helps reuse software in large programs
-    B. Module consists of a collection of declarations
-        1. Types of Declarations
-            a. ordinary values
-            b. datatypes
-            c. type classes
-            d. fixity information
-    C. Next level down are expressions
-        1. Has a value and a static type
-        2. Heart of Haskell programming "in the small"
-    D. Lowest Level is lexical structure
-        1. Captures the concrete representation of programs in text files
+   A. Modules - top most level
+      1. Provides way to control namespaces
+      2. Helps reuse software in large programs
+   B. Module consists of a collection of declarations
+      1. Types of Declarations
+         a. ordinary values
+         b. datatypes
+         c. type classes
+         d. fixity information
+   C. Next level down are expressions
+      1. Has a value and a static type
+      2. Heart of Haskell programming "in the small"
+   D. Lowest Level is lexical structure
+      1. Captures the concrete representation of programs in text files
 II. Haskell Kernel (Factoids)
-    A. Not formally specified
-        1. Slightly sugared variant of the (typed) lambda calculus
-        2. Straightforward denotational semantics
-        3. Programs get reduced (desugared) to the kernel before symantics
-        4. Provides straight forward reasoning about programs
-        5. Provides useful guidelines for language implementation
-        6. Reflects true nature of the beast
-    B. Language does not have statements (not imperative)
-    C. Language is non-strict (lazy)
-        1. expressions evaluated only if necessary
-    D. Data is immutable
-        1. Names are bound to expressions, not storage areas in memmory
-        2. Once bound, can not be changed
-    E. Functions arguments are separated by whitespace
-    ```
-       myFunction arg1 arg2 arg3
-    ```
-    F. The Prelude also adds complexity on top of the sugar added to
-       the kernel.  (Kernal, Compilier, Prelude boundaries can be
-       implementation dependent.)
+   A. Not formally specified
+      1. Slightly sugared variant of the (typed) lambda calculus
+      2. Straightforward denotational semantics
+      3. Programs get reduced (desugared) to the kernel before symantics
+      4. Provides straight forward reasoning about programs
+      5. Provides useful guidelines for language implementation
+      6. Reflects true nature of the beast
+   B. Language does not have statements (not imperative)
+   C. Language is non-strict (lazy)
+      1. expressions evaluated only if necessary
+   D. Data is immutable
+      1. Names are bound to expressions, not storage areas in memmory
+      2. Once bound, can not be changed
+   E. Functions arguments are separated by whitespace
+   ```
+      myFunction arg1 arg2 arg3
+   ```
+   F. The Prelude also adds complexity on top of the sugar added to
+      the kernel.  (Kernal, Compilier, Prelude boundaries can be
+      implementation dependent.)
 III. Haskell Namespaces
-    A. Six kinds of names in Haskell
-        1. variables and Constructors denote values
-        2. Type system consists of
-            a. type variables
-            b. type constructors
-            c. type classes
-        3. Module names
-    B. Two constraints on naming
-        1. Names of variables and type variables are identifiers beginning
-           with lowercase letters or underscore.  Other types of names are 
-           identifiers begin with uppercase letters
-        2. An identifier must not be used as the name of a type constructor
-           and a (type) class in the same scope.
-     C. Concrete naming example
-         1. Int may simultaneously be the name of a module, class, and 
-            constructor within a single scope.
+   A. Six kinds of names in Haskell
+      1. variables and Constructors denote values
+      2. Type system consists of
+         a. type variables
+         b. type constructors
+         c. type classes
+      3. Module names
+   B. Two constraints on naming
+      1. Names of variables and type variables are identifiers beginning
+         with lowercase letters or underscore.  Other types of names are 
+         identifiers begin with uppercase letters
+      2. An identifier must not be used as the name of a type constructor
+         and a (type) class in the same scope.
+   C. Concrete naming example
+      1. Int may simultaneously be the name of a module, class, and 
+         constructor within a single scope.
 
 ## Part 2: Lexical Structure
 I. Notational conventions
@@ -71,49 +71,49 @@ I. Notational conventions
 ```
 II. BNF-like syntax
 III. Haskell uses Unicode character set
-    A. Infarstructure biased toward ASCII for historical reasons
-    B. Compilers expected to make use of new versions of Unicode
-    C. Syntax depends on how characters are defined by Unicode consortium.
-    D. This choise makes Unix no longer completely Text/Binary
-       agnostic.  (small price for UTF-8)
+   A. Infarstructure biased toward ASCII for historical reasons
+   B. Compilers expected to make use of new versions of Unicode
+   C. Syntax depends on how characters are defined by Unicode consortium.
+   D. This choise makes Unix no longer completely Text/Binary
+      agnostic. (small price for UTF-8)
 IV. Lexical Program Structure
-    A. See page 8 of 2010 standard for gory details.
-    B. Lexical analysis uses "maximal munch" rule
-        1. Longest possible lexeme is read
-            a. = is reserved but == and ~= are not
-            b. case is reserved but cases is not
-        2. Any kind of whitespace is a proper deliniter for lexemes
-        3. Only ANY type of characters are valid in Haskell programs
-            a. graphic character
-            b. whitespace character
-        4. newline ➔ cr lf ǀ cr ǀ lf ǀ ff
-        5. Comments are valid whitespace
-            a. Ordinary comments begin with -- and extend to newline
-            b. The sequence of dashes must not form part of a legal lexeme
-                i. --> and |-- don't begin comments
-                ii. --foo does start a comment
-                iii. func "foo--bar" does not start a comment. 
-            c. Nested commets start {- and end -}
-                i. No legal lexeme starts with {-
-                ii. Can be nested to any depth
-                iii. Nested comments used for compiler pragmas
-                iv. Comments are not lexically analysed.  Any instance of {-
-                   or -} within a string or end-of-line comment  will
-                   interfer with the nested comment.
-    C. Identifiers and Operators
-        1. identifier ➔ letter{letter ǀ digit ǀ _ ǀ '}
-            a. Case sensitive, _ is treated as lower case
-            b. Separate namespaces
-                i. variable identifiers start with lower case letter
-                ```
-                   varid ➔ (small {small ǀ large ǀ digit ǀ '})<reservedid>
-                ```
-                ii. constructor identifiers start with upper case letter 
-                ```
-                   conid ➔ large {small ǀ large ǀ digit ǀ '}
-                ```
-    D. Reserved identifiers:
-    ```
+   A. See page 8 of 2010 standard for gory details.
+   B. Lexical analysis uses "maximal munch" rule
+      1. Longest possible lexeme is read
+         a. = is reserved but == and ~= are not
+         b. case is reserved but cases is not
+      2. Any kind of whitespace is a proper deliniter for lexemes
+      3. Only ANY type of characters are valid in Haskell programs
+         a. graphic character
+         b. whitespace character
+      4. newline ➔ cr lf ǀ cr ǀ lf ǀ ff
+      5. Comments are valid whitespace
+         a. Ordinary comments begin with -- and extend to newline
+         b. The sequence of dashes must not form part of a legal lexeme
+            i. --> and |-- don't begin comments
+            ii. --foo does start a comment
+            iii. func "foo--bar" does not start a comment. 
+         c. Nested commets start {- and end -}
+            i. No legal lexeme starts with {-
+            ii. Can be nested to any depth
+            iii. Nested comments used for compiler pragmas
+            iv. Comments are not lexically analysed.  Any instance of
+              `{-` or `-}` within a string or end-of-line comment will
+              interfer with the nested comment.
+   C. Identifiers and Operators
+      1. identifier ➔ letter{letter ǀ digit ǀ _ ǀ '}
+         a. Case sensitive, _ is treated as lower case
+         b. Separate namespaces
+            i. variable identifiers start with lower case letter
+            ```
+               varid ➔ (small {small ǀ large ǀ digit ǀ '})<reservedid>
+            ```
+            ii. constructor identifiers start with upper case letter 
+            ```
+               conid ➔ large {small ǀ large ǀ digit ǀ '}
+            ```
+   D. Reserved identifiers:
+   ```
        reservedid ➔ case ǀ class ǀ data ǀ default ǀ deriving ǀ do ǀ else
                   ǀ foreign ǀ if ǀ import ǀ in ǀ infix ǀ infixl ǀ infixr
                   ǀ instance ǀ let ǀ module ǀ newtype ǀ of ǀ then
@@ -127,75 +127,75 @@ IV. Lexical Program Structure
       varsym ➔ (symbol<:> {symbol})<reservedop ǀ dashes>
       consym ➔ ( : {symbol})<reservedop>
    ```
-       1. An operator symbol starting with a colon is a constructor
-       2. Otherwise it is an ordinary identifier
-       3. :, [], and [a,b] list constructors are built into the base 
-          language (kernel???) to make more compatible with the LISP 
-          family of functional languages.
-       4. With the exception of the prefix operator -, all other operators 
-          are infix.  May need parentheses to force - prefix:
-          ```
-             ghci> 4 - (- 3)
-             7
-          ```
-       5. Operators are just functions and can be called as such:
-          ```
-             ghci> 2 + 3
-             5
-             ghci> (+) 2 3
-             5
-          ```
-       6. Functions have infix forms too:
-          ```
-             ghci> mod 8 3
-             2
-             ghci> 8 `mod` 3
-             2
-          ```
+      1. An operator symbol starting with a colon is a constructor
+      2. Otherwise it is an ordinary identifier
+      3. `:`, `[]`, and `[a,b]` list constructors are built into the base 
+         language (kernel???) to make more compatible with the LISP 
+         family of functional languages.
+      4. With the exception of the prefix operator -, all other operators 
+         are infix.  May need parentheses to force - prefix:
+      ```
+         ghci> 4 - (- 3)
+         7
+      ```
+      5. Operators are just functions and can be called as such:
+      ```
+         ghci> 2 + 3
+         5
+         ghci> (+) 2 3
+         5
+      ```
+      6. Functions have infix forms too:
+      ```
+         ghci> mod 8 3
+         2
+         ghci> 8 `mod` 3
+         2
+      ```
     F. The six different type of names:
-      ```
-         varid
-         conid
-         tyvar ➔ varid
-         tycon ➔ conid
-         tycls ➔ conid
-         modid ➔ {conid .} conid
-      ```
-        1. Variables and type variables begin with small letters.
-           The others with capital letters.
-           (aside: that is why True is capitalized)
-        2. Variables and constructors have infix forms, the 
-           others do not.
-        3. Variables, (data) constructors, type constuctors, and 
-           type classes can have "qualified" names, but not
-           type variables or module names.
-           ```
-              qvarid ➔ [modid .] varid
-              qconid ➔ [modid .] conid
-              qtycon ➔ [modid .] tycon
-              qtycls ➔ [modid .] tycls
-              qvarsym ➔ [modid .] varsym
-              qconsym ➔ [modid .] consym
-           ```
+    ```
+       varid
+       conid
+       tyvar ➔ varid
+       tycon ➔ conid
+       tycls ➔ conid
+       modid ➔ {conid .} conid
+    ```
+       1. Variables and type variables begin with small letters.
+          The others with capital letters.
+          (aside: that is why True is capitalized)
+       2. Variables and constructors have infix forms, the 
+          others do not.
+       3. Variables, (data) constructors, type constuctors, and 
+          type classes can have "qualified" names, but not
+          type variables or module names.
+          ```
+             qvarid ➔ [modid .] varid
+             qconid ➔ [modid .] conid
+             qtycon ➔ [modid .] tycon
+             qtycls ➔ [modid .] tycls
+             qvarsym ➔ [modid .] varsym
+             qconsym ➔ [modid .] consym
+          ```
     G. Sample Lexical Analysis:
-        1. `f.g` lexes as 3 tokens
-        ```
-           f . g
-        ```
-        2. `F.g` lexes as a qualified name
-        ```
-           F.g
-        ```
-        3. `f..` lexes as 2 tokens
-        ```
-           f ..
-        ```
-        4. `F..` lexes as a qualified .
-        5. `F.`  lexes as 2 tokens
-        ```
-           F .
-        ```
-        6. Prelude.+ is an infix operator with same fixity as + in the Prelude
+       1. `f.g` lexes as 3 tokens
+       ```
+          f . g
+       ```
+       2. `F.g` lexes as a qualified name
+       ```
+          F.g
+       ```
+       3. `f..` lexes as 2 tokens
+       ```
+          f ..
+       ```
+       4. `F..` lexes as a qualified .
+       5. `F.`  lexes as 2 tokens
+       ```
+          F .
+       ```
+       6. Prelude.+ is an infix operator with same fixity as + in the Prelude
     H. Numeric Literals:
     ```
        decimal ➔ digit{digit} 
@@ -211,11 +211,11 @@ IV. Lexical Program Structure
 
        exponent ➔ (eǀE)[+ǀ-]decimal
     ```
-        1. Floating point literals are always expressed with
-           decimal notation.
-        2. Digits before and after decimal point, no whitespace.
-        3. Negative numbers may require some care.
-        4. Tping of literals to be discussed later.
+       1. Floating point literals are always expressed with
+          decimal notation.
+       2. Digits before and after decimal point, no whitespace.
+       3. Negative numbers may require some care.
+       4. Tping of literals to be discussed later.
     I. Character and String Literals
     ```
        char    ➔  ' (graphic<'ǀ\> ǀ space ǀ escape<\&>) '
@@ -230,26 +230,26 @@ IV. Lexical Program Structure
        gap     ➔  \ whitechar {whitechr} \
        whitechar ➔ newline ǀ vertab ǀ space ǀ tab ǀ uniWhite
     ```
-        1. Think of \& as a zero width separator.
-            a. "foo\&bar" == "foobar"
-            b. "\SOH" is one character
-            c. "\SO\&H" is two characters
-            d. '\&' is illegal
+       1. Think of \& as a zero width separator.
+          a. `"foo\&bar" == "foobar"`
+          b. `"\SOH" is one character`
+          c. `"\SO\&H" is two characters`
+          d. `'\&' is illegal`
 
     J. Layout
-        1. In the kernel language `{ ... }` is used for
-           grouping and ; for expression separation.
-            a. Very rarely seen used in code
-            b. Sometimes useful in ghci one-liners
-            c. Makes Haskell programs easier to be produced by other programs.
-            d. Makes C wonks feel more at home.
-            e. The ; used like in Pascal as a separator except for 
+       1. In the kernel language `{ ... }` is used for
+          grouping and ; for expression separation.
+          a. Very rarely seen used in code
+          b. Sometimes useful in ghci one-liners
+          c. Makes Haskell programs easier to be produced by other programs.
+          d. Makes C wonks feel more at home.
+          e. The ; used like in Pascal as a separator except for 
              expressions, Haskell has no statements.
         2. Layout optional, gives Haskell more of a Python feel.
-            a. Culture (parser too?) puts the ; before the next 
-               statement instead of after the previous one.
-            b. Parser "substitutes" certain indentation with backets
-               and semicolens.
+          a. Culture (parser too?) puts the ; before the next 
+             statement instead of after the previous one.
+          b. Parser "substitutes" certain indentation with backets
+             and semicolens.
 
         3. Example with layout:
         ```
@@ -258,7 +258,6 @@ IV. Lexical Program Structure
                       stkToLst Empty          = []
                       stkToLst (MkStack x s)  = x:xs where xs = stkToLst s
         ```
-
         4a. How the parser would interpret above:
         ```
            size :: Stack a -> Int
@@ -300,13 +299,13 @@ IV. Lexical Program Structure
 
 ## Part 3: Expressions
 I. Introduction
-    A. This part describes the syntax and informal syntax of Haskell 
-       expressions, including their translation into the Haskell
-       kernel where appropriate.
-    B. Except in the case of "let" expressions, these kernel translations
-       preserve static and dynamic semantics.
-    C. Free variables and constructors used always refer to entities 
-       defined in the Prelude.  (may not necessarily be in scope)
+   A. This part describes the syntax and informal syntax of Haskell 
+      expressions, including their translation into the Haskell
+      kernel where appropriate.
+   B. Except in the case of "let" expressions, these kernel translations
+      preserve static and dynamic semantics.
+   C. Free variables and constructors used always refer to entities 
+      defined in the Prelude.  (may not necessarily be in scope)
 II. Structure of expressions
 ```
    exp      ➔  infixexp :: ［context =>］ type    (expression type signature)
@@ -338,33 +337,33 @@ II. Structure of expressions
             ǀ  qcon { fbind1, ..., fbindn }       (labeled construction, n ≥ 0)
             ǀ  aexp<qcon> { fbind1, ..., fbindn } (labeled update, n ≥ 1)
 ```
-    A. Use parenthesis to override infix operator's fixity.
-    B. Consecutive operators with the same precedence must both 
-       be right or left associative.
-    C. Negation is the only prefix operator.  No postfix operators.
-    D. Grammar ambiguous regarding the extent of lambda abstractions,
-       let expressions, and conditionals.  Ambiguity resolved with
-       meta-rule that each of these constructs extends as far right
-       as possible.
-       ```
-          Examples:                     Parses as:
-          f x + g y                     (f x) + (g y)
-          - f x + y                     (- (f x)) + y
-          let { ... } in x + y          let { ... } in (x + y)
-          z + let {...} in x + y        z + (let {...} in (x+y))
-          f x y :: Int                  (f x y) :: Int
-          \ x -> a+b :: Int             \x -> ((a+b) :: Int)
-       ```
+   A. Use parenthesis to override infix operator's fixity.
+   B. Consecutive operators with the same precedence must both 
+      be right or left associative.
+   C. Negation is the only prefix operator.  No postfix operators.
+   D. Grammar ambiguous regarding the extent of lambda abstractions,
+      let expressions, and conditionals.  Ambiguity resolved with
+      meta-rule that each of these constructs extends as far right
+      as possible.
+      ```
+         Examples:                     Parses as:
+         f x + g y                     (f x) + (g y)
+         - f x + y                     (- (f x)) + y
+         let { ... } in x + y          let { ... } in (x + y)
+         z + let {...} in x + y        z + (let {...} in (x+y))
+         f x y :: Int                  (f x y) :: Int
+         \ x -> a+b :: Int             \x -> ((a+b) :: Int)
+      ```
 III. Errors
-    A. Errors during expression evaluation, denoted by ⊥ (bottom), are 
-       indistinguishable by a Haskell program from non-termination.
-    B. Since Haskell is a non-strict language (only evaluate function
-       arguments if necessary), all Haskell types include ⊥ .
-    C. When evaluated, errors cause immediate program termination.
-    D. Prelude provides two such funtions:
-       * `error     :: String -> a`
-       * `undefined :: a`
-    E. Very implementation dependent.
+   A. Errors during expression evaluation, denoted by ⊥ (bottom), are 
+      indistinguishable by a Haskell program from non-termination.
+   B. Since Haskell is a non-strict language (only evaluate function
+      arguments if necessary), all Haskell types include ⊥ .
+   C. When evaluated, errors cause immediate program termination.
+   D. Prelude provides two such funtions:
+      * `error     :: String -> a`
+      * `undefined :: a`
+   E. Very implementation dependent.
 IV. Variables, Constructors, Operators, and Literals
 ```
    aexp  ➔   qvar                      (variable)

@@ -71,6 +71,19 @@ alias which='alias | /usr/bin/which --tty-only --read-alias --show-dot --show-ti
 alias vi='vim'
 alias gvim='gvim -c "colorscheme desert"'
 
+## pop up multiple directories
+function ud() {
+  upDir=../
+  if [[ $1 =~ ^[1-9][0-9]*$ ]]
+  then
+    for ((ii = 1; ii < $1; ii++))
+    do
+      upDir=../$upDir
+    done
+  fi
+  cd $upDir
+}
+
 ## wget aliases to pulldown websites
 
 # Pull down a subset of a website

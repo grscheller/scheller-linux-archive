@@ -532,7 +532,55 @@ of doing things; it just that I don't know EMACS that well.
       > fi
       MATLAB file
 
-16. Editting differences between vi/vim and bash in vi mode:
+16. Looping constructs:
+
+    Loop a fixed number of times,
+
+      $ for ii in {1..10..3}
+      > do
+      >    echo $ii
+      > done
+      11
+      8
+      5
+      2
+
+    More general construct modelled after C programming,
+
+      $ n=4
+      $ for ((ii = 0; ii < n; ii++))
+      > do
+      >   echo $ii
+      >done
+      0
+      1
+      2
+      3
+
+    More Pythonic construct,
+
+      $ jj=43; jj[1]=5; jj[2]=11
+      > for ii in ${jj[*]}
+      > do
+      >   echo $ii
+      > done
+      42
+      5
+      11
+
+    Using a while loop,
+
+      $ Line=""; ((jj = 0)); while [[ ! $Line =~ [y|Y] ]]
+      > do
+      >   echo -n "Quit? [y|Y]: "
+      >   read Line
+      > done
+      Quit? [y|Y]: g
+      Quit? [y|Y]: n
+      Quit? [y|Y]: y
+      $ 
+
+17. Editting differences between vi/vim and bash in vi mode:
 
     Use 
 

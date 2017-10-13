@@ -3,10 +3,13 @@ My attempts to work through the course exercises from and mini-projects
 inspired by the University of Chicago's introduction to programming course
 sequence.  I put "Intro" in quotes because this course would be
 impenetrable to anyone without some previous exposure to functional
-programming.  Working through the book
-[Learn You A Haskell for Great Good](http://learnyouahaskell.com/chapters)
-should be sufficient.  This course is excellent, but don't expect it to
-hold you by the hand.
+programming.  Working through the book [Learn You A Haskell for Great Good][1]
+should be sufficient.  The posted lectures and assigned exercises for this
+course seem excellent.  College honors courses tend to be just shallow
+accelerated versions of the regular course for people who already know the
+material.  This one, I think, actually is successful at being deeper.
+
+  [1]: http://learnyouahaskell.com "Learn You A Haskell for Great Good"
 
 ## Online Course Notes
 1. Honors Introduction to Programming, I
@@ -22,9 +25,10 @@ hold you by the hand.
 
 ## Some notes
 * The [Notes](notes/MyNotes.md) I took while working through the material.
-* [Haskell Language Summary](notes/HaskellLangRefSummary.md) I found.
+* A [Haskell Language Summary](notes/HaskellLangRefSummary.md) I found
+  and converted to Markdown.
 
-## Original invitation to community on Haskell-Cafe:
+### Original invitation to community on Haskell-Cafe:
 ```
    Message: 2
    Date: Sun, 24 Sep 2017 10:52:03 -0500

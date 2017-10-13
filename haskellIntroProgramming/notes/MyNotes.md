@@ -8,8 +8,8 @@ Haskell 2010 refernce manual, or my general observations.
 * The type system partitions the universe of values and expressions into
   equivalence classes limiting how elements of these equivalence classes
   can be combined.
-* "variables" (names - denoted by initial lower case) are bounded to
-  values, denoted by expressions, by "binary expression" `=`.
+* "variables" are immutable.  They are bounded with the symbol `=` to
+  values, which are denoted by expressions.
 * `=` is not an operator, it is part of the language, `(=) foo 5` does not work!
 * Values are immutable.
 

@@ -1,9 +1,9 @@
 # Notes on Haskell 2010 Report.
-* A summary of the [Haskell 2010 Language Report][HR].  
-* Do not know where I downloaded the text version of this summary.
-* Converted to MarkDown by me.
+* A summary of the [Haskell 2010 Language Report][1].  
+* Do not know from where I downloaded the initial text version of this summary.
+* Converted to Markdown format.
 
-[HR]: https://www.haskell.org/onlinereport/haskell2010/ "Haskell 2010 Report"
+   [1]: https://www.haskell.org/onlinereport/haskell2010/ "Haskell 2010 Report"
 
 ## Part 1: Overview
 ### Top down structure (Gross overview):
@@ -56,9 +56,11 @@
    * Names of variables and type variables are identifiers beginning
      with lowercase letters or underscore.
      Other types of identifiers begin with uppercase letters.
-   * An identifier must not be used as the name of a type constructor and a type class in the same scope.
+   * An identifier must not be used as the name of a type constructor and
+     a type class in the same scope.
 3. Concrete naming example
-   * Int may simultaneously be the name of a module, type class, and constructor within a single scope.
+   * Int may simultaneously be the name of a module, type class, and
+     data constructor within a single scope.
 
 ## Part 2: Lexical Structure
 ### Notational conventions
@@ -74,7 +76,8 @@
 1. Infrastructure biased toward ASCII for historical reasons
 2. Compilers expected to make use of new versions of Unicode
 3. Syntax depends on how characters are defined by Unicode consortium.
-4. This choice makes Unix no longer completely Text/Binary agnostic. (small price for UTF-8)
+4. This choice makes Unix no longer completely Text/Binary agnostic, a small
+   price tp pay for UTF-8 compatibility.
 
 ### Lexical Program Structure
 1. See page 8 of 2010 standard for gory details.
@@ -97,8 +100,9 @@
        * No legal lexeme starts with {-
        * Can be nested to any depth
        * Nested comments used for compiler pragmas
-       * Comments are not lexically analysed.  Any instance of `{-` or `-}` within
-         a string or end-of-line comment will interfere with the nested comment.
+       * Comments are not lexically analysed.  Any instance
+         of `{-` or `-}` within a string or end-of-line comment
+         will interfere with the nested comment.
 
 ### Identifiers and Operators
 ```
@@ -131,9 +135,11 @@
    varsym ➔ (symbol<:> {symbol})<reservedop ǀ dashes>
    consym ➔ ( : {symbol})<reservedop>
 ```
-1. An operator symbol starting with a colon is a constructor, otherwise it is an ordinary identifier.
-2. `:`, `[]`, and `[a,b]` list constructors are built into the base language (kernel???) to make
-   more compatible with the LISP family of functional languages.
+1. An operator symbol starting with a colon is a constructor, otherwise
+   it is an ordinary identifier.
+2. `:`, `[]`, and `[a,b]` list constructors are built into the base language
+   (kernel???) to make more compatible with the LISP family of functional
+   languages.
 3. With the exception of the prefix operator `-`, all other operators 
    are infix.  May need parentheses to force `-` prefix:
    ```
@@ -166,8 +172,8 @@
 1. Variables and type variables begin with small letters.
    The others with capital letters.  (aside: that is why True is capitalized)
 2. Variables and constructors have infix forms, the others do not.
-3. Variables, data constructors, type constructors, and type classes can have "qualified"
-   names, but not type variables or module names.
+3. Variables, data constructors, type constructors, and type classes can
+   have "qualified" names, but not type variables or module names.
    ```
       qvarid ➔ [modid .] varid
       qconid ➔ [modid .] conid
@@ -238,14 +244,17 @@
    * `'\&' is illegal`
 
 ### Layout
-1. In the kernel language `{ ... }` is used for grouping and ; for expression separation.
+1. In the kernel language `{ ... }` is used for grouping and `;` for
+   expression separation.
    * Very rarely seen used in code
    * Sometimes useful in ghci one-liners
    * Makes Haskell programs easier to be produced by other programs.
    * Makes C wonks feel more at home.
-   * The ; used like in Pascal as a separator except for expressions, Haskell has no statements.
+   * The `;` is used like in Pascal as a separator except for expressions,
+     Haskell has no statements.
 2. Layout optional, gives Haskell more of a Python feel.
-   * Culture (parser too?) puts the ; before the next statement instead of after the previous one.
+   * Culture (parser too?) puts the ; before the next statement instead of
+     after the previous one.
    * Parser "substitutes" certain indentation with brackets and semicolens.
 3. Example with layout:
    ```
@@ -281,10 +290,11 @@
                                      { xs = stkToLst s }
                  }
    ```
-7. How to type it into ghci:
+7. How to type above into ghci:
     ```
-       let size s=length (s2L s) where {s2L Empty=[];s2L (MKStack x s)=x:xs where {xs=s2L s}}
+       ghci> let size s=length (s2L s) where {s2L Empty=[];s2L (MKStack x s)=x:xs where {xs=s2L s}}
     ```
+   Sometimes I find this is easier than messing with `:{` and `:}` within ghci.
 8. Layout and non-layout can be mixed:
    ```
       f x = let a = 1; b = 2
@@ -334,10 +344,13 @@
             ǀ  aexp<qcon> { fbind1, ..., fbindn } (labeled update, n ≥ 1)
 ```
 1. Use parenthesis to override infix operator's fixity.
-2. Consecutive operators with the same precedence must both be right or left associative.
+2. Consecutive operators with the same precedence must both be right or
+   left associative.
 3. Negation is the only prefix operator.  No postfix operators.
-4. Grammar ambiguous regarding the extent of lambda abstractions, let expressions, and conditionals.
-5. Ambiguity resolved with meta-rule that each of these constructs extends as far right as possible.
+4. Grammar ambiguous regarding the extent of lambda abstractions,
+   let expressions, and conditionals.
+5. Ambiguity resolved with meta-rule that each of these constructs extends
+   as far right as possible.
    ```
       Examples:                     Parses as:
       f x + g y                     (f x) + (g y)

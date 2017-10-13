@@ -58,7 +58,7 @@
      Other types of identifiers begin with uppercase letters.
    * An identifier must not be used as the name of a type constructor and a type class in the same scope.
 3. Concrete naming example
-   * Int may simultaneously be the name of a module, class, and constructor within a single scope.
+   * Int may simultaneously be the name of a module, type class, and constructor within a single scope.
 
 ## Part 2: Lexical Structure
 ### Notational conventions
@@ -132,8 +132,8 @@
    * An operator symbol starting with a colon is a constructor, otherwise it is an ordinary identifier
    * `:`, `[]`, and `[a,b]` list constructors are built into the base language (kernel???) to make
      more compatible with the LISP family of functional languages.
-   * With the exception of the prefix operator -, all other operators 
-     are infix.  May need parentheses to force - prefix:
+   * With the exception of the prefix operator `-`, all other operators 
+     are infix.  May need parentheses to force `-` prefix:
      ```
         ghci> 4 - (- 3)
         7
@@ -302,7 +302,7 @@
 
 ### Structure of expressions
 ```
-   exp      ➔  infixexp :: ［context =>］ type    (expression type signature)
+   exp      ➔  infixexp :: [context =>] type    (expression type signature)
             ǀ  infixexp
 
    infixexp ➔  lexp qop infixexp                  (infix operator application)
@@ -324,7 +324,7 @@
             ǀ  ( exp )                            (parenthesized expression)
             ǀ  ( exp1, ... , expn )               (tuple, n ≥ 2)
             ǀ  [ exp1, ... , expn ]               (list, n ≥ 1)
-            ǀ  [ exp1, ［, exp2］ .. ［exp3］]    (arithmetic sequence)
+            ǀ  [ exp1, [exp2, ] .. [exp3]         (arithmetic sequence)
             ǀ  [ exp | qual1, ..., qualn ]        (list comprehension, n ≥ 1)
             ǀ  ( infixexp qop )                   (left section)
             ǀ  ( qop<-> infixexp )                (left section)

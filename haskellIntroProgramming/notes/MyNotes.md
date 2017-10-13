@@ -49,11 +49,11 @@ Haskell 2010 refernce manual, or my general observations.
 * Used to bind names to local expressions.
 * Difference is more subtle than just whether definitions come first or last.
 * Deep within the Haskell kernel, both implemented as λ-expressions.
-1. **`let` construct**
+1. **`let ... in ...` expression**
    * Part of Haskell's expression syntax.
-   * Comes before the expression.
-   * Does not extend past guards.
-2. **`where` construct**
+   * The `let` comes before the subexpression after the `in`.
+   * Does not "extend past guards," i.e. only applies to the subexpression.
+2. **`where` clause**
    * Part of Haskell's definition syntax.
    * Comes after the definition.
-   * Scope extends over all guards in the expressions making up the definition.
+   * Scope extends over all guards.

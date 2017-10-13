@@ -34,7 +34,7 @@
 3. Language is non-strict (lazy)
    * expressions evaluated only if necessary
 4. Data is immutable
-   * Names are bound to expressions, not storage areas in memmory
+   * Names are bound to expressions, not storage areas in memory
    * Once bound, can not be changed
 5. Functions arguments are separated by whitespace
    ```
@@ -42,7 +42,7 @@
    ```
 6. The Prelude adds complexity.
    * This on top of the sugar added to the kernel.
-   * Kernal, Compilier, Prelude boundaries can be implementation dependent.
+   * Kernel, Compiler, Prelude boundaries can be implementation dependent.
 
 ### Haskell Namespaces
 1. Six kinds of names in Haskell
@@ -71,10 +71,10 @@
 ```
 ### BNF-like syntax
 ### Haskell uses Unicode character set
-1. Infarstructure biased toward ASCII for historical reasons
+1. Infrastructure biased toward ASCII for historical reasons
 2. Compilers expected to make use of new versions of Unicode
 3. Syntax depends on how characters are defined by Unicode consortium.
-4. This choise makes Unix no longer completely Text/Binary agnostic. (small price for UTF-8)
+4. This choice makes Unix no longer completely Text/Binary agnostic. (small price for UTF-8)
 
 ### Lexical Program Structure
 1. See page 8 of 2010 standard for gory details.
@@ -82,7 +82,7 @@
    * Longest possible lexeme is read
      - `=` is reserved but `==` and `~=` are not
      -  case is reserved but cases is not
-   * Any kind of whitespace is a proper deliniter for lexemes
+   * Any kind of whitespace is a proper delimiter for lexemes
    * Only ANY type of characters are valid in Haskell programs
      - graphic character
      - whitespace character
@@ -98,7 +98,7 @@
        * Can be nested to any depth
        * Nested comments used for compiler pragmas
        * Comments are not lexically analysed.  Any instance of `{-` or `-}` within
-         a string or end-of-line comment will interfer with the nested comment.
+         a string or end-of-line comment will interfere with the nested comment.
 
 ### Identifiers and Operators
 ```
@@ -166,7 +166,7 @@
 1. Variables and type variables begin with small letters.
    The others with capital letters.  (aside: that is why True is capitalized)
 2. Variables and constructors have infix forms, the others do not.
-3. Variables, data constructors, type constuctors, and type classes can have "qualified"
+3. Variables, data constructors, type constructors, and type classes can have "qualified"
    names, but not type variables or module names.
    ```
       qvarid ➔ [modid .] varid
@@ -246,7 +246,7 @@
    * The ; used like in Pascal as a separator except for expressions, Haskell has no statements.
 2. Layout optional, gives Haskell more of a Python feel.
    * Culture (parser too?) puts the ; before the next statement instead of after the previous one.
-   * Parser "substitutes" certain indentation with backets and semicolens.
+   * Parser "substitutes" certain indentation with brackets and semicolens.
 3. Example with layout:
    ```
       size :: Stack a -> Int
@@ -354,7 +354,7 @@
 2. Since Haskell is a non-strict language (only evaluate function
    arguments if necessary), all Haskell types include ⊥ .
 3. When evaluated, errors cause immediate program termination.
-4. Prelude provides two such funtions:
+4. Prelude provides two such functions:
    * `error     :: String -> a`
    * `undefined :: a`
 5. Very implementation dependent.

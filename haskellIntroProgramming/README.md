@@ -21,7 +21,7 @@ hold you by the hand.
 * [Peano Arithmrtic](PeanoArithmetic/)
 
 ## Some notes
-* The [Notes](notes/Notes.md) I took while working through the material.
+* The [Notes](notes/MyNotes.md) I took while working through the material.
 * [Haskell Language Summary](notes/HaskellLangRefSummary.md) I found.
 
 ## Original invitation to community on Haskell-Cafe:

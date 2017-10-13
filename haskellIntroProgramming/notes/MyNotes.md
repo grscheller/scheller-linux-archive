@@ -15,7 +15,7 @@ Haskell 2010 refernce manual, or my general observations.
 ### Algebraic Data Types (ADT)
 * All nullary constructors are "grounded."
 * If `n` is grounded, then so is S n.
-* Non-bounded expreessions exist,
+* Non-grounded expreessions exist,
   ```
      data NaturalNumber = Zero | S NaturalNumber
      infinity = S infinity
@@ -46,15 +46,16 @@ Haskell 2010 refernce manual, or my general observations.
    * Captures concrete lexical structure of Haskell programs in text files.
 
 ### let vs. where
-Used to bind names to local expressions.  Difference is more subtle than just
-whether definitions come first or last.
+* Used to bind names to local expressions.
+* Difference is more subtle than just whether definitions come first or last.
+* Deep within the Haskell kernel, both implemented as λ-expressions.
 
 #### `let` construct
-* Part of the expression syntax of Haskell.
+* Part of Haskell's expression syntax.
 * Comes before the expression.
 * Does not extend past guards.
 
 #### `where` construct
-* Part of the definition syntax.
+* Part of Haskell's definition syntax.
 * Comes after the definition.
 * Scope extends over all guards in the expressions making up the definition.

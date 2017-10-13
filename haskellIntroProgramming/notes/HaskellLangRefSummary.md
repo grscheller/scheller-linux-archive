@@ -202,6 +202,14 @@
       F .
    ```
 6. Prelude.+ is an infix operator with same fixity as + in the Prelude
+7. `bar(3)` lexes as 4 tokens
+   ```
+      bar ( 3 )
+   ```
+   and eventually sematically interpretted as
+   ```
+      bar 3
+   ```
 
 ### Numeric Literals:
 ```

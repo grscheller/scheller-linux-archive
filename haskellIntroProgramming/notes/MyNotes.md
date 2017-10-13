@@ -8,10 +8,9 @@ Haskell 2010 refernce manual, or my general observations.
 * The type system partitions the universe of values and expressions into
   equivalence classes limiting how elements of these equivalence classes
   can be combined.
-* "variables" are immutable.  They are bounded with the symbol `=` to
-  values, which are denoted by expressions.
+* "Variables" are bounded with the symbol `=` to immutable values, denoted
+  by expressions.
 * `=` is not an operator, it is part of the language, `(=) foo 5` does not work!
-* Values are immutable.
 
 ### Algebraic Data Types (ADT)
 * All nullary constructors are "grounded."

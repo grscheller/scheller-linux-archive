@@ -6,59 +6,57 @@
 [HR]: https://www.haskell.org/onlinereport/haskell2010/ "Haskell 2010 Report"
 
 ## Part 1: Overview
-1. Top down structure (Gross overview):
-   A. Modules - top most level
-      1. Provides way to control namespaces
-      2. Helps reuse software in large programs
-   B. Module consists of a collection of declarations
-      1. Types of Declarations
-         a. ordinary values
-         b. datatypes
-         c. type classes
-         d. fixity information
-   C. Next level down are expressions
-      1. Has a value and a static type
-      2. Heart of Haskell programming "in the small"
-   D. Lowest Level is lexical structure
-      1. Captures the concrete representation of programs in text files
-2. Haskell Kernel (Factoids)
-   A. Not formally specified
-      1. Slightly sugared variant of the (typed) lambda calculus
-      2. Straightforward denotational semantics
-      3. Programs get reduced (desugared) to the kernel before symantics
-      4. Provides straight forward reasoning about programs
-      5. Provides useful guidelines for language implementation
-      6. Reflects true nature of the beast
-   B. Language does not have statements (not imperative)
-   C. Language is non-strict (lazy)
-      1. expressions evaluated only if necessary
-   D. Data is immutable
-      1. Names are bound to expressions, not storage areas in memmory
-      2. Once bound, can not be changed
-   E. Functions arguments are separated by whitespace
+### Top down structure (Gross overview):
+1. Modules - top most level
+   * Provides way to control namespaces
+   * Helps reuse software in large programs
+2. Module consists of a collection of declarations
+   * Types of Declarations
+       1. ordinary values
+       2. datatypes
+       3. type classes
+       4. fixity information
+   * Next level down are expressions
+       1. Has a value and a static type
+       2. Heart of Haskell programming "in the small"
+   * Lowest Level is lexical structure
+       1. Captures the concrete representation of programs in text files
+### Haskell Kernel (Factoids)
+   * Not formally specified
+       1. Slightly sugared variant of the (typed) lambda calculus
+       2. Straightforward denotational semantics
+       3. Programs get reduced (desugared) to the kernel before symantics
+       4. Provides straight forward reasoning about programs
+       5. Provides useful guidelines for language implementation
+       6. Reflects true nature of the beast
+   * Language does not have statements (not imperative)
+   * Language is non-strict (lazy)
+       1. expressions evaluated only if necessary
+   * Data is immutable
+       1. Names are bound to expressions, not storage areas in memmory
+       2. Once bound, can not be changed
+   * Functions arguments are separated by whitespace
    ```
       myFunction arg1 arg2 arg3
    ```
-   F. The Prelude also adds complexity on top of the sugar added to
-      the kernel.  (Kernal, Compilier, Prelude boundaries can be
-      implementation dependent.)
-3. Haskell Namespaces
-   A. Six kinds of names in Haskell
-      1. variables and Constructors denote values
-      2. Type system consists of
-         a. type variables
-         b. type constructors
-         c. type classes
-      3. Module names
-   B. Two constraints on naming
-      1. Names of variables and type variables are identifiers beginning
-         with lowercase letters or underscore.  Other types of names are 
-         identifiers begin with uppercase letters
-      2. An identifier must not be used as the name of a type constructor
-         and a (type) class in the same scope.
-   C. Concrete naming example
-      1. Int may simultaneously be the name of a module, class, and 
-         constructor within a single scope.
+   * The Prelude adds complexity.
+       1, This on top of the sugar added to the kernel.
+       2. Kernal, Compilier, Prelude boundaries can be implementation dependent.
+### Haskell Namespaces
+   * Six kinds of names in Haskell
+       1. variables and Constructors denote values
+       2. Type system consists of
+          - type variables
+          - type constructors
+          - type classes
+       3. Module names
+   * Two constraints on naming
+       1. Names of variables and type variables are identifiers beginning
+          with lowercase letters or underscore.  Other types of names are 
+          identifiers begin with uppercase letters
+       2. An identifier must not be used as the name of a type constructor and a (type) class in the same scope.
+   * Concrete naming example
+       1. Int may simultaneously be the name of a module, class, and constructor within a single scope.
 
 ## Part 2: Lexical Structure
 1. Notational conventions

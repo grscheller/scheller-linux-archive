@@ -40,8 +40,8 @@ text files with information on a variety of topics.
 * A hierarchical scalaz project for purposes of learning scalaz.
 
 ### 5. [fpForMortals](grokScalaz/fpForMortals/)
-* Scala project where I work through the book
-  "Functional Programming for Mortals" by Sam Halliday.
+* Scala project working through the book
+  "Functional Programming for Mortals with Scalaz" by Sam Halliday.
 * A collecton of standalone scalaz projects for purposes of learning scalaz.
 
 ### 6. [grokJava](grokJava/)

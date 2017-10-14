@@ -8,7 +8,7 @@ by Sam Halliday.
 ### The build.sbt file suggested by book:
 ```
    scalaVersion in ThisBuild := "2.12.3"
-   scalaOptions in ThisBuild ++= Seq(
+   scalacOptions in ThisBuild ++= Seq(
      "-language:_",
      "-Ypartial-unification",
      "-Xfatal-warnings"

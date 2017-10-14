@@ -175,5 +175,5 @@ package root directory, grok/src/main/scala/grok/rand/.
 * Using `val Rand = grokScala.grok.state.State` so the compiler can find the companion object.
 * User code needs to use `new` key word to distinguish constructor from the `State.apply` method.
 
-This is my original implimentation of `fpinscala.state.rand.Rand`.  I plan
-to reimplemented it there as a case class containing a `State(RNG,A)`.
+This is my original implimentation of `fpinscala.state.rand.Rand`.
+I reimplemented it there as a case class containing a `State(RNG,A)`.

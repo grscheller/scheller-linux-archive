@@ -322,7 +322,7 @@
 
 ### Structure of expressions
 ```
-   exp      ➔  infixexp :: [context =>] type    (expression type signature)
+   exp      ➔  infixexp :: [context =>] type      (expression type signature)
             ǀ  infixexp
 
    infixexp ➔  lexp qop infixexp                  (infix operator application)

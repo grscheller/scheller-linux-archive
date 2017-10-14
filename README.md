@@ -1,6 +1,6 @@
 # scheller-linux-archive
-My personal archive of functional based software development projects
-as well as information on Linux/Bash environment configuration.
+My personal archive of my personnal software development projects
+and related information.
 
 The primary purpose of this GitHub repo is to capture what I learn
 in a way that helps me stay up to speed on a topic.  I maintain
@@ -35,35 +35,41 @@ text files with information on a variety of topics.
 ### 3. [grokScala](grokScala/)
 * Document factoids about the Scala language
 
-### 4. [grokScalaz](grokScalaz/)
+### 4. [grokScalaz](grokScalaz/babySteps/)
 * Document factoids about Scalaz.
+* A hierarchical scalaz project for purposes of learning scalaz.
 
-### 5. [grokJava](grokJava/)
+### 5. [fpForMortals](grokScalaz/fpForMortals/)
+* Scala project where I work through the book
+  "Functional Programming for Mortals" by Sam Halliday.
+* A collecton of standalone scalaz projects for purposes of learning scalaz.
+
+### 6. [grokJava](grokJava/)
 * An attempt to learn Java coming at it from a Python and Scala perspective.
 * Not exactly sure the direction this project will take.
 
-### 6. [grokRust](grokRust/)
+### 7. [grokRust](grokRust/)
 * Learn Rust as a systems language.
 * Learn Rust as a general purpose programming language.
 
-### 7. [haskellIntroProgramming](haskellIntroProgramming)
+### 8. [haskellIntroProgramming](grokHaskell/haskellIntroProgramming/)
 * Working through examples and exercises from the Univ. of Chicago's
   honors introduction to programming course sequence.
 
-### 8. [haskellParallelAndConcurrent](haskellParallelAndConcurrent)
+### 9. [haskellParallelAndConcurrent](grokHaskell/haskellParallelAndConcurrent/)
 * Implementing examples inspired by Simon Marlow's book
   "Parallel and Concurrent Programming in Haskell."
 
-### 9. [linuxHome](linuxHome/)
+### 10. [linuxHome](linuxHome/)
 * Keep Linux environment synced across workstations and supercomputers.
 * Based on the infrastructure I use at work.
 
-### 10. [pythagTriples](pythagTriples/)
+### 11. [pythagTriples](pythagTriples/)
 * Haskell project that generates Pythagorean triples.
 * Mathematical factoids about Pythagorean triples.
 * Also used to help me learn Haskell stack.
 
-### 11. [pureMath](pureMath/)
+### 12. [pureMath](pureMath/)
 * A mathematics library centered around integer arithmetic.
 * An old project of mine back when I first learned Python.
 

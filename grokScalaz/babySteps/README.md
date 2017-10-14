@@ -7,7 +7,7 @@ To compile all projects,
 ```
    $ sbt compile
 ```
-make sure you launch sbt from the root grokScalaz directory.
+make sure you launch sbt from the root babySteps directory.
 
 ## 2. Using [Scalaz from Scala REPL via SBT](scalazREPL/):
 

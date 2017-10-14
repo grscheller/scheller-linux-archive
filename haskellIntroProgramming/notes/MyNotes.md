@@ -46,14 +46,16 @@ Haskell 2010 refernce manual, or my general observations.
    * Captures concrete lexical structure of Haskell programs in text files.
 
 ### let vs. where
-* Used to bind names to local expressions.
+* Used to bind names in local scopes.
 * Difference is more subtle than just whether definitions come first or last.
-* Deep within the Haskell kernel, both implemented as λ-expressions.
-1. **`let ... in ...` expression**
+* Deep within the Haskell kernel, both probably implemented as λ-expressions.
+1. **The `let ... in ...` expression**
    * Part of Haskell's expression syntax.
-   * The `let` comes before the subexpression after the `in`.
-   * Does not "extend past guards," i.e. only applies to the subexpression.
-2. **`where` clause**
+   * The `let` "comes before the expression," means the `let` bindings only
+     apply to the subexpression after the `in` clause.
+   * Does not "extend past guards," i.e. applies to just the subexpression, 
+     not to any enclosing definitions.
+2. **The `where` clause of a definition**
    * Part of Haskell's definition syntax.
    * Comes after the definition.
-   * Scope extends over all guards.
+   * Scope extends over all guards within the definition.

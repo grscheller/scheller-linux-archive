@@ -2,9 +2,24 @@
 Goal is to keep these notes sufficiently short to be able to wrap my head
 around them, even at the price of them not being properly logically
 grounded, perhaps even circular.  Notes taken from the course, the
-Haskell 2010 refernce manual, or my general observations.
+Haskell 2010 reference manual, or my general observations.
+
+## Haskell
+* Haskell is a strongly-type, lazy, pure, functional language.
+* Types are compile time entities.
+  + Values need not have the run time overhead of encoding their types.
+  + No run time dispatch overhead.
+  + No run time type incompatibilities.
+  + No run time "duck typing" crashes or unintended type conversions.
+* Lazy in the sense that values are not computed unless needed/forced.
+* Pure in the sense of:
+  + Values are immutable.
+  + No statements, program with referentially transperant expressions.
+  + Functions have no side effects.
+  + Functions are first class values.
 
 ## Haskell Type System
+* Strong, flexible type system with powerful type inference algorithms.
 * The type system partitions the universe of values and expressions into
   equivalence classes limiting how elements of these equivalence classes
   can be combined.
@@ -22,7 +37,6 @@ Haskell 2010 refernce manual, or my general observations.
   ```
 
 ## Scoping
-
 ### Progam Structure
 1. Top most level a Haskell program is a set of modules.
    * Provide way to control namespaces.

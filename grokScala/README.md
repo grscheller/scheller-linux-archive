@@ -122,21 +122,37 @@ I found something I thought peculiar while in the scala REPL:
 ```
 If you put a single lambda in the middle of a code block, my expectation
 was that the lambda would be ignored and I'd get back just `()` as the
-the value of `dog`, which comes from the last println function call in
-the code block.  Instead, its return value is a `function1` where the
+value of `dog`, which comes from the last println function call in
+the code block.  Instead, it returned value a `function1` where the
 statements after the lambda become part of the `function1`.  Statements
 before the lambda were executed only once as expected when the code block
 was first run, but statements after the lambda get executed each time `dog`
-was executed.  Though the return value of `dog` is indead `()`, the lambda
-actually extends to the end of the code block.
+was executed.  I was totally confused.
 
-By imbedding the lambda, the code block is no longer just a "thunk," but
-rather behaves like a first class object in the sense of functional
-programming.  And like any good closure, it can contain state.
+The problem was that the lambda actually extends to the end of the code block.
+λ-functions extend as far "to the left" as possible.  I took "left" too
+literally.  Maybe we should say that λ-functions extend as far "syntactically"
+as possible.
 
-This means that the use of `self` as a synonym for `this` in class and trait
-definitions may not just be "Syntactic Sugar" but may have some deeper semantic
-meaning.
+Code blocks are not "first class objects" in the functional programming
+sense.  They are just  "thunks."  When you put the λ-function at the end,
+you are returning a "first class object" from the thunk.  Thus, `dog` is
+not the "codeblock" but just the returned lambda,
+
+If the execution of the codeblock were expensive, a useful technique would be
+to define it as a `lazy val'. 
+
+Codeblocks, like any good closures, can contain state.
+
+### Related topics:
+    * case blocks, without a match, actually define partial functions.  These
+      can be extremely useful when used with collect methods.
+    * Sort of related, the use of `self` as a synonym for `this` in class and
+      trait definitions.  These may be more than just "Syntactic Sugar" but
+      have some deeper meaning.  The use of `self` returns/references the
+      class/trait itself within the class/trait.  Since classes/traits do not
+      use `=`, like a method can, their "return values" definately 
+      not a λ-function, but instances of the class/trait.
 ```
    trait Foo[+A] { self =>
       ...

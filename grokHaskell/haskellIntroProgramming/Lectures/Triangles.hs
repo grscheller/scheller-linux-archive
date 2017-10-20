@@ -1,4 +1,4 @@
--- Triangles.hs
+-- Triangles.hs (Lecture 1)
 
 -- | A module for working with triangles.
 

@@ -26,7 +26,6 @@ that allows SBT to "out-of-the-box" handle package dependencies among them.
 
 ## 3. Building scala code to run as a "Java App": [onejar](onejar/)
 Builds scala code into a "fat" jar file so that all an end user needs is
-
 a functioning java runtime environment.  This will includes everything in
 the jar file, including the Scala runtime libraries.
 
@@ -95,8 +94,10 @@ To run outside sbt build,,
 ```
 
 ## 5. Scala code blocks: [codeblocks](codeblocks/)
-Scala code blocks are interesting closures.  This project is to explore
-code blocks as functions.
+Scala code blocks are interesting closures.  They can contain state
+and can behave like first class objects and not just "thunks."
+
+This project is to explore code blocks behave like functions.
 
 I found something I thought peculiar while in the scala REPL:
 ```
@@ -126,11 +127,16 @@ the code block.  Instead, its return value is a `function1` where the
 statements after the lambda become part of the `function1`.  Statements
 before the lambda were executed only once as expected when the code block
 was first run, but statements after the lambda get executed each time `dog`
-was executed.  Though the  return value of `dog` is indead `()`.  Actually,
-the lambda extends to the end of the code block.
+was executed.  Though the return value of `dog` is indead `()`, the lambda
+actually extends to the end of the code block.
+
+By imbedding the lambda, the code block is no longer just a "thunk," but
+rather behaves like a first class object in the sense of functional
+programming.  And like any good closure, it can contain state.
 
 This means that the use of `self` as a synonym for `this` in class and trait
-definitions may not just be "Syntactic Sugar" but have deeper semantic meaning.
+definitions may not just be "Syntactic Sugar" but may have some deeper semantic
+meaning.
 ```
    trait Foo[+A] { self =>
       ...

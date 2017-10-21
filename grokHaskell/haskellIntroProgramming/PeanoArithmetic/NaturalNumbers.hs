@@ -57,12 +57,12 @@ instance Num NaturalNumber where
     x + S y  = S (x + y)
 
     Zero * _    = Zero
-    _    * Zero = Zero
     x    * S y  = x * y + x
+    _    * _    = Zero
 
-    Zero  - _     = Zero
-    x     - Zero  = x
     (S x) - (S y) = x - y
+    x     - Zero  = x
+    Zero  - _     = Zero
 
     abs = id
 

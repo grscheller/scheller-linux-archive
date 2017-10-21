@@ -11,7 +11,7 @@ material.  This one, I think, actually is successful at being deeper.
 
   [1]: http://learnyouahaskell.com "Learn You A Haskell for Great Good"
 
-## Online Course Notes
+## Courses whose online Lecture notes I am following:
 1. Honors Introduction to Programming, I
    Autumn Quarter, 2017
    Univ. of Chicago
@@ -20,7 +20,15 @@ material.  This one, I think, actually is successful at being deeper.
 2. Honors Introduction to Programming, II
    TBD
 
-## Exercises working through an Honors Intro to Programming sequence:
+## Modules written
+### CMSC-16100
+1. Lecture I
+   * [Triangles](modules/Triangles.hs)
+2. Lecture II
+   * [ListFunctions](modules/ListFunctions)
+
+## Additional Lectures
+### CMSC-16100
 * [Peano Arithmrtic](PeanoArithmetic/)
 
 ## Some notes

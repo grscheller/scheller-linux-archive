@@ -8,8 +8,9 @@ sumf (sumf square) (1:2:[]):(3:4:[]):[]  -- Inner desugaring
 ```
 Now, the run time evaluation below assumes that:
 * (+) is left associative.
-* All functions are strict, their argument only evaluated if needed.
+* Functions are not strict, their argument only evaluated if needed.
 * Haskell is lazy, nothing is evaluated until needed/driven.
+* All expressions are referentially transparent.
 * Calculation is single threaded.
 * Trivial steps, like `square 2 => 2 * 2 => 4`, are consolidated.
 ```

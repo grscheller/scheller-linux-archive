@@ -73,6 +73,24 @@ instance Num NaturalNumber where
         | n > 0  = S (fromInteger (n-1))
         | n == 0 = Zero
 
+-- To make an instance of Integral, ghc is telling me that I need
+-- to make NaturalNumber an instance of Real and Enum.  I'll come
+-- back later when I better understand these type classes.
+
+-- instance Integral NaturalNumber where
+--     quotRem _ Zero = error "Division by Zero undefined."
+--     quotRem n d
+--         | n  < d = (Zero, n)
+--         | n >= d = let
+--                      (q, r) = quotRem (n - d) d
+--                    in
+--                      (S(q), r)
+-- 
+--     -- Stack crancky?  Should I make this  tail recursive?
+-- 
+--     toInteger Zero = 0
+--     toInteger (S n) = 1 + toInteger n
+
 -- | A NaturalNumber context helper function.
 --
 --   In the expression "nat (4 + 3*5)" 3, 4, and 5 are interpretted as
@@ -87,7 +105,7 @@ nat = id
 --
 --   Unsafe for Fractional data types if typed
 --     even' :: (Eq t, Num t) => t -> Bool
---   and the name "even" collides with the one from the
+--   Also, the name "even" collides with the one from the
 --   Integral typeclass imported from Prelude. 
 
 even' :: NaturalNumber -> Bool

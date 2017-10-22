@@ -22,7 +22,8 @@ taken to mean will be partially based on the choices made in Haskell's lazy
 evaluation strategy.
 
 Consider the true mathematical statements, which follow from the distributive
-theorem of Natural Numbers, and are equalivalent via the commutative theorem, 
+theorem of Natural Numbers, and are equalivalent via the commutative theorem
+for `+`, 
 ```
    x*(y + 1) = x*y + x                x*(1 + y) = x + x*y
 ```
@@ -33,10 +34,15 @@ from these we abstract competing definitions for `(*)`
 My intuition is leaning toward the first one due to Haskell's left-to-right
 evaluation strategy.  The recursion generates the repeated addition before
 adding up the terms generated.  I find the separation of concerns more
-appealing.  At this point, not clear to me which approach is "lazier."
+appealing.  Also, I don't see how a partial evaluation of `(*)` would be
+that useful.  When do we operate on partial multiplications?  Maybe there are
+advantages steamlining the calculation or making things less stack cranky
+in the second approach?
+
+At this point, not clear to me which approach is "lazier."
 
 ### Initial attempt
-Consider the evaluation of `three * three` where we let `z = Zero`
+Consider the evaluation of `three * three`, where we are letting `z = Zero`
 
 #### Version originally suggested:
 ```
@@ -65,7 +71,7 @@ S(S(S(S(S(S(S(S(S(z)))))) + z)))
 S(S(S(S(S(S(S(S(S(z)))))))))               -- fully evaluated
 nine
 ```
-
+Almost completely evaluated until I get down to a type constructor.
 #### Improved version suggested:
 ```
 x + Zero = x
@@ -96,8 +102,9 @@ S(S(S(S(S(S(S(S(S(z + z)))))))))
 S(S(S(S(S(S(S(S(S(z)))))))))               -- fully evaluated
 nine
 ```
+Three substitutions lazier, but total number of steps to full evaluation longer.
 
-#### Redundant version
+#### Redundant version of improved version
 ```
 x + Zero = x
 Zero + x = x
@@ -126,11 +133,11 @@ S(S(S(S(S(S(S(S(S(z))) + z))))))
 S(S(S(S(S(S(S(S(S(z)))))))))               -- fully evaluated
 nine
 ```
-Interesting, initially not "lazier" but more efficient if driven to
-full evaluation.
+Interesting, not any "lazier" than the non-redundant version, but more
+efficient if driven to full evaluation.
 
 ### Follow up to above based on lecture example.
-Consider the evaluation of `three * three == one`,
+Consider the evaluation of `three * three == two`,
 
 #### Version originally suggested:
 ```
@@ -158,6 +165,7 @@ S(S(S(S(S(S(S(S(z)))))) + S(z))) == S(z)
 S(S(S(S(S(S(S(z)))))) + S(z)) == Zero
 False
 ```
+Done in 14 evaluations.
 
 #### Improved version suggested:
 ```
@@ -184,6 +192,7 @@ S(S(z + S(S(z)) + S(S(z)))) + S(z) == z
 S(S(S(z + S(S(z)) + S(S(z)))) + z) == Zero
 False
 ```
+Done in 13 evaluations.
 
 #### Redundant version
 ```
@@ -211,3 +220,5 @@ S(S(S(S(z))) + S(S(z))) + S(z) == z
 S(S(S(S(S(z))) + S(S(z))) + z) == Zero
 False
 ```
+Done in 12 evaluations.
+

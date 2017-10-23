@@ -362,10 +362,10 @@ case class Map2Future[A,B,C]( af: Future[A]
         try {
             calculate()
         } catch {
-            case ex: TimeoutException      => 
-            case ex: CancellationException => 
-            case ex: InterruptedException  => 
-            case ex: ExecutionException    => 
+            case ex: TimeoutException      =>
+            case ex: CancellationException =>
+            case ex: InterruptedException  =>
+            case ex: ExecutionException    =>
         }
       }.start()
     done

@@ -1,6 +1,6 @@
 lazy val commonSettings = Seq(
     version := "0.2-SNAPSHOT"
-  , scalaVersion := "2.12.3"
+  , scalaVersion := "2.12.4"
   , exportJars := false
   , scalacOptions += "-deprecation"
   , libraryDependencies += "org.scalaz" %% "scalaz-core"       % "7.2.14"

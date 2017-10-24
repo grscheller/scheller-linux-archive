@@ -355,10 +355,13 @@ case class Map2Future[A,B,C]( af: Future[A]
    *    Swallows all exceptions for compatibility with the
    *    Java Futures trait.
    *
+   *    Below uses Scala's single abstract method interface
+   *    to convert the nullary λ-function into a runable object.
+   *
    */
   def isDone: Boolean = {
     if ( ! hasStarted && ! isCancelled )
-      new Thread { () =>
+      new Thread(() =>
         try {
             calculate()
         } catch {
@@ -367,7 +370,7 @@ case class Map2Future[A,B,C]( af: Future[A]
             case ex: InterruptedException  =>
             case ex: ExecutionException    =>
         }
-      }.start()
+      ).start
     done
   }
 

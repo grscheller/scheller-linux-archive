@@ -32,7 +32,7 @@ authors.
 ### [fpinscala.testing](src/main/scala/fpinscala/testing/)
 * Chapter 8: Property-based testing
 
-### fpinscala.parsing
+### [fpinscala.parsing](src/main/scala/fpinscala/parsing/)
 * Chapter 9: Parser combinators
 
 ### fpinscala.monoids

@@ -10,7 +10,7 @@ My version includes error handling.
 * Use case is for client code to apply the blocking run method as last step.
 * The run method is not intended to be used internally within the package.
 
-### Companon Object [`parallelism.Par`](parallelism.scala#L188-L374)
+### Companon Object [`parallelism.Par`](parallelism.scala#L188-L377)
 * Utility methods for the `parallelism.Par[A]` trait.
 
 ### Private Abstract Trait [`parallelism.ParFuture[+A]`](parallelism.scala#L15-L28)
@@ -70,11 +70,11 @@ entering its event loop, and writes to the same location before suspending.
 ### Program [ParParFutures3](exerciseCode/ParParFutures3.scala)
 * Program to exercise package fpinscala.parallelism:
 
-### Program [ParParFutures4](exerciseCode/ParParFutures4.scala)
-* Program to exercise package fpinscala.parallelism:
-
 ## These programs test package fpinscala.parallelism:
 
-### Program [parallelismTest](../../../../test/scala/fpinscala/parallelism/parallelismTest.scala)
+### Program [parallelismTest](../../../../test/scala/fpinscala/parallelism/parallelismCheck.scala)
 * Property based testing for fpinscala.parallelism package.
+
+### Program [parallelismTest](../../../../test/scala/fpinscala/parallelism/parallelismParProp.scala)
+* More property based testing for fpinscala.parallelism package.
 

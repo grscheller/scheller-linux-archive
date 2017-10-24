@@ -17,18 +17,18 @@ the creation of test cases while working through the exercises in
 * Used as a namespace for Prop related type aliases.
 * Won't always update line numbers until I am done with chapter.
 
-### Case Class [fpinscala.testing.Gen](fpinScalaCheck.scala#L175-L224)
-* Generator of test cases.
+### Case Class [fpinscala.testing.Gen](fpinScalaCheck.scala#L175-L225)
+* Represents a generator of test cases.
 * Wraps a fpinscala Rand[A] which wraps a State[RNG,A].
-* Won't always update line numbers until I am done with chapter.
 
-### Companion Object [fpinscala.testing.Gen](fpinScalaCheck.scala#L226-L271)
-* Won't always update line numbers until I am done with chapter.
+### Companion Object [fpinscala.testing.Gen](fpinScalaCheck.scala#L227-L270)
+* Utility functions for Gen case class.
+* Contains implicit defs for Gen case class.
+* Contains object `**` for matching tuples within Gen pattern matches.
 
-### Case Class [fpinscala.testing.SGen](fpinScalaCheck.scala#L273-L288)
-* Generates a Gen of a given size.
+### Case Class [fpinscala.testing.SGen](fpinScalaCheck.scala#L272-L292)
+* Generate Gens of given sizes.
 * A Gen can be converted to an SGen via an implicit def or its unsized method.
-* Won't always update line numbers until I am done with chapter.
 
 ### Program [genTest](exerciseCode/genTest.scala)
 * Used as feedback while developing the Gen type.

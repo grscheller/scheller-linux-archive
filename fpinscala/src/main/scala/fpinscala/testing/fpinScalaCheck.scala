@@ -172,6 +172,7 @@ object Prop {
 
 }
 
+/** Represents a generator of test cases. */
 case class Gen[+A](sample: Rand[A]) {
 
   import Gen._
@@ -268,6 +269,7 @@ object Gen {
 
 }
 
+/** Generates Gens of given sizes. */
 case class SGen[+A](forSize: Int => Gen[A]) {
 
   def apply(n: Int): Gen[A] = forSize(n)

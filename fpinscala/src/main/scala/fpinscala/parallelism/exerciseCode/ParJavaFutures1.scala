@@ -164,19 +164,21 @@ object ParJavaFutures1 {
     println("\nTest isDone Future method for Map2Future:")
 
     val ultimateAns = unit(42L)
-    val longRunner2 = longRunner1.map2(ultimateAns) {(x, y) => x}
+    val longRunner2 = longRunner1.map2(ultimateAns) {(x, y) => x - y}
     val longRunner2_Fut = longRunner2.frozenFuture(es)
 
     while (!longRunner2_Fut.isDone) {
       println("Task not done.")
       Thread.sleep(1000)
     }
-    print("The " + fibParameter2 + " Fibonacci number: ")
+    print("The " + fibParameter2 + " Fibonacci number - ultamateAns: ")
     println(longRunner2_Fut.get)
-    print("The " + fibParameter2 + " Fibonacci number: ")
+    // The following should return immediately.
+    print("The " + fibParameter2 + " Fibonacci number - ultimateAns: ")
     println(longRunner2_Fut.get)
 
-    // Syntax check
+    // Syntax and stictness check
+    println("\nThe map2 method seems to be strict.")
     val longRunner3 = ultimateAns.map2(longRunner1) {(x, _) => x}
     val longRunner3_Fut = longRunner3.future(es)
 

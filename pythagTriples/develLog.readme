@@ -236,9 +236,40 @@ gcd(a,b,c) = 1 and a, b, c > 0.
 
 2017-09-23:
   In `stack.yaml`:
-    Updated resolver from: lts-7.18 to lts-9.5.
+    Updated resolver from lts-7.18 to lts-9.5.
 
   In `pythagTriples.cabal`:
     Changed Licence from BSD3 to MIT.
     Updated version to 0.2.0.0 due to license change.
     Added -dynamic to gch-options
+
+2017-10-27:
+  In LICENSE file, I noticed that the text was still that of BSD3.
+  Changed the text to that of an MIT license.
+
+  In `stack.yaml` file, changed Resolver from lts-9.5 to ghc-8.2.1
+  to test if stack will use the locally installed ghc installed on
+  my Arch Linux system instead of downloading and installing it locally.
+
+2017-10-28:
+  Stack still snubs the Arch Linux ghc-8.2.1 version and stubbornly
+  downloads a local copy of ghc-8.2.1.
+
+  Version it downloaded was ghc-tinfo6-nopie-8.2.1.  The references to
+  "nopie" may indicate that the problem may be related to Arch Linux
+  ncurses-6 incompatibility issues.  The same issues that broke SBT
+  for a while.  I'll just use the locally installed version for now
+  since my use case is just to learn ghc and stack.
+
+    $ stack install
+    ...
+    $ stack clean
+    $ stack build
+    ...
+    $ stack exec -- pythagTriples -o 5
+    (3,4,5)
+    (5,12,13)
+    (7,24,25)
+    (8,15,17)
+    (9,40,41)
+

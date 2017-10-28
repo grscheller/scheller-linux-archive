@@ -3728,10 +3728,15 @@ Purpose: To indicate what was done to create gauss17 and
   Did not help the stopped processes to terminate.
 
 2017-10-09:
-  The system hangs or takes long time to shut down, but not when I am not using wireless.
-  At the console, getting an error message from a kernel thread regarding something
-  "tainting the kernel."  It suggested a workarond to gag the message which I have tried:
+  The system hangs or takes long time to shut down, but not when I am not using
+  wireless.  At the console, getting an error message from a kernel thread
+  regarding something "tainting the kernel."  It suggested a workarond to gag
+  the message which I have tried:
 
     # echo 0 > /proc/sys/kernel/hung_task_timeout_secs 
 
   I'll see if this helps or is persistent across reboots.
+
+2017-10-28:
+  Problem from 2017-10-09 gradually went away, won't worry about it.
+

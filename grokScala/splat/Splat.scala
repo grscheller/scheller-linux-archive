@@ -1,6 +1,6 @@
-package grokScala.Splat
+package grokScala.splat
 
-object splat {
+object Splat {
 
   // For variadic functions, a splat type construct
   // exists for variable length datastructures.

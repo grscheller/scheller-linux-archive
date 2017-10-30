@@ -11,6 +11,7 @@ lazy val root = (project in file("."))
      , onejar
      , oop
      , parallelism
+     , sort
      , splat
   )
   .settings(commonSettings: _*)
@@ -39,6 +40,10 @@ lazy val oop = (project in file("oop"))
 lazy val parallelism = (project in file("parallelism"))
   .settings(commonSettings: _*)
   .settings(name := "parallelism")
+
+lazy val sort = (project in file("sort"))
+  .settings(commonSettings: _*)
+  .settings(name := "sort")
 
 lazy val splat = (project in file("splat"))
   .settings(commonSettings: _*)

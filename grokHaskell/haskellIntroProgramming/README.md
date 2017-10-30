@@ -11,7 +11,7 @@ material.  This one, I think, actually is successful at being deeper.
 
   [1]: http://learnyouahaskell.com "Learn You A Haskell for Great Good"
 
-## Courses whose online Lecture notes I am following:
+## CMSC courses whose online Lecture notes I am following:
 1. Honors Introduction to Programming, I
    Autumn Quarter, 2017
    Univ. of Chicago
@@ -20,23 +20,25 @@ material.  This one, I think, actually is successful at being deeper.
 2. Honors Introduction to Programming, II
    TBD
 
-## Modules written
-### CMSC-16100
+### Modules written following CMSC-16100
 1. Lecture I
    * [Triangles](modules/Triangles.hs)
 2. Lecture II
-   * [ListFunctions](modules/ListFunctions)
+   * [ListFunctions](modules/ListFunctions.hs)
 
-## Additional Lectures
-### CMSC-16100
+### Additional Lectures for CMSC-16100
 * [Peano Arithmrtic](PeanoArithmetic/)
 
-## Some notes
+## My notes:
 * The [Notes](notes/MyNotes.md) I took while working through the material.
 * A [Haskell Language Summary](notes/HaskellLangRefSummary.md) I found
   and converted to Markdown.
 
-### Original invitation to community on Haskell-Cafe:
+## Additional play:
+* A [Utilities](examples/Utilities.hs) module, basically a place to hang code
+  snippets.
+
+## Original invitation to community on Haskell-Cafe:
 ```
    Message: 2
    Date: Sun, 24 Sep 2017 10:52:03 -0500

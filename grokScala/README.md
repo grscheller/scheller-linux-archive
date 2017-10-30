@@ -71,9 +71,8 @@ To run outside sbt build,,
 
 ## 4. Scala code blocks: [codeblocks](codeblocks/)
 Scala code blocks are interesting closures.  They can contain state
-and but are not first class objects.
-
-This project is to explore to what extend code blocks behave like functions.
+but are not first class objects.  This project is to explore to what
+extend code blocks behave like functions.
 
 I found something I thought peculiar while in the scala REPL:
 ```
@@ -111,9 +110,9 @@ literally.  Maybe we should say that λ-functions extend as far "syntactically"
 as possible.
 
 Code blocks are not "first class objects" in the functional programming
-sense.  They are just  "thunks."  When you put the λ-function at the end,
+sense.  They are just "thunks."  When you put the λ-function at the end,
 you are returning a "first class object" from the thunk.  Thus, `dog` is
-not the "codeblock" but just the returned lambda,
+not the "codeblock" but just the returned lambda.
 
 If the execution of the codeblock were expensive, a useful technique would be
 to define it as a `lazy val'. 

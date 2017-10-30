@@ -374,7 +374,12 @@ VI. Moving and removing files.
          git mv path/to/filename new/path/to/new_filename
          git commit
 
-       Git will move and rename the file before the commit.
+       Git will move and rename the file before the commit.  If you move
+       a file with unstaged changes, the original version is what will get
+       commited.  The changes made to the file will be an unstages change
+       within the working directory.
+
+       Usual Unix mv command semantics apply.
 
     5. To move a bunch of files to a new directory
 
@@ -398,15 +403,66 @@ VI. Moving and removing files.
 
        where
 
-         -d means "remove untracted directories too"
-         -n means "dry run, just show what to remove"
-         -f means "force"
-         -i means "interactive mode"
-         -X means "remove only files ignored via GIT"
+         -d "remove untracked directories too"
+         -n "dry run, just show what to remove"
+         -f "force"
+         -i "interactive mode"
+         -e <pattern> "Add pattern to ignored patterns from .gitignore files"
+         -x "don't use ignore rules from .gitignore files"
+         -X "remove only files ignored by git"
 
        either -n, -f, or -i must be selected.
 
-VII. Git branch:
+VII. Creating revisionist history via git rebase:
+
+    Rewriting your history, don't do this if you have already shared it!!!
+
+    The `git rebase' command comes in handy when you need to reorder commits,
+    change commit messages, squash commits together.  A reasonable reason for
+    squashing commits might be enforcing a policy of never pushing non-working
+    history to a software release branch.
+
+    Also, useful when you want to hide your dirty laundry, or if you want
+    everyone to think you are a "genius programmer."  Please, don't hide
+    your scaffolding from the history.  It may come in handy when reworking 
+    the code, or to understand how an architecture arose, or how you think.
+
+    1. Redo the last 4 commits:
+
+         $ git rebase -i HEAD~4
+
+       Drops you into an editor session:
+
+         pick 8c4a6a5 Commit message four commits ago.
+         pick 4a3f436 Commit message three commits ago.
+         pick 949e05d Commit message two commits ago.
+         pick 8ae51b6 Commit message on last commit.
+         ...
+
+       And gives you the following choices to edit into above:
+
+         # p, pick = use commit
+         # r, reword = use commit, but edit the commit message
+         # e, edit = use commit, but stop for amending
+         # s, squash = use commit, but meld into previous commit
+         # f, fixup = like "squash", but discard this commit's log message
+         # x, exec = run command (the rest of the line) using shell
+         # d, drop = remove commit
+
+       In the case of a merge conflict, Git drops you back to a shell.
+       Fix the conflict, and
+
+         $ git add ...
+         $ git rebase --continue  (or git rebase --abort)
+
+    2. If you have not pushed your changes upstream, you can
+       use the `git commit --amend' to update the last commit.
+       GitHub will refuse a push with such an amended commit if
+       previous version was already pushed. You will need to do
+       a `git merge' the upstream version into your work to make
+       your HEAD pushable.
+
+VIII. Git branch:
 
     1. List all available branches:
 
@@ -507,7 +563,7 @@ VII. Git branch:
          scheller    ../../../scheller-linux-archive/ (fetch)
          scheller    ../../../scheller-linux-archive/ (push)
 
-VIII. Git checkout:
+IX. Git checkout:
 
     The git checkout command lets you navigate between branches.  
     Checking out a branch updates the files in the working directory
@@ -572,7 +628,7 @@ VIII. Git checkout:
            master
          * scheller-master
 
-IX. Git merge:
+X. Git merge:
 
     The git merge command is used to merge another branch
     into your current branch.  If merge successful without conflicts,
@@ -649,7 +705,7 @@ IX. Git merge:
        Continue long-term development
          ...
 
-X. Syncing repositories:
+XI. Syncing repositories:
 
     1. List remote connections.
 
@@ -834,13 +890,14 @@ X. Syncing repositories:
        I think the issue is the olde version of git CentOS 6.8 uses, 
        but it might also be related to firewall/proxy issues.
 
-       Interesting factoid: When I changed the name of the repo from
-                            scheller-linux-environment to scheller-linux-archive,
-                            above value for remote.origin.url still worked, but
-                            changing the repo name part of it to something random
-                            like, like scheller-linux-foofoo, failed. 
+       Interesting factoid:
+         When I changed the name of a repo from
+         scheller-linux-environment to scheller-linux-archive,
+         above value for remote.origin.url still worked, but
+         changing the repo name part of it to something random
+         like, like scheller-linux-foofoo, failed. 
   
-XI. Tagging:
+XII. Tagging:
 
     1. List available tags.
 
@@ -895,7 +952,7 @@ XI. Tagging:
 
          git show tag_name
 
-XII. Examining previous versions of a file:
+XIII. Examining previous versions of a file:
 
     1. To view a previous version of file,
 
@@ -911,7 +968,7 @@ XII. Examining previous versions of a file:
 
        will dump it all to a file called junk.
 
-XIII. GIT revision history tools:
+XIV. GIT revision history tools:
 
     1. To show commit comments for history
 
@@ -989,7 +1046,7 @@ XIII. GIT revision history tools:
 
        Then search for equivalent of "d71adde" in a git log.
 
-XIV. Debug options:
+XV. Debug options:
 
     1. To turn on debug logging (assuming Linux/Cygwin Bash shell)
 

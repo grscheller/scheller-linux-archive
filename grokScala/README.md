@@ -24,31 +24,7 @@ dependencies between them must be configured like other local external
 packages.  The grok project shows how to compile multiple packages in a way
 that allows SBT to "out-of-the-box" handle package dependencies among them.
 
-## 3. Building scala code to run as a "Java App": [onejar](onejar/)
-Builds scala code into a "fat" jar file so that all an end user needs is
-a functioning java runtime environment.  This will includes everything in
-the jar file, including the Scala runtime libraries.
-
-This uses [stb-assembly](https://github.com/sbt/sbt-assembly)
-
-To build the fat jar file, 
-```
-   $ sbt onejar/compile
-   $ sbt onejar/assembly
-```
-To run,
-```
-   $ java -jar onejar/target/scala-2.12/onejar-assembly-0.1-SNAPSHOT.jar 
-   Hello World!
-```
-All it is is a stupid hello world program, with added complexity to
-illustrate how to indicate the default main class.
-
-To get this to work, I had to name the default main class Main.  Also, I
-noticed that I had to manually trigger off a compile for assembly to pick
-the latest source code changes.
-
-## 4. Scala's "splat" equivalents: [splat.scala](splat/splat.scala)
+## 3. Scala's "splat" equivalents: [Splat.scala](splat/Splat.scala)
 Languages like Python and Ruby have a syntactic sugar to pass an
 array or tuple into a fixed or variable-arity function.
 
@@ -86,14 +62,14 @@ To "splat" a tuple into a curried function:
 To compile outside the sbt build, 
 ```
    $ cd splat
-   $ scala grockScala.Splat.splat
+   $ scalac Splat.scala
 ```
 To run outside sbt build,,
 ```
-   $ scala Splat.splat  
+   $ scala grokScala.splat.Splat  
 ```
 
-## 5. Scala code blocks: [codeblocks](codeblocks/)
+## 4. Scala code blocks: [codeblocks](codeblocks/)
 Scala code blocks are interesting closures.  They can contain state
 and can behave like first class objects and not just "thunks."
 
@@ -130,7 +106,7 @@ was first run, but statements after the lambda get executed each time `dog`
 was executed.  I was totally confused.
 
 The problem was that the lambda actually extends to the end of the code block.
-λ-functions extend as far "to the left" as possible.  I took "left" too
+λ-functions extend as far "to the right" as possible.  I took "right" too
 literally.  Maybe we should say that λ-functions extend as far "syntactically"
 as possible.
 
@@ -145,19 +121,24 @@ to define it as a `lazy val'.
 Codeblocks, like any good closures, can contain state.
 
 ### Related topics:
-    * case blocks, without a match, actually define partial functions.  These
-      can be extremely useful when used with collect methods.
-    * Sort of related, the use of `self` as a synonym for `this` in class and
-      trait definitions.  These may be more than just "Syntactic Sugar" but
-      have some deeper meaning.  The use of `self` returns/references the
-      class/trait itself within the class/trait.  Since classes/traits do not
-      use `=`, like a method can, their "return values" definately 
-      not a λ-function, but instances of the class/trait.
+* case blocks, without a match, actually define partial functions.  These
+  can be extremely useful when used with collect methods.
+* Sort of related, the use of `self` as a synonym for `this` in class and
+  trait definitions.  These may be more than just "Syntactic Sugar" but
+  have some deeper meaning.  The use of `self` returns/references the
+  class/trait itself within the class/trait.  Since classes/traits do not
+  use `=`, like a method can, their "return values" definately 
+  not a λ-function, but instances of the class/trait.
+
 ```
    trait Foo[+A] { self =>
       ...
    }
 ```
+
+## 5. Sort a polymorphic ordered list: [Sort.scala](sort/Sort.scala)
+Compare this to the Haskell implementation in
+[here](../grokHaskell/haskellIntroProgramming/examples/Utilities.hs).
 
 ## 6. Scala oop: [oop](oop/)
 Exploring Scala OOP features.  When an OOP model fits the problem, it is not

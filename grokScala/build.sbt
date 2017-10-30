@@ -8,7 +8,6 @@ lazy val root = (project in file("."))
   .aggregate(
        codeblocks
      , grok
-     , onejar
      , oop
      , parallelism
      , sort
@@ -24,14 +23,6 @@ lazy val codeblocks = (project in file("codeblocks"))
 lazy val grok = (project in file("grok"))
   .settings(commonSettings: _*)
   .settings(name := "grok")
-
-lazy val onejar = (project in file("onejar"))
-  .settings(commonSettings: _*)
-  .settings(
-      test in assembly := {}
-    , mainClass in assembly := Some("grockScala.HelloWorld.Main")
-  )
-  .settings(name := "onejar")
 
 lazy val oop = (project in file("oop"))
   .settings(commonSettings: _*)

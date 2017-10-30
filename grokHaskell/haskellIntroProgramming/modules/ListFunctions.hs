@@ -5,7 +5,7 @@
 module ListFunctions where
 
 -- | Count the number of elements in a list.
---   Type I think the stanard library should have choosen for length.
+--   Type I think the standard library should have choosen for length.
 
 length' :: Num n => [a] -> n
 length' [] = 0
@@ -59,6 +59,27 @@ sumCubes' = sumf cube
 sum'' :: Num n => [n] -> n
 sum'' = sumf id
 
+-- | Map a function accross a list.
+
+map' :: (a -> b) -> [a] -> [b]
+map' f [] = []
+map' f (x:xs) = f x : map f xs
+
+-- | Compute the sum of the cubes of the numbers in a list.
+
+sumSquares'' :: Num n => [n] -> n
+sumSquares'' xs = sum (map' square xs)
+
+-- | Compute the sum of the cubes of the numbers in a list.
+
+sumSquares''' :: Num n => [n] -> n
+sumSquares''' xs = sum $ map' square xs
+
+-- | Compute the sum of the cubes of the numbers in a list.
+
+sumSquares'''' :: Num n => [n] -> n
+sumSquares'''' = sum . map' square
+
 -- | Count the number of elements in a list.
 --   Using a left fold and a λ-function.  
 
@@ -76,3 +97,44 @@ length''' = foldl (\n _ -> n + 1) 0
 
 length'''' :: (Functor t, Foldable t, Num n) => t a -> n
 length'''' = (foldl (+) 0) . ((<$) 1) 
+
+-- | Given a function f, compute the product of the (f x) for each x in xs.
+
+productf :: Num n => (a -> n) -> [a] -> n
+productf f [] = 1
+productf f (c:cs) = f c * productf f cs
+
+-- | Compute the product of the numbers in a list.
+
+product' :: Num n => [n] -> n
+product' = productf id
+
+-- | Compute the product of the squares of numbers in a list.
+
+productSquares :: Num n => [n] -> n
+productSquares = productf square
+
+-- | Compute the sum of squares of the odd integers in a list.
+--   Introducing pattern guards.  Unlike patterns, guards cannot
+--   introduce new bindings.  Each guard is considered in order
+--   until one evaluates to True.  Also, otherwise == True.
+
+sumSquaresOfOdds :: Integral n => [n] -> n
+sumSquaresOfOdds [] = 0
+sumSquaresOfOdds (x:xs)
+    | odd x     = x*x + sumSquaresOfOdds xs
+    | otherwise = sumSquaresOfOdds xs
+
+-- | Return a sublist comprised of the elements of a list that
+--   satisfies a predicate.
+
+filter' :: (a -> Bool) -> [a] -> [a]
+filter' p [] = []
+filter' p (x:xs)
+    | p x       = x : filter p xs
+    | otherwise = filter' p xs
+
+-- | Compute the sum of squares of the odd integers in a list.
+
+sumSquaresOfOdds' :: Integral n => [n] -> n
+sumSquaresOfOdds' = sum'' . map' square . filter' odd

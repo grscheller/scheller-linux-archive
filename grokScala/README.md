@@ -71,9 +71,9 @@ To run outside sbt build,,
 
 ## 4. Scala code blocks: [codeblocks](codeblocks/)
 Scala code blocks are interesting closures.  They can contain state
-and can behave like first class objects and not just "thunks."
+and but are not first class objects.
 
-This project is to explore code blocks behave like functions.
+This project is to explore to what extend code blocks behave like functions.
 
 I found something I thought peculiar while in the scala REPL:
 ```
@@ -155,7 +155,7 @@ implementation, which is very different that the one removed from Scalaz.
 An implementation of the State Monad I took from my version of
 the [fpinscala package](../fpinscala).
 
-## 9. Package objects: [grokScala.grok.rand](grok/src/main/scala/grok/packageWide/)
+## 9. Package objects: [grokScala.grok.rand](grok/src/main/scala/grok/rand/)
 In scala, types cannot be defined outside of classes/objects.  They are
 features that are part of Scala's OO system - see page 457 of Oderski's
 Programming in Scala, 3rd edition, on path dependent types.  Types are

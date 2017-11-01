@@ -1,8 +1,35 @@
-bottom: ⊥     Unicode: 22a5  8869
-top:    ⊤     Unicode: 22a4  8868
-lambda: λ     Unicode: 03bb  0955
-Lambda: Λ     Unicode: 039b  0923
-Gamma:  Γ     Unicode: 0393  0915
+Logic
+for all:    ∀  Unicode: 2200 (universal quantification)
+exists:     ∃  Unicode: 2203 (existential quantification)
+not exists: ∄  Unicode: 2204
+up tack:    ⊥  Unicode: 22a5 (bottom, contradiction, falsum)
+down tack:  ⊤  Unicode: 22a4 (top, tautology, verum)
+left tack:  ⊣  Unicode: 22a3
+right tack: ⊢  Unicode: 22a2 (is provable)
+q.e.d.:     ∎  Unicode: 220e (end of proof)
+and:        ∧  Unicode: 2227
+or:         ∨  Unicode: 2228
+therefore:  ∴  Unicode: 2234
+
+Set Theory
+empty set:      ∅  Unicode: 2205
+element of:     ∈  Unicode: 2208
+not element of: ∉  Unicode: 2209
+intersection:   ∩  Unicode: 2229
+union:          ∪  Unicode: 222a
+
+Math symbols:
+partial deriv:    ∂  Unicode: 2202 (Partial Differentiation)
+N-ary product:    ∏  Unicode: 220f
+minus sign:       −  Unicode: 2212
+infinity:         ∞  Unicode: 221e
+integral:         ∫  Unicode: 222b
+contour integral: ∮  Unicode: 222e
+
+
+lambda: λ     Unicode: 03bb
+Lambda: Λ     Unicode: 039b
+Gamma:  Γ     Unicode: 0393
 
 In Python:
   Convert Hex String to decimal Int:
@@ -19,3 +46,8 @@ but on the same line.
 
 Example super and subscripts:
 <U-03bb><U-2080><U-207f> -> λ₀ⁿ
+
+Example thin space, space, hair space:
+H<U-2009>H H<U-200a>H -> H H H H
+
+unicode.org tool: https://unicode.org/cldr/utility/character.jsp?a=007E

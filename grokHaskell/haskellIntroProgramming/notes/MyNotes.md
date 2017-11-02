@@ -18,24 +18,6 @@ Haskell 2010 reference manual, or my general observations.
   + Functions have no side effects.
   + Functions are first class values.
 
-## Haskell Type System
-* Strong, flexible type system with powerful type inference algorithms.
-* The type system partitions the universe of values and expressions into
-  equivalence classes limiting how elements of these equivalence classes
-  can be combined.
-* "Variables" are bounded with the symbol `=` to immutable values, denoted
-  by expressions.
-* `=` is not an operator, it is part of the language, `(=) foo 5` does not work!
-
-### Algebraic Data Types (ADT)
-* All nullary constructors are "grounded."
-* If `n` is grounded, then so is S n.
-* Non-grounded expreessions exist,
-  ```
-     data NaturalNumber = Zero | S NaturalNumber
-     infinity = S infinity
-  ```
-
 ## Scoping
 ### Progam Structure
 1. Top most level a Haskell program is a set of modules.
@@ -73,3 +55,57 @@ Haskell 2010 reference manual, or my general observations.
    * Part of Haskell's definition syntax.
    * Comes after the definition.
    * Scope extends over all guards within the definition.
+
+## Haskell Type System
+* Strong, flexible type system with powerful type inference algorithms.
+* The type system partitions the universe of values and expressions into
+  equivalence classes limiting how elements of these equivalence classes
+  can be combined.
+* "Variables" are bounded with the symbol `=` to immutable values, denoted
+  by expressions.
+* `=` is not an operator, it is part of the language, `(=) foo 5` does not work!
+
+### Algebraic Data Types (ADT)
+* All nullary constructors are "grounded."
+* If `n` is grounded, then so is S n.
+* Non-grounded expreessions exist,
+  ```
+     data NaturalNumber = Zero | S NaturalNumber
+     infinity = S infinity
+  ```
+
+#### Simplified versions of predefined ADTs
+These types are either predefined into the Prelude, or they are "cooked"
+into the runtime implementation.
+
+1. Unit type:
+   * The "Unit" type and "unit" value.
+   * Can be thought as a 0-tuple, but actually an ADT.
+```
+   data () = () deriving (Eq, Ord, Show)
+```
+2. Bool type:
+   * Represents true and false boolean values.
+```
+   Bool type:
+   data Bool
+       = False
+       | True
+       deriving (Eq, Ord, Show)
+```
+3. Tuple type
+   * Two-tuple type class (with syntatic sugar)
+```
+   data (,) a b = (,) a b
+```
+   * Without the sybtatic sugar, we would define it as
+```
+   data Pair a b = Pair a b
+```
+   * unlike Python, `,` is not an operator on its own. 
+   * The abstraction is that of a key-value pair.
+```
+   > fmap (\x -> x + 40) (1,2)
+   (1,42)
+```
+

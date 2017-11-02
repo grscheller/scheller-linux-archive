@@ -1,3 +1,7 @@
+To lookup unicode code points:
+https://unicode.org/cldr/utility/character.jsp?a=03bb
+https://unicode-table.com/en/    (also HTML code points)
+
 Logic
 for all:    ∀  Unicode: 2200 (universal quantification)
 exists:     ∃  Unicode: 2203 (existential quantification)
@@ -26,10 +30,62 @@ infinity:         ∞  Unicode: 221e
 integral:         ∫  Unicode: 222b
 contour integral: ∮  Unicode: 222e
 
+Bold math symbols:
+omega: 𝛀    Unicode: 1d6c0
+nabla: 𝛁    Unicode: 1d6c1
 
-lambda: λ     Unicode: 03bb
-Lambda: Λ     Unicode: 039b
-Gamma:  Γ     Unicode: 0393
+Small Greek Letters:
+alpha:   α  Unicode: 03b1
+beta:    β  Unicode: 03b2
+gamma:   γ  Unicode: 03b3
+delta:   δ  Unicode: 03b4
+epsilon: ε  Unicode: 03b5    
+zeta:    ζ  Unicode: 03b6
+eta:     η  Unicode: 03b7
+theta:   θ  Unicode: 03b8
+iota:    ι  Unicode: 03b9
+kappa:   κ  Unicode: 03ba
+lambda:  λ  Unicode: 03bb
+mu:      μ  Unicode: 03bc
+nu:      ν  Unicode: 03bd
+xi:      ξ  Unicode: 03be
+omicron: ο  Unicode: 03bf
+pi:      π  Unicode: 03c0
+rho:     ρ  Unicode: 03c1
+sigma:   ς  Unicode: 03c2  (for word endings)
+sigma:   σ  Unicode: 03c3
+tau:     τ  Unicode: 03c4
+upsilon: υ  Unicode: 03c5
+phi:     φ  Unicode: 03c6
+chi:     χ  Unicode: 03c7
+psi:     ψ  Unicode: 03c8
+omega:   ω  Unicode: 03c9
+
+Large Greek Letters:
+alpha:   α  Unicode: 0391
+beta:    Β  Unicode: 0392
+gamma:   Γ  Unicode: 0393
+delta:   Δ  Unicode: 0394
+epsilon: Ε  Unicode: 0395    
+zeta:    Ζ  Unicode: 0396
+eta:     Η  Unicode: 0397
+theta:   Θ  Unicode: 0398
+iota:    Ι  Unicode: 0399
+kappa:   Κ  Unicode: 039a
+lambda:  Λ  Unicode: 039b
+mu:      Μ  Unicode: 039c
+nu:      Ν  Unicode: 039d
+xi:      Ξ  Unicode: 039e
+omicron: Ο  Unicode: 039f
+pi:      Π  Unicode: 03a0
+rho:     Ρ  Unicode: 03a1
+sigma:   Σ  Unicode: 03a3
+tau:     τ  Unicode: 03a4
+upsilon: υ  Unicode: 03a5
+phi:     φ  Unicode: 03a6
+chi:     χ  Unicode: 03a7
+psi:     ψ  Unicode: 03a8
+omega:   ω  Unicode: 03a9
 
 In Python:
   Convert Hex String to decimal Int:
@@ -48,6 +104,7 @@ Example super and subscripts:
 <U-03bb><U-2080><U-207f> -> λ₀ⁿ
 
 Example thin space, space, hair space:
+(pointless for fixed sized fonts)
 H<U-2009>H H<U-200a>H -> H H H H
 
-unicode.org tool: https://unicode.org/cldr/utility/character.jsp?a=007E
+

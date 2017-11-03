@@ -147,6 +147,7 @@ Vim - Vi improved (minimalistic)
      5cc  change next 5 lines
      5C   change next 5 lines
      c^   change text before cursor, excluding initial white space
+     s    delete current character and enter text mode
      ~    change case of current character, advance one character,
             stay in command mode
      r    change current character to next character typed,

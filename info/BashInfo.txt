@@ -487,7 +487,7 @@ of doing things; it just that I don't know EMACS that well.
 
       $ otherUsers=$(ps -ef | egrep -v "($(whoami)|root|USER)" | sed 's/ .*//' | sort | uniq)
       $ echo $otherUsers
-      dbus polkitd postfix rtkit
+      dbus polkitd postfix rtkit systemd+ UID
  
 15. Comparisons with [[ ... ]]
 
@@ -559,7 +559,7 @@ of doing things; it just that I don't know EMACS that well.
 
     More Pythonic construct,
 
-      $ jj=43; jj[1]=5; jj[2]=11
+      $ jj=42; jj[1]=5; jj[2]=11
       > for ii in ${jj[*]}
       > do
       >   echo $ii
@@ -570,7 +570,7 @@ of doing things; it just that I don't know EMACS that well.
 
     Using a while loop,
 
-      $ Line=""; ((jj = 0)); while [[ ! $Line =~ [y|Y] ]]
+      $ Line=""; while [[ ! $Line =~ [y|Y] ]]
       > do
       >   echo -n "Quit? [y|Y]: "
       >   read Line
@@ -580,7 +580,100 @@ of doing things; it just that I don't know EMACS that well.
       Quit? [y|Y]: y
       $ 
 
-17. Editting differences between vi/vim and bash in vi mode:
+17. Shell functions:
+
+    Shell functions are bash subroutines that execute in the context
+    of the current shell.  These "functions" don't return values.
+
+    Two examples, I define these in my .bashrc,
+
+      # PDF Reader
+      function ev() {
+        ( /usr/bin/evince "$@" &>/dev/null & )
+      }
+
+      ## pop up multiple directories (takes an optional parameter)
+      function ud() {
+        upDir=../
+        if [[ $1 =~ ^[1-9][0-9]*$ ]]
+        then
+          for ((ii = 1; ii < $1; ii++))
+          do
+            upDir=../$upDir
+          done
+        fi
+        cd $upDir
+      }
+
+    To list the names of all the shell functions defined in your
+    current environment,
+
+      $ declare -F
+      declare -f dequote
+      declare -f ev
+      declare -f gc
+      declare -f quote
+      declare -f quote_readline
+      declare -f ud
+
+   To type out the definition to one,
+
+     $ declare -f ev
+     ev () 
+     { 
+         ( /usr/bin/evince "$@" &> /dev/null & )
+     }
+
+  Variables can be declared local to the function body via the `local' keyword,
+
+    $ a=a1; b=b1
+    $ echo $a $b
+    a1 b1
+
+    $ function baz() {
+    >   echo $a $b
+    >   a=a2
+    >   local b=b2
+    >   echo $a $b
+    > }
+
+    $ echo $a $b
+    a1 b1
+    $ baz
+    a1 b1
+    a2 b2
+    $ echo $a $b
+    a2 b1
+
+18. Aliases:
+
+    The alias command allows a string to be substituted as the first
+    word of a simple command.  Useful if you want to change the default
+    behavior of a command.
+
+      $ unalias ls 2>/dev/null  # Undo any evil done in startup scripts.
+      $ alias la='ls -a'   # Also show .files.
+      $ alias l.='ls -dA .* --color=auto'   # Show just .files, with color.   
+      $ alias vi=vim   # Helps me overcome years of muscle memory.
+      $ alias gvim='gvim -c "colorscheme desert"'
+
+    Alias are intended as typing conveniences and should only be used
+    for simple substitutions.  For any thing more complicated than say
+
+      $ alias pst="ps axjf | sed -e '/^ PPID.*$/d' -e's/.*:...//'"
+
+    I would use a shell function instead.  The Bash man page actually
+    says "For almost every purpose, aliases are superseded by shell
+    functions."
+
+    Alias substitution was intended only for interactive shell
+    sessions.  To enable alias substitution in a shell script, include
+    this line in the script:
+
+      shopt -s expand_aliases
+
+
+19. Editting differences between vi/vim and bash in vi mode:
 
     Use 
 
@@ -611,8 +704,9 @@ of doing things; it just that I don't know EMACS that well.
       ctrl-r    reverse search history, <ret> to execute, <esc> to edit
       ctrl-s    forward search history, <ret> to execute, <esc> to edit
 
-                Note: To use ctrl-s, you need to turn off terminal flow
-                      control.  To do this, use the "stty -ixon" command.
-                      You will no longer be able to use ctrl-s to stop
-                      output and ctrl-u to start it again.  Use "stty ixon"
-                      to turn flow control back on.
+    Note: To use ctrl-s, you need to turn off terminal flow
+          control.  To do this, use the "stty -ixon" command.
+          You will no longer be able to use ctrl-s to stop
+          output and ctrl-u to start it again.  Use "stty ixon"
+          to turn flow control back on.
+

@@ -138,3 +138,89 @@ filter' p (x:xs)
 
 sumSquaresOfOdds' :: Integral n => [n] -> n
 sumSquaresOfOdds' = sum'' . map' square . filter' odd
+
+-- Exercise 2.3
+-- Define divisibleBy, allp, filterAll
+
+-- | Determine if 1st arg evenly divides 2nd arg.
+--   Partially apply to produce a "divide by' predicate.
+
+divisibleBy :: Integral m => m -> m -> Bool
+divisibleBy d n = n `rem` d == 0
+
+-- | Apply a predicate across a list, return true if true for all elements.
+--   Stumbled on this trying to initially define allp without recursion.
+
+all' :: (a -> Bool) -> [a] -> Bool
+all' = \x -> foldr ((&&) . ($) x) True
+
+-- | Create a predicate satisfying all predicates in a list.
+--   Gave up and used recursion.
+
+allp :: [a -> Bool] -> a -> Bool
+allp [] _     = True
+allp (p:ps) a = p a && allp ps a
+
+-- | Filter with all predicates in a list.
+
+filterAll = filter . allp
+
+-- Exercise 2.4
+-- Define allp without recursion using Prelude function and
+
+-- | Create a predicate satisfying all predicates in a list.
+
+allp' :: [a -> Bool] -> a -> Bool
+allp' ps = 
+  let
+    f x = map (flip ($) x)
+  in
+    and . (flip f) ps
+
+-- | Filter with all predicates in a list.
+
+filterAll' = filter . allp'
+
+-- Apply examples given in lecture notes to above:
+
+main :: IO ()
+main =  putStrLn "These next 4 values should be equal:"
+     >> putStrLn (show result0)
+     >> putStrLn (show result1)
+     >> putStrLn (show result2)
+     >> putStrLn (show result3)
+
+result0 = sum
+        . take 100
+        . filter (divisibleBy 2)
+        . filter (divisibleBy 3)
+        . filter (not . divisibleBy 4)
+        . filter (not . divisibleBy 9)
+        $ [0..]
+
+result1 = sum
+        . take 100
+        . filter (not . divisibleBy 9)
+        . filter (not . divisibleBy 4)
+        . filter (divisibleBy 3)
+        . filter (divisibleBy 2)
+        $ [0..]
+
+result2 = sum
+        . take 100
+        . filterAll [ divisibleBy 2
+                    , divisibleBy 3
+                    , not . divisibleBy 4
+                    , not . divisibleBy 9
+                    ]
+        $ [0..]
+
+result3 = sum
+        . take 100
+        . filterAll' [ divisibleBy 2
+                     , divisibleBy 3
+                     , not . divisibleBy 4
+                     , not . divisibleBy 9
+                     ]
+        $ [0..]
+

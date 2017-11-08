@@ -1,5 +1,7 @@
-## Lazy evaluate `sort [2,1,3,1]`
-Where
+## Lazy evaluation - sorting a list
+Source code: [Sort.hs](Sort.hs)
+
+Consider `sort [2,1,3,1]` where
 ```
 sort :: Ord a => [a] -> [a]
 sort = foldr insert [] where

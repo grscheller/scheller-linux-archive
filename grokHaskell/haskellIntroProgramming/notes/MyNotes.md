@@ -106,7 +106,7 @@ into the runtime implementation.
 ```
       data Pair a b = Pair a b deriving (Eq, Ord, Show)
 ```
-    * Can use, and displays, like as done in mathematics,
+    * Sugar to use and display like as done in mathematics,
 ```
       Prelude> (,) 2 3 == (2,3)
       True
@@ -129,3 +129,9 @@ into the runtime implementation.
 ```
     * Like `(,)` the list type is a member of `Eq`, `Ord`, and `Show`.
     * The ordering is lexical, assuming that the underlying type a is ordered.
+    * Syntaxic sugar to allow
+```
+      Prelude> foo a b = [a, b, a + b]
+      Prelude> foo 1 2
+      [1,2,3]
+```

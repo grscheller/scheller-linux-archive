@@ -35,7 +35,7 @@ material.  This one, I think, actually is successful at being deeper.
   and converted to Markdown.
 
 ## Additional play:
-* [Examples](examples/README.md) module, basically a place for code snippets.
+* [Examples](examples/README.md), basically a place for code snippets.
 
 ## Original invitation to community on Haskell-Cafe:
 ```

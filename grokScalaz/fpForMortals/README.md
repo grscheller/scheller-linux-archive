@@ -41,3 +41,10 @@ Use the following import statements in code:
   ```
      $ sbt console
   ```
+* As a convienence, boilerplate in build.sbt file automatically imports
+  ```
+     import scalaz._, Scalaz._
+     import simulacrum._
+     import stalactite._
+  ```
+  into the console session.

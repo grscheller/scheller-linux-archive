@@ -43,8 +43,21 @@ Use the following import statements in code:
   ```
 * As a convienence, boilerplate in build.sbt file automatically imports
   ```
-     import scalaz._, Scalaz._
+     import scalaz._
+     import Scalaz._
      import simulacrum._
      import stalactite._
   ```
   into the console session.
+
+### 2. Abstracting over context via [higher kinded types](hkt/):
+* Scala type constructors.
+* Kind projector plugin to avoid unnecessary type aliases.
+* Working directly with "types with holes."
+* Writing generic code across contexts.
+
+### 3. Explore scala [for comprehensions](forPlay/):
+* Illustrates scala `for` comprehensions and their use with scalaz.
+* Simple rewrite rules for flatMap and map methods.
+* Ideal FP abstractions for sequential programs that interact with the world.
+* Maybe too strong for merely abstracting over a context.

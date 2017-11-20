@@ -1,6 +1,6 @@
 -- Sort.hs
 
--- | A place to hang code snippets.  No attempt to over architecture.
+-- | Source code used for Sort.md
 
 module Sort where
 

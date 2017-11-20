@@ -1,7 +1,7 @@
 package grokScala.sort
 
 // Compare with Haskell implementation in 
-// grokHaskell/haskellIntroProgramming/examples/Utilities.hs
+// grokHaskell/haskellIntroProgramming/examples/Sort.hs
 object Sort {
 
   /** Sort a polymorphic ordered list. */

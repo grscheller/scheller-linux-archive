@@ -17,12 +17,13 @@ run one project,
 ```
 make sure you launch sbt from the root grokScala directory.
 
-## 2. Multiple packages in single build: [grok](grok/)
+## 2. Multiple packages in single build: [multiPackage](multiPackage/)
 The above multiple projects (my term) in the hierarchical build compile
 scala packages which are independent of each other in the sense that
 dependencies between them must be configured like other local external
-packages.  The grok project shows how to compile multiple packages in a way
-that allows SBT to "out-of-the-box" handle package dependencies among them.
+packages.  The multiPackage project shows how to compile multiple packages
+in a way that allows SBT to "out-of-the-box" handle package dependencies
+among them.
 
 ## 3. Scala's "splat" equivalents: [Splat.scala](splat/Splat.scala)
 Languages like Python and Ruby have a syntactic sugar to pass an
@@ -137,7 +138,7 @@ Codeblocks, like any good closures, can contain state.
 
 ## 5. Sort a polymorphic ordered list: [Sort.scala](sort/Sort.scala)
 Compare this to the Haskell implementation in
-[here](../grokHaskell/haskellIntroProgramming/examples/Utilities.hs).
+[here](../grokHaskell/haskellIntroProgramming/examples/Sort.hs).
 
 ## 6. Scala oop: [oop](oop/)
 Exploring Scala OOP features.  When an OOP model fits the problem, it is not
@@ -150,11 +151,11 @@ It seems that Actors from the Scala standard library have been dropped in
 favor of akka Actors.  Also, the standard library now has a Promises
 implementation, which is very different that the one removed from Scalaz.
 
-## 8. State Monad: [grokScala.grok.state](grok/src/main/scala/grok/state/State.scala)
+## 8. State Monad: [grokScala.multiPackage.state](multiPackage/src/main/scala/multiPackage/state/State.scala)
 An implementation of the State Monad I took from my version of
 the [fpinscala package](../fpinscala).
 
-## 9. Package objects: [grokScala.grok.rand](grok/src/main/scala/grok/rand/)
+## 9. Package objects: [grokScala.multiPackage.rand](multiPackage/src/main/scala/multiPackage/rand/)
 In scala, types cannot be defined outside of classes/objects.  They are
 features that are part of Scala's OO system - see page 457 of Oderski's
 Programming in Scala, 3rd edition, on path dependent types.  Types are
@@ -167,14 +168,13 @@ per package.  By convention, the package object is put in a file named
 package.scala located in the root directory of the package.  The package
 object itself is part of the package's parent package.
 
-In the `grokScala.grok` package, `Rand[A]`, is a type alias for
+In the `grokScala.multiPackage` package, `Rand[A]`, is a type alias for
 `state.State[RNG, A]`
 It is defined package-wide in the file
-[package.scala](grok/src/main/scala/grok/rand/package.scala) located in the
-`rand`
-package root directory, grok/src/main/scala/grok/rand/. 
+[package.scala](multiPackage/src/main/scala/multiPackage/rand/package.scala) located in the
+`rand` package root directory, multiPackage/src/main/scala/multiPackage/rand/. 
 * Used to define the Rand type alias at the rand package level.
-* Using `val Rand = grokScala.grok.state.State` so the compiler can find the companion object.
+* Using `val Rand = grokScala.multiPackage.state.State` so the compiler can find the companion object.
 * User code needs to use `new` key word to distinguish constructor from the `State.apply` method.
 
 This is my original implimentation of `fpinscala.state.rand.Rand`.

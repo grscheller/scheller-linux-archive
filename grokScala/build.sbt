@@ -7,7 +7,7 @@ lazy val commonSettings = Seq(
 lazy val root = (project in file("."))
   .aggregate(
        codeblocks
-     , grok
+     , multiProject
      , oop
      , parallelism
      , sort
@@ -20,9 +20,9 @@ lazy val codeblocks = (project in file("codeblocks"))
   .settings(commonSettings: _*)
   .settings(name := "codeblocks")
 
-lazy val grok = (project in file("grok"))
+lazy val multiProject = (project in file("multiProject"))
   .settings(commonSettings: _*)
-  .settings(name := "grok")
+  .settings(name := "multiProject")
 
 lazy val oop = (project in file("oop"))
   .settings(commonSettings: _*)

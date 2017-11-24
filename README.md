@@ -7,9 +7,10 @@ in a way that helps me stay up to speed on a topic.  I maintain
 additional infrastructure so that this information may be of some
 marginal use to others.
 
-## [info](info/) directory:
-This directory is a fairly free form collection of
-text files with information on a variety of topics.
+## [info](Linux/info/) directory:
+This directory is a fairly free form collection of text files with information
+on a variety of topics relating to Linux software development, user
+configuration, and system administration.
 
 1. Arch Linux System Admin Notes
 2. CentOS6 without root privs
@@ -17,15 +18,19 @@ text files with information on a variety of topics.
 4. Vim notes
 5. Bash environment configuration
 6. SSH configuration
-7. Private HTML Homepage 
-8. Windows 10 Powershell and Cygwin configuration
+7. Windows 10 Powershell and Cygwin configuration
+
+## Private HTML [Homepage](Linux/Web):
+* In lieu of using bookmarks.
+* Easily shared between browsers and computers.
+* Not shared with Google or Mozilla.
 
 ## Software projects:
-### 1. [bash-utils](bash-utils/)
+### 1. [bash-utils](Linux/bash-utils/)
 * Simple, but utilitarian, bash scripts illustrating bash scripting techniques.
 * I put these in my ~/bin directory.
 
-### 2. [fpinscala](grokscala/fpinscala/)
+### 2. [fpinscala](grokScala/fpinscala/)
 * Scala project where I work through the exercises in the book
   "Functional Programming in Scala" by Paul Chiusana and Runar Bjarnason.
 * The book is more about learning Functional Programming than the
@@ -61,7 +66,7 @@ text files with information on a variety of topics.
 * Implementing examples inspired by Simon Marlow's book
   "Parallel and Concurrent Programming in Haskell."
 
-### 10. [linuxHome](linuxHome/)
+### 10. [linuxHome](Linux/linuxHome/)
 * Keep Linux environment synced across workstations and supercomputers.
 * Based on the infrastructure I use at work.
 

@@ -25,17 +25,18 @@ text files with information on a variety of topics.
 * Simple, but utilitarian, bash scripts illustrating bash scripting techniques.
 * I put these in my ~/bin directory.
 
-### 2. [fpinscala](fpinscala/)
+### 2. [fpinscala](grokscala/fpinscala/)
 * Scala project where I work through the exercises in the book
   "Functional Programming in Scala" by Paul Chiusana and Runar Bjarnason.
 * The book is more about learning Functional Programming than the
   Scala language per say.
 * In this project I try to do both.
 
-### 3. [grokScala](grokScala/)
+### 3. [learnScala](grokScala/learnScala)
 * Document factoids about the Scala language
+* Illustrates a hierarchical SBT Scala build.
 
-### 4. [grokScalaz](grokScalaz/babySteps/)
+### 4. [scalazBabySteps](grokScalaz/babySteps/)
 * Document factoids about Scalaz.
 * A hierarchical scalaz project for purposes of learning scalaz.
 
@@ -48,7 +49,7 @@ text files with information on a variety of topics.
 * An attempt to learn Java coming at it from a Python and Scala perspective.
 * Not exactly sure the direction this project will take.
 
-### 7. [grokRust](grokRust/)
+### 7. [learnRust](grokRust/learnRust)
 * Learn Rust as a systems language.
 * Learn Rust as a general purpose programming language.
 
@@ -64,12 +65,12 @@ text files with information on a variety of topics.
 * Keep Linux environment synced across workstations and supercomputers.
 * Based on the infrastructure I use at work.
 
-### 11. [pythagTriples](pythagTriples/)
+### 11. [pythagTriples](educational/pythagTriples/)
 * Haskell project that generates Pythagorean triples.
 * Mathematical factoids about Pythagorean triples.
 * Also used to help me learn Haskell stack.
 
-### 12. [pureMath](pureMath/)
+### 12. [pureMath](grokPython/pureMath/)
 * A mathematics library centered around integer arithmetic.
 * An old project of mine back when I first learned Python.
 

@@ -34,11 +34,14 @@ In glorious UTF-8 format, for for maximal compatibility and easy grepping.
 * How to configure VIM to play nice in a hybrid CLI/GUI workflow.
 
 ### [Windows 10 Configuration](Windows10Info)
+* First install [Cygwin](https://www.cygwin.com/).
 * Powershell and Cygwin Configuration files.
 * Powershell GUI made to play nice with color inversion
   provided by the Magnifier accessibility tool.
 * Powershell context colors "turned off."  Very useful when overhead
   projectors don't render colors well.
+* I know it is not Linux, but allows me to bring some of the configurability
+  of the Linux Desktop to an OS that expects the user to adapt to it.
 
 ### [Web](Web) directory
 * Private homepage, used in lieu of browser bookmarks.

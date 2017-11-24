@@ -33,8 +33,8 @@ and not,
 ```
 The problems are that booleans and ints are being conflated, assignment
 returns the value being assigned, the < operator is left associative, and
-the syntax is misleading.  See the paper, [The Seven Deadly
-Sins of Introductory Programming Language Design](http://users.monash.edu/~damian/papers/PDF/SevenDeadlySins.pdf)
+the syntax is misleading.  See the paper,
+[The Seven Deadly Sins of Introductory Programming Language Design](http://users.monash.edu/~damian/papers/PDF/SevenDeadlySins.pdf)
 where I got this example.
 
 I think Rust will become the C for the 21st Century.

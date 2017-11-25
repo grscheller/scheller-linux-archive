@@ -29,7 +29,7 @@ configuration, and system administration.
 * Keep Linux environment synced across workstations and supercomputers.
 * Based on the infrastructure I use at work.
 
-### Private HTML [Homepage](linux/Web):
+### [Private HTML Homepage](linux/Web):
 * In lieu of using bookmarks.
 * Easily shared between browsers and computers.
 * Not shared with Google or Mozilla.
@@ -52,10 +52,6 @@ computer languages.
 * Scala project working through the book
   "Functional Programming for Mortals with Scalaz" by Sam Halliday.
 * A collecton of standalone scalaz projects for purposes of learning scalaz.
-
-### [scalazBabySteps](grok/grokScalaz/babySteps/)
-* Document factoids about Scalaz.
-* A hierarchical scalaz project for purposes of learning scalaz.
 
 ### [haskellIntroProgramming](grok/grokHaskell/haskellIntroProgramming/)
 * Working through examples and exercises from the Univ. of Chicago's

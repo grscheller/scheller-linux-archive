@@ -42,6 +42,3 @@ In glorious UTF-8 format, for for maximal compatibility and easy grepping.
   projectors don't render colors well.
 * I know it is not Linux, but allows me to bring some of the configurability
   of the Linux Desktop to an OS that expects the user to adapt to it.
-
-### [Web](Web) directory
-* Private homepage, used in lieu of browser bookmarks.

@@ -4,10 +4,10 @@
 
 ## Source Code:
 
-### * [pureMath.py](lib/pureMath.py)
+### [pureMath.py](lib/pureMath.py)
 * Library for integer mathematics
 
-### * [pythag3.py](bin/pythag3.py)
+### [pythag3.py](bin/pythag3.py)
 * Program to compute Pythagorean triples
 
 

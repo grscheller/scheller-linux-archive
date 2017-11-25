@@ -1,5 +1,5 @@
 # scheller-linux-archive
-My personal archive relating to software development on Linux or in Linux like
+My personal archive relating to software development for Linux or Linux like
 environments.
 
 The primary purpose of this GitHub repo is to capture what I learn
@@ -8,7 +8,7 @@ additional infrastructure so that this information may be of some
 marginal use to others.
 
 ## Linux configuration & administration:
-### [info](linux/info/) directory:
+### [linux info](linux/info/)
 This directory is a fairly free form collection of text files with information
 on a variety of topics relating to Linux software development, environment
 configuration, and system administration.
@@ -21,15 +21,17 @@ configuration, and system administration.
 6. SSH configuration
 7. Windows 10 Powershell and Cygwin configuration
 
-### [bash-utils](linux/bash-utils/)
+### [bash utiltiess](linux/bash-utils/)
 * Simple, but utilitarian, bash scripts illustrating bash scripting techniques.
 * I put these in my ~/bin directory.
+* For some useful shell functions, see the .bashrc files in
+  [linux/info/BashEnvConf](linux/info/BashEnvConf).
 
 ### [linuxHome](linux/linuxHome/)
 * Keep Linux environment synced across workstations and supercomputers.
 * Based on the infrastructure I use at work.
 
-### [Private HTML Homepage](linux/Web):
+### [Private HTML Homepage](linux/Web)
 * In lieu of using bookmarks.
 * Easily shared between browsers and computers.
 * Not shared with Google or Mozilla.
@@ -79,6 +81,10 @@ Projects of interest other than illustrating programming techniques.
 * Haskell project that generates Pythagorean triples.
 * Mathematical factoids about Pythagorean triples.
 * Also used to help me learn Haskell stack.
+
+### [Harmonic Oscillator Wave Function](educational/harmonicOscillator/):
+* Models a one-dimensional harmonic oscillator wavefuntion.
+* Mupad notebook, requires MATLAB & MATLAB Symbolic Toolbox.
 
 ## For more Info:
 Please read the

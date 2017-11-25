@@ -7,7 +7,7 @@ in a way that helps me stay up to speed on a topic.  I maintain
 additional infrastructure so that this information may be of some
 marginal use to others.
 
-## Linux configuration & administration:
+## Linux Configuration & Administration:
 ### [linux info](linux/info/)
 This directory is a fairly free form collection of text files with information
 on a variety of topics relating to Linux software development, environment
@@ -21,7 +21,7 @@ configuration, and system administration.
 6. SSH configuration
 7. Windows 10 Powershell and Cygwin configuration
 
-### [bash utiltiess](linux/bash-utils/)
+### [bash utilities](linux/bash-utils/)
 * Simple, but utilitarian, bash scripts illustrating bash scripting techniques.
 * I put these in my ~/bin directory.
 * For some useful shell functions, see the .bashrc files in
@@ -31,7 +31,7 @@ configuration, and system administration.
 * Keep Linux environment synced across workstations and supercomputers.
 * Based on the infrastructure I use at work.
 
-### [Private HTML Homepage](linux/Web)
+### [private HTML homepage](linux/Web)
 * In lieu of using bookmarks.
 * Easily shared between browsers and computers.
 * Not shared with Google or Mozilla.
@@ -39,27 +39,26 @@ configuration, and system administration.
 ## Grokking Computer Languages:
 Projects whose basic purpose is to teach me a variety of mostly Functional
 computer languages.
-### [fpinscala](grok/grokScala/fpinscala/)
+### [functional programming in scala](grok/grokScala/fpinscala/)
 * Scala project where I work through the exercises in the book
   "Functional Programming in Scala" by Paul Chiusana and Runar Bjarnason.
 * The book is more about learning Functional Programming than the
   Scala language per say.
-* In this project I try to do both.
 
 ### [learnScala](grok/grokScala/learnScala)
 * Document factoids about the Scala language
 * Illustrates a hierarchical SBT Scala build.
 
-### [fpForMortals](grok/grokScalaz/fpForMortals/)
+### [functional programming for mortals](grok/grokScalaz/fpForMortals/)
 * Scala project working through the book
   "Functional Programming for Mortals with Scalaz" by Sam Halliday.
 * A collecton of standalone scalaz projects for purposes of learning scalaz.
 
-### [haskellIntroProgramming](grok/grokHaskell/haskellIntroProgramming/)
+### [haskell intro programming](grok/grokHaskell/haskellIntroProgramming/)
 * Working through examples and exercises from the Univ. of Chicago's
   honors introduction to programming course sequence.
 
-### [haskellParallelAndConcurrent](grok/grokHaskell/haskellParallelAndConcurrent/)
+### [haskell parallel and concurrent](grok/grokHaskell/haskellParallelAndConcurrent/)
 * Implementing examples inspired by Simon Marlow's book
   "Parallel and Concurrent Programming in Haskell."
 
@@ -77,12 +76,12 @@ computer languages.
 
 ## Educational:
 Projects of interest other than illustrating programming techniques.
-### [pythagTriples](educational/pythagTriples/)
+### [pythagorean triples](educational/pythagTriples/)
 * Haskell project that generates Pythagorean triples.
 * Mathematical factoids about Pythagorean triples.
 * Also used to help me learn Haskell stack.
 
-### [Harmonic Oscillator Wave Function](educational/harmonicOscillator/):
+### [Harmonic Oscillator Wave Function](educational/harmonicOscillator/)
 * Models a one-dimensional harmonic oscillator wavefuntion.
 * Mupad notebook, requires MATLAB & MATLAB Symbolic Toolbox.
 

@@ -8,6 +8,7 @@ lazy val root = (project in file("."))
   .aggregate(
        codeblocks
      , fib
+     , methodAsFunctions
      , multiPackage
      , oop
      , parallelism
@@ -24,6 +25,10 @@ lazy val codeblocks = (project in file("codeblocks"))
 lazy val fib = (project in file("fib"))
   .settings(commonSettings: _*)
   .settings(name := "fib")
+
+lazy val methodAsFunctions = (project in file("methodAsFunctions"))
+  .settings(commonSettings: _*)
+  .settings(name := "methodAsFunctions")
 
 lazy val multiPackage = (project in file("multiPackage"))
   .settings(commonSettings: _*)

@@ -179,3 +179,36 @@ It is defined package-wide in the file
 
 This is my original implimentation of `fpinscala.state.rand.Rand`.
 I reimplemented it there as a case class containing a `State(RNG,A)`.
+
+## 10. Convert methods to functions: [MethodAsFunctions](convertMethodToFunctions/)
+Explore how a Scala instance method can be converted to a function.
+
+Consider the class in the file methodAsFunction.scala:
+```
+   class MethodAsFunctions {
+     def m1(x: Int) = x + 30        // instance method
+     val f1 = (x: Int) => x + 30    // λ-function
+     val f2 = m1 _                  // function object
+     val f3: (Int) => Int = m1      // function object
+   }
+```
+and using the Scala REPL
+```
+   scala> import methodAsFunctions._
+   import methodAsFunctions._
+   
+   scala> val foo = new MethodAsFunctions
+   foo: methodAsFunctions.MethodAsFunctions = methodAsFunctions.MethodAsFunctions@4dd90166
+   
+   scala> :t foo.m1 _
+   Int => Int
+   
+   scala> :t foo.f1
+   Int => Int
+   
+   scala> :t foo.f2
+   Int => Int
+   
+   scala> :t foo.f3
+   Int => Int
+```

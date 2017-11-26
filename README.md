@@ -31,13 +31,13 @@ configuration, and system administration.
 * Keep Linux environment synced across workstations and supercomputers.
 * Based on the infrastructure I use at work.
 
-### [private HTML homepage](linux/Web)
+### [private html homepage](linux/Web)
 * In lieu of using bookmarks.
 * Easily shared between browsers and computers.
 * Not shared with Google or Mozilla.
 
 ## Grokking Computer Languages:
-Projects whose basic purpose is to teach me a variety of mostly Functional
+Projects whose basic purpose is to teach me a variety of mostly functional
 computer languages.
 ### [functional programming in scala](grok/grokScala/fpinscala/)
 * Scala project where I work through the exercises in the book
@@ -81,7 +81,7 @@ Projects of interest other than illustrating programming techniques.
 * Mathematical factoids about Pythagorean triples.
 * Also used to help me learn Haskell stack.
 
-### [Harmonic Oscillator Wave Function](educational/harmonicOscillator/)
+### [harmonic oscillator wave function](educational/harmonicOscillator/)
 * Models a one-dimensional harmonic oscillator wavefuntion.
 * Mupad notebook, requires MATLAB & MATLAB Symbolic Toolbox.
 

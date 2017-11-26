@@ -7,6 +7,7 @@ lazy val commonSettings = Seq(
 lazy val root = (project in file("."))
   .aggregate(
        codeblocks
+     , fib
      , multiPackage
      , oop
      , parallelism
@@ -19,6 +20,10 @@ lazy val root = (project in file("."))
 lazy val codeblocks = (project in file("codeblocks"))
   .settings(commonSettings: _*)
   .settings(name := "codeblocks")
+
+lazy val fib = (project in file("fib"))
+  .settings(commonSettings: _*)
+  .settings(name := "fib")
 
 lazy val multiPackage = (project in file("multiPackage"))
   .settings(commonSettings: _*)

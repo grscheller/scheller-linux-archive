@@ -1,5 +1,5 @@
 # scheller-linux-archive
-My personal archive relating to software development for Linux or Linux like
+My personal software development archive for Linux and Linux like
 environments.
 
 The primary purpose of this GitHub repo is to capture what I learn

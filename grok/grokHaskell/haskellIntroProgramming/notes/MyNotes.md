@@ -135,3 +135,69 @@ into the runtime implementation.
       Prelude> foo 1 2
       [1,2,3]
 ```
+
+#### Deconstructiong types
+With pattern matching,
+```
+   addMaybes (Just x) (Just y) = Just (x + y)
+   addMaybes _ _               = Nothing
+```
+with guards,
+```
+   addMaybes mx my | Just x <- mx, Just y <- my = Just (x + y)
+   addMaybes _  _                               = Nothing
+```
+and λ-abstractions can also deconstruct patterns
+```
+   (/(Right x) -> x)  -- run time error if pattern has wrong constructor
+                      -- guards & multiple bindings not allowed.
+```
+
+## Haskell Syntax
+Function application is most fundamental concept, so function
+application is just done by justiposition.
+```
+   fun arg1 arg2 arg3
+```
+Some say arguments are "separated by spaces."  But
+```
+   fun(arg1)(arg2)(arg3)
+```
+would be parsed as justiposition too, but considered "bad style."
+
+### Operators
+#### Very few operators reserved by language syntax
+In Haskell, most predefined operators are either just library functions
+or are cooked into the parser, examples of these are:
+```
+   .., :, ::, =, \, |, <-, ->, @, ~, =>, --
+```
+You can go crazy and define your own operators, or even use your own
+definitions instead of the system ones.
+
+#### Define precedence operators with fixity declarations
+* Keywords: `infixl` | `infixr` | `infix` for left/right/no associativity
+* Syntax: infix-keyword [0-9] operator [, operator]
+* Allowed wherever a type declaration is allowed
+* 0 is lowest allowed fixity precedence, 9 is highest
+* Prefix function application has fixity 10, higher than any infix call
+
+Lambda abstractions, else clauses, and let...in clauses extend as far as
+lexically possible, meaning they never stop at any infix operator, no
+matter how low precedencer.
+
+Default fixitity:
+```
+   infixl 9  !!             -- This is the default when fixity unspecified
+   infixr 9  .
+   infixr 8  ^, ^^, ⋆⋆
+   infixl 7  ⋆, /, `quot`, `rem`, `div`, `mod`  
+   infixl 6  +, -           -- Unary negation "-" has this fixity, too
+   infixr 5  ++             -- built-in ":" constructor has this fixity, too
+   infix  4  ==, /=, <, <=, >=, >, `elem`, `notElem`
+   infixr 3  &&
+   infixr 2  ||
+   infixl 1  >>, >>=
+   infixr 1  =<<  
+   infixr 0  $, $!, `seq`
+```

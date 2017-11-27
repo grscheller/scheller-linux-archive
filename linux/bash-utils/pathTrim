@@ -4,7 +4,7 @@
 # in colen separated lists.  Useful when $HOME is shared
 # between many systems.  Also when .bash_profile gets resourced.
 #
-# Usage: pathTrim colon:separated:list
+# Usage: pathTrim colen:separated:list
 #
 # Written by Geoffrey Scheller 
 #

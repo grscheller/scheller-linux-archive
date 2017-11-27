@@ -853,7 +853,7 @@ XI. Syncing repositories:
 
          git push <Remotename> :<BranchName>
 
-       note the space before the colon, similar to renaming a branch,
+       note the space before the colen, similar to renaming a branch,
        you are pushing "nothing" into BranchName.
 
        To push a tag,

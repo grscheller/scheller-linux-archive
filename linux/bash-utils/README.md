@@ -14,7 +14,7 @@ Theses are the bash utilities I put into my Linux ~/bin directory.
   bash_profile are/is shared between several systems.
 * Trims off duplicate entries and non-existant director $PATH
   ```
-  Usage: pathTrim colon:separated:list
+  Usage: pathTrim colen:separated:list
 
   Example: PATH=$(~/bin/pathTrim $PATH)
   ```

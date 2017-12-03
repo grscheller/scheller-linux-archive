@@ -3740,3 +3740,17 @@ Purpose: To indicate what was done to create gauss17 and
 2017-10-28:
   Problem from 2017-10-09 gradually went away, won't worry about it.
 
+2017-12-02:
+  Replaced xscreensaver with xscreensaver-arch-logo from AUR.
+
+    $ cd ~/build/AUR
+    $ git clone https://aur.archlinux.org/xscreensaver-arch-logo.git
+    $ cd xscreensaver-arch-logo/
+    $ makepkg -sri
+
+  Updated Google Chrome
+
+    $ cd ~/build/AUR/google-chrome_build/google-chrome
+    $ git pull    # Needed to remove untracked file eula_text.html
+    $ makepkg -sri
+

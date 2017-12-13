@@ -3754,3 +3754,59 @@ Purpose: To indicate what was done to create gauss17 and
     $ git pull    # Needed to remove untracked file eula_text.html
     $ makepkg -sri
 
+2017-12-12:
+  Today I need to print a document to a networked HP Office Jet Pro 8610
+  printer.  First install, enable, and start cups,
+
+    $ sudo pacman -Syu cups
+    $ sudo systemctl enable org.cups.cupsd.service
+    $ sudo systemctl start org.cups.cupsd.service
+
+  No complaints, now do a reboot.
+
+    $ journalctl -b | grep -i cups
+    Dec 12 09:51:57 gauss17 systemd[1]: Listening on CUPS Scheduler.
+    Dec 12 09:51:57 gauss17 systemd[1]: Started CUPS Scheduler.
+
+  There is a CUPS cli interface, but since printing to an actual printer
+  is something I rarely do, I want something GUI and idiot proof.  I looked
+  into installing the KDE Network Manager, but this would drag in way too
+  much KDE for my XFCE minimalistic approach.
+
+  There appears to be a CUPS web interface running on: localhost:631
+
+  Doesn't seem to see the HP Officejet Pro 8610.  Talked to my son
+  Jason who said he downloaded the HP drivers from
+
+    https://developers.hp.com/hp-linux-imaging-and-printing
+
+  and got working via a usb connection for his Arch Linux computer.
+  The pacakage was called HPLIP.  Lets check Arch Repos first.
+
+    $ pacman -Ss hplip
+    extra/hplip 3.17.11-1
+        Drivers for HP DeskJet, OfficeJet, Photosmart, Business Inkjet and some
+        LaserJet
+
+    $ sudo pacman -Syu hplip
+
+  From the optional depends list,
+
+    $ sudo pacman -Syu sane xsane
+    $ sudo pacman -Syu rpcbind
+
+  first to give faxing capabilities, the second I "think" it needs to enable
+  networking use.  The CUPS service on localhost 631 was not finding it.
+
+    $ systemctl enable rpcbind.service
+
+  Reboot, since remote proceedure call service has to be started before
+  other services.
+
+  CUPS servce still not finding it.  After some poking around on Stackoverflow
+  I found that I had to run hp-setup,
+
+    $ sudo /usr/bin/hp-setup -i 192.168.1.17
+
+  The -i ran it as a CLI, would had to install QT libraries to run it as a GUI.
+  Was able to print a test page.  Printed another page from a browser.

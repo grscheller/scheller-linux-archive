@@ -3810,3 +3810,18 @@ Purpose: To indicate what was done to create gauss17 and
 
   The -i ran it as a CLI, would had to install QT libraries to run it as a GUI.
   Was able to print a test page.  Printed another page from a browser.
+
+2017-12-12:
+  Added systemadm GUI front-end for systemctl.
+
+    $ sudo pacman -Syu systemd-ui
+
+  To connect to systemd system manager (default)
+
+    $ systemadm --system
+
+  To connect to systemd manager of the calling user
+
+    $ systemadm --user
+
+  Also, can launch from the Applications -> System GUI menu.

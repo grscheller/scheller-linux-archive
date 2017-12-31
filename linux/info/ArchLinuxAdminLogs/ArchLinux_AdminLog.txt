@@ -3825,3 +3825,60 @@ Purpose: To indicate what was done to create gauss17 and
     $ systemadm --user
 
   Also, can launch from the Applications -> System GUI menu.
+
+2017-12-30:
+  Added utility which can be used to control NUMA policy for
+  processes or shared memory.
+
+  NUMA (stands for Non-Uniform Memory Access).  Presumably this is a
+  good thing for Intel i7 processes.
+
+    $ journalctl -b | grep NUMA
+    Dec 30 13:14:25 gauss17 kernel: No NUMA configuration found
+
+    $ sudo pacman -Syu numactl
+
+  reboot,
+
+    $ journalctl -b | grep NUMA
+    Dec 30 17:43:39 gauss17 kernel: No NUMA configuration found
+
+  some configuration needed?
+
+    $ numactl --show
+    policy: default
+    preferred node: current
+    physcpubind: 0 1 2 3 4 5 6 7 
+    cpubind: 0 
+    nodebind: 0 
+    membind: 0 
+
+    $ numactl --hardware
+    available: 1 nodes (0)
+    node 0 cpus: 0 1 2 3 4 5 6 7
+    node 0 size: 15931 MB
+    node 0 free: 14474 MB
+    node distances:
+    node   0 
+      0:  10
+
+  From the man page, numactl runs processes with a specific NUMA scheduling
+  or memory placement policy.  The policy is set for command and inherited
+  by all of its children.  In addition it can set persistent policy for
+  shared memory segments or files.
+
+  More info found here:
+
+    https://www.sharcnet.ca/help/index.php/Using_numactl
+
+  You can use numactl to control how your program uses memory quite precisely,
+  controlling which CPUs are used to execute a program and which memory nodes
+  are used. Quite often, simply using numactl to require that the program uses
+  only local memory can result in much improved performance. This can be
+  achieved by using numactl with flag -l.
+
+    $ numctl --localalloc <my-multi-threaded-program>
+
+  The tradeoff is that the program can use only local memory, which is less
+  than the total memory, and will fail if it tries to allocate more memory
+  when the local memory is already full.

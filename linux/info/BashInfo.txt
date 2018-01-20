@@ -3,8 +3,8 @@ as a tutorial or, for that matter, other people's use.  They are a work
 in progress.  For a good tutorial, I suggest using "The Linux Command Line"
 by William Shotts.  Most of what I know about shell programming comes from
 David Korns ksh book and the Unix/Linux man pages.  Bash is a superset of
-the Bourn shell (sh) with the best features of both the Korn shell and C
-shell added.
+the Bourn shell (sh) with the best features of both the Korn shell (ksh)
+and the C shell (csh) added.
 
 Probably you will get the most out of these notes if you already are
 functional with Bash.
@@ -430,7 +430,32 @@ of doing things; it just that I don't know EMACS that well.
              for the first line of the test above. This is to get
              around an old wart from the Bourn shell.  
 
-13. Use (( ... )) instead of [[ ... ]] for arithmetic and numeric
+13. [[ ... ]] is a "command" on its own and not part of the `if' command
+    syntax.  
+
+      $ if ls foo >& /dev/null
+      > then
+      >     echo "File foo is there."
+      > elif ls bar >& /dev/null
+      > then
+      >     echo "File bar, but not foo, is there"
+      > else 
+      >     echo "Neither file, foo nor bar, is there."
+      > fi
+      Neither file, foo nor bar, is there.
+
+      $ if [[ -e foo ]]
+      > then
+      > echo "File foo is there."
+      > elif [[ -e bar ]]
+      > then
+      >   echo "File bar, but not foo, is there"
+      > else 
+      >   echo "Neither file, foo nor bar, is there."
+      > fi
+      Neither file, foo nor bar, is there.
+
+14. Use (( ... )) instead of [[ ... ]] for arithmetic and numeric
     testing in Bash.
 
     Do this:
@@ -457,7 +482,7 @@ of doing things; it just that I don't know EMACS that well.
           jj=`expr $jj + 1`
       done
 
-14. Use $(...) instead of back tics `...`.
+15. Use $(...) instead of back tics `...`.
 
     $(...) is used to embed the output of a bash command or
     pipeline into a bash script as if you typed it.
@@ -489,7 +514,7 @@ of doing things; it just that I don't know EMACS that well.
       $ echo $otherUsers
       dbus polkitd postfix rtkit systemd+ UID
  
-15. Comparisons with [[ ... ]]
+16. Comparisons via [[ ... ]] and the non-stictness of && and ||.
 
     Strings and numerics use different sets of operators:
 
@@ -532,7 +557,7 @@ of doing things; it just that I don't know EMACS that well.
       > fi
       MATLAB file
 
-16. Looping constructs:
+17. Looping constructs:
 
     Loop a fixed number of times,
 
@@ -580,7 +605,7 @@ of doing things; it just that I don't know EMACS that well.
       Quit? [y|Y]: y
       $ 
 
-17. Shell functions:
+18. Shell functions:
 
     Shell functions are bash subroutines that execute in the context
     of the current shell.  These "functions" don't return values.
@@ -645,7 +670,7 @@ of doing things; it just that I don't know EMACS that well.
     $ echo $a $b
     a2 b1
 
-18. Aliases:
+19. Aliases:
 
     The alias command allows a string to be substituted as the first
     word of a simple command.  Useful if you want to change the default
@@ -673,7 +698,7 @@ of doing things; it just that I don't know EMACS that well.
       shopt -s expand_aliases
 
 
-19. Editting differences between vi/vim and bash in vi mode:
+20. Editting differences between vi/vim and bash in vi mode:
 
     Use 
 

@@ -436,3 +436,24 @@ Purpose: For things installed locally as an unprivalleged user.
     2017/01/21 19:50:13 :: WARNING: python-wpactrl not found, falling back to using wpa_cli.
 
   At several wifi hotspots, not all, I've had to configure static IP addresses.
+
+2018-01-20:
+  Updated my Anaconda Python Distribution:
+
+    $ conda update --all
+
+  Now we have
+
+    $ whence python
+    /home/geoff/opt/anaconda3/bin/python
+    /usr/bin/python
+
+    $ python --version
+    Python 3.6.4 :: Anaconda custom (64-bit)
+
+    $ /usr/bin/python --version
+    Python 3.6.4
+
+  This is the first step in trying to work thru some Python based
+  machine learning tutorials.  I hope to also incorporate Jupyter
+  notebooks into this endeavor.

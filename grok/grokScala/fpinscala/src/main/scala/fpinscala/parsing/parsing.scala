@@ -13,7 +13,6 @@ trait Parsers[ParseError, Parser[+_]] { self =>
 
   def run[A](p: Parser[A])(input: String): Either[ParseError,A]
   def char(c: Char): Parser[Char]
-  // def string(s: String): Parser[String]
   def listOfN[A](n: Int, p: Parser[A]): Parser[List[A]]
 
   // Some Laws:

@@ -14,6 +14,9 @@ Purpose: For things installed locally as an unprivalleged user.
     $ /usr/bin/python2 --version
     Python 2.7.12
 
+    Note: See 2018-01-25 for configuring conda virtual environments,
+          without having to put base Anaconda on your $PATH.
+
 2016-08-01:
   For scanning journalctl output, some useful options -
     journalctl -f : follows like tail -f
@@ -457,3 +460,132 @@ Purpose: For things installed locally as an unprivalleged user.
   This is the first step in trying to work thru some Python based
   machine learning tutorials.  I hope to also incorporate Jupyter
   notebooks into this endeavor.
+
+2018-01-25:
+  Have to use conda virtual environments since ~/opt/anaconda3/bin
+  contaminates path with old versions of /usr/bin utilities.
+
+  In my ~/.bashrc file I put
+
+    alias conda=~/opt/anaconda3/bin/conda
+
+  and in ~/.bash_profile I removed ~/opt/anaconda3/bin from my $PATH.
+
+  After these changes,
+
+    $ conda -V
+    conda 4.4.7
+
+    $ conda update conda
+    Solving environment: done
+
+    # All requested packages already installed.
+
+  Use the following to determine a list of available python versions
+  to configure an anaconda virtual environment,
+
+    $ conda search "^python$"
+
+  Since I am a bleeding edge type guy, I will create a conda virtual
+  environment called "play" with the most recent version of python
+  given by above command,
+
+    $ conda create -n play python=3.6.4 anaconda
+    Solving environment: done
+
+    ## Package Plan ##
+
+      environment location: /home/geoff/opt/anaconda3/envs/play
+
+      added / updated specs: 
+        - anaconda
+        - python=3.6.4
+
+
+    The following packages will be downloaded:
+
+        package                    |            build
+        ---------------------------|-----------------
+        sqlite-3.21.0              |       h1bed415_0         1.5 MB
+
+    The following NEW packages will be INSTALLED:
+
+        anaconda:        custom-py36hbbc8b67_0   
+        ca-certificates: 2017.08.26-h1d4fec5_0   
+        certifi:         2017.11.5-py36hf29ccca_0
+        libedit:         3.1-heed3624_0          
+        libffi:          3.2.1-hd88cf55_4        
+        libgcc-ng:       7.2.0-h7cc24e2_2        
+        libstdcxx-ng:    7.2.0-h7a57d05_2        
+        ncurses:         6.0-h9df7e31_2          
+        openssl:         1.0.2n-hb7f436b_0       
+        pip:             9.0.1-py36h6c6f9ce_4    
+        python:          3.6.4-hc3d631a_1        
+        readline:        7.0-ha6073c6_4          
+        setuptools:      38.4.0-py36_0           
+        sqlite:          3.21.0-h1bed415_0       
+        tk:              8.6.7-hc745277_3        
+        wheel:           0.30.0-py36hfd4bba0_1   
+        xz:              5.2.3-h55aa19d_2        
+        zlib:            1.2.11-ha838bed_2       
+    
+    Proceed ([y]/n)?y
+
+    Downloading and Extracting Packages
+    sqlite 3.21.0: ############################################### | 100% 
+    Preparing transaction: done
+    Verifying transaction: done
+    Executing transaction: done
+    #
+    # To activate this environment, use:
+    # > source activate play
+    #
+    # To deactivate an active environment, use:
+    # > source deactivate
+    #
+
+  The following two aliases will be needed in .bashrc
+
+    alias activate='source ~/opt/anaconda3/bin/activate'
+    alias deactivate='source ~/opt/anaconda3/bin/deactivate'
+
+  Well, Anaconda's horrible activate/deactivate scripts don't seem to
+  get along with my bash environment.
+
+    $ sh
+    sh-4.4$ source ~/opt/anaconda3/bin/activate play
+    (play) sh-4.4$ whence python
+    /home/geoff/opt/anaconda3/envs/play/bin/python
+    /usr/bin/python
+    (play) sh-4.4$ source ~/opt/anaconda3/bin/deactivate
+    sh-4.4$ whence python
+    /usr/bin/python
+    sh-4.4$ exit
+    $ 
+
+  In my opinion, each shell should have its own very cleanly written
+  version.  Then a "lowest common denominator" activation script can
+  select the correct version for the user's shell.  That way shell
+  scripting is not stuck in the 1970's.
+
+  Lets create a .profile for the Bourne Shell
+
+    export PS1='$ '
+    export PS2='> '
+
+    ## Anaconda Python aliases
+    alias activate='. ~/opt/anaconda3/bin/activate'
+    alias deactivate='. ~/opt/anaconda3/bin/deactivate'
+
+  Now,
+
+    $ sh -l
+    $ whence python
+    /usr/bin/python
+    $ activate play
+    (play) $ whence python
+    /home/geoff/opt/anaconda3/envs/play/bin/python
+    /usr/bin/python
+    (play) $ deactivate
+    $ exit
+    $

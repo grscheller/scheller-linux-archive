@@ -61,6 +61,39 @@ Hostnamectl:
                 Kernel: Linux 4.10.1-1-ARCH
           Architecture: x86-64
 
+Time management:
+  To check if hardware clock is set to UTC time,
+    $ sudo hwclock --debug
+    hwclock from util-linux 2.31.1
+    System Time: 1517255432.147819
+    Trying to open: /dev/rtc0
+    Using the rtc interface to the clock.
+    Last drift adjustment done at 1498353865 seconds after 1969
+    Last calibration done at 1498353865 seconds after 1969
+    Hardware clock is on UTC time
+    Assuming hardware clock is kept in UTC time.
+    Waiting for clock tick...
+    ...got clock tick
+    Time read from Hardware Clock: 2018/01/29 19:50:33
+    Hw clock time : 2018/01/29 19:50:33 = 1517255433 seconds since 1969
+    Time since last adjustment is 18901568 seconds
+    Calculated Hardware Clock drift is 0.000000 seconds
+    2018-01-29 12:50:32.123321-0700
+
+  this shows HW clock is kept in UTC time.
+  Since I use the systemd-timesyncd client,
+    $ timedatectl
+                          Local time: Mon 2018-01-29 12:55:01 MST
+                      Universal time: Mon 2018-01-29 19:55:01 UTC
+                            RTC time: Mon 2018-01-29 19:55:01
+                           Time zone: America/Denver (MST, -0700)
+           System clock synchronized: yes
+    systemd-timesyncd.service active: yes
+                     RTC in local TZ: no
+
+  Last line shows that HW clock, "real time clock," is not local time. 
+
+
 DNSUTILS replacements:
   No longer have nslookup, dig, and host.
 

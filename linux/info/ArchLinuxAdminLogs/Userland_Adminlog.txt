@@ -589,3 +589,235 @@ Purpose: For things installed locally as an unprivalleged user.
     (play) $ deactivate
     $ exit
     $
+
+2018-01-30:
+  Fixed annoying xscreensaver problem where login box appeared
+  ~ every 20 seconds.
+
+  Went into settings -> settings editor -> xfce4-power-man.  I
+  reset every setting, which permanently removed it.  Fixed the
+  problem.
+
+  Wondering if past configurations incompatible with updates?
+
+2018-02-05:
+  Tweaked Anaconda related aliases in .bashrc:
+
+    alias conda=~/opt/anaconda3/bin/conda
+    alias actA='sh -c ". ~/opt/anaconda3/bin/activate; bash"'
+    alias play='sh -c ". ~/opt/anaconda3/bin/activate play; bash"'
+
+  Don't need to mess with the deactivate script, just ^D out
+  of the bash shell.  Also, conda does not like to be called from 
+  an activated anaconda environment.
+
+2018-02-05:
+  Updated Anaconda base and play environments:
+    $ conda update -n base conda
+    $ conda update -n base --all
+    $ conda update -n play --all
+
+  Noted that my "play" environment's python is getting downgraded
+  from 3.6.4 to 3.6.3.  
+
+  Installing "everything but the kitchen sink" seems to be a
+  bad idea.  Stuff gets downgraded to meet dependencies.  Use
+  conda environments with minimally installed packages.
+
+  A GUI called Anaconda Navigator was installed into play, but
+  not base???  This thing is something like Enthought's canopy?
+  It is also in base, but both fail with a type error
+
+    TypeError: byte indices must be integers or slices, not str
+
+  when run outside a conda environment.
+
+2018-02-05:
+  Anaconda navigator-updater will run from the base anaconda environment
+  but not the play environment.  From base, can modify both base and play.
+
+2018-02-07:
+  Anaconda and Canopy both seem geared for clueless scientist using out-of-date
+  Linux distributions.  I want a Python development environment, not a MATLAB
+  like IDE "App" geared toward hacky Fortran programmers.
+
+  For purposes of learning Deep Learning Python development, I will use
+  the Arch Linux system python and configure Arch via pacman for the
+  required NVIDIA/CUDA dependencies.
+
+  To be continued...
+
+2018-02-07:
+  Time to figure out the Arch Haskell infarstucture.
+
+  Up to now, I have used Stack which pretty much ignored the existing
+  Arch Haskell infrastructure.  When using ghc from the command line, it failed
+  to link due to the absence of the Haskell static libraries.  Instead of
+  linking dynamically, I installed the static libraries via the ghc-static
+  package.
+
+  Cabal is the package description format for Haskell.  It describes a package
+  and how it interacts with the language.  It provides a common infrastructure
+  for building and distributing packages.  The cabal-install build tool provides
+  dependency resolution and retrieves source packages from Hackage, the official
+  Haskell package hosting website.  Cabal uses the GHC that you indicate; it is
+  beyond its scope to manage GHC installations.
+
+  Stack is a build system for Haskell.  Its aim is to provide extremely
+  reprodicible builds.  To do this, it freezes all your dependencies, including
+  the version of GHC used for the project.  It utilizes the Stackage package
+  website.  Stackage contains snapshots of packages and GHC compilers which
+  are compatible with each other.  When starting a project, you choose which
+  Stackage snapshot to use.  It downloads and installs locally into your
+  home directory which versions of GHC and other packages it needs to build
+  your project.  It is built on top of Cabal and replaces cabal-install.
+
+  My Arch Haskell infrastructure is not a Stackage snapshot.  I need to
+  learn how to use Cabal directly.  This will also help me learn how to
+  use stack better.
+
+2018-02-07:
+  First step is to uninstall the Haskell static libraries.  When I did 
+  this (see ArchLinux_AdminLog.txt), it also uninstalled ghc!
+
+  What I build locally to run on Arch, I'll use cabal-install with sandboxes
+  and dynamic linking.  I'll use stack when I want a statically linked 
+  executable I can distribute, or share a build.
+
+  Lets see how much of the Haskell Platform I have left:
+
+    $ pacman -Qs happy
+    local/happy 1.19.8-2
+        The Parser Generator for Haskell
+
+    $ pacman -Qs alex
+    local/alex 3.2.3-4
+        Lexical analyser generator for Haskell
+
+    $ pacman -Qs haddock
+    local/haskell-haddock-library 1.4.5-7
+        A documentation-generation tool for Haskell libraries
+
+    $ pacman -Qs stack
+    local/bluez-libs 5.48-1
+        Deprecated libraries for the bluetooth protocol stack
+    local/haskell-call-stack 0.1.0-5
+        Use GHC call-stacks in a backward compatible way
+    local/haskell-transformers-base 0.4.4-10
+        Lift computations from the bottom of a transformer stack
+    local/stack 1.6.3-60
+        The Haskell Tool Stack
+
+    $ pacman -Qs cabal-install
+
+    $ pacman -Ss cabal-install
+        community/cabal-install 2.0.0.1-5
+        The command-line interface for Cabal and Hackage.
+
+    $ pacman -Qs ghc
+    local/ghc-libs 8.2.2-1
+        The Glasgow Haskell Compiler - Dynamic Libraries
+        local/haskell-call-stack 0.1.0-5
+        Use GHC call-stacks in a backward compatible way
+    local/haskell-deepseq-generics 0.2.0.0-5
+        GHC.Generics-based Control.DeepSeq.rnf implementation
+    local/haskell-extensible-exceptions 0.1.1.4-18
+        extensible exceptions for both new and old versions of GHC
+    local/haskell-system-fileio 0.3.16.3-8
+        Consistent filesystem interaction across GHC versions
+
+  I guess I never installed the pacman cabal-install package.
+
+    $ sudo pacman -Syu ghc
+    $ sudo pacman -Syu cabal-install
+
+  The ghc-static package was not re-installed.
+
+2018-02-07:
+  Let's test dynamic linking, in file Main.hs put
+
+    main = putStrLn "Hello, World!"
+
+  and compile and run it
+
+    $ ghc -dynamic Main.hs
+    [1 of 1] Compiling Main             ( Main.hs, Main.o )
+    Linking Main ...
+
+    $ ./Main
+    Hello, World!
+
+2018-02-07:
+  The cabal-install package contained the /usr/bin/cabal command:
+
+    $ whence cabal*
+    /usr/bin/cabal
+
+  The 'cabal help' command gives a summary of the available cabal commands.
+
+    $ cabal update
+    Config file path source is default config file.
+    Config file /home/geoff/.cabal/config not found.
+    Writing default configuration to /home/geoff/.cabal/config
+    Warning: 'nslookup' tool missing - can't locate mirrors
+    Downloading the latest package list from hackage.haskell.org
+
+  This has to be done periodically to capture newly released packages,
+
+    $ cabal update
+    Downloading the latest package list from hackage.haskell.org
+
+  Let's create a sandbox:
+
+    $ mkdir junk2; cd junk2
+    $ cabal sandbox init
+    Writing a default package environment file to
+    /home/geoff/junk2/cabal.sandbox.config
+    Creating a new sandbox at /home/geoff/junk2/.cabal-sandbox
+
+  Interactively initiate the default cabal file:
+
+    $ cabal init
+
+  I told it to create an executable with entry point Main.hs and it
+  created the boilerplate:
+
+    module Main where
+
+    main :: IO ()
+    main = putStrLn "Hello, Haskell!"
+
+  Need to tell cabal to use dynamic libraries for my sandbox.
+
+    $ cabal configure --disable-library-vanilla --enable-shared --enable-executable-dynamic
+    Resolving dependencies...
+    Configuring junk2-0.1.0.0...
+
+  Build the package
+
+    $ cabal build
+    Preprocessing executable 'junk2' for junk2-0.1.0.0..
+    Building executable 'junk2' for junk2-0.1.0.0..
+    [1 of 1] Compiling Main             ( Main.hs, dist/build/junk2/junk2-tmp/Main.dyn_o )
+    Linking dist/build/junk2/junk2 ...
+
+  Run the command
+
+    $ dist/build/junk2/junk2
+    Hello, Haskell!
+
+  Clean things up,
+
+    $ cabal clean
+    cleaning...
+
+  this deleted the executable and undid the 'cabal configure'.  Redoing
+  these and finally,
+
+    $ cabal run
+    Preprocessing executable 'junk2' for junk2-0.1.0.0..
+    Building executable 'junk2' for junk2-0.1.0.0..
+    Running junk2...
+    Hello, Haskell!
+
+  seemed to want to build it again.

@@ -3882,3 +3882,23 @@ Purpose: To indicate what was done to create gauss17 and
   The tradeoff is that the program can use only local memory, which is less
   than the total memory, and will fail if it tries to allocate more memory
   when the local memory is already full.
+
+2018-02-07:
+
+  Removed ghc-static.  (See Userland_Adminlog.txt for details.)
+
+    $ sudo pacman -Rsu ghc-static
+    checking dependencies...
+
+    Packages (2) ghc-8.2.2-1  ghc-static-8.2.2-1
+    ...
+
+  Seems to have removed ghc too!  Let's renstall it:
+
+    $ pacman -Syu ghc
+
+  Only reinstall the ghc package, not the ghc-static package.
+  Now, install cabel-install.
+
+    $ pacman -Syu cabal-install
+

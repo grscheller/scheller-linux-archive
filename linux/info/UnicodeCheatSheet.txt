@@ -62,7 +62,7 @@ psi:     ψ  Unicode: 03c8
 omega:   ω  Unicode: 03c9
 
 Large Greek Letters:
-alpha:   α  Unicode: 0391
+alpha:   Α  Unicode: 0391
 beta:    Β  Unicode: 0392
 gamma:   Γ  Unicode: 0393
 delta:   Δ  Unicode: 0394
@@ -80,12 +80,12 @@ omicron: Ο  Unicode: 039f
 pi:      Π  Unicode: 03a0
 rho:     Ρ  Unicode: 03a1
 sigma:   Σ  Unicode: 03a3
-tau:     τ  Unicode: 03a4
-upsilon: υ  Unicode: 03a5
-phi:     φ  Unicode: 03a6
-chi:     χ  Unicode: 03a7
-psi:     ψ  Unicode: 03a8
-omega:   ω  Unicode: 03a9
+tau:     Τ  Unicode: 03a4
+upsilon: Υ  Unicode: 03a5
+phi:     Φ  Unicode: 03a6
+chi:     Χ  Unicode: 03a7
+psi:     Ψ  Unicode: 03a8
+omega:   Ω  Unicode: 03a9
 
 In Python:
   Convert Hex String to decimal Int:
@@ -101,10 +101,16 @@ Bash, vim and most modern linux terminal windows are unicode aware:
 but on the same line.
 
 Example super and subscripts:
-<U-03bb><U-2080><U-207f> -> λ₀ⁿ
+    <u-03bb><u-2080><u-207f> -> λ₀ⁿ
+    x<u-00b2> + y<u-00b2> = h<u-00b2> -> x² + y² = h²
+    2<u-00b0> = 1 -> 2° = 1
+    g<u-00b3><2082> -> g³₂
+except for numbers, these don't seem to be logically ordered,
+see https://en.wikipedia.org/wiki/Unicode_subscripts_and_superscripts
+for "cut and paste" examples.
 
 Example thin space, space, hair space:
 (pointless for fixed sized fonts)
-H<U-2009>H H<U-200a>H -> H H H H
+H<u-2009>H H<u-200a>H -> H H H H
 
 

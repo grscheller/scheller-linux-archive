@@ -645,7 +645,7 @@ Purpose: For things installed locally as an unprivalleged user.
   the Arch Linux system python and configure Arch via pacman for the
   required NVIDIA/CUDA dependencies.
 
-  To be continued...
+  To be continued... (see ArchLinux_AdminLog.txt 2018-02-14)
 
 2018-02-07:
   Time to figure out the Arch Haskell infarstucture.

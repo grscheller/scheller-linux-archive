@@ -3902,3 +3902,184 @@ Purpose: To indicate what was done to create gauss17 and
 
     $ pacman -Syu cabal-install
 
+2018-02-10:
+  Today pacman -Syu failed.
+
+    libxfont: removing fontsproto breaks dependency 'fontsproto>=2.1.3'
+
+  Seems to be upgrading a lot of X11 stuff.  From Arch Linux forums,
+  libfont has been ophaned in 2017.
+
+    $ pacman -Ss libxfont
+    extra/libxfont2 2.0.3-1 [installed]
+        X11 font rasterisation library
+
+  So, lets remove it
+
+    $ sudo pacman -Rs libxfont
+    checking dependencies...
+
+    Packages (1) libxfont-1.5.3-1
+
+    Total Removed Size:  0.29 MiB
+    ...
+
+  Now do
+
+    $ sudo pacman -Syu
+
+  While sorting this out, there has been some major core and extra
+  updates, so along with a major X11 upgrade, I am getting a kernel
+  upgrade and NVIDIA upgrade.  Reboot needed.
+
+2018-02-10:
+  Glad to see Linux kernel developers are on the ball.
+
+    $ journalctl -b
+    -- Logs begin at Mon 2017-06-26 15:38:08 MDT, end at Sat 2018-02-10 11:39:09 MST. --
+    Feb 10 11:26:37 gauss17 kernel: microcode: microcode updated early to revision 0xc2, date = 2017-11-16
+    Feb 10 11:26:37 gauss17 kernel: Linux version 4.15.2-2-ARCH (builduser@heftig-7084) (gcc version 7.3.0 (GCC)) #1 SMP PREEM
+    Feb 10 11:26:37 gauss17 kernel: Command line: initrd=\intel-ucode.img initrd=\initramfs-linux.img root=PARTUUID=d6793ae6-1
+    Feb 10 11:26:37 gauss17 kernel: KERNEL supported cpus:
+    Feb 10 11:26:37 gauss17 kernel:   Intel GenuineIntel
+    Feb 10 11:26:37 gauss17 kernel:   AMD AuthenticAMD
+    Feb 10 11:26:37 gauss17 kernel:   Centaur CentaurHauls
+    Feb 10 11:26:37 gauss17 kernel: Intel Spectre v2 broken microcode detected; disabling Speculation Control
+
+  This is way I use a "rolling distribution" like Arch.
+
+2018-02-14:
+  Today I will attempt to install the prerequisites needed to allow using the
+  Arch system Python for GPU based Tensorflow Deep-Learning programming with
+  Keras. I am using the book "Deep Learning with Python" by François Chollet.
+  Appendix A covers how to install the environment for Ubuntu.  I will be using
+  it as a rough guide for Arch.
+
+  First make sure we are not conflating things with other Arch updates:
+
+     $ sudo pacman -Syu
+
+  Install pip, Arch's default Python environment in Python 3.6.4.
+
+     $ sudo pacman -Syu python-pip
+     $ pip --version
+     pip 9.0.1 from /usr/lib/python3.6/site-packages (python 3.6)
+
+  Next the appendix uses sudo pip to install tensorflow-gpu into the Python
+  environment.  "Pacman -Ss tensorflow" tells me that there are four flavors,
+  basic, with CPU optimizations, with GPU optimizations, and with both.  Lets
+  go with the last one:
+
+     $ sudo pacman -Syu tensorflow-opt-cuda python-tensorflow-opt-cuda 
+
+  This also drags in:
+
+     absl-py
+     blas
+     cblas
+     cuda-9.1.85-1
+     cudnn-7.0.5-2
+     gcc6-6.4.1-5
+     gcc6-libs-6.4.1-5
+     lapack
+     opencl-nvidia
+     protobuf
+     pycuda-headers
+     python-numpy
+     python-protobuf
+     python-pycuda
+     python-pytools
+
+  Pacman is indicating some optional dependencies:
+
+     gdb: for cuda-gdb
+     java-runtime: for nsight & nvvp [installed]
+     tensorboard: for tensorflow-opt-cuda & python-tensorflow-opt-cuda
+     python-nose: for python-numpy [installed]
+
+  These recommendations seem reasonable
+
+     $ sudo pacman -Syu gdb tensorboard
+
+  Note the symlinks that were installed:
+
+     /opt/cuda/bin/gcc -> /usr/bin/gcc-6
+     /opt/cuda/bin/g++ -> /usr/bin/g++-6
+
+  So, when doing cuda programming, I will need to put the
+  /opt/cuda/bin directory in my path before /usr/bin.
+
+  Next, install some more of the Python scientific stack:
+
+     $ sudo pacman -Syu python-scipy python-matplotlib python-yaml
+
+  To install Keras files to disk quickly and efficiently, install
+
+     $ sudo pacman -Syu python-h5py
+
+  which brought in
+
+     cython
+     hdf5
+     libaec
+
+  Install some visualization tools
+
+     $ sudo pacman -Syu python-pydot
+
+  which brought in
+
+     graphviz
+     gts
+
+  also, since opencl-nvidia was brought in.
+
+     $ sudo pacman -Syu python-pyopencl
+
+  Now, appendix installs python-opencv.  OpenCV is a computer vision
+  library.  Wondering if they meant OpenCL?  Doesn't seem to be an
+  python-opencv in the Arch Repos
+
+    $ pacman -Ss opencv
+    extra/opencv 3.4.0-2
+        Open Source Computer Vision Library
+    extra/opencv-samples 3.4.0-2
+        Open Source Computer Vision Library (samples)
+
+  Let's see what we can do,
+
+    $ sudo pacman -Syu opencv opencv-samples
+    $ pip install python-opencv
+    Collecting python-opencv
+      Could not find a version that satisfies the requirement python-opencv (from versions: )
+    No matching distribution found for python-opencv
+
+  Oh well, I tried.
+
+  I can skip over the setting up of the GPU, Pacman did this for me via dependencies.
+
+  Finally, install Keras,
+
+    $ cd ~/build
+    $ git clone https://github.com/fchollet/keras
+    $ cd keras
+    $ sudo python setup.py install
+
+  I think I am done! ... Nope.  Python is not finding module keras,
+  The python setup script installed a Keras-2.1.4-py3.6.egg file
+  here: /usr/lib/python3.6/site-packages
+  but there are no other "egg" files there, just directories and egg.info
+  directories.  Had root blow the egg file away.
+
+  Try installing it not from the git clone,
+
+    $ sudo pip install keras
+
+  It installed the same version, but this time in a similar format to
+  what is already there.  Python now imports it.
+
+2018-02-25:
+  For the Keras libraries I installed, I had to go in as root to
+  fix the permissions on the Python modules.  Seems that "other"
+  didn't have any permisions.  Did a "chmod o+rx" on directories
+  and a "chmod o+r" on the files.

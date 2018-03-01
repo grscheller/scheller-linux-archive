@@ -1,0 +1,9 @@
+Automtic variables are set by make after a rule is matched.
+
+  $@ - Filename representing the target.
+  $< - Filename of the first prerequisite.
+  $? - Filenames of all prerequisites which are newer than target.
+  $^ - Filenames of all prerequisites, duplicates removed.
+  $+ - Same as above except duplicates not removed.
+  $* - Filename with suffix removed <- use discouraged outside pattern rules
+  $% - Filename element of an archive member specification.

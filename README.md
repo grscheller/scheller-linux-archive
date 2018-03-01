@@ -76,6 +76,11 @@ computer languages.
 ### [pureMath](grok/grokPython/pureMath/)
 * A mathematics library centered around integer arithmetic.
 * An old project of mine back when I first learned Python.
+* Example of code being both Python 2.7/3 compatible.
+
+### [Deep Learning with Python](grok/grokPython/deepLearning/)
+* Code written while learning Python based Deep Learning.
+* Keras and TensorFlow libraries.
 
 ## Educational:
 Projects of interest other than illustrating programming techniques.

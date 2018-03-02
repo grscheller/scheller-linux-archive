@@ -70,7 +70,7 @@ computer languages.
 * An attempt to learn Java coming at it from a Python and Scala perspective.
 * Not exactly sure the direction this project will take.
 
-### [Old School](grok/OldSchool)
+### [old school](grok/OldSchool)
 * Best practices for pre-1990 imperitive programming techniques.
 
 ### [pureMath](grok/grokPython/pureMath/)
@@ -78,7 +78,7 @@ computer languages.
 * An old project of mine back when I first learned Python.
 * Example of code being both Python 2.7/3 compatible.
 
-### [Deep Learning with Python](grok/grokPython/deepLearning/)
+### [deep learning with python](grok/grokPython/deepLearning/)
 * Code written while learning Python based Deep Learning.
 * Keras and TensorFlow libraries.
 
@@ -99,5 +99,8 @@ Please read the
 and
 [Code of Conduct](CODE_OF_CONDUCT.md)
 documents for more information.
+
+Also, check out [my software development
+blog](https://github.com/grscheller/scheller-linux-archive/wiki/GRScheller-Software-Development-Blog) on the GitHub wiki.
 
 -Geoffrey Scheller

@@ -70,7 +70,7 @@ computer languages.
 * An attempt to learn Java coming at it from a Python and Scala perspective.
 * Not exactly sure the direction this project will take.
 
-### [grokOldSchool](grok/grokOldSchool)
+### [Old School](grok/OldSchool)
 * Best practices for pre-1990 imperitive programming techniques.
 
 ### [pureMath](grok/grokPython/pureMath/)

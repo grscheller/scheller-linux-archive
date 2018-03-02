@@ -4083,3 +4083,138 @@ Purpose: To indicate what was done to create gauss17 and
   fix the permissions on the Python modules.  Seems that "other"
   didn't have any permisions.  Did a "chmod o+rx" on directories
   and a "chmod o+r" on the files.
+
+2018-03-01:
+  Orphan packages,
+
+    $ pacman -Qtdq
+    ethtool
+    gmime
+    gtksourceview2
+    haskell-binary-tagged
+    haskell-cmark
+    haskell-either
+    haskell-errors
+    haskell-extensible-exceptions
+    haskell-filemanip
+    haskell-hit
+    haskell-lifted-async
+    haskell-monad-unlift
+    haskell-monadrandom
+    haskell-safe-exceptions
+    haskell-text-binary
+    haskell-vector-binary-instances
+    libtracker-sparql
+    libtxc_dxtn
+    net-tools
+    python2-dbus
+    python2-urwid
+    wireless_tools
+    xorg-fonts-misc
+
+  Removed them all with several rounds of
+
+    $ sudo pacman -Rsu ...
+
+2018-03-01:
+  From vlc stderr I get:
+
+    core audio output error: cannot add user audio filter "equalizer" (skipped)
+
+  Tried adding
+
+    $ sudo pacman -Syu pulseaudio-equalizer 
+
+  but still get same error.
+
+2018-03-02:
+  Continue pulseaudio-equalizer issues from yesterday.
+
+  When I run qpaeq from the pulseaudio-equalizer package,
+
+    $ qpaeq
+    There was an error connecting to pulseaudio, please make sure you have the pulseaudio dbus module loaded, exiting...
+
+  From the PalseAudio-ArchWiki page, it suggests to put the line
+
+    ### Load the integrated PulseAudio equalizer and D-Bus module
+    load-module module-equalizer-sink
+    load-module module-dbus-protocol
+
+  into either /etc/pulse/default.pa or ~/.config/pulse/default.pa.
+  I created the later and just put the above lines into it.  I hope
+  it works similarly to /etc/bash_profile and ~/.bash_profile. [Bad
+  choice, see below.]
+
+  After reboot, not only don't I have sound, but no wireless network
+  either.
+
+    $ systemctl --failed --all --user
+    UNIT                 LOAD   ACTIVE SUB    DESCRIPTION       
+    ● pulseaudio.service loaded failed failed Sound Service       
+    ● pulseaudio.socket  loaded failed failed Sound System   
+
+    $ journalctl -b --user
+    ...systemd[519]: Stopped Sound Service.
+    ...systemd[519]: Starting Sound Service...
+    ...pulseaudio[594]: W: [pulseaudio] module-equalizer-sink.c:
+       module-equalizer-sink is currently unsupported, and can sometimes
+       cause PulseAudio crashes, increased latency or audible artifacts.
+    ...pulseaudio[594]: W: [pulseaudio] module-equalizer-sink.c: If you're
+       facing audio problems, try unloading this module as a potential
+       workaround.
+    ...pulseaudio[594]: E: [pulseaudio] module-equalizer-sink.c: Master sink
+       not found
+    ...pulseaudio[594]: E: [pulseaudio] module.c: Failed to load module
+       "module-equalizer-sink" (argument: ""): initialization failed.
+    ...pulseaudio[594]: E: [pulseaudio] main.c: Module load failed.
+    ...pulseaudio[594]: E: [pulseaudio] main.c: Failed to initialize daemon.
+    ...systemd[519]: pulseaudio.service: Main process exited, code=exited,
+       status=1/FAILURE
+    ...systemd[519]: pulseaudio.service: Failed with result 'exit-code'.
+    ...systemd[519]: Failed to start Sound Service.
+
+  I'll remove file I created and reboot.
+
+  Sound is back, but no wifi.  When I do a
+
+    $ journalctl -f
+
+  and hit the Fn-f3 key, I get
+
+    ...ACPI group/action undefined: button/wlan / WLAN
+
+  After another reboot, wifi is back. Gremlins? Hit Fn-f3 odd number of
+  times?
+
+  Back to pulseaudio issues.  The above error message seems to indicate
+  that "module-equalizer-sink.c" is currently unsupported.
+
+    $ find /usr -name module-equalizer-sink* 2>/dev/null
+    /usr/lib/pulse-11.1/modules/module-equalizer-sink.so
+
+    $ pacman -Qo /usr/lib/pulse-11.1/modules/module-equalizer-sink.so
+    /usr/lib/pulse-11.1/modules/module-equalizer-sink.so is owned by pulseaudio-equalizer 11.1-1
+
+  Maybe should punt with the equalizer, but if I continue, I would try
+  and put the configurations lines I tried into /etc/pulse/default.pa
+  instead.  Let's see what happens.
+
+  Reboot.
+
+  Everything still works, I "think" pavucontrol has gained some functionality.
+  Still get the error message
+
+    core audio output error: cannot add user audio filter "equalizer" (skipped)
+
+  when vlc is started.  Though it does not cache changes to its equalizer
+  settings between runs.  Have no idea where vlc's equalizer functionality
+  is implemented, within vlc? past down to pa?
+
+2018-03-01:
+  According to the Arch Linux PulseAudio Wiki,
+
+    https://wiki.archlinux.org/index.php/PulseAudio
+
+  I should have copied /etc/pulse/default.pa to ~/.config/pulse/default.pa
+  and made my changes.  I'll do as recommended.

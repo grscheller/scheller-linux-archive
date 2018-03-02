@@ -39,15 +39,18 @@ Pacman:
   Find installed packages depending on an installed package
     pacman -Qii net-tools
 
-  Pacman logs stored here,
+  Pacman logs stored here
     /var/log/pacman.log
 
-  To search for packages,
+  To search for packages
     pacman -Ss regex   // search for terms in package database
     pacman -Qs regex   // search against the local database
 
   Download packages without installing,
     sudo pacman -Syuw
+
+  Remove packages,
+    $ sudo pacman -Rsu wireless_tools python2-dbus net-tools 
 
 Hostnamectl:
   Get info on an Arch System,

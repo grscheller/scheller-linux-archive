@@ -4211,10 +4211,119 @@ Purpose: To indicate what was done to create gauss17 and
   settings between runs.  Have no idea where vlc's equalizer functionality
   is implemented, within vlc? past down to pa?
 
-2018-03-01:
+2018-03-02:
   According to the Arch Linux PulseAudio Wiki,
 
     https://wiki.archlinux.org/index.php/PulseAudio
 
   I should have copied /etc/pulse/default.pa to ~/.config/pulse/default.pa
   and made my changes.  I'll do as recommended.
+
+2018-03-02:
+  More pulseaudio wrangling, here is what I finally put
+  into ~/.config/pulse/defaults.pa,
+
+    #!/usr/bin/pulseaudio -nF
+
+    .include /etc/pulse/default.pa
+
+    ### Load the integrated PulseAudio equalizer and D-Bus module
+    load-module module-equalizer-sink
+    load-module module-dbus-protocol
+
+  Don't think the #! is necessary, probably used by developers while
+  debugging the deamon.  Also, the .include minimizes having to keep
+  an eye out for /etc/pulse/default.pa.pacnew files.
+
+    $ pacmd list-sinks|egrep -i 'index:|name:'
+      index: 0
+      name: <alsa_output.pci-0000_00_1f.3.analog-stereo>
+    * index: 1
+      name: <combined>
+      index: 2
+      name: <combined.equalizer>
+
+  The * denotes the default channel.
+
+  The qpaeq command now launches a Python based GUI where I can adjust
+  frequency settings and save them.  It seems to be adjusting the
+  <combined.equalized> channel.  I need to figure out how to make this 
+  the default channel.
+
+  Some nomenclature, you send audio to "sinks" (sound cards, servers, process),
+  you receive audio from "sources" (capture devices, processes).
+
+  To list sources,
+
+    $ pacmd list-sources|egrep -i 'device\.string|name:'
+    name: <alsa_output.pci-0000_00_1f.3.analog-stereo.monitor>
+        device.string = "0"
+    name: <alsa_input.pci-0000_00_1f.3.analog-stereo>
+        device.string = "front:0"
+    name: <combined.monitor>
+    name: <combined.equalizer.monitor>
+
+  For now I am going to set the default sink, and leave sources alone.
+  File ~/.config/pulse/defauls.pa is now,
+
+    #!/usr/bin/pulseaudio -nF
+
+    .include /etc/pulse/default.pa
+
+    ### Load the integrated PulseAudio equalizer and D-Bus module
+    load-module module-equalizer-sink
+    load-module module-dbus-protocol
+
+    ### Set default sink
+    set-default-sink combined.equalizer
+
+  Reboot,
+
+    $ systemctl --failed --all --user
+    0 loaded units listed.
+
+  To show all installed unit files use 'systemctl list-unit-files'.
+
+    $ pacmd list-sinks|egrep -i 'index:|name:'
+      index: 0
+          name: <alsa_output.pci-0000_00_1f.3.analog-stereo>
+      index: 1
+         name: <combined>
+    * index: 2
+         name: <combined.equalizer>
+
+  But, no sound initially with vlc.  Messing around with pauvcontrol,
+  I got sound and adjusting the equilizer with qpaeq.  Thought about
+  adding combined.equalizer.monitor as a "source" to see if things
+  defaulted correctly on reboot, but decided to just reboot and see
+  if problem repeated itself.  Something else happeded.  Now, vlc
+  played "out of the box" but qpaeq had no affect.  Also,
+
+    $ pacmd list-sinks|egrep -i 'index:|name:'
+    * index: 0
+          name: <alsa_output.pci-0000_00_1f.3.analog-stereo>
+      index: 1
+          name: <combined>
+      index: 2
+          name: <alsa_output.pci-0000_00_1f.3.analog-stereo.equalizer>
+
+  Now, the equalizer is on this ALSA device!
+
+2018-03-02:
+  Final form for pulseaudio default.pa,
+
+    $ cat .config/pulse/default.pa 
+    #!/usr/bin/pulseaudio -nF
+
+    .include /etc/pulse/default.pa
+
+    ### Load the integrated PulseAudio equalizer and D-Bus module
+    load-module module-equalizer-sink
+    load-module module-dbus-protocol
+
+    ### Set default sink (where audio is sent)
+    set-default-sink alsa_output.pci-0000_00_1f.3.analog-stereo.equalizer
+
+  This worked with both vlc and chrome running together and qpaeq
+  manipulating their combined output, while pavucontrol could 
+  independently adjust their volumes.

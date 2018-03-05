@@ -23,23 +23,22 @@ print('test_labels =', test_labels)
 from keras import models
 from keras import layers
 
-print('\nBuild the network')
+print('\nBuild the network.')
 network = models.Sequential()
 network.add(layers.Dense(512, activation='relu', input_shape=(28 * 28,)))
 network.add(layers.Dense(10, activation='softmax'))
 
 # Add loss function
-print('\nAdd loss function.')
+print('Add loss function.')
 network.compile(optimizer='rmsprop',
                 loss='categorical_crossentropy',
                 metrics=['accuracy'])
 
 ### Reshape/format data to match network.
 
-print('\nReshape the network.')
+print('Reshape/format data to match network.')
 train_images = train_images.reshape((60000, 28 * 28))
 train_images = train_images.astype('float32') / 255
-
 test_images = test_images.reshape((10000, 28 * 28))
 test_images = test_images.astype('float32') / 255
 
@@ -47,18 +46,18 @@ test_images = test_images.astype('float32') / 255
 
 from keras.utils import to_categorical
 
-print('\nCategorically encode the labels.')
+print('Categorically encode the labels.')
 train_labels = to_categorical(train_labels)
 test_labels = to_categorical(test_labels)
 
 ### Train the network.
 
-print('\nTrain the network.')
+print('Train the network:\n')
 network.fit(train_images, train_labels, epochs=5, batch_size=128)
 
 ### Run network with training data.
 
-print('\nRun network with training data.')
+print('\nRun network with test data:\n')
 test_loss, test_acc = network.evaluate(test_images, test_labels)
 print('\ntest_acc:', test_acc)
 

@@ -52,12 +52,12 @@ test_labels = to_categorical(test_labels)
 
 ### Train the network.
 
-print('Train the network:\n')
+print('\nTrain the network:')
 network.fit(train_images, train_labels, epochs=5, batch_size=128)
 
 ### Run network with training data.
 
-print('\nRun network with test data:\n')
+print('\nRun network with test data:')
 test_loss, test_acc = network.evaluate(test_images, test_labels)
-print('\ntest_acc:', test_acc)
+print('test_acc:', test_acc)
 

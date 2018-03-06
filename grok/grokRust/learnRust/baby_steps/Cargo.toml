@@ -1,6 +1,6 @@
 [package]
-name = "babySteps"
-version = "0.1.0"
+name = "baby_steps"
+version = "0.1.1"
 authors = ["Geoffrey Scheller <geoffrey@scheller.com>"]
 
 [dependencies]

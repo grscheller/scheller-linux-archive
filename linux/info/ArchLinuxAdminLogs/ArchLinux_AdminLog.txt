@@ -4327,3 +4327,13 @@ Purpose: To indicate what was done to create gauss17 and
   This worked with both vlc and chrome running together and qpaeq
   manipulating their combined output, while pavucontrol could 
   independently adjust their volumes.
+
+2018-03-05:
+  Noticed that Arch was not updating Rust toolchain.  Removed
+  the rustup package via pacman and manually my ~/.cargo directory.
+  Reinstalled Rust locally, see 2017-06-27 for how.
+
+  Installed version is now,
+
+    $ rustc --version
+    rustc 1.24.1 (d3ae9a9e0 2018-02-27)

@@ -4329,11 +4329,91 @@ Purpose: To indicate what was done to create gauss17 and
   independently adjust their volumes.
 
 2018-03-05:
-  Noticed that Arch was not updating Rust toolchain.  Removed
-  the rustup package via pacman and manually my ~/.cargo directory.
+  Noticed that Arch was not updating Rust toolchain.  Removed the rustup
+  package via pacman and manually by rm -rf ~/.cargo directory.
   Reinstalled Rust locally, see 2017-06-27 for how.
 
   Installed version is now,
 
     $ rustc --version
     rustc 1.24.1 (d3ae9a9e0 2018-02-27)
+
+2018-03-07:
+  I been readng the XFCE Arch Wiki and as a result, I'll try some
+  changes.
+
+  gnome-keyring: 
+  I have been getting along fine without it, and the wiki does not
+  seem to indicate whether or not it is a desirable thing to run.
+    Pros: Don't have to remember password schema.
+          Can enable/disable it with XFCE settings.
+          Some WiFi wpa2/psk hotspots connecton issues solved.
+    Cons: By enabling it, gpg-agent & ssh-agent not launched.
+          Have to mess with PAM to unlock keyring on login automatically.
+          Have to figure out how to backup keyring.
+  For now, won't do anything.
+
+  Preferred applications have no effect:
+  I noticed that different applications will launch firefox instead
+  of chrome, even though chrome is configured as the default.  Wiki
+  says the xorg-xprop package needs to be installed for xdg-open and
+  xdg-settings to detect and integrate with XFCE desktop environment
+  correctly.
+
+    $ pacman -Ss xorg-xprop 
+    extra/xorg-xprop 1.2.2-1 (xorg-apps xorg)
+        Property displayer for X
+
+  Installed it and rebooted.
+
+    $ xdg-settings get default-web-browser
+    google-chrome.desktop
+
+  above command worked before and after install.
+
+  Launching XFCE from command line:
+  The Wiki refered me to the XFCE online documentation
+
+    http://docs.xfce.org/xfce/xfce4-session/advanced
+
+  which recommends when not using a desktop manager to 
+  start XFCE with an option to run the desktop with an
+  active ConsoleKit.
+
+    $ startxfce4 --with-ck-launch
+
+  So, I updated ~/.xinitrc file to
+
+    session=${1:-xfce}
+
+    case $session in
+        gnome          ) exec gnome-session;;
+        gnome-classic  ) exec gnome-session --session=gnome-classic;;
+        xfce           ) exec startxfce4 --with-ck-launch;;
+        *              ) exec $1;;
+    esac
+
+  The web page says:
+
+    The Xfce Desktop requires an active ConsoleKit session to function
+    properly. ConsoleKit is used for system actions like shutdown, suspend
+    and (un)mounting devices (through Polkit for authorization). In case
+    you use a desktop manager, the DM will take care of that. For console
+    starts this is a bit different.
+
+  Well, didn't work.
+
+    $ pacman -Ss consolekit with-ck-launch
+
+  Can't find any packages.  From the freedesktop.org website,
+
+    https://www.freedesktop.org/wiki/Software/ConsoleKit/
+
+  it says:
+  
+    ConsoleKit is currently not actively maintained. The focus has shifted
+    to the built-in seat/user/session management of Software/systemd called
+    systemd-logind!
+
+  So I removed --with-ck-launch from .xinitrc.  I need to check the dates
+  of crap I find in internet forums!

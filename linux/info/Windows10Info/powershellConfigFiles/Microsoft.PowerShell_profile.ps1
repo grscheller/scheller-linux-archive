@@ -4,15 +4,10 @@
 #  usually C:\Users\your_user_name, the one above Documents.
 #
 
-## Print original Path
-"Original Path: " + $env:Path
-
 ## Modify the Path environmental variable
-#  Put the JDK I installed before any native Java
-$env:Path = "C:\Program Files\Java\jdk1.8.0_131\bin;$env:Path"
-#  Set path to locally installed scripts and programs.
-$env:Path += "$home\Documents\WindowsPowerShell\psbin"
-$env:Path += ";$home\opt\bin"
+"Virgin Path: " + $env:Path
+$env:Path += "$home\psbin"      # Powershell scripts/programs I write.
+$env:Path += ";$home\opt\bin"   # For stuff I install locally.
 
 ## Define some useful functions
 # Change the PowerShell prompt
@@ -21,7 +16,7 @@ function prompt {
 }
 
 # Define something that behaves more like Posix ls -a
-# gci cmdlet lies to you if file attributes are hidden
+#    gci lies to you if file attributes are hidden
 function la {
     if ($args.count -eq 0) {
         Get-ChildItem -Force
@@ -31,6 +26,7 @@ function la {
         }
     }
 }
+
 
 # Print path in a list format (can be assigned to arrays)
 function path {
@@ -56,11 +52,6 @@ function whence {
             }
         }
     }
-}
-
-# Function wrapper for gnu diff
-function gdiff {
-   C:\Users\schelleg\opt\vim72\diff.exe -a -w $args
 }
 
 # Need to easily grep thru files and directories 
@@ -99,18 +90,25 @@ ni -path alias:fm -value "C:\Windows\explorer.exe"
 ## Show what version of PowerShell we are using
 "`nPowerShell Version = " +  $PSVersionTable.PSVersion.toString()
 
-## Turn off all context colors since these don't play well with me reversing
-#  my colors with the Magnifier accessibility tool.
+## Set Execution Policy - Can't change this without admin priviledges.
+# Since I only run local scripts, RemoteSigned would be the more secure choice.
+if ( (Get-ExecutionPolicy).ToString() -ne "Unrestricted" )
+{
+     Set-ExecutionPolicy Unrestricted
+}
+
+## Turn of all context colors since these don't play well with my vision problems.
+#  Works well with Settings -> Ease of Access -> High contrast -> High Constrast Black,
+#  keywords are just slightly highlighted.
 #
 #     In the shortcut for Powershell on my shortcut bar I 
 #        rt-click title bar -> Properties -> Colors
-#     Set Screen and Popup Background to 255, 255, 255 (This gets reversed to black)
-#     Set Screen and Popup Text color to   1,  36,  86 (Reverses to a pleasant yellow)
+#     Set Screen and Popup Background to 1, 36, 86
+#     Set Screen and Popup Text color to  238, 237, 240
 #
-#  The following lines are from info I found on stack overflow.
-#
-$fgColor = "DarkMagenta"
-$bgColor = "White"
+#  The following lines I "script-kiddied" off of stack overflow.
+$fgColor = "White"
+$bgColor = "DarkBlue"
 Set-PSReadlineOption -TokenKind Parameter -ForegroundColor $fgColor -BackgroundColor $bgColor
 Set-PSReadlineOption -TokenKind String -ForegroundColor $fgColor -BackgroundColor $bgColor
 Set-PSReadlineOption -TokenKind Operator -ForegroundColor $fgColor -BackgroundColor $bgColor
@@ -134,15 +132,3 @@ Set-PSReadlineOption -ErrorForegroundColor $fgColor -ErrorBackgroundColor $bgCol
 (Get-Host).PrivateData.VerboseBackgroundColor=$bgColor
 (Get-Host).PrivateData.ProgressForegroundColor=$fgColor
 (Get-Host).PrivateData.ProgressBackgroundColor=$bgColor
-
-## To be able to run this script, run powershell as the administrator
-#  and run the command:
-#      Set-ExecutionPolicy Unrestricted
-#  Then, as your regular user, run the commands:
-#      cd .\Documents\WindowsPowerShell\
-#      Unblock-File Microsoft.PowerShell_profile.ps1
-#  Now when powershell is launched, this file will configure your
-#  powershell environment.
-#
-#  You have made Windows more useful, and your regular user more powerful,
-#  but remember: "With great power comes great responsibility."

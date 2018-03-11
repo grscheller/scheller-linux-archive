@@ -22,6 +22,3 @@ scalacOptions in (Compile,doc) += "-author"
 // to group class members based on their semantic relationship.
 scalacOptions in (Compile,doc) ++= Seq("-groups", "-implicits")
 
-// Force sbt to use a local version of scala
-//    Use case - when not available in a repo
-// scalaHome := Some(file("/usr/share/scala/"))

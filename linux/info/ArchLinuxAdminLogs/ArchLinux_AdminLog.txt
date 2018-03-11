@@ -4417,3 +4417,41 @@ Purpose: To indicate what was done to create gauss17 and
 
   So I removed --with-ck-launch from .xinitrc.  I need to check the dates
   of crap I find in internet forums!
+
+2018-03-08:
+  Installed java 9 jdk and jre,
+
+    $ sudo pacman -Syu jdk9-openjdk jre9-openjdk openjdk9-doc
+    ...
+    Default Java environment is already set to 'java-8-openjdk'
+    See 'archlinux-java help' to change it
+    ...
+
+  Only optional dependency not already installed is java-rhino.
+
+    $ pacman -Ss java-rhino
+    extra/java-rhino 1.7.7.1-1
+        Open-source implementation of JavaScript written entirely in Java - JAR
+
+  Sounds interesting,
+
+    $ sudo pacman -Syu java-rhino
+
+  Now,
+
+   $ archlinux-java status
+   Available Java environments:
+     java-8-openjdk (default)
+     java-9-openjdk
+
+  also, Java is going to 6-month rolling releases with Java 10
+  slated to come out 20 March 2018.  (Java 10.0.2 will be
+  last "free as in beer" release of Oracle's Java.)  Java will
+  start a new numbering system starting with Java 10.
+
+    Java SE 10 -> Java 18.3
+    Java SE 11 -> Java 18.9-LTS   (LTS will be 3 years)
+
+  Therefore, for now, I will make java 9 the default version.
+
+    $ sudo archlinux-java set java-9-openjdk

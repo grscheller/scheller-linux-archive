@@ -4455,3 +4455,51 @@ Purpose: To indicate what was done to create gauss17 and
   Therefore, for now, I will make java 9 the default version.
 
     $ sudo archlinux-java set java-9-openjdk
+
+2018-03-11:
+  Enabling compiling Haskell locally statically.
+
+    $ sudo pacman -Syu ghc-static haskell-ghc-paths
+
+  The second package brings names reversed engineered from the GHC build
+  system into the GHC.Paths module.
+
+    $ ghci
+    GHCi, version 8.2.2: http://www.haskell.org/ghc/  :? for help
+    Prelude> import GHC.Paths as GP
+    Prelude GP> GP.ghc
+    "/usr/bin/ghc-8.2.2"
+    Prelude GP> GP.docdir
+    "/usr/share/doc/ghc/html/libraries/base-4.10.1.0"
+    Prelude GP> GP.ghc_pkg
+    "/usr/bin/ghc-pkg-8.2.2"
+    Prelude GP> GP.libdir
+    "/usr/lib/ghc-8.2.2"
+
+  The upstream of this package is maintained by Simon Marlow.
+
+  Does not seem to contain any statically linked libraries.
+
+    $ pacman -Qlq haskell-ghc-paths
+    /usr/
+    /usr/lib/
+    /usr/lib/ghc-8.2.2/
+    /usr/lib/ghc-8.2.2/site-local/
+    /usr/lib/ghc-8.2.2/site-local/ghc-paths-0.1.0.9/
+    /usr/lib/ghc-8.2.2/site-local/ghc-paths-0.1.0.9/GHC/
+    /usr/lib/ghc-8.2.2/site-local/ghc-paths-0.1.0.9/GHC/Paths.dyn_hi
+    /usr/lib/libHSghc-paths-0.1.0.9-jtXMj34IrEDKFvgWnrf0G-ghc8.2.2.so
+    /usr/share/
+    /usr/share/doc/
+    /usr/share/doc/haskell-ghc-paths/
+    /usr/share/haskell/
+    /usr/share/haskell/register/
+    /usr/share/haskell/register/haskell-ghc-paths.sh
+    /usr/share/haskell/unregister/
+    /usr/share/haskell/unregister/haskell-ghc-paths.sh
+    /usr/share/licenses/
+    /usr/share/licenses/haskell-ghc-paths/
+    /usr/share/licenses/haskell-ghc-paths/LICENSE
+
+  No *.a files.  Makes sense, we want it to give information on the system
+  it runs on, not the system it is compiled on.

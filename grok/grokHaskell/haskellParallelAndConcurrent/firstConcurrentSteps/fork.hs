@@ -2,7 +2,8 @@ import Control.Concurrent
 import Control.Monad
 import System.IO
 
+main :: IO ()
 main = do
   hSetBuffering stdout NoBuffering
-  forkIO (replicateM_ 20 (putChar 'A'))
+  _ <- forkIO (replicateM_ 20 (putChar 'A'))
   replicateM_ 20 (putChar 'B')

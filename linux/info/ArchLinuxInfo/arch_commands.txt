@@ -1,5 +1,5 @@
 Purpose: Useful commands and factoids most of which
-         that can be done without root or sudo access.
+         can be done without root or sudo access.
 
 Journalctl:
   For scanning journalctl output, some useful options,

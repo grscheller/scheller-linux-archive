@@ -982,6 +982,25 @@ XIV. GIT revision history tools:
 
          git log -p 
 
+       First line summaries of commit messages
+
+         git log --oneline
+
+       To get the most out of git log, remember the
+       seven rules of a great Git commit message:
+
+         - Separate subject from body with a blank line
+         - Limit the subject line to 50 characters
+         - Capitalize the subject line
+         - Do not end the subject line with a period
+         - Use the imperative mood in the subject line
+         - Wrap the body at 72 characters
+         - Use the body to explain what and why vs. how
+
+       Above taken from:
+
+         https://chris.beams.io/posts/git-commit/
+
     2. git show
         
        Very versatile command.  Commit ranges a..b will be resolved to

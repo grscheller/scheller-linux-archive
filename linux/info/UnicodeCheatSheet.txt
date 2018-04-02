@@ -1,116 +1,262 @@
-To lookup unicode code points:
-https://unicode.org/cldr/utility/character.jsp?a=03bb
-https://unicode-table.com/en/    (also HTML code points)
+This document is a Unicode cheatsheet when working with text
+documents and Unicode aware editors.  My main use case is for
+inserting unicode into documents.  For inserting math equations
+into HTML, I'd recommend using MathML instead.  I still need to
+determined how MarkDown renders Unicode.
 
-Logic
-for all:    ∀  Unicode: 2200 (universal quantification)
-exists:     ∃  Unicode: 2203 (existential quantification)
-not exists: ∄  Unicode: 2204
-up tack:    ⊥  Unicode: 22a5 (bottom, contradiction, falsum)
-down tack:  ⊤  Unicode: 22a4 (top, tautology, verum)
-left tack:  ⊣  Unicode: 22a3
-right tack: ⊢  Unicode: 22a2 (is provable)
-q.e.d.:     ∎  Unicode: 220e (end of proof)
-and:        ∧  Unicode: 2227
-or:         ∨  Unicode: 2228
-therefore:  ∴  Unicode: 2234
+To lookup unicode code points:
+  https://unicode.org/cldr/utility/character.jsp?a=03bb
+  https://unicode-table.com/en/    (also HTML code points)
+
+In modern Unix terminal emulators and Libre Office, input and display
+of unicode code points just works.  Terminals are fixed width font
+beasts, but Libre Office handles the variable width code points just fine.
+
+Python 3 can be used to tranlate a cut-n-paste character to its
+hexidecimal codepoint:
+  >>> hex(ord('β'))
+  '0x3b2'
+
+Code points can be entered from the terminal or directly into Libre Office
+via <ctrl>+<shift>+u3b2<ret>.  The <ctrl>+<shift>+u is typed by pressing
+u key while holding down the <ctrl> and <shift> keys.  The unicode character
+is entered when the <ret> key is pressed. 
+
+Logic:
+  for all:    ∀  Unicode: 2200 (universal quantification)
+  exists:     ∃  Unicode: 2203 (existential quantification)
+  not exists: ∄  Unicode: 2204
+  up tack:    ⊥  Unicode: 22a5 (bottom, contradiction, falsum)
+  down tack:  ⊤  Unicode: 22a4 (top, tautology, verum)
+  left tack:  ⊣  Unicode: 22a3
+  right tack: ⊢  Unicode: 22a2 (is provable)
+  q.e.d.:     ∎  Unicode: 220e (end of proof)
+  and:        ∧  Unicode: 2227
+  or:         ∨  Unicode: 2228
+  therefore:  ∴  Unicode: 2234
 
 Set Theory
-empty set:      ∅  Unicode: 2205
-element of:     ∈  Unicode: 2208
-not element of: ∉  Unicode: 2209
-intersection:   ∩  Unicode: 2229
-union:          ∪  Unicode: 222a
+  empty set:      ∅  Unicode: 2205
+  element of:     ∈  Unicode: 2208
+  not element of: ∉  Unicode: 2209
+  intersection:   ∩  Unicode: 2229
+  union:          ∪  Unicode: 222a
 
 Math symbols:
-partial deriv:    ∂  Unicode: 2202 (Partial Differentiation)
-N-ary product:    ∏  Unicode: 220f
-minus sign:       −  Unicode: 2212
-infinity:         ∞  Unicode: 221e
-integral:         ∫  Unicode: 222b
-contour integral: ∮  Unicode: 222e
+  partial deriv:    ∂  Unicode: 2202 (Partial Differentiation)
+  N-ary product:    ∏  Unicode: 220f
+  minus sign:       −  Unicode: 2212
+  infinity:         ∞  Unicode: 221e
+  integral:         ∫  Unicode: 222b
+  contour integral: ∮  Unicode: 222e
+  plus/minus sign:  ±  Unicode: 00b1
+  multiplication:   ×  Unicode: 00d7
+  dot product:      ⋅  Unicode: 22c5
+  exterior product: ∧  Unicode: 2227
+  divsion:          ÷  Unicode: 00f7
+  bar/pipe/norm:    ∥  Unicode: 2225
+
+Useful in illustrating math calculations:
+  Horizontal Ellipsis:  …  Unicode: 2026
+  Virtical Ellipsis:    ⋮  Unicode: 22ee
+
+There doesn't seem to be any unicode for hat or bar versions
+of Latin or Greek letters.
+
+For base vectors in R³:
+  "i-hat":  𝐢   Unicode: 1d422
+  "j-hat":  𝐣   Unicode: 1d423
+  "k-hat":  𝐤   Unicode: 1d424
 
 Bold math symbols:
-omega: 𝛀    Unicode: 1d6c0
-nabla: 𝛁    Unicode: 1d6c1
+  omega: 𝛀    Unicode: 1d6c0
+  nabla: 𝛁    Unicode: 1d6c1
 
 Small Greek Letters:
-alpha:   α  Unicode: 03b1
-beta:    β  Unicode: 03b2
-gamma:   γ  Unicode: 03b3
-delta:   δ  Unicode: 03b4
-epsilon: ε  Unicode: 03b5    
-zeta:    ζ  Unicode: 03b6
-eta:     η  Unicode: 03b7
-theta:   θ  Unicode: 03b8
-iota:    ι  Unicode: 03b9
-kappa:   κ  Unicode: 03ba
-lambda:  λ  Unicode: 03bb
-mu:      μ  Unicode: 03bc
-nu:      ν  Unicode: 03bd
-xi:      ξ  Unicode: 03be
-omicron: ο  Unicode: 03bf
-pi:      π  Unicode: 03c0
-rho:     ρ  Unicode: 03c1
-sigma:   ς  Unicode: 03c2  (for word endings)
-sigma:   σ  Unicode: 03c3
-tau:     τ  Unicode: 03c4
-upsilon: υ  Unicode: 03c5
-phi:     φ  Unicode: 03c6
-chi:     χ  Unicode: 03c7
-psi:     ψ  Unicode: 03c8
-omega:   ω  Unicode: 03c9
+  alpha:   α  Unicode: 03b1
+  beta:    β  Unicode: 03b2
+  gamma:   γ  Unicode: 03b3
+  delta:   δ  Unicode: 03b4
+  epsilon: ε  Unicode: 03b5    
+  zeta:    ζ  Unicode: 03b6
+  eta:     η  Unicode: 03b7
+  theta:   θ  Unicode: 03b8
+  iota:    ι  Unicode: 03b9
+  kappa:   κ  Unicode: 03ba
+  lambda:  λ  Unicode: 03bb
+  mu:      μ  Unicode: 03bc
+  nu:      ν  Unicode: 03bd
+  xi:      ξ  Unicode: 03be
+  omicron: ο  Unicode: 03bf
+  pi:      π  Unicode: 03c0
+  rho:     ρ  Unicode: 03c1
+  sigma:   ς  Unicode: 03c2  (for word endings)
+  sigma:   σ  Unicode: 03c3
+  tau:     τ  Unicode: 03c4
+  upsilon: υ  Unicode: 03c5
+  phi:     φ  Unicode: 03c6
+  chi:     χ  Unicode: 03c7
+  psi:     ψ  Unicode: 03c8
+  omega:   ω  Unicode: 03c9
 
 Large Greek Letters:
-alpha:   Α  Unicode: 0391
-beta:    Β  Unicode: 0392
-gamma:   Γ  Unicode: 0393
-delta:   Δ  Unicode: 0394
-epsilon: Ε  Unicode: 0395    
-zeta:    Ζ  Unicode: 0396
-eta:     Η  Unicode: 0397
-theta:   Θ  Unicode: 0398
-iota:    Ι  Unicode: 0399
-kappa:   Κ  Unicode: 039a
-lambda:  Λ  Unicode: 039b
-mu:      Μ  Unicode: 039c
-nu:      Ν  Unicode: 039d
-xi:      Ξ  Unicode: 039e
-omicron: Ο  Unicode: 039f
-pi:      Π  Unicode: 03a0
-rho:     Ρ  Unicode: 03a1
-sigma:   Σ  Unicode: 03a3
-tau:     Τ  Unicode: 03a4
-upsilon: Υ  Unicode: 03a5
-phi:     Φ  Unicode: 03a6
-chi:     Χ  Unicode: 03a7
-psi:     Ψ  Unicode: 03a8
-omega:   Ω  Unicode: 03a9
+  alpha:   Α  Unicode: 0391
+  beta:    Β  Unicode: 0392
+  gamma:   Γ  Unicode: 0393
+  delta:   Δ  Unicode: 0394
+  epsilon: Ε  Unicode: 0395    
+  zeta:    Ζ  Unicode: 0396
+  eta:     Η  Unicode: 0397
+  theta:   Θ  Unicode: 0398
+  iota:    Ι  Unicode: 0399
+  kappa:   Κ  Unicode: 039a
+  lambda:  Λ  Unicode: 039b
+  mu:      Μ  Unicode: 039c
+  nu:      Ν  Unicode: 039d
+  xi:      Ξ  Unicode: 039e
+  omicron: Ο  Unicode: 039f
+  pi:      Π  Unicode: 03a0
+  rho:     Ρ  Unicode: 03a1
+  sigma:   Σ  Unicode: 03a3
+  tau:     Τ  Unicode: 03a4
+  upsilon: Υ  Unicode: 03a5
+  phi:     Φ  Unicode: 03a6
+  chi:     Χ  Unicode: 03a7
+  psi:     Ψ  Unicode: 03a8
+  omega:   Ω  Unicode: 03a9
 
-In Python:
-  Convert Hex String to decimal Int:
-    >>> int("03bb", 16)
-    955
-  Convert an Int to a hex string:
-    >>> hex(955)
-    '0x3bb'
+Superscript Decimal Digits (not all are together):
+  0: ⁰  Unicode: 2070
+  1: ¹  Unicode: 00b9
+  2: ²  Unicode: 00b2
+  3: ³  Unicode: 00b3
+  4: ⁴  Unicode: 2074
+  5: ⁵  Unicode: 2075
+  6: ⁶  Unicode: 2076
+  7: ⁷  Unicode: 2077
+  8: ⁸  Unicode: 2078
+  9: ⁹  Unicode: 2079
+  
+Subscript Decimal Digits (all together):
+  0: ₀  Unicode: 2080
+  1: ₁  Unicode: 2081
+  2: ₂  Unicode: 2082
+  3: ₃  Unicode: 2083
+  4: ₄  Unicode: 2084
+  5: ₅  Unicode: 2085
+  6: ₆  Unicode: 2086
+  7: ₇  Unicode: 2087
+  8: ₈  Unicode: 2088
+  9: ₉  Unicode: 2089
 
-Bash, vim and most modern linux terminal windows are unicode aware:
-    $ <ctrl>+<shift>+u03bb<ret>
-    $ λ
-but on the same line.
+Super/Subscript math symbols:
+  super +: ⁺  Unicode: 207a
+  super -: ⁻  Unicode: 207b
+  super =: ⁼  Unicode: 207c
+  super (: ⁽  Unicode: 207d
+  super ): ⁾  Unicode: 207e
+    sub +: ₊  Unicode: 208a
+    sub -: ₋  Unicode: 208b
+    sub =: ₌  Unicode: 208c
+    sub (: ₍  Unicode: 208d
+    sub ): ₎  Unicode: 208e
 
-Example super and subscripts:
-    <u-03bb><u-2080><u-207f> -> λ₀ⁿ
-    x<u-00b2> + y<u-00b2> = h<u-00b2> -> x² + y² = h²
-    2<u-00b0> = 1 -> 2° = 1
-    g<u-00b3><2082> -> g³₂
-except for numbers, these don't seem to be logically ordered,
-see https://en.wikipedia.org/wiki/Unicode_subscripts_and_superscripts
-for "cut and paste" examples.
+Small Latin Superscripts:
+  a:  ᵃ  Unicode: 1d43
+  b:  ᵇ  Unicode: 1d47
+  c:  ᶜ  Unicode: 1d9c
+  d:  ᵈ  Unicode: 1d48
+  e:  ᵉ  Unicode: 1d49
+  f:  ᶠ  Unicode: 1da0
+  g:  ᵍ  Unicode: 1d4d
+  h:  ʰ  Unicode: 02b0
+  i:  ⁱ  Unicode: 2071
+  j:  ʲ  Unicode: 02b2
+  k:  ᵏ  Unicode: 1d4f
+  l:  ˡ  Unicode: 02e1
+  m:  ᵐ  Unicode: 1d50
+  n:  ⁿ  Unicode: 207f
+  o:  ᵒ  Unicode: 1d52
+  p:  ᵖ  Unicode: 1d56
+  r:  ʳ  Unicode: 02b3
+  s:  ˢ  Unicode: 02e2
+  t:  ᵗ  Unicode: 1d57
+  u:  ᵘ  Unicode: 1d58
+  v:  ᵛ  Unicode: 1d5b
+  w:  ʷ  Unicode: 02b7
+  x:  ˣ  Unicode: 02e3
+  y:  ʸ  Unicode: 02b8
+  z:  ᶻ  Unicode: 1dbb
 
-Example thin space, space, hair space:
-(pointless for fixed sized fonts)
-H<u-2009>H H<u-200a>H -> H H H H
+Small Latin Subscripts:
+  a:  ₐ  Unicode: 2090
+  e:  ₑ  Unicode: 2091
+  h:  ₕ  Unicode: 2095
+  i:  ᵢ  Unicode: 1d62
+  j:  ⱼ  Unicode: 2c7c
+  k:  ₖ  Unicode: 2096
+  l:  ₗ  Unicode: 2097
+  m:  ₘ  Unicode: 2098
+  n:  ₙ  Unicode: 2099
+  o:  ₒ  Unicode: 2092
+  p:  ₚ  Unicode: 209a
+  r:  ᵣ  Unicode: 1d63
+  s:  ₛ  Unicode: 209b
+  t:  ₜ  Unicode: 209c
+  u:  ᵤ  Unicode: 1d64
+  v:  ᵥ  Unicode: 1d65
+  x:  ₓ  Unicode: 2093
 
+Small Greek Superscript Letters:
+  alpha:   ᵅ  Unicode: 1d45
+  beta:    ᵝ  Unicode: 1d5d
+  gamma:   ᵞ  Unicode: 1d5e
+  delta:   ᵟ  Unicode: 1d5f
+  theta:   ᶿ  Unicode: 1dbf
+  iota:    ᶥ  Unicode: 1da5
+  phi:     ᵠ  Unicode: 1d60
+  chi:     ᵡ  Unicode: 1d61
 
+Small Greek Subscript Letters:
+  beta:    ᵦ  Unicode: 1d66
+  gamma:   ᵧ  Unicode: 1d67
+  rho:     ᵨ  Unicode: 1d68
+  phi:     ᵩ  Unicode: 1d69
+  chi:     ᵪ  Unicode: 1d6a
+
+Super/Sub-Script Examples:
+  x<u-b2> + y<u-b2> = h<u-b2>     -> x² + y² = h²
+  2<u-b0> = 1                     -> 2° = 1
+  g<u-1d68><u-1d69>               -> gᵨᵩ
+  <u-393><u-2071><u-2c7c><u-2096> -> Γⁱⱼₖ
+
+No-break space example:
+  foo<u-00a0>bar -> foo bar  (works in Libra Office, XFCE Mousepad;
+                              ignored by XFCE Terminal Emulator)
+
+Thin space, space, hair space example:
+  H<u-2009>H H<u-200a>H -> H H H H  (pointless for fixed sized fonts)
+
+Science symbol examples:
+  Degrees:
+    180<u-00b0> -> 180°
+    32<u-00b0>F -> 32°F
+    32<u-00b0><u-200a>F -> 32° F  (looks better in variable width fonts)
+
+Other Misc. symbol examples:
+  Copyright/trademark symbols:
+    TestiChem<u-00ae> -> TestiChem®
+    My Story <u-00a9>1972 -> My Story ©1972
+    The Chop-o-matic<u-2122> -> The Chop-o-matic™
+
+  Section sign:
+    <u-00a7> -> §
+
+  Double angle quotation marks example:
+    <u-ab>foobar<u-bb> -> «foobar»
+
+  Money:
+    <u00a3>100 -> £100  (British Pound)
+    <u00a5>100 -> ¥100  (Japanese Yen)
+    <u0024>100 -> $100  (US Dollar)
+    42<u0a22>  -> 42¢   (Cents)

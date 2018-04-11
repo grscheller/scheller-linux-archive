@@ -1,5 +1,5 @@
 lazy val commonSettings = Seq(
-  scalaVersion := "2.12.4"
+  scalaVersion := "2.12.5"
 )
 
 lazy val root = (project in file("."))
@@ -14,9 +14,6 @@ exportJars := false
 // Run scalac with these flags
 scalacOptions += "-deprecation"
 scalacOptions += "-feature"
-
-// Tell scaladoc to process author tags
-scalacOptions in (Compile,doc) += "-author"
 
 // Tell scaladoc to include info on implicits and 
 // to group class members based on their semantic relationship.

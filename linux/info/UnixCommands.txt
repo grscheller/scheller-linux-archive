@@ -63,11 +63,18 @@ Version Info:
   To determine what type of Unix you are using, use the uname command:
      uname -a
 
-   But, what distribution is it?
+  Specifically what kernel
+     uname -r
+     dmesg | head
 
-   If it is a Redhat system then:   cat /etc/redhat-release
-   If it is Ubuntu:   cat /etc/issue
+  But, what distribution is it?
 
+    Redhat system:   cat /etc/redhat-release
+    Ubuntu:   cat /etc/issue
+
+  If you have the pacman command, you are either on Archlinux
+  or a system derived from Archlinux, like Manjaro, Antergos,
+  or Apricity.
 
 Uses for /dev device files:
 

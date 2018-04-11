@@ -1,8 +1,9 @@
 lazy val commonSettings = Seq(
     version := "0.1-SNAPSHOT"
-  , scalaVersion := "2.12.4"
+  , scalaVersion := "2.12.5"
   , exportJars := false
-  , scalacOptions += "-deprecation")
+  , scalacOptions += "-deprecation"
+  , scalacOptions += "-feature")
 
 lazy val root = (project in file("."))
   .aggregate(
@@ -49,3 +50,4 @@ lazy val sort = (project in file("sort"))
 lazy val splat = (project in file("splat"))
   .settings(commonSettings: _*)
   .settings(name := "splat")
+

@@ -4503,3 +4503,89 @@ Purpose: To indicate what was done to create gauss17 and
 
   No *.a files.  Makes sense, we want it to give information on the system
   it runs on, not the system it is compiled on.
+
+2018-04-14:
+  Installed python virtualenv tool,
+
+    $ sudo pacman -Syu python-virtualenv
+
+  I wonder to what degree Anaconda's & Canopy's virtual environment
+  mechanisms derive from this.
+
+2018-04-17:
+  Updated Rust installation, not using Arch version.
+
+    $ rustup self update
+    info: checking for self-updates
+
+    $ rustup install stable
+    info: syncing channel updates for 'stable-x86_64-unknown-linux-gnu'
+    info: latest update on 2018-03-29, rust version 1.25.0 (84203cac6 2018-03-25)
+    info: downloading component 'rustc'
+    info: downloading component 'rust-std'
+    info: downloading component 'cargo'
+    info: downloading component 'rust-docs'
+    info: removing component 'rustc'
+    info: removing component 'rust-std'
+    info: removing component 'cargo'
+    info: removing component 'rust-docs'
+    info: installing component 'rustc'
+    info: installing component 'rust-std'
+    info: installing component 'cargo'
+    info: installing component 'rust-docs'
+
+    $ rustc --version
+    rustc 1.25.0 (84203cac6 2018-03-25)
+
+  Install rust.vim Vim plugin for rust language:
+
+  First install the Vundle plug-in manager for Vim,
+
+    $ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+    
+  Added Vundle configuration lines to .vimrc as per
+
+    https://github.com/VundleVim/Vundle.vim
+
+  also, added line 
+
+    Plugin 'rust-lang/rust.vim'
+
+  to the appropriate section of the Vundle configuration as per
+
+    https://github.com/rust-lang/rust.vim
+
+  Configured the plugin from within vim via
+
+    :PluginInstall
+
+  To get help with Vundle, from within vim
+
+    :h vundle
+
+2018-04-18:
+  Added Syntastic plugin.  Put in the Vundle section of .vimrc
+
+    Plugin 'vim-syntastic/syntastic'
+
+  Configured Syntastic as per https://github.com/vim-syntastic/syntastic
+  by putting the following lines
+
+    set statusline+=%#warningmsg#
+    set statusline+=%{SyntasticStatuslineFlag()}
+    set statusline+=%*
+
+    let g:syntastic_always_populate_loc_list = 1
+    let g:syntastic_auto_loc_list = 1
+    let g:syntastic_check_on_open = 1
+    let g:syntastic_check_on_wq = 0
+
+  Needed to explicitly turn syntax on in .vimrc to get syntax colors.
+
+  Need to verify, but subjectly syntax colors are better for different
+  programming file types than with raw vim.  
+
+  Not sure if syntax checking is not working or if I just don't know
+  how to use it yet.
+
+  Good news, syntax checking works as advertised with :w a C file.

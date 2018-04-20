@@ -17,13 +17,9 @@ fi
 
 export BASHRC_SOURCED_INTERACTIVELY=${BASHRC_SOURCED_INTERACTIVELY:=0}
 
-## Temporary fix until ncurses/sbt incompatibility properly fixed
-regExForXtermType='xterm.*'
-[[ $TERM =~ $regExForXtermType ]] && TERM=xterm
-
 ## Bash customizations when running interactively
 
-set -o notify  # Don't wait until next prompt to report bg jobs status.
+set -o notify  # Do not wait until next prompt to report bg jobs status.
 set -o pipefail  # Return right most nonzero error, otherwise 0.
 shopt -s extglob  # Turn on extended pattern matching.
 shopt -s checkwinsize
@@ -91,6 +87,13 @@ alias Wget='wget -p --convert-links -e robots=off'
 
 # Pull down more -- Not good for large websites
 alias WgetMirror='wget --mirror -p --convert-links -e robots=off'
+
+## Anaconda Python aliases
+#    Have to use conda virtual environments since ~/opt/anaconda3/bin
+#    contaminates path with old versions of /usr/bin utilities.
+alias conda=~/opt/anaconda3/bin/conda
+alias actA='sh -c ". ~/opt/anaconda3/bin/activate; bash"'
+alias play='sh -c ". ~/opt/anaconda3/bin/activate play; bash"'
 
 ## NVIDIA aliases
 

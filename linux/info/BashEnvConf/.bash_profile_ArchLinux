@@ -28,7 +28,7 @@ umask 0007
 ## For Haskell locally contained and administered via stack
 PATH=~/.local/bin:$PATH
 
-## Rust language configuraton for use with rustup
+## Location Rust Toolchain
 PATH=~/.cargo/bin:$PATH
 
 ## Locally installed SBT (Scala Build Tool)
@@ -39,7 +39,6 @@ PATH=~/opt/sbt/bin:$PATH
 PATH=$PATH:~/local/bin
 
 # My private utils bin and current directory last.
-# Someday turn these utils into an ARCH package???
 PATH=$PATH:~/bin:.
 
 # Clean up PATH
@@ -47,4 +46,3 @@ PATH=$PATH:~/bin:.
 
 # Count number of times file sourced
 ((BASH_PROFILE_SOURCED++))
-

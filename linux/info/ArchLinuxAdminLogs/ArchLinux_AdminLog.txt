@@ -4589,3 +4589,14 @@ Purpose: To indicate what was done to create gauss17 and
   how to use it yet.
 
   Good news, syntax checking works as advertised with :w a C file.
+
+2018-04-19:
+  Swapped in a new /etc/pacman.d/mirrorlist
+
+  After uncommenting the Wordwide, Canada, German, Netherlands and
+  United States servers, used the command
+
+     $ rankmirrors -v /etc/pacman.d/mirrorlist
+
+  to rank these servers.  Kept the top 25.  One Worldwide, the rest
+  in the United States.

@@ -1,13 +1,12 @@
 " .vimrc
 
-" This .vimrc file is simplistic enough to prevents vim,
-" when run in a terminal window, from hijacking the mouse from
-" the terminal emulator.  I don't want vim moving its cursor
-" based on the mouse.  I want the terminal emulator to
-" handle copy and paste with the GUI environment.  When I
-" right-click, I want the terminal emulator menu.
-
 " Setup the Vundle plugin manager
+"
+"   Initially you will need to bootstrap the Vundle infrastructure
+"   by manually cloning it into the right place:
+"
+"   $ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+"
 set nocompatible    " be iMproved, required by Vundle
 filetype off        " required by Vundle
 
@@ -20,11 +19,15 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
 " GitHub plugins for Vundle to manage
-"
-" Provide syntax checking for a variety of languages
+
+"   Extend */# functionality while in visual mode
+Plugin 'nelstrom/vim-visual-star-search'
+
+"   Provide syntax checking for a variety of languages
 Plugin 'vim-syntastic/syntastic'
-" Provide Rust file detection, syntax highlighting,
-" formatting, syntastic integration, and more.
+
+"   Provide Rust file detection, syntax highlighting,
+"   formatting, syntastic integration, and more.
 Plugin 'rust-lang/rust.vim'
 
 call vundle#end()

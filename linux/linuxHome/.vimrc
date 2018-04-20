@@ -1,54 +1,14 @@
 " .vimrc
-
-" This .vimrc file is simplistic enough to prevents vim,
-" when run in a terminal window, from hijacking the mouse from
-" the terminal emulator.  I don't want vim moving its cursor
-" based on the mouse.  I want the terminal emulator to
-" handle copy and paste with the GUI environment.  When I
-" right-click, I want the terminal emulator menu.
-
-" Setup the Vundle plugin manager
-set nocompatible    " be iMproved, required by Vundle
-filetype off        " required by Vundle
-
-" Set the runtime path to include Vundle
-set rtp+=~/.vim/bundle/Vundle.vim
-
-" Initialize Vundle
-call vundle#begin()
-" Let Vundle manage Vundle, required by Vundle
-Plugin 'VundleVim/Vundle.vim'
-
-" GitHub plugins for Vundle to manage
 "
-" Provide syntax checking for a variety of languages
-Plugin 'vim-syntastic/syntastic'
-" Provide Rust file detection, syntax highlighting,
-" formatting, syntastic integration, and more.
-Plugin 'rust-lang/rust.vim'
-
-call vundle#end()
-filetype plugin indent on   " required by Vundle
-" End setup for the Vundle plugin manager
-
-" Configure new user settings for Syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-
-" To turn off colors, use ":syntax off"
-syntax on
-
+" A simplistic .vimrc file.
+"
+" Turn off ugly colors, use ":syntax on" if you really want them.
+syntax off
 " use utf-8
 set encoding=utf-8
 set fileencoding=utf-8
-
-" Set the default language to US English for spell checking.
-" To turn on spell checking while in vim,  `:set spell'.
-" To turn off,                             `:set nospell'.
-set spelllang=en_us
+" Don't use TABS!!!, replace with 4 spaces when <tab> key is pressed.
+" Use <ctrl-v><tab> to actually add a real tab.
+set tabstop=4
+set shiftwidth=4
+set expandtab

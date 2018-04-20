@@ -28,11 +28,3 @@ homepage in my browser to ~/info/Web/workHomepage.
 ### style.css
 * All formating done here.
 
-### [Portmanteau](Portmanteau.html)
-* Contains password schemas I used
-* Organized as a column table, which I am not happy with.  I intend
-  to change it to a row table since the "records" for each site are
-  kept together.
-
-### [Portmanteau](http://htmlpreview.github.com/?https://github.com/grscheller/scheller-linux-archive/blob/master/linuxHome/info/Web/Portmanteau.html)
-* Same as above except rendered as HTML.

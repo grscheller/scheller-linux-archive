@@ -1,32 +1,14 @@
-Vim - Vi improved (minimalistic)
+Vim - Vi improved
 
-1. Configuration:
+My go to text editor of choice is Vim.  What I want most
+out of vim is the ability to edit text files in terminal
+windows in a unicode aware way.  I want my editing
+sessions to be CLI centric, but still integrate well
+into the Linux GUI environment.
 
-  My go to text editor of choice is vim.  All I want out
-  of vim is the ability to edit text files in terminal
-  windows in a unicode aware way.  I want my editing
-  sessions to be CLI centric but still integrate well
-  into the Linux GUI environment.  I do not want to change
-  vim into a gui editor.  Nor use it as an IDE.
-  
-  Out of the box, vim hijacks the mouse from the terminal
-  emulator (usually xfce4-terminal or gnome-terminal) so
-  that the mouse will reposition the cursor.  This is
-  especially annoying because now I have to precisely position
-  the cursor before pasting.  If I want this behavior, I will
-  use gvim instead.
+1. Minimalistic Configuration:
 
-  While in vim, you can turn off this mouse stealing behavior
-  via,
-
-    :set mouse=
-
-  and turn it back on via,
-
-    :set mouse=n
-  
-  The following simplistic ~/.vimrc file will prevent this
-  mouse stealing:
+  Here is an example of a very simplistic ~/.vimrc file:
 
     syntax off
     set encoding=utf-8
@@ -34,27 +16,44 @@ Vim - Vi improved (minimalistic)
     set tabstop=4
     set shiftwidth=4
     set expandtab
+    set mouse=
 
-  The first line turns off colors in vim since these usually
-  don't work out well with the dark terminal backgrounds I like.
+  The first line turns off program language syntax highlighting.  
 
   The next two lines make vim more unicode aware.
 
-  The last 3 lines have the tab key put in 4 spaces, which is
+  The next 3 lines have the tab key put in 4 spaces, which is
   my default for C/C++ and Python.  For Haskell and Scala, I
   find typing 2 spaces easier than hitting the tab key once.
+
+  Out-off-the-box on many Linux distributions, vim has been
+  configured to hijack the mouse from the terminal emulator.
+  This will cause the mouse to reposition the cursor.  This
+  will be very familiar to Windows users, but this doesn't
+  suit my "sloppy mouse focus" desktop style.  This is especially
+  annoying because now I have to precisely position the cursor
+  before pasting.  I can't highlight and paste from the editing
+  session, nor summon the terminal emulator menu via a
+  right-click, unless vim is in visual mode.  The last line
+  in the above .vimrc file will prevents this.  
+
+  While in vim, you can turn this mouse stealing behavior
+  back on via,
+
+    :set mouse=n
 
   My desktop gui environment is very old school.  I configure
   things to use "sloppy" mouse focus.  Also, I do not have 
   windows jump to the top of the Z-order just because they
   got the focus or received a mouse click.  Alt-click or
   lt-click-title_bar will bring the window to the top if I
-  want.  Double-click title bar to make full screen,
-  middle-click title bar to drop them to bottom of the Z-order.
-  This enables me to interact with vim in a small area of a
-  terminal window while having another windows on top.  This
-  is incredibly useful.  You are not constantly having to juggle
-  windows around nor do you need a 42" monitor.
+  want.  Double-click title bar to make window full screen,
+  middle-click title bar to drop window to the bottom of the
+  Z-order.  This enables me to interact with vim in a small
+  area of a terminal window while having another windows on
+  top.  This is incredibly useful.  You are not constantly
+  having to juggle windows around nor do you need two 42"
+  monitors.
 
   In vim I find the Caps-Lock key annoying since it is easy to
   accidentally hit and commands like j or J do much different
@@ -129,7 +128,7 @@ Vim - Vi improved (minimalistic)
 
 4. Commands to Insert or manipulate text:
 
-   Vim has two modes, these commands take vim from "command"
+   Vim has two main modes, these commands take vim from "command"
    mode to "typing input mode."  To return to "command" mode,
    type ESC.  
 
@@ -203,13 +202,13 @@ Vim - Vi improved (minimalistic)
      :17,42s/foo/bar/g   Substitute all instances of foo with
                          bar on lines 17 through 42.
 
-7. Dealing with non-printable characters:
+7. Dealing with whitespace characters:
 
-   To see non-printable characters,
+   Tell vim to indicate where line endings and tabs are,
 
      :set list
 
-   to return to normal mode,
+   to return to displaying tabs and lind endings normally,
 
      :set nolist
 
@@ -236,24 +235,22 @@ Vim - Vi improved (minimalistic)
      :set spell
      :set nospell
 
-10. End remarks:
+10. Visual mode:
 
-   Editors like vim or emacs are very powerful.  I have just
-   scratched the surface of what is possible with vim.  I
+   Todo.
+
+11. End remarks:
+
+   Editors like Vim or Emacs are very powerful.  I have just
+   scratched the surface of what is possible with Vim.  I
    choose this minimalistic approach since it fits into my
    brain and allows me to be much more productive than what
    is provided with WYSIWYG editors, or even context sensitive
    editors provided by IDEs.
 
    There is a backward compatibility mode that forces vim to
-   behave very much like vi -> vim -C.  I think this is a too
-   reactionary approach and not sure all of its ramifications.
-   All I can say is that it does not make vim a clone of
-   System V vi.  Nor do I want it to be.
+   behave very much like vi -> vim -u NONE -C.  I think this
+   is a too reactionary approach and not sure all of its
+   ramifications.  All I can say is that it does not make vim
+   a clone of System V vi.  Nor do I want it to be.
 
-   I do not like colored syntax highlighting.  If it did
-   something useful like distinguish different scopes, 
-   then I might reconsider.  Otherwise, I just waste time
-   adjusting the colors so that I can read the code.  The
-   only language I found it useful is MATLAB when using
-   the MATLAB debugger.

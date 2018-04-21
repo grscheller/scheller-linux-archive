@@ -2,15 +2,17 @@
 
 ## The Project
 The project consists of the scheller-linux-archive GitHub repository, its
-associated GitHub community infrastructure, and any Wiki pages associated with
-this repo. The project maintainer is Geoffrey R. Scheller.
+associated GitHub community infrastructure, and any Wiki pages associated
+with this repo. The project maintainer is Geoffrey R. Scheller.
 
 ## Purpose of Project
 The primary purpose of this GitHub repo is to capture what the project's
-maintainer learns in a way that helps him stay up to speed on topics related to
-software development and system administration in a Linux/Unix/Posix
-environment.  Additional infrastructure is maintained so that this information
-may be of some marginal use to others.
+maintainer learns in a way that helps him stay up to speed on topics related
+to software development and system administration in Linux/Unix/Posix
+like environments.  Additional infrastructure is maintained to help the
+mantainer document what he has done.  Secondarily, it is hoped that this
+additional infrastructure makes the content of the repo more accessible
+to others.
 
 When topics mature to the point where there may be interest in share
 collaborative open source development, the maintainer may spin these topics
@@ -21,9 +23,9 @@ codes of conduct.
 In the interest of fostering an open and welcoming environment, we as
 contributors and maintainers pledge to making participation in our project and
 our community a harassment-free experience for everyone, regardless of age,
-body size, disability, ethnicity, gender identity and expression, level of 
-experience, nationality, personal appearance, race, religion, or sexual identity
-and orientation.
+body size, disability, ethnicity, gender identity and expression, level of
+experience, nationality, personal appearance, race, religion, or sexual
+identity and orientation.
 
 Examples of behavior contributing to creating a positive environment include:
 

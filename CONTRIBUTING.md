@@ -5,17 +5,11 @@ geoffrey@scheller.com would be the most appropriate means of letting me know
 of your suggestions.  That said, you are still welcome to use any supported
 means GitHub provides (Issues, Pull Requests, etc.) to provide me feedback.
 
-As subtopics mature and become of greater value, I may spin these off as
-separate GitHub repositories, not just separate branches.
-
-The first of these may be my implementation of the fpinscala project which
-works through the exercises in the book "Functional Programming in Scala"
-by Paul Chiusana and Runar Bjarnason.  While the project's purpose is just
-to document my learning of Functional Programming with Scala, as a separate
-project it would avoid the clutter of the rest of the repo.  If I actually
-come up with code of utilitarian benefit to the Open and/or Libre Scala
-Communities, I'd spin these off as separate repos with an Open Source
-development model.
+By its nature, this repo has many loose threads due to the whim of my
+interests.  If some subtopics matures to the point where there would be serious
+interest in collaborative development, I would consider creating a separate
+GitHub repo for it, with the Open and/or Libre Source licenses appropriate
+for the effort.
 
 As one may notice, I make frequent commits and plenty of comments both
 in my code and my GIT history.  The main branch is more my working branch

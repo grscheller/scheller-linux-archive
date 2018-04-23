@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-Wall
+CFLAGS=-Wall -std=c99
 BINARIES=sumIt sumItO2 sumItV sumItVO2
 
 default: binaries

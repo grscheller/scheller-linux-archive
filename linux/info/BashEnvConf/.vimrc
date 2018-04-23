@@ -2,10 +2,14 @@
 
 " Setup the Vundle plugin manager
 "
-"   Initially you will need to bootstrap the Vundle infrastructure
-"   by manually cloning it into the right place:
+" Initially you will need to bootstrap the Vundle infrastructure
+" by manually cloning it into the right place:
 "
 "   $ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+"
+" and then from within vim run
+"
+"   :PluginInstall
 "
 set nocompatible    " be iMproved, required by Vundle
 filetype off        " required by Vundle

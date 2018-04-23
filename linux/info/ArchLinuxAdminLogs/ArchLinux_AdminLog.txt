@@ -4600,3 +4600,249 @@ Purpose: To indicate what was done to create gauss17 and
 
   to rank these servers.  Kept the top 25.  One Worldwide, the rest
   in the United States.
+
+2018-04-21:
+  Someone was knowing on my door while gauss17 was directly connected
+  directly connected to the Internet.
+
+  From Etherage I noticed alot of ssh activity from 222.186.52.123.
+  
+  Partial output from "journalctl -u sshd":
+    ...
+    sshd[24200]: pam_tally(sshd:auth): Tally overflowed for user root
+    sshd[24200]: pam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=222.186.52.123  user=root
+    sshd[24200]: Failed password for root from 222.186.52.123 port 62002 ssh2
+    sshd[24200]: pam_tally(sshd:auth): Tally overflowed for user root
+    sshd[24200]: Failed password for root from 222.186.52.123 port 62002 ssh2
+    sshd[24200]: pam_tally(sshd:auth): Tally overflowed for user root
+    sshd[24200]: Failed password for root from 222.186.52.123 port 62002 ssh2
+    sshd[24200]: error: maximum authentication attempts exceeded for root from 222.186.52.123 port 62002 ssh2 [preauth]
+    sshd[24200]: Disconnecting authenticating user root 222.186.52.123 port 62002: Too many authentication failures [preauth]
+    sshd[24200]: PAM 2 more authentication failures; logname= uid=0 euid=0 tty=ssh ruser= rhost=222.186.52.123  user=root
+    sshd[24204]: pam_tally(sshd:auth): Tally overflowed for user root
+    sshd[24204]: pam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=222.186.52.123  user=root
+    sshd[24204]: Failed password for root from 222.186.52.123 port 31380 ssh2
+    sshd[24204]: pam_tally(sshd:auth): Tally overflowed for user root
+    sshd[24204]: Failed password for root from 222.186.52.123 port 31380 ssh2
+    sshd[24204]: pam_tally(sshd:auth): Tally overflowed for user root
+    sshd[24204]: Failed password for root from 222.186.52.123 port 31380 ssh2
+    sshd[24204]: error: maximum authentication attempts exceeded for root from 222.186.52.123 port 31380 ssh2 [preauth]
+    sshd[24204]: Disconnecting authenticating user root 222.186.52.123 port 31380: Too many authentication failures [preauth]
+    ...
+ 
+  Before I rebuilt gauss17, I had moved the ssh port to 30303, lets move it
+  somewhere else, not allow passwd ssh, and deny root direct ssh access. 
+
+  Edit /etc/ssh/sshd_config:
+
+    Port <snip> (uncommented, default was 22)
+    PermitRootLogin no (uncommented, default was prohibit-password)
+    PasswordAuthentication no (uncommented, default was yes)
+    ChallengeResponseAuthentication no (already set)
+
+  See 2018-04-23.
+
+2019-04-22:
+  Following up from yesterday, since I tightened up on sshd security,
+  I am not seeing any unusual activity using `journalctl -u sshd -f' running all night.
+
+  Data mined journalctl logs:
+
+  Distinct login names blackhats used:
+
+    $ for ii in 0 1 2
+    > do
+    >  journalctl -u sshd -b -${ii}|grep ' Failed password for '
+    > done|sed 's/ from .*$//'|sed 's/invalid user //'|sed 's/^.* for //'|sort|uniq
+    1234
+    admin
+    bot
+    deploybot
+    git
+    hduser
+    mc
+    mobile
+    monitor
+    oracle
+    pi
+    postgres
+    probe
+    public
+    root
+    serveur
+    share
+    sinusbot
+    support
+    test
+    teste
+    tmax
+    ts3
+    ubnt
+    ubuntu
+    user
+    usuario
+
+  Lets make a report,
+
+  No, I did not type the following in at the command line,
+  I editted the command line in "set -i vi" mode via <esc>v
+
+    $ for login in $(for ii in 0 1 2
+    >   do
+    >     journalctl -u sshd -b -${ii}|grep ' Failed password for '
+    >   done|sed 's/ from .*$//'|sed 's/invalid user // 
+    >                                 s/^.* for //'      |sort|uniq)
+    > do
+    >   for ii in 0 1 2
+    >   do
+    >     journalctl -u sshd -b -${ii}|grep ' Failed password for '|grep ${login}|sed 's/invalid user //
+    >                                                                                  s/ from / /
+    >                                                                                  s/ port / /
+    >                                                                                  s/ ssh2$//'
+    >   done|sed 's/^.* for //'
+    > done|sort -V > hold1
+
+  Report looks like,
+
+    $ cat hold1 | head -6
+    1234 5.101.40.81 49279
+    1234 5.101.40.81 49279
+    admin 5.101.40.81 39284
+    admin 5.101.40.81 39284
+    admin 5.101.40.81 39284
+    admin 5.101.40.81 52845
+
+  Number of distinct blackhat ssh attemps in last 2 days before sshd lockdown:
+
+    $ cat hold1 | wc -l
+    9791
+
+ Generate subreport of uniq IPs and logins,
+
+    $ sed 's/ [0-9]*$//' hold1|uniq|sed 's|\(.*\) \(.*\)|\2 \1|'|sort -V > hold2
+
+ Editted contents of hold2:
+
+    5.101.40.81 1234
+    5.101.40.81 admin
+    5.186.77.62 deploybot hduser mc oracle public root test
+    14.231.139.150 admin
+    42.7.26.61 root
+    42.159.246.3 admin
+    82.146.42.42 share tmax usuario
+    85.0.188.83 ts3
+    88.247.140.8 pi
+    91.77.79.79 admin
+    103.89.88.220 root
+    103.99.2.136 root
+    103.210.135.136 support
+    113.190.217.166 admin
+    115.84.92.207 admin
+    119.42.127.166 admin
+    121.176.81.18 admin
+    123.21.201.113 root
+    128.199.164.110 root
+    140.143.64.105 sinusbot ubuntu
+    159.192.127.131 support
+    177.182.145.25 root
+    178.253.236.44 ubnt
+    178.253.237.83 user
+    179.52.234.254 admin
+    181.211.61.197 admin
+    185.17.134.167 root
+    185.143.223.77 bot monitor
+    186.47.169.239 admin
+    186.148.172.130 root
+    187.189.225.37 admin
+    189.108.183.115 git postgres root
+    192.34.60.79 admin probe root serveur teste ubuntu
+    197.48.250.11 admin
+    211.117.11.149 root
+    212.129.38.148 admin mobile monitor pi root ubnt
+    217.128.127.128 admin
+    218.65.30.25 root
+    222.82.138.209 admin
+    222.186.52.123 root
+
+  Does not look like I am specifically being targeted.
+
+  Number of failed ssh logins attempts per IP
+
+    $ for ip in $(for ip2 in $(sed 's/\(^.*\) .*/\1/' hold2)
+    >             do
+    >               echo $ip2
+    >             done|uniq)
+    > do
+    >   echo ${ip} $(grep " ${ip} " hold1|wc -l)
+    > done | sort -g -k 2,2 -r
+    222.186.52.123 6547
+    42.7.26.61 2943
+    212.129.38.148 80
+    218.65.30.25 60
+    5.186.77.62 21
+    192.34.60.79 18
+    5.101.40.81 16
+    42.159.246.3 12
+    222.82.138.209 12
+    103.210.135.136 12
+    82.146.42.42 10
+    140.143.64.105 5
+    88.247.140.8 4
+    189.108.183.115 4
+    185.143.223.77 4
+    211.117.11.149 3
+    177.182.145.25 3
+    91.77.79.79 2
+    85.0.188.83 2
+    217.128.127.128 2
+    197.48.250.11 2
+    187.189.225.37 2
+    186.47.169.239 2
+    181.211.61.197 2
+    179.52.234.254 2
+    178.253.236.44 2
+    159.192.127.131 2
+    14.231.139.150 2
+    121.176.81.18 2
+    119.42.127.166 2
+    115.84.92.207 2
+    113.190.217.166 2
+    186.148.172.130 1
+    185.17.134.167 1
+    178.253.237.83 1
+    128.199.164.110 1
+    123.21.201.113 1
+    103.99.2.136 1
+    103.89.88.220 1
+
+  The top 4 offenders are:
+
+    222.186.52.123 6547 -> China Zhenjiang Chinanet Jiangsu Province Network (Beijing)
+    42.7.26.61     2943 -> China Anshan Unicom Liaoning Province Network (Beijing)
+    212.129.38.148   80 -> France Paris Online S.a.s. (Paris)
+    218.65.30.25     60 -> China Xinyu Chinanet Jiangxi Province Network (Beijing)
+
+  What did I get out of this:
+
+  1. I should upgrade my firewall enabled wireless router to
+     IPv6 so I am not tempted to plug my Linux computer
+     directly into my cable "modem". 
+  2. If I ever did this for a living, do it in Python.
+  3. Learned a little bit more about grep, sed, and sort options.
+  4. Confirmed I was not being targetted specifically.
+  5. Realtively certain that I have not been hacked, at least
+     not by anyone of comperable expertise as myself.
+
+2018-04-23:
+  Forgot to enable the sshd.socket service,
+
+  Configure systemd to listen for sshd trafic
+
+      # systemctl edit --full sshd.socket
+
+    where we changed ListenStream=22 to ListenStream=<snip>
+
+    Enable on boot:
+
+      # systemctl enable sshd.socket
+

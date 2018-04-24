@@ -6,26 +6,26 @@
 * Saves having to re-research howto's from scratch
 
 ### [ArchLinuxInfo](ArchLinuxInfo/) directory
-* Contains Arch Linux specific information.
+* Contains Arch Linux specific information
 
 ### [BashInfo.txt](BashInfo.txt)
-* My personal Bash notes/cheatsheet.
+* My personal Bash notes/cheatsheet
 
 ### [GITnotes.txt](GITnotes)
-* Pretty much everything I know about GIT.
-* These are the notes I take while learning GIT.
-* I adapted these notes to share with my coworkers.
+* Pretty much everything I know about GIT
+* These are the notes I take while learning GIT
+* I adapted these notes to share with my coworkers
 
 ### [UnixCommands.txt](UnixCommands.txt)
-* General Unix/POSIX command line utilities.
+* General Unix/POSIX command line utilities
 
 ### [VimMinimalistic.txt](VimMinimalistic.txt)
-* Everything I know about VIM (VI-iMproved).
-* How to configure VIM to play nice in a hybrid CLI/GUI workflow.
+* Everything I know about VIM (VI-iMproved)
+* How to configure VIM to play nice in a hybrid CLI/GUI workflow
 
 ### [Windows 10 Configuration](Windows10Info)
-* First install [Cygwin](https://www.cygwin.com/).
-* Powershell and Cygwin Configuration files.
+* First install [Cygwin](https://www.cygwin.com/)
+* Powershell and Cygwin Configuration files
 * Powershell GUI made to play nice with dark themes
 * Powershell context colors "turned off."  Very useful
   when overhead projectors don't render colors well.

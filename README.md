@@ -1,11 +1,8 @@
 # scheller-linux-archive
-My personal software development archive for Linux and Linux like
-environments.
-
-The primary purpose of this GitHub repo is to capture what I learn
-in a way that helps me stay up to speed on a topic.  I maintain
-additional infrastructure so that this information may be of some
-marginal use to others.
+My personal software development archive for Linux and Linux
+like environments.  The primary purpose of this GitHub repo
+is to capture what I learn in a way that helps me stay up to
+speed on a topic.
 
 ## Linux Configuration & Administration:
 ### [linux info](linux/info/)
@@ -46,7 +43,7 @@ left off and not have to learn everything all over again from scratch.
 
 ### [learnScala](grok/grokScala/learnScala)
 * Document factoids about the Scala language
-* Illustrates a hierarchical SBT Scala build.
+* Illustrates a hierarchical SBT Scala build
 
 ### [functional programming for mortals](grok/grokScalaz/fpForMortals/)
 * Scala project working through the book
@@ -62,14 +59,14 @@ left off and not have to learn everything all over again from scratch.
   "Parallel and Concurrent Programming in Haskell."
 
 ### [learnRust](grok/grokRust/learnRust)
-* Learn Rust as a systems language.
-* Learn Rust as a general purpose programming language.
+* Learn Rust as a systems language
+* Learn Rust as a general purpose programming language
 
 ### [grokJava](grok/grokJava/)
 * An attempt to learn Java coming at it from a Python and Scala perspective
 * Post Java 8 oriented
 
-### [Old School Unix](grok/OldSchool)
+### [old school unix](grok/oldSchool)
 * Best practices for pre-1990 imperitive programming techniques
 
 ### [pureMath](grok/grokPython/pureMath/)

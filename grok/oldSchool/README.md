@@ -1,8 +1,8 @@
 # Old School Programming
-* Capture various "traditional" programming paradigms:
-* Create examples of various pre-1990 imperitive programming techniques.
-* Not necessarily resticted to pre-1990 languages or tools.
-* Subtopic either answer simple questions or provide simple examples.
+* Capture various "traditional" programming paradigms
+* Create examples of various pre-1990 imperitive programming techniques
+* Not necessarily resticted to pre-1990 languages or tools
+* Subtopic either answer simple questions or provide simple examples
 * Provide simple templates as starting points for more involved
   projects. (It is always easier to edit than create from scratch.)
 

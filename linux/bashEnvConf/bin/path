@@ -1,7 +1,7 @@
 #!/bin/bash
 # Spread $PATH out in a more user readable form.
 #
-# Usage: Path
+# Usage: path
 #
 # Written by Geoffrey Scheller
 #

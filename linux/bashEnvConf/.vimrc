@@ -51,11 +51,33 @@ let g:syntastic_check_on_wq = 0
 " To turn off colors, use ":syntax off"
 syntax on
 
+" Set the default color scheme
+colorscheme elflord
+"
+" To select a different color scheme while in vim,
+" tab through
+"
+"   :colorscheme blue
+"
+" first to get the command, then to get the color scheme.
+"
+" Example of a color scheme that does not come with Vim,
+"
+"     From https://github.com/tomasr/molokai, put the
+"     colorscheme file here: ~/.vim/color/molokai.vim
+"
+"     Customizations come before :colorscheme command.
+"
+" let g:molokai_original = 1
+" colorscheme molokai
+
 " use utf-8
 set encoding=utf-8
 set fileencoding=utf-8
 
 " Set the default language to US English for spell checking.
-" To turn on spell checking while in vim,  `:set spell'.
-" To turn off,                             `:set nospell'.
 set spelllang=en_us
+"
+" In vim,
+"   to turn on spell check   :set spell
+"   to turn it off           :set nospell

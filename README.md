@@ -6,9 +6,9 @@ speed on a topic.
 
 ## Linux Configuration & Administration:
 ### [linux info](linux/info/)
-This directory is a fairly free form collection of text files with information
-on a variety of topics relating to Linux software development, environment
-configuration, and system administration.
+This directory is a fairly free form collection of information
+on a variety of topics relating to Linux software development,
+environment configuration, and system administration.
 
 1. Arch Linux System Admin Notes
 2. General Unix/Linux notes

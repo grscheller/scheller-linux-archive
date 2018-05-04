@@ -9,13 +9,14 @@
 "   configuration changes.  Then this file is sourced.
 "
 "   Warning: If neither ~/.vimrc nor ~/.vim/vimrc exist,
-"   vim will source a "default.vim" file (unless the SA put
-"   let skip_defaults_vim=1 in /etc/vimrc).  This can
+"   vim will source a "defaults.vim" file (unless the SAs
+"   put "let skip_defaults_vim=1" in /etc/vimrc).  This can
 "   very well overide behavior in /etc/vimrc!  Not knowing
-"   about the existence of this default configuration file
-"   can be very confusing to new and intermediate vim users.
-"   Simply creating an empty ~/.vimrc file can radically
-"   change vim behavior.
+"   about the existence of this mechanism can be very
+"   confusing to new and intermediate vim users.  Simply
+"   creating an empty ~/.vimrc file can radically change
+"   vim behavior and the user has no clue how to recover
+"   previous desirable features.
 
 " Setup the Vundle plugin manager
 "
@@ -109,15 +110,24 @@ set expandtab
 " Don't configure vim to use mouse
 set mouse=
 "
-" Sometimes it useful to configure the mouse on
-" the fly in vim, but usually I prefer the terminal
-" emulator to receive mouse events.  Works better
-" with my "sloppy focus follows mouse" style of
-" GUI-CLI integration.
+" Sometimes it is useful to configure the mouse when
+" looking at files or when using :help <topic>,
+" but when editing files, I usually prefer the
+" terminal emulator receiving mouse events.  This
+" works better with my "sloppy focus follows mouse"
+" style of GUI-CLI integration.
 " 
 " See :help mouse-using to configure the mouse
 "   When enabled, use <shift>-clicks to send mouse
 "   events to the terminal instead of vim.
 "
-" For convienence in :help windows, from within vim,
+" To enable the mouse from within vim,
 "   :set mouse=a
+
+set history=500   " Number lines of command history to keep
+set scrolloff=5   " Keep cursor away from edge of window
+set backspace=indent,eol,start  " More powerful backspacing
+
+" Make tab completion in command mode more efficient
+set wildmenu
+set wildmode=longest:full,full

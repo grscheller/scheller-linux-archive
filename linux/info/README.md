@@ -21,7 +21,7 @@
 
 ### [Vim Notes](vimNotes/README.md)
 * Everything I know about VIM (VI-iMproved)
-* How to configure VIM to play nice in a hybrid CLI/GUI workflow
+* Configuring VIM to play nice in a hybrid CLI/GUI workflow
 * Configuring VIM plug-ins with Vundle plugin manager
 
 ### [Windows 10 Configuration](Windows10Info)

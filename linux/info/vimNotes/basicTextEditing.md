@@ -91,8 +91,8 @@ one's "muscle memory."
       5C   change next 5 lines
       c^   change text before cursor, excluding initial white space
       s    delete current character and enter Normal Mode
-      ~    change case of current character, advance one character, return to Command Mode
-      r    change current character to next character typed, stay in Command Mode
+      ~    change case of current char, advance one char, return to Command Mode
+      r    change current char to next char typed, stay in Command Mode
    ```
    While in _Insert Mode_, the file can be navigated through with the arrow keys.
 
@@ -123,18 +123,18 @@ one's "muscle memory."
    cursor jumps down to the bottom of the terminal window
    and prompts you with `: `.
    ```
-      :w       Write to disk file you are editing.
-      :w file  Write to file, unlike MS Word, you are still editing the original file.
-      :q       Quit editing, vim will warn you if you have unsaved changes.
-      :wq      Write to disk, then quit.
-      :q!      Quit without saving unsaved changes.
-      :n       Move to next file given on command line.
-      :wn      Write to disk and move on to next file to edit.
-      :42      Move cursor to beginning of line 42.
-      :#       Give line number of current line cursor is on.
-      :s/foo/bar/  Substitute first instance of foo with bar on current line.
-      :s/foo/bar/g  Substitute all instances of foo with bar on current line.
-      :17,42s/foo/bar/g  Substitute all instances of foo with bar on lines 17 through 42.
+      :w       Write to disk file you are editing
+      :w file  Write to file, unlike MS Word, you're still editing orig file
+      :q       Quit editing, vim will warn you if you have unsaved changes
+      :wq      Write to disk, then quit
+      :q!      Quit without saving unsaved changes
+      :n       Move to next file given on command line
+      :wn      Write to disk and move on to next file to edit
+      :42      Move cursor to beginning of line 42
+      :#       Give line number of current line cursor is on
+      :s/foo/bar/  Substitute first instance of foo with bar on current line
+      :s/foo/bar/g  Substitute all instances of foo with bar on current line
+      :17,42s/foo/bar/g  Substitute all foo with bar, lines 17 to 42
    ```
    While in _Command Mode_, the up & down arrow keys cycles through previous
    _Command Mode_ commands.  The left & right arrow keys help you re-edit the

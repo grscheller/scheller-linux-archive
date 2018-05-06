@@ -67,20 +67,3 @@ into the Linux GUI environment.
   to the Application Autostart section of Session and Startup
   of Settings.
 
-<cut>
-
-11. End remarks:
-
-   Editors like Vim or Emacs are very powerful.  I have just
-   scratched the surface of what is possible with Vim.  I
-   choose this minimalistic approach since it fits into my
-   brain and allows me to be much more productive than what
-   is provided with WYSIWYG editors, or even context sensitive
-   editors provided by IDEs.
-
-   There is a backward compatibility mode that forces vim to
-   behave very much like vi -> vim -u NONE -C.  I think this
-   is a too reactionary approach and not sure all of its
-   ramifications.  All I can say is that it does not make vim
-   a clone of System V vi.  Nor do I want it to be.
-

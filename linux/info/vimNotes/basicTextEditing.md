@@ -37,8 +37,8 @@ one's "muscle memory."
       ;         move forward to target of last f command
       ,         move backward to target of last f command
       3f<char>  move forward to 3rd occurrence of <char> on line
-      /reg-exp<ret>  forward search for regular expression pattern
-      ?reg-exp<ret>  backward search for regular expression pattern
+      /RegExp<ret>  forward search for regular expression pattern
+      ?RegExp<ret>  backward search for regular expression pattern
       /<ret>    search forward for last pattern
       ?<ret>    search backward for last pattern
       n         search forward or backward for last pattern
@@ -161,4 +161,16 @@ one's "muscle memory."
    This is a wonderful feature to get rid of tabs and trailing whitespace.
 
 9. Introduction to _Visual Mode_:
-   Todo.  Keep simple.
+   This mode allows you to select region of text by visually highlighting
+   regions that can then be modified.
+
+   To enter _Visual Mode_ from _Normal Mode_
+   * type v for character based
+   * type V for line based
+   * type <ctrl-v> for block visual mode
+   
+   Highlight text via either the <hjkl-keys> or the arrow keys.
+   Once selected, you can issue either _Normal Mode_ or 
+   _Command Mode_ commands on that highlighted region.  To punt
+   out of _Visual Mode_, hit <esc>.
+

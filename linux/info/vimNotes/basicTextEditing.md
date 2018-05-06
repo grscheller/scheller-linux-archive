@@ -144,8 +144,8 @@ one's "muscle memory."
    ```
       .  repeat the last command
    ```
-   The command is the last _Normal Mode_ command, not _Command Mode_
-   command, that changed text,
+   This repeats the last _Normal Mode_ command, not _Command Mode_
+   command, that changed text.
 
    This is frequently used in conjunction with the `n` command.
 
@@ -155,9 +155,9 @@ one's "muscle memory."
       :set list
    ```
    to return to displaying tabs and line endings normally,
-   ```
+  ```
       :set nolist
-   ```
+  ```
    This is a wonderful feature to get rid of tabs and trailing whitespace.
 
 9. Introduction to _Visual Mode_:
@@ -167,10 +167,10 @@ one's "muscle memory."
    To enter _Visual Mode_ from _Normal Mode_
    * type v for character based
    * type V for line based
-   * type <ctrl-v> for block visual mode
-   
-   Highlight text via either the <hjkl-keys> or the arrow keys.
+   * type ctrl-v for block visual mode
+ 
+   Highlight text via either the h,j,k,l keys or the arrow keys.
    Once selected, you can issue either _Normal Mode_ or 
    _Command Mode_ commands on that highlighted region.  To punt
-   out of _Visual Mode_, hit <esc>.
+   out of _Visual Mode_, hit the esc key.
 

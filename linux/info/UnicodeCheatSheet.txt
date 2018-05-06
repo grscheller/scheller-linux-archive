@@ -1,8 +1,12 @@
 This document is a Unicode cheatsheet when working with text
 documents and Unicode aware editors.  My main use case is for
-inserting unicode into documents.  For inserting math equations
-into HTML, I'd recommend using MathML instead.  I still need to
-determined how MarkDown renders Unicode.
+inserting unicode into documents.
+
+For inserting math equations into HTML, I'd recommend using MathML
+instead. For adding math/logic notation to MarkDown documents, where
+I want to keep things readable when unrendered, I find Unicode can
+help.  The problem is that the code points blocks are geared for
+writtten languages, not technical disciplines.
 
 To lookup unicode code points:
   https://unicode.org/cldr/utility/character.jsp?a=03bb

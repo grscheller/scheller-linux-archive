@@ -10,16 +10,23 @@ This directory is a fairly free form collection of information
 on a variety of topics relating to Linux software development,
 environment configuration, and system administration.
 
-1. Arch Linux System Admin Notes
-2. General Unix/Linux notes
-3. SSH configuration
-4. GIT notes
-5. Vim notes
-6. Windows 10 Powershell and Cygwin configuration
+1. Unix Commands (including passwordless SSH)
+2. Bash notes
+3. GIT notes
+4. Vim notes
+5. Unicode cheatsheet
+6. Arch Linux Info
+7. CentOS 6 Info
+8. Windows 10 Powershell and Cygwin configuration
 
 ### [bashEnvConf](linux/bashEnvConf/)
 * Examples `.bash*` and other user configuration files
 * Simple, utilitarian bash scripts illustrating bash scripting techniques
+
+### [My Arch Linux Admin Logs](linux/ArchLinuxAdminLogs/)
+* Contains date ordered admin logs documenting the steps taken
+  to create and administer Arch Linux on a laptop.
+* Saves having to re-research howto's from scratch
 
 ### [linuxHome](linux/linuxHome/)
 * Keep Linux environment synced across workstations and supercomputers

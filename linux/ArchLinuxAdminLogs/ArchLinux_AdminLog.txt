@@ -1,6 +1,13 @@
 Purpose: To indicate what was done to create gauss17 and 
          the rational behind it.
 
+Note: Basically rebuilt system from scratch starting on 2017-06-20
+      after swapping out the DVD with a SSD.
+
+      First time through ran into issues getting an NVidia Optimus
+      graphics card working with the NVidia drivers.  On the rebuild
+      Arch handled the card and drivers without much fuss.
+
 2016-07-04:
   Installed ArchLinux on Acer E-14 Laptop (E5-491G-70PX).
   Created a UEFI/GPT x86-64 system with a 4 core i7 Intel
@@ -4846,3 +4853,11 @@ Purpose: To indicate what was done to create gauss17 and
 
       # systemctl enable sshd.socket
 
+2018-05-08:
+  Did /etc/..../*.pacnew merging.  Mostly updating comments.
+
+  Factoid: systemd now maintains /etc/{passwd,shadow,gshadow,group}
+  The only reason to manually update them is to update the
+  comments, so these *.pacnew files can be safely deleted.  The
+  new versions of these files are just subs with root's info in
+  them.

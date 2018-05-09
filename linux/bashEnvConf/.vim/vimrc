@@ -3,7 +3,7 @@
 "   The commands in the file are
 "   run as if in vim command mode.
 "   
-"   First /etc/vimrc is sourced, which should first sources
+"   First /etc/vimrc is sourced, which should first source
 "   your distribution's vim-package related configuration
 "   files and then your system admins "helpful" system-wide
 "   configuration changes.  Then this file is sourced.

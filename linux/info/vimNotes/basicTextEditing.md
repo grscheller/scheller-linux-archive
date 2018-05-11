@@ -41,7 +41,7 @@ one's "muscle memory."
 * `/<ret>`    search forward for last pattern
 * `?<ret>`    search backward for last pattern
 * `n`         search forward or backward for last pattern
-   ```
+
 ### Interacting with the buffer in _Normal Mode_:
 * `yy`    yank line to buffer (copy)
 * `dd`    delete line and put in buffer (cut)
@@ -49,31 +49,31 @@ one's "muscle memory."
 * `x`     delete character under cursor to buffer
 * `p`     paste buffer contents "after"
 * `P`     paste buffer contents "before"
-   ```
+
 What "before" or "after" mean depends on what is
 in the buffer.  `y` and `d` can be used with all
 the cursor positioning commands in section 2
-   ```
+
 * `d$`    delete to end of line and put in buffer
 * `3yw`   yank three words to buffer, starting at cursor
 * `d2fz`  delete from cursor to 2nd z on current line
 * `2y3w`  ends up yanking 6 words
-   ```
+
 You can use named buffers to store text.
-   ```
+
 * `'adw`  delete word and put in buffer a
 * `'A2yy` yank 2 lines and append to buffer a
 * `'sd$`  delete to end of line and put in buffer "s"
 * `'sp`   paste contents of buffer "s" after cursor
 * `'aP`   paste contents of buffer "a" before cursor
-   ```
+
 One use case for named buffers is copying multiple items
 from multiple files and paste them into later files.
 
 ### Commands to insert or manipulate text:
 These commands take vim from _Normal Mode_ to _Insert Mode_.
 To return to _Normal Mode_, type `esc`.
-   ```
+
 * `i`    insert text at cursor
 * `a`    insert text after cursor
 * `I`    insert text at beginning of line after initial white space
@@ -90,13 +90,13 @@ To return to _Normal Mode_, type `esc`.
 * `s`    delete current character and enter Normal Mode
 * `~`    change case of current char, advance one char, return to Command Mode
 * `r`    change current char to next char typed, stay in Command Mode
-   ```
+
 While in _Insert Mode_, the file can be navigated through with the arrow keys.
 
 ### Undo/redo commands:
 * `u`         undo previous edit
 * `ctrl-r`    redo edit undone
-   ```
+
 These can be used to linearly undo and redo edits,
 like the arrow buttons in a web browser.
 Navigating with the arrow keys while in _Insert Mode_
@@ -117,7 +117,7 @@ line editing commands.
 Use the `:` command to enter _Command Mode_.  The
 cursor jumps down to the bottom of the terminal window
 and prompts you with `: `.
-   ```
+
 * `:w`       Write to disk file you are editing
 * `:w file`  Write to file, unlike MS Word, you're still editing orig file
 * `:q`       Quit editing, vim will warn you if you have unsaved changes
@@ -130,14 +130,14 @@ and prompts you with `: `.
 * `:s/foo/bar/`  Substitute first instance of foo with bar on current line
 * `:s/foo/bar/g`  Substitute all instances of foo with bar on current line
 * `:17,42s/foo/bar/g`  Substitute all foo with bar, lines 17 to 42
-   ```
+
 While in _Command Mode_, the up & down arrow keys cycles through previous
 _Command Mode_ commands.  The left & right arrow keys help you re-edit the
 line.  To return to _Normal Mode_, without issuing a command, press `esc`.
 
 ### Repeating commands in _Normal Mode_:
 * `.`  repeat the last command
-   ```
+
 This repeats the last _Normal Mode_ command, not _Command Mode_
 command, that changed text.
 
@@ -145,13 +145,13 @@ This is frequently used in conjunction with the `n` command.
 
 ### Dealing with whitespace characters:
 Tell vim to indicate where line endings and tabs are,
-   ```
+
 * `:set list`
-```
+
 to return to displaying tabs and line endings normally,
-  ```
+
 * `:set nolist`
-  ```
+
 This is a wonderful feature to get rid of tabs and trailing whitespace.
 
 ### Introduction to _Visual Mode_:

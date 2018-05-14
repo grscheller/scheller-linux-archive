@@ -107,27 +107,25 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 
-" Don't configure vim to use mouse
-set mouse=
+" Configure vim to use mouse in normal mode only
+set mouse=n
 "
-" Sometimes it is useful to configure the mouse when
-" looking at files or when using :help <topic>,
-" but when editing files, I usually prefer the
-" terminal emulator receiving mouse events.  This
-" works better with my "sloppy focus follows mouse"
-" style of GUI-CLI integration.
-" 
-" See :help mouse-using to configure the mouse
-"   When enabled, use <shift>-clicks to send mouse
-"   events to the terminal instead of vim.
+" See `:help mouse-using' to configure the mouse
 "
-" To enable the mouse from within vim,
+" When enabled, use <shift>-clicks to send mouse
+" events to the terminal emulator instead of vim.
+"
+" To enable full mouse from within vim,
 "   :set mouse=a
 
 set history=500   " Number lines of command history to keep
-set scrolloff=5   " Keep cursor away from edge of window
+set scrolloff=3   " Keep cursor away from edge of window
 set backspace=indent,eol,start  " More powerful backspacing
 
 " Make tab completion in command mode more efficient
 set wildmenu
 set wildmode=longest:full,full
+
+" Open new Vim windows below/right of active window
+set splitbelow
+set splitright

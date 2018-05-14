@@ -5,7 +5,7 @@ is a very power editor.  These examples barely scratch the surface
 of what it can do.
 
 (TL;DR) Vim is actually a Turing complete language.  It can be turned
-into a complete IDE or Unix Shell.
+into a complete IDE with full Unix Shell support.
 
 I think with a few weeks of practice, the material covered here
 can be internalized.  Eventually, these commands become part of
@@ -43,32 +43,36 @@ one's "muscle memory."
 * `n`         search forward or backward for last pattern
 
 ### Interacting with the buffer in _Normal Mode_:
-* `yy`    yank line to buffer (copy)
-* `dd`    delete line and put in buffer (cut)
-* `5dd`   delete 5 lines and put in buffer
-* `x`     delete character under cursor to buffer
-* `p`     paste buffer contents "after"
-* `P`     paste buffer contents "before"
+* `yy`      yank line to buffer (copy)
+* `dd`      delete line and put in buffer (cut)
+* `5dd  `   delete 5 lines and put in buffer
+* `x`       delete character under cursor to buffer
+* `~`       change case of current char and advance one char
+* `r<char>  change current char to char typed
+* `p`       paste buffer contents "after"
+* `P`       paste buffer contents "before"
 
 What "before" or "after" mean depends on what is
 in the buffer.  `y` and `d` can be used with all
-the cursor positioning commands in section 2
+the _normal mode_ cursor positioning commands.
 
 * `d$`    delete to end of line and put in buffer
+* `d0`    delete everything before cursor on line and put in buffer
 * `3yw`   yank three words to buffer, starting at cursor
+* `y^`    yank everything before cursor to first non-whitespace char
 * `d2fz`  delete from cursor to 2nd z on current line
 * `2y3w`  ends up yanking 6 words
 
 You can use named buffers to store text.
 
-* `'adw`  delete word and put in buffer a
-* `'A2yy` yank 2 lines and append to buffer a
-* `'sd$`  delete to end of line and put in buffer "s"
-* `'sp`   paste contents of buffer "s" after cursor
-* `'aP`   paste contents of buffer "a" before cursor
+* `'adw`  delete word and put in buffera` 'a`
+* `'A2yy` yank 2 lines and append to buffer `'a`
+* `'sd$`  delete to end of line and put in buffer `'s`
+* `'sp`   paste contents of buffer `'s` after cursor
+* `'aP`   paste contents of buffer `'a` before cursor
 
 One use case for named buffers is copying multiple items
-from multiple files and paste them into later files.
+from multiple files and pasting them into later files.
 
 ### Commands to insert or manipulate text:
 These commands take vim from _Normal Mode_ to _Insert Mode_.
@@ -88,14 +92,14 @@ To return to _Normal Mode_, type `esc`.
 * `5C`   change next 5 lines
 * `c^`   change text before cursor, excluding initial white space
 * `s`    delete current character and enter Normal Mode
-* `~`    change case of current char, advance one char, return to Command Mode
-* `r`    change current char to next char typed, stay in Command Mode
 
-While in _Insert Mode_, the file can be navigated through with the arrow keys.
+While in _Insert Mode_, the file can be navigated via with the arrow keys.
+Text can also be deleted with the backspace key.  In _Normal Mode_, the backspace
+key is just another navigation key.
 
 ### Undo/redo commands:
 * `u`         undo previous edit
-* `ctrl-r`    redo edit undone
+* `CTRL-r`    redo edit undone
 
 These can be used to linearly undo and redo edits,
 like the arrow buttons in a web browser.
@@ -124,6 +128,7 @@ and prompts you with `: `.
 * `:wq`      Write to disk, then quit
 * `:q!`      Quit without saving unsaved changes
 * `:n`       Move to next file given on command line
+* `:prev`    Move to previous file given on command line
 * `:wn`      Write to disk and move on to next file to edit
 * `:42`      Move cursor to beginning of line 42
 * `:#`       Give line number of current line cursor is on
@@ -136,23 +141,15 @@ _Command Mode_ commands.  The left & right arrow keys help you re-edit the
 line.  To return to _Normal Mode_, without issuing a command, press `esc`.
 
 ### Repeating commands in _Normal Mode_:
-* `.`  repeat the last command
+* `.`  repeat the last command which changed text
 
-This repeats the last _Normal Mode_ command, not _Command Mode_
-command, that changed text.
+This repeats the last _Normal Mode_ command used which changed text.  It
+does not repeat _Command Mode_ commands.
 
-This is frequently used in conjunction with the `n` command.
-
-### Dealing with whitespace characters:
-Tell vim to indicate where line endings and tabs are,
-
-* `:set list`
-
-to return to displaying tabs and line endings normally,
-
-* `:set nolist`
-
-This is a wonderful feature to get rid of tabs and trailing whitespace.
+This is frequently used in conjunction with the `n` _Normal Mode_ command.
+For example, `n.n.nn.n` keeps moving to the beginning of the next match for
+the last search pattern and I either decide to repeat, or not, the change
+at each location.  
 
 ### Introduction to _Visual Mode_:
 This mode allows you to select region of text by visually highlighting
@@ -161,10 +158,13 @@ regions that can then be modified.
 To enter _Visual Mode_ from _Normal Mode_
 * type `v` for character based
 * type `V` for line based
-* type `ctrl-v` for block visual mode
+* type `CTRL-v` for block visual mode
  
 Highlight text via either the h,j,k,l keys or the arrow keys.
 Once selected, you can issue either _Normal Mode_ or 
 _Command Mode_ commands on that highlighted region.  To punt
-out of _Visual Mode_, hit the `esc` key.
+out of _Visual Mode_ without doing anything, hit the `esc` key.
+
+If you have enabled mouse support, mouse actions can cause you
+to enter _Visual Mode_.
 

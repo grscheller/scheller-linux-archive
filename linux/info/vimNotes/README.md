@@ -7,4 +7,6 @@ accessible to someone familiar the previous
 notes above it.
 
 * [Basic text editing](basicTextEditing.md)
+* [Vim Factoids](vimFactoids.md)
+* [Using Multiple Vim Windows](multipleVimWindows.md)
 * [Regular Expresions](regExp.md)

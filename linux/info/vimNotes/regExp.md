@@ -52,13 +52,13 @@ Given a set `V` of words, let `ε` be the **empty word** , then
    V* = V₀ ∪ V₁ ∪ V₂ ∪ V₃ ∪ …
    V+ = V₁ ∪ V₂ ∪ V₃ ∪ V₄ ∪ …
 ```
-The collection of **regular languages** over an alphabet `Σ` is regursively 
+The collection of **regular languages** over an alphabet `Σ` is recursively 
 defined by
 * languages `{ }` and `{ε}` are regular languages
 * `∀a ∈ Σ`, `{a}` is a regular language
 * if `A` and `B` are regular languages, then
   * `A∪B`is a regular language
-  * `A⋅B` are regular language
+  * `A⋅B`is a regular language
   * `A*` is a regular language
 * no other languages over `Σ` are regular
 
@@ -126,6 +126,6 @@ It is usually easiest to learn regular expressions using simple examples.
 
 ### Using Regular Expressions in Vim:
 
-#### _Normal Mode_ examples
+##### _Normal Mode_ examples
 
-#### _Command Mode_ examples
+##### _Command Mode_ examples

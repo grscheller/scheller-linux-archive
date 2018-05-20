@@ -11,10 +11,10 @@ I think with a few weeks of practice, the material covered here
 can be internalized.  Eventually, these commands become part of
 one's "muscle memory."
 
-### Vim has 4 modes:
+### Vim has 4 main modes:
 * _Normal Mode_
-* _Insert Mode_
 * _Command Mode_
+* _Insert Mode_
 * _Visual Mode_ (not in original vi)
 
 ### Cursor movement in _Normal Mode_:
@@ -25,11 +25,6 @@ one's "muscle memory."
 * `$`         move to end of line
 * `^`         move to first non-whitespace character on line 
 * `0`         move to first character on line
-* `%`         move to the matching (, ) or [, ] or {, }
-* `(`         move to beginning of sentence
-* `)`         move to beginning of next sentence
-* `{`         move up a paragraph
-* `}`         move down paragraph
 * `G`         move to last line in file
 * `gg`        move to first line in file
 * `f<char>`   move forward to next <char> on current line
@@ -61,24 +56,25 @@ the _normal mode_ cursor positioning commands.
 * `3yw`   yank three words to buffer, starting at cursor
 * `y^`    yank everything before cursor to first non-whitespace char
 * `d2fz`  delete from cursor to 2nd z on current line
+* `2db`   delete 2 previous words starting from cursor
 * `2y3w`  ends up yanking 6 words
 
 You can use named buffers to store text.
 
 * `'adw`  delete word and put in buffera` 'a`
-* `'A2yy` yank 2 lines and append to buffer `'a`
+* `'B2yy` yank 2 lines and append to buffer `'b`
 * `'sd$`  delete to end of line and put in buffer `'s`
 * `'sp`   paste contents of buffer `'s` after cursor
 * `'aP`   paste contents of buffer `'a` before cursor
 
 One use case for named buffers is copying multiple items
-from multiple files and pasting them into later files.
+from multiple files and pasting them into other files.
 
 ### Commands to insert or manipulate text:
 These commands take vim from _Normal Mode_ to _Insert Mode_.
-To return to _Normal Mode_, type `esc`.
+To return to _Normal Mode_, type `<esc>`.
 
-* `i`    insert text at cursor
+* `i`    insert text before cursor
 * `a`    insert text after cursor
 * `I`    insert text at beginning of line after initial white space
 * `0i`   insert text beginning of line
@@ -99,7 +95,7 @@ key is just another navigation key.
 
 ### Undo/redo commands:
 * `u`         undo previous edit
-* `CTRL-r`    redo edit undone
+* `<ctrl-r>`  redo edit undone
 
 These can be used to linearly undo and redo edits,
 like the arrow buttons in a web browser.
@@ -128,7 +124,7 @@ and prompts you with `: `.
 * `:wq`      Write to disk, then quit
 * `:q!`      Quit without saving unsaved changes
 * `:n`       Move to next file given on command line
-* `:prev`    Move to previous file given on command line
+* `:prev`    Move back to previous file given on command line
 * `:wn`      Write to disk and move on to next file to edit
 * `:42`      Move cursor to beginning of line 42
 * `:#`       Give line number of current line cursor is on
@@ -138,7 +134,7 @@ and prompts you with `: `.
 
 While in _Command Mode_, the up & down arrow keys cycles through previous
 _Command Mode_ commands.  The left & right arrow keys help you re-edit the
-line.  To return to _Normal Mode_, without issuing a command, press `esc`.
+line.  To return to _Normal Mode_, without issuing a command, press `<esc>`.
 
 ### Repeating commands in _Normal Mode_:
 * `.`  repeat the last command which changed text
@@ -158,12 +154,12 @@ regions that can then be modified.
 To enter _Visual Mode_ from _Normal Mode_
 * type `v` for character based
 * type `V` for line based
-* type `CTRL-v` for block visual mode
+* type `<ctrl-v>` for block visual mode
  
 Highlight text via either the h,j,k,l keys or the arrow keys.
 Once selected, you can issue either _Normal Mode_ or 
 _Command Mode_ commands on that highlighted region.  To punt
-out of _Visual Mode_ without doing anything, hit the `esc` key.
+out of _Visual Mode_ without doing anything, hit the `<esc>` key.
 
 If you have enabled mouse support, mouse actions can cause you
 to enter _Visual Mode_.

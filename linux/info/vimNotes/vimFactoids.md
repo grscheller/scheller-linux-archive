@@ -31,7 +31,7 @@ knowing about the existence of this mechanism can be very
 confusing to new and intermediate vim users.  Simply
 creating an empty ~/.vimrc file can radically change
 vim behavior and the user has no clue how to recover
-previous desirable features.  Putting
+previous desirable features.  Putting the line
 `let skip_defaults_vim=1` in `/etc/vimrc` will stop
 this "feature."
 
@@ -66,16 +66,16 @@ with that buffer.
 * `:n`           edit next buffer
 * `:next`        same as above
 * `:prev`        edit previous buffer
-*  :edit <file>` edit buffer associated with <file> in current window
-*  :e <file>`    same as above, for both, creates new buffer if necessary
+* `:edit <file>` edit buffer associated with <file> in current window
+* `:e <file>`    same as above, for both, creates new buffer if necessary
 * `:buffers`     list buffers
 * `:ls`          same as above
 * `:b2`          edit buffer 2 in current window (not commonly used)
 * `:new`         open new window with a new empty buffer
 * `:split`       open new window but use the same buffer
-*  :spl          same as above, basically 2 views of same buffer
+* `:spl`         same as above, basically 2 views of same buffer
 * `:w`           write buffer to file associated with buffer
-*  :w <file>     write buffer to <file>, buffer file association does not change
+* `:w <file>`    write buffer to <file>, buffer file association does not change
 * `:q`           quit window, if last view, won't let you until changes written to disk
 * `:q!`          quit window, abandon any changes if last view
 
@@ -88,7 +88,7 @@ terminal emulator handle all mouse events, `:set mouse=`.
 Available mouse options are:
 
 | Option | Mode                                 |
-|:------:| ------------------------------------ |
+|:------:|:------------------------------------:|
 | n      | _Normal Mode_                        |
 | v      | _Visual Mode_                        |
 | i      | _Insert Mode_                        |
@@ -102,7 +102,7 @@ key.
 
 I find that configuring the mouse for anything but _Normal Mode_
 pretty useless and counter intuitive.  In _Insert Mode_ I
-don't like the middle mouse button repositioning the paste.
+don't like the middle mouse button repositioning a paste.
 In _Normal Mode_ I don't like a click-drag throwing me into
 character _Visual Mode_.
 
@@ -125,3 +125,14 @@ Turn spell checking on,
 turn spell checking off,
 
 * `:set nospell`
+
+### Vi and Vim differences:
+* Vi only has one level of undo/redo, `<ctrl-u>` undo the
+  last change and, if hit again, will redo the change.
+  `<ctrl-r>` has no effect.
+* On modern Linuxes, the vi "executable" is either a
+  symlink to ex, traditional BSD based vi, or a symlink
+  to vim.  If vim is started with the name vi, it lauches
+  itself in vi cmpatibility mode.  Vim in compatibility
+  mode is neither POSIX compliant nor a Vi clone.
+

@@ -64,8 +64,6 @@ alias lla='ls -ltra'
 alias l.='ls -dA .* --color=auto'
 alias pst="ps axjf | sed -e '/^ PPID.*$/d' -e's/.*:...//'"
 alias which='alias | /usr/bin/which --tty-only --read-alias --show-dot --show-tilde'
-alias vi='vim'
-alias gvim='gvim -c "colorscheme desert"'
 
 ## pop up multiple directories
 function ud() {

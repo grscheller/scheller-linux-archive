@@ -1,12 +1,17 @@
 # Vim - Vi iMproved
-My purpose is to create a set of vim notes which
-not only captures what I know, but can be used
-as a tutorial.  Well, maybe more as a series of 
-"cheatsheets" for vim.  I wanted to make each note
-accessible to someone familiar the previous
-notes above it.
+These notes have evolved from a text file cheatsheet
+I maintained for myself.  I tried to put the MarkDown
+files linked below in an order that only relies on  
+the gist of the information in ones above it.
+I have found the act of creating/maintaining these
+notes invaluable in my journey to master Vim.
 
 * [Basic text editing](basicTextEditing.md)
+* [Advanced Traditional Vi Commands](advTradViCommands.md)
 * [Vim Factoids](vimFactoids.md)
 * [Using Multiple Vim Windows](multipleVimWindows.md)
-* [Regular Expresions](regExp.md)
+* [Regular Expressions](regExp.md)
+
+(TL;DR) <- Means "too long, don't read."  I use this to
+mark interesting background information, but want to make
+sure the reader knows it is clearly an aside.

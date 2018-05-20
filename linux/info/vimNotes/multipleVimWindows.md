@@ -28,23 +28,23 @@ I configure these in my `~/.vim/vimrc
 ### Adjusting windows size (without mouse support):
 
 ##### Equalize window size
-* `CTRL-w=`   equalize heights/widths of all windows
+* `<ctrl-w>=`   equalize heights/widths of all windows
 
 ##### Setting/adjusting window sizes
-* `20CTRL-w_` set active window height 20 lines
-* `72CTRL-w|` set active window width 72 chars
-* `10CTRL-w+` increaces active window height 10 lines
-* `15CTRL-w-` decreaces active window height 15 lines
-* `10CTRL-w>` increaces active window width 10 char
-* `15CTRL-w<` decreaces active window width 15 char
+* `20<ctrl-w>_` set active window height 20 lines
+* `72<ctrl-w>|` set active window width 72 chars
+* `10<ctrl-w>+` increaces active window height 10 lines
+* `15<ctrl-w>-` decreaces active window height 15 lines
+* `10<ctrl-w>>` increaces active window width 10 char
+* `15<ctrl-w><` decreaces active window width 15 char
 
 Also, note that
-* `CTRL-w_`   maximize active window height
-* `CTRL-w|`   maximize active window width
+* `<ctrl-w>_`   maximize active window height
+* `<ctrl-w>|`   maximize active window width
 
 but
-* `CTRL-w+`   increaces active window height 1 lines
-* `CTRL-w-`   decreaces active window height 1 lines
-* `CTRL-w>`   increaces active window width 1 char
-* `CTRL-w<`   decreaces active window width 1 char
+* `<ctrl-w>+`   increaces active window height 1 lines
+* `<ctrl-w>-`   decreaces active window height 1 lines
+* `<ctrl-w>>`   increaces active window width 1 char
+* `<ctrl-w><`   decreaces active window width 1 char
 

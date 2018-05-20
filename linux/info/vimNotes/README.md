@@ -7,8 +7,8 @@ I have found the act of creating/maintaining these
 notes invaluable in my journey to master Vim.
 
 * [Basic text editing](basicTextEditing.md)
-* [Advanced Traditional Vi Commands](advTradViCommands.md)
 * [Vim Factoids](vimFactoids.md)
+* [Advanced Traditional Vi Commands](advTradViCommands.md)
 * [Using Multiple Vim Windows](multipleVimWindows.md)
 * [Regular Expressions](regExp.md)
 

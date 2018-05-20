@@ -27,10 +27,10 @@ I configure these in my `~/.vim/vimrc
 
 ### Adjusting windows size (without mouse support):
 
-##### Equalize window size
+#### Equalize window size
 * `<ctrl-w>=`   equalize heights/widths of all windows
 
-##### Setting/adjusting window sizes
+#### Setting/adjusting window sizes
 * `20<ctrl-w>_` set active window height 20 lines
 * `72<ctrl-w>|` set active window width 72 chars
 * `10<ctrl-w>+` increaces active window height 10 lines

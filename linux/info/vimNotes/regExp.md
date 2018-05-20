@@ -126,6 +126,6 @@ It is usually easiest to learn regular expressions using simple examples.
 
 ### Using Regular Expressions in Vim:
 
-##### _Normal Mode_ examples
+#### _Normal Mode_ examples
 
-##### _Command Mode_ examples
+#### _Command Mode_ examples

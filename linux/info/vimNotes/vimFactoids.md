@@ -46,18 +46,18 @@ for now are:
 * named buffers
 * file buffers
 
-##### The default buffer
+#### The default buffer
 The default buffer is just the area which `y` and `c` commands
 write to and `w` and `c` commands read from by "default."
 
-##### Named buffers
+#### Named buffers
 Illustrated in [Basic text editing](basicTextEditing.md),
 Named buffers are areas where you can store snippets of text.
 They are named `"a` thru `"z`and are essentially
 26 independent "clip boards" that are shared between all the file
 buffers.
 
-##### File buffers
+#### File buffers
 These are the in memory text associated with a file.  To list
 them, use the `:buffers` command.  Amoung other things, this
 gives a unique buffer number and filename (if any) associated
@@ -89,12 +89,12 @@ Available mouse options are:
 
 | Option | Mode                                 |
 |:------:|:------------------------------------:|
-| n      | _Normal Mode_                        |
-| v      | _Visual Mode_                        |
-| i      | _Insert Mode_                        |
-| c      | _Command Mode_                       |
-| a      | All previous modes                   |
-| h      | All previous modes only when in help |
+| `n`    | _Normal Mode_                        |
+| `v`    | _Visual Mode_                        |
+| `i`    | _Insert Mode_                        |
+| `c`    | _Command Mode_                       |
+| `a`    | All previous modes                   |
+| `h`    | All previous modes only when in help |
 
 As a workaround, you can send mouse events directly to the
 terminal emulator instead of Vim by holding down the SHIFT

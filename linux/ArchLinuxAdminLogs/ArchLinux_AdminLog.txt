@@ -4861,3 +4861,10 @@ Note: Basically rebuilt system from scratch starting on 2017-06-20
   comments, so these *.pacnew files can be safely deleted.  The
   new versions of these files are just subs with root's info in
   them.
+
+2018-05-17:
+  Installed a vulnerability scanner, 
+
+    $ sudo pacman -Syu vulscan
+
+  brought in nmap.

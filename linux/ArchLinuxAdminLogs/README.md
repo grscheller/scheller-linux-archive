@@ -2,10 +2,14 @@
 
 These files are date ordered and evolutionary in nature.
 
-### ArchLinux_AdminLog.txt
-* A system administration file I maintain to document what was
-  done to create my Arch Linux laptop and how I administrate it.
+### [ArchLinux_AdminLog](ArchLinux_AdminLog)
+* Documents system administration on my Arch Linux laptop
+* Cronologically ordered
+* Lots of factoid asides
 
-### userland_Adminlog.txt
-* File used to document how I configure the programs and software
-  development environments I install in my home directory.
+### [Userland_Adminlog](Userland_Adminlog)
+* Documents user level configurations
+* Desktop environments
+* Software development environments
+* Building software development tools
+* Using software development tools

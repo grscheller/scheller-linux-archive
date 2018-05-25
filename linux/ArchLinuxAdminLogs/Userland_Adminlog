@@ -821,3 +821,77 @@ Purpose: For things installed locally as an unprivalleged user.
     Hello, Haskell!
 
   seemed to want to build it again.
+
+2018-05-23:
+  Installed Cinnamon desktop environment.  Its native file manager
+  is called nemo (was installed) and terminal emulator is called
+  gnome-terminal (not installed, but available).  Able to find
+  xfce4-terminal in the menus.
+
+  To set xfce4-terminal as the default terminal application
+
+    $ gsettings set org.cinnamon.desktop.default-applications.terminal exec /usr/bin/xfce4-terminal
+
+  Now I can open a terminal by rt-clicking in nemo and <ctrl>+<alt>+t.
+
+  To set mouse focus go to
+
+    Settings -> Windows -> Behavior
+
+  Also turned on "Prevent focus stealing" from here.
+
+  Only behavior I could not achieve is not to raise the window on
+  a mouse click event...
+
+  But, scrollwheel doesn't raise window and mouse click passes
+  to window, not just raises it.  <ctrl>+<clicks> don't raise
+  the window.
+
+2018-05-23:
+  Moved panel to top and created new pannel on bottom.  Moved 
+  "Window list app" to bottom panel (LHS) by itself. Installed
+  workspace switcher app top panel.  
+
+  Can switch workspaces via
+    <cntl>+<alt>+<left arrow>  and  <cntl>+<alt>+<right arrow>  
+
+  Can drag windows between workspaces and select workspace via
+    <cntl>+<alt>+<up arrow>
+
+  Can select amoung windows on a workspace via
+    <cntl>+<alt>+<down arrow>
+
+2018-05-24:
+  Cinnamon seems very similar to XFCE, or it is so configurable that
+  I have comfigured it so.  The big difference is that font size and
+  colors are centrally configured in Cinammon.  Claws-mail pleasingly
+  dark theme in XFCE is ignored in Cinnamon.  
+
+  I think Cinammon themes configure groups of gui elements (panel applets,
+  desktop applets, background) separately and uniformly across applications.
+  Trying to overwide Claw-email colors with clawsker failed in Cinammon.
+
+  Cinnamon lets you mix aspects of different themes fairly effortlessly.
+  Until I can find some themes which give "applets" a dark background,
+  Cinnamon won't work for me.  By "applet" I refer to programs that use
+  GTK2 library interface, I think this is the "hook" that these "modern"
+  desktops are using to Mac-i-nize the user experience.
+
+2018-05-24:
+  Got a Cinnamon theme combo that works for me,
+
+    Window borders:  Adapta-Nokto
+    Icons:           gnome
+    Controls:        Adwaita
+    Mouse Pointer:   Adwaita
+    Desktop:         Serena
+
+  Borders & title bars indicate what has focus.  Unfocused
+  windows don't blur-out.  Window-list applet shows what
+  has focus.  Controls very readable, light text on a
+  medium-to-dark grey backgound.
+
+  Other Setting -> Windows -> Titlebar  tweaks:
+    - <middle-wheel> adjusts windows opacity
+    - <middle-click> lowers window
+    - <rt-click>     toggles window always on top

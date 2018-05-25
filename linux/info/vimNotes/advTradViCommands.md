@@ -13,7 +13,7 @@ introduced multiple windows.
 #### Status commands
 | Command  | Description                                |
 |:----------:|:------------------------------------------ |
-| `<cntl-g>` | show filename and other useful status info |
+| `<ctrl-g>` | show filename and other useful status info |
 
 #### Commands to move cursor
 | Command    | Description                                |
@@ -68,7 +68,7 @@ to repeat them that many times.
 
 What "section" means is most easily understood in the
 context of file types.  For text files, different sections
-can be separated by formfeeds (Unicode u000c).  `[[` and `]]`
+can be separated by formfeeds (U+000c). `[[` and `]]`
 jump you to the previous and next one respectively.
 
 (TL;DR) For pre-ANSI K&R C files, The last two will jump

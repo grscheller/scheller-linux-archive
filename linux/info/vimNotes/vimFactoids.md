@@ -48,14 +48,14 @@ for now are:
 
 #### The default buffer
 The default buffer is just the area which `y` and `c` commands
-write to and `w` and `c` commands read from by "default."
+write to and `p` and `c` commands read from by "default."
 
 #### Named buffers
 Illustrated in [Basic text editing](basicTextEditing.md),
 Named buffers are areas where you can store snippets of text.
-They are named `"a` thru `"z`and are essentially
-26 independent "clip boards" that are shared between all the file
-buffers.
+They are named `"a` thru `"z` and are essentially 26
+independent "clip boards" that are shared between all the
+file buffers.
 
 #### File buffers
 These are the in memory text associated with a file.  To list
@@ -63,21 +63,23 @@ them, use the `:buffers` command.  Amoung other things, this
 gives a unique buffer number and filename (if any) associated
 with that buffer.
 
-* `:n`           edit next buffer
-* `:next`        same as above
-* `:prev`        edit previous buffer
-* `:edit <file>` edit buffer associated with <file> in current window
-* `:e <file>`    same as above, for both, creates new buffer if necessary
-* `:buffers`     list buffers
-* `:ls`          same as above
-* `:b2`          edit buffer 2 in current window (not commonly used)
-* `:new`         open new window with a new empty buffer
-* `:split`       open new window but use the same buffer
-* `:spl`         same as above, basically 2 views of same buffer
-* `:w`           write buffer to file associated with buffer
-* `:w <file>`    write buffer to <file>, buffer file association does not change
-* `:q`           quit window, if last view, won't let you until changes written to disk
-* `:q!`          quit window, abandon any changes if last view
+| Command       | Description                                 |
+|:------------- |:-------------------------------------------------------- |
+| `:n`          | edit next buffer                                         |
+| `:next`       | same as above                                            |
+| `:prev`       | edit previous buffer                                     |
+| `:edit <file>`| edit buffer associated with <file> in current window     |
+| `:e <file>`   | same as above, for both, creates new buffer if necessary |
+| `:buffers`    | list buffers                                             |
+| `:ls`         | same as above, not the same as `!ls`                     |
+| `:b2`         | edit buffer 2 in current window (not commonly used)      |
+| `:new`        | open new window with a new empty buffer                  |
+| `:split`      | open new window but use the same buffer                  |
+| `:spl`        | same as above, basically 2 views of same buffer          |
+| `:w`          | write buffer to file associated with buffer              |
+| `:w <file>`   | write buffer to <file>, buffer file association unchange |
+| `:q`          | quit window, fails if last view & changes not saved      |
+| `:q!`         | quit window, abandon any changes if last view            |
 
 ### Using the mouse
 When configured to use the mouse, vim will steal the mouse
@@ -107,24 +109,20 @@ In _Normal Mode_ I don't like a click-drag throwing me into
 character _Visual Mode_.
 
 ### Dealing with whitespace characters:
-Tell vim to indicate where line endings and tabs are,
 
-* `:set list`
+| Command       | Description                                 |
+|:------------- |:------------------------------------ |
+| `:set list`   | Indicate line endings & tabs         |
+| `:set nolist` | Display line endings & tabs normally |
 
-to return to displaying tabs and line endings normally,
-
-* `:set nolist`
-
-This is a wonderful feature to get rid of tabs and trailing whitespace.
+Helps when getting rid of tabs and trailing whitespace.
 
 ### Spell checking:
-Turn spell checking on,
 
-* `:set spell`
-
-turn spell checking off,
-
-* `:set nospell`
+| Command        | Description             |
+|:-------------- |:----------------------- |
+| `:set spell`   | Turn spell checking on  |
+| `:set nospell` | Turn spell checking off |
 
 ### Vi and Vim differences:
 * Vi only has one level of undo/redo, `<ctrl-u>` undo the

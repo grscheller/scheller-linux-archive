@@ -9,15 +9,29 @@ if you don't know how to navigate multiple vim windows.
 * A _window_ is a viewport on a buffer
 * A _tab page_ is a collection of windows
 
-### Creating new windows
-* `new`  new window with empty buffer above
-* `vnew` new window with empty buffer to left
-* `spl`  new window new view same buffer above
-* `vspl` new window new view same buffer to left
+### Creating new windows _Command Mode_
+
+| Command | Description                             |
+|:------- |:--------------------------------------- |
+| `:new`  | new window with empty buffer above      |
+| `:vnew` | new window with empty buffer to left    |
+| `:spl`  | new window new view same buffer above   |
+| `:vspl` | new window new view same buffer to left |
+
+### Creating new windows _Normal Mode_
+
+| Command     | Description                             |
+|:-----------:|:--------------------------------------- |
+| `<ctrl-w>n` | new window with empty buffer above      |
+| `<ctrl-w>s` | new window new view same buffer above   |
+| `<ctrl-w>v` | new window new view same buffer to left |
 
 The directional sense of these commands can be adjusted via
-* `:set splitbelow`  open new windows below, not above
-* `:set splitright`  open new windows to right, not to left
+
+| Command           | Description                            |
+|:----------------- |:-------------------------------------- |
+| `:set splitbelow` | open new windows below, not above      |
+| `:set splitright` | open new windows to right, not to left |
 
 I configure these in my `~/.vim/vimrc
 ```
@@ -28,23 +42,35 @@ I configure these in my `~/.vim/vimrc
 ### Adjusting windows size (without mouse support):
 
 #### Equalize window size
-* `<ctrl-w>=`   equalize heights/widths of all windows
+
+| Command        | Description                            |
+|:--------------:|:-------------------------------------- |
+| `<ctrl-w>=`    | equalize heights/widths of all windows |
 
 #### Setting/adjusting window sizes
-* `20<ctrl-w>_` set active window height 20 lines
-* `72<ctrl-w>|` set active window width 72 chars
-* `10<ctrl-w>+` increaces active window height 10 lines
-* `15<ctrl-w>-` decreaces active window height 15 lines
-* `10<ctrl-w>>` increaces active window width 10 char
-* `15<ctrl-w><` decreaces active window width 15 char
+
+| Command       | Description                             |
+|:-------------:|:--------------------------------------- |
+| `20<ctrl-w>_` | set active window height 20 lines       |
+| `72<ctrl-w>|` | set active window width 72 chars        |
+| `10<ctrl-w>+` | increaces active window height 10 lines |
+| `15<ctrl-w>-` | decreaces active window height 15 lines |
+| `10<ctrl-w>>` | increaces active window width 10 char   |
+| `15<ctrl-w><` | decreaces active window width 15 char   |
 
 Also, note that
-* `<ctrl-w>_`   maximize active window height
-* `<ctrl-w>|`   maximize active window width
+
+| Command     | Description                   |
+|:-----------:|:----------------------------- |
+| `<ctrl-w>_` | maximize active window height |
+| `<ctrl-w>|` | maximize active window width  |
 
 but
-* `<ctrl-w>+`   increaces active window height 1 lines
-* `<ctrl-w>-`   decreaces active window height 1 lines
-* `<ctrl-w>>`   increaces active window width 1 char
-* `<ctrl-w><`   decreaces active window width 1 char
+
+| Command     | Description                            |
+|:-----------:|:-------------------------------------- |
+| `<ctrl-w>+` | increaces active window height 1 lines |
+| `<ctrl-w>-` | decreaces active window height 1 lines |
+| `<ctrl-w>>` | increaces active window width 1 char   |
+| `<ctrl-w><` | decreaces active window width 1 char   |
 

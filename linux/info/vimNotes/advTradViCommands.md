@@ -11,7 +11,7 @@ introduced multiple windows.
 
 ### _Normal Mode_ Commands:
 #### Status commands
-| Command  | Description                                |
+| Command    | Description                                |
 |:----------:|:------------------------------------------ |
 | `<ctrl-g>` | show filename and other useful status info |
 
@@ -93,7 +93,7 @@ For more information on `<ctrl-x>` see,
 ```
 If you accidentally typed `<ctrl-x>`, typing any non-control character will
 get you back.  If you have terminal flow control turned on, and you hit
-the unfortunate key combination `<ctrl-x><ctrl-s>, something EMACS are
+the unfortunate key combination `<ctrl-x><ctrl-s>`, something EMACS are
 likely to do, you will find your vim editting session frozen.  Type
 `<ctrl-q>` to unlock.
 

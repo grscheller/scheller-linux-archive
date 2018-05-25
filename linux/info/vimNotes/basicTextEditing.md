@@ -24,7 +24,7 @@ one's "muscle memory."
 | `:n`           | edit next buffer                                 |
 | `h,i,j,k`      | move cursor one character (also arrow keys)      |
 | `w, W`         | move forward to beginning next word              |
-| `b, B`         | move back to beginning of previous word          |
+| `b, B`         | move back to beginning of current/previous word  |
 | `e, E`         | move forward to end of word                      |
 | `$`            | move to end of line                              |
 | `^`            | move to first non-whitespace character on line   |
@@ -58,7 +58,7 @@ What "before" or "after" mean depends on what is
 in the buffer.  `y` and `d` can be used with all
 the _normal mode_ cursor positioning commands.
 
-| Command | Description                                         |
+| Command | Description                                                |
 |:-------:|:---------------------------------------------------------- |
 | `d$`    | delete to end of line and put in buffer                    |
 | `d0`    | delete everything before cursor on line and put in buffer  |
@@ -150,20 +150,23 @@ and prompts you with `: `.
 | `:s/foo/bar/g`      | substitute all instances of foo with bar on current line      |
 | `:17,42s/foo/bar/g` | substitute all foo with bar, lines 17 to 42                   |
 
-While in _Command Mode_, the up & down arrow keys cycles through previous
+While in _Command Mode_, up & down arrow keys cycle through previous
 _Command Mode_ commands.  The left & right arrow keys help you re-edit the
-line.  To return to _Normal Mode_, without issuing a command, press `<esc>`.
+line.  Press `<esc>` to return to _Normal Mode_ without issuing a command.
 
 ### Repeating commands in _Normal Mode_:
-* `.`  repeat the last command which changed text
+
+| Command | Description                                |
+|:-------:|:------------------------------------------ |
+| `.`     | repeat the last command which changed text |
 
 This repeats the last _Normal Mode_ command used which changed text.  It
 does not repeat _Command Mode_ commands.
 
 This is frequently used in conjunction with the `n` _Normal Mode_ command.
 For example, `n.n.nn.n` keeps moving to the beginning of the next match for
-the last search pattern and I either decide to repeat, or not, the change
-at each location.  
+the last search pattern and you can either decide to repeat, or not, the
+change at each location.  
 
 ### Introduction to _Visual Mode_:
 This mode allows you to select region of text by visually highlighting

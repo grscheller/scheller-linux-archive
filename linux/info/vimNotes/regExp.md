@@ -121,11 +121,47 @@ Due to the common use of `(){}|+` in programming languages, makes
 sense that vim uses BREs.  Probably more likely done for backward
 compatibility with vi.
 
-### Simple ERE Examples:
+### Extended Regexp examples:
 It is usually easiest to learn regular expressions using simple examples.
 
+| RegExp           | Examples                                       |
+|:--------------   |:---------------------------------------------- |
+| `foo.*`          | match foo followed by zero or more characters  |
+| `fooba+r`        | match foobar, foobaar, foobaaar, ...           |
+| `foo(bar|baz)`   | match either foobar or foobaz                  |
+| `fo{2,4}bar`     | match foobar, fooobar, or foooobar             |
+| `(fo){2,}bar`    | match fofobar, fofofobar, fofofobar, ...       |
+| `(fo){2}bar`     | match fofobar                                  |
+| `(fo){,3}bar`    | match bar, fobar, fofobar, fofofobar           |
+| `^foobar`        | match foobar at beginning of a line            |
+| `foobar$`        | match foobar at end of a line                  |
+| `^foo(bar|baz)$` | match line containing only foobar or foobaz    |
+| `fooba[rz]`      | match foobar or foobaz                         |
+| `foob[^ui]r`     | matches fobar or fobqz but not fobur nor fobir |
+
 ### Using Regular Expressions in Vim:
+I like to think of all my regular expressions as extended regular
+expressions.  When working with basic regular expressions I still
+think interms of extended regular expressions but with the need
+to escape the `(){}|+?` characters with a backslash to turn on their
+meta-meaning.  The character `.` is meta without escaping.
 
 #### _Normal Mode_ examples
 
 #### _Command Mode_ examples
+
+### POSIX.2 Regular Expressions:
+For a description of POSIX.2 regular expressions see
+```
+   $ man -s7 regex
+```
+According to this Linux man page,
+POSIX.2 refers to "_extended regular expresions_" as
+"_modern regular expresions_" and "_egrep regular expressions_."
+It also refers to "_simple regular expressions_" as
+"_obsolete regular expressions_" and "_basic regular expressions_"
+and "_ed regular expressions_."
+
+For "_simple regular expressions_" the characters `|+?` have no
+special meta-meaning.  This type of regular expressions are in the
+POSIX.2 standard for backward compatibility, and are considered a wart.

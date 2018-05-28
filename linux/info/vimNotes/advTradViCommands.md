@@ -84,18 +84,18 @@ defining "sections."
 | `<backspace>`   | delete previous character                         |
 | `<ctrl-v><chr>` | take <chr> literally                              |
 | `<ctrl-w>`      | delete previous word                              |
-| `<ctrl-c>`      | break out of _insert mode_, punt on any auto cmds |
+| `<ctrl-c>`      | break out of _Insert Mode_, punt on any auto cmds |
 | `<ctrl-x>`      | enter _Insert Mode_ completion submode            |
 
 For more information on `<ctrl-x>` see,
 ```
    :help ins-completion
 ```
-If you accidentally typed `<ctrl-x>`, typing any non-control character will
-get you back.  If you have terminal flow control turned on, and you hit
-the unfortunate key combination `<ctrl-x><ctrl-s>`, something EMACS are
-likely to do, you will find your vim editting session frozen.  Type
-`<ctrl-q>` to unlock.
+If you accidentally typed `<ctrl-x>` while in insert mode, typing any
+non-control character will get you back.  If you have terminal flow
+control turned on, and you hit the unfortunate key combination
+`<ctrl-x><ctrl-s>`, something EMACS users are likely to do, you will
+find your vim editting session frozen.  Type `<ctrl-q>` to unlock.
 
 ### _Insert Mode_ vs _Replace Mode_:
 * _Replace Mode_ is similar to _Insert Mode_ but
@@ -111,7 +111,7 @@ likely to do, you will find your vim editting session frozen.  Type
 
 ### _Command Mode_ Commands:
 | Command        | Description                                       |
-|:--------------:|:------------------------------------------------- |
+|:-------------- |:------------------------------------------------- |
 | `:r file`      | read file and insert it after current line        |
 | `:nr file`     | read file and insert it after line n              |
 | `:w!`          | write file overriding normal checks               |
@@ -123,6 +123,28 @@ likely to do, you will find your vim editting session frozen.  Type
 | `:=`           | show number of lines in buffer                    |
 | `:n,md`        | delete lines n thru m
 
-### Markers:
+### Marks:
+Marks allow you to set locations to be able to either quickly jump to
+or use with _Normal Mode_ editing commands.
 
+Marks within a given buffer are denoted via leters `a-z`.  For marks between
+different buffers, use letters `A-Z`.  The mark is a "zero-width" entity
+between the cursor and the preceding character.
 
+| Command   | Description                                               |
+|:---------:|:--------------------------------------------------------- |
+| `ma`      | set mark `a` for the current editing buffer               |
+| `mB`      | set mark `B` for all buffers                              |
+| `` `a ``  | jump to mark `a` current buffer                           |
+| `` `B ``  | jump to mark `B` current or another editing buffer        |
+| `'a`      | jump to first nonspace char in line with mark `a`         |
+| `'B`      | jump to mark `B` in this or another editing buffer        |
+| `` d`a `` | delete from cursor to mark `a`                            |
+| `` y`a `` | yank from cursor to mark `a`                              |
+| `y'B`     | yank from cursor to mark `B`, fails if not in curr buffer |
+| `d'w      | deletes current line thru line with mark `w`              |
+
+Like a mark, the cursor is also a "zero-width" entity between the 
+highlighted character and the preceeding character.  If the mark is
+before the cursor in the file, the selection does not contain the
+highlighted character.  Just like the `yb` _Normal Mode_ command does.

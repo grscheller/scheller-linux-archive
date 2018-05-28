@@ -124,7 +124,7 @@ find your vim editting session frozen.  Type `<ctrl-q>` to unlock.
 | `:n,md`        | delete lines n thru m
 
 ### Marks:
-Marks allow you to set locations to be able to either quickly jump to
+Marks allow you to set locations to either be able to jump to
 or use with _Normal Mode_ editing commands.
 
 Marks within a given buffer are denoted via leters `a-z`.  For marks between

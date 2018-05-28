@@ -110,7 +110,7 @@ Note, `*`, `+`, `?`, and `{m,n}` all bind more closely than concatenation.
 
 ### Basic Regular Expressions(BRE):
 These are what Vim uses.  The big difference is that the meta
-characters `(){}|+` are treated litterally and you must
+characters `(){}|+?` are treated litterally and you must
 escape them with `\` for them to take on their meta-meaning.
 * BRE backward compatible to Simple Regular Expressions(SRE)
 * SRE are deprecated

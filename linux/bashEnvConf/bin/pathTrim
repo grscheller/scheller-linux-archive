@@ -6,8 +6,7 @@
 #
 # Usage: pathTrim colen:separated:list
 #
-# Written by Geoffrey Scheller 
-#
+
 unset Fields Path
 shopt -s extglob
 
@@ -19,7 +18,7 @@ do
    [[ -x $Dir/sed ]] && SED=$Dir/sed && break
 done
 if [[ -n $SED ]]; then
-   Path=$(echo $* | $SED -e 's|/\+|/|g
+   Path=$(echo "$@" | $SED -e 's|/\+|/|g
                              s|:\+|:|g')
 else
    Path="$*"
@@ -28,19 +27,19 @@ fi
 OLDIFS=$IFS; IFS=':'
 for Dir in $Path
 do
-    Dir=${Dir%%+(/)}                    # Remove trailing /'s
-    [[ -d "$Dir" ]] || continue         # Why look if not there?
-    for Field in "${Fields[@]}"         # Search for duplicates
+    Dir=${Dir%%+(/)}               # Remove trailing /'s
+    [[ -d "$Dir" ]] || continue      # Why look if not there?
+    for Field in "${Fields[@]}"    # Search for duplicates
     do
-        [[ $Field == $Dir ]] && continue 2
+        [[ $Field == "$Dir" ]] && continue 2
     done
-    Fields+=($Dir)                      # Append to end of array
+    Fields+=("$Dir")   # Append to end of array
 done
 IFS=$OLDIFS
 
 Path=''
-for Field in "${Fields[@]}"             # Create PATH string from array
+for Field in "${Fields[@]}"  # Create PATH string from array
 do
     Path+=${Field}:
 done
-echo ${Path%:}                          # Remove final :
+echo "${Path%:}"  # Remove final :

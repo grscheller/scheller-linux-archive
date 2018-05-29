@@ -7,8 +7,7 @@
 #
 # Usage: spin
 #
-# Written by Geoffrey Scheller
-#
+
 unset LINE SPINNER jj
 
 SPINNER[0]='\b-'; SPINNER[1]='\b\\'; SPINNER[2]='\b|'; SPINNER[3]='\b/'

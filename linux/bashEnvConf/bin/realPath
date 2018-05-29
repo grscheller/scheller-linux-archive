@@ -5,69 +5,67 @@
 #
 # Usage: realPath /path/to/first/item another/path/to/second/item
 #
-# Works well with whence -
+# Purpose: To find the real locations of files and directories.
+#          Will give some limited info on failures other than
+#          just not finding anything.  Not a symlink report tool.
+#
+# Works well with whence,
 #
 #     realPath $(whence java javac scala python cc gcc ghc)
 #
-# Written by Geoffrey Scheller
+# Bugs: 1. Execute permission needed in all directories traversed.
+#       2. Don't know how to gag FUNCNEST recursion limit error messages.
 #
 
-#
-# Takes a path to the ultimate target and
-# recursively resolves all the symlinks.
-#
-#   Called only in the context of the target
-#   known to exist but known not to be a directory.
-#
+export FUNCNEST=500  # For safety, put a limit on the recursion,
+                     # FUNCNEST=0 means no limit, but not a good
+                     # idea for a script that recursively creates
+                     # subshells.
+
+# Recursively resolves all the symlinks
 function rabbitHole() {
   Path="$1"
+  currDir="$(pwd)"
   if [[ -L $Path ]]
   then
       # Basename a symlink
       symBase="$(basename "$Path")"
       symDir="$(dirname "$Path")"
       (
-        cd "$symDir"
-        longLS="$(ls -l $symBase)"
+        cd "${symDir}" 2>/dev/null || {
+            echo "For ${currPath}: Cannot access symlink ${symDir} from ${currDir}" >&2
+            exit
+        }
+        longLS="$(ls -l "${symBase}")"
         target="${longLS#*-> }"
         rabbitHole "$target"
       )
   else
-      # Basename not a symlink - end recursion
+      # Basename not a symlink
       dirName="$(dirname "$Path")"
-      echo -n $( (cd "$dirName"; pwd -P) )
-      echo /$(basename "$Path")
+      baseName="$(basename "$Path")"
+      (
+        cd "$dirName" 2>/dev/null || {
+            echo "For ${currPath}: Cannot access directory ${dirName} from ${currDir}" >&2
+            exit
+        }
+        if [[ -e $baseName ]]
+        then
+            echo "$(pwd -P)/${baseName}"
+        fi
+      )
   fi
 }
 
-for currentPath in "$@"
+for currPath in "$@"
 do
-  if [[ -e ${currentPath} ]]
-  then
-      # The eventual target exists.
-      if [[ -d ${currentPath} ]]
-      then
-          # A directory or a chain of symlinks to a directory.
-          (
-             cd "${currentPath}"
-             pwd -P
-          )
-      else
-          # Eventually, currentPath gets us to something other
-          # than a directory - we need to chase things down a
-          # recursive rabbit hole.
-          rabbitHole "${currentPath}"
-      fi
-  else
-      # Nothing at the end of the rabbit hole, or circular links,
-      # or insufficient permissions along path..
-      if [[ -L ${currentPath} ]]
-      then
-          # Broken symlink
-          echo ">>>ENCOUNTERED BROKEN SYMLINKS FOR: ${currentPath}" >&2
-      else
-          # Target does not exist
-          echo ">>>DOES NOT EXIST OR INSUFFICIENT PERMISSIONS: ${currentPath}" >&2
-      fi
-  fi
+
+    if [[ ! -e ${currPath} ]]  # If target not reachable, put
+    then                       # tighter limits on the recursion.
+        FUNCNEST=20
+    fi
+
+    rabbitHole "${currPath}" || echo "For ${currPath} possible circular links" >&2
+
+    FUNCNEST=500
 done

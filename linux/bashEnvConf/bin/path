@@ -3,10 +3,9 @@
 #
 # Usage: path
 #
-# Written by Geoffrey Scheller
-#
+
 IFS=':'
 for P in $PATH
 do
-    echo $P
+    echo "$P"
 done

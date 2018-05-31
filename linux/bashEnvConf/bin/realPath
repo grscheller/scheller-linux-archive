@@ -17,13 +17,13 @@
 #       2. Don't know how to gag FUNCNEST recursion limit error messages.
 #
 
-export FUNCNEST=500  # For safety, put a limit on the recursion,
+export FUNCNEST=50   # For safety, put a limit on the recursion,
                      # FUNCNEST=0 means no limit, but not a good
                      # idea for a script that recursively creates
                      # subshells.
 
 # Recursively resolves all the symlinks
-function rabbitHole() {
+function followLinks() {
   Path="$1"
   currDir="$(pwd)"
   if [[ -L $Path ]]
@@ -33,12 +33,12 @@ function rabbitHole() {
       symDir="$(dirname "$Path")"
       (
         cd "${symDir}" 2>/dev/null || {
-            echo "For ${currPath}: Cannot access symlink ${symDir} from ${currDir}" >&2
+            echo "$0: For ${currTarget}: Cannot access symlink ${symDir} from ${currDir}" >&2
             exit
         }
         longLS="$(ls -l "${symBase}")"
         target="${longLS#*-> }"
-        rabbitHole "$target"
+        followLinks "$target"
       )
   else
       # Basename not a symlink
@@ -46,26 +46,24 @@ function rabbitHole() {
       baseName="$(basename "$Path")"
       (
         cd "$dirName" 2>/dev/null || {
-            echo "For ${currPath}: Cannot access directory ${dirName} from ${currDir}" >&2
+            echo "$0: For ${currTarget}: Cannot access directory ${dirName} from ${currDir}" >&2
             exit
         }
         if [[ -e $baseName ]]
         then
-            echo "$(pwd -P)/${baseName}"
+            echo -n "$(pwd -P)"
+            if [[ $baseName == . ]]
+            then
+                echo
+            else
+                echo "/${baseName}"
+            fi
         fi
       )
   fi
 }
 
-for currPath in "$@"
+for currTarget in "$@"
 do
-
-    if [[ ! -e ${currPath} ]]  # If target not reachable, put
-    then                       # tighter limits on the recursion.
-        FUNCNEST=20
-    fi
-
-    rabbitHole "${currPath}" || echo "For ${currPath} possible circular links" >&2
-
-    FUNCNEST=500
+    followLinks "${currTarget}" || echo "$0: For ${currTarget}: Possible circular links" >&2
 done

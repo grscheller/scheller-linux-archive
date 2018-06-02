@@ -94,10 +94,10 @@ Keymapping treaks:
 
   3. Similarly to 2 above, I set the following shortcuts:
 
-       <Super>g  -> /usr/bin/google-chrome-stable
-       <Super>f  -> /usr/bin/firefox
-       <Super>m  -> /usr/bin/claws-mail
-       <Super>t  -> /usr/bin/tor-browser
+       <Super>+g  -> /usr/bin/google-chrome-stable
+       <Super>+f  -> /usr/bin/firefox
+       <Super>+m  -> /usr/bin/claws-mail
+       <Super>+t  -> /usr/bin/tor-browser
 
      Actually, I tend to forget about these and use the
      shortcuts I have put in the lower panel bar instead.

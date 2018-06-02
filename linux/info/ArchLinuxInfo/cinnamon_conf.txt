@@ -1,0 +1,81 @@
+Installation:
+  See notes in linux/ArchLinuxAdminLogs/ArchLinux_AdminLog dated
+  2018-05-22 for steps I did to intall into Arch Linux.
+
+Nomenclature: 
+  Panels are toolbars that can live on borders of desktop
+  Menu lives on a panel edge
+  Launchers live on panals and launch programs
+  Apps are GUI programs that run in desktop windows
+  Applets are programs that run on a panel
+    Can move applet on panel, or between panels, but
+    only one instance across all panels.
+  Desklets are programs that live directly on the desktop
+    Take up too much valuable desktop real estate.
+  System Tray is applet which shows other running applets
+
+My layout:
+  Two panels:
+    Top panel:
+      Menu (on LHS)
+      Show desktop applet (iconizes everything)
+      Launchers (to right of menu):
+          Orage (XFCE) (launches to system tray)
+          Clipman (XFCE) (launches to system tray)
+          Claws Mail (single instance)
+          Chrome
+          XFCE Terminal
+          Nemo file manager
+      Workspace switcher applet (to left of system tray) 
+      System tray (on RHS)
+    Bottom panel:
+      Window chooser applet
+
+  Fonts:
+      Monospace font: Monospace Bold 11
+      All others:     Sans Bold 13
+
+  Themes:
+      Window borders:  Adapta-Nokto
+      Icons:           gnome
+      Controls:        Adwaita
+      Mouse Pointer:   Adwaita
+      Desktop:         Serena
+
+      This combination gives very readable controls,
+      light text on medium-dark-grey background.
+
+      Can download themes from here:
+        https://cinnamon-spices.linuxmint.com/themes
+
+  Windows:
+    Menu -> Settings -> Windows -> Behavior
+        Window focus mode:       sloppy (follows mouse)
+        Auto raise on focus:     off
+        Prevent focus stealing:  on
+
+Autostarting applets:
+  May need manually edit ~/.config/autostart Freedesktop.org files for this.
+
+Keyboard shortcuts:
+  Navigation:
+    <ctrl>+<alt>+<right-arrow> -> Move to desktop on right
+    <ctrl>+<alt>+<left-arrow> -> Move to desktop on left
+    <ctrl>+<alt>+<up-arrow> -> Select desktop
+    <ctrl>+<alt>+<down-arrow> -> Select window on current desktop
+
+  In Window:
+    <left-click> -> pass thru to window, raises window
+    <middle-click> -> paste
+    <right-click> -> context menu
+    <middle-wheel> -> scroll
+    <alt>+<left-click-drag> -> Move window (without going to title bar)  
+    <alt>+<right-click-drag> -> Resize window (without going to edge)  
+
+  Window title bar:
+    <left-click> -> raises window
+    <left-click-drag> -> move window
+    <middle-click> -> lowers window
+    <middle-wheel> adjusts windows opacity
+    <rt-click> -> toggles window always on top
+    

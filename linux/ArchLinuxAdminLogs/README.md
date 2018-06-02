@@ -13,3 +13,8 @@ These files are date ordered and evolutionary in nature.
 * Software development environments
 * Building software development tools
 * Using software development tools
+
+### [buildGHConArchLinuxLog](buildGHConArchLinuxLog)
+* Documents my steps building the Glasgow Haskell Compilation System on Arch
+* Built from Github source
+* Build relies heavily having a current Haskell tool chain already installed

@@ -18,8 +18,8 @@ My layout:
   Two panels:
     Top panel:
       Menu (on LHS)
-      Show desktop applet (iconizes everything)
-      Launchers (to right of menu):
+      Show desktop applet - hide/show desktop windows
+      Launchers (to right of show):
           Orage (XFCE) (launches to system tray)
           Clipman (XFCE) (launches to system tray)
           Claws Mail (single instance)
@@ -44,6 +44,9 @@ My layout:
 
       This combination gives very readable controls,
       light text on medium-dark-grey background.
+      Borders & title bars indicate what has focus.
+      Unfocused windows don't blur-out.
+      Window-list applet shows what has focus.
 
       Can download themes from here:
         https://cinnamon-spices.linuxmint.com/themes

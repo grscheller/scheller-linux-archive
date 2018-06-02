@@ -891,7 +891,11 @@ Purpose: For things installed locally as an unprivalleged user.
   has focus.  Controls very readable, light text on a
   medium-to-dark grey backgound.
 
-  Other Setting -> Windows -> Titlebar  tweaks:
-    - <middle-wheel> adjusts windows opacity
-    - <middle-click> lowers window
-    - <rt-click>     toggles window always on top
+2018-06-01:
+  Will stick to Cinnamon, supplemented with some XFCE
+  "apps" and "applets".  Launchers and running applications
+  are nicely deconflated.  Created an info file on how to
+  configure Cinnamon on Arch:
+
+    linux/info/ArchLinuxInfo/cinnamon_conf.txt
+

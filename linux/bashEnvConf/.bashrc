@@ -75,7 +75,7 @@ function ud() {
       upDir=../$upDir
     done
   fi
-  cd $upDir
+  cd $upDir || return
 }
 
 ## wget aliases to pulldown websites
@@ -85,13 +85,6 @@ alias Wget='wget -p --convert-links -e robots=off'
 
 # Pull down more -- Not good for large websites
 alias WgetMirror='wget --mirror -p --convert-links -e robots=off'
-
-## Anaconda Python aliases
-#    Have to use conda virtual environments since ~/opt/anaconda3/bin
-#    contaminates path with old versions of /usr/bin utilities.
-alias conda=~/opt/anaconda3/bin/conda
-alias actA='sh -c ". ~/opt/anaconda3/bin/activate; bash"'
-alias play='sh -c ". ~/opt/anaconda3/bin/activate play; bash"'
 
 ## NVIDIA aliases
 
@@ -104,10 +97,7 @@ alias nv-pd='sudo nvidia-persistenced --user geoff --persistence-mode'
 alias nv-off='sudo nvidia-smi -pm 0'
 alias nv-on='sudo nvidia-smi -pm 1'
 
-## XFCE GUI-land aliases and functions
-
-# Quick way to bring up file manager from CLI-land
-alias fm='(/usr/bin/thunar &)'
+## GUI-land aliases and functions
 
 # Terminal which inherits environment of parent shell
 alias tm='(/usr/bin/xfce4-terminal --disable-server &)'

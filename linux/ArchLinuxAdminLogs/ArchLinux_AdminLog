@@ -4956,3 +4956,127 @@ Note: Basically rebuilt system from scratch starting on 2017-06-20
   don't have to think how to spell it.
 
   See Userland_Adminlog for adventures in configuring Cinnamon.
+
+2018-06-04:
+  Using the following as a guide,
+
+    The Hitchhiker's Guide to Python -
+    http://docs.python-guide.org/en/latest/
+
+  Definately Python3 oriented, not Arch Linux oriented.  Will tend
+  to default to pacman over pip.
+
+  Versions installed:
+
+     /usr/bin/python --version
+     Python 3.6.5
+
+     $ /usr/bin/pip --version
+     pip 10.0.1 from /usr/lib/python3.6/site-packages/pip (python 3.6)
+
+  Install pipenv:
+
+     $ pacman -Ss pipenv
+     community/python-pipenv 2018.05.18-1
+         Sacred Marriage of Pipfile, Pip, & Virtualenv.
+     community/python2-pipenv 2018.05.18-1
+         Sacred Marriage of Pipfile, Pip, & Virtualenv.
+
+     $ sudo pacman -Syu python-pipenv
+
+  This brought in
+
+     python-certifi
+     python-pew
+     python-virtualenv-clone
+     python-pipenv
+
+     $ pacman -Qs python-certifi
+     local/python-certifi 2018.4.16-1
+         Python package for providing Mozilla's CA Bundle
+
+     $ pacman -Qs python-pew
+     local/python-pew 1.1.5-1
+         Python Env Wrapper, a set of tools to manage multiple virtual environments
+
+     $ pacman -Qs python-virtualenv-clone
+     local/python-virtualenv-clone 0.3.0-1
+         A script for cloning a non-relocatable virtualenv.
+
+  So far, I am installing these system wide
+
+    $ python -m site --user-base
+
+  where /home/geoff/.local/bin is in my $PATH before system stuff.
+
+    $ ls -A ~/.local/bin
+    pythagTriples
+
+  Unlike non-rolling (stale) distribution, pacman will keep me more
+  up to date than trying to do this myself.
+
+  Following the Hitchhiker's guide,
+
+    $ mkdir ~/devel/myPythonProg; cd ~/devel/myPythonProg
+    $ pipenv install requests
+    $ ls -lA
+    total 8
+    -rw-rw---- 1 geoff geoff  153 Jun  4 23:35 Pipfile
+    -rw-r--r-- 1 geoff geoff 1911 Jun  4 23:35 Pipfile.lock
+
+  Now, create amin.py with the following contents:
+
+    import requests
+
+    response = requests.get('https://httpbin.org/ip')
+
+    print('Your IP is {0}'.format(response.json()['origin']))
+
+  Run this script,
+
+    $ pipenv run python main.py
+    Your IP is 73.26.43.14
+
+  Create a shell environment,
+
+    $ pipenv shell
+    Spawning environment shell (/bin/bash). Use 'exit' to leave.
+    . /home/geoff/.local/share/virtualenvs/myPythonProg--EYR82S2/bin/activate
+
+    $ path
+    /home/geoff/.local/share/virtualenvs/myPythonProg--EYR82S2/bin
+    /home/geoff/opt/sbt/bin
+    <clip>
+
+    $ exit
+    $ ll /home/geoff/.local/share/virtualenvs/myPythonProg--EYR82S2/bin
+    total 60
+    lrwxrwxrwx 1 geoff geoff    6 Jun  4 23:35 python3.6 -> python
+    lrwxrwxrwx 1 geoff geoff    6 Jun  4 23:35 python3 -> python
+    -rwxrwxr-x 1 geoff geoff 9992 Jun  4 23:35 python
+    -rwxrwxr-x 1 geoff geoff  287 Jun  4 23:35 easy_install-3.6
+    -rwxrwxr-x 1 geoff geoff  287 Jun  4 23:35 easy_install
+    -rwxrwxr-x 1 geoff geoff  269 Jun  4 23:35 pip3.6
+    -rwxrwxr-x 1 geoff geoff  269 Jun  4 23:35 pip3
+    -rwxrwxr-x 1 geoff geoff  269 Jun  4 23:35 pip
+    -rwxrwxr-x 1 geoff geoff  266 Jun  4 23:35 wheel
+    -rwxrwxr-x 1 geoff geoff 2376 Jun  4 23:35 python-config
+    -rw-rw---- 1 geoff geoff 1137 Jun  4 23:35 activate_this.py
+    -rw-rw---- 1 geoff geoff 2213 Jun  4 23:35 activate.fish
+    -rw-rw---- 1 geoff geoff 1059 Jun  4 23:35 activate.csh
+    -rw-rw---- 1 geoff geoff 2117 Jun  4 23:35 activate
+    -rwxrwxr-x 1 geoff geoff  278 Jun  4 23:35 chardetect
+
+    $ sha256sum /usr/bin/python
+    1c76835f82c022aa0da47d5edbadbe70ac4812c65d5418d694c2e7b28dcccc20  /usr/bin/python
+
+    $ sha256sum /home/geoff/.local/share/virtualenvs/myPythonProg--EYR82S2/bin/python
+    1c76835f82c022aa0da47d5edbadbe70ac4812c65d5418d694c2e7b28dcccc20  /home/geoff/.local/share/virtualenvs/myPythonProg--EYR82S2/bin/python
+
+  Seems to have copied the system python.
+
+  The pipenv command wrappers the lower level virtualenv.  Just
+  exit out of the pipenv shell.  (Things get confused if you use
+  a "deactivate".)
+
+  Has a very sbt feel to it.

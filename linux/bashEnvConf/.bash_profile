@@ -21,9 +21,16 @@ export BASH_PROFILE_SOURCED=${BASH_PROFILE_SOURCED:=0}
 export VIRGIN_BASH_PATH=${VIRGIN_BASH_PATH:=$PATH}
 
 # Configure interactive shells.
-[[ -f ~/.bashrc ]] && source ~/.bashrc
+if [[ -f .bashrc ]]
+then
+    # shellcheck source=/dev/null
+    source .bashrc
+fi
 
 umask 0007
+
+## Python pip configuration
+export PIP_REQUIRE_VIRTUALENV=true
 
 ## For Haskell locally contained and administered via stack
 PATH=~/.local/bin:$PATH
@@ -42,7 +49,7 @@ PATH=$PATH:~/local/bin
 PATH=$PATH:~/bin:.
 
 # Clean up PATH
-[[ -x ~/bin/pathTrim ]] && PATH=$(~/bin/pathTrim $PATH)
+[[ -x ~/bin/pathTrim ]] && PATH=$(~/bin/pathTrim "$PATH")
 
 # Count number of times file sourced
 ((BASH_PROFILE_SOURCED++))

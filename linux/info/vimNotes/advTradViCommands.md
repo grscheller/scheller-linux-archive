@@ -10,51 +10,63 @@ mode.  It was the Berkley Unix nvi (for new vi) which first
 introduced multiple windows.
 
 ### _Normal Mode_ Commands:
-#### Status commands
+#### Misc commands
 | Command    | Description                                |
 |:----------:|:------------------------------------------ |
 | `<ctrl-g>` | show filename and other useful status info |
+| `<ctrl-l>` | redraw view                                |
+| `ZZ`       | save changes and exit vim                  |
+| `<ctrl-z>` | suspend vim to shell background            |
+
+For `<ctrl-z>`, in Bash use "`$ fg %1`" will usually work to
+unsuspend vim.  If you have other things suspended, hunt for it
+using "`$ jobs`".
 
 #### Commands to move cursor
 | Command    | Description                                |
 |:----------:|:------------------------------------------ |
 | `+`        | move to first nonspace character next line |
 | `-`        | move to first nonspace character prev line |
-| `1G`       | move to 1st line in file                   |
-| `G`        | move to last line in file                  |
 | `nG`       | move to nth line in file                   |
+| `G`        | move to last line in file                  |
+| `ngg`      | move to nth line in file                   |
+| `gg`       | move to first line in file                 |
+| `\n|`      | move to nth column in line                 |
 | `\|`       | move to beginning of line                  |
-| `n\|`      | move to nth column in line                 |
+| `0`        | move to beginning of line                  |
 | `H`        | move to top of screen                      |
 | `M`        | move to middle of screen                   |
 | `L`        | move to bottom of screen                   |
 | `nH`       | move to nth line from top of screen        |
 | `nL`       | move to nth line from bottom of screen     |
-| `<ctrl-u>` | move cursor up half a screen               |
-| `<ctrl-d>` | move cursor down half a screen             |
-| `<ctrl-b>` | move cursor up a full screen               |
-| `<ctrl-f>` | move cursor down a full screen             |
-| `%`        | move between matching ( ), [ ], or { }     |
+| `<ctrl-u>` | move cursor/view up half a screen          |
+| `<ctrl-d>` | move cursor/view down half a screen        |
+| `<ctrl-b>` | move cursor/view up a full screen          |
+| `<ctrl-f>` | move cursor/view down a full screen        |
+| `%`        | move between matching ( ), [ ], { }, < >   |
+
+When scrolloff is set, some of these commands get changed.
+
+In my .vim/vimrc file, I use
+```
+   set scrolloff=3
+```
+to keep the cursor 3 lines from the edge of the screen.
 
 #### Commands to move screen view
-Where applicable, you can type a number before these commands
-to repeat them that many times.
-
 | Command    | Description                                |
 |:----------:|:------------------------------------------ |
 | `<ctrl-e>` | move view down one line                    |
 | `<ctrl-y>` | move view up one line                      |
-| `<ctrl-u>` | move view up half a screen                 |
-| `<ctrl-d>` | move view down half a screen               |
-| `<ctrl-b>` | move view up a full screen                 |
-| `<ctrl-f>` | move view down a full screen               |
-| `<ctrl-l>` | redraw view                                |
 | `z<ret>`   | make current line top line of view         |
 | `nz<ret>`  | make line n top line of view               |
 | `z.`       | make current line middle line of view      |
 | `nz.`      | make line n middle line of view            |
 | `z-`       | make current line bottom line of view      |
 | `nz-`      | make line n bottom line of view            |
+
+Where applicable, you can type a number before these commands
+to repeat them that many times.
 
 #### Cursor commands useful for written text
 | Command | Description                                 |
@@ -76,6 +88,17 @@ between `{` which are in the first column.  Programmers
 used these to jump between C functions in source code.
 For troff files various constructs were understood as
 defining "sections."
+
+#### Commands to change text
+| Command    | Description                                               |
+|:----------:|:--------------------------------------------------------- |
+| `C`      ` | change from cursor to end of line (enter _Insert Mode_)   |
+| `R`        | from cursor, overwriting text (enter _Replace Mode_)      |
+| `S`      ` | change entire line (enter _Insert Mode_)                  |
+| `I`        | insert text at beginning of line after initial whitespace |
+| `i`        | enter _Insert Mode_                                       |
+| `a`        | advance cursor one char and enter _Insert Mode_           | 
+| `A`        | advance cursor to end of line and enter _Insert Mode_     | 
 
 ### _Insert Mode_ Commands:
 | Command         | Description                                       |
@@ -131,20 +154,21 @@ Marks within a given buffer are denoted via leters `a-z`.  For marks between
 different buffers, use letters `A-Z`.  The mark is a "zero-width" entity
 between the cursor and the preceding character.
 
-| Command   | Description                                               |
-|:---------:|:--------------------------------------------------------- |
-| `ma`      | set mark `a` for the current editing buffer               |
-| `mB`      | set mark `B` for all buffers                              |
-| `` `a ``  | jump to mark `a` current buffer                           |
-| `` `B ``  | jump to mark `B` current or another editing buffer        |
-| `'a`      | jump to first nonspace char in line with mark `a`         |
-| `'B`      | jump to mark `B` in this or another editing buffer        |
-| `` d`a `` | delete from cursor to mark `a`                            |
-| `` y`a `` | yank from cursor to mark `a`                              |
-| `y'B`     | yank from cursor to mark `B`, fails if not in curr buffer |
-| `d'w      | deletes current line thru line with mark `w`              |
+| Command   | Description                                                  |
+|:---------:|:------------------------------------------------------   --- |
+| `ma`      | set mark `a` for the current editing buffer                  |
+| `mB`      | set mark `B` for all buffers                                 |
+| `` `a ``  | jump to mark `a` current buffer                              |
+| `` `B ``  | jump to mark `B` current or another editing buffer           |
+| `'a`      | jump to first nonspace char in line with mark `a   `         |
+| `'B`      | jump to mark `B` in this or another editing buffer           |
+| `` d`a `` | delete from cursor to mark `a`                               |
+| `` y`a `` | yank from cursor to mark `a`                                 |
+| `y'B`     | yank from cursor to mark `B`, fails if not in current buffer |
+| `d'w      | deletes current line thru line with mark `w`                 |
 
 Like a mark, the cursor is also a "zero-width" entity between the 
 highlighted character and the preceeding character.  If the mark is
 before the cursor in the file, the selection does not contain the
 highlighted character.  Just like the `yb` _Normal Mode_ command does.
+

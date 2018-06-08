@@ -28,7 +28,7 @@ one's "muscle memory."
 | `e, E`         | move forward to end of word                      |
 | `$`            | move to end of line                              |
 | `^`            | move to first non-whitespace character on line   |
-| `0`            | move to first character on line                  |
+| `0`            | move to beginning of line                  |
 | `G`            | move to last line in file                        |
 | `gg`           | move to first line in file                       |
 | `f<char>`      | move forward to next <char> on current line      |
@@ -40,6 +40,7 @@ one's "muscle memory."
 | `/<ret>`       | search forward for last pattern                  |
 | `?<ret>`       | search backward for last pattern                 |
 | `n`            | search forward or backward for last pattern      |
+| `N`            | search for last pattern in reverse sense to `n`  |
 
 ### Interacting with the buffer in _Normal Mode_:
 
@@ -96,15 +97,15 @@ To return to _Normal Mode_, type `<esc>`.
 | `O`     | open new line before current line to insert text           |
 | `3cw`   | change next three words                                    |
 | `c3w`   | change next three words                                    |
-| `c$`    | change text to end of line                                 |
 | `5cc`   | change next 5 lines                                        |
-| `5C`    | change next 5 lines                                        |
+| `2cb    | change previous 3 words                                    |
+| `c$     | change to end of line                                      |
 | `c^`    | change text before cursor, excluding initial white space   |
 | `s`     | delete current character and enter Normal Mode             |
 
 While in _Insert Mode_, the file can be navigated via with the arrow keys.
-Text can also be deleted with the backspace key.  In _Normal Mode_, the backspace
-key is just another navigation key.
+Text can also be deleted with the backspace key.  In _Normal Mode_, the
+backspace key is just another navigation key.
 
 ### Undo/redo commands:
 
@@ -189,3 +190,25 @@ out of _Visual Mode_ without doing anything, hit the `<esc>` key.
 If you have enabled mouse support, mouse actions can cause you
 to enter _Visual Mode_.
 
+### Some Vim command line option examples
+```
+   $ vim file1 file2 file3   # Open/create 3 files for editting
+   $ vim +[n] file           # Open file for editing on line n (default last line of file)
+   $ vim +/pattern file      # Open file for editing at first reg-exp pattern match
+   $ vim -R file             # Open file read only, can still write via :w!
+   $ vim -g file             # Run as gvim GUI
+   $ vim -r                  # List swap files, then exit
+   $ vim -r file             # Recover crashed vim session, uses swap file
+   $ vim -h                  # List help message for command-line options and exit
+```
+
+### Detailed help
+From within vim, type `:help`
+
+Vim built in help is very powerfull.  To get the most out of it, use this guide to:
+
+* familiarize yourself with how to use [multiple vim windows](multipleVimWindows.md)
+* configuring the [mouse](vimFactoids.md#using-the-mouse)
+* setting up the wildmenu.
+
+Double click to follow links.

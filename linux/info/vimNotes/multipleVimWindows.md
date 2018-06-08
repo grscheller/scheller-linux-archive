@@ -74,3 +74,9 @@ but
 | `<ctrl-w>>` | increaces active window width 1 char   |
 | `<ctrl-w><` | decreaces active window width 1 char   |
 
+### Starting Vim with multiple windows/tabs:
+```
+   $ vim -p[N]    # Open N tab pages (default: one for each file)
+   $ vim -o[N]    # Open N windows (default: one for each file)
+   $ vim -O[N]    # Like -o but split vertically
+```

@@ -12,7 +12,6 @@ DOT_FILES='
     .bash_profile
     .bash_logout
     .inputrc
-    .vimrc
     .wgetrc
 '
 
@@ -23,6 +22,14 @@ cp -f $DOT_FILES ~
 ### Make sure ~/catch and ~/pitch are there
 [[ -d ~/catch ]] || mkdir ~/catch
 [[ -d ~/pitch ]] || mkdir ~/pitch
+
+###
+### Install vimrc
+[[ ! -f ~/.vimrc ]] || rm -f ~/.vimrc || echo 'Error: Failed to remove existing ~/.vimrc'
+[[ -d ~/.vim ]] || mkdir ~/.vim || echo 'Error: Failed to create ~/.vim'
+
+cp -f ./.vim/vimrc ~/.vim
+chmod 550 ~/.vim/vimrc
 
 ###
 ### Now install ~/bin scripts.

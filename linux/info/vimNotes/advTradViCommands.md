@@ -32,7 +32,7 @@ using `$ jobs`.
 | `ngg`      | move to nth line in file                   |
 | `gg`       | move to first line in file                 |
 | `\n\|`     | move to nth column in line                 |
-| `\\\|`     | move to beginning of line                  |
+| `\\|`      | move to beginning of line                  |
 | `0`        | move to beginning of line                  |
 | `H`        | move to top of screen                      |
 | `M`        | move to middle of screen                   |

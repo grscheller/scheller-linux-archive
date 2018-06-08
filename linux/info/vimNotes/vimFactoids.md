@@ -68,8 +68,8 @@ with that buffer.
 | `:n`          | edit next buffer                                         |
 | `:next`       | same as above                                            |
 | `:prev`       | edit previous buffer                                     |
-| `:edit <file>`| edit buffer associated with <file> in current window     |
-| `:e <file>`   | same as above, for both, creates new buffer if necessary |
+| `:edit file`  | edit buffer associated with file in current window       |
+| `:e file`     | same as above, for both, creates new buffer if necessary |
 | `:buffers`    | list buffers                                             |
 | `:ls`         | same as above, not the same as `!ls`                     |
 | `:b2`         | edit buffer 2 in current window (not commonly used)      |
@@ -77,7 +77,7 @@ with that buffer.
 | `:split`      | open new window but use the same buffer                  |
 | `:spl`        | same as above, basically 2 views of same buffer          |
 | `:w`          | write buffer to file associated with buffer              |
-| `:w <file>`   | write buffer to <file>, buffer file association unchange |
+| `:w file`     | write buffer to file, buffer file association unchange   |
 | `:q`          | quit window, fails if last view & changes not saved      |
 | `:q!`         | quit window, abandon any changes if last view            |
 
@@ -110,7 +110,7 @@ character _Visual Mode_.
 
 ### Dealing with whitespace characters:
 
-| Command       | Description                                 |
+| Command       | Description                          |
 |:------------- |:------------------------------------ |
 | `:set list`   | Indicate line endings & tabs         |
 | `:set nolist` | Display line endings & tabs normally |

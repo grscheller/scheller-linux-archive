@@ -60,10 +60,10 @@ I configure these in my `~/.vim/vimrc
 
 Also, note that
 
-| Command     | Description                   |
-|:-----------:|:----------------------------- |
-| `<ctrl-w>_` | maximize active window height |
-| `<ctrl-w>|` | maximize active window width  |
+| Command      | Description                   |
+|:------------:|:----------------------------- |
+| `<ctrl-w>_`  | maximize active window height |
+| `<ctrl-w>\|` | maximize active window width  |
 
 but
 
@@ -76,7 +76,7 @@ but
 
 ### Starting Vim with multiple windows/tabs:
 ```
-   $ vim -p[N]    # Open N tab pages (default: one for each file)
-   $ vim -o[N]    # Open N windows (default: one for each file)
-   $ vim -O[N]    # Like -o but split vertically
+   $ vim -p[n]    # Open n tab pages (default: one for each file)
+   $ vim -o[n]    # Open n windows (default: one for each file)
+   $ vim -O[n]    # Like -o but split vertically
 ```

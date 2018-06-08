@@ -18,9 +18,9 @@ introduced multiple windows.
 | `ZZ`       | save changes and exit vim                  |
 | `<ctrl-z>` | suspend vim to shell background            |
 
-For `<ctrl-z>`, in Bash use "`$ fg %1`" will usually work to
+For `<ctrl-z>`, in bash usnge `fg %1` will usually work to
 unsuspend vim.  If you have other things suspended, hunt for it
-using "`$ jobs`".
+using `$ jobs`.
 
 #### Commands to move cursor
 | Command    | Description                                |
@@ -31,8 +31,8 @@ using "`$ jobs`".
 | `G`        | move to last line in file                  |
 | `ngg`      | move to nth line in file                   |
 | `gg`       | move to first line in file                 |
-| `\n|`      | move to nth column in line                 |
-| `\|`       | move to beginning of line                  |
+| `\n\|`     | move to nth column in line                 |
+| `\\\|`     | move to beginning of line                  |
 | `0`        | move to beginning of line                  |
 | `H`        | move to top of screen                      |
 | `M`        | move to middle of screen                   |
@@ -92,9 +92,9 @@ defining "sections."
 #### Commands to change text
 | Command    | Description                                               |
 |:----------:|:--------------------------------------------------------- |
-| `C`      ` | change from cursor to end of line (enter _Insert Mode_)   |
+| `C`        | change from cursor to end of line (enter _Insert Mode_)   |
 | `R`        | from cursor, overwriting text (enter _Replace Mode_)      |
-| `S`      ` | change entire line (enter _Insert Mode_)                  |
+| `S`        | change entire line (enter _Insert Mode_)                  |
 | `I`        | insert text at beginning of line after initial whitespace |
 | `i`        | enter _Insert Mode_                                       |
 | `a`        | advance cursor one char and enter _Insert Mode_           | 
@@ -138,8 +138,8 @@ find your vim editting session frozen.  Type `<ctrl-q>` to unlock.
 | `:r file`      | read file and insert it after current line        |
 | `:nr file`     | read file and insert it after line n              |
 | `:w!`          | write file overriding normal checks               |
-| `:n,mw file`   | save lines n thru m to file                       |`
-| `:n,mw >>file` | append lines n thru m to existing file            |`
+| `:n,mw file`   | save lines n thru m to file                       |
+| `:n,mw >>file` | append lines n thru m to existing file            |
 | `:e!`          | reedit file discarding any unsaved changes        |
 | `:#`           | show current line number and print line           |
 | `:.=`          | show current line number                          |
@@ -155,17 +155,16 @@ different buffers, use letters `A-Z`.  The mark is a "zero-width" entity
 between the cursor and the preceding character.
 
 | Command   | Description                                                  |
-|:---------:|:------------------------------------------------------   --- |
+|:---------:|:------------------------------------------------------------ |
 | `ma`      | set mark `a` for the current editing buffer                  |
 | `mB`      | set mark `B` for all buffers                                 |
 | `` `a ``  | jump to mark `a` current buffer                              |
 | `` `B ``  | jump to mark `B` current or another editing buffer           |
-| `'a`      | jump to first nonspace char in line with mark `a   `         |
-| `'B`      | jump to mark `B` in this or another editing buffer           |
+| `'a`      | jump to first nonspace char in line with mark `a`            |
 | `` d`a `` | delete from cursor to mark `a`                               |
 | `` y`a `` | yank from cursor to mark `a`                                 |
-| `y'B`     | yank from cursor to mark `B`, fails if not in current buffer |
-| `d'w      | deletes current line thru line with mark `w`                 |
+| `` y`B `` | yank from cursor to mark `B`, fails if not in current buffer |
+| `d'w`     | deletes current line thru line with mark `w`                 |
 
 Like a mark, the cursor is also a "zero-width" entity between the 
 highlighted character and the preceeding character.  If the mark is

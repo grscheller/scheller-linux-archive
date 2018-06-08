@@ -131,6 +131,6 @@ Helps when getting rid of tabs and trailing whitespace.
 * On modern Linuxes, the vi "executable" is either a
   symlink to ex, traditional BSD based vi, or a symlink
   to vim.  If vim is started with the name vi, it lauches
-  itself in vi cmpatibility mode.  Vim in compatibility
+  itself in vi compatibility mode.  Vim in compatibility
   mode is neither POSIX compliant nor a Vi clone.
 

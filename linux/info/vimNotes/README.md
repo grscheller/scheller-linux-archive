@@ -11,6 +11,7 @@ notes invaluable in my journey to master Vim.
 * [Advanced Traditional Vi Commands](advTradViCommands.md)
 * [Using Multiple Vim Windows](multipleVimWindows.md)
 * [Regular Expressions](regExp.md)
+* [Configuring Vim](vimrcConfigFile.md)
 
 (TL;DR) <- Means "too long, don't read."  I use this to
 mark interesting background information, but want to make

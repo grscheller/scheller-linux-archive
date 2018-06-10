@@ -228,7 +228,7 @@ Vim built in help is very powerful, but not too beginner friendly.  To get the m
 
 * familiarize yourself with how to use [multiple vim windows](multipleVimWindows.md)
 * configure the [mouse](vimFactoids.md#using-the-mouse)
-* setting up the wildmenu
+* setting up the [wildmenu](vimFactoids.md#configuring_wildmenu)
 * double clicking is needed to follow vim "hyperlinks"
 * Use `<ctrl-o>` to jump back to previous location
 * Use `<ctrl-i>` or `<tab>` to jump forward again

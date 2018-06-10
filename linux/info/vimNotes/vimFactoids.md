@@ -9,7 +9,7 @@ for now are:
 * file buffers
 
 #### Named buffers
-Illustrated in [Basic text editing](basicTextEditing.md),
+Illustrated in [Basic text editing](basicTextEditing.md#you-can-use-named-buffers-to-store-text),
 Named buffers are areas where you can store snippets of text.
 They are named `"a` thru `"z` and are essentially 26
 independent "clip boards" that are shared between all the
@@ -83,7 +83,7 @@ character _Visual Mode_.
 
 ### Configuring wildmenu
 To make tab completion in command mode more efficient, put the
-following lines in your [.vim/vimrc file](vimrcConfigFile.md#simplistic_vimrc):
+following lines in your ~/.vim/vimrc or ~/.vimrc file.
 ```
    set wildmenu
    set wildmode=longest:full,full

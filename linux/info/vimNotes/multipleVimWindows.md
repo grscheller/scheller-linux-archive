@@ -80,3 +80,18 @@ but
    $ vim -o[n]    # Open n windows (default: one for each file)
    $ vim -O[n]    # Like -o but split vertically
 ```
+### Terminal Windows
+Traditionally in vi one could interact with the Unix shell via
+
+| Command   | Description                              |
+|:--------- |:---------------------------------------- |
+| `:!<cmd>` | display output of shell command <cmd>    |
+| `:sh`     | replace editing session with a new shell |
+
+Vim allows you to open a shell in a separate Vim Window
+
+| Command     | Description                                 |
+|:----------- |:------------------------------------------- |
+| `:term      | open a shell in a new horizontal Vim window |
+| `:vert term | open a shell in a new vertical Vim window   |
+

@@ -38,13 +38,13 @@ this "feature."
 In Arch Linux, the location of this default file is
 `/usr/share/vim/vim80/defaults.vim`.
 
-### Sample .vimrc (or .vim/vimrc) files:
+### Sample vimrc files:
 The commands in these .vimrc example files are run
 as if in vim command mode.  Comments begin with `"`.
 
 #### Simplistic .vimrc
 ```
-   " .vimrc
+   " ~/.vimrc
    "
    " A very simplistic .vimrc file.  Prevents default.vim
    " on random linux distributions from giving vim surprising
@@ -64,9 +64,9 @@ as if in vim command mode.  Comments begin with `"`.
    set shiftwidth=4
    set expandtab
 ```
-#### Intermediate vim user's (me!) vimrc file 
+#### Intermediate vim user's vimrc file 
 ```
-   " .vim/vimrc
+   " ~/.vim/vimrc
    "   
    
    " Setup the Vundle plugin manager

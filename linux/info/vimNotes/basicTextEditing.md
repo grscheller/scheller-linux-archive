@@ -21,7 +21,6 @@ one's "muscle memory."
 
 | Command        | Description                                      |
 |:--------------:|:------------------------------------------------ |
-| `:n`           | edit next buffer                                 |
 | `h,i,j,k`      | move cursor one character (also arrow keys)      |
 | `w, W`         | move forward to beginning next word              |
 | `b, B`         | move back to beginning of current/previous word  |
@@ -69,7 +68,7 @@ the _normal mode_ cursor positioning commands.
 | `2db`   | delete 2 previous words starting from cursor               |
 | `2y3w`  | ends up yanking 6 words                                    |
 
-You can use named buffers to store text.
+#### You can use named buffers to store text
 
 | Command | Description                                                |
 |:-------:|:---------------------------------------------------------- |
@@ -142,8 +141,8 @@ and prompts you with `: `.
 | `:q`                | quit editing, vim will warn you if you have unsaved changes   |
 | `:wq`               | write to disk, then quit                                      |
 | `:q!`               | quit without saving unsaved changes                           |
-| `:n`                | move to next file given on command line                       |
-| `:prev`             | move back to previous file given on command line              |
+| `:n`                | edit next buffer (typically next file given on command line   |
+| `:prev`             | edit previous buffer                                          |
 | `:wn`               | write to disk and move on to next file to edit                |
 | `:42`               | move cursor to beginning of line 42                           |
 | `:#`                | give line number of current line cursor is on                 |
@@ -228,7 +227,7 @@ Vim built in help is very powerful, but not too beginner friendly.  To get the m
 
 * familiarize yourself with how to use [multiple vim windows](multipleVimWindows.md)
 * configure the [mouse](vimFactoids.md#using-the-mouse)
-* setting up the [wildmenu](vimFactoids.md#configuring_wildmenu)
+* setting up the [wildmenu](vimFactoids.md#configuring-wildmenu)
 * double clicking is needed to follow vim "hyperlinks"
 * Use `<ctrl-o>` to jump back to previous location
 * Use `<ctrl-i>` or `<tab>` to jump forward again

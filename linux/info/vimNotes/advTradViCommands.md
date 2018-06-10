@@ -45,7 +45,7 @@ using `$ jobs`.
 | `<ctrl-f>` | move cursor/view down a full screen        |
 | `%`        | move between matching ( ), [ ], { }, < >   |
 
-When scrolloff is set, some of these commands get changed.
+When scrolloff is set, some of these commands get modified.
 
 In my .vim/vimrc file, I use
 ```

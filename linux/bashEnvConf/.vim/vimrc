@@ -116,7 +116,7 @@ set mouse=n
 " When enabled, use <shift>-clicks to send mouse
 " events to the terminal emulator instead of vim.
 "
-" To enable full mouse from within vim,
+" To enable full mouse support from within vim,
 "   :set mouse=a
 
 set history=500   " Number lines of command history to keep

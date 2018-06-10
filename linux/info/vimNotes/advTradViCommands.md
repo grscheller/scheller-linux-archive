@@ -169,5 +169,6 @@ between the cursor and the preceding character.
 Like a mark, the cursor is also a "zero-width" entity between the 
 highlighted character and the preceeding character.  If the mark is
 before the cursor in the file, the selection does not contain the
-highlighted character.  Just like the `yb` _Normal Mode_ command does.
+highlighted character.  Just like the behavior of the `yb` _Normal Mode_
+command.
 

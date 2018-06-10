@@ -201,14 +201,34 @@ to enter _Visual Mode_.
    $ vim -r file             # Recover crashed vim session, uses swap file
    $ vim -h                  # List help message for command-line options and exit
 ```
+### Dealing with whitespace characters:
+
+| Command       | Description                          |
+|:------------- |:------------------------------------ |
+| `:set list`   | Indicate line endings & tabs         |
+| `:set nolist` | Display line endings & tabs normally |
+
+Helps when getting rid of tabs and trailing whitespace.
+
+### Spell checking:
+
+| Command        | Description             |
+|:-------------- |:----------------------- |
+| `:set spell`   | Turn spell checking on  |
+| `:set nospell` | Turn spell checking off |
+
 
 ### Detailed help
-From within vim, type `:help`
+To get started, from within vim, type
+* `:help
+* `:help help`
+* `:help tutorial`
 
-Vim built in help is very powerfull.  To get the most out of it, use this guide to:
+Vim built in help is very powerful, but not too beginner friendly.  To get the most out of it,
 
 * familiarize yourself with how to use [multiple vim windows](multipleVimWindows.md)
-* configuring the [mouse](vimFactoids.md#using-the-mouse)
-* setting up the wildmenu.
-
-Double click to follow links.
+* configure the [mouse](vimFactoids.md#using-the-mouse)
+* setting up the wildmenu
+* double clicking is needed to follow vim "hyperlinks"
+* Use `<ctrl-o>` to jump back to previous location
+* Use `<ctrl-i>` or `<tab>` to jump forward again

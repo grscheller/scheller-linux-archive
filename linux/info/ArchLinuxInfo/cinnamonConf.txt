@@ -20,12 +20,12 @@ My layout:
       Menu (on LHS)
       Show desktop applet - hide/show desktop windows
       Launchers (to right of show):
-          Orage (XFCE) (launches to system tray)
-          Clipman (XFCE) (launches to system tray)
-          Claws Mail (single instance)
-          Chrome
-          XFCE Terminal
-          Nemo file manager
+          Orage (XFCE) - launches to system tray (applet) 
+          Clipman (XFCE) - launches to system tray (applet) 
+          Claws Mail - launches to system tray (applet) 
+          Chrome - multiple instances (app)
+          XFCE Terminal - multiple instances (app)
+          Nemo file manager (app) <- probably hidden applet
       Workspace switcher applet (to left of system tray) 
       System tray (on RHS)
     Bottom panel:
@@ -69,9 +69,12 @@ Keyboard shortcuts:
 
   In Window:
     <left-click> -> pass thru to window, raises window
-    <middle-click> -> paste
-    <right-click> -> context menu
-    <middle-wheel> -> scroll
+    <ctrl>+<left-click> -> pass thru to window, doesn't raises window
+    <middle-click> -> paste, raises window
+    <ctrl>+<middle-click> -> paste, doesn't raises window
+    <right-click> -> context menu, raises window
+    <ctrl>+<right-click> -> context menu, doesn't raises window
+    <middle-wheel> -> scroll, doesn't raises window
     <alt>+<left-click-drag> -> Move window (without going to title bar)  
     <alt>+<right-click-drag> -> Resize window (without going to edge)  
 
@@ -79,6 +82,6 @@ Keyboard shortcuts:
     <left-click> -> raises window
     <left-click-drag> -> move window
     <middle-click> -> lowers window
-    <middle-wheel> adjusts windows opacity
+    <middle-wheel> adjusts windows opacity (I configured this)
     <rt-click> -> toggles window always on top
     

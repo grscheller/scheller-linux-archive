@@ -4928,7 +4928,7 @@ Note: Basically rebuilt system from scratch starting on 2017-06-20
       $ startx cinnamon
       $ startx xfce
 
-  seems that
+  don't work, seems that
 
       $ startx
 

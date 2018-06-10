@@ -853,13 +853,13 @@ Purpose: For things installed locally as an unprivalleged user.
   workspace switcher app top panel.  
 
   Can switch workspaces via
-    <cntl>+<alt>+<left arrow>  and  <cntl>+<alt>+<right arrow>  
+    <ctrl>+<alt>+<left arrow>  and  <ctrl>+<alt>+<right arrow>  
 
   Can drag windows between workspaces and select workspace via
-    <cntl>+<alt>+<up arrow>
+    <ctrl>+<alt>+<up arrow>
 
   Can select amoung windows on a workspace via
-    <cntl>+<alt>+<down arrow>
+    <ctrl>+<alt>+<down arrow>
 
 2018-05-24:
   Cinnamon seems very similar to XFCE, or it is so configurable that

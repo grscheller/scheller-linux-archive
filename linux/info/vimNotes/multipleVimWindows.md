@@ -90,8 +90,8 @@ Traditionally in vi one could interact with the Unix shell via
 
 Vim allows you to open a shell in a separate Vim Window
 
-| Command     | Description                                 |
-|:----------- |:------------------------------------------- |
-| `:term      | open a shell in a new horizontal Vim window |
-| `:vert term | open a shell in a new vertical Vim window   |
+| Command      | Description                                 |
+|:------------ |:------------------------------------------- |
+| `:term`      | open a shell in a new horizontal Vim window |
+| `:vert term` | open a shell in a new vertical Vim window   |
 

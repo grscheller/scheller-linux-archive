@@ -47,7 +47,7 @@ with that buffer.
 My advise, just forget they exist.  Not to be confused with the unique
 number vim gives file buffers.
 
-The have names likea `""`, `"0`, `"1`, `"2`, `"3`, `"4`, ...
+They have names likea `""`, `"0`, `"1`, `"2`, `"3`, `"4`, ...
 
 They seem to be hooks into vim internals.  They behave like a stack
 and contain, among other things, past whole line yanks and deletes.
@@ -98,4 +98,6 @@ following lines in your ~/.vim/vimrc or ~/.vimrc file.
   to vim.  If vim is started with the name vi, it launches
   itself in vi compatibility mode.  Vim in compatibility
   mode is neither POSIX compliant nor a Vi clone.
-
+* You cannot navigate around file in _Insert Mode_ or _Replace Mode_
+  with the arrow keys.  Hitting `<ins>` while in these modes
+  does not swap you between them.

@@ -9,6 +9,9 @@ and called "_Command Mode_."  _Insert Mode_ was the second
 mode.  It was the Berkley Unix nvi (for new vi) which first
 introduced multiple windows.
 
+Where the behavior differs from the original Vi, I will indicate
+the Vim bwhavior.
+
 ### _Normal Mode_ Commands:
 #### Misc commands
 | Command    | Description                                |
@@ -18,7 +21,7 @@ introduced multiple windows.
 | `ZZ`       | save changes and exit vim                  |
 | `<ctrl-z>` | suspend vim to shell background            |
 
-For `<ctrl-z>`, in bash usnge `fg %1` will usually work to
+For `<ctrl-z>`, in bash usage `fg %1` will usually work to
 unsuspend vim.  If you have other things suspended, hunt for it
 using `$ jobs`.
 
@@ -130,7 +133,7 @@ find your vim editting session frozen.  Type `<ctrl-q>` to unlock.
 * Like in _Insert Mode_ you can naviagte around the text
   via the arrow keys creating multiple undo events.
 * In _Replace Mode_, the `<backspace>` and `<ctrl-h>` act
-  like a back arrow key.
+  like a back arrow key but undoes (only) last set of replacements.
 
 ### _Command Mode_ Commands:
 | Command        | Description                                       |

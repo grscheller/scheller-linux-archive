@@ -10,6 +10,7 @@ notes invaluable in my journey to master Vim.
 * [Vim Factoids](vimFactoids.md)
 * [Advanced Traditional Vi Commands](advTradViCommands.md)
 * [Using Multiple Vim Windows](multipleVimWindows.md)
+* [Vim Specific Features](vimSpecificFeatures.md)
 * [Regular Expressions](regExp.md)
 * [Configuring Vim](vimrcConfigFile.md)
 

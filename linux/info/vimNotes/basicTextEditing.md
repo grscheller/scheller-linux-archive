@@ -67,16 +67,18 @@ the _normal mode_ cursor positioning commands.
 | `d2fz`  | delete from cursor to 2nd z on current line                |
 | `2db`   | delete 2 previous words starting from cursor               |
 | `2y3w`  | ends up yanking 6 words                                    |
+| `5x`    | delete next 5 characters on current line                   |
+| `5X`    | delete previous 5 characters on current line               |
 
 #### You can use named buffers to store text
 
 | Command | Description                                                |
 |:-------:|:---------------------------------------------------------- |
-| `'adw`  | delete word and put in buffera` 'a`                        |
-| `'B2yy` | yank 2 lines and append to buffer `'b`                     |
-| `'sd$`  | delete to end of line and put in buffer `'s`               |
-| `'sp`   | paste contents of buffer `'s` after cursor                 |
-| `'aP`   | paste contents of buffer `'a` before cursor                |
+| `"adw`  | delete word and put in buffera` "a`                        |
+| `"B2yy` | yank 2 lines and append to buffer `"b`                     |
+| `"sd$`  | delete to end of line and put in buffer `"s`               |
+| `"sp`   | paste contents of buffer `"s` after cursor                 |
+| `"aP`   | paste contents of buffer `"a` before cursor                |
 
 One use case for named buffers is copying multiple items
 from multiple files and pasting them into other files.
@@ -94,13 +96,17 @@ To return to _Normal Mode_, type `<esc>`.
 | `A`     | insert text at end of line                                 |
 | `o`     | open new line after current line to insert text            |
 | `O`     | open new line before current line to insert text           |
+| `S`     | delete line contents and enter Normal Mode                 |
 | `3cw`   | change next three words                                    |
 | `c3w`   | change next three words                                    |
 | `5cc`   | change next 5 lines                                        |
 | `2cb    | change previous 3 words                                    |
 | `c$     | change to end of line                                      |
 | `c^`    | change text before cursor, excluding initial white space   |
+| `c0`    | change text before cursor to beginning of line             |
 | `s`     | delete current character and enter Normal Mode             |
+| `"a3S`  | delete 3 lines into `"a` and enter Normal Mode on new line |
+
 
 While in _Insert Mode_, the file can be navigated via with the arrow keys.
 Text can also be deleted with the backspace key.  In _Normal Mode_, the

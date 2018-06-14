@@ -136,17 +136,18 @@ find your vim editting session frozen.  Type `<ctrl-q>` to unlock.
   like a back arrow key but undoes (only) last set of replacements.
 
 ### _Command Mode_ Commands:
-| Command        | Description                                       |
-|:-------------- |:------------------------------------------------- |
-| `:r file`      | read file and insert it after current line        |
-| `:nr file`     | read file and insert it after line n              |
-| `:w!`          | write file overriding normal checks               |
-| `:n,mw file`   | save lines n thru m to file                       |
-| `:n,mw >>file` | append lines n thru m to existing file            |
-| `:e!`          | reedit file discarding any unsaved changes        |
-| `:#`           | show current line number and print line           |
-| `:.=`          | show current line number                          |
-| `:=`           | show number of lines in buffer                    |
+| Command        | Description                                          |
+|:-------------- |:---------------------------------------------------- |
+| `:r file`      | read file and insert it after current line           |
+| `:nr file`     | read file and insert it after line n                 |
+| `:w!`          | write file overriding normal checks                  |
+| `:n,mw file`   | save lines n thru m to file                          |
+| `:n,mw >>file` | append lines n thru m to existing file               |
+| `:'a,'bw file` | save lines from line with mark a to line with mark b |
+| `:e!`          | reedit file discarding any unsaved changes           |
+| `:#`           | show current line number and print line              |
+| `:.=`          | show current line number                             |
+| `:=`           | show number of lines in buffer                       |
 | `:n,md`        | delete lines n thru m
 
 ### Marks:

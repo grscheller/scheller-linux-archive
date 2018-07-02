@@ -1,0 +1,161 @@
+#!/bin/bash
+#
+# capConvert
+#
+# Converts zip files of database dumps to eliminate 
+# excessive use use of string datatypes.
+
+ZIPFILE=$1
+
+if [[ ! $ZIPFILE =~ .*\.zip$ ]]
+then
+    echo "Usage: capConvert CAPDBfiles.zip" >&2
+    exit 1
+fi
+    
+if [[ ! -f $ZIPFILE ]]
+then
+    echo "Zipfile \"${ZIPFILE}\" does not exist" >&2
+    exit 1
+fi
+
+UNZIPDIR=${ZIPFILE%.zip}_unzipped
+CONVERTDIR=${ZIPFILE%.zip}_converted
+
+if [[ -d $UNZIPDIR ]]
+then
+    echo "Unzip directory \"${UNZIPDIR}\" already exists." >&2
+    exit 1
+elif [[ -d $CONVERTDIR ]]
+then
+    echo "Converted directory \"${CONVERTDIR}\" already exists." >&2
+    exit 1
+fi
+
+if mkdir "$UNZIPDIR"
+then
+    cp "$ZIPFILE" "$UNZIPDIR"
+    (
+      echo "Unzipping zip file \"${ZIPFILE}\" to directory \"${UNZIPDIR}\"."
+      cd "$UNZIPDIR" || { echo "Cannot cd into $UNZIPDIR"; exit 1; }
+      unzip "$ZIPFILE"
+      rm "$ZIPFILE"
+    )
+else
+    echo "Unable to create unzip directiory \"${UNZIPDIR}\"." >&2
+fi
+
+if mkdir "$CONVERTDIR"
+then
+    echo "Created directory \"${CONVERTDIR}\" for converted files."
+else
+    echo "Unable to create directory \"${CONVERTDIR}\" for converted files," >&2
+    echo "punting." >&2
+fi
+
+# Taylored regular expressions used
+REGEX[0]='s/"([[:digit:]]+)"/\1/g'
+REGEX[1]='s/"([[:digit:]]+)"/\1/'
+REGEX[2]='s/"([[:digit:]]+)"/\1/g
+          s/(,.*,)([[:digit:]]+),/\1"\2",/'
+REGEX[3]='s/"([[:digit:]]+)"/\1/g
+          s/(,"[[:upper:]]{2,3}",)([[:digit:]]+),/\1"\2",/'
+REGEX[4]='s/"([[:digit:]]+)"/\1/g
+          s/"(True|False)"/\1/g'
+REGEX[5]='s/"([[:digit:]]+)"/\1/
+          s/"(True|False)"/\1/g'
+REGEX[6]='s/"([[:digit:]]+)"/\1/g
+          s/(,"([[:digit:]]{2}\/){2}[[:digit:]]{4}",)([[:digit:]]+),/\1"\2",/'
+REGEX[7]='s/"([[:digit:]]+)"/\1/g
+          s/(,"[[:upper:]]{2,3}",)([[:digit:]]+),/\1"\2",/
+          s/"([[:digit:]]+\.[[:digit:]]+)"/\1/g'
+REGEX[8]='s/"([[:digit:]]+)"/\1/g
+          s/("[[:upper:]]{2,3}",)([[:digit:]]+),/\1"\2",/
+          s/"([[:digit:]]+\.[[:digit:]]+)"/\1/g'
+REGEX[9]='s/"([[:digit:]]+)"/\1/g
+          s/"([[:digit:]]+\.[[:digit:]]+)"/\1/g'
+
+# File groupings to which the above Regex's apply.
+Files[0]='
+    AcfGrp.txt
+    Achievements.txt
+    CadetActivities.txt
+    CadetAwards.txt
+    CadetDutyPositions.txt
+    CadetPhase.txt
+    CadetRank.txt
+    CdtAchvEnum.txt
+    DutyPosition.txt
+    MbrCommittee.txt
+    MbrTransfer.txt
+    MemberCurrency.txt
+    MemberInstrumentation.txt
+    MemberPrm.txt
+    SafetyBriefingsMonthly.txt
+    SeniorAwards.txt
+    SeniorLevel.txt
+'
+Files[1]='
+    OrgAddresses.txt
+    OrgContact.txt
+    OrgMeetings.txt
+    SafetyBriefingsQuarterly.txt
+    SpecTrack.txt
+    Tasks.txt
+'
+Files[2]='
+    AchvStepAchv.txt
+    AchvStepTasks.txt
+'
+Files[3]='
+    Commanders.txt
+    MbrAddresses.txt
+    Member.txt
+    Organization.txt
+    ORGStatistics.txt
+'
+Files[4]='
+    CadetAchvAprs.txt
+    CadetAchv.txt
+    MbrChars.txt
+'
+Files[5]=MbrContact.txt
+Files[6]=MbrTasks.txt
+Files[7]=OFlight.txt
+Files[8]=property.txt
+Files[9]=OrgSquadron_Of_Merit.txt
+
+# Files that are unchanged.
+#   Some of these currently have no records, so if they ever
+#   get populated, they may also need to be converted.
+UnchangedFiles='
+    aircraft.txt
+    CapFlt.txt
+    DownLoadDate.txt
+    equipment_hst.txt
+    equipment.txt
+    SafetyBriefingList.txt
+    vehicles_maintenance.txt
+    vehicles.txt
+    vehicles_usage.txt
+'
+
+# Use sed to convert files to old format
+#   The -E makes sed use extended regular expressions.
+echo "Beginning file conversion..."
+
+for grp in 0 1 2 3 4 5 6 7 8 9
+do
+    for File in ${Files[${grp}]}
+    do
+        sed -E "${REGEX[${grp}]}" "$UNZIPDIR/$File" > "$CONVERTDIR/$File"
+    done
+done
+
+# Copy files not currently needing conversions
+for File in $UnchangedFiles
+do
+    cp "$UNZIPDIR/$File" "$CONVERTDIR/$File"
+done
+
+echo "Done!"

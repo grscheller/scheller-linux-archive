@@ -100,8 +100,10 @@ defining "sections."
 | `S`        | change entire line (enter _Insert Mode_)                  |
 | `I`        | insert text at beginning of line after initial whitespace |
 | `i`        | enter _Insert Mode_                                       |
-| `a`        | advance cursor one char and enter _Insert Mode_           | 
-| `A`        | advance cursor to end of line and enter _Insert Mode_     | 
+| `a`        | advance cursor one char and enter _Insert Mode_           |
+| `A`        | advance cursor to end of line and enter _Insert Mode_     |
+| `x`        | delete char at cursor, stay in _Normal Mode_              |
+| `X`        | delete char before cursor, stay in _Normal Mode_          |
 
 ### _Insert Mode_ Commands:
 | Command         | Description                                       |

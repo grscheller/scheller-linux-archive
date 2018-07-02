@@ -5080,3 +5080,13 @@ Note: Basically rebuilt system from scratch starting on 2017-06-20
   a "deactivate".)
 
   Has a very sbt feel to it.
+
+2018-06-27:
+  Installed East Asian fonts.  Like I did on 2017-01-11 with previous
+  incarnation of gauss17.
+
+  Used
+
+    $ pacman -Ss fonts|egrep -i -B 1 'japanese|chinese|korean'
+
+  to get names of font packages.  Baidu seems to display correctly.

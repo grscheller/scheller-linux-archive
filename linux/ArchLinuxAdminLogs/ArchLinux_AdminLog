@@ -5090,3 +5090,57 @@ Note: Basically rebuilt system from scratch starting on 2017-06-20
     $ pacman -Ss fonts|egrep -i -B 1 'japanese|chinese|korean'
 
   to get names of font packages.  Baidu seems to display correctly.
+
+2018-07-06:
+  Meeded to use my PC's built in SD card reader, so installed the
+  utilities for exFAT file system.
+
+    $ sudo pacman -Syu exfat-utils
+
+  Note:
+    Package community/exfat-utils uses the extra/fuse2 package.  Utilities
+    that use fuse2 work in user space, not kernel space, so expect
+    a performance hit.  The filesystems which use fuse2 are:
+
+      exfat-utils  gvfs  ntfs-3g
+
+2018-08-18:
+  Looked into Scala Natively.  Uses Clang.  Decided to build in Clang
+  toolchain support as a first step.
+
+    $ sudo pacman -Syu clang zapcc
+
+  zapcc is a "fast"  CC compiler.  Not sure what they means, compiles fast
+  or runs fast?  Supposively creates memory efficient code useful for large
+  C++ programs.
+
+2018-18-18:
+
+  Seems sbt is broken:
+
+    $ sbt
+
+    The java installation you have is not up to date
+    requires at least version 1.6+, you have
+    version 10.0 2018-07-17
+
+    Please go to http://www.java.com/getjava/ and download
+    a valid Java Runtime and install before running 
+
+  Alot of internet chatter regarding this from April.
+
+    $ whence sbt
+    /home/geoff/opt/sbt/bin/sbt
+    /usr/bin/sbt
+
+  Problem goes away when I use Arch version.  Got rid of local
+  version.
+
+    $ rm -rf ~/opt/sbt/
+
+  Check what is installed,
+
+   $ pacman -Ss sbt
+    community/sbt 1:1.1.4-1 [installed]
+        The interactive build tool
+

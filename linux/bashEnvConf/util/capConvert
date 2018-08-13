@@ -160,4 +160,27 @@ do
     cp "$UNZIPDIR/$File" "$CONVERTDIR/$File"
 done
 
-echo "Done!"
+# Finally, zip up converted files
+(
+  echo -e "\\nZip up converted files in \"${UNZIPDIR}\"."
+  cd "$CONVERTDIR" || {
+      echo "Cannot cd into $CONVERTDIR" 2>&2
+      exit 1
+  }
+  zip "${CONVERTDIR}.zip" ${Files[*]} $UnchangedFiles || {
+      echo "Zip failure." >&2
+      exit 2
+  }
+  mv "$CONVERTDIR.zip" .. || {
+      echo "Failed to retrieve zip file ${CONVERTDIR}.zip" >&2
+      exit 3
+  }
+)
+
+if (( $? == 1 ))
+then
+    echo "Failed to zip up converted archive." >&2
+    exit 1
+else
+    echo -e "\\nDone!"
+fi

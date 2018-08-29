@@ -9,17 +9,51 @@ if [[ -f /etc/bashrc ]]; then
 	source /etc/bashrc
 fi
 
-##
-## Source local aliases and functions
-if [[ -f ~/.bashrc_local ]]; then
-	source ~/.bashrc_local
-fi
+#
+## Fix what /etc/profile.d/gnome-ssh-askpass.sh may break,
+## so that git asks for passwords on command line.
+unset SSH_ASKPASS
 
+#
+## Force Unicode preference beyong just awareness
 export LANG=en_US.utf8
 
+#
+## My work email address
+export ME='geoffrey.scheller@work.com'
+
+#
+## ls family of aliases
+alias l1='ls -1'
+alias lc='ls --color=auto'
+alias la='ls -a'
+alias la1='ls -a -1'
+alias ll='ls -ltr'
+alias lla='ls -ltra'
+alias l.='ls -dA .* --color=auto'
+alias lS='ls -Ssr'
+
+#
+## Print out process tree
+alias pst="ps axjf | sed -e '/^ PPID.*$/d' -e's/.*:...//'"
+
+#
+## pop up multiple directories
+function ud() {
+  upDir=../
+    if [[ $1 =~ ^[1-9][0-9]*$ ]]
+    then
+      for ((ii = 1; ii < $1; ii++))
+      do
+        upDir=../$upDir
+      done
+    fi
+    cd $upDir
+}
+
+#
 ##
 ## ssh aliases
-
 alias rygar='/usr/bin/ssh userName@rygar'
 alias galaga='/usr/bin/ssh userName2@galaga'
 alias frogger='/usr/bin/ssh userName@frogger'
@@ -42,10 +76,10 @@ function fromSystem() {
   done
 }
 
-# scp aliases - if used in scripts, you need to use
-#               "shopt -s expand_aliases" in the script.
 #
-#               replace userName with your login on each of these systems
+## scp aliases - if used in scripts, you need to use
+##               "shopt -s expand_aliases" in the script.
+## Replace userName with your login on each of these systems
 
 alias toRygar='toSystem userName rygar'
 alias fromRygar='fromSystem userName rygar'
@@ -53,23 +87,18 @@ alias fromRygar='fromSystem userName rygar'
 alias toGalaga='toSystem userName2 galaga'
 alias fromGalaga='fromSystem userName2 galaga'
 
-alias toFrogger userName frogger'
-alias fromFrogger userName frogger'
-
 alias toFoobar='toSystem userName3 foobar.mySchool.edu'
 alias fromFoobar='fromSystem userName3 foobar.mySchool.edu'
 
-##
+#
 ## Misc. bash modifcations
 set -o pipefail  # return right most nonzero error, otherwise 0
 shopt -s extglob  # turn on extended pattern matching
 shopt -s checkwinsize
 shopt -s checkhash    # Checks if hashed cmd exists, otherwise search path.
 
-##
+#
 ## Set up command line history and editing
-##    I have written entire shell scripts within my shell
-##    history this way.
 set -o vi         # Cmdline editting like vi editor
 shopt -s cmdhist     # Store multiline commands as single entry in history
 shopt -s lithist     # and store with embedded whitespace, not ;.

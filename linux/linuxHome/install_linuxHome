@@ -8,7 +8,6 @@ export DOT_FILES BIN_SCRIPTS
 ### First install the bash setup files.
 DOT_FILES='
     .bashrc
-    .bashrc_grsTemps
     .bash_profile
     .bash_logout
     .inputrc
@@ -40,7 +39,9 @@ chmod 750 ~/bin
 BIN_SCRIPTS='
     installHome
     pushHome
+    pushHome
     realPath
+    spin
     whence
 '
 

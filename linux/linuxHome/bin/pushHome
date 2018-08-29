@@ -31,11 +31,18 @@ cd ~/pitch
 # Strip out .git directories
 rm -rf $(find linuxHome -name '\.git')
 
-WORK_COMPS="Galaga Frogger"
+WORK_COMPS="Godzilla Frogger"
 SUPER_COMPS="Foobar"
 
 # Distribute to remote computers
 for comp in $WORK_COMPS $SUPER_COMPS
 do
+    echo "Pushing to $comp:"
     eval to${comp} linuxHome
+done
+
+echo "Pushed to:"
+for comp in $WORK_COMPS $SUPER_COMPS
+do
+    echo "    $comp:"
 done

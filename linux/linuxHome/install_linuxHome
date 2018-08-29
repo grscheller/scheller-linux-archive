@@ -8,7 +8,6 @@ export DOT_FILES BIN_SCRIPTS
 ### First install the bash setup files.
 DOT_FILES='
     .bashrc
-    .bashrc_grsTemps
     .bash_profile
     .bash_logout
     .inputrc
@@ -34,19 +33,51 @@ chmod 550 ~/.vim/vimrc
 ###
 ### Now install ~/bin scripts.
 cd ./bin
-[[ -d ~/bin ]] || mkdir ~/bin
-chmod 750 ~/bin
+[[ -d ~/bin ]] || mkdir ~/bin || echo 'Error: Failed to create ~/bin'
+chmod 755 ~/bin
 
 BIN_SCRIPTS='
     installHome
+    path
+    pathTrim
     pushHome
     realPath
+    spin
     whence
 '
 
 # Scripts
 cp -f $BIN_SCRIPTS ~/bin
-(cd ~/bin; chmod 555 $BIN_SCRIPTS; chmod 554 pushHome installHome)
+(cd ~/bin; chmod 555 $BIN_SCRIPTS; chmod 550 pushHome installHome)
+
+# Setup Symlinks for MATLAB
+# Find where MATLAB is installed:
+if [[ -d ~/opt/MATLAB ]]
+then
+    MATLAB_INSTALL_DIR=~/opt/MATLAB
+elif [[ -d ~/local/MATLAB ]]
+then
+    MATLAB_INSTALL_DIR=~/local/MATLAB
+elif [[ -d /opt/MATLAB ]]
+then
+    MATLAB_INSTALL_DIR=/usr/local/MATLAB
+elif [[ -d /usr/local/MATLAB ]]
+then
+    MATLAB_INSTALL_DIR=/usr/local/MATLAB
+else
+    MATLAB_INSTALL_DIR=""
+fi
+
+if [[ -d $MATLAB_INSTALL_DIR ]]
+then
+    #Find latest version of MATLAB and create symlinks
+    MATLAB_BIN=$MATLAB_INSTALL_DIR/$(for Rdir in $MATLAB_INSTALL_DIR/R*
+                                     do
+                                         echo ${Rdir##*/}
+                                     done | sort | tail -1)/bin
+    rm ~/bin/{matlab,mex}
+    ln -s $MATLAB_BIN/{matlab,mex} ~/bin 2> /dev/null
+fi
 
 cd ..   # Get out of bin
 
@@ -54,14 +85,15 @@ cd ..   # Get out of bin
 ### Now install tracked directories into ~/info.
 ###   Good only for flat directory structures,
 ###   unless we manually fix subdirectory permisions 
-###   as we do for info/Another.
+###   as we do for info/Others.
 cd ./info
 [[ -d ~/info ]] || mkdir ~/info
 chmod 750 ~/info
 
 Info_Dirs='
+    Others
+    Preferences
     Web
-    Another
 '
 for Info_Dir in $Info_Dirs
 do
@@ -73,10 +105,10 @@ do
     chmod g+x ~/info/$Info_Dir
     chmod u-wx ~/info/$Info_Dir/*
 done
-# Manually fix sub-directories for ~/info/Another
-chmod u-wx $(ls -dA ~/info/Another/.* | sed '/\/\.\{1,2\}$/d')
-chmod u+wx ~/info/Another/bin
-chmod g+x ~/info/Another/bin
-chmod ug+x-w ~/info/Another/bin/*
+# Manually fix sub-directories for ~/info/Others
+chmod u-wx $(ls -dA ~/info/Others/.* | sed '/\/\.\{1,2\}$/d')
+chmod u+wx ~/info/Others/bin
+chmod g+x ~/info/Others/bin
+chmod ug+x-w ~/info/Others/bin/*
 
 cd ..   # Get out of info

@@ -41,7 +41,6 @@ BIN_SCRIPTS='
     path
     pathTrim
     pushHome
-    pushHome
     realPath
     spin
     whence

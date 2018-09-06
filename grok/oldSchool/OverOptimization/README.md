@@ -54,4 +54,4 @@ Build 4 binaries from one source file, time them, and clean up:
 ```
 * Note how "fast" the second run is.
   All that is happenng is the binary is just spitting a constant out.
-* Currious that just making a variable volitile speeds up the code.
+* Currious that just making a variable volatile speeds up the code.

@@ -1,0 +1,29 @@
+#!/bin/bash
+#
+# Utility to select a GNOME 3 desktop background image.
+#
+# Due to the limitations deliberately built into the GNOME 3
+# desktop, I have to wrapper obtuse gsettings commands to regain
+# ease of use configuring the desktop.
+
+Image="$*"
+
+# See if file exists and, if it does, get its full path.
+if [[ -f $Image ]]
+then
+    PathToImage="$(realPath $Image)"
+else
+    echo "File '$Image' not found as a regular file"
+    exit 1
+fi
+
+# Make sure file claims to be a JPG or PNG
+if [[ ! $PathToImage =~ .*(jpg|png)$ ]]
+then
+    echo "Not a JPG or PNG: $PathToImage"
+    exit 1
+fi
+
+# Set desktop background image
+gsettings set org.gnome.desktop.background picture-uri "file://$PathToImage"
+

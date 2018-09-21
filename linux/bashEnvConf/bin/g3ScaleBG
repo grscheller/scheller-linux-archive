@@ -1,0 +1,45 @@
+#!/bin/bash
+#
+# Utility to rescale the GNOME 3 desktop background.
+#
+# Due to the limitations deliberately built into the GNOME 3
+# desktop, I have to wrapper obtuse gsettings commands to regain
+# ease of use configuring the desktop.
+
+SCALINGS="Centered Scaled Spanned Zoom Stretched Wallpaper Quit"
+
+select scale in $SCALINGS
+do
+  if [[ $scale == Centered ]]
+  then
+     gsettings set org.gnome.desktop.background picture-options "centered"
+     echo Centering background image
+  elif [[ $scale == Scaled ]]
+  then
+     gsettings set org.gnome.desktop.background picture-options "scaled"
+     echo Scaling background image
+  elif [[ $scale == Spanned ]]
+  then
+     gsettings set org.gnome.desktop.background picture-options "spanned"        
+     echo Spanning background image
+  elif [[ $scale == Zoom ]]
+  then
+     gsettings set org.gnome.desktop.background picture-options "zoom"
+     echo Zooming background image
+  elif [[ $scale == Stretched ]]
+  then
+     gsettings set org.gnome.desktop.background picture-options "stretched"
+     echo Stretching background image
+  elif [[ $scale == Wallpaper ]]
+  then
+     gsettings set org.gnome.desktop.background picture-options "wallpaper"
+     echo Wallpapering background image
+  elif [[ $scale == Quit ]]
+  then
+     echo Quitting
+     exit
+  else
+     clear
+     echo Bad scaling
+  fi
+done

@@ -43,7 +43,7 @@ Theses are the bash utilities I put into my Linux ~/bin directory.
   Hit any key, except \<space\> or \<enter\>, to terminate.
 
 ### [viewJarManifest](viewJarManifest)
-* View the manifest list of a *.jar file.
+* View the manifest list of a jar file.
 ```
    Usage: viewJarManifest someJarFile.jar
 ```
@@ -59,4 +59,30 @@ Theses are the bash utilities I put into my Linux ~/bin directory.
 ```
 ```
    Example: whence 'pyth*' 'ghc*' 'filename with spaces'
+```
+## GNOME 3 Scripts
+Due to the limitations deliberately built into the GNOME 3
+desktop, I have to wrapper obtuse gsettings commands to regain
+ease of use configuring the desktop.
+
+### [g3SetBG](g3SetBG)
+* Set the GNOME 3 desktop background to a given JPG or PNG file
+* It is a shame that setting desktop image not trivially easy in the GUI
+* Never checked if this works with PNG files
+```
+    Usage: g3SetBG image_file.jpg
+           g3SetBG image_file.png
+```
+
+### [g3ScaleBG](g3SetBG)
+* Change the scaling of the GNOME 3 desktop background image
+* Choices are:
+   - Centered
+   - Spanned
+   - Stretched
+   - Scaled
+   - Zoom
+   - Wallpaper
+```
+    Usage: g3ScaleBG 
 ```

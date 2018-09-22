@@ -26,6 +26,9 @@
 ### [CentOS 6 Info](CentOS6Info/README.md)
 * CentOS 6 without root privaledges
 
+### [CentOS 7 Info](CentOS7Info/README.md)
+* CentOS 7 without root privaledges
+
 ### [Windows 10 Configuration](Windows10Info)
 * First install [Cygwin](https://www.cygwin.com/)
 * Powershell and Cygwin Configuration files

@@ -517,7 +517,7 @@ Note: Basically rebuilt system from scratch starting on 2017-06-20
 2016-07-16:
   Install google-chrome from AUR:
 
-    $ git clone https://aur.archlinux.org/google-chrome.git 
+    $ git clone https://aur.archlinux.org/google-chrome.git
 
   This accomplished steps 1 and 2 above.  Doing this as user
   geoff in /home/geoff/build/AUR/google-chrome_build.  Looks

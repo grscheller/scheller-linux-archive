@@ -31,7 +31,7 @@
 * Menu takes up minimal real estate, leave on.
 * Edit -> Preferences -> Theme variant: Dark
 
-### Manually tern on Ethernet Interface:
+### Manually turn on Ethernet Interface:
 * Applet on right side top tool bar to left of sound applet
 
 ### More behaviors:
@@ -47,7 +47,7 @@
    $ gsettings set org.gnome.desktop.wm.preferences action-middle-click-titlebar lower
 ```
 * Clear default icons from desktop
-  ```
-     $ gsettings set org.gnome.nautilus.desktop home-icon-visible false
-     $ gsettings set org.gnome.nautilus.desktop trash-icon-visible false
-  ```
+```
+   $ gsettings set org.gnome.nautilus.desktop home-icon-visible false
+   $ gsettings set org.gnome.nautilus.desktop trash-icon-visible false
+```

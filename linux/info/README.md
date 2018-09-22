@@ -20,7 +20,7 @@
 ### [Unicode Cheatsheet](UnicodeCheatSheet.txt)
 * Useful code points
 
-### [Arch Linux Info](ArchLinuxInfo/) directory
+### [Arch Linux Info](ArchLinuxInfo/)
 * Contains Arch Linux specific information
 
 ### [CentOS 6 Info](CentOS6Info/README.md)

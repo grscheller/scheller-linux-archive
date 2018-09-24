@@ -899,3 +899,39 @@ Purpose: For things installed locally as an unprivalleged user.
 
     linux/info/ArchLinuxInfo/cinnamon_conf.txt
 
+2018-09-23:
+  Installed GNOME 3. Using it at work on CentOS 7.  Running it
+  under X11.  Eventually, I wish to switch from X11 to Wayland.
+  Unfortunately. right now in Arch, Wayland and NVIDIA don't
+  get along too well.  Since neither Cinnamon nor XFCE have
+  any immediate plans to migrate to Wayland, will
+  switch to a DE that supports it and switch to Wayland after
+  Arch gets NVIDIA and Wayland working between together.
+
+  Following commands give GNOME sloppy mouse focus like in Cinnamon:
+
+    $ gsettings set org.gnome.desktop.wm.preferences focus-mode sloppy
+    $ gsettings set org.gnome.desktop.wm.preferences raise-on-click false
+    $ gsettings set org.gnome.desktop.wm.preferences action-middle-click-titlebar lower
+
+  One pet peeve of mine: Why do they hide the DE Terminal App????
+  This is the most important "app" in any Linux desktop environment!!!!
+  Had to use DE GUI to find xfce terminal so I could launch gnome-terminal.
+  Once launched, it was added to the left side "docker bar" from
+  whence I put it at the top, and put the File Manager below it.
+
+  Install background and screenlock images:
+
+    $ gsettings set org.gnome.desktop.background picture-uri file:///home/geoff/Pictures/Wallpapers/Rachel_Hawk_Falls.jpg
+    $ gsettings set org.gnome.desktop.screensaver picture-uri file:///home/geoff/Pictures/Wallpapers/Er_Wang_Dong_Cave_1.jpg
+
+  Screen lock does not seem to work, remember reading that you needed to use
+  a DM to use default screen locker.
+
+  Adwaita theme tortures my optic nerve.  Used gnome-tweak to change it
+  to Adwaita-dark.  The elf-lord color scheme I use for vim looks
+  reasonably good in gnome-terminal.
+
+  The side bar (left side docky thing) has annoying Windows 10
+  misfeature of not launching new instance of a running program.
+  I'll try to live with it.

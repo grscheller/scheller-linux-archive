@@ -17,7 +17,8 @@ environment configuration, and system administration.
 5. Unicode cheatsheet
 6. Arch Linux Info
 7. CentOS 6 Info
-8. Windows 10 Powershell and Cygwin configuration
+8. CentOS 7 Info
+9. Windows 10 Powershell and Cygwin configuration
 
 ### [bashEnvConf](linux/bashEnvConf/)
 * Examples `.bash*` and other user configuration files

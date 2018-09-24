@@ -19,7 +19,7 @@
   vertical menu bar on RHS to select desktop.  Something like
   docky in a LHS menu bar.  (Overview mode)
 * No functionality built into GUI to change focus model, info on
-  internet using cmdline gconfigtool 5-6 years old.
+  internet using cmdline gconfigtool 5-6 years old. (but see below)
 
 ### UTF-8 right out of the box:
 ```

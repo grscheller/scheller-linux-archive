@@ -3,7 +3,7 @@ Mupad notebook to model a One-dimensional Harmonic Oscillator Wavefuntion.
 
 ## HarmonicOscWaveFunctions.mn
 * Models a 1-dimensional Harmonic Oscillator wave function.
-* I was curious on how the it looks for high wave number.
+* I was curious about what it would look for high wave number.
 * Uses MATLAB and the MATLAB Symbolic Math Toolbox.
 
 ### Disclaimer:

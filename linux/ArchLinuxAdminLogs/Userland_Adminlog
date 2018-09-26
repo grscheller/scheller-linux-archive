@@ -922,8 +922,8 @@ Purpose: For things installed locally as an unprivalleged user.
 
   Install background and screenlock images:
 
-    $ gsettings set org.gnome.desktop.background picture-uri file:///home/geoff/Pictures/Wallpapers/Rachel_Hawk_Falls.jpg
-    $ gsettings set org.gnome.desktop.screensaver picture-uri file:///home/geoff/Pictures/Wallpapers/Er_Wang_Dong_Cave_1.jpg
+    $ gsettings set org.gnome.desktop.background picture-uri file:///home/geoff/Pictures/Wallpapers/RachelHawkFalls.jpg
+    $ gsettings set org.gnome.desktop.screensaver picture-uri file:///home/geoff/Pictures/Wallpapers/ErWangDongCave.jpg
 
   Screen lock does not seem to work, remember reading that you needed to use
   a DM to use default screen locker.

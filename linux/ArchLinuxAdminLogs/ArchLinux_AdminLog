@@ -5161,3 +5161,16 @@ Note: Basically rebuilt system from scratch starting on 2017-06-20
     $ startx gnome
 
   See Userland_Adminlog for how I configured Gnome 3.
+
+2018-09-25:
+  Installed htop after discovering that top was reverted to the
+  original top command:
+
+    Pacman: htop
+
+2018-09-25:
+  Installed Gnome-shell Clipboard Indicator extension from AUR.
+
+    $ git clone https://aur.archlinux.org/gnome-shell-extension-clipboard-indicator-git.git
+    $ cd gnome-shell-extension-clipboard-indicator-git
+    $ makepkg -sri

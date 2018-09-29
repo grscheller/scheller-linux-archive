@@ -1,6 +1,8 @@
 # Rust systems programming language:
-
-Explore the Rust toolchain and come up to speed with the language.
+Explore the Rust toolchain and come up to speed with the language.  A good
+introduction to the Rust, know as the
+[book](https://doc.rust-lang.org/book) can be found on the Rust
+[web site](https://www.rust-lang.org).
 
 ## 1. Why I no longer love C:
 Consider code a beginner C programmer might write,
@@ -110,7 +112,7 @@ To build or run a "release" version with full optimization,
 The executable is `./target/release/babySteps`.
 
 ## 4. Guessing game - [guessing_game](guessing_game/):
-Guessing game example taken from the official Rust 
+Guessing game example taken from the second edition of the official Rust 
 [book](https://doc.rust-lang.org/book/second-edition/ch02-00-guessing-game-tutorial.html).
 
 I have added comments to the code documenting language features.

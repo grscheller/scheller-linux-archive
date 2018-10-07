@@ -9,7 +9,7 @@ under-the-hood.
 
 ## 1. Build a Haskell program from commandline.
 Let us start with a completely trivial Haskell program,
-[ghcInfo/ghcInfo.hs](ghcInfo/ghcInfo.hs),
+[cmdLine/hw.hs](cmdLine/hw.hs),
 with the following contents:
 ```
    module Main where

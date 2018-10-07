@@ -1,0 +1,500 @@
+Purpose: For tracking Haskell infrastructure installed locally as
+         an unprivalleged user.
+
+2016-08-30 [Deprecated]:
+  Configured Cabal to install Haskell Cabal packages into geoff
+  home directory for Cabal packages not yet rolled into Arch
+  Linux Pacman packages.
+
+    $ mkdir -p .cabal/bin
+    $ cabal update
+
+  Installed codo-notation Cabal package
+
+    $ cabal install codo-notation
+
+    Cabal001: codo-notation
+
+  Note: Cabal is "NOT" a true package manager.  Subsequent
+    "cabal installs" can break previous ones.  This is known
+    as "Cabal Hell."
+
+    1. Cabal can install packages globally - NEVER DO THIS!!!
+    2. Be prepared to blow away the .cabal directory and
+       start over.
+    3. Possible to do Cabal on a per project basis using Cabal
+       sandboxws.  I wish to avoid this.  Also, periodically
+       monitor if Arch Linux Repos pick up these Cabal packages.
+    4. Like I did with Pacman, using "Cabal#:" so that I know
+       what I have currently installed via Cabal.  Use
+
+         $ grep 'Cabal...:' userland_Adminlog.txt
+
+       to get the list of Cabal installs.  Starting the
+       count at 001.
+
+  Cabal man page says that it is "cabal - a system for building
+  and packaging Haskell libraries and programs".
+
+2016-10-13 [Deprecated]:
+  Using stack as my build tool for Haskell -
+
+  Installed into /usr/local/bin via.
+
+    $ curl -sSL https://get.haskellstack.org/ | sh
+
+  Install ghc locally to your home directory:
+
+    $ stack setup
+
+  Created a stack "sandbox" and using with git.
+
+    $ stack --resolver ghc-7.10.3 new pythagTriples simple
+    cd pythagTriples
+    git init
+    git add develLog.txt LICENSE Setup.hs pythagTriples.cabal
+    git add stack.yaml src/Main.hs
+    vi develLog.txt
+    git status
+    git commit
+
+  Later, created a .gitignore file based on what was recommended
+  by Chris Allen in 'https://www.howistart.org/posts/haskell/1'.
+
+    $ cat .gitignore
+    dist
+    dist-*
+    cabal-dev
+    *.o
+    *.hi
+    *.chi
+    *.chs.h
+    *.dyn_o
+    *.dyn_hi
+    .hpc
+    .hsenv
+    .cabal-sandbox/
+    cabal.sandbox.config
+    *.prof
+    *.aux
+    *.hp
+    *.eventlog
+    .stack-work/
+    *.swp
+
+  Run ghci outside of a project:
+
+    $ stack ghci
+    Run from outside a project, using implicit global project config
+    Using resolver: lts-7.1 from implicit global project's config file:
+        /home/geoff/.stack/global-project/stack.yaml
+    Configuring GHCi with the following packages:
+    GHCi, version 8.0.1: http://www.haskell.org/ghc/  :? for help
+    Loaded GHCi configuration from /tmp/ghci7977/ghci-script
+    Prelude>
+
+  Run another version of ghci outside of a project:
+
+    $ stack --resolver ghc-7.10.3 ghci
+    Run from outside a project, using implicit global project config
+    Using resolver: ghc-7.10.3 specified on command line
+    Configuring GHCi with the following packages:
+    GHCi, version 7.10.3: http://www.haskell.org/ghc/  :? for help
+    Prelude>
+
+  OK, I need to figure out which version I should be using.  Seems
+  that the lts-7.1 is using a newer version of GHCi than ghc-7.10.3!
+  Until I am better "educated", I'll stick to lts-7.1.
+
+2016-10-15 [Deprecated]:
+  The latest long term support version of Haskell on Stackage,
+  https://www.stackage.org/, is LTS Haskell 7.3 (ghc-8.0.1).  The
+  defaults stack generates in stack.yaml are really out of date.
+  The lts-3.5 on Arch Linux caused me a lot of confussion, but it
+  did tell me that the only supported versions of ghc for OS
+  key 'linux64-ncurses6' are GhcVersion 7.10.3, GhcVersion 8.0.1.
+
+  So, I'll stick with lts-7.3 until the next LTS release.
+
+  Globally I installed lts-7.3 via
+
+    $ stack --resolver lts-7.3 setup
+
+  and made lts-7.3 the default  by editing
+  ~/.stack/global-project/stack.yaml, where the non-comment
+  contents of this file are now:
+
+    extra-package-dbs: []
+    packages: []
+    extra-deps: []
+    resolver: lts-7.3
+
+  Now, a comment in this file directs me to the file
+  ~/.stack/config.yaml as being the default template for
+  new projects.  This file refers to the website
+  http://docs.haskellstack.org/en/stable/yaml_configuration/
+  for how to configure this file.  After consulting this
+  website, the contents of ~/.stack/config.yaml are now:
+
+    templates:
+      params:
+        author-email: geoffrey@scheller.com
+        author-name: 'Geoffrey Scheller'
+        copyright: 'Copyright: (c) 2016 Geoffrey R. Scheller'
+        github-username: grscheller
+
+  I left the param 'category: value' off until I understand
+  it better.  Seems that it should be set on a per project
+  basis anyway.
+
+2016-10-15 [Deprecated]:
+  When creating a new stack project, use
+
+    $ stack new foofoo new-template
+
+  This will create:
+    LICENSE
+    Setup.hs
+    foofoo.cabal
+    stack.yaml
+    app/Main.hs
+    src/Lib.hs
+    test/Spec.hs
+
+  This seems a much better starting point than the ones I
+  fumbled to create above.
+
+  Aside: Don't know why it put it in the Web category?
+
+2016-10-16 [Deprecated]:
+  Seems that the Haskell/Stack world has moved onto lts-7.4.
+
+  I saw this when I tried to build something with stack.
+
+  Updated stack itself:
+
+    $ stack update
+
+2016-10-20 [Deprecated]:
+  Updated stack to use lts-7.4 when outside a project:
+
+  Changed
+
+    resolver: lts-7.3
+
+  in ~/.stack/global-project/stack.yaml
+
+2017-01-29:
+  I had noticed that some package (I think haskell-cmark)
+  required ghc 8.0.1-1 as a dependency.  Also noticed that
+  the version of stack in the Arch Repos was later than
+  the one I previous installed in /usr/local.
+
+  Removed previous stack Haskell infrastructure.
+
+    $ rm -rf ~/.stack
+    $ rm ~/.local/bin/{cabal,happy,alex}
+    # rm /usr/local/bin/stack
+
+  Installed stack and haskell-stack packages with
+  pacman.  Initialized new sandbox into my home
+  directory.
+
+    $ stack setup
+
+  and created a new project with
+
+    $ stack new junkTest simple
+
+  From the stack.yaml file, I see the following
+
+    resolver: lts-7.18
+    # require-stack-version: ">=1.3"
+
+  Also,
+
+    $ whence ghc
+    /usr/bin/ghc
+
+    $ stack exec whence ghc
+    /home/geoff/.stack/programs/x86_64-linux/ghc-ncurses6-8.0.1/bin/ghc
+    /usr/bin/ghc
+
+  Running stack the first time created a default YAML file
+
+    ~/.stack/global-project/stack.yaml
+
+  With the following non-comment content:
+
+    flags: {}
+    extra-package-dbs: []
+    packages: []
+    extra-deps: []
+    resolver: lts-7.18
+
+  Versions of ghc
+
+    $ /usr/bin/ghc --version
+    The Glorious Glasgow Haskell Compilation System, version 8.0.1
+
+    $ ~/.stack/programs/x86_64-linux/ghc-ncurses6-8.0.1/bin/ghc --version
+    The Glorious Glasgow Haskell Compilation System, version 8.0.1
+
+  Finally I editted the file
+
+    ~/.stack/config.yaml
+
+  as follows
+
+    templates:
+      params:
+        author-name: geoffrey@scheller.com
+        author-email: 'Geoffrey Scheller'
+        copyright: 'Copyright: (c) 2017 Geoffrey R. Scheller'
+        github-username: grscheller
+        category: 'Learning Haskell'
+
+  From these sites:
+
+    https://docs.haskellstack.org
+    https://haskell-lang.org/tutorial/stack-build
+
+  I got the following:
+
+    We define project to mean a directory that contains a
+    stack.yaml file, which specifies how to build a set of
+    cabal packages.  We define package to be a package with
+    a .cabal file.
+
+    A cabal package is identified by a single .cabal file, and
+    has 0 or 1 libraries, and 0 or more executables, test suites,
+    and benchmarks.
+
+    A Stack project has 1 or more cabal packages, and can build
+    them all at the same time.
+
+  Initialize a new project with
+
+    $ stack new junkTest simple
+
+  Build the project with
+
+    $ stack build
+
+  Test the project with
+
+    $ stack test
+
+  Install the project with
+
+    $ stack install
+
+    For the simple project, this just installs
+    the executable into ~/.local/bin
+
+  An existing Cabal package can be initialize
+  a stack.yaml file to use Stack via
+
+    $ stack init
+
+  inside the directory with the package's .cabal file.
+  Stack will attempt to determine a package set compatible
+  with the packages requested in the .cabal file.
+
+  To get all sorts of configuration info, use
+
+    $ stack path
+
+  To find out the versions of libraries which stack installed
+
+    $ stack list-dependencies
+    base 4.9.0.0
+    junkTest3 0.1.0.0
+
+2017-02-01:
+  Installed networking components.
+
+    Pacman: python2-iwscan python2-wpactrl
+
+  Noticed following warnings in /var/log/wicd/wicd.log - 
+
+    2017/01/21 19:50:13 :: WARNING: python-iwscan not found, falling back to using iwlist scan.
+    2017/01/21 19:50:13 :: WARNING: python-wpactrl not found, falling back to using wpa_cli.
+
+  At several wifi hotspots, not all, I've had to configure static IP addresses.
+
+2018-02-07:
+  Time to figure out the Arch Haskell infarstucture.
+
+  Up to now, I have used Stack which pretty much ignored the existing
+  Arch Haskell infrastructure.  When using ghc from the command line, it failed
+  to link due to the absence of the Haskell static libraries.  Instead of
+  linking dynamically, I installed the static libraries via the ghc-static
+  package.
+
+  Cabal is the package description format for Haskell.  It describes a package
+  and how it interacts with the language.  It provides a common infrastructure
+  for building and distributing packages.  The cabal-install build tool provides
+  dependency resolution and retrieves source packages from Hackage, the official
+  Haskell package hosting website.  Cabal uses the GHC that you indicate; it is
+  beyond its scope to manage GHC installations.
+
+  Stack is a build system for Haskell.  Its aim is to provide extremely
+  reprodicible builds.  To do this, it freezes all your dependencies, including
+  the version of GHC used for the project.  It utilizes the Stackage package
+  website.  Stackage contains snapshots of packages and GHC compilers which
+  are compatible with each other.  When starting a project, you choose which
+  Stackage snapshot to use.  It downloads and installs locally into your
+  home directory which versions of GHC and other packages it needs to build
+  your project.  It is built on top of Cabal and replaces cabal-install.
+
+  My Arch Haskell infrastructure is not a Stackage snapshot.  I need to
+  learn how to use Cabal directly.  This will also help me learn how to
+  use stack better.
+
+2018-02-07:
+  First step is to uninstall the Haskell static libraries.  When I did 
+  this (see ArchLinux_AdminLog.txt), it also uninstalled ghc!
+
+  What I build locally to run on Arch, I'll use cabal-install with sandboxes
+  and dynamic linking.  I'll use stack when I want a statically linked 
+  executable I can distribute, or share a build.
+
+  Lets see how much of the Haskell Platform I have left:
+
+    $ pacman -Qs happy
+    local/happy 1.19.8-2
+        The Parser Generator for Haskell
+
+    $ pacman -Qs alex
+    local/alex 3.2.3-4
+        Lexical analyser generator for Haskell
+
+    $ pacman -Qs haddock
+    local/haskell-haddock-library 1.4.5-7
+        A documentation-generation tool for Haskell libraries
+
+    $ pacman -Qs stack
+    local/bluez-libs 5.48-1
+        Deprecated libraries for the bluetooth protocol stack
+    local/haskell-call-stack 0.1.0-5
+        Use GHC call-stacks in a backward compatible way
+    local/haskell-transformers-base 0.4.4-10
+        Lift computations from the bottom of a transformer stack
+    local/stack 1.6.3-60
+        The Haskell Tool Stack
+
+    $ pacman -Qs cabal-install
+
+    $ pacman -Ss cabal-install
+        community/cabal-install 2.0.0.1-5
+        The command-line interface for Cabal and Hackage.
+
+    $ pacman -Qs ghc
+    local/ghc-libs 8.2.2-1
+        The Glasgow Haskell Compiler - Dynamic Libraries
+        local/haskell-call-stack 0.1.0-5
+        Use GHC call-stacks in a backward compatible way
+    local/haskell-deepseq-generics 0.2.0.0-5
+        GHC.Generics-based Control.DeepSeq.rnf implementation
+    local/haskell-extensible-exceptions 0.1.1.4-18
+        extensible exceptions for both new and old versions of GHC
+    local/haskell-system-fileio 0.3.16.3-8
+        Consistent filesystem interaction across GHC versions
+
+  I guess I never installed the pacman cabal-install package.
+
+    $ sudo pacman -Syu ghc
+    $ sudo pacman -Syu cabal-install
+
+  The ghc-static package was not re-installed.
+
+2018-02-07:
+  Let's test dynamic linking, in file Main.hs put
+
+    main = putStrLn "Hello, World!"
+
+  and compile and run it
+
+    $ ghc -dynamic Main.hs
+    [1 of 1] Compiling Main             ( Main.hs, Main.o )
+    Linking Main ...
+
+    $ ./Main
+    Hello, World!
+
+2018-02-07:
+  The cabal-install package contained the /usr/bin/cabal command:
+
+    $ whence cabal*
+    /usr/bin/cabal
+
+  The 'cabal help' command gives a summary of the available cabal commands.
+
+    $ cabal update
+    Config file path source is default config file.
+    Config file /home/geoff/.cabal/config not found.
+    Writing default configuration to /home/geoff/.cabal/config
+    Warning: 'nslookup' tool missing - can't locate mirrors
+    Downloading the latest package list from hackage.haskell.org
+
+  This has to be done periodically to capture newly released packages,
+
+    $ cabal update
+    Downloading the latest package list from hackage.haskell.org
+
+  Let's create a sandbox:
+
+    $ mkdir junk2; cd junk2
+    $ cabal sandbox init
+    Writing a default package environment file to
+    /home/geoff/junk2/cabal.sandbox.config
+    Creating a new sandbox at /home/geoff/junk2/.cabal-sandbox
+
+  Interactively initiate the default cabal file:
+
+    $ cabal init
+
+  I told it to create an executable with entry point Main.hs and it
+  created the boilerplate:
+
+    module Main where
+
+    main :: IO ()
+    main = putStrLn "Hello, Haskell!"
+
+  Need to tell cabal to use dynamic libraries for my sandbox.
+
+    $ cabal configure --disable-library-vanilla --enable-shared --enable-executable-dynamic
+    Resolving dependencies...
+    Configuring junk2-0.1.0.0...
+
+  Build the package
+
+    $ cabal build
+    Preprocessing executable 'junk2' for junk2-0.1.0.0..
+    Building executable 'junk2' for junk2-0.1.0.0..
+    [1 of 1] Compiling Main             ( Main.hs, dist/build/junk2/junk2-tmp/Main.dyn_o )
+    Linking dist/build/junk2/junk2 ...
+
+  Run the command
+
+    $ dist/build/junk2/junk2
+    Hello, Haskell!
+
+  Clean things up,
+
+    $ cabal clean
+    cleaning...
+
+  this deleted the executable and undid the 'cabal configure'.  Redoing
+  these and finally,
+
+    $ cabal run
+    Preprocessing executable 'junk2' for junk2-0.1.0.0..
+    Building executable 'junk2' for junk2-0.1.0.0..
+    Running junk2...
+    Hello, Haskell!
+
+  seemed to want to build it again.
+

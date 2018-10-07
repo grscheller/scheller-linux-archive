@@ -2096,6 +2096,18 @@ Note: Basically rebuilt system from scratch starting on 2017-06-20
     Pacman: stack haskell-stack
 
 2017-02-01:
+  Installed networking components.
+
+    Pacman: python2-iwscan python2-wpactrl
+
+  Noticed following warnings in /var/log/wicd/wicd.log - 
+
+    2017/01/21 19:50:13 :: WARNING: python-iwscan not found, falling back to using iwlist scan.
+    2017/01/21 19:50:13 :: WARNING: python-wpactrl not found, falling back to using wpa_cli.
+
+  At several wifi hotspots, not all, I've had to configure static IP addresses.
+
+2017-02-01:
   Found the following orphaned packages,
 
     $ pacman -Qtdq
@@ -3892,7 +3904,7 @@ Note: Basically rebuilt system from scratch starting on 2017-06-20
 
 2018-02-07:
 
-  Removed ghc-static.  (See Userland_Adminlog.txt for details.)
+  Removed ghc-static.
 
     $ sudo pacman -Rsu ghc-static
     checking dependencies...
@@ -5174,3 +5186,52 @@ Note: Basically rebuilt system from scratch starting on 2017-06-20
     $ git clone https://aur.archlinux.org/gnome-shell-extension-clipboard-indicator-git.git
     $ cd gnome-shell-extension-clipboard-indicator-git
     $ makepkg -sri
+
+2018-10-07:
+  Updated Rust environment installed locally in my home directory.
+
+    $ rustup self update
+    $ rustup update
+    $ rustc --version
+    rustc 1.29.1 (b801ae664 2018-09-20)
+
+2018-10-07:
+  Remove orphan packages.
+
+    $ pacman -Qtdq
+    cython
+    dcadec
+    flite
+    gcc54
+    gcc6
+    gconfmm
+    glew
+    gtkglext
+    haskell-cpphs
+    haskell-deepseq-generics
+    haskell-foundation
+    haskell-hastache
+    haskell-microlens-mtl
+    haskell-mime-mail
+    haskell-mmorph
+    haskell-pid1
+    haskell-prelude-extras
+    haskell-semigroups
+    haskell-stringsearch
+    haskell-uri-bytestring
+    hunspell-en_AU
+    hunspell-en_CA
+    hunspell-en_GB
+    js
+    lcms
+    libcloudproviders
+    libglademm
+    libgnomecanvas
+    libmagick6
+    openjpeg
+    python-pyqt4
+    schroedinger
+    sip
+    xine-lib
+
+    $ sudo pacman -Rns $(pacman -Qtdq)

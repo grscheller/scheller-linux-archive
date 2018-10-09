@@ -1,7 +1,7 @@
-## Advanced vim specific features
+# Advanced vim specific features
 Vim commands not in your grandfather's Vi.
 
-### Jump Lists:
+## Jump Lists:
 Associated with each vim window (not buffer!) is a list of
 past locations "jumped" to.  Jumps are remembered in a jump
 list.  Just navigating via the `hjkl` keys will not create
@@ -32,37 +32,35 @@ Your current location in the jump list is allways 0.
 | `3<ctrl-o>` | go back 3 jumps in jump list                |
 | `2<ctrl-i>` | go forward 2 jumps in jump list             |
 
-### Types of registers
-#### Default register
+## Types of registers
+### Default register
 The default register has a name `""`
 
-#### Numbered registers
+### Numbered registers
+These contain only multiline (one or more whole lines) data.
 
 | Register       | Purpose                                        |
 |:--------------:|:---------------------------------------------- |
 | `"0`           | contains contents of most recent yank command  |
-| `"1`           | contains most recent multi-line delete/change  |
-| `"2` thru `"9` | contents shift downward when `"1` changes      |
-`
-These can be written to in Command Mode via
-   ```
-      :let @5 = "foobar"
-   ```
+| `"1`           | contains most recent delete/substitution       |
+| `"2` thru `"9` | contents shift downward when `"1` is updated   |
 
-#### Small delete register
+These can be written to in Command Mode via `:let @5 = "foobar"`
+
+### Small delete register
 
 | Register       | Purpose                                      |
 |:--------------:|:-------------------------------------------- |
 | `"-`           | contains deletes/changes less than one line  |
 
-#### Named registers
+### Named registers
 
 | Register       | Purpose                                           |
 |:--------------:|:------------------------------------------------- |
 | `"a` thru `"z` | storage registers across all file buffers         |
 | `"A` thru `"Z` | same registers, used to append to named register  |
 
-#### Read only registers
+### Read only registers
 
 | Register  | Purpose                                      |
 |:---------:|:-------------------------------------------- |
@@ -72,27 +70,27 @@ These can be written to in Command Mode via
 
 Use `:@:` to repeat last _Command Mode_ command.
 
-#### Alternate file register 
+### Alternate file register 
 The alternate file register `"#` is an assignable name, useful when jumping
 between 2 buffers via <ctrl-^>.
 
-#### Expression register
+### Expression register
 The expression register `"=` is used for expressions in commands
 which use registers.
 
-#### Selection and drop registers (Interacts with Desktop GUI)
+### Selection and drop registers (Interacts with Desktop GUI)
 
 | Register  | Purpose                                  |
 |:---------:|:---------------------------------------- |
-| `"\*`     | copy/paste from/to the X11 clipboard     |
+| `"*`      | copy/paste from/to the X11 clipboard     |
 | `"+`      | copy/paste from/to clipboard             |
 | `"~`      | paste from last drag-and-drop operation  |
 
-#### Black hole register
-The black hole register `"\_` allows deleting text without affecting
+### Black hole register
+The black hole register `"_` allows deleting text without affecting
 other registers.  Reading from it returns nothing.
 
-#### Last search pattern register
+### Last search pattern register
 The last search pattern register `"/` is readable from _Normal Mode_.
 You can assign values to it in _Command Mode_ via
 ```

@@ -1,23 +1,25 @@
 ## Useful and/or essential Vim factoids
 
-### Buffers in Vim
-There are several things in Vim refered to as buffers.  These
-are areas that can store text.  The three most important ones
+### Buffers and registers in Vim
+These are areas that can store text.  The three most important ones
 for now are:
-* default buffer
-* named buffers
+* default register
+* named registers
 * file buffers
 
-#### Named buffers
-Illustrated in [Basic text editing](basicTextEditing.md#you-can-use-named-buffers-to-store-text),
-Named buffers are areas where you can store snippets of text.
+For more in depth information see the section on types of registers in
+[vimSpecificFeatures](vimSpecificFeatures.md#types-of-registers),
+
+#### The default register
+The default register is just the area which `y` and `c` commands
+write to and `p` and `c` commands read from by "default."
+
+#### Named registers
+Illustrated in [Basic text editing](basicTextEditing.md#you-can-use-named-registers-to-store-text),
+Named registers are areas where you can store snippets of text.
 They are named `"a` thru `"z` and are essentially 26
 independent "clip boards" that are shared between all the
 file buffers.
-
-#### The default buffer
-The default buffer is just the area which `y` and `c` commands
-write to and `p` and `c` commands read from by "default."
 
 #### File buffers
 These are the in memory text associated with a file.  To list
@@ -43,16 +45,18 @@ with that buffer.
 | `:q`          | quit window, fails if last view & changes not saved      |
 | `:q!`         | quit window, abandon any changes if last view            |
 
-#### Numbered buffers
-My advise, just forget they exist.  Not to be confused with the unique
-number vim gives file buffers.
+#### Numbered registers
+My advise to beginners, just forget they exist.  Not to be confused with
+the unique number vim gives file buffers.
 
-They have names likea `""`, `"0`, `"1`, `"2`, `"3`, `"4`, ...
-
-They seem to be hooks into vim internals.  They behave like a stack
-and contain, among other things, past whole line yanks and deletes.
+They have names like `""`, `"0`, `"1`, `"2`, `"3`, `"4`, ... `"9`
 
 The `""` buffer is actually the name of the default buffer.
+
+The `"0` buffer contains the last whole line yank.
+
+The `"1` thru `"9` buffers act like a stack containing deleted or substituted
+whole line text.
 
 ### Using the mouse
 When configured to use the mouse, vim will steal the mouse
@@ -98,6 +102,6 @@ following lines in your ~/.vim/vimrc or ~/.vimrc file.
   to vim.  If vim is started with the name vi, it launches
   itself in vi compatibility mode.  Vim in compatibility
   mode is neither POSIX compliant nor a Vi clone.
-* You cannot navigate around file in _Insert Mode_ or _Replace Mode_
+* In vi, you cannot navigate around file in _Insert Mode_ or _Replace Mode_
   with the arrow keys.  Hitting `<ins>` while in these modes
   does not swap you between them.

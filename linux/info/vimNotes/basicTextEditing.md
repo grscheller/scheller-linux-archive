@@ -70,7 +70,7 @@ the _normal mode_ cursor positioning commands.
 | `5x`    | delete next 5 characters on current line                   |
 | `5X`    | delete previous 5 characters on current line               |
 
-#### You can use named buffers to store text
+#### You can use named registers to store text
 
 | Command | Description                                                |
 |:-------:|:---------------------------------------------------------- |
@@ -80,7 +80,7 @@ the _normal mode_ cursor positioning commands.
 | `"sp`   | paste contents of buffer `"s` after cursor                 |
 | `"aP`   | paste contents of buffer `"a` before cursor                |
 
-One use case for named buffers is copying multiple items
+One use case for named registers is copying multiple items
 from multiple files and pasting them into other files.
 
 ### Commands to insert or manipulate text:
@@ -225,7 +225,7 @@ Helps when getting rid of tabs and trailing whitespace.
 
 ### Detailed help
 To get started, from within vim, type
-* `:help
+* `:help`
 * `:help help`
 * `:help tutorial`
 

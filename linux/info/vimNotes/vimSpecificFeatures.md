@@ -32,7 +32,7 @@ Your current location in the jump list is allways 0.
 | `3<ctrl-o>` | go back 3 jumps in jump list                |
 | `2<ctrl-i>` | go forward 2 jumps in jump list             |
 
-## Types of registers
+## Types of registers:
 ### Default register
 The default register has a name `""`
 
@@ -55,10 +55,10 @@ These can be written to in Command Mode via `:let @5 = "foobar"`
 
 ### Named registers
 
-| Register       | Purpose                                           |
-|:--------------:|:------------------------------------------------- |
-| `"a` thru `"z` | storage registers across all file buffers         |
-| `"A` thru `"Z` | same registers, used to append to named register  |
+| Register       | Purpose                                               |
+|:--------------:|:----------------------------------------------------- |
+| `"a` thru `"z` | storage registers across all file buffers             |
+| `"A` thru `"Z` | same registers, used to appending instead of replace  |
 
 ### Read only registers
 

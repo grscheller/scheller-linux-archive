@@ -33,45 +33,68 @@ Your current location in the jump list is allways 0.
 | `2<ctrl-i>` | go forward 2 jumps in jump list             |
 
 ### Types of registers
-1. Default register has a name `""`
-2. Numbered registers
+#### Default register
+The default register has a name `""`
 
-   | Register       | Purpose                                        |
-   |:--------------:|:---------------------------------------------- |
-  `| `"0`           | contains contents of most recent yank command  |
-  `| `"1`           | contains most recent multi-line delete/change  |
-  `| `"2` thru `"9` | contents shift downward when `"1` changes      |
+#### Numbered registers
+
+| Register       | Purpose                                        |
+|:--------------:|:---------------------------------------------- |
+| `"0`           | contains contents of most recent yank command  |
+| `"1`           | contains most recent multi-line delete/change  |
+| `"2` thru `"9` | contents shift downward when `"1` changes      |
 `
-   These can be written to in Command Mode via `:let @5 = "foobar"`
-3. Small delete register `"-` contains deletes/changes less than one line
-4. Named registers `"a` thru `"z`. To append instead, use `"A` thru `"Z`
-5. Read only registers
+These can be written to in Command Mode via
+   ```
+      :let @5 = "foobar"
+   ```
 
-   | Register  | Purpose                                      |
-   |:---------:|:-------------------------------------------- |
-   | `".`      | contains last inserted text                  |
-   | `"%`      | contains the name of the current file        |
-   | `":`      | contains most recent _Command Mode_ command  |
+#### Small delete register
 
-   Use `:@:` to repeat last _Command Mode_ command.
+| Register       | Purpose                                      |
+|:--------------:|:-------------------------------------------- |
+| `"-`           | contains deletes/changes less than one line  |
 
-6. Alternate file register `"#` assignable name, useful when jumping
-   between 2 buffers via <ctrl-^> 
+#### Named registers
 
-7. Expression register `"=` for expressions in commands which use registers
+| Register       | Purpose                                           |
+|:--------------:|:------------------------------------------------- |
+| `"a` thru `"z` | storage registers across all file buffers         |
+| `"A` thru `"Z` | same registers, used to append to named register  |
 
-8. Selection and drop registers (Interacts with Desktop GUI)
+#### Read only registers
 
-   | Register  | Purpose                                  |
-   |:---------:|:---------------------------------------- |
-   | `"\*`     | copy/paste from/to the X11 clipboard     |
-   | `"+`      | copy/paste from/to clipboard             |
-   | `"~`      | paste from last drag-and-drop operation  |
+| Register  | Purpose                                      |
+|:---------:|:-------------------------------------------- |
+| `".`      | contains last inserted text                  |
+| `"%`      | contains the name of the current file        |
+| `":`      | contains most recent _Command Mode_ command  |
 
-9. Black hole register `"_`
-   Allows deleting text without affecting other registers.  Reading
-   from it returns nothing.
+Use `:@:` to repeat last _Command Mode_ command.
 
-10. Last search pattern register `"/`
-    Can only read from it in Normal Mode.
-    Assign value while in Command Mode via `:let @/ = "Some String"`
+#### Alternate file register 
+The alternate file register `"#` is an assignable name, useful when jumping
+between 2 buffers via <ctrl-^>.
+
+#### Expression register
+The expression register `"=` is used for expressions in commands
+which use registers.
+
+#### Selection and drop registers (Interacts with Desktop GUI)
+
+| Register  | Purpose                                  |
+|:---------:|:---------------------------------------- |
+| `"\*`     | copy/paste from/to the X11 clipboard     |
+| `"+`      | copy/paste from/to clipboard             |
+| `"~`      | paste from last drag-and-drop operation  |
+
+#### Black hole register
+The black hole register `"\_` allows deleting text without affecting
+other registers.  Reading from it returns nothing.
+
+#### Last search pattern register
+The last search pattern register `"/` is readable from _Normal Mode_.
+You can assign values to it in _Command Mode_ via
+```
+   :let @/ = "Some String"
+```

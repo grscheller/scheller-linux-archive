@@ -1,4 +1,4 @@
-## More advanced traditional vi commands
+# More advanced traditional vi commands
 Many of the following commands existed in the original vi.
 A good vi cheatsheet for traditional vi can be found here: 
 [Lagmonster](http://www.lagmonster.org/docs/vi2.html).
@@ -10,10 +10,10 @@ mode.  It was the Berkley Unix nvi (for new vi) which first
 introduced multiple windows.
 
 Where the behavior differs from the original Vi, I will indicate
-the Vim bwhavior.
+the Vim behavior.
 
-### _Normal Mode_ Commands:
-#### Misc commands
+## _Normal Mode_ Commands:
+### Misc commands
 | Command    | Description                                |
 |:----------:|:------------------------------------------ |
 | `<ctrl-g>` | show filename and other useful status info |
@@ -25,7 +25,7 @@ For `<ctrl-z>`, in bash usage `fg %1` will usually work to
 unsuspend vim.  If you have other things suspended, hunt for it
 using `$ jobs`.
 
-#### Commands to move cursor
+### Commands to move cursor
 | Command    | Description                                |
 |:----------:|:------------------------------------------ |
 | `+`        | move to first nonspace character next line |
@@ -56,7 +56,7 @@ In my .vim/vimrc file, I use
 ```
 to keep the cursor 3 lines from the edge of the screen.
 
-#### Commands to move screen view
+### Commands to move screen view
 | Command    | Description                                |
 |:----------:|:------------------------------------------ |
 | `<ctrl-e>` | move view down one line                    |
@@ -71,7 +71,7 @@ to keep the cursor 3 lines from the edge of the screen.
 Where applicable, you can type a number before these commands
 to repeat them that many times.
 
-#### Cursor commands useful for written text
+### Cursor commands useful for written text
 | Command | Description                                 |
 |:-------:|:------------------------------------------- |
 | `(`     | move cursor to beginning of sentence        |
@@ -92,7 +92,7 @@ used these to jump between C functions in source code.
 For troff files various constructs were understood as
 defining "sections."
 
-#### Commands to change text
+### Commands to change text
 | Command    | Description                                               |
 |:----------:|:--------------------------------------------------------- |
 | `C`        | change from cursor to end of line (enter _Insert Mode_)   |
@@ -105,7 +105,7 @@ defining "sections."
 | `x`        | delete char at cursor, stay in _Normal Mode_              |
 | `X`        | delete char before cursor, stay in _Normal Mode_          |
 
-### _Insert Mode_ Commands:
+## _Insert Mode_ Commands:
 | Command         | Description                                       |
 |:---------------:|:------------------------------------------------- |
 | `<ctrl-h>`      | delete previous character                         |
@@ -137,7 +137,7 @@ find your vim editting session frozen.  Type `<ctrl-q>` to unlock.
 * In _Replace Mode_, the `<backspace>` and `<ctrl-h>` act
   like a back arrow key but undoes (only) last set of replacements.
 
-### _Command Mode_ Commands:
+## _Command Mode_ Commands:
 | Command        | Description                                          |
 |:-------------- |:---------------------------------------------------- |
 | `:r file`      | read file and insert it after current line           |
@@ -152,7 +152,7 @@ find your vim editting session frozen.  Type `<ctrl-q>` to unlock.
 | `:=`           | show number of lines in buffer                       |
 | `:n,md`        | delete lines n thru m
 
-### Marks:
+## Marks:
 Marks allow you to set locations to either be able to jump to
 or use with _Normal Mode_ editing commands.
 

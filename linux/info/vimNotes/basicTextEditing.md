@@ -1,4 +1,4 @@
-## Basic text editing by example
+# Basic text editing by example
 This should be enough to enable you to be productive with vim.
 For many years, this is basically all I knew.  Vim, like EMACS,
 is a very power editor.  These examples barely scratch the surface
@@ -8,10 +8,9 @@ of what it can do.
 into a complete IDE with full Unix Shell support.
 
 I think with a few weeks of practice, the material covered here
-can be internalized.  Eventually, these commands become part of
-one's "muscle memory."
+can be internalized and eventually become part of your "muscle memory."
 
-### Vim has 4 main modes:
+## Vim has 4 main modes:
 * _Normal Mode_
 * _Command Mode_
 * _Insert Mode_
@@ -41,16 +40,18 @@ one's "muscle memory."
 | `n`            | search forward or backward for last pattern      |
 | `N`            | search for last pattern in reverse sense to `n`  |
 
-### Interacting with the buffer in _Normal Mode_:
+### Interacting with "the buffer" in _Normal Mode_:
+Buffer is older vi jargon for what is now called the
+default register in vim.
 
-| Command       | Description                                 |
+| Command       | Description                                      |
 |:-------------:|:------------------------------------------------ |
 | `yy`          | yank line to buffer (copy)                       |
 | `dd`          | delete line and put in buffer (cut)              |
 | `5dd  `       | delete 5 lines and put in buffer                 |
 | `x`           | delete character under cursor to buffer          |
 | `~`           | change case of current char and advance one char | 
-| `r<char>      | change current char to <char>                    |
+| `r<char>`     | change current char to <char>                    |
 | `p`           | paste buffer contents "after"                    |
 | `P`           | paste buffer contents "before"                   |
 
@@ -70,11 +71,12 @@ the _normal mode_ cursor positioning commands.
 | `5x`    | delete next 5 characters on current line                   |
 | `5X`    | delete previous 5 characters on current line               |
 
-#### You can use named registers to store text
+### You can use named "buffers" to store text
+In vim these now are refered to as named registers.
 
 | Command | Description                                                |
 |:-------:|:---------------------------------------------------------- |
-| `"adw`  | delete word and put in buffera` "a`                        |
+| `"adw`  | delete word and put in buffer` "a`                        |
 | `"B2yy` | yank 2 lines and append to buffer `"b`                     |
 | `"sd$`  | delete to end of line and put in buffer `"s`               |
 | `"sp`   | paste contents of buffer `"s` after cursor                 |
@@ -112,18 +114,6 @@ While in _Insert Mode_, the file can be navigated via with the arrow keys.
 Text can also be deleted with the backspace key.  In _Normal Mode_, the
 backspace key is just another navigation key.
 
-### Undo/redo commands:
-
-| Command    | Description        |
-|:----------:|:------------------ |
-| `u`        | undo previous edit |
-| `<ctrl-r>` | redo edit undone   |
-
-These can be used to linearly undo and redo edits,
-like the arrow buttons in a web browser.
-Navigating with the arrow keys while in _Insert Mode_
-will result in multiple entries in the undo/redo buffers.
-
 ### _Command Mode_ (line editor) commands:
 (TL;DR) Vim is an open source version of the Unix editor vi,
 which is a CLI visual version of the Berkeley Unix
@@ -143,7 +133,7 @@ and prompts you with `: `.
 | Command             | Description                                                   |
 |:------------------- |:------------------------------------------------------------- |
 | `:w`                | write to disk file you are editing                            |
-| `:w file`           | write to file, unlike MS Word, you're still editing orig file |
+| `:w file`           | write to file, unlike MS Word, you are still editing orig file |
 | `:q`                | quit editing, vim will warn you if you have unsaved changes   |
 | `:wq`               | write to disk, then quit                                      |
 | `:q!`               | quit without saving unsaved changes                           |
@@ -187,15 +177,33 @@ To enter _Visual Mode_ from _Normal Mode_
 | `<ctrl-v>`  | for block visual mode      |
 | `gv`        | to reselect last selection |
  
-Highlight text via either the `h,j,k,l` keys or the arrow keys.
+Highlight text with _Normal Mode_ cursor navigation commands
+like `h, j, k, l, w, e, W, B` or the arrow keys.
 Once selected, you can issue either _Normal Mode_ or 
-_Command Mode_ commands on that highlighted region.  To punt
-out of _Visual Mode_ without doing anything, hit the `<esc>` key.
+_Command Mode_ commands.  _Normal Mode_ commands such as
+`d, y, c` act on the highlighted region.  _Command Mode_
+commands act on the lines in their entirity that contain
+the selected region.
+
+To punt out of _Visual Mode_ without doing anything,
+hit the `<esc>` key.
 
 If you have enabled mouse support, mouse actions can cause you
 to enter _Visual Mode_.
 
-### Some Vim command line option examples
+## Undo/redo commands:
+
+| Command    | Description        |
+|:----------:|:------------------ |
+| `u`        | undo previous edit |
+| `<ctrl-r>` | redo edit undone   |
+
+These can be used to linearly undo and redo edits,
+like the arrow buttons in a web browser.
+Navigating with the arrow keys while in _Insert Mode_
+will result in multiple entries in the undo/redo buffers.
+
+## Some Vim command line option examples
 ```
    $ vim file1 file2 file3   # Open/create 3 files for editting
    $ vim +[n] file           # Open file for editing on line n (default last line of file)
@@ -206,7 +214,7 @@ to enter _Visual Mode_.
    $ vim -r file             # Recover crashed vim session, uses swap file
    $ vim -h                  # List help message for command-line options and exit
 ```
-### Dealing with whitespace characters:
+## Dealing with whitespace characters:
 
 | Command       | Description                          |
 |:------------- |:------------------------------------ |
@@ -215,7 +223,7 @@ to enter _Visual Mode_.
 
 Helps when getting rid of tabs and trailing whitespace.
 
-### Spell checking:
+## Spell checking:
 
 | Command        | Description             |
 |:-------------- |:----------------------- |
@@ -223,7 +231,7 @@ Helps when getting rid of tabs and trailing whitespace.
 | `:set nospell` | Turn spell checking off |
 
 
-### Detailed help
+## Detailed help
 To get started, from within vim, type
 * `:help`
 * `:help help`

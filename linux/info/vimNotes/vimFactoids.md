@@ -1,27 +1,31 @@
-## Useful and/or essential Vim factoids
+# Useful and/or essential Vim factoids
 
-### Buffers and registers in Vim
+## Buffers and registers in Vim
 These are areas that can store text.  The three most important ones
 for now are:
 * default register
 * named registers
 * file buffers
 
-For more in depth information see the section on types of registers in
-[vimSpecificFeatures](vimSpecificFeatures.md#types-of-registers),
+For more in depth information see the section on all the different
+types of registers in
+[vimSpecificFeatures](vimSpecificFeatures.md#types-of-registers).
 
-#### The default register
+Note: In older vi documentation and jargon, registers are refered
+to as buffers.
+
+### The default register
 The default register is just the area which `y` and `c` commands
 write to and `p` and `c` commands read from by "default."
 
-#### Named registers
+### Named registers
 Illustrated in [Basic text editing](basicTextEditing.md#you-can-use-named-registers-to-store-text),
 Named registers are areas where you can store snippets of text.
 They are named `"a` thru `"z` and are essentially 26
 independent "clip boards" that are shared between all the
 file buffers.
 
-#### File buffers
+### File buffers
 These are the in memory text associated with a file.  To list
 them, use the `:buffers` command.  Among other things, vim
 gives a unique buffer number and associates a filename (if any) 
@@ -45,20 +49,7 @@ with that buffer.
 | `:q`          | quit window, fails if last view & changes not saved      |
 | `:q!`         | quit window, abandon any changes if last view            |
 
-#### Numbered registers
-My advise to beginners, just forget they exist.  Not to be confused with
-the unique number vim gives file buffers.
-
-They have names like `""`, `"0`, `"1`, `"2`, `"3`, `"4`, ... `"9`
-
-The `""` buffer is actually the name of the default buffer.
-
-The `"0` buffer contains the last whole line yank.
-
-The `"1` thru `"9` buffers act like a stack containing deleted or substituted
-whole line text.
-
-### Using the mouse
+## Using the mouse
 When configured to use the mouse, vim will steal the mouse
 events from the terminal emulator.  To enable full vim mouse
 support, `:set mouse=a` and to disable the mouse and let the
@@ -85,7 +76,7 @@ don't like the middle mouse button repositioning a paste.
 In _Normal Mode_ I don't like a click-drag throwing me into
 character _Visual Mode_.
 
-### Configuring wildmenu
+## Configuring wildmenu
 To make tab completion in command mode more efficient, put the
 following lines in your ~/.vim/vimrc or ~/.vimrc file.
 ```
@@ -93,7 +84,7 @@ following lines in your ~/.vim/vimrc or ~/.vimrc file.
    set wildmode=longest:full,full
 ```
    
-### Vi and Vim differences:
+## Vi and Vim differences:
 * Vi only has one level of undo/redo, `<ctrl-u>` undo the
   last change and, if hit again, will redo the change.
   `<ctrl-r>` has no effect.

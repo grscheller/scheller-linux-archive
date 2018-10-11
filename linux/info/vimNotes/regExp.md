@@ -1,9 +1,9 @@
-## Regular Expressions
+# Regular Expressions
 Regular expressions, also called RegExps, are used in
 in Unix/Posix like environments to match textual patterns.
 They are not to be confused with shell globbing pattern matching.
 
-### History (TL;DR):
+## History (TL;DR):
 The concept of regular expressions arose in the 1950s from
 the work of mathematitian/logician Stephen Kleen in his study of
 [regular languages](https://en.wikipedia.org/wiki/Regular_language).
@@ -69,7 +69,7 @@ the pattern (are contained in the formal language defined by the RE).  It does
 this via "compiling" the RE down to a finite state machine which scans the 
 documents for strings contained in the RE's formal language.
 
-### Extended Regular Expressions(ERE):
+## Extended Regular Expressions(ERE):
 Regular expresions (REs) are patterns used to match strings.  These
 days, "strings" means a data structure repesenting an ordered sequence
 of Unicode code points.  We'll assume we are using a "string-based" regular
@@ -96,9 +96,9 @@ expression engine.
 
 Let `S` and `T` represent regular expressions
 * `ST` concats `S` and `T`
-* `(ST)` concats `S` and `T`, treated as single subexpression
+* `(ST)` concat `S` and `T`but treat as single subexpression
 * `S|T` matches either `S` or `T`
-* `S*` matches 0 or more instances of S
+* `S\*` matches 0 or more instances of S
 * `S+` matches 1 or more instances of S
 * `S{n,m}` matches at least n but not more than m of S
 * `S{n,}` matches at least n of S
@@ -106,9 +106,9 @@ Let `S` and `T` represent regular expressions
 * `S{m}` matches exactly m of S
 * `S?` matches 0 or 1 of S
 
-Note, `*`, `+`, `?`, and `{m,n}` all bind more closely than concatenation.
+Note, `\*`, `+`, `?`, and `{m,n}` all bind more closely than concatenation.
 
-### Basic Regular Expressions(BRE):
+## Basic Regular Expressions(BRE):
 These are what Vim uses.  The big difference is that the meta
 characters `(){}|+?` are treated litterally and you must
 escape them with `\` for them to take on their meta-meaning.
@@ -121,7 +121,7 @@ Due to the common use of `(){}|+` in programming languages, makes
 sense that vim uses BREs.  Probably more likely done for backward
 compatibility with vi.
 
-### Extended Regexp examples:
+## Extended Regexp examples:
 It is usually easiest to learn regular expressions using simple examples.
 
 | RegExp           | Examples                                       |
@@ -139,18 +139,18 @@ It is usually easiest to learn regular expressions using simple examples.
 | `fooba[rz]`      | match foobar or foobaz                         |
 | `foob[^ui]r`     | matches fobar or fobqz but not fobur nor fobir |
 
-### Using Regular Expressions in Vim:
+## Using Regular Expressions in Vim:
 I like to think of all my regular expressions as extended regular
 expressions.  When working with basic regular expressions I still
 think interms of extended regular expressions but with the need
 to escape the `(){}|+?` characters with a backslash to turn on their
 meta-meaning.  The character `.` is meta without escaping.
 
-#### _Normal Mode_ examples
+### _Normal Mode_ examples
 
-#### _Command Mode_ examples
+### _Command Mode_ examples
 
-### POSIX.2 Regular Expressions:
+## POSIX.2 Regular Expressions:
 For a description of POSIX.2 regular expressions see
 ```
    $ man -s7 regex

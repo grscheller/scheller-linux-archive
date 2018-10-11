@@ -89,6 +89,10 @@ colorscheme elflord
 "
 " let g:molokai_original = 1
 " colorscheme molokai
+"
+" Force all files, besides README.md, ending in .md to
+" be intepreted as MArkDown and not Modula-2.
+autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 
 " Set default encoding
 "   

@@ -1,15 +1,15 @@
-## Using multiple windows within a terminal 
+# Using multiple windows within a terminal 
 Within a single vim terminal editing session, using multiple
 CLI ncurses windows can be very useful.  For example,
 using the help facility `:help <command>` can be confusing
 if you don't know how to navigate multiple vim windows.
 
-### Basic concepts
+## Basic concepts
 * A _file buffer_ is the in memory text associated with a file
 * A _window_ is a viewport on a buffer
 * A _tab page_ is a collection of windows
 
-### Creating new windows _Command Mode_
+## Creating new windows _Command Mode_
 
 | Command | Description                             |
 |:------- |:--------------------------------------- |
@@ -18,7 +18,7 @@ if you don't know how to navigate multiple vim windows.
 | `:spl`  | new window new view same buffer above   |
 | `:vspl` | new window new view same buffer to left |
 
-### Creating new windows _Normal Mode_
+## Creating new windows _Normal Mode_
 
 | Command     | Description                             |
 |:-----------:|:--------------------------------------- |
@@ -39,19 +39,19 @@ I configure these in my `~/.vim/vimrc
    set splitright
 ```
 
-### Adjusting windows size (without mouse support):
+## Adjusting windows size (without mouse support):
 
-#### Equalize window size
+### Equalize window size
 
 | Command        | Description                            |
 |:--------------:|:-------------------------------------- |
 | `<ctrl-w>=`    | equalize heights/widths of all windows |
 
-#### Setting/adjusting window sizes
+### Setting/adjusting window sizes
 
 | Command       | Description                             |
 |:-------------:|:--------------------------------------- |
-| `20<ctrl-w>_` | set active window height 20 lines       |
+| `20<ctrl-w>\_` | set active window height 20 lines       |
 | `72<ctrl-w>|` | set active window width 72 chars        |
 | `10<ctrl-w>+` | increaces active window height 10 lines |
 | `15<ctrl-w>-` | decreaces active window height 15 lines |
@@ -62,7 +62,7 @@ Also, note that
 
 | Command      | Description                   |
 |:------------:|:----------------------------- |
-| `<ctrl-w>_`  | maximize active window height |
+| `<ctrl-w>\_`  | maximize active window height |
 | `<ctrl-w>\|` | maximize active window width  |
 
 but
@@ -74,13 +74,13 @@ but
 | `<ctrl-w>>` | increaces active window width 1 char   |
 | `<ctrl-w><` | decreaces active window width 1 char   |
 
-### Starting Vim with multiple windows/tabs:
-```
+## Starting Vim with multiple windows/tabs:
+
    $ vim -p[n]    # Open n tab pages (default: one for each file)
    $ vim -o[n]    # Open n windows (default: one for each file)
    $ vim -O[n]    # Like -o but split vertically
 ```
-### Terminal Windows
+## Terminal Windows
 Traditionally in vi one could interact with the Unix shell via
 
 | Command   | Description                              |

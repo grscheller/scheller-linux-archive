@@ -25,12 +25,12 @@ The `:jumps` command will list a table consisting like this:
 
 Your current location in the jump list is allways 0.
 
-| Command     | Description                                 |
-|:-----------:|:------------------------------------------- |
-| `<ctrl-o>`  | go back to previous location in jump list   |
-| `<ctrl-i>`  | go forward to next location in jump list    |
-| `3<ctrl-o>` | go back 3 jumps in jump list                |
-| `2<ctrl-i>` | go forward 2 jumps in jump list             |
+| Command      | Description                                 |
+|:------------:|:------------------------------------------- |
+| `<ctrl-o>`   | go back to previous location in jump list   |
+| `<ctrl-i>`   | go forward to next location in jump list    |
+| `3 <ctrl-o>` | go back 3 jumps in jump list                |
+| `2 <ctrl-i>` | go forward 2 jumps in jump list             |
 
 ## Types of registers:
 ### Default register

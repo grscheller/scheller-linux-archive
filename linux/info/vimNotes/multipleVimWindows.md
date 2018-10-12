@@ -20,11 +20,11 @@ if you don't know how to navigate multiple vim windows.
 
 ## Creating new windows _Normal Mode_
 
-| Command     | Description                             |
-|:-----------:|:--------------------------------------- |
-| `<ctrl-w>n` | new window with empty buffer above      |
-| `<ctrl-w>s` | new window new view same buffer above   |
-| `<ctrl-w>v` | new window new view same buffer to left |
+| Command      | Description                             |
+|:------------:|:--------------------------------------- |
+| `<ctrl-w> n` | new window with empty buffer above      |
+| `<ctrl-w> s` | new window new view same buffer above   |
+| `<ctrl-w> v` | new window new view same buffer to left |
 
 The directional sense of these commands can be adjusted via
 
@@ -43,39 +43,39 @@ I configure these in my `~/.vim/vimrc
 
 ### Equalize window size
 
-| Command        | Description                            |
-|:--------------:|:-------------------------------------- |
-| `<ctrl-w>=`    | equalize heights/widths of all windows |
+| Command         | Description                            |
+|:---------------:|:-------------------------------------- |
+| `<ctrl-w> =`    | equalize heights/widths of all windows |
 
 ### Setting/adjusting window sizes
 
-| Command       | Description                             |
-|:-------------:|:--------------------------------------- |
-| `20<ctrl-w>\_` | set active window height 20 lines       |
-| `72<ctrl-w>|` | set active window width 72 chars        |
-| `10<ctrl-w>+` | increaces active window height 10 lines |
-| `15<ctrl-w>-` | decreaces active window height 15 lines |
-| `10<ctrl-w>>` | increaces active window width 10 char   |
-| `15<ctrl-w><` | decreaces active window width 15 char   |
+| Command           | Description                             |
+|:-----------------:|:--------------------------------------- |
+| `20 <ctrl-w> _ `  | set active window height 20 lines       |
+| `72 <ctrl-w> \|`  | set active window width 72 chars        |
+| `10 <ctrl-w> +`   | increaces active window height 10 lines |
+| `15 <ctrl-w> -`   | decreaces active window height 15 lines |
+| `10 <ctrl-w> >`   | increaces active window width 10 char   |
+| `15 <ctrl-w> <`   | decreaces active window width 15 char   |
 
 Also, note that
 
-| Command      | Description                   |
-|:------------:|:----------------------------- |
-| `<ctrl-w>\_`  | maximize active window height |
-| `<ctrl-w>\|` | maximize active window width  |
+| Command        | Description                   |
+|:--------------:|:----------------------------- |
+| `<ctrl-w> _ `  | maximize active window height |
+| `<ctrl-w> \|`  | maximize active window width  |
 
 but
 
-| Command     | Description                            |
-|:-----------:|:-------------------------------------- |
-| `<ctrl-w>+` | increaces active window height 1 lines |
-| `<ctrl-w>-` | decreaces active window height 1 lines |
-| `<ctrl-w>>` | increaces active window width 1 char   |
-| `<ctrl-w><` | decreaces active window width 1 char   |
+| Command      | Description                            |
+|:------------:|:-------------------------------------- |
+| `<ctrl-w> +` | increaces active window height 1 lines |
+| `<ctrl-w> -` | decreaces active window height 1 lines |
+| `<ctrl-w> >` | increaces active window width 1 char   |
+| `<ctrl-w> <` | decreaces active window width 1 char   |
 
 ## Starting Vim with multiple windows/tabs:
-
+```
    $ vim -p[n]    # Open n tab pages (default: one for each file)
    $ vim -o[n]    # Open n windows (default: one for each file)
    $ vim -O[n]    # Like -o but split vertically

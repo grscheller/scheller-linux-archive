@@ -59,7 +59,7 @@ as if in vim command mode.  Comments begin with `"`.
    set fileencoding=utf-8
    
    " Don't use TABS!!!, replace with 4 spaces when <tab> key is pressed.
-   " Use <ctrl-v><tab> to actually add a real tab.
+   " Use <ctrl-v> <tab> to actually add a real tab.
    set tabstop=4
    set shiftwidth=4
    set expandtab

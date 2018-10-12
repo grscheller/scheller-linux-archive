@@ -106,14 +106,14 @@ defining "sections."
 | `X`        | delete char before cursor, stay in _Normal Mode_          |
 
 ## _Insert Mode_ Commands:
-| Command         | Description                                       |
-|:---------------:|:------------------------------------------------- |
-| `<ctrl-h>`      | delete previous character                         |
-| `<backspace>`   | delete previous character                         |
-| `<ctrl-v><chr>` | take <chr> literally                              |
-| `<ctrl-w>`      | delete previous word                              |
-| `<ctrl-c>`      | break out of _Insert Mode_, punt on any auto cmds |
-| `<ctrl-x>`      | enter _Insert Mode_ completion submode            |
+| Command          | Description                                       |
+|:----------------:|:------------------------------------------------- |
+| `<ctrl-h>`       | delete previous character                         |
+| `<backspace>`    | delete previous character                         |
+| `<ctrl-v> <chr>` | take <chr> literally                              |
+| `<ctrl-w>`       | delete previous word                              |
+| `<ctrl-c>`       | break out of _Insert Mode_, punt on any auto cmds |
+| `<ctrl-x>`       | enter _Insert Mode_ completion submode            |
 
 For more information on `<ctrl-x>` see,
 ```
@@ -122,7 +122,7 @@ For more information on `<ctrl-x>` see,
 If you accidentally typed `<ctrl-x>` while in insert mode, typing any
 non-control character will get you back.  If you have terminal flow
 control turned on, and you hit the unfortunate key combination
-`<ctrl-x><ctrl-s>`, something EMACS users are likely to do, you will
+`<ctrl-x> <ctrl-s>`, something EMACS users are likely to do, you will
 find your vim editting session frozen.  Type `<ctrl-q>` to unlock.
 
 ### _Insert Mode_ vs _Replace Mode_:

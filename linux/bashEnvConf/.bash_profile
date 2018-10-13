@@ -1,33 +1,36 @@
 #
 # ~/.bash_profile
 #
-#  Configure initial environment of my login shells.
+#  Configure initial environment of my login shells,
+#  also, initial environment of terminal windows via
+#  a hook in .bashrc.
 #
-#    Essentually, reconfigure what is handed
-#    to me by /etc/profile.
+#  Essentually, reconfigure what is handed
+#  to me by /etc/profile or some damn gui
+#  desktop environment.
 #
-#  Note: Configure xfce-terminal to launch new terminals
-#        with login shells if using a display manager.
-#
-#        If using startx, initial environment picked up
-#        from console login.
-#
-#  Note: Non-existent path and duplicate path elements
-#        will be dealt with near end of script.
+#  Non-existent path and duplicate path elements
+#  will be dealt with near end of script.  Can be
+#  run multiple times to reinitialize an environment.
 #
 
-# Reverse engineering
+export VIRGIN_PATH=${VIRGIN_PATH:=$PATH}
 export BASH_PROFILE_SOURCED=${BASH_PROFILE_SOURCED:=0}
-export VIRGIN_BASH_PATH=${VIRGIN_BASH_PATH:=$PATH}
 
-# Configure interactive shells.
+# Count number of times file sourced
+(( BASH_PROFILE_SOURCED++ ))
+
+# Configure what is consistent accross all interactive shells.
 if [[ -f .bashrc ]]
 then
     # shellcheck source=/dev/null
-    source .bashrc
+    source ~/.bashrc
 fi
 
-umask 0007
+umask u=rwx,g=rwx,o=
+
+export EDITOR=vim
+export VISUAL=vim
 
 ## Python pip configuration
 export PIP_REQUIRE_VIRTUALENV=true
@@ -50,6 +53,3 @@ PATH=$PATH:~/bin:.
 
 # Clean up PATH
 [[ -x ~/bin/pathTrim ]] && PATH=$(~/bin/pathTrim "$PATH")
-
-# Count number of times file sourced
-((BASH_PROFILE_SOURCED++))

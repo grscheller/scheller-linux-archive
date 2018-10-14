@@ -105,7 +105,7 @@ shopt -s lithist     # and store with embedded whitespace, not ;.
 shopt -s histappend    # Append, don't replace history file.
 HISTSIZE=2000
 HISTFILESIZE=5000
-HISTCONTROL="ignoredups"
+HISTCONTROL="ignoredups:ignorespace"
 PROMPT_COMMAND='history -a'   # Whenever Displaying $PS1,
                               # save the last cmd to disk.
 

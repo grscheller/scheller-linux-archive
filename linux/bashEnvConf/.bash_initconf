@@ -1,0 +1,61 @@
+#
+# ~/.bash_conf
+#
+#  Configure initial path, environment variables, 
+#  aliases and shell functions which you want to be
+#  able to change and be inherited, not reset, in 
+#  child bash shells.
+#
+#  This was traditionally done in ~/.bash_profile,
+#  when a login shell was created.  Unfortunately,
+#  in a DE, the bash shells in terminal emulators
+#  are descendent not from a login shell, but the
+#  Bourne shell scripts which kick off the X-session.
+#  As a result, only ~/.bashrc can be counted on to
+#  be run.
+#
+#  Non-existent path and duplicate path elements
+#  will be dealt with near end of script.
+#
+
+## Sentinel function to see if an initial configuration
+#  was previously done.  This will not be defined if 
+#  you use a display manager and this file has not previously
+#  been sourced.  If you start your X-session manually, put
+#  "unset -f bash_initconf_ran" into your .xinitrc file
+#  before any exec function.
+#
+function bash_initconf_ran () {
+    return 0
+}
+
+export -f bash_initconf_ran
+
+## initial setup of bash environment
+#
+umask u=rwx,g=rx,o=
+
+export EDITOR=vim
+export VISUAL=vim
+
+## Python pip configuration
+export PIP_REQUIRE_VIRTUALENV=true
+
+## For Haskell locally contained and administered via stack
+PATH=~/.local/bin:$PATH
+
+## Location Rust Toolchain
+PATH=~/.cargo/bin:$PATH
+
+## Locally installed SBT (Scala Build Tool)
+PATH=~/opt/sbt/bin:$PATH
+
+# Use ~/local/bin for stuff I hope Arch will eventually
+# supercede what I install in my home directory.
+PATH=$PATH:~/local/bin
+
+# My private utils bin and current directory last.
+PATH=$PATH:~/bin:.
+
+# Clean up PATH
+[[ -x ~/bin/pathTrim ]] && PATH=$(~/bin/pathTrim "$PATH")

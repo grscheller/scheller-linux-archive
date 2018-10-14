@@ -11,7 +11,6 @@
 
 export BASHRC_NON_INTERACTIVE=${BASHRC_NON_INTERACTIVE:=0}
 export BASHRC_INTERACTIVE=${BASHRC_INTERACTIVE:=0}
-export BASH_PROFILE_SOURCED=${BASH_PROFILE_SOURCED:=0}
 
 if [[ $- != *i* ]]
 then
@@ -21,20 +20,22 @@ then
 
     ((BASHRC_NON_INTERACTIVE++))
 
-elif ((  BASH_PROFILE_SOURCED == 0 ))
-then 
-    ## Make sure initial shell environment is well defined,
-    #  many GUI environments never parse .bash_profile.
-    #  Note, .bash_profile will resource .bashrc.
-
-    # shellcheck source=/dev/null
-    source ~/.bash_profile
-
 else
     # Count number of times file sourced noninteractively
-  ((BASHRC_INTERACTIVE++))
+    ((BASHRC_INTERACTIVE++))
+
+    ## Make sure initial shell environment is well defined,
+    #  for both login shells and new terninal windows.
+    # 
+    if [[  $(type -t bash_initconf_ran)  != function ]]
+    then 
+    
+        # shellcheck source=/dev/null
+        source ~/.bash_initconf
+    fi
 
     ## Bash customizations when running interactively
+    #  These are consistent accross all my bash shells.
 
     set -o notify  # Do not wait until next prompt to report bg jobs status.
     set -o pipefail  # Return right most nonzero error, otherwise 0.
@@ -49,7 +50,7 @@ else
     shopt -s histappend    # Append, don't replace history file.
     HISTSIZE=5000
     HISTFILESIZE=10000
-    HISTCONTROL="ignoredups"
+    HISTCONTROL="ignoredups:ignorespace"
     HOST=${HOSTNAME%%.*}
     case $TERM in
       xterm*|rxvt*|urxvt*|kterm*|gnome*)

@@ -29,10 +29,6 @@ environment configuration, and system administration.
   to create and administer Arch Linux on a laptop.
 * Saves having to re-research howto's from scratch
 
-### [linuxHome](linux/linuxHome/)
-* Keep Linux environment synced across workstations and supercomputers
-* Based on the infrastructure I use at work
-
 ### [private html homepage](linux/web)
 * In lieu of using bookmarks
 * Easily shared between browsers and computers

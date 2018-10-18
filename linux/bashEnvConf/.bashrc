@@ -138,7 +138,7 @@ else
     function fm () {
         DiR="$1"
         [[ -n $DiR ]] || DiR='.'
-        ( /usr/bin/nautilus "$1" & )
+        ( /usr/bin/nautilus "$DiR" & )
     }
 
     # Terminal which inherits environment of parent shell
@@ -163,7 +163,7 @@ else
 
     ## LibreOffice
     function lo () {
-        ( /usr/bin/envince "$@" &>/dev/null & )
+        ( /usr/bin/libreoffice & )
     }
     # LibreOffice writer
     function low () {

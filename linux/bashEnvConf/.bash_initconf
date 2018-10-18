@@ -42,8 +42,14 @@ export VISUAL=vim
 ## My e-mail address
 export ME='geoffrey@scheller.com'
 
+## Set locale so applications (like Python3) display unicode correctly
+export LANG=en_US.utf8
+
 ## Python pip configuration
 export PIP_REQUIRE_VIRTUALENV=true
+
+## To supercede what comes with the Linux distribution.
+PATH=~/local/bin:$PATH
 
 ## For Haskell locally contained and administered via stack
 PATH=~/.local/bin:$PATH
@@ -53,10 +59,6 @@ PATH=~/.cargo/bin:$PATH
 
 ## Locally installed SBT (Scala Build Tool)
 PATH=~/opt/sbt/bin:$PATH
-
-## Use ~/local/bin for stuff I hope Arch will eventually
-#  supercede what I install in my home directory.
-PATH=$PATH:~/local/bin
 
 ## My private utils bin and current directory last.
 PATH=$PATH:~/bin:.

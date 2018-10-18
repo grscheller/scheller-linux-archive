@@ -15,7 +15,7 @@
 #  be run.
 #
 #  Non-existent path and duplicate path elements
-#  will be dealt with near end of script.
+#  will be dealt with at the end of script.
 #
 
 ## Sentinel function to see if an initial configuration
@@ -32,11 +32,15 @@ function bash_initconf_ran () {
 export -f bash_initconf_ran
 
 ## initial setup of bash environment
-#
-umask u=rwx,g=rx,o=
+
+## Default file permissions
+umask ug=rwx,o=
 
 export EDITOR=vim
 export VISUAL=vim
+
+## My e-mail address
+export ME='geoffrey@scheller.com'
 
 ## Python pip configuration
 export PIP_REQUIRE_VIRTUALENV=true
@@ -50,12 +54,12 @@ PATH=~/.cargo/bin:$PATH
 ## Locally installed SBT (Scala Build Tool)
 PATH=~/opt/sbt/bin:$PATH
 
-# Use ~/local/bin for stuff I hope Arch will eventually
-# supercede what I install in my home directory.
+## Use ~/local/bin for stuff I hope Arch will eventually
+#  supercede what I install in my home directory.
 PATH=$PATH:~/local/bin
 
-# My private utils bin and current directory last.
+## My private utils bin and current directory last.
 PATH=$PATH:~/bin:.
 
-# Clean up PATH
+## Clean up PATH
 [[ -x ~/bin/pathTrim ]] && PATH=$(~/bin/pathTrim "$PATH")

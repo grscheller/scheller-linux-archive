@@ -2,11 +2,7 @@
 #  ~/.bashrc
 #
 #  Configure what stays consistent across all my 
-#  interctive shells.
-#
-#  Also, try to make all new terminal windows run
-#  with a shell descendant from one configured
-#  via .bash_profile.
+#  interctive bash shells.
 #
 
 export BASHRC_NON_INTERACTIVE=${BASHRC_NON_INTERACTIVE:=0}
@@ -14,29 +10,29 @@ export BASHRC_INTERACTIVE=${BASHRC_INTERACTIVE:=0}
 
 if [[ $- != *i* ]]
 then
-    ## Not running interactively, don't configure anything.
-    #  Non-interactive shells are responsible for their own
-    #  configuration.
-
     ((BASHRC_NON_INTERACTIVE++))
+    # Don't configure anything, non-interactive
+    # shells are responsible for their own configuration.
 
 else
-    # Count number of times file sourced noninteractively
     ((BASHRC_INTERACTIVE++))
-
-    ## Make sure initial shell environment is well defined,
-    #  for both login shells and new terninal windows.
-    # 
+    # Make sure initial shell environment is well defined,
+    # for both login shells and new terninal windows, even
+    # if ~/.bash_profile not sourced.
     if [[  $(type -t bash_initconf_ran)  != function ]]
     then 
-    
         # shellcheck source=/dev/null
         source ~/.bash_initconf
     fi
 
-    ## Bash customizations when running interactively
-    #  These are consistent accross all my bash shells.
+    ## Make sure git asks for passwords on the command line
+    unset SSH_ASKPASS
 
+    ## Timeout bash sessions after about 8 hours
+    TMOUT=60000
+
+    ## Bash customizations when running interactively
+    #
     set -o notify  # Do not wait until next prompt to report bg jobs status.
     set -o pipefail  # Return right most nonzero error, otherwise 0.
     shopt -s extglob  # Turn on extended pattern matching.
@@ -50,8 +46,23 @@ else
     shopt -s histappend    # Append, don't replace history file.
     HISTSIZE=5000
     HISTFILESIZE=10000
-    HISTCONTROL="ignoredups:ignorespace"
-    HOST=${HOSTNAME%%.*}
+    HISTCONTROL="ignoredups"
+
+    ## Set up prompt, save history whenever displayed
+    #
+    export HOST=${HOSTNAME%%.*}
+    case $HOST in
+      gauss17)
+        HOST=gauss17
+        ;;
+      maxwell4)
+        HOST=maxwell4
+        ;;
+      kpsrbylzntj42)
+        HOST=rygar
+        ;;
+    esac
+
     case $TERM in
       xterm*|rxvt*|urxvt*|kterm*|gnome*)
         PROMPT_COMMAND='history -a; echo -ne "\033]0;${USER}@${HOST}\007"'
@@ -74,14 +85,21 @@ else
 
     unalias rm 2> /dev/null
     unalias ls 2> /dev/null
+
     alias lc='ls --color=auto'
     alias l1='ls -1'
     alias la='ls -a'
     alias ll='ls -ltr'
     alias lla='ls -ltra'
     alias l.='ls -dA .* --color=auto'
+
     alias pst="ps axjf | sed -e '/^ PPID.*$/d' -e's/.*:...//'"
     alias which='alias | /usr/bin/which --tty-only --read-alias --show-dot --show-tilde'
+
+    # Pull down a subset of a website
+    alias Wget='/usr/bin/wget -p --convert-links -e robots=off'
+    # Pull down more -- Not good for large websites
+    alias WgetMirror='/usr/bin/wget --mirror -p --convert-links -e robots=off'
 
     ## pop up multiple directories
     function ud() {
@@ -96,19 +114,18 @@ else
       cd $upDir || return
     }
 
-    ## wget aliases to pulldown websites
-
-    # Pull down a subset of a website
-    alias Wget='/usr/bin/wget -p --convert-links -e robots=off'
-
-    # Pull down more -- Not good for large websites
-    alias WgetMirror='/usr/bin/wget --mirror -p --convert-links -e robots=off'
+    ## Convert between hex and dec
+    function h2d () {
+        echo "ibase=16; $*" | bc
+    }
+    function d2h () {
+        echo "obase=16; $*" | bc
+    }
 
     ## NVIDIA aliases
-
+    #
     # NVIDIA Daemon to keep card active when not running X-Windows
     alias nv-pd='sudo /usr/bin/nvidia-persistenced --user geoff --persistence-mode'
-
     # Activate and Deactivate respectfully.
     #    Communicates with above daemon if running, otherwise
     #    directly with card in a deprecated manner.
@@ -117,21 +134,43 @@ else
 
     ## GUI-land aliases and functions
 
+    # Gnome's file manager
+    function fm () {
+        DiR="$1"
+        [[ -n $DiR ]] || DiR='.'
+        ( /usr/bin/nautilus "$1" & )
+    }
+
     # Terminal which inherits environment of parent shell
-    #alias tm='(/usr/bin/xfce4-terminal --disable-server &)'
-    alias tm='(/usr/bin/gnome-terminal &>/dev/null &)'
+    function tm () {
+        if [[ -x /usr/bin/gnome-terminal ]]
+        then
+            ( /usr/bin/gnome-terminal &>/dev/null & )
+        else
+            ( /usr/bin/xterm &>/dev/null & )
+        fi
+    }
 
     # PDF Reader
     function ev() {
       ( /usr/bin/evince "$@" &>/dev/null & )
     }
 
-    # Google Chrome Browser
+    # Firefox Browser
     function ff() {
       ( /usr/bin/firefox "$@" &>/dev/null & )
     }
 
-    # Bash completion for stack (Haskell)
+    ## LibreOffice
+    function lo () {
+        ( /usr/bin/envince "$@" &>/dev/null & )
+    }
+    # LibreOffice writer
+    function low () {
+        ( /usr/bin/libreoffice --writer "$@" & )
+    }
+
+    ## Bash completion for stack (Haskell)
     #eval "$(stack --bash-completion-script stack)"
 
 fi

@@ -1,4 +1,4 @@
-Purpose: To indicate what was done to create gauss17 and 
+arpose: To indicate what was done to create gauss17 and 
          the rational behind it.
 
 Note: Basically rebuilt system from scratch starting on 2017-06-20
@@ -279,7 +279,7 @@ Note: Basically rebuilt system from scratch starting on 2017-06-20
   Added first two lines to /home/geoff/.xinitrc whose
   contents now are:
 
-    xrandr --setprovideeroutputsource modesetting NVIDIA-0
+    xrandr --setprovideroutputsource modesetting NVIDIA-0
     xrandr --auto
 
     session=${1:-gnome}
@@ -5235,3 +5235,119 @@ Note: Basically rebuilt system from scratch starting on 2017-06-20
     xine-lib
 
     $ sudo pacman -Rns $(pacman -Qtdq)
+
+2018-10-17:
+  Boldly removed XFCE and Cinnamon.
+
+    $ sudo pacman -Rsu cinnamon
+    $ sudo pacman -Rsu xfce4
+    $ sudo pacman -Rsu xfce4-goodies
+    $ sudo pacman -Rsu xfce4
+
+  See what got orphaned.
+
+    $ pacman -Qtdq
+    haskell-mwc-random
+
+    $ sudo pacman -Rsu haskell-mwc-random
+
+  Which removed 
+
+    haskell-math-functions
+    haskell-vector-th-unbox
+    haskell-mwc-random
+
+  Probably had nothing to do with removing
+  xfce4 and cinnamon DE's.
+
+2018-10-17:
+  OK, startx was removed.  Have to research the alternatives.
+
+    $ pacman -Ss startx
+    community/sx 2.1-1
+        Simple alternative to startx(1) for starting an Xorg server.
+
+2018-10-18:
+  This is what I what,
+
+    $ pacman -Ss xorg-xinit
+    extra/xorg-xinit 1.4.0-3
+        X.Org initialisation program
+
+  So, install it
+
+    $ sudo pacman -Syu xorg-xinit
+
+  Also brought in xorg-xauth.  Once installed, startx worked
+  as it usually does.
+
+  Research this, I find that I already have the gnome display
+  manager, gdm, installed.
+
+    $ whence gdm
+    /usr/bin/gdm
+
+  Let's us see its status
+
+    $ systemctl status gdm
+    ● gdm.service - GNOME Display Manager
+       Loaded: loaded (/usr/lib/systemd/system/gdm.service; disabled; vendor preset>
+       Active: inactive (dead)
+
+  Usual systemctl mechanism to 
+
+     sudo systemctl (start|stop|restart|try-restart) gdm
+     sudo systemctl (enable|disable) gdm
+
+2018-10-18:
+  When gdm enabled and system rebooted, get the login GUI
+  on <ctrl>+<alt>+F1.  When I log in, I get the "Black Screen
+  of Death" on both <ctlr>+<alt>+F1 & <ctrl>+<alt>+F2.  Able
+  to login on the other virtual terminals.
+
+  Tried moving ~/.xintrc aside, but this not help.
+
+  Seems that gdm is launched on TTY1 and it spwans
+  the user login session in TTY2.  Unfortunately, I am
+  getting the "black screen of death" in TTY2.
+
+  Tried uncommenting in /etc/gdm/custom.conf the line
+
+    #WaylandEnable=false
+
+  but behavior was the same.  Did this because Wayland
+  and NVIDIA don't get along with each other at this time.
+
+  Repeated /etc/X11/xorg.conf and .xinitrc changes I made
+  back on 2016-07-09 (and removed on 2017-06-29).  Before
+  I make any GDM changes, make sure I can still launch
+  gnome-shell via startx.
+
+  Using startx still works.  I am using the Arch-Wiki article:
+
+    https://wiki.archlinux.org/index.php/NVIDIA_Optimus
+
+  where I getting this information.  For GDM it says "Make
+  sure that GDM use X as default backend."  So uncommenting
+  the line in /etc/gdm/custom.conf as I tried above.
+
+  Created two files,
+
+    /usr/share/gdm/greeter/autostart/optimus.desktop
+    /etc/xdg/autostart/optimus.desktop
+
+  with the contents:
+
+    [Desktop Entry]
+    Type=Application
+    Name=Optimus
+    Exec=sh -c "xrandr --setprovideroutputsource modesetting NVIDIA-0; xrandr --auto"
+    NoDisplay=true
+    X-GNOME-Autostart-Phase=DisplayServer
+
+  Still does not work.  I am becoming wearly of magical incantations
+  that I don't know what they do, so i will stick with startx 
+  for a while longer.
+
+  It may be just my imagination, but my desktop backgraound seems
+  to be a lot sharper.

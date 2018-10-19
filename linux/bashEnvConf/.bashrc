@@ -4,6 +4,10 @@
 #  Configure what stays consistent across all my 
 #  interctive bash shells.
 #
+#  No need to source /etc/bashrc (none in Arch)
+#  /etc/profile sources /etc/bash.bashrc which
+#  brings in shell completion.
+#
 
 export BASHRC_NON_INTERACTIVE=${BASHRC_NON_INTERACTIVE:=0}
 export BASHRC_INTERACTIVE=${BASHRC_INTERACTIVE:=0}
@@ -28,7 +32,7 @@ else
     ## Make sure git asks for passwords on the command line
     unset SSH_ASKPASS
 
-    ## Timeout bash sessions after about 8 hours
+    ## Timeout bash sessions after about 8 hours of inactivity
     TMOUT=60000
 
     ## Bash customizations when running interactively

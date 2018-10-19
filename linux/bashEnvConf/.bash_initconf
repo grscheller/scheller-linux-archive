@@ -18,6 +18,9 @@
 #  will be dealt with at the end of script.
 #
 
+export BASH_INITCONF=${BASH_INITCONF:=0}
+((BASH_INITCONF++))
+
 ## Sentinel function to see if an initial configuration
 #  was previously done.  This will not be defined if 
 #  you use a display manager and this file has not previously

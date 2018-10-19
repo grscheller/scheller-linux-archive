@@ -21,7 +21,7 @@
 export BASH_INITCONF=${BASH_INITCONF:=0}
 ((BASH_INITCONF++))
 
-## Sentinel function to see if an initial configuration
+## Sentinel function to mark that an initial configuration
 #  was previously done.  This will not be defined if 
 #  you use a display manager and this file has not previously
 #  been sourced.  If you start your X-session manually, put
@@ -35,8 +35,7 @@ function bash_initconf_ran () {
 export -f bash_initconf_ran
 
 ## initial setup of bash environment
-
-## Default file permissions
+# Default file permissions
 umask ug=rwx,o=
 
 export EDITOR=vim
@@ -48,11 +47,11 @@ export ME='geoffrey@scheller.com'
 ## Set locale so applications (like Python3) display unicode correctly
 export LANG=en_US.utf8
 
-## Python pip configuration
-export PIP_REQUIRE_VIRTUALENV=true
-
 ## To supercede what comes with the Linux distribution.
 PATH=~/local/bin:$PATH
+
+## Python pip configuration
+export PIP_REQUIRE_VIRTUALENV=true
 
 ## For Haskell locally contained and administered via stack
 PATH=~/.local/bin:$PATH

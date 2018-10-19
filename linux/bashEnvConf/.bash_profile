@@ -11,10 +11,7 @@
 export VIRGIN_PATH=${VIRGIN_PATH:=$PATH}
 export BASH_PROFILE_SOURCED=${BASH_PROFILE_SOURCED:=0}
 
-# Count number of times file sourced
 (( BASH_PROFILE_SOURCED++ ))
-
-# Configure what is consistent across all interactive shells.
 
 if [[ -f .bashrc ]]
 then
@@ -28,7 +25,6 @@ fi
 [[ -x ~/bin/pathTrim ]] && PATH=$(~/bin/pathTrim "$PATH")
 
 ## Perform tasks unique to login shells
-#
 
 # Log when this file gets sourced
 echo "$(date): by $(ps h -q $$)" >> ~/.log_source_bash_profile

@@ -36,13 +36,11 @@ else
     TMOUT=60000
 
     ## Bash customizations when running interactively
-    #
     set -o notify  # Do not wait until next prompt to report bg jobs status.
     set -o pipefail  # Return right most nonzero error, otherwise 0.
     shopt -s extglob  # Turn on extended pattern matching.
     shopt -s checkwinsize
     shopt -s checkhash # Checks if hashed cmd exists, otherwise search path.
-
     # Command line history editing and terminal title
     #set -o vi       # vi editing-mode, set here if not in ~/.inputrc
     shopt -s cmdhist     # Store multiline commands as single entry
@@ -53,7 +51,6 @@ else
     HISTCONTROL="ignoredups"
 
     ## Set up prompt, save history whenever displayed
-    #
     export HOST=${HOSTNAME%%.*}
     case $HOST in
       gauss17)
@@ -86,7 +83,6 @@ else
     PS4='+ '
 
     ## Aliases and Functions
-
     unalias rm 2> /dev/null
     unalias ls 2> /dev/null
 
@@ -105,7 +101,7 @@ else
     # Pull down more -- Not good for large websites
     alias WgetMirror='/usr/bin/wget --mirror -p --convert-links -e robots=off'
 
-    ## pop up multiple directories
+    # pop up multiple directories
     function ud() {
       upDir=../
       if [[ $1 =~ ^[1-9][0-9]*$ ]]
@@ -118,7 +114,7 @@ else
       cd $upDir || return
     }
 
-    ## Convert between hex and dec
+    # Convert between hex and dec
     function h2d () {
         echo "ibase=16; $*" | bc
     }
@@ -127,7 +123,7 @@ else
     }
 
     ## NVIDIA aliases
-    #
+
     # NVIDIA Daemon to keep card active when not running X-Windows
     alias nv-pd='sudo /usr/bin/nvidia-persistenced --user geoff --persistence-mode'
     # Activate and Deactivate respectfully.
@@ -140,7 +136,7 @@ else
 
     # Gnome's file manager
     function fm () {
-        DiR="$1"
+        local DiR="$1"
         [[ -n $DiR ]] || DiR='.'
         ( /usr/bin/nautilus "$DiR" & )
     }
@@ -154,6 +150,9 @@ else
             ( /usr/bin/xterm &>/dev/null & )
         fi
     }
+
+    alias toGauss17='toSystem geoff gauss17'
+    alias fromVoltron='fromSystem geoff gauss17'
 
     # PDF Reader
     function ev() {
@@ -174,7 +173,18 @@ else
         ( /usr/bin/libreoffice --writer "$@" & )
     }
 
-    ## Bash completion for stack (Haskell)
+    # Bash completion for stack (Haskell)
     #eval "$(stack --bash-completion-script stack)"
+
+    ## scp aliases - Need to use "shopt -s expand_aliases"
+    #                in shell scripts.
+    alias toGauss17='toSystem geoff gauss17'
+    alias fromGauss17='fromSystem geoff gauss17'
+
+    alias toMaxwell4='toSystem geoffrey maxwell4'
+    alias fromMaxwell4='fromSystem geoffrey maxwell4'
+
+    alias toRygar='toSystem grscheller rygar.testichem.com'
+    alias fromRygar='fromSystem grscheller rygar.testichem.com'
 
 fi

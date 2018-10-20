@@ -5351,3 +5351,74 @@ Note: Basically rebuilt system from scratch starting on 2017-06-20
 
   It may be just my imagination, but my desktop backgraound seems
   to be a lot sharper.
+
+2018-10-19:
+  Got GDM to work!
+
+  Created file /etc/xprofile with the contents,
+    
+    xrandr --setprovideroutputsource modesetting NVIDIA-0
+    xrandr --auto
+
+  and enabled the service via
+
+    $ sudo systemctl enable gdm.service
+
+  rebooted and login screen came up on TTY1.  After logging
+  in, my X session was on TTY3 with the login screen still
+  running on TTY1.  Next time it came up on TTY2.
+
+  The .bashrc hook configured my initial environment, note, 
+  ~/.bash_profile was not sourced!  But my .bashrcahooked worked.
+
+    $ env|grep -i bash
+    BASHRC_NON_INTERACTIVE=0
+    BASHRC_INTERACTIVE=1
+    BASH_INITCONF=1
+    SHELL=/bin/bash
+    BASH_FUNC_bash_initconf_ran%%=() {  return 0
+
+    $ path
+    /home/geoff/.cargo/bin
+    /home/geoff/.local/bin
+    /home/geoff/local/bin
+    /usr/local/bin
+    /usr/local/sbin
+    /usr/bin
+    /opt/cuda/bin
+    /usr/lib/jvm/default/bin
+    /usr/bin/site_perl
+    /usr/bin/vendor_perl
+    /usr/bin/core_perl
+    /home/geoff/bin
+
+  Let's see if I can log out shut the system down at the console.
+
+  Yes, also I can reboot from within the X-session.
+
+  I updated ~/.xinitrc file to:
+
+    unset -f bash_initconf_ran
+
+    [ -f /etc/xprofile ] && . /etc/xprofile
+
+    session=${2:-gnome}
+
+    case $session in
+        gnome          ) exec gnome-session;;
+        xfce           ) exec startxfce4;;
+        cinnamon       ) exec cinnamon-session;;
+        *              ) exec $2;;
+    esac
+
+  The Arch-Wiki xprofile page indicates that both
+  ~/.xinitrc and /etc/gdm/Xsession needs to source
+  /etc/xprofile and/or ~/.xprofile.  Remember, these
+  are run under POSIX sh, not bash.
+  
+  Aside: pretty sure unset -f never was in the
+         AT&T SYS V Bourne shell, I think it
+         was a ksh-ism.
+
+  Now, only one place I need to keep the xrandr
+  commands straight.

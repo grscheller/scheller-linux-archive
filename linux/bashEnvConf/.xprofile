@@ -1,0 +1,9 @@
+#
+# /etc/xprofile or ~/.xprofile
+#
+# Configuration used for my laptop to accommodate an
+# NVIDIA GEFORCE 940m OPTIMUS video card run as the
+# sole GPU.
+#
+xrandr --setprovideroutputsource modesetting NVIDIA-0
+xrandr --auto

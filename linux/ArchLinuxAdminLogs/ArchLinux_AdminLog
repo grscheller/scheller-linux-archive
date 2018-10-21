@@ -1,4 +1,4 @@
-arpose: To indicate what was done to create gauss17 and 
+Purpose: To indicate what was done to create gauss17 and 
          the rational behind it.
 
 Note: Basically rebuilt system from scratch starting on 2017-06-20
@@ -5333,8 +5333,8 @@ Note: Basically rebuilt system from scratch starting on 2017-06-20
 
   Created two files,
 
-    /usr/share/gdm/greeter/autostart/optimus.desktop
     /etc/xdg/autostart/optimus.desktop
+    /usr/share/gdm/greeter/autostart/optimus.desktop
 
   with the contents:
 
@@ -5369,7 +5369,7 @@ Note: Basically rebuilt system from scratch starting on 2017-06-20
   running on TTY1.  Next time it came up on TTY2.
 
   The .bashrc hook configured my initial environment, note, 
-  ~/.bash_profile was not sourced!  But my .bashrcahooked worked.
+  ~/.bash_profile was not sourced!  But my .bashrca hooked worked.
 
     $ env|grep -i bash
     BASHRC_NON_INTERACTIVE=0
@@ -5422,3 +5422,34 @@ Note: Basically rebuilt system from scratch starting on 2017-06-20
 
   Now, only one place I need to keep the xrandr
   commands straight.
+
+2018-10-20:
+  Removing these two files I created on 2018-10-18
+  did not affect anything,
+
+    /etc/xdg/autostart/optimus.desktop
+    /usr/share/gdm/greeter/autostart/optimus.desktop
+
+2018-10-20:
+  The purpose of the XDG Autostart directories
+
+    /etc/xdg/autostart/
+    ~/.config/autostart/
+
+  is to launch applications on DE startup and removable
+  media mounting.  The entries, with the same filename
+  in the later location overide entries in the former.
+
+  To disable a system-wide entry, create an overriding
+  entry containing
+
+    Hidden=true
+
+  This mechanism is used by any DE that supports the
+  Freedesktop.org standard.
+
+2018-10-20:
+  The purpose of /usr/share/gdm/greeter/autostart/
+  allows applications to run on the initialization
+  of the GDM login screen on TTY1, before any users 
+  log in.

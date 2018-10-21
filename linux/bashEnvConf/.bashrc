@@ -152,7 +152,7 @@ else
     }
 
     alias toGauss17='toSystem geoff gauss17'
-    alias fromVoltron='fromSystem geoff gauss17'
+    alias fromGauss17='fromSystem geoff gauss17'
 
     # PDF Reader
     function ev() {

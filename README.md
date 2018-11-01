@@ -29,7 +29,7 @@ environment configuration, and system administration.
   to create and administer Arch Linux on a laptop.
 * Saves having to re-research howto's from scratch
 
-### [private html homepage](linux/web)
+### [private html homepage](web)
 * In lieu of using bookmarks
 * Easily shared between browsers and computers
 * Not shared with Google or Mozilla

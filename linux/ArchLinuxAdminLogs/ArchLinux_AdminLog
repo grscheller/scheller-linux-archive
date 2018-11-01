@@ -5418,7 +5418,7 @@ Note: Basically rebuilt system from scratch starting on 2017-06-20
   
   Aside: pretty sure unset -f never was in the
          AT&T SYS V Bourne shell, I think it
-         was a ksh-ism.
+         is a ksh-ism.
 
   Now, only one place I need to keep the xrandr
   commands straight.
@@ -5453,3 +5453,11 @@ Note: Basically rebuilt system from scratch starting on 2017-06-20
   allows applications to run on the initialization
   of the GDM login screen on TTY1, before any users 
   log in.
+
+2018-10-23:
+  Installed 7-Zip file archiver.  High compression
+  ratios.  Can add passwords to archive.
+
+    $ sudo pacman -Syu p7zip
+
+  See the 7z, 7za, 7zr man pages.

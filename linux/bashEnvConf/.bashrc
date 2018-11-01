@@ -103,7 +103,7 @@ else
 
     # pop up multiple directories
     function ud() {
-      upDir=../
+      local upDir=../
       if [[ $1 =~ ^[1-9][0-9]*$ ]]
       then
         for ((ii = 1; ii < $1; ii++))

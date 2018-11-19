@@ -83,14 +83,15 @@ else
     PS4='+ '
 
     ## Aliases and Functions
+    #  Need to use "shopt -s expand_aliases" in shell scripts.
     unalias rm 2> /dev/null
     unalias ls 2> /dev/null
 
     alias lc='ls --color=auto'
     alias l1='ls -1'
     alias la='ls -a'
-    alias ll='ls -ltr'
-    alias lla='ls -ltra'
+    alias ll='ls -ltrh'
+    alias lla='ls -ltrah'
     alias l.='ls -dA .* --color=auto'
 
     alias pst="ps axjf | sed -e '/^ PPID.*$/d' -e's/.*:...//'"
@@ -151,9 +152,6 @@ else
         fi
     }
 
-    alias toGauss17='toSystem geoff gauss17'
-    alias fromGauss17='fromSystem geoff gauss17'
-
     # PDF Reader
     function ev() {
       ( /usr/bin/evince "$@" &>/dev/null & )
@@ -173,18 +171,37 @@ else
         ( /usr/bin/libreoffice --writer "$@" & )
     }
 
-    # Bash completion for stack (Haskell)
+    ## scp related functions and aliases
+    function toSystem() {
+      local user=$1
+      local system=$2
+      local port=$3
+      shift 3
+      /usr/bin/scp -P "${port}" -r "$@" "${user}@${system}:catch"
+    }
+
+    function fromSystem() {
+      local user=$1
+      local system=$2
+      local port=$3
+      shift 3
+      for each in "$@"
+      do
+          /usr/bin/scp -P "${port}" -r "${user}@${system}:${each}" .
+      done
+    }
+
+    #  Single quotes intentional
+    alias toGauss17='toSystem geoff ${GAUSS17}'
+    alias fromGauss17='fromSystem geoff ${GAUSS17}'
+
+    alias toMaxwell4='toSystem geoffrey ${MAXWELL4}'
+    alias fromMaxwell4='fromSystem geoffrey ${MAXWELL4}'
+
+    alias toRygar='toSystem grscheller ${RYGAR}'
+    alias fromRygar='fromSystem grscheller ${RYGAR}'
+
+    ## Bash completion for stack (Haskell)
     #eval "$(stack --bash-completion-script stack)"
-
-    ## scp aliases - Need to use "shopt -s expand_aliases"
-    #                in shell scripts.
-    alias toGauss17='toSystem geoff gauss17'
-    alias fromGauss17='fromSystem geoff gauss17'
-
-    alias toMaxwell4='toSystem geoffrey maxwell4'
-    alias fromMaxwell4='fromSystem geoffrey maxwell4'
-
-    alias toRygar='toSystem grscheller rygar.testichem.com'
-    alias fromRygar='fromSystem grscheller rygar.testichem.com'
 
 fi

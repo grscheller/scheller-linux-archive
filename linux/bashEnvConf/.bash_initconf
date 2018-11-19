@@ -67,3 +67,9 @@ PATH=$PATH:~/bin:.
 
 ## Clean up PATH
 [[ -x ~/bin/pathTrim ]] && PATH=$(~/bin/pathTrim "$PATH")
+
+## Shell variables for initial system names and ssh port numbers
+export GAUSS17='gauss17 35881'
+export MAXWELL4='maxwell4 29801'
+export RYGAR='kpsrbylzntj42.testichem.com 22'
+

@@ -69,7 +69,8 @@ PATH=$PATH:~/bin:.
 [[ -x ~/bin/pathTrim ]] && PATH=$(~/bin/pathTrim "$PATH")
 
 ## Shell variables for initial system names and ssh port numbers
-export GAUSS17='gauss17 35881'
-export MAXWELL4='maxwell4 29801'
-export RYGAR='kpsrbylzntj42.testichem.com 22'
+#  SYSTEM='system port_number login'
+export GAUSS17='gauss17 35881 geoff'
+export MAXWELL4='maxwell4 29801 geoffrey'
+export RYGAR='kpsrbylzntj42.testichem.com 22 grscheller'
 

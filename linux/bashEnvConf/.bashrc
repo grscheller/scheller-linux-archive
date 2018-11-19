@@ -171,20 +171,34 @@ else
         ( /usr/bin/libreoffice --writer "$@" & )
     }
 
+    ## ssh related functions and aliases
+    function sshToSystem() {
+      local system=$1
+      local port=$2
+      local user=$3
+      /usr/bin/ssh -P "${port}" "${user}@${system}"
+    }
+
+    #  Single quotes intentional
+    alias gauss17='sshToSystem ${GAUSS17}'
+    alias maxwell4='sshToSystem ${MAXWELL4}'
+    alias rygar='sshToSystem ${RYGAR}'
+
     ## scp related functions and aliases
     function toSystem() {
-      local user=$1
-      local system=$2
-      local port=$3
+      local system=$1
+      local port=$2
+      local user=$3
       shift 3
       /usr/bin/scp -P "${port}" -r "$@" "${user}@${system}:catch"
     }
 
     function fromSystem() {
-      local user=$1
-      local system=$2
-      local port=$3
+      local system=$1
+      local port=$2
+      local user=$3
       shift 3
+      local each
       for each in "$@"
       do
           /usr/bin/scp -P "${port}" -r "${user}@${system}:${each}" .

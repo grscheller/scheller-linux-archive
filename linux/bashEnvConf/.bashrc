@@ -176,7 +176,7 @@ else
       local system=$1
       local port=$2
       local user=$3
-      /usr/bin/ssh -P "${port}" "${user}@${system}"
+      /usr/bin/ssh -p "${port}" "${user}@${system}"
     }
 
     #  Single quotes intentional
@@ -206,14 +206,14 @@ else
     }
 
     #  Single quotes intentional
-    alias toGauss17='toSystem geoff ${GAUSS17}'
-    alias fromGauss17='fromSystem geoff ${GAUSS17}'
+    alias toGauss17='toSystem ${GAUSS17}'
+    alias fromGauss17='fromSystem ${GAUSS17}'
 
-    alias toMaxwell4='toSystem geoffrey ${MAXWELL4}'
-    alias fromMaxwell4='fromSystem geoffrey ${MAXWELL4}'
+    alias toMaxwell4='toSystem ${MAXWELL4}'
+    alias fromMaxwell4='fromSystem ${MAXWELL4}'
 
-    alias toRygar='toSystem grscheller ${RYGAR}'
-    alias fromRygar='fromSystem grscheller ${RYGAR}'
+    alias toRygar='toSystem ${RYGAR}'
+    alias fromRygar='fromSystem ${RYGAR}'
 
     ## Bash completion for stack (Haskell)
     #eval "$(stack --bash-completion-script stack)"

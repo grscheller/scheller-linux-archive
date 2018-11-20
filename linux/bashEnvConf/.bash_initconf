@@ -63,7 +63,7 @@ PATH=~/.cargo/bin:$PATH
 PATH=~/opt/sbt/bin:$PATH
 
 ## My private utils bin and current directory last.
-PATH=$PATH:~/bin:.
+PATH=$PATH:~/bin
 
 ## Clean up PATH
 [[ -x ~/bin/pathTrim ]] && PATH=$(~/bin/pathTrim "$PATH")

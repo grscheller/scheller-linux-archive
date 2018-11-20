@@ -6,19 +6,25 @@ object LowlevelThreads {
   
   def main(args: Array[String]): Unit = {
 
-    val hw =
+    println("entering main")
+
+    val helloThread =
       new Thread(
         new Runnable {
           def run() {
-            println("hello world")
+            println("hello from thread")
+            Thread.sleep(1000)
+            println("so long from thread")
           }
         }
       )
 
     // Can only call Thread start method once.
-    println("Now call hw.start")
-    hw.start
-    println("Just called hw.start")
+    println("now call helloThread.start")
+    helloThread.start
+    println("just called helloThread.start")
+    Thread.sleep(500)
+    println("exiting main")
 
   }
 

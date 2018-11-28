@@ -5,19 +5,19 @@
  *
  *   Positions cursor x units down & y units to right from 
  *   the upper left hand courner of screen.  Then performs
- *   a left mouse button click.
+ *   a left mouse button click.  The latter does not work.
  *
  *   Got original code from Stackoverflow:
  *     https://stackoverflow.com/questions/20595716/control-mouse-by-writing-to-dev-input-mice/20772019#20772019
  *
- *   The comments are mine in my attempt to grok the code.
+ *   Any comments are mine in my attempt to grok the code.
  *
  */
+#include <X11/Xlib.h>
+#include <time.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <time.h>
-#include <X11/Xlib.h>
 
 void mouseClick(Display *display, int button) {
 
@@ -115,7 +115,7 @@ int main(int argc, char * argv[]) {
     XWarpPointer(display, None, root, 0, 0, 0, 0, x, y);
 
     // Fake left mouse button single click
-    mouseClick(display, Button1);  // Figure out where Button1 is defined
+    mouseClick(display, Button1);  // Button1 defined in X11/X.h
 
     // Clean up
     XFlush(display);

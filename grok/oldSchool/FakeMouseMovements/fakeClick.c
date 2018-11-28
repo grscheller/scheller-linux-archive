@@ -10,37 +10,31 @@
  *   Got original code from Stackoverflow:
  *     https://stackoverflow.com/questions/20595716/control-mouse-by-writing-to-dev-input-mice/20772019#20772019
  *
+ *   The comments are mine in my attempt to grok the code.
+ *
  */
 #include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
 #include <string.h>
-
-#include <unistd.h>
-
+#include <stdlib.h>
+#include <time.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 
-void mouseClick(int button) {
-    Display *display = XOpenDisplay(NULL);
+void mouseClick(Display *display, int button) {
 
     XEvent event;
 
-    if(display == NULL)
-    {
-        fprintf(stderr, "Error in opening display!!!\n");
-        exit(EXIT_FAILURE);
-    }
-
     memset(&event, 0x00, sizeof(event));
 
+    // Setup event to be a button down event
     event.type = ButtonPress;
     event.xbutton.button = button;
     event.xbutton.same_screen = True;
 
+    // Not sure what these next 3 statements are doing.
+    // Possibly drilling up through the Z-order?
     XQueryPointer(display,
-                  RootWindow(display,
-                  DefaultScreen(display)),
+                  RootWindow(display, DefaultScreen(display)),
                   &event.xbutton.root,
                   &event.xbutton.window,
                   &event.xbutton.x_root,
@@ -48,6 +42,7 @@ void mouseClick(int button) {
                   &event.xbutton.x,
                   &event.xbutton.y,
                   &event.xbutton.state);
+
     event.xbutton.subwindow = event.xbutton.window;
 
     while(event.xbutton.subwindow) {
@@ -63,23 +58,30 @@ void mouseClick(int button) {
                       &event.xbutton.state);
     }
 
+    // Press button
     if (XSendEvent(display, PointerWindow, True, 0xfff, &event) == 0) {
-       fprintf(stderr, "Error\n");
+       fprintf(stderr, "Error: Failed button down event\n");
     }
 
     XFlush(display);
 
-    usleep(100000);
+    // Hold button down for a mullisecond
+    struct timespec wait;
+    wait.tv_sec = 0;
+    wait.tv_nsec = 100000000;
+    while (nanosleep(&wait, &wait));
 
+    // Convert event to be a button up event
     event.type = ButtonRelease;
     event.xbutton.state = 0x100;
 
+    // Release button
     if (XSendEvent(display, PointerWindow, True, 0xfff, &event) == 0) {
-       fprintf(stderr, "Error\n");
+       fprintf(stderr, "Error: Failed button up event\n");
     }
 
     XFlush(display);
-    XCloseDisplay(display);
+
 }
 
 void usage_on_failure() {
@@ -100,7 +102,15 @@ int main(int argc, char * argv[]) {
 
     if ( x <= 0 || y <= 0 ) usage_on_failure();
 
-    Display *display = XOpenDisplay(0);
+    // Open display, exit on failure
+    Display *display = XOpenDisplay(NULL);
+
+    if (display == NULL)
+    {
+        fprintf(stderr, "Error in opening display!!!\n");
+        exit(EXIT_FAILURE);
+    }
+
     Window root = DefaultRootWindow(display);
 
     // Move mouse pointer to default position x,y 
@@ -108,7 +118,7 @@ int main(int argc, char * argv[]) {
     XWarpPointer(display, None, root, 0, 0, 0, 0, x, y);
 
     // Fake left mouse button single click
-    mouseClick(Button1);  // Where does Button1 come from?
+    mouseClick(display, Button1);  // Figure out where Button1 is defined
 
     // Clean up
     XFlush(display);

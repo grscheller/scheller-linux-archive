@@ -18,7 +18,6 @@
 #include <stdlib.h>
 #include <time.h>
 #include <X11/Xlib.h>
-#include <X11/Xutil.h>
 
 void mouseClick(Display *display, int button) {
 
@@ -66,9 +65,7 @@ void mouseClick(Display *display, int button) {
     XFlush(display);
 
     // Hold button down for a mullisecond
-    struct timespec wait;
-    wait.tv_sec = 0;
-    wait.tv_nsec = 100000000;
+    struct timespec wait = {0, 100000000};
     while (nanosleep(&wait, &wait));
 
     // Convert event to be a button up event

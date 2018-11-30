@@ -2,18 +2,20 @@
 * Capture various "traditional" programming paradigms
 * Create examples of various pre-1990 imperitive programming techniques
 * Not necessarily resticted to pre-1990 languages or tools
-* Subtopic either answer simple questions or provide simple examples
 * Provide simple templates as starting points for more involved
   projects. (It is always easier to edit than create from scratch.)
 
-## 1. [Hello World](HelloWorld/):
-Tradition demands we start with the canonical Hello World program.
-
-Goal is to write short, but not an irrationally short, programs that
-when run print the greeting "Hello, world!"
+## 1. [C Language Exempars](CLangExeplars/):
+Short examples of best practices for ANSI-C coding.  A lot of factoids
+in the comments.
+* __hw.c__: Traditional Kerrigan & Richie Hello World C program.
+* __removeSpaces__: O(n) string manipulation
 
 ## 2. [Over Optimization](OverOptimization/):
 C compilers can overly optimize code.
 
 Example of the compiler doing the calculation and the program merely
 printing a constant.
+
+## 3. [XWindows](XWindows):
+Examples of low level XWindows coding.

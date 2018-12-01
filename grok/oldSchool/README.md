@@ -2,10 +2,8 @@
 * Capture various "traditional" programming paradigms
 * Create examples of various pre-1990 imperitive programming techniques
 * Not necessarily resticted to pre-1990 languages or tools
-* Provide simple templates as starting points for more involved
-  projects. (It is always easier to edit than create from scratch.)
 
-## 1. [C Language Exempars](CLangExeplars/):
+## 1. [C Language Exempars](CExeplars/):
 Short examples of best practices for ANSI-C coding.  A lot of factoids
 in the comments.
 * __hw.c__: Traditional Kerrigan & Richie Hello World C program.

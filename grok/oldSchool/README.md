@@ -3,7 +3,7 @@
 * Create examples of various pre-1990 imperitive programming techniques
 * Not necessarily resticted to pre-1990 languages or tools
 
-## 1. [C Language Exempars](CExeplars/):
+## 1. [C Language Exempars](CExemplars/):
 Short examples of best practices for ANSI-C coding.  A lot of factoids
 in the comments.
 * __hw.c__: Traditional Kerrigan & Richie Hello World C program.

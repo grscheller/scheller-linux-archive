@@ -3,12 +3,15 @@
  *
  *  1. Use of pointers as integers (not Int's!) pointing to
  *     locations in a data structure.
- *  2. Data structure returned is what is initially
- *     given.  Not some local or static variable within
- *     the function.  Not memory allocated on heap.
+ *  2. Data structure (char *) returned is same as what
+ *     initially given.  Not pointing to local or static memory
+ *     location within the function.  Not memory allocated on heap.
  *  3. O(n) computational complexity.  Very efficient.
- *  4. Reusing a data structure as opposed to manipulating
+ *  4. Reusing the memory location as opposed to manipulating
  *     the data within it.
+ *  5. Assignment is right associative and returns the 
+ *     value being assigned:
+ *       in = ( out = data )
  *
  *  Safety:
  *  1. Function has side effects.  
@@ -17,8 +20,8 @@
  *     coming from unsafe sources to prevent buffer overruns.
  *  3. Data structure used not really a data structure, just
  *     primative chars layed out in memory with a "promise"
- *     that eventually we get to the NUL character.  So much
- *     for value dependent types in C.
+ *     that eventually we get to the NUL character.  Sort of
+ *     an unenforced value dependent type.
  *
  */
 

@@ -13,4 +13,4 @@ removeSpaces: removeSpaces.c
 	$(CC) $(CFLAGS) removeSpaces.c -o removeSpaces
 
 clean:
-	rm -f hw removeSpaces 
+	rm -f $(BINARIES)

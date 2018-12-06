@@ -1,13 +1,31 @@
 CC=gcc
 CFLAGS=-Wall
-BINARIES=myls
+BINARIES=myLs myUnbufferedCat myBufferedCat pidInfo
 
 default: binaries
 
 binaries: $(BINARIES)
 
-myls: myls.c myErrorHandlers.o myErrorHandlers.h
-	$(CC) $(CFLAGS) -o myls myErrorHandlers.o myls.c
+myErrorHandlers.o: myErrorHandlers.c \
+                   myCommon.h
+
+myBufferedCat: myBufferedCat.c \
+               myErrorHandlers.o \
+	       myCommon.h
+	$(CC) $(CFLAGS) -o myBufferedCat myErrorHandlers.o myBufferedCat.c
+
+myUnbufferedCat: myUnbufferedCat.c \
+                 myErrorHandlers.o \
+		 myCommon.h
+	$(CC) $(CFLAGS) -o myUnbufferedCat myErrorHandlers.o myUnbufferedCat.c
+
+myLs: myLs.c \
+      myErrorHandlers.o \
+      myCommon.h
+	$(CC) $(CFLAGS) -o myLs myErrorHandlers.o myLs.c
+
+pidInfo: pidInfo.c
+	$(CC) $(CFLAGS) -o pidInfo pidInfo.c
 
 clean:
 	rm -f $(BINARIES) *.o

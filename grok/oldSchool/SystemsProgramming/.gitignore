@@ -1,2 +1,5 @@
-myls
+myBufferedCat
+myUnbufferedCat
+myLs
+pidInfo
 *.o

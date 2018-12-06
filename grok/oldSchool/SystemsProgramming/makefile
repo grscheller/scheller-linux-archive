@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-Wall
+CFLAGS=-Wall -std=c90
 BINARIES=myLs myUnbufferedCat myBufferedCat pidInfo
 
 default: binaries

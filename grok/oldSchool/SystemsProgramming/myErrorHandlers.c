@@ -29,8 +29,8 @@ err_dump(const char *fmt, ...)
     err_doit(1, fmt, ap);
     va_end(ap);
 
-    abort();     // Dump core and terminate
-    exit(1);     // Should never get here
+    abort();     /* Dump core and terminate */
+    exit(1);     /* Should never get here */
 }
 
 /* Nonfatal error unrelated to a system call
@@ -116,9 +116,9 @@ err_doit(int errnoflag, const char *fmt, va_list ap)
     if (errnoflag)
         sprintf(buf+strlen(buf), ": %s", strerror(errno_save));
     strcat(buf, "\n");
-    fflush(stdout);  // in case stdout and stderr are the same
+    fflush(stdout);  /* in case stdout and stderr are the same */
     fputs(buf, stderr);
-    fflush(NULL);    // flush all stdio output streams
+    fflush(NULL);    /* flush all stdio output streams */
 
     return;
 }

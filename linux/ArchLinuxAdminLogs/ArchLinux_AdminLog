@@ -5122,7 +5122,7 @@ Note: Basically rebuilt system from scratch starting on 2017-06-20
 
     $ sudo pacman -Syu clang zapcc
 
-  zapcc is a "fast"  CC compiler.  Not sure what they means, compiles fast
+  zapcc is a "fast"  CC compiler.  Not sure what they mean, compiles fast
   or runs fast?  Supposively creates memory efficient code useful for large
   C++ programs.
 
@@ -5461,3 +5461,18 @@ Note: Basically rebuilt system from scratch starting on 2017-06-20
     $ sudo pacman -Syu p7zip
 
   See the 7z, 7za, 7zr man pages.
+
+2018-12-08:
+  Command "sudo pacman -Syu" failed.  Something called zapcc
+  wanted to install files owned by clang.
+
+    $ sudo pacman -Rsc zapcc
+    checking dependencies...
+
+    Packages (2) z3-4.8.3-1  zapcc-5.0-1
+    ...
+
+  Then upgrade went fine.  After that reinstalled z3 with no issues.
+  
+  Originally installed zapcc on 2018-08-18 as first step in 
+  installing Scala Natively, which I never followed through with.

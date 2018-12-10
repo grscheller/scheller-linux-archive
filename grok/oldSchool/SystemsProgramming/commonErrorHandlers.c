@@ -11,7 +11,7 @@
 #include <string.h>
 #include <errno.h>
 
-#include "myCommon.h"
+#include "commonHeaders.h"
 
 static void err_doit(int, const char *, va_list ap);
 

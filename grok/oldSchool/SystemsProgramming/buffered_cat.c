@@ -7,7 +7,7 @@
 #include <stdlib.h>    /* for exit */
 #include <stdio.h>     /* for getc, putc, ferror, EOF */
 
-#include "myCommon.h"
+#include "commonHeaders.h"
 
 int
 main(void)

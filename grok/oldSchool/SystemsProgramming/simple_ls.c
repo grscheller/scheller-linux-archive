@@ -10,7 +10,7 @@
 #include <stdlib.h>     /* For exit */
 #include <stdio.h>
 
-#include "myCommon.h"
+#include "commonHeaders.h"
 
 int
 main(int argc, char *argv[])

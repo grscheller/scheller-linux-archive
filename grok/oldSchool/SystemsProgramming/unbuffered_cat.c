@@ -7,7 +7,7 @@
 #include <stdlib.h>    /* for exit */
 #include <unistd.h>    /* for read, write, STD*_FILENO */
 
-#include "myCommon.h"
+#include "commonHeaders.h"
 
 #define BUFFSIZE 4192
 

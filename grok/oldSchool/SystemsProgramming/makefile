@@ -1,28 +1,32 @@
 CC=gcc
 CFLAGS=-Wall -std=c90
-BINARIES=myLs myUnbufferedCat myBufferedCat pidInfo
+BINARIES=buffered_cat \
+         simple_ls \
+         pidInfo \
+         unbuffered_cat
 
 default: binaries
 
 binaries: $(BINARIES)
 
-myErrorHandlers.o: myErrorHandlers.c \
-                   myCommon.h
+commonErrorHandlers.o: commonErrorHandlers.c \
+                       commonHeaders.h
+	$(CC) $(CFLAGS) -c commonErrorHandlers.c
 
-myBufferedCat: myBufferedCat.c \
-               myErrorHandlers.o \
-	       myCommon.h
-	$(CC) $(CFLAGS) -o myBufferedCat myErrorHandlers.o myBufferedCat.c
+buffered_cat: buffered_cat.c \
+              commonErrorHandlers.o \
+	      commonHeaders.h
+	$(CC) $(CFLAGS) -o buffered_cat commonErrorHandlers.o buffered_cat.c
 
-myUnbufferedCat: myUnbufferedCat.c \
-                 myErrorHandlers.o \
-		 myCommon.h
-	$(CC) $(CFLAGS) -o myUnbufferedCat myErrorHandlers.o myUnbufferedCat.c
+unbuffered_cat: unbuffered_cat.c \
+                commonErrorHandlers.o \
+                commonHeaders.h
+	$(CC) $(CFLAGS) -o unbuffered_cat commonErrorHandlers.o unbuffered_cat.c
 
-myLs: myLs.c \
-      myErrorHandlers.o \
-      myCommon.h
-	$(CC) $(CFLAGS) -o myLs myErrorHandlers.o myLs.c
+simple_ls: simple_ls.c \
+      commonErrorHandlers.o \
+      commonHeaders.h
+	$(CC) $(CFLAGS) -o simple_ls commonErrorHandlers.o simple_ls.c
 
 pidInfo: pidInfo.c
 	$(CC) $(CFLAGS) -o pidInfo pidInfo.c

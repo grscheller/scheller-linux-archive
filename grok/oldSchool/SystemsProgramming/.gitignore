@@ -1,5 +1,5 @@
-myBufferedCat
-myUnbufferedCat
-myLs
+buffered_cat
+simple_ls
 pidInfo
+unbuffered_cat
 *.o

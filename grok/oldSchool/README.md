@@ -21,7 +21,7 @@ volumes 1 & 2.
 
 Using `gcc -std=c90` to match the standard used by these books.
 * __myErrorHandlers.c__: Common error handling routines.
-* __myLs.c__: Application to display file names in a directory.
+* __simple_ls.c__: Application to display file names in a directory.
 * __myUnbufferedCat.c__: Lower level IO defined in unistd.h
 * __myBufferedCat.c__: Buffered IO defined in stdio.h
 * __pidInfo.c__: Process ID information

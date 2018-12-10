@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-Wall
+CFLAGS=-Wall -std=gnu11
 LIBS=-lX11
 BINARIES=fakeClick getMouseCoords
 
@@ -14,4 +14,4 @@ getMouseCoords: getMouseCoords.c
 	$(CC) $(LIBS) getMouseCoords.c $(CFLAGS) -o getMouseCoords
 
 clean:
-	rm -f fakeClick 
+	rm -f $(BINARIES)

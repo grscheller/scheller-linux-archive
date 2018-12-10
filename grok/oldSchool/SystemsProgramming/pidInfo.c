@@ -1,10 +1,15 @@
 /*
- *  Print out information on current process.
+ * Print out information on current process.
  *
- *  Note: Actually using glib.c wrappers for
- *        underlying Linux versions of these
- *        calls.  The unistd.h header is used
- *        to select a particular POSIX standard.
+ *  1. Actually using glib.c wrappers for
+ *     underlying Linux versions of these
+ *     calls.
+ *  2. The unistd.h header seems to be used
+ *     oto select a particular POSIX standard.
+ *  3. According to the man page, the getpid,
+ *     getppid, and getpgrp functions shall
+ *     always be successful and no return value
+ *     is reserved to indicate an error.
  */
 
 #include <unistd.h>

@@ -13,7 +13,7 @@ better learn what it is I am trying to replace.  Thanks to POSIX
 standards, Steven's books are as relevant today as they were back
 in the 1990's.
 
-The books I am using are
+Books being used are
 "Advanced Programming in the UNIX Environment"
 and
 "UNIX Network Programming"
@@ -26,7 +26,7 @@ Using `gcc -std=c90` to match the standard used by these books.
 * __myBufferedCat.c__: Buffered IO defined in stdio.h
 * __pidInfo.c__: Process ID information
 
-## 2. [C++ to Infinity and Beyond](C++InfinityAndBeyond1/):
+## 2. [C++ to Infinity and Beyond](C++InfinityAndBeyond/):
 ANSI-C needs to be replaced.  Unfortunately, it is good enough
 never to be replaced.  I feel C++, properly done, could be a
 safer and socially palitable replacement.  This project was
@@ -48,7 +48,7 @@ in the comments.
 The last one is an example of the compiler doing the
 calculation and the program merely printing a constant.
 and how to stop this from happening by using of C language
-volitile` keyword.  Also, an example of Bourn shell
+`volitile` keyword.  Also, an example of Bourn shell
 scripting techniques within a makefile.
 
 Build 4 binaries from one source file, time them, and clean up:
@@ -56,9 +56,10 @@ Build 4 binaries from one source file, time them, and clean up:
    $ make
    $ make timeit
    $ make clean
-
+```
 ### Example run:
-```$ make timeit
+```
+   $ make timeit
    gcc sumit.c -Wall -std=c99 -o sumIt
    gcc sumit.c -Wall -std=c99 -O2 -o sumItO2
    gcc sumit.c -Wall -std=c99 -DVOLATILE -o sumItV
@@ -92,7 +93,6 @@ Build 4 binaries from one source file, time them, and clean up:
    real	0m0.160s
    user	0m0.160s
    sys	0m0.000s
-```
 ```
 Note how "fast" the second run is.  All that is happenng
 is the binary is just spitting a constant out.  Currious

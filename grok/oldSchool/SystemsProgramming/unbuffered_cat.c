@@ -1,13 +1,12 @@
-/*  Copy bytes fron stdin to stdout
+/*
+ * Copy bytes fron stdin to stdout
  *  
- *  Uses low level IO defined in unistd.h
- *
  */
+
+#include "systemsProgrammingHeaders.h"
 
 #include <stdlib.h>    /* for exit */
 #include <unistd.h>    /* for read, write, STD*_FILENO */
-
-#include "commonHeaders.h"
 
 #define BUFFSIZE 4192
 
@@ -26,3 +25,9 @@ main(void)
 
     exit(0);
 }
+
+/*
+ * Factoids:
+ * 1. Uses low level IO defined in unistd.h
+ *
+ */

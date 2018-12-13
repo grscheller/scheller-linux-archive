@@ -8,8 +8,8 @@
  *
  */
 
-#ifndef __MY_ERROR_HANDLERS_H
-#define __MY_ERROR_HANDLERS_H
+#ifndef __SYSTEMS_PROGRAMMING_HEADERS_H
+#define __SYSTEMS_PROGRAMMING_HEADERS_H
 
 #define MAXLINE 4096
 
@@ -19,4 +19,4 @@ void err_quit(const char *, ...);
 void err_ret(const char *, ...);
 void err_sys(const char *, ...);
 
-#endif /* __MYERROR_HANDLERS_H  */
+#endif /* __SYSTEMS_PROGRAMMING_HEADERS_H  */

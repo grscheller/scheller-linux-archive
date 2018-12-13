@@ -1,13 +1,14 @@
-/*  Copy bytes fron stdin to stdout
+/*
+ *  Copy bytes fron stdin to stdout
  *
  *  Uses buffered interface defined in stdio,h
  *
  */
 
+#include "systemsProgrammingHeaders.h"
+
 #include <stdlib.h>    /* for exit */
 #include <stdio.h>     /* for getc, putc, ferror, EOF */
-
-#include "commonHeaders.h"
 
 int
 main(void)

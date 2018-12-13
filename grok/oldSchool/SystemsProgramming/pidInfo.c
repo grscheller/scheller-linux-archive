@@ -1,4 +1,8 @@
-/* Print out information on current process. */
+/*
+ *  Print out information on current process.
+ */
+
+#include "systemsProgrammingHeaders.h"
 
 #include <unistd.h>
 #include <stdio.h>

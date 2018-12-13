@@ -1,9 +1,12 @@
-/* Error Handling functions
+/*
+ * Error Handling functions
  *
  * Purpose: Keep error handling activity
- *          to one line in programs
+ *          to one line in programs.
  *
  */
+
+#include "systemsProgrammingHeaders.h"
 
 #include <stdarg.h>
 #include <stdlib.h>
@@ -11,14 +14,10 @@
 #include <string.h>
 #include <errno.h>
 
-#include "commonHeaders.h"
-
 static void err_doit(int, const char *, va_list ap);
 
-/* Fatal error related to a system call
- * 
- * Print a message, dump core and terminate program
- *
+/* Fatal error related to a system call,
+ * print a message, dump core and terminate program
  */
 void
 err_dump(const char *fmt, ...)
@@ -33,10 +32,8 @@ err_dump(const char *fmt, ...)
     exit(1);     /* Should never get here */
 }
 
-/* Nonfatal error unrelated to a system call
- * 
- * Print a message and return
- *
+/* Nonfatal error unrelated to a system call,
+ * print a message and return
  */
 void
 err_msg(const char *fmt, ...)
@@ -50,10 +47,8 @@ err_msg(const char *fmt, ...)
     return;
 }
 
-/* Fatal error unrelated to a system call
- * 
- * Print a message and terminate program
- *
+/* Fatal error unrelated to a system call,
+ * print a message and terminate program
  */
 void
 err_quit(const char *fmt, ...)
@@ -67,10 +62,8 @@ err_quit(const char *fmt, ...)
     exit(1);
 }
 
-/* Nonfatal error related to a system call
- * 
- * Print a message and return
- *
+/* Nonfatal error related to a system call,
+ * print a message and return
  */
 void
 err_ret(const char *fmt, ...)
@@ -84,10 +77,8 @@ err_ret(const char *fmt, ...)
     return;
 }
 
-/* Fatal error related to a system call
- * 
- * Print a message and terminate program
- *
+/* Fatal error related to a system call,
+ * print a message and terminate program
  */
 void
 err_sys(const char *fmt, ...)
@@ -101,10 +92,9 @@ err_sys(const char *fmt, ...)
     exit(1);
 }
 
-/*  Factor out commonality, uncapsulate all the non-obvious
+/*  Factor out commonality, encapsulate all the non-obvious
  *  wisdom in one place, makes implementation of public
  *  interface easier to grok.
- *
  */
 static void
 err_doit(int errnoflag, const char *fmt, va_list ap)

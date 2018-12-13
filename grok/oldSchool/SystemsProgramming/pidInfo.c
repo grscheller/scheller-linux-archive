@@ -4,9 +4,6 @@
 
 #include "systemsProgrammingHeaders.h"
 
-#include <unistd.h>
-#include <stdio.h>
-
 int
 main(void)
 {
@@ -14,7 +11,7 @@ main(void)
     printf("Parent Process ID: %ld\n", (long)getppid());
     printf("Process Group ID: %ld\n", (long)getpgrp());
 
-    return 0;
+    exit(0);
 }
 
 /*

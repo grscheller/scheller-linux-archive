@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-Wall -std=c90
+CFLAGS=-Wall
 BINARIES=buffered_cat \
          simple_ls \
          pidInfo \

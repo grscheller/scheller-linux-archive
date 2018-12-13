@@ -7,9 +7,6 @@
 
 #include "systemsProgrammingHeaders.h"
 
-#include <stdlib.h>    /* for exit */
-#include <stdio.h>     /* for getc, putc, ferror, EOF */
-
 int
 main(void)
 {

@@ -5,9 +5,6 @@
 
 #include "systemsProgrammingHeaders.h"
 
-#include <stdlib.h>    /* for exit */
-#include <unistd.h>    /* for read, write, STD*_FILENO */
-
 #define BUFFSIZE 4192
 
 int

@@ -10,10 +10,6 @@
 #include <sys/types.h>
 #include <dirent.h>
 
-#include <stddef.h>     /* For NULL */
-#include <stdlib.h>     /* For exit */
-#include <stdio.h>
-
 int
 main(int argc, char *argv[])
 {

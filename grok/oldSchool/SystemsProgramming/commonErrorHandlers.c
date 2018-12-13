@@ -8,16 +8,29 @@
 
 #include "systemsProgrammingHeaders.h"
 
-#include <stdarg.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <errno.h>
+#include <errno.h>     // defines errno macro
+#include <stdarg.h>    // ISO C variable arguments
 
-static void err_doit(int, const char *, va_list ap);
+static void err_doit(int, int, const char *, va_list ap);
+
+/* Nonfatal error unrelated to a system call,
+ * error code passed as explicit parameter,
+ * print a message and return.
+ */
+void
+err_cont(int error, const char *fmt, ...)
+{
+    va_list ap;
+
+    va_start(ap, fmt);
+    err_doit(0, error, fmt, ap);
+    va_end(ap);
+
+    return;
+}
 
 /* Fatal error related to a system call,
- * print a message, dump core and terminate program
+ * print a message, dump core and terminate program.
  */
 void
 err_dump(const char *fmt, ...)
@@ -25,15 +38,31 @@ err_dump(const char *fmt, ...)
     va_list ap;
 
     va_start(ap, fmt);
-    err_doit(1, fmt, ap);
+    err_doit(1, errno, fmt, ap);
     va_end(ap);
 
     abort();     /* Dump core and terminate */
     exit(1);     /* Should never get here */
 }
 
+/* Fatal error unrelated to a system call,
+ * error code passed as explicit parameter,
+ * print a message and terminate.
+ */
+void
+err_exit(int error, const char *fmt, ...)
+{
+    va_list ap;
+
+    va_start(ap, fmt);
+    err_doit(0, error, fmt, ap);
+    va_end(ap);
+
+    exit(1);
+}
+
 /* Nonfatal error unrelated to a system call,
- * print a message and return
+ * print a message and return.
  */
 void
 err_msg(const char *fmt, ...)
@@ -41,14 +70,14 @@ err_msg(const char *fmt, ...)
     va_list ap;
 
     va_start(ap, fmt);
-    err_doit(0, fmt, ap);
+    err_doit(0, 0, fmt, ap);
     va_end(ap);
 
     return;
 }
 
 /* Fatal error unrelated to a system call,
- * print a message and terminate program
+ * print a message and terminate program.
  */
 void
 err_quit(const char *fmt, ...)
@@ -56,14 +85,14 @@ err_quit(const char *fmt, ...)
     va_list ap;
 
     va_start(ap, fmt);
-    err_doit(0, fmt, ap);
+    err_doit(0, 0, fmt, ap);
     va_end(ap);
 
     exit(1);
 }
 
 /* Nonfatal error related to a system call,
- * print a message and return
+ * print a message and return.
  */
 void
 err_ret(const char *fmt, ...)
@@ -71,14 +100,14 @@ err_ret(const char *fmt, ...)
     va_list ap;
 
     va_start(ap, fmt);
-    err_doit(1, fmt, ap);
+    err_doit(1, errno, fmt, ap);
     va_end(ap);
 
     return;
 }
 
 /* Fatal error related to a system call,
- * print a message and terminate program
+ * print a message and terminate program.
  */
 void
 err_sys(const char *fmt, ...)
@@ -86,7 +115,7 @@ err_sys(const char *fmt, ...)
     va_list ap;
 
     va_start(ap, fmt);
-    err_doit(1, fmt, ap);
+    err_doit(1, errno, fmt, ap);
     va_end(ap);
 
     exit(1);
@@ -97,14 +126,16 @@ err_sys(const char *fmt, ...)
  *  interface easier to grok.
  */
 static void
-err_doit(int errnoflag, const char *fmt, va_list ap)
+err_doit(int errnoflag, int error, const char *fmt, va_list ap)
 {
-    int errno_save = errno;
     char buf[MAXLINE];
 
-    vsprintf(buf, fmt, ap);
+    vsnprintf(buf, MAXLINE-1, fmt, ap);
     if (errnoflag)
-        sprintf(buf+strlen(buf), ": %s", strerror(errno_save));
+        snprintf( buf+strlen(buf),
+                  MAXLINE-strlen(buf)-1,
+                  ": %s",
+                  strerror(error) );
     strcat(buf, "\n");
     fflush(stdout);  /* in case stdout and stderr are the same */
     fputs(buf, stderr);

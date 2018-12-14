@@ -1,38 +1,8 @@
 # scheller-linux-archive
 My personal software development archive for Linux and Linux
 like environments.  The primary purpose of this GitHub repo
-is to capture what I learn in a way that helps me stay up to
-speed on a topic.
-
-## Linux Configuration & Administration:
-### [linux info](linux/info/)
-This directory is a fairly free form collection of information
-on a variety of topics relating to Linux software development,
-environment configuration, and system administration.
-
-1. Unix Commands (including passwordless SSH)
-2. Bash notes
-3. GIT notes
-4. Vim notes
-5. Unicode cheatsheet
-6. Arch Linux Info
-7. CentOS 6 Info
-8. CentOS 7 Info
-9. Windows 10 Powershell and Cygwin configuration
-
-### [bashEnvConf](linux/bashEnvConf/)
-* Examples `.bash*` and other user configuration files
-* Simple, utilitarian bash scripts illustrating bash scripting techniques
-
-### [My Arch Linux Admin Logs](linux/ArchLinuxAdminLogs/)
-* Contains date ordered admin logs documenting the steps taken
-  to create and administer Arch Linux on a laptop.
-* Saves having to re-research howto's from scratch
-
-### [private html homepage](web)
-* In lieu of using bookmarks
-* Easily shared between browsers and computers
-* Not shared with Google or Mozilla
+is to permanently capture what I learn in a way that helps me stay up to
+speed on a variety of topics.
 
 ## Grokking Computer Languages:
 Projects whose basic purpose is for me to learn a variety computer
@@ -82,16 +52,40 @@ left off and not have to learn everything all over again from scratch.
 * Code written while learning Python based Deep Learning
 * Keras and TensorFlow libraries
 
-## Educational:
-Projects of interest other than illustrating programming techniques.
-### [pythagorean triples](educational/pythagTriples/)
+### [pythagorean triples](grok/grokPython/pythagTriples/)
 * Haskell project that generates Pythagorean triples
 * Mathematical factoids about Pythagorean triples
 * Also used to help me learn Haskell stack
 
-### [harmonic oscillator wave function](educational/harmonicOscillator/)
-* Models a one-dimensional harmonic oscillator wavefuntion
-* Mupad notebook, requires MATLAB & MATLAB Symbolic Toolbox
+## Linux Configuration & Administration:
+### [linux info](linux/info/)
+This directory is a fairly free form collection of information
+on a variety of topics relating to Linux software development,
+environment configuration, and system administration.
+
+1. Unix Commands (including passwordless SSH)
+2. Bash notes
+3. GIT notes
+4. Vim notes
+5. Unicode cheatsheet
+6. Arch Linux Info
+7. CentOS 6 Info
+8. CentOS 7 Info
+9. Windows 10 Powershell and Cygwin configuration
+
+### [bashEnvConf](linux/bashEnvConf/)
+* Examples `.bash*` and other user configuration files
+* Simple, utilitarian bash scripts illustrating bash scripting techniques
+
+### [My Arch Linux Admin Logs](linux/ArchLinuxAdminLogs/)
+* Contains date ordered admin logs documenting the steps taken
+  to create and administer Arch Linux on a laptop.
+* Saves having to re-research howto's from scratch
+
+### [private html homepage](web)
+* In lieu of using bookmarks
+* Easily shared between browsers and computers
+* Not shared with Google or Mozilla
 
 ## For more Info:
 Please read the

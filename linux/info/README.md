@@ -23,11 +23,9 @@
 ### [Arch Linux Info](ArchLinuxInfo/)
 * Contains Arch Linux specific information
 
-### [CentOS 6 Info](CentOS6Info/README.md)
+### [CentOS 6 For the Unempowered](CentOS6Info/README.md)
 * CentOS 6 without root privaledges
-
-### [CentOS 7 Info](CentOS7Info/README.md)
-* CentOS 7 without root privaledges
+* Building GCC compiler chaine and Haskell Stack in home directory
 
 ### [Windows 10 Configuration](Windows10Info)
 * First install [Cygwin](https://www.cygwin.com/)

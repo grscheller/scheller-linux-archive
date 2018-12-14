@@ -6,7 +6,8 @@ personnal tasks.  Probably not of general interest.
 * Newer CAP zipfiles of DB dumps have everything as string types
 * Converts various fields to numeric and logical types
 * Aids in usability when importing into Access
-* Tried to make maintainable by those who are not sed gods
+* Tried to make maintainable by those not familiar with sed
+* Should convert to awk or python someday
 ```
    Usage: capConvert CAPDBfiles.zip
 ```

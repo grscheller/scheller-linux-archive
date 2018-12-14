@@ -1,3 +1,5 @@
+# Configure GNU Readline Library
+
 # Set editing mode for vi
 set editing-mode vi
 

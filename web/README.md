@@ -12,7 +12,7 @@
 * Information content.
 * Basically an HTML table of organized topics.
 * Kept very simple to facilitate "monkey see-monkey do" updating.
-* Easily resize with <ctrl>+<+> and <ctrl>+<->.
+* Easily resize with `<ctrl>+<+>` and `<ctrl>+<->`.
 
 ### [style.css](style.css)
 * All formating done here

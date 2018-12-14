@@ -23,8 +23,7 @@ pythagTriples [-o|-f|-fs|-h] number
     -fs Use fast algorithm, but sort results a < b < c.
     -h  Print help message.
 ```   
-Both algorithms only print triples with no common factors,
-that is `gcd(a,b,c) = 1`.
+Both algorithms only print triples with no common factors.
 
 ## Some design considerations:
 1. These algorithms generate pathagorean triples with no common factors.
@@ -32,13 +31,15 @@ that is `gcd(a,b,c) = 1`.
        a^2 + b^2 = c^2  where gcd(a, b, c) = 1
                           and 0 < a < b < c
    ```
-   you only need to check any two of `a, b, c` because you can factor
-   out the common factors of any two to show the the square of the other
-   (and henced the other itself) has the same common factors.
+   When checking for common factors, we need to check just two
+   of `a, b, c` because by factoring out a common factor of
+   any two we show the the square of the third, and henced the
+   third itself, has the same common factor.
 
-   Geometrically this is the right choice since as right triangles
+   Choosing `gcd(a, b, c)` geometrically this is the right choice
+   since as right triangles
    ```
-       (3, 4, 5)` and `(6, 8, 10)` and `(4, 3, 5)
+       (3, 4, 5) and (6, 8, 10) and (4, 3, 5)
    ```
    are similar and thus the same except for scale or orientation.
 
@@ -63,7 +64,7 @@ that is `gcd(a,b,c) = 1`.
                   * * * * * * * * * * * * * 
                          vary b
    ```
-   Hence, `c - b < 1` => no more triples.
+   Hence, `c-b < 1` => no more triples.
    ```
       a^2 + b^2 = c^2
       a^2 = c^2 - b^2 = (c-b)*(c+b) < c + b
@@ -77,9 +78,10 @@ that is `gcd(a,b,c) = 1`.
    ```
       a+1 <= b <= (a^2 - 1)/2
    ```
-   From running code, we see that both <= cases happen.
+   From running the code, we see that both <= cases happen.
 
-4. Running code seems to show that the hypotence `c` is alwaya odd.
+4. Running the code also seems to show that the hypotence `c` is
+   alwaya odd.
 
    Let's show that this is universally true:
 
@@ -99,7 +101,8 @@ that is `gcd(a,b,c) = 1`.
    ```
    But `1` is not even, therefore `c` always odd.
 
-   Thus, if `a` is odd, we need to only check for `b` even, and via versa.
+   This means that if `a` is odd, we need to only check for `b` even,
+   and via versa.
 
 5. I came across a faster algorithm which produces unordered results,
    ```

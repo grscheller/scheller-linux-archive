@@ -1,4 +1,4 @@
-## Put this file in the Documents/WindowsPowerShell folder.
+## Put this file in your Documents\WindowsPowerShell folder.
 #
 #  Powershell will start in your "home" directory, which is
 #  usually C:\Users\your_user_name, the one above Documents.
@@ -108,7 +108,7 @@ if ( (Get-ExecutionPolicy).ToString() -ne "Unrestricted" )
 #
 #  The following lines I "script-kiddied" off of stack overflow.
 $fgColor = "White"
-$bgColor = "DarkBlue"
+$bgColor = "Black"
 Set-PSReadlineOption -TokenKind Parameter -ForegroundColor $fgColor -BackgroundColor $bgColor
 Set-PSReadlineOption -TokenKind String -ForegroundColor $fgColor -BackgroundColor $bgColor
 Set-PSReadlineOption -TokenKind Operator -ForegroundColor $fgColor -BackgroundColor $bgColor

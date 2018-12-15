@@ -1,8 +1,78 @@
 # scheller-linux-archive
 My personal software development archive for Linux and Linux
 like environments.  The primary purpose of this GitHub repo
-is to permanently capture what I learn in a way that helps me stay up to
-speed on a variety of topics.
+is to permanently capture what I learn in a way that helps
+me stay up to speed on a variety of topics.
+
+## Linux Configuration, Tools & Administration:
+### [linux info](linux/info/
+A fairly free form collection of information on a variety
+of topics relating to Linux/Unix/POSIX software development,
+environment configuration, and system administration.
+#### [Unix Commands](linux/info/UnixCommands.txt)
+* General Unix/POSIX command line utilities
+* Using SSH without password
+
+#### [Bash Notes](linux/info/BashInfo.txt)
+* My personal Bash notes/cheatsheet
+
+#### [GIT Notes](linux/info/GITnotes.txt)
+* Pretty much everything I know about GIT
+* These are the notes I take while learning GIT
+* I adapted these notes to share with my coworkers
+
+#### [Vim Notes](linux/info/vimNotes/README.md)
+* Everything I know about VIM (VI-iMproved)
+* Configuring VIM to play nice in a hybrid CLI/GUI workflow
+* Configuring VIM plug-ins with Vundle plugin manager
+
+#### [Unicode Cheatsheet](linux/info/UnicodeCheatSheet.txt)
+* Useful code points
+
+#### [Arch Linux Info](linux/info/ArchLinuxInfo/)
+* Contains Arch Linux specific information
+
+#### [CentOS 6 For the Unempowered](linux/info/CentOS6Info/README.md)
+* CentOS 6 without root privaledges
+* Building GCC compiler chain and Haskell Stack in home directory
+
+#### [Windows 10 Powershell Configuration](linux/info/Win10PowershellConfigFile)
+* File location: `Documents\WindowsPowershell\Microsoft.PowerShell_profile.ps1`
+* Powershell GUI made to play nice with dark themes
+* Powershell context colors "turned off."  Very useful
+  when overhead projectors don't render colors well.
+
+### [bashEnvConf](linux/bashEnvConf/)
+Documents how I configure my Linux environment.
+* Example Bash configuration files
+* Simple, ~/bin bash scripts illustrating bash scripting techniques
+* ~/.vim/vimrc configuration files (including Vundle and Syntastic)
+* ~/.inputrc to configure GNU readline library
+* ~/.xinitrc and ~/.xprofile files for X desktops
+
+### [My Arch Linux Admin Logs](linux/ArchLinuxAdminLogs/)
+Documents changes made when administrating my Arch Linux system.
+
+These log files are date ordered and evolutionary in nature.
+They save mr having to re-research HOWTO's and man pages
+from scratch
+#### [ArchLinux Admin Log](ArchLinuxAdmin.log)
+* Documents system administration on my Arch Linux laptop
+* Cronologically ordered
+* Lots of factoid asides
+
+#### [Python Admin Log](PythonAdmin.log)
+* Initially tracked Anaconda Python installed by unprivalleged user.
+* Now using Arch Linux's Python infrastructure.
+
+#### [Haskell Admin Log](HaskellAdmin.log)
+* Initially only using the Stack tool.
+* Starting to grok using locally installed Haskell via Cabal.
+
+#### [Build GHC Arch Linux Log](BuildGHCArchLinux.log)
+* Documents my steps building the Glasgow Haskell Compilation System on Arch
+* Built from Github source
+* Build relies heavily having a current Haskell tool chain already installed
 
 ## Grokking Computer Languages:
 ### C and C++:
@@ -60,75 +130,6 @@ left off and not have to learn everything all over again from scratch.
 * Haskell project that generates Pythagorean triples
 * Mathematical factoids about Pythagorean triples
 * Also used to help me learn Haskell stack
-
-## Linux Configuration & Administration:
-### [linux info](linux/info/
-A fairly free form collection of information on a variety
-of topics relating to Linux/Unix/POSIX software development,
-environment configuration, and system administration.
-#### [Unix Commands](linux/info/UnixCommands.txt)
-* General Unix/POSIX command line utilities
-* Using SSH without password
-
-#### [Bash Notes](linux/info/BashInfo.txt)
-* My personal Bash notes/cheatsheet
-
-#### [GIT Notes](linux/info/GITnotes.txt)
-* Pretty much everything I know about GIT
-* These are the notes I take while learning GIT
-* I adapted these notes to share with my coworkers
-
-#### [Vim Notes](linux/info/vimNotes/README.md)
-* Everything I know about VIM (VI-iMproved)
-* Configuring VIM to play nice in a hybrid CLI/GUI workflow
-* Configuring VIM plug-ins with Vundle plugin manager
-
-#### [Unicode Cheatsheet](linux/info/UnicodeCheatSheet.txt)
-* Useful code points
-
-#### [Arch Linux Info](linux/info/ArchLinuxInfo/)
-* Contains Arch Linux specific information
-
-#### [CentOS 6 For the Unempowered](linux/info/CentOS6Info/README.md)
-* CentOS 6 without root privaledges
-* Building GCC compiler chain and Haskell Stack in home directory
-
-#### [Windows 10 Powershell Configuration](linux/info/Win10PowershellConfigFile)
-* File location: `Documents\WindowsPowershell\Microsoft.PowerShell_profile.ps1`
-* Powershell GUI made to play nice with dark themes
-* Powershell context colors "turned off."  Very useful
-  when overhead projectors don't render colors well.
-
-### [bashEnvConf](linux/bashEnvConf/)
-Documents how I configure my Linux environment.
-* Example Bash configuration files
-* Simple, ~/bin bash scripts illustrating bash scripting techniques
-* ~/.vim/vimrc configuration files (including Vundle and Syntastic)
-* ~/.inputrc to configure GNU readline library
-* ~/.xinitrc and ~/.xprofile files for X desktops
-
-### [My Arch Linux Admin Logs](linux/ArchLinuxAdminLogs/)
-Documents changes made when administrating my Arch Linux system.
-
-These files are date ordered and evolutionary in nature.  These logs
-save having to re-research howto's from scratch
-#### [ArchLinux_AdminLog](ArchLinux_AdminLog)
-* Documents system administration on my Arch Linux laptop
-* Cronologically ordered
-* Lots of factoid asides
-
-#### [Haskell_Adminlog](Userland_Adminlog)
-* Initially only using the Stack tool.
-* Starting to grok using locally installed Haskell via Cabal.
-
-#### [Python_Adminlog](Userland_Adminlog)
-* Initially tracked Anaconda Python installed by unprivalleged user.
-* Now using Arch Linux's Python infrastructure.
-
-#### [buildGHConArchLinuxLog](buildGHConArchLinuxLog)
-* Documents my steps building the Glasgow Haskell Compilation System on Arch
-* Built from Github source
-* Build relies heavily having a current Haskell tool chain already installed
 
 ## WWW Info
 World Wide Web factoids and utilities.

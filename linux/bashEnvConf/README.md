@@ -1,4 +1,4 @@
-# Bash Environment Configuration
+## Bash Environment Configuration
 * Example Bash configuration files
 * Simple, ~/bin bash scripts illustrating bash scripting techniques
 * ~/.vim/vimrc configuration files (including Vundle and Syntastic)

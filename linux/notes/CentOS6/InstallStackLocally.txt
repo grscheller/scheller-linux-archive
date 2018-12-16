@@ -2,21 +2,21 @@ Install Haskell Stack without root privs
 
 I wrote this guide to document what I did to get
 Haskell Stack installed on my work computer, a
-CentOS 6.8 workstation where I do not have root
+CentOS 6.8 workstation where I did not have root
 privilages.  The GHC Stack people must think
 everyone has root privileges.
 
-The stack command itself will be install into
+The stack command itself will be install under
 your home directory.
 
 I am assuming that stack is not already installed on
 your system and you do not have the necessary root
-privaledges to do so as per the official Haskell Stack
-website - https://docs.haskellstack.org/en/stable/README/
+privaledges to do so as per the official
+[Haskell Stack Website](https://docs.haskellstack.org/en/stable/README/).
 
 This guide should be useful for other flavors of
 Linux, but there are additional CentOS 6.8 issues.
-The stack version that gets installed, 1.3.2+, will not
+The stack version that got installed, 1.3.2+, does not
 work with the native version of GCC that comes with
 CentOS 6.8.  It only works on systems that I have
 locally built and installed a more recent version of
@@ -30,13 +30,13 @@ will fail with the native GCC that comes with CentOS 6.8.
   gcc (GCC) 4.4.7 20120313 (Red Hat 4.4.7-17) <- Does not work!
 
 
-###To install, do the following as a regular user:
+To install, do the following as a regular user:
 
 1. If you are behind a corporate firewall, make sure your
    proxy settings are set up correctly for commandline use
 
-     $ export http_proxy='Kprs-wg-001:9090'
-     $ export https_proxy='Kprs-wg-001:9090'
+     $ export http_proxy='kprs-wg-001:9090'
+     $ export https_proxy='kprs-wg-001:9090'
 
    adjust your proxy settings accordingly.
 

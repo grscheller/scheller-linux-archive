@@ -1,7 +1,8 @@
 ## Java:
 An attempt to better familiarize myself with Java coming
-at it from a Python and Scala perspective.  Post Java 8
-oriented.
+at it from a Python and Scala perspective.  Java code
+compiles down to byte code which runs on any system
+that has a Java Virtual Machine (JVM).
 
 ### [Testing JVM for Word Tearing](wordTearing/)
 Java program to test for "word tearing" occuring in the

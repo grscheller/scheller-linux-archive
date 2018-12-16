@@ -1,4 +1,4 @@
-# Purpose: Gnome 3 configuration on CentOS 7
+## Purpose: Gnome 3 configuration on CentOS 7
 
 ### GNOME Version:
 ```

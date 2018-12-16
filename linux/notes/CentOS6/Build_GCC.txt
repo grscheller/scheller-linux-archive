@@ -1,4 +1,6 @@
-Build GCC from source
+How to build the GCC Gnu Compiler Collection from source.
+No attempt is made to try and optimize these tools.  I was not
+trying to make a better compiler, just a more modern one.
 
 Since I am behind a firewall that blocks svn protocol,
 I am forced to use https protocol:

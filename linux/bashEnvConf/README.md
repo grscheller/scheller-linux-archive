@@ -1,4 +1,5 @@
-## Bash Environment Configuration
+### Bash Environment Configuration
+Documents how I configure my Linux/POSIX environments.
 * Example Bash configuration files
 * Simple, ~/bin bash scripts illustrating bash scripting techniques
 * ~/.vim/vimrc configuration files (including Vundle and Syntastic)

@@ -8,7 +8,7 @@ java ecosystem.
 
 In the age of SBT, using Make for Java is probably dead.
 
-## To build:
+### To build:
 ```
   $ make
   javac  Carl.java
@@ -16,7 +16,7 @@ In the age of SBT, using Make for Java is probably dead.
   javac  IsPrime.java
 ```
 
-## To run:
+### To run:
 ```
   $ java Carl
   Sum of 1 to 100 is 5050

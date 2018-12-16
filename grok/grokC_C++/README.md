@@ -1,20 +1,19 @@
-# Old School Programming
-* Capture various "traditional" programming paradigms
-* Create examples of various pre-1990 imperitive programming techniques
-* Not necessarily resticted to pre-1990 languages or tools
+## C and C++ Programming
+Purpose of this project is to learn C and C++ as both
+systems and general purpose programming languages.
 
-## 1. [C Systems Programming](SystemsProgramming/):
+### 1. [C Systems Programming](SystemsProgramming/):
 I have always admired W. Richard Steven's books on Unix System
 programming.  Back in the early 1990's, I thought someday I would
 work my way through them.  Well, I have finally gotten around to
-it, in 2018.  I want to investigate the use of bloody edge C++
-as a general purpose language, but before I do so, I thought I'd
+it, in 2018.  I got inspired to investigate using bloody edge C++
+as a general purpose language, but before I did so, I thought I'd
 better learn what it is I am trying to replace.  Thanks to POSIX
 standards, Steven's books are as relevant today as they were back
 in the 1990's.
 
 Books being used are
-"Advanced Programming in the UNIX Environment"
+"Advanced Programming in the UNIX Environment" third edition
 and
 "UNIX Network Programming"
 volumes 1 & 2.
@@ -26,7 +25,7 @@ Using `gcc -std=c90` to match the standard used by these books.
 * __myBufferedCat.c__: Buffered IO defined in stdio.h
 * __pidInfo.c__: Process ID information
 
-## 2. [C++ to Infinity and Beyond](C++InfinityAndBeyond/):
+### 2. [C++ to Infinity and Beyond](C++InfinityAndBeyond/):
 ANSI-C needs to be replaced.  Unfortunately, it is good enough
 never to be replaced.  I feel C++, properly done, could be a
 safer and socially palitable replacement.  This project was

@@ -1,9 +1,9 @@
-# Haskell Parallel & Concurrent Programming
+## Haskell Parallel & Concurrent Programming
 Example code bits inspired by the book
 [Haskell Parallel & Concurrent Programming in Haskell](http://shop.oreilly.com/product/0636920026365.do)
 by Simon Marlow.
 
-## 1. First step, using ghc from the command line.
+### 1. First step, using ghc from the command line.
 Created a new file, taken from the beginning of chapter 7,
 [firstConcurrentSteps/fork.hs](firstConcurrentSteps/fork.hs)
 with the following contents:
@@ -30,7 +30,7 @@ to run,
    BBBBBABABABABABABABABABABABABABABABAAAAA
 ```
 
-## 2. Print out info on GHC's installation directories.
+### 2. Print out info on GHC's installation directories.
 [ghcInfo/ghcInfo.hs](ghcInfo/ghcInfo.hs)
 
 I have locally installed Simon Marlow's ghc.paths cabal package via 

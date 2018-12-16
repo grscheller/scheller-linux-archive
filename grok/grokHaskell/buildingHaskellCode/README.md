@@ -1,4 +1,4 @@
-# Building Haskell Code
+## Building Haskell Code
 I am finding that Cabal has advantages over Stack when dealing with
 the locally installed Arch GHC.  Stack is more for freezing a build
 consistently across different architectures.  Cabal seems to work well with
@@ -7,7 +7,7 @@ using different interrelated sets of dependencies, need to be put into
 different Cabal sandboxes to avoid "Cabal Hell."  Stack uses Cabal sandboxes
 under-the-hood.
 
-## 1. Build a Haskell program from commandline.
+### 1. Build a Haskell program from commandline.
 Let us start with a completely trivial Haskell program,
 [cmdLine/hw.hs](cmdLine/hw.hs),
 with the following contents:

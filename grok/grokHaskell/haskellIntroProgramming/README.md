@@ -1,4 +1,4 @@
-# "Intro" to Haskell
+## "Intro" to Haskell
 My attempts to work through the course exercises from and mini-projects
 inspired by the University of Chicago's introduction to programming course
 sequence.  I put "Intro" in quotes because this course would be
@@ -11,7 +11,7 @@ material.  This one, I think, actually is successful at being deeper.
 
   [1]: http://learnyouahaskell.com "Learn You A Haskell for Great Good"
 
-## CMSC courses whose online Lecture notes I am following:
+### CMSC courses whose online Lecture notes I am following:
 1. Honors Introduction to Programming, I
    Autumn Quarter, 2017
    Univ. of Chicago
@@ -20,24 +20,24 @@ material.  This one, I think, actually is successful at being deeper.
 2. Honors Introduction to Programming, II
    TBD
 
-### Modules written following CMSC-16100
+#### Modules written following CMSC-16100
 1. Lecture I
    * [Triangles](modules/Triangles.hs)
 2. Lecture II
    * [ListFunctions](modules/ListFunctions.hs)
 
-### Additional Lectures for CMSC-16100
+#### Additional Lectures for CMSC-16100
 * [Peano Arithmrtic](PeanoArithmetic/)
 
-## My notes:
+### My notes:
 * The [Notes](notes/MyNotes.md) I took while working through the material.
 * A [Haskell Language Summary](notes/HaskellLangRefSummary.md) I found
   and converted to Markdown.
 
-## Additional play:
+### Additional play:
 * [Examples](examples/README.md), basically a place for code snippets.
 
-## Original invitation to community on Haskell-Cafe:
+### Original invitation to community on Haskell-Cafe:
 ```
    Message: 2
    Date: Sun, 24 Sep 2017 10:52:03 -0500

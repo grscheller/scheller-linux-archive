@@ -13,7 +13,7 @@
  */
 public class WordTearing extends Thread {
   static final int LENGTH = 8;
-  static final int ITERS = 1000000;
+  static final int ITERS = 10000000;
   static byte[] mutableByteArray = new byte[LENGTH];
   static Thread[] threads = new Thread[LENGTH];
 

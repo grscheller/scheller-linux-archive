@@ -11,13 +11,8 @@
 #ifndef _SYSTEMS_PROGRAMMING_HEADERS_H
 #define _SYSTEMS_PROGRAMMING_HEADERS_H
 
-#define _POSIX_C_SOURCE 200809L
-
-#if defined(SOLARIS)
-#define _XOPEN_SOURCE 600   /* For Solaris 10 */
-#else
-#define _XOPEN_SOURCE 700   /* For Linux, FreeBSD, Mac OS 10 */
-#endif
+#define _POSIX_C_SOURCE 200809L // Compile to POSIX.1-2008 standard
+#define _XOPEN_SOURCE 700       // with X/Open 7 extentions
 
 #include <stdio.h>
 #include <stdlib.h>

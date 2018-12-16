@@ -1,5 +1,7 @@
 ## Python:
-A run-time pure Object Oriented Language.
+A pure runtime Object Oriented Language.  Like Smalltalk,
+everything is an object, including classes.  Type classes
+via "duck-typing."
 
 ### [pureMath](pureMath/)
 * A mathematics library centered around integer arithmetic

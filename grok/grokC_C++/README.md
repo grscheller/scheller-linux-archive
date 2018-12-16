@@ -12,13 +12,11 @@ better learn what it is I am trying to replace.  Thanks to POSIX
 standards, Steven's books are as relevant today as they were back
 in the 1990's.
 
-Books being used are
-"Advanced Programming in the UNIX Environment" third edition
-and
-"UNIX Network Programming"
-volumes 1 & 2.
+The books being used is
+"Advanced Programming in the UNIX Environment" third edition and
+the __systemsProgrammingHeaders.h__ header file configures compiling to
+the POSIX.1-2008 and X/Open 7 to match the standard used by the book.
 
-Using `gcc -std=c90` to match the standard used by these books.
 * __myErrorHandlers.c__: Common error handling routines.
 * __simple_ls.c__: Application to display file names in a directory.
 * __myUnbufferedCat.c__: Lower level IO defined in unistd.h

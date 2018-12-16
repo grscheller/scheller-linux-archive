@@ -16,7 +16,7 @@ main(void)
 
 /*
  * Notes:
- * 1. The POSIX  Standards do not indicate
+ * 1. The POSIX Standards do not indicate
  *    the precise size of pid_t, only that it
  *    needs to fit inside a long.  For portability,
  *    we cast the return values of these library
@@ -46,5 +46,5 @@ main(void)
  *
  * Suppositions:
  *  1. The unistd.h header seems to be used
- *     to select particular POSIX/ISO C standards.
+ *     to configure particular POSIX/ISO C standards.
  */

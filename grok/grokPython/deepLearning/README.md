@@ -4,5 +4,5 @@
   [Deep Learning in Python](https://www.manning.com/books/deep-learning-with-python).
 * Book by creator of Keras libraries, François Chollet.
 * See 2018-02-14 and 2018-02-25 entries in 
-  [ArchLinuxAdminLogs](../../../linux/info/ArchLinuxAdminLogs/ArchLinux_AdminLog.txt)
+  [ArchLinuxAdminLogs](../../../linux/info/ArchLinuxAdminLogs/ArchLinuxAdmin.log)
   to see how I installed software on Arch Linux.

@@ -5,6 +5,7 @@ Documents how I configure my Linux/POSIX environments.
 * ~/.vim/vimrc configuration files (including Vundle and Syntastic)
 * ~/.inputrc to configure GNU readline library
 * ~/.xinitrc and ~/.xprofile files for X desktops
+  - Note: These last two are POSIX shell scripts
 
 For these configuration files to fully work, the Bash
 scripts in the [bin](bin) directory need to be put into

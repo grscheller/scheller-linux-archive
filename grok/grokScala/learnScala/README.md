@@ -1,8 +1,8 @@
-# Basic Scala Language Constructs:
+## Basic Scala Language Constructs:
 
 Explore Scala language and build constructions.
 
-## 1. Hierarchical SBT build.
+#### 1. Hierarchical SBT build.
 To compile all projects,
 ```
    $ sbt compile
@@ -17,7 +17,7 @@ run one project,
 ```
 make sure you launch sbt from the root grokScala directory.
 
-## 2. Multiple packages in single build: [multiPackage](multiPackage/)
+#### 2. Multiple packages in single build: [multiPackage](multiPackage/)
 The above multiple projects (my term) in the hierarchical build compile
 scala packages which are independent of each other in the sense that
 dependencies between them must be configured like other local external
@@ -25,7 +25,7 @@ packages.  The multiPackage project shows how to compile multiple packages
 in a way that allows SBT to "out-of-the-box" handle package dependencies
 among them.
 
-## 3. Scala's "splat" equivalents: [Splat.scala](splat/Splat.scala)
+#### 3. Scala's "splat" equivalents: [Splat.scala](splat/Splat.scala)
 Languages like Python and Ruby have a syntactic sugar to pass an
 array or tuple into a fixed or variable-arity function.
 
@@ -70,7 +70,7 @@ To run outside sbt build,,
    $ scala grokScala.splat.Splat  
 ```
 
-## 4. Scala code blocks: [codeblocks](codeblocks/)
+#### 4. Scala code blocks: [codeblocks](codeblocks/)
 Scala code blocks are interesting closures.  They can contain state
 but are not first class objects.  This project is to explore to what
 extend code blocks behave like functions.
@@ -120,7 +120,7 @@ to define it as a `lazy val'.
 
 Codeblocks, like any good closures, can contain state.
 
-### Related topics:
+##### Related topics:
 * case blocks, without a match, actually define partial functions.  These
   can be extremely useful when used with collect methods.
 * Sort of related, the use of `self` as a synonym for `this` in class and
@@ -136,26 +136,26 @@ Codeblocks, like any good closures, can contain state.
    }
 ```
 
-## 5. Sort a polymorphic ordered list: [Sort.scala](sort/Sort.scala)
+#### 5. Sort a polymorphic ordered list: [Sort.scala](sort/Sort.scala)
 Compare this to the Haskell implementation in
 [here](../grokHaskell/haskellIntroProgramming/examples/Sort.hs).
 
-## 6. Scala oop: [oop](oop/)
+#### 6. Scala oop: [oop](oop/)
 Exploring Scala OOP features.  When an OOP model fits the problem, it is not
 bad.  I just don't like it when it handcuffs me.
 
-## 7. Parallelism with Scala: [parallelism](parallelism/)
+#### 7. Parallelism with Scala: [parallelism](parallelism/)
 Exploring multithreading/concurrent constructs in Scala.
 
 It seems that Actors from the Scala standard library have been dropped in
 favor of akka Actors.  Also, the standard library now has a Promises
 implementation, which is very different that the one removed from Scalaz.
 
-## 8. State Monad: [grokScala.multiPackage.state](multiPackage/src/main/scala/multiPackage/state/State.scala)
+#### 8. State Monad: [grokScala.multiPackage.state](multiPackage/src/main/scala/multiPackage/state/State.scala)
 An implementation of the State Monad I took from my version of
 the [fpinscala package](../fpinscala).
 
-## 9. Package objects: [grokScala.multiPackage.rand](multiPackage/src/main/scala/multiPackage/rand/)
+#### 9. Package objects: [grokScala.multiPackage.rand](multiPackage/src/main/scala/multiPackage/rand/)
 In scala, types cannot be defined outside of classes/objects.  They are
 features that are part of Scala's OO system - see page 457 of Oderski's
 Programming in Scala, 3rd edition, on path dependent types.  Types are
@@ -169,18 +169,20 @@ package.scala located in the root directory of the package.  The package
 object itself is part of the package's parent package.
 
 In the `grokScala.multiPackage` package, `Rand[A]`, is a type alias for
-`state.State[RNG, A]`
-It is defined package-wide in the file
-[package.scala](multiPackage/src/main/scala/multiPackage/rand/package.scala) located in the
+`state.State[RNG, A]`.  It is defined package-wide in the file
+[package.scala](multiPackage/src/main/scala/multiPackage/rand/package.scala)
+located in the
 `rand` package root directory, multiPackage/src/main/scala/multiPackage/rand/. 
 * Used to define the Rand type alias at the rand package level.
-* Using `val Rand = grokScala.multiPackage.state.State` so the compiler can find the companion object.
-* User code needs to use `new` key word to distinguish constructor from the `State.apply` method.
+* Using `val Rand = grokScala.multiPackage.state.State` so the compiler can
+  find the companion object.
+* User code needs to use `new` key word to distinguish constructor from
+  the `State.apply` method.
 
 This is my original implimentation of `fpinscala.state.rand.Rand`.
 I reimplemented it there as a case class containing a `State(RNG,A)`.
 
-## 10. Convert methods to functions: [MethodAsFunctions](convertMethodToFunctions/)
+#### 10. Convert methods to functions: [MethodAsFunctions](convertMethodToFunctions/)
 Explore how a Scala instance method can be converted to a function.
 
 Consider the class in the file methodAsFunction.scala:

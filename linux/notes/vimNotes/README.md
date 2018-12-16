@@ -1,4 +1,4 @@
-# Vim - Vi iMproved
+## Vim - Vi iMproved
 These notes have evolved from a text file cheatsheet
 I maintained for myself.  I tried to put the MarkDown
 files linked below in an order that only relies on  

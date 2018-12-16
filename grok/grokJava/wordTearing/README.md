@@ -2,7 +2,7 @@
 A java class to test if multiple threads of the underlying
 JVM can update adjacent elements of a byte array.
 
-### Background:
+#### Background:
 * Ideally, separately executing threads, not interacting with
   each other's values, should not need synchronization to ensure
   sequential consistency.  Unfornuately, if the underlying processor
@@ -13,13 +13,6 @@ JVM can update adjacent elements of a byte array.
 * The threads should not get in each others way unless the
   underlying java implementation can only work on whole words at a time.
 
-### Usage:
-Build via:
-```
-   javac WordTearing.java
-```
-
-Run via:
-```
-   java WordTearing
-```
+#### Usage:
+* Build via: `javac WordTearing.java`
+* Run via:   `java WordTearing`

@@ -1,17 +1,13 @@
-# A Python Pure Math Library
+## A Python Pure Math Library
 * A simple example of a Python library
 * Example executables to go with it.
 
-## Source Code:
+#### Source Code:
 
-### [pureMath.py](lib/pureMath.py)
-* Library for integer mathematics
+* [pureMath.py](lib/pureMath.py): Library for integer mathematics
+* [pythag3.py](bin/pythag3.py): Program to compute Pythagorean triples
 
-### [pythag3.py](bin/pythag3.py)
-* Program to compute Pythagorean triples
-
-
-## Notes:
+#### Notes:
 Known to work with both Python 2.7 and Python 3.2+
 
 I wrote these for Python 3, but tried to keep Python 2.7 backward compatibility.

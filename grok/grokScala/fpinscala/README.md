@@ -9,52 +9,51 @@ I have set up my own build.sbt file and am not using the canned SBT
 setup supplied [here](https://github.com/fpinscala/fpinscala) by the
 authors.
 
-### Packages and corresponding book chapters
+#### Packages and corresponding book chapters
 
-#### [fpinscala.gettingstarted](src/main/scala/fpinscala/gettingstarted/)
-* Chapter 2: Getting started with functional programming in Scala
+* Chapter 2: Getting started with functional programming in Scala -
+  [fpinscala.gettingstarted](src/main/scala/fpinscala/gettingstarted/)
 
-#### [fpinscala.datastructures](src/main/scala/fpinscala/datastructures/)
-* Chapter 3: Functional data structures
+* Chapter 3: Functional data structures -
+  [fpinscala.datastructures](src/main/scala/fpinscala/datastructures/)
 
-#### [fpinscala.errorhandling](src/main/scala/fpinscala/errorhandling/)
-* Chapter 4: Handling errors without exceptions
+* Chapter 4: Handling errors without exceptions -
+  [fpinscala.errorhandling](src/main/scala/fpinscala/errorhandling/)
 
-#### [fpinscala.laziness](src/main/scala/fpinscala/laziness/)
-* Chapter 5: Strictness and laziness
+* Chapter 5: Strictness and laziness -
+  [fpinscala.laziness](src/main/scala/fpinscala/laziness/)
 
-#### [fpinscala.state](src/main/scala/fpinscala/state/)
-* Chapter 6: Purely functional state
+* Chapter 6: Purely functional state -
+  [fpinscala.state](src/main/scala/fpinscala/state/)
 
-#### [fpinscala.parallelism](src/main/scala/fpinscala/parallelism/)
-* Chapter 7: Purely functional parallelism
+* Chapter 7: Purely functional parallelism -
+  [fpinscala.parallelism](src/main/scala/fpinscala/parallelism/)
 
-#### [fpinscala.testing](src/main/scala/fpinscala/testing/)
-* Chapter 8: Property-based testing
+* Chapter 8: Property-based testing -
+  [fpinscala.testing](src/main/scala/fpinscala/testing/)
 
-#### [fpinscala.parsing](src/main/scala/fpinscala/parsing/)
-* Chapter 9: Parser combinators
+* Chapter 9: Parser combinators -
+  [fpinscala.parsing](src/main/scala/fpinscala/parsing/)
 
-#### fpinscala.monoids
-* Chapter 10: Monoids
+* Chapter 10: Monoids -
+  fpinscala.monoids
 
-#### fpinscala.monads
-* Chapter 11: Monads
+* Chapter 11: Monads -
+  fpinscala.monads
 
-#### fpinscala.applicative
-* Chapter 12: Applicative and traversable functors
+* Chapter 12: Applicative and traversable functors -
+  fpinscala.applicative
 
-#### fpinscala.iomonad
-* Chapter 13: External effects and I/O
+* Chapter 13: External effects and I/O -
+  fpinscala.iomonad
 
-#### fpinscala.localeffects
-* Chapter 14: Local effects and mutable state
+* Chapter 14: Local effects and mutable state -
+  fpinscala.localeffects
 
-#### fpinscala.streamingio
-* Chapter 15: Stream processing and incremental I/O
+* Chapter 15: Stream processing and incremental I/O -
+  fpinscala.streamingio
 
-### Typical work flow
-
+#### Typical work flow
 Run code:
 ```
     $ sbt run

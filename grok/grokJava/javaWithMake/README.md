@@ -32,4 +32,3 @@ In the age of SBT, using Make for Java is probably dead.
   721692259 is prime.
   721692261 is not prime.
 ```
-

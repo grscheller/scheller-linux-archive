@@ -11,14 +11,12 @@ material.  This one, I think, actually is successful at being deeper.
 
   [1]: http://learnyouahaskell.com "Learn You A Haskell for Great Good"
 
-### CMSC courses whose online Lecture notes I am following:
-1. Honors Introduction to Programming, I
-   Autumn Quarter, 2017
-   Univ. of Chicago
-   Profs. Stuart A. Kurtz & Ravi Chugh
-   [CMSC-16100](http://cmsc-16100.cs.uchicago.edu/2017/)
-2. Honors Introduction to Programming, II
-   TBD
+### CMSC course whose online Lecture notes I am following:
+* Honors Introduction to Programming, I
+  - Autumn Quarter, 2017
+  - Univ. of Chicago
+  - Profs. Stuart A. Kurtz & Ravi Chugh
+  - [CMSC-16100](http://cmsc-16100.cs.uchicago.edu/2017/)
 
 #### Modules written following CMSC-16100
 1. Lecture I

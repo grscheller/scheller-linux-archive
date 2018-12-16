@@ -1,10 +1,10 @@
-# Rust systems programming language:
+## Rust systems programming language:
 Explore the Rust toolchain and come up to speed with the language.  A good
 introduction to the Rust, know as the
 [book](https://doc.rust-lang.org/book) can be found on the Rust
 [web site](https://www.rust-lang.org).
 
-## 1. Why I no longer love C:
+#### 1. Why I no longer love C:
 Consider code a beginner C programmer might write,
 ```
     #include <stdio.h>
@@ -39,9 +39,13 @@ the syntax is misleading.  See the paper,
 [The Seven Deadly Sins of Introductory Programming Language Design](http://users.monash.edu/~damian/papers/PDF/SevenDeadlySins.pdf)
 where I got this example.
 
-I think Rust will become the C for the 21st Century.
+Rust is a safer systems language than C.  Rust requires way too
+much support from the underlying OS for it to be an alternative
+to C as a "freestanding language" that can run on bare hardware.
+In other words, it really is not suitable as a tool to write an
+OS kernel.
 
-## 2. Locally installing Rust toolchain:
+#### 2. Locally installing Rust toolchain:
 The Rust toolchain really, really, really wants to be installed
 locally into a developer's home directory.  To do so,
 ```
@@ -57,8 +61,7 @@ To later update the installed toolchains,
 ```
    $ rustup update
 ```
-
-## 3. First steps Rust toolchain - [babySteps](babySteps/):
+#### 3. First steps Rust toolchain - [babySteps](babySteps/):
 Create a new project with a main function,
 ```
    $ cargo new --bin babySteps
@@ -111,11 +114,11 @@ To build or run a "release" version with full optimization,
 ```
 The executable is `./target/release/babySteps`.
 
-## 4. Guessing game - [guessing_game](guessing_game/):
+#### 4. Guessing game - [guessing_game](guessing_game/):
 Guessing game example taken from the second edition of the official Rust 
 [book](https://doc.rust-lang.org/book/second-edition/ch02-00-guessing-game-tutorial.html).
 
 I have added comments to the code documenting language features.
 
-## 5. Fibonacci program - [fibonacci](fibonacci/):
+#### 5. Fibonacci program - [fibonacci](fibonacci/):
 Program to compute the nth Fiboncci number.

@@ -1,4 +1,5 @@
-/*  Care must be taken when comparing optimization levels of code.
+/*
+ *  Care must be taken when comparing optimization levels of code.
  *
  *  With gcc, compiling with -O2 optimization will completely
  *  "optimize" the loop away.  Essentually, all the program

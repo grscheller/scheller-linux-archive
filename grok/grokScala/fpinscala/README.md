@@ -9,51 +9,51 @@ I have set up my own build.sbt file and am not using the canned SBT
 setup supplied [here](https://github.com/fpinscala/fpinscala) by the
 authors.
 
-#### Packages and corresponding book chapters
+### Packages and corresponding book chapters
 
-* Chapter 2: Getting started with functional programming in Scala -
+* Chapter 2: Getting started with functional programming in Scala: 
   [fpinscala.gettingstarted](src/main/scala/fpinscala/gettingstarted/)
 
-* Chapter 3: Functional data structures -
+* Chapter 3: Functional data structures: 
   [fpinscala.datastructures](src/main/scala/fpinscala/datastructures/)
 
-* Chapter 4: Handling errors without exceptions -
+* Chapter 4: Handling errors without exceptions: 
   [fpinscala.errorhandling](src/main/scala/fpinscala/errorhandling/)
 
-* Chapter 5: Strictness and laziness -
+* Chapter 5: Strictness and laziness: 
   [fpinscala.laziness](src/main/scala/fpinscala/laziness/)
 
-* Chapter 6: Purely functional state -
+* Chapter 6: Purely functional state: 
   [fpinscala.state](src/main/scala/fpinscala/state/)
 
-* Chapter 7: Purely functional parallelism -
+* Chapter 7: Purely functional parallelism: 
   [fpinscala.parallelism](src/main/scala/fpinscala/parallelism/)
 
-* Chapter 8: Property-based testing -
+* Chapter 8: Property-based testing: 
   [fpinscala.testing](src/main/scala/fpinscala/testing/)
 
-* Chapter 9: Parser combinators -
+* Chapter 9: Parser combinators: 
   [fpinscala.parsing](src/main/scala/fpinscala/parsing/)
 
-* Chapter 10: Monoids -
+* Chapter 10: Monoids: 
   fpinscala.monoids
 
-* Chapter 11: Monads -
+* Chapter 11: Monads: 
   fpinscala.monads
 
-* Chapter 12: Applicative and traversable functors -
+* Chapter 12: Applicative and traversable functors: 
   fpinscala.applicative
 
-* Chapter 13: External effects and I/O -
+* Chapter 13: External effects and I/O: 
   fpinscala.iomonad
 
-* Chapter 14: Local effects and mutable state -
+* Chapter 14: Local effects and mutable state: 
   fpinscala.localeffects
 
-* Chapter 15: Stream processing and incremental I/O -
+* Chapter 15: Stream processing and incremental I/O: 
   fpinscala.streamingio
 
-#### Typical work flow
+### Typical work flow
 Run code:
 ```
     $ sbt run

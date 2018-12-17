@@ -3,7 +3,7 @@ Various C and C++ projects.
 
 * [C Systems Programming](SystemsProgramming/)
   - Based on the books by W. Richard Stevens
-  - Well written classics which hold up well
+  - Well written classics which holds up well
 * [C Language Exemplars](CExemplars/)
   - Short examples of best practices in ANCI-C coding
   - Lots of factoids and asides

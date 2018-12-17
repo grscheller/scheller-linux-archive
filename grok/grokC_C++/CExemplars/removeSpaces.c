@@ -1,4 +1,30 @@
 /*
+ *  Print out all strings given on commandline
+ *  with all ascii space characters removed.
+ */
+
+#include <stdio.h>
+
+char *removeAllSpaces(char *data) {
+
+    char *in, *out;
+
+    for (in = out = data; *in !='\0'; in++)
+        if (*in != ' ') *out++ = *in;
+    *out = '\0';
+
+    return data;
+}
+
+int main(int argc, char *argv[]) {
+
+    for (int ii = 1; ii < argc; ii++)
+        printf("%s\n", removeAllSpaces(argv[ii]));
+
+    return 0;
+}
+
+/*
  *  Illustrates:
  *
  *  1. Use of pointers as integers (not Int's!) pointing to
@@ -24,24 +50,3 @@
  *     an unenforced value dependent type.
  *
  */
-
-#include <stdio.h>
-
-char *removeAllSpaces(char *data) {
-
-    char *in, *out;
-
-    for (in = out = data; *in !='\0'; in++)
-        if (*in != ' ') *out++ = *in;
-    *out = '\0';
-
-    return data;
-}
-
-int main(int argc, char *argv[]) {
-
-    for (int ii = 1; ii < argc; ii++)
-        printf("%s\n", removeAllSpaces(argv[ii]));
-
-    return 0;
-}

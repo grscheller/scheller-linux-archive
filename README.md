@@ -4,12 +4,12 @@
   - [Linux Notes](linux/notes/)
   - [My Arch Linux Admin Logs](linux/ArchLinuxAdminLogs/)
 * Grokking Computer Languages:
-  - [C and C++](grok/grokC_C++)
-  - [Scala](grok/grokScala/)
-  - [Haskell](grok/grokHaskell/)
-  - [Rust](grok/grokRust/)
-  - [Python](grok/grokPython)
-  - [Java](grok/grokJava/)
+  - [C and C++](grok/C_C++)
+  - [Scala](grok/Scala/)
+  - [Haskell](grok/Haskell/)
+  - [Rust](grok/Rust/)
+  - [Python](grok/Python)
+  - [Java](grok/Java/)
 * WWW Info:
   - [Private homepage](web/homepage/)
 

@@ -1,13 +1,14 @@
 CXX=g++
-CPPFLAGS=-Wall -std=c++2a
+CPPFLAGS=-Wall
 BINARIES=hw
 
 default: binaries
 
 binaries: $(BINARIES)
 
+# guessing where -ptrhead goes
 hw: hw.cpp
-	$(CXX) $(CPPFLAGS) hw.cpp -o hw
+	$(CXX) $(CPPFLAGS) -pthread hw.cpp -o hw
 
 clean:
 	rm -f $(BINARIES)

@@ -7,3 +7,32 @@ Automtic variables are set by make after a rule is matched.
   $+ - Same as above except duplicates not removed.
   $* - Filename with suffix removed <- use discouraged outside pattern rules
   $% - Filename element of an archive member specification.
+
+Comments begin with a #
+
+    # Comment ends at end of line
+
+    # My prefered way
+    # to have a multi-line 
+    # comment.
+
+    # Another way \
+    to have a multi-line \
+    comment.
+
+    # Slightly better way \
+      for a multi-line \
+      comment.
+
+Automated tasks, linr with POSIX shell action
+starts with a <tab>
+
+    timeit: $(SUMIT_BINARIES)
+	for bb in $(SUMIT_BINARIES);\
+	do\
+	    echo -ne "\n$$bb: ";\
+	    time ./$$bb;\
+	done
+
+    clean:
+	rm -f $(BINARIES) 

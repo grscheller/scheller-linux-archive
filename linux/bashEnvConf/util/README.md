@@ -1,4 +1,4 @@
-# Bash Utilities:
+## Bash Utilities:
 Theses are utility scripts which I use for particular
 personnal tasks.  Probably not of general interest.
 

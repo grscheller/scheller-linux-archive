@@ -3,12 +3,12 @@ Various C and C++ projects.
 
 * [C Systems Programming](SystemsProgramming/)
   - Based on the books by W. Richard Stevens
-  - Well written classics which holds up well
+  - Stevens' books are well written classics which hold up well
 * [C Language Exemplars](CExemplars/)
   - Short examples of best practices in ANCI-C coding
   - Lots of factoids and asides
 * [X Windows](XWindows/)
-  - Start off with low level X Windows coding.
+  - Low level X Windows coding
 * [C++ to Infiity and Beyond](C++InfinityAndBeyond/)
-  - Inspired by Bjarne Stroustup's "A Tour of C++" 2nd Ed.
+  - Inspired by Bjarne Stroustup's "A Tour of C++" 2nd Edition
   - Just fooling around for now, see where it goes

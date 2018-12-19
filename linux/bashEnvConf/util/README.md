@@ -1,7 +1,6 @@
-# Bash Utilities:
+## Bash Utilities:
 Theses are utility scripts which I use for particular
 personnal tasks.  Probably not of general interest.
-
 ### [capConvert](capConvert)
 * Newer CAP zipfiles of DB dumps have everything as string types
 * Converts various fields to numeric and logical types

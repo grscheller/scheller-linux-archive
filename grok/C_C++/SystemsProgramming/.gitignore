@@ -1,5 +1,6 @@
 buffered_cat
-simple_ls
 pidInfo
+simple_ls
+tinyShell
 unbuffered_cat
 *.o

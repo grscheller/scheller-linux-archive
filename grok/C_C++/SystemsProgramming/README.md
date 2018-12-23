@@ -18,3 +18,4 @@ compiling to __POSIX.1-2008__ and __X/Open 7__ standard.
 * __myUnbufferedCat.c__: Lower level IO defined in unistd.h
 * __myBufferedCat.c__: Buffered IO defined in stdio.h
 * __pidInfo.c__: Process ID information
+* __tinyShell.c__: Illustrates fork, exec, and waitpid flow

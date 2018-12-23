@@ -1,7 +1,8 @@
 /* Header file for Error and Logging functions
  *
- * Purpose: Keep error handling activity
- *          to one line in programs.
+ * Purpose: 1. Set up standards used.
+ *          2. Include frequently used headers
+ *          3. Prototypes for common error handling routines
  *
  * IMPORTANT: To be included before all
  *            standard system header files.

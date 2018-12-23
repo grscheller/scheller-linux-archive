@@ -2,7 +2,7 @@
  * Error Handling functions
  *
  * Purpose: Keep error handling activity
- *          to one line in programs.
+ *          to one line in the programs.
  *
  */
 

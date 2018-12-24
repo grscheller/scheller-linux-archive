@@ -100,6 +100,10 @@ Time management:
 
   Last line shows that HW clock, "real time clock," is not local time. 
 
+  Reset the timezone to East Coast.
+    $ timedatectl list-timezones | grep America/Ne
+    America/New_York
+    $ sudo timedatectl set-timezone America/New_York
 
 DNSUTILS replacements:
   No longer have nslookup, dig, and host.

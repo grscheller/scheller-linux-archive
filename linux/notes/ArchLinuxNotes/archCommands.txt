@@ -27,8 +27,12 @@ Pacman:
     pacman -Qmq      // List all foreign (usually AUR) packages
     pacman -Q | grep '^linux '   // Get Linux kernel version
 
-  Find the package which owns a particular file,
+  Find the package which owns a particular installed file,
     pacman -Qo /etc/profile
+
+  Find the package (not necessarily installed) that owns a file.
+    pacman -Fo /usr/bin/time
+    sudo pacman -Fyo /usr/bin/time      // sometimes necessary
 
   Query orphan packages,
     pacman -Qtdq

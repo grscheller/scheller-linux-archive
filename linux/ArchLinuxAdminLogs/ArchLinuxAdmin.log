@@ -5476,3 +5476,16 @@ Note: Basically rebuilt system from scratch starting on 2017-06-20
   
   Originally installed zapcc on 2018-08-18 as first step in 
   installing Scala Natively, which I never followed through with.
+
+2018-12-24:
+  Installed the traditional /usr/bin/time utility.
+
+    $ sudo pacman -Syu time
+
+  Note that time is also a bash built-in, so if you want to use 
+  the GNU version of time, use complete path name.
+
+  Bash version handles whole pipelines.  The GNU version can report
+  on other useful information.  The Linux manpages are their own
+  pacman package, so man time reported on /usr/bin/time without the
+  time package being installed.

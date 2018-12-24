@@ -4,6 +4,8 @@
 #include "systemsProgrammingHeaders.h"
 #include <sys/wait.h>
 
+static void sig_int(int);  // Signel handler
+
 #define PROMPT "%% "
 
 int
@@ -13,6 +15,9 @@ main(void)
     char  *bufPt;
     pid_t pid;
     int   status;
+
+    if (signal(SIGINT, sig_int) == SIG_ERR)
+        err_sys("Signal error");
 
     printf(PROMPT);    // Prints "% " as user prompt
 
@@ -44,6 +49,12 @@ main(void)
     }
 
     exit(0);
+}
+
+void
+sig_int(int signo)
+{
+    printf("Interrupted!!!\n");
 }
 
 /*  Notes:

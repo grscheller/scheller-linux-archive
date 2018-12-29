@@ -26,12 +26,12 @@ buffered_cat: buffered_cat.c \
 
 simple_ls: simple_ls.c \
            $(HEADERS)/spHeaders.h \
-           $(COMMON)
+           $(COMMON)/spErrorHandlers.o
 	$(CC) $(CFLAGS) -o $@ $(COMMON)/spErrorHandlers.o $<
 
 tinyShell: tinyShell.c \
            $(HEADERS)/spHeaders.h \
-           $(COMMON)
+           $(COMMON)/spErrorHandlers.o
 	$(CC) $(CFLAGS) -o $@ $(COMMON)/spErrorHandlers.o $<
 
 pidInfo: pidInfo.c \
@@ -40,7 +40,7 @@ pidInfo: pidInfo.c \
 
 unbuffered_cat: unbuffered_cat.c \
                 $(HEADERS)/spHeaders.h \
-                $(COMMON)
+                $(COMMON)/spErrorHandlers.o
 	$(CC) $(CFLAGS) -o $@ $(COMMON)/spErrorHandlers.o $<
 
 clean:

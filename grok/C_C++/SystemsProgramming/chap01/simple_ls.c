@@ -5,8 +5,7 @@
  *
  */
 
-#include "systemsProgrammingHeaders.h"
-
+#include "../include/spHeaders.h"
 #include <sys/types.h>
 #include <dirent.h>
 

@@ -2,7 +2,7 @@
  *  Print out information on current process.
  */
 
-#include "systemsProgrammingHeaders.h"
+#include "../include/spHeaders.h"
 
 int
 main(void)

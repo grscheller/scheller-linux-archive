@@ -1,7 +1,7 @@
 /*
  *  A tiny shell to illustrate fork, exec, and waitpid
  */
-#include "systemsProgrammingHeaders.h"
+#include "../include/spHeaders.h"
 #include <sys/wait.h>
 
 static void sig_int(int);  // Signel handler

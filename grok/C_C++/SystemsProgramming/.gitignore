@@ -1,6 +1,7 @@
-buffered_cat
-pidInfo
-simple_ls
-tinyShell
-unbuffered_cat
-*.o
+chap01/buffered_cat
+chap01/pidInfo
+chap01/simple_ls
+chap01/tinyShell
+chap01/unbuffered_cat
+**/*.o
+include/*.h.gch

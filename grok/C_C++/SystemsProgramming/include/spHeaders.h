@@ -1,11 +1,12 @@
 /* Header file for Error and Logging functions
  *
- * Purpose: 1. Set up standards used
- *          2. Include frequently used headers
- *          3. Prototypes for common error handling routines
+ * Purpose: 1. Set up standards used.
+ *          2. Include frequently used headers - speeds up
+ *             compilation via the include/spHeaders.h.gch
+ *             compiler generated precompiled header.
+ *          3. Prototypes for common error handling routines.
  *
- * IMPORTANT: To be included before all
- *            standard system header files.
+ * IMPORTANT: To be included before all other header files.
  *
  */
 

@@ -3,5 +3,7 @@ chap01/pidInfo
 chap01/simple_ls
 chap01/tinyShell
 chap01/unbuffered_cat
+chap02/sysLimits
+chap02/sysLimits.c
 **/*.o
 include/*.h.gch

@@ -1,7 +1,7 @@
 CC=gcc
-CFLAGS=-Wall
+INCLUDE=../include
+CFLAGS=-Wall -I$(INCLUDE)
 MAKE=/usr/bin/make
-HEADERS=../include
 
 BINARIES=buffered_cat \
          simple_ls \
@@ -20,26 +20,26 @@ object_files:
 binaries: $(BINARIES)
 
 buffered_cat: buffered_cat.c \
-	      $(HEADERS)/spHeaders.h \
+	      $(INCLUDE)/spHeaders.h \
               $(COMMON)/spErrorHandlers.o
 	$(CC) $(CFLAGS) -o $@ $(COMMON)/spErrorHandlers.o $<
 
 simple_ls: simple_ls.c \
-           $(HEADERS)/spHeaders.h \
+           $(INCLUDE)/spHeaders.h \
            $(COMMON)/spErrorHandlers.o
 	$(CC) $(CFLAGS) -o $@ $(COMMON)/spErrorHandlers.o $<
 
 tinyShell: tinyShell.c \
-           $(HEADERS)/spHeaders.h \
+           $(INCLUDE)/spHeaders.h \
            $(COMMON)/spErrorHandlers.o
 	$(CC) $(CFLAGS) -o $@ $(COMMON)/spErrorHandlers.o $<
 
 pidInfo: pidInfo.c \
-         $(HEADERS)/spHeaders.h
+         $(INCLUDE)/spHeaders.h
 	$(CC) $(CFLAGS) -o $@ $<
 
 unbuffered_cat: unbuffered_cat.c \
-                $(HEADERS)/spHeaders.h \
+                $(INCLUDE)/spHeaders.h \
                 $(COMMON)/spErrorHandlers.o
 	$(CC) $(CFLAGS) -o $@ $(COMMON)/spErrorHandlers.o $<
 

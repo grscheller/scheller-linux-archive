@@ -14,7 +14,9 @@
 #define _SP_HEADERS_H
 
 #define _POSIX_C_SOURCE 200809L // Compile to POSIX.1-2008 standard
-#define _XOPEN_SOURCE 700       // with X/Open 7 extentions.
+#define _XOPEN_SOURCE 700       // with X/Open 7 extentions-
+                                // Pretty much what ARCH Linux gives
+                                // right out of the box.
 
 #include <stdio.h>
 #include <stdlib.h>

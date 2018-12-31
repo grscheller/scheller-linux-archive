@@ -9,13 +9,40 @@ The books being used are his
 "Advanced Programming in the UNIX Environment" third edition and his
 Unix Network Programming two volume set.
 
-A common header file, included before all system headers, configures
-compiling to __POSIX.1-2008__ and __X/Open 7__ standard.
+### Common infrastructure
+#### include/spHeaders.h
+* Common header file to be included before all other header files
+* Builds executables to compiling to __POSIX.1-2008__ and __X/Open 7__ standards.
+#### Make based build
+* Hierarchical build
+* Individual subdirectories can be built independently of each other
+#### common/ directory for utility functions
+* Error handling routines
+* Logging routines
+* Compiled to `*.o` files for now
+* Eventually turn into a static library
 
-* __systemsProgrammingHeaders.h__: Common header, include before system headers
-* __myErrorHandlers.c__: Common error handling routines.
-* __simple_ls.c__: Application to display file names in a directory.
-* __myUnbufferedCat.c__: Lower level IO defined in unistd.h
-* __myBufferedCat.c__: Buffered IO defined in stdio.h
-* __pidInfo.c__: Process ID information
-* __tinyShell.c__: Illustrates fork, exec, and waitpid flow
+### UNIX System Overview - Chapter 1
+#### systemsProgrammingHeaders.h
+* Common header, include before all other header files
+#### __myErrorHandlers.c__
+* Common error handling routines.
+#### __simple_ls.c__
+* Application to display file names in a directory.
+#### __myUnbufferedCat.c__
+* Lower level IO
+* Defined in unistd.h
+#### __myBufferedCat.c__
+* Buffered IO
+* Defined in stdio.h
+#### __pidInfo.c__
+* Process ID information
+#### __tinyShell.c__
+* Illustrates fork, exec, and waitpid functions
+
+### UNIX Standardization and Implementation - Chapter 2
+#### __genSysLimits.awk__
+* Awk Script based on one from Stevens' book
+* Generates sysLimits.c from __sysConf.sym__, __pathConf.sym__, and unistd.h 
+* Makefile will generate sysLimits executable
+* Executable prints values of precompiler constants and associated runtime values

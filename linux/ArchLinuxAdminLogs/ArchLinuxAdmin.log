@@ -1346,11 +1346,11 @@ Note: Basically rebuilt system from scratch starting on 2017-06-20
   a wrapper for the commercial data files for the game.  Needs
   the actual data files from the Humble Bundle release.  The only
   "sources" for these is the manufacturer or questionally legal
-  torrent sites.  Torrent sights business model seems to be
-  for you to pay to avoid their black hat spy/adware/captcha ware.
+  torrent sites.  Torrent sites business models seems to be
+  for you to pay to avoid their black hat spy/adware/captcha-ware.
   Lifetime memberships to sights that only been around for a
   year and "popular" for the last couple of months?  Sounds like
-  a site about ready to be shut down.
+  a site about ready to be shutdown.
 
   I have no desire to steal anyone's intellectual property nor pay
   real money for things not really important, like games.
@@ -1358,7 +1358,7 @@ Note: Basically rebuilt system from scratch starting on 2017-06-20
   I uninstalled the game-engine:
     $ sudo pacman -Rsu aquaria-ose
 
-  Leason learned: So far, the only torrent "culture" I have found
+  Lesson learned: So far, the only torrent "culture" I have found
     is one looking to ripoff the naive.  Have not yet found any
     equivalent to the pre-internet BBS culture.
 

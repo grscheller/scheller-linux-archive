@@ -4,7 +4,7 @@ CFLAGS=-Wall -I$(INCLUDE)
 MAKE=/usr/bin/make
 
 BINARIES=buffered_cat \
-         simple_ls \
+         simpleLs \
          tinyShell \
          pidInfo \
          unbuffered_cat
@@ -24,7 +24,7 @@ buffered_cat: buffered_cat.c \
               $(COMMON)/spErrorHandlers.o
 	$(CC) $(CFLAGS) -o $@ $(COMMON)/spErrorHandlers.o $<
 
-simple_ls: simple_ls.c \
+simpleLs: simpleLs.c \
            $(INCLUDE)/spHeaders.h \
            $(COMMON)/spErrorHandlers.o
 	$(CC) $(CFLAGS) -o $@ $(COMMON)/spErrorHandlers.o $<

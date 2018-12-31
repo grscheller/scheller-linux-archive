@@ -13,31 +13,25 @@ Unix Network Programming two volume set.
 #### include/spHeaders.h
 * Common header file to be included before all other header files
 * Builds executables conforming to __POSIX.1-2008__ and __X/Open 7__ standards.
-#### Make based build
+#### common/spErrorHandlers.c_
+* Error handling routines
+* Compiled to a `*.o` file for now
+#### make based build
 * Hierarchical build
 * Individual subdirectories can be built independently of each other
-#### common/ directory for utility functions
-* Error handling routines
-* Logging routines
-* Compiled to `*.o` files for now
-* Eventually turn into a static library
 
 ### UNIX System Overview - Chapter 1
-#### systemsProgrammingHeaders.h
-* Common header, include before all other header files
-#### __myErrorHandlers.c__
-* Common error handling routines.
-#### __simple_ls.c__
+#### simpleLs.c
 * Application to display file names in a directory.
-#### __myUnbufferedCat.c__
+#### myUnbufferedCat.c
 * Lower level IO
 * Defined in unistd.h
-#### __myBufferedCat.c__
+#### myBufferedCat.c
 * Buffered IO
 * Defined in stdio.h
-#### __pidInfo.c__
+#### pidInfo.c
 * Process ID information
-#### __tinyShell.c__
+#### tinyShell.c
 * Illustrates fork, exec, and waitpid functions
 
 ### UNIX Standardization and Implementation - Chapter 2

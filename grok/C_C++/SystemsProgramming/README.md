@@ -1,4 +1,4 @@
-## C Systems Programming
+# C Systems Programming
 I have always admired W. Richard Stevens' books on Unix System
 programming.  Back in the mid 1990's, I thought someday I would
 work my way through them.  Well, I have finally gotten around to
@@ -12,7 +12,7 @@ Unix Network Programming two volume set.
 ### Common infrastructure
 #### include/spHeaders.h
 * Common header file to be included before all other header files
-* Builds executables to compiling to __POSIX.1-2008__ and __X/Open 7__ standards.
+* Builds executables conforming to __POSIX.1-2008__ and __X/Open 7__ standards.
 #### Make based build
 * Hierarchical build
 * Individual subdirectories can be built independently of each other
@@ -41,8 +41,8 @@ Unix Network Programming two volume set.
 * Illustrates fork, exec, and waitpid functions
 
 ### UNIX Standardization and Implementation - Chapter 2
-#### __genSysLimits.awk__
+#### genSysLimits.awk
 * Awk Script based on one from Stevens' book
-* Generates sysLimits.c from __sysConf.sym__, __pathConf.sym__, and unistd.h 
+* Generates sysLimits.c from __sysConf.sym__, __pathConf.sym__, and __unistd.h__
 * Makefile will generate sysLimits executable
 * Executable prints values of precompiler constants and associated runtime values

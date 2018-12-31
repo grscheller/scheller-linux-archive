@@ -1,4 +1,4 @@
-## Linux Notes
+# Linux Notes
 Notes relating to Linux/Unix/POSIX tools for
 software development and system administration.
 * [Bash Notes](BashNotes/BashNotes.txt)

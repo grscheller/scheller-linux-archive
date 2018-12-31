@@ -1,4 +1,4 @@
-## Java
+# Java
 An attempt to familiarize myself with Java coming
 at it from a Python and Scala perspective.  Java code
 compiles down to byte code which runs on any system that

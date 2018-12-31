@@ -1,4 +1,4 @@
-## Functional Programming in Scala Book Exercises
+# Functional Programming in Scala
 I'm working my way through "Functional Programming in Scala"
 by Paul Chiusana and Runar Bjarnason to learn Scala.  Also, I am
 teaching myself SBT using the online

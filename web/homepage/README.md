@@ -1,4 +1,4 @@
-## Private Home Page
+# Private Home Page
 Old fashioned personal home page.  Used in lieu
 of browser bookmarks.  Homepage available anywhere
 I can clone my repo.  Set homepage in browser to

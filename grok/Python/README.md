@@ -1,4 +1,4 @@
-## Python
+# Python
 A pure runtime object oriented language.  Like Smalltalk,
 everything is an object, including classes.  Type classes
 implemented via "duck-typing."

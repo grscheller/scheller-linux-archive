@@ -1,4 +1,4 @@
-## A Python Pure Math Library
+# A Python Pure Math Library
 * A simple example of a Python library
 * Example executables to go with it.
 

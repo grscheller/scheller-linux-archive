@@ -1,6 +1,5 @@
-## C and C++
+# C and C++
 Various C and C++ projects.
-
 * [C Systems Programming](SystemsProgramming/)
   - Based on the books by W. Richard Stevens
   - Stevens' books are well written classics which hold up well

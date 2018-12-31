@@ -1,10 +1,10 @@
-## Rust systems programming language:
+# Rust systems programming language:
 Explore the Rust toolchain and come up to speed with the language.  A good
 introduction to the Rust, know as the
 [book](https://doc.rust-lang.org/book) can be found on the Rust
 [web site](https://www.rust-lang.org).
 
-### 1. Why I no longer love C:
+### 1. C has its short comings:
 Consider code a beginner C programmer might write,
 ```
     #include <stdio.h>

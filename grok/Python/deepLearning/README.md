@@ -1,4 +1,4 @@
-## Deep Learning with Python
+# Deep Learning with Python
 * Using the Keras and TensorFlow libraries.
 * Following the book
   [Deep Learning in Python](https://www.manning.com/books/deep-learning-with-python).

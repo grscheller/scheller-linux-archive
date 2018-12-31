@@ -1,4 +1,4 @@
-## A Pythagorean Triple generation program
+# A Pythagorean Triple generation program
 
 A Pythagoean Triple is a tuple `(a, b, c)` such that `a^2 + b^2 = c^2`.
 
@@ -7,7 +7,7 @@ This program generates all possible pythagorean triples where
 
 Implemented in Haskell using the stack buildtool.
 
-#### Usage:
+### Usage:
 ```
 pythagTriples [-o|-f|-fs|-h] number
   where
@@ -25,7 +25,7 @@ pythagTriples [-o|-f|-fs|-h] number
 ```   
 Both algorithms only print triples with no common factors.
 
-#### Some design considerations:
+### Some design considerations:
 1. These algorithms generate pathagorean triples with no common factors.
    ```
        a^2 + b^2 = c^2  where gcd(a, b, c) = 1

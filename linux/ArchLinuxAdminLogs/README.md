@@ -1,4 +1,4 @@
-## My Arch Linux Admin Logs
+# My Arch Linux Admin Logs
 Date ordered log files documenting changes made when
 administrating my Arch Linux system.
 * [ArchLinux Admin Log](ArchLinuxAdmin.log)

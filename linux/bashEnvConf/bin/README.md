@@ -1,4 +1,4 @@
-## Bash Utilities
+# Bash Utilities
 Theses are the bash utilities I put into my Linux ~/bin directory
 ### [path](path)
 * Spreads $PATH out in a more user readable form
@@ -13,6 +13,8 @@ Theses are the bash utilities I put into my Linux ~/bin directory
 * Trims off duplicate entries and non-existant director $PATH
 ```
    Usage: pathTrim colen:separated:list
+
+
    Example: PATH=$(~/bin/pathTrim $PATH)
 ```
 ### [realPath](realPath)

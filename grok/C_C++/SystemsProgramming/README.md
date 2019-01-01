@@ -12,10 +12,16 @@ Unix Network Programming two volume set.
 ### Common infrastructure
 #### include/spHeaders.h
 * Common header file to be included before all other header files
-* Builds executables conforming to __POSIX.1-2008__ and __X/Open 7__ standards.
-#### common/spErrorHandlers.c_
+* Builds executables conforming to __POSIX.1-2008__ and __XSI 7__ standards
+* POSIX is a portmanteau of "Portable Operating System" and "Unix"
+* XSI stands for X/OPEN System Interfaces
+#### common/spErrorHandlers.c
 * Error handling routines
 * Compiled to a `*.o` file for now
+#### common/spLimits.c
+* Contains routines to determine variaous systems limits at run time.
+* `path_alloc` uses malloc to allocate space for pathnames
+* `open_max` returns maximum number of possible open file descriptures
 #### make based build
 * Hierarchical build
 * Individual subdirectories can be built independently of each other

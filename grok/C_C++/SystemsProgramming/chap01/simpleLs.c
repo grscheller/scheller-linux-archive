@@ -1,11 +1,9 @@
 /*
  * List contents of the directory given on cmdline.
  *
- * Usage: simple_ls <path-to-directory>
- *
+ *     Usage: simple_ls <path-to-directory>
  */
-
-#include "../include/spHeaders.h"
+#include "spHeaders.h"
 #include <sys/types.h>
 #include <dirent.h>
 

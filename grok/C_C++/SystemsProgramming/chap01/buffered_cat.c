@@ -1,11 +1,7 @@
 /*
- *  Copy bytes fron stdin to stdout
- *
- *  Uses buffered interface defined in stdio,h
- *
+ * Copy bytes fron stdin to stdout.
  */
-
-#include "../include/spHeaders.h"
+#include "spHeaders.h"
 
 int
 main(void)
@@ -20,3 +16,8 @@ main(void)
 
     exit(0);
 }
+
+/*
+ * Factoids:
+ * 1. Uses buffered interface defined in stdio,h
+ */

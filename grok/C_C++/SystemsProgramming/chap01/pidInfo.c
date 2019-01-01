@@ -1,8 +1,7 @@
 /*
- *  Print out information on current process.
+ * Print out information on current process
  */
-
-#include "../include/spHeaders.h"
+#include "spHeaders.h"
 
 int
 main(void)

@@ -5,9 +5,7 @@
  *          to one line in the programs.
  *
  */
-
-#include "../include/spHeaders.h"
-
+#include "spHeaders.h"
 #include <errno.h>     // defines errno "variable," actually a macro
 #include <stdarg.h>    // ISO C variable arguments
 
@@ -41,8 +39,8 @@ err_dump(const char *fmt, ...)
     err_doit(1, errno, fmt, ap);
     va_end(ap);
 
-    abort();     /* Dump core and terminate */
-    exit(1);     /* Should never get here */
+    abort();     // Dump core and terminate
+    exit(1);     // Should never get here
 }
 
 /* Fatal error unrelated to a system call,

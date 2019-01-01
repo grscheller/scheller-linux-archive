@@ -1,6 +1,6 @@
 CC=gcc
 INCLUDE=../include
-CFLAGS=-Wall -I$(INCLUDE)
+CFLAGS=-Wall -std=c99 -I$(INCLUDE)
 MAKE=/usr/bin/make
 
 BINARIES=buffered_cat \

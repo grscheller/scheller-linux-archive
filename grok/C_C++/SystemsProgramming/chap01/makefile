@@ -1,6 +1,8 @@
 CC=gcc
 INCLUDE=../include
-CFLAGS=-Wall -std=c99 -I$(INCLUDE)
+LIB=../lib
+COMMON=../common
+CFLAGS=-Wall -std=c99 -I$(INCLUDE) -L$(LIB)
 MAKE=/usr/bin/make
 
 BINARIES=buffered_cat \
@@ -9,11 +11,9 @@ BINARIES=buffered_cat \
          pidInfo \
          unbuffered_cat
 
-COMMON=../common
+default: spcommonlib binaries
 
-default: object_files binaries
-
-object_files:
+spcommonlib:
 	cd $(COMMON); \
         $(MAKE)
 
@@ -21,18 +21,18 @@ binaries: $(BINARIES)
 
 buffered_cat: buffered_cat.c \
 	      $(INCLUDE)/spHeaders.h \
-              $(COMMON)/spErrorHandlers.o
-	$(CC) $(CFLAGS) -o $@ $(COMMON)/spErrorHandlers.o $<
+              $(LIB)/libspcommon.a
+	$(CC) $(CFLAGS) -o $@ $< -lspcommon 
 
 simpleLs: simpleLs.c \
            $(INCLUDE)/spHeaders.h \
-           $(COMMON)/spErrorHandlers.o
-	$(CC) $(CFLAGS) -o $@ $(COMMON)/spErrorHandlers.o $<
+           $(LIB)/libspcommon.a
+	$(CC) $(CFLAGS) -o $@ $< -lspcommon 
 
 tinyShell: tinyShell.c \
            $(INCLUDE)/spHeaders.h \
-           $(COMMON)/spErrorHandlers.o
-	$(CC) $(CFLAGS) -o $@ $(COMMON)/spErrorHandlers.o $<
+           $(LIB)/libspcommon.a
+	$(CC) $(CFLAGS) -o $@ $< -lspcommon 
 
 pidInfo: pidInfo.c \
          $(INCLUDE)/spHeaders.h
@@ -40,8 +40,8 @@ pidInfo: pidInfo.c \
 
 unbuffered_cat: unbuffered_cat.c \
                 $(INCLUDE)/spHeaders.h \
-                $(COMMON)/spErrorHandlers.o
-	$(CC) $(CFLAGS) -o $@ $(COMMON)/spErrorHandlers.o $<
+                $(LIB)/libspcommon.a
+	$(CC) $(CFLAGS) -o $@ $< -lspcommon 
 
 clean:
 	rm -f $(BINARIES)

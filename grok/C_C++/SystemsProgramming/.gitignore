@@ -6,4 +6,5 @@ chap01/unbuffered_cat
 chap02/sysLimits
 chap02/sysLimits.c
 **/*.o
+lib/lib*.a
 include/*.h.gch

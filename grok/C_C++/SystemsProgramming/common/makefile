@@ -1,14 +1,16 @@
 CC=gcc
 INCLUDE=../include
+LIB=../lib
 CFLAGS=-Wall -std=c99 -I$(INCLUDE)
+AR=/usr/bin/ar
 
 O_FILES=spErrorHandlers.o \
-	spLimits.o
+        spLimits.o
 
-default: o_files
+default: $(LIB)/libspcommon.a
 
-o_files: $(O_FILES)
-	
+../lib/libspcommon.a: $(O_FILES)
+	$(AR) rcs $(LIB)/libspcommon.a $?
 
 spErrorHandlers.o: spErrorHandlers.c \
                    $(INCLUDE)/spHeaders.h
@@ -20,3 +22,4 @@ spLimits.o: spLimits.c \
 
 clean:
 	rm -f $(O_FILES)
+	rm -f $(LIB)/libspcommon.a

@@ -1,15 +1,15 @@
 CC=gcc
 INCLUDE=../include
-CFLAGS=-Wall -std=c99 -I$(INCLUDE)
+LIB=../lib
+COMMON=../common
+CFLAGS=-Wall -std=c99 -I$(INCLUDE) -L$(LIB)
 MAKE=/usr/bin/make
 
 BINARIES=sysLimits
 
-COMMON=../common
+default: spcommonlib binaries
 
-default: object_files binaries
-
-object_files:
+spcommonlib:
 	cd $(COMMON); \
         $(MAKE)
 
@@ -17,8 +17,8 @@ binaries: $(BINARIES)
 
 sysLimits: sysLimits.c \
 	   $(INCLUDE)/spHeaders.h \
-           $(COMMON)/spErrorHandlers.o
-	$(CC) $(CFLAGS) -o $@ $(COMMON)/spErrorHandlers.o $<
+           $(LIB)/libspcommon.a
+	$(CC) $(CFLAGS) -o $@ $< -lspcommon
 
 sysLimits.c: genSysLimits.awk \
              sysConf.sym \

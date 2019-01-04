@@ -464,7 +464,7 @@ VII. Creating revisionist history via git rebase:
 
 VIII. Git branch:
 
-    1. List all available branches:
+    1. List all available local branches:
 
          git branch
 
@@ -486,13 +486,21 @@ VIII. Git branch:
            remotes/origin/silverdb_grs_oneToolbar
            remotes/origin/master
 
-    2. Create a new branch (does not checkout the branch)
+    2, View merged local GIT branches relative to current branch
+
+         git branch --merged
+
+       and unmerged local GIT branches
+
+         git branch --not-merged
+
+    3. Create a new branch (does not checkout the branch)
 
          git branch myBranch
 
        This branch is based on the current branch checked out.
 
-    3. Create a new local empty branch 
+    4. Create a new local empty branch 
 
          git checkout --orphan newBranch
 
@@ -507,7 +515,7 @@ VIII. Git branch:
        git version 1.7.1, does not support the --orphan option
        with checkout.
 
-    4. Delete a branch (safe, git will prevent you if you
+    5. Delete a branch (safe, git will prevent you if you
        have unmerged changes)
 
          git branch -d myBranch
@@ -517,7 +525,7 @@ VIII. Git branch:
 
          git branch -D myBranch
 
-    5. Delete a remote branch or tag
+    6. Delete a remote branch or tag
 
          git push origin --delete myBranchToDelete
 
@@ -525,20 +533,20 @@ VIII. Git branch:
 
          git push origin :myBranchToDelete
 
-    6. Delete references to remote branches that no longer
+    7. Delete references to remote branches that no longer
        exist on the remote repo.
 
          git fetch -p
          git fetch -p some_remote_repo
          git fetch -p origin
 
-    7. Rename current branch to new name
+    8. Rename current branch to new name
 
          git branch -m myNewName
 
     Note that all branches really are just pointers to commits. 
 
-    8. Delete existing branches.
+    9. Delete existing branches.
 
        To delete local branch:
 
@@ -548,7 +556,11 @@ VIII. Git branch:
 
          git push origin :the_remote_branch
 
-    9. Figuring out what exactly your branches are
+   11. Rename a GIT Branch
+
+         git branch -m oldname newname
+
+   12. Figuring out what exactly your branches are
        actually tracking:
 
          $ git branch -vv

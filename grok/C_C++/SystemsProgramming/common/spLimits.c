@@ -84,7 +84,7 @@ static long openmax = 0;
 #endif
 
 /* If PATH_MAX indeterminate, no guarantee this guess is adequate */
-#define OPEN_MAX_GUESS 256
+#define OPEN_MAX_GUESS 2048
 
 /* Determine number of file descriptors.*/
 long
@@ -98,6 +98,11 @@ open_max(void)
         else
             err_sys("sysconf error for _SC_OPEN_MAX");
     }
+
+#ifdef LONG_MAX
+    if (openmax == LONG_MAX)
+        openmax = OPEN_MAX_GUESS;
+#endif
 
     return openmax;
 }

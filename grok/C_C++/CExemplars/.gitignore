@@ -1,7 +1,12 @@
 endianness
 hw
 removeSpaces
-sumIt
+ftmBasic
+ftmISOC*
+ftmPOSIX*
+ftmXOpen*
+ftmGNU
+sumItBasic
 sumItO2
 sumItV
 sumItVO2

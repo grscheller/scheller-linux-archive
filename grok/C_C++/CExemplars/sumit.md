@@ -7,7 +7,7 @@
 
 Build 4 binaries from one source file, time them, and clean up:
 ```
-   $ make
+   $ make sumIt
    $ make timeit
    $ make clean
 ```

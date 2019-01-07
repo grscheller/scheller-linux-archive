@@ -1,31 +1,102 @@
 CC=gcc
-CFLAGS=-Wall -std=gnu11
-SUMIT_BINARIES=sumIt sumItO2 sumItV sumItVO2
-BINARIES=endianness hw removeSpaces $(SUMIT_BINARIES)
+CFLAGS=-Wall
+SUMIT_BINARIES=sumItBasic sumItO2 sumItV sumItVO2
+FTM_BINARIES=ftmBasic \
+             ftmXOpen500 ftmXOpen600 ftmXOpen700 ftmXOpen \
+	     ftmISOC99 ftmISOC11 \
+             ftmPOSIX ftmPOSIX1 ftmPOSIX2 \
+             ftmPOSIX199309L ftmPOSIX199506L ftmPOSIX200112L \
+             ftmPOSIX200809L ftmPOSIX202012L \
+             ftmGNU
+BINARIES=endianness hw removeSpaces
 
 default: binaries
 
-binaries: $(BINARIES)
+binaries: $(BINARIES) sumIt ftm
+
+endianness: endianness.c
+	$(CC) $(CFLAGS) -o $@ $<
 
 hw: hw.c
-	$(CC) $(CFLAGS) hw.c -o hw
+	$(CC) $(CFLAGS) -o $@ $<
 
 removeSpaces: removeSpaces.c
-	$(CC) $(CFLAGS) removeSpaces.c -o removeSpaces
+	$(CC) $(CFLAGS) -o $@ $<
 
-sumIt: sumit.c
-	$(CC) sumit.c $(CFLAGS) -o sumIt
+
+ftm: $(FTM_BINARIES)
+
+ftmBasic: featureTestMacros.c
+	$(CC) $(CFLAGS) -o ftmBasic $<
+
+ftmXOpen500: featureTestMacros.c
+	$(CC) $(CFLAGS) -D_XOPEN_SOURCE=500 -o $@ $<
+
+ftmXOpen600: featureTestMacros.c
+	$(CC) $(CFLAGS) -D_XOPEN_SOURCE=600 -o $@ $<
+
+ftmXOpen700: featureTestMacros.c
+	$(CC) $(CFLAGS) -D_XOPEN_SOURCE=700 -o $@ $<
+
+ftmXOpen: featureTestMacros.c
+	$(CC) $(CFLAGS) -D_XOPEN_SOURCE -o $@ $<
+
+ftmISOC99: featureTestMacros.c
+	$(CC) $(CFLAGS) -D_IOSC99 -o $@ $<
+
+ftmISOC11: featureTestMacros.c
+	$(CC) $(CFLAGS) -D_IOSC11_SOURCE -o $@ $<
+
+ftmPOSIX: featureTestMacros.c
+	$(CC) $(CFLAGS) -D_POSIX_C_SOURCE -o $@ $<
+
+ftmPOSIX1: featureTestMacros.c
+	$(CC) $(CFLAGS) -D_POSIX_C_SOURCE=1 -o $@ $<
+
+ftmPOSIX2: featureTestMacros.c
+	$(CC) $(CFLAGS) -D_POSIX_C_SOURCE=2 -o $@ $<
+
+ftmPOSIX199309L: featureTestMacros.c
+	$(CC) $(CFLAGS) -D_POSIX_C_SOURCE=199309L -o $@ $<
+
+ftmPOSIX199506L: featureTestMacros.c
+	$(CC) $(CFLAGS) -D_POSIX_C_SOURCE=199506L -o $@ $<
+
+ftmPOSIX200112L: featureTestMacros.c
+	$(CC) $(CFLAGS) -D_POSIX_C_SOURCE=200112L -o $@ $<
+
+ftmPOSIX200809L: featureTestMacros.c
+	$(CC) $(CFLAGS) -D_POSIX_C_SOURCE=200809L -o $@ $<
+
+ftmPOSIX202012L: featureTestMacros.c
+	$(CC) $(CFLAGS) -D_POSIX_C_SOURCE=202012L -o $@ $<
+
+ftmGNU: featureTestMacros.c
+	$(CC) $(CFLAGS) -D_GNU_SOURCE -o $@ $<
+
+testSys: $(FTM_BINARIES)
+	for bb in $(FTM_BINARIES);\
+	do\
+	    echo -ne "\n$$bb:\n";\
+	    ./$$bb;\
+	done
+
+
+sumIt: $(SUMIT_BINARIES)
+
+sumItBasic: sumit.c
+	$(CC) $(CFLAGS) -o $@ $<
 
 sumItO2: sumit.c
-	$(CC) sumit.c $(CFLAGS) -O2 -o sumItO2
+	$(CC) $(CFLAGS) -O2 -o $@ $<
 
 sumItV: sumit.c
-	$(CC) sumit.c $(CFLAGS) -DVOLATILE -o sumItV
+	$(CC) $(CFLAGS) -DVOLATILE -o $@ $<
 
 sumItVO2: sumit.c
-	$(CC) sumit.c $(CFLAGS) -DVOLATILE -O2 -o sumItVO2
+	$(CC) $(CFLAGS) -DVOLATILE -O2 -o $@ $<
 
-timeit: $(SUMIT_BINARIES)
+timeIt: $(SUMIT_BINARIES)
 	for bb in $(SUMIT_BINARIES);\
 	do\
 	    echo -ne "\n$$bb: ";\
@@ -33,4 +104,4 @@ timeit: $(SUMIT_BINARIES)
 	done
 
 clean:
-	rm -f $(BINARIES) 
+	rm -f $(BINARIES) $(SUMIT_BINARIES) $(FTM_BINARIES)

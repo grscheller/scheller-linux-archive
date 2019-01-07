@@ -43,6 +43,11 @@ Unix Network Programming two volume set.
 ### UNIX Standardization and Implementation - Chapter 2
 #### genSysLimits.awk
 * Awk Script based on one from Stevens' book
-* Generates sysLimits.c from __sysConf.sym__, __pathConf.sym__, and __unistd.h__
+* Generates __sysLimits.c__ from __sysConf.sym__ and __pathConf.sym__
 * Makefile will generate sysLimits executable
-* Executable prints values of precompiler constants and associated runtime values
+* Executable prints values of precompiler constants from __unistd.h__
+* Also prints associated runtime values
+
+### File I/O - Chapter 3
+#### `cpp_constants.c`
+* Lists constants from __fcntl.h__ and related runtime parameters

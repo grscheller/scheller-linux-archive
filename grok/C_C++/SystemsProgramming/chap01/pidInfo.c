@@ -10,7 +10,7 @@ main(void)
     printf("Parent Process ID: %ld\n", (long)getppid());
     printf("Process Group ID: %ld\n", (long)getpgrp());
 
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
 
 /*

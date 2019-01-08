@@ -20,7 +20,7 @@ main(int argc, char *argv[])
     struct dirent  *dirp;
     while ( (dirp = readdir(dp)) != NULL )
         printf("%s\n", dirp->d_name);
-
     closedir(dp);
-    exit(0);
+
+    exit(EXIT_SUCCESS);
 }

@@ -40,7 +40,7 @@ err_dump(const char *fmt, ...)
     va_end(ap);
 
     abort();     // Dump core and terminate
-    exit(1);     // Should never get here
+    exit(EXIT_FAILURE);     // Should never get here
 }
 
 /* Fatal error unrelated to a system call,
@@ -56,7 +56,7 @@ err_exit(int error, const char *fmt, ...)
     err_doit(0, error, fmt, ap);
     va_end(ap);
 
-    exit(1);
+    exit(EXIT_FAILURE);
 }
 
 /* Nonfatal error unrelated to a system call,
@@ -86,7 +86,7 @@ err_quit(const char *fmt, ...)
     err_doit(0, 0, fmt, ap);
     va_end(ap);
 
-    exit(1);
+    exit(EXIT_FAILURE);
 }
 
 /* Nonfatal error related to a system call,
@@ -116,7 +116,7 @@ err_sys(const char *fmt, ...)
     err_doit(1, errno, fmt, ap);
     va_end(ap);
 
-    exit(1);
+    exit(EXIT_FAILURE);
 }
 
 /*  Factor out commonality, encapsulate all the non-obvious

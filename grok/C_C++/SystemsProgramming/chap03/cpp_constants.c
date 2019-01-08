@@ -73,7 +73,7 @@ main(int argc, char *argv[])
     printf("no symbol for _PC_NO_TRUNC\n");
 #endif
 
-    return 0;
+    exit(EXIT_SUCCESS);
 }
 
 static void

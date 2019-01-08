@@ -18,7 +18,7 @@ main(void)
     if (n < 0)
         err_sys("read error");
 
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
 
 /*

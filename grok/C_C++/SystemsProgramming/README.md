@@ -51,3 +51,5 @@ Unix Network Programming two volume set.
 ### File I/O - Chapter 3
 #### `cpp_constants.c`
 * Lists constants from __fcntl.h__ and related runtime parameters
+#### `seekTest.c`
+* Determine if stdin is seekable

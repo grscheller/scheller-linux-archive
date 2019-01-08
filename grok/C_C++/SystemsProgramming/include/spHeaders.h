@@ -15,9 +15,9 @@
 
 #define _POSIX_C_SOURCE 200809L // Compile to POSIX.1-2008 standard
 #if defined(SOLARIS)
-#define _XOPEN_SOURCE 600       // Use XSI 6 extentions for Solaris 10
+#define _XOPEN_SOURCE 600       // Use XSI 6 extention for Solaris 10
 #else
-#define _XOPEN_SOURCE 700       // Otherwise use XSI 7 extentions
+#define _XOPEN_SOURCE 700       // Otherwise use XSI 7 extention
 #endif
 
 #include <sys/types.h>      // some systems still require this

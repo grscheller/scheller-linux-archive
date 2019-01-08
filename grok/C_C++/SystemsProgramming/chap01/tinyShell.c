@@ -48,7 +48,7 @@ main(void)
         printf(PROMPT);
     }
 
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
 
 void

@@ -9,9 +9,6 @@ binaries: $(BINARIES)
 fakeClick: fakeClick.c
 	$(CC) $(CFLAGS) -o $@ $< -lX11
 
-getMouseCoords: getMouseCoords.c
-	$(CC) $(CFLAGS) -o $@ $< -lX11
-
 jiggleMouse: jiggleMouse.c
 	$(CC) $(CFLAGS) -o $@ $< -lX11
 

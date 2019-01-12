@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=-Wall -std=gnu11
-BINARIES=fakeClick getMouseCoords jiggleMouse
+BINARIES=fakeClick jiggleMouse
 
 default: binaries
 

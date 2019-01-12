@@ -40,7 +40,7 @@ int main(void) {
     fprintf(stderr, "There are %d screens available in this X session\n", number_of_screens);
     root_windows = (Window *)malloc(sizeof(Window) * number_of_screens);
     for (ii = 0; ii < number_of_screens; ii++) {
-        root_windows[ii] = XRootWindow(display, ii);
+        root_windows[ii] = RootWindow(display, ii);
     }
     for (ii = 0; ii < number_of_screens; ii++) {
        result = XQueryPointer(display,

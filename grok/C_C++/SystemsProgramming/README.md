@@ -9,7 +9,7 @@ The books being used are his
 "Advanced Programming in the UNIX Environment" third edition and his
 Unix Network Programming two volume set.
 
-### Common infrastructure
+### Common Infrastructure
 #### include/spHeaders.h
 * Common header file to be included before all other header files
 * Builds executables conforming to __POSIX.1-2008__ and __XSI 7__ standards

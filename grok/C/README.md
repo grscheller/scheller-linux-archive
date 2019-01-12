@@ -1,13 +1,12 @@
-# C and C++
-Various C and C++ projects.
+# C Programming
+Various C programming projects.
 * [C Systems Programming](SystemsProgramming/)
   - Based on the books by W. Richard Stevens
   - Stevens' books are well written classics which hold up well
+  - Portability a higher priority
 * [C Language Exemplars](CExemplars/)
-  - Short examples of best practices in ANCI-C coding
+  - Short examples of best practices in ISO-C coding
   - Lots of factoids and asides
 * [X Windows](XWindows/)
   - Low level X Windows coding
-* [C++ to Infiity and Beyond](C++InfinityAndBeyond/)
-  - Inspired by Bjarne Stroustup's "A Tour of C++" 2nd Edition
-  - Just fooling around for now, see where it goes
+  - using the XLIB and XCB Libraries

@@ -4,7 +4,8 @@
   - [Linux Notes](linux/notes/)
   - [My Arch Linux Admin Logs](linux/ArchLinuxAdminLogs/)
 #### Grokking Computer Languages
-  - [C and C++](grok/C_C++)
+  - [C](grok/C)
+  - [C++](grok/C++)
   - [Scala](grok/Scala/)
   - [Haskell](grok/Haskell/)
   - [Rust](grok/Rust/)

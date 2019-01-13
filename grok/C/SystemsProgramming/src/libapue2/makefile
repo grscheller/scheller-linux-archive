@@ -1,27 +1,22 @@
 ROOT=../..
-INCLUDEDIR=$(ROOT)/include
-LIBDIR=$(ROOT)/lib
-
-CC=gcc
-CFLAGS=-Wall -std=c99 -I$(INCLUDEDIR)
-AR=/usr/bin/ar
+include $(ROOT)/make.definitions
 
 OBJS=errorHandlers.o \
      limits.o
 
-default: $(LIBDIR)/libapue2.a
+default: $(LIBAPUE2)
 
 ../../lib/libapue2.a: $(OBJS)
-	$(AR) rcs $(LIBDIR)/libapue2.a $?
+	$(AR) rcs $(LIBAPUE2) $?
 
 errorHandlers.o: errorHandlers.c \
-                 $(INCLUDEDIR)/apue2.h
+                 $(INCLUDE)/apue2.h
 	$(CC) $(CFLAGS) -c $<
 
 limits.o: limits.c \
-          $(INCLUDEDIR)/apue2.h
+          $(INCLUDE)/apue2.h
 	$(CC) $(CFLAGS) -c $<
 
 clean:
 	rm -f $(OBJS)
-	rm -f $(LIBDIR)/libapue2.a
+	rm -f $(LIBAPUE2)

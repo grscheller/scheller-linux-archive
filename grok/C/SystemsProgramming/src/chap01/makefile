@@ -1,11 +1,5 @@
 ROOT=../..
-INCLUDEDIR=$(ROOT)/include
-LIBDIR=$(ROOT)/lib
-COMMONLIBS=$(ROOT)/commonlibs
-
-CC=gcc
-CFLAGS=-Wall -std=c99 -I$(INCLUDEDIR) -L$(LIBDIR)
-MAKE=/usr/bin/make
+include $(ROOT)/make.definitions
 
 BINARIES=buffered_cat \
          simpleLs \
@@ -13,36 +7,38 @@ BINARIES=buffered_cat \
          pidInfo \
          unbuffered_cat
 
-default: spcommonLib binaries
+.PHONY: default libapue2 binaries clean 
 
-spcommonLib:
-	cd $(COMMONLIBS); $(MAKE)
+default: libapue2 binaries
+
+libapue2:
+	cd $(LIBSRC); $(MAKE)
 
 binaries: $(BINARIES)
 
 buffered_cat: buffered_cat.c \
-   	          $(INCLUDEDIR)/apue2.h \
+   	          $(INCLUDE)/apue2.h \
               $(LIBDIR)/libapue2.a
-	$(CC) $(CFLAGS) -o $@ $< -lapue2 
+	$(CC) $(CFLAGS) -o $@ $< -L$(LIBDIR) -lapue2 
 
 simpleLs: simpleLs.c \
-          $(INCLUDEDIR)/apue2.h \
+          $(INCLUDE)/apue2.h \
           $(LIBDIR)/libapue2.a
-	$(CC) $(CFLAGS) -o $@ $< -lapue2 
+	$(CC) $(CFLAGS) -o $@ $< -L$(LIBDIR) -lapue2 
 
 tinyShell: tinyShell.c \
-           $(INCLUDEDIR)/apue2.h \
+           $(INCLUDE)/apue2.h \
            $(LIBDIR)/libapue2.a
-	$(CC) $(CFLAGS) -o $@ $< -lapue2 
+	$(CC) $(CFLAGS) -o $@ $< -L$(LIBDIR) -lapue2 
 
 pidInfo: pidInfo.c \
-         $(INCLUDEDIR)/apue2.h
+         $(INCLUDE)/apue2.h
 	$(CC) $(CFLAGS) -o $@ $<
 
 unbuffered_cat: unbuffered_cat.c \
-                $(INCLUDEDIR)/apue2.h \
+                $(INCLUDE)/apue2.h \
                 $(LIBDIR)/libapue2.a
-	$(CC) $(CFLAGS) -o $@ $< -lapue2 
+	$(CC) $(CFLAGS) -o $@ $< -L$(LIBDIR) -lapue2 
 
 clean:
 	rm -f $(BINARIES)

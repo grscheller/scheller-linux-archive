@@ -10,21 +10,21 @@ The books being used are his
 Unix Network Programming two volume set.
 
 ### Common Infrastructure
-#### include/spHeaders.h
+#### include/apue2.h
 * Common header file to be included before all other header files
 * Builds executables conforming to __POSIX.1-2008__ and __XSI 7__ standards
 * POSIX is a portmanteau of "Portable Operating System" and "Unix"
 * XSI stands for X/OPEN System Interfaces
-#### common/spErrorHandlers.c
+#### src/libapue2/errorHandlers.c
 * Error handling routines
-* Compiled to a `*.o` file for now
-#### common/spLimits.c
+* Compiled to `errorHandlers.o` and archived to lib/libapue2.a
+#### src/libapue2/limits.c
 * Contains routines to determine variaous systems limits at run time.
 * `path_alloc` uses malloc to allocate space for pathnames
 * `open_max` returns maximum number of possible open file descriptures
 #### make based build
 * Hierarchical build
-* Individual subdirectories can be built independently of each other
+* Individual src/ subdirectories can be built independently of each other
 
 ### UNIX System Overview - Chapter 1
 #### simpleLs.c

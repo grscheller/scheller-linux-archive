@@ -1,29 +1,25 @@
 ROOT=../..
-INCLUDEDIR=$(ROOT)/include
-LIBDIR=$(ROOT)/lib
-COMMONLIBS=$(ROOT)/commonlibs
-
-CC=gcc
-CFLAGS=-Wall -std=c99 -I$(INCLUDEDIR) -L$(LIBDIR)
-MAKE=/usr/bin/make
+include $(ROOT)/make.definitions
 
 BINARIES=cpp_constants \
          seekTest
 
-default: spcommonLib binaries
+.PHONY: default libapue2 binaries clean 
 
-spcommonLib:
-	cd $(COMMONLIBS); $(MAKE)
+default: libapue2 binaries
+
+libapue2:
+	cd $(LIBSRC); $(MAKE)
 
 binaries: $(BINARIES)
 
 cpp_constants: cpp_constants.c \
-               $(INCLUDEDIR)/apue2.h \
+               $(INCLUDE)/apue2.h \
                $(LIBDIR)/libapue2.a
-	$(CC) $(CFLAGS) -o $@ $< -lapue2 
+	$(CC) $(CFLAGS) -o $@ $< -L$(LIBDIR) -lapue2 
 
 seekTest: seekTest.c \
-          $(INCLUDEDIR)/apue2.h
+          $(INCLUDE)/apue2.h
 	$(CC) $(CFLAGS) -o $@ $<
 
 clean:

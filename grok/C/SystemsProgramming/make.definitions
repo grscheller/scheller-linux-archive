@@ -1,0 +1,12 @@
+# Common make definitions
+
+INCLUDE=$(ROOT)/include
+LIBDIR=$(ROOT)/lib
+LIBAPUE2=$(LIBDIR)/libapue2.a
+LIBSRC=$(ROOT)/src/libapue2
+
+CC=gcc
+CFLAGS=-Wall -std=gnu11 -I$(INCLUDE)
+AR=ar
+AWK=awk
+

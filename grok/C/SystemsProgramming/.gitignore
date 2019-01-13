@@ -1,12 +1,3 @@
-chap01/buffered_cat
-chap01/pidInfo
-chap01/simpleLs
-chap01/tinyShell
-chap01/unbuffered_cat
-chap02/sysLimits
-chap02/sysLimits.c
-chap03/cpp_constants
-chap03/seekTest
 **/*.o
 lib/lib*.a
 include/*.h.gch

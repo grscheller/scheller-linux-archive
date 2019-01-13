@@ -1,4 +1,4 @@
-ROOT=..
+ROOT=../..
 INCLUDEDIR=$(ROOT)/include
 LIBDIR=$(ROOT)/lib
 
@@ -11,7 +11,7 @@ OBJS=errorHandlers.o \
 
 default: $(LIBDIR)/libapue2.a
 
-../lib/libapue2.a: $(OBJS)
+../../lib/libapue2.a: $(OBJS)
 	$(AR) rcs $(LIBDIR)/libapue2.a $?
 
 errorHandlers.o: errorHandlers.c \

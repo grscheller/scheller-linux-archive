@@ -6,7 +6,7 @@ See the system manpages for detailed descriptions of these commands.
 ## ar
 Create, modify, and extract items from archives.  Usually what is
 created or modified is a static shared library of `*.o` object files.
-#### ar rcs
+### ar rcs
 Create/update an archive static library and symbol table.
 ```
     ar rcs libapue2.a errorHandlers.o limits.o
@@ -14,7 +14,7 @@ Create/update an archive static library and symbol table.
 
 ## nm 
 List symbols from object files.
-#### nm
+### nm
 With no arguments, nm lists the symbols from object files
 and ar archives of object files.
 
@@ -84,7 +84,7 @@ For ar archives:
                      U sysconf
     0000000000000008 b xsi_version
 ```
-#### nm -s
+### nm -s
 Before listing the symbols from an archive, print the index for
 which modules contain which names, if one exists.
 

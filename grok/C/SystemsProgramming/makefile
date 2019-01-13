@@ -1,25 +1,26 @@
 MAKE=/usr/bin/make
 
+LIBAPUE2=src/libapue2
 CHAPTERS=chap01 chap02 chap03 
 
-default: commonLibs chapters
+default: libapue2 chapters
 
-clean: clean_commonLibs \
+clean: clean_libapue2 \
        clean_chapters
 	rm -f include/*.h.gch
 
-commonLibs:
-	(cd commonlibs && echo -e "\nmaking lib$@.a" && $(MAKE)) || exit 1
+libapue2:
+	(cd $(LIBAPUE2) && echo -e "\nmaking $@.a" && $(MAKE)) || exit 1
 
 chapters:
 	for ii in $(CHAPTERS); do \
-		(cd $$ii && echo -e "\nmaking $$ii" && $(MAKE) binaries) || exit 1; \
+		(cd src/$$ii && echo -e "\nmaking $$ii" && $(MAKE) binaries) || exit 1; \
 	done
 
-clean_commonLibs:
-	(cd commonlibs && echo -e "\ncleaning lib$@.a" && $(MAKE) clean) || exit 1
+clean_libapue2:
+	(cd $(LIBAPUE2) && echo -e "\ncleaning lib$@.a" && $(MAKE) clean) || exit 1
 
 clean_chapters:
 	for ii in $(CHAPTERS); do \
-		(cd $$ii && echo -e "\ncleaning $$ii" && $(MAKE) clean) || exit 1; \
+		(cd src/$$ii && echo -e "\ncleaning $$ii" && $(MAKE) clean) || exit 1; \
 	done

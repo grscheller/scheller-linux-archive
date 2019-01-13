@@ -1,4 +1,4 @@
-ROOT=..
+ROOT=../..
 INCLUDEDIR=$(ROOT)/include
 LIBDIR=$(ROOT)/lib
 COMMONLIBS=$(ROOT)/commonlibs

@@ -9,9 +9,8 @@ created or modified is a static shared library of `*.o` object files.
 ### ar rcs
 Create/update an archive static library and symbol table.
 ```
-    ar rcs libapue2.a errorHandlers.o limits.o
+    $ ar rcs libapue2.a errorHandlers.o limits.o
 ```
-
 ## nm 
 List symbols from object files.
 ### nm
@@ -20,7 +19,7 @@ and ar archives of object files.
 
 For object files:
 ```
-$ nm errorHandlers.o
+    $ nm errorHandlers.o
                      U abort
     0000000000000000 T err_cont
     0000000000000580 t err_doit

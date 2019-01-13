@@ -14,7 +14,7 @@ software development and system administration.
   - GNU Make software build utility
 * [Unix Commands](UnixCommands/unixCommands.txt)
   - General Unix/POSIX command line utilities
-* [Software Development Tools](softwareDevTools/softwareDevTools.md)
+* [Software Development Tools](SoftwareDevTools/softwareDevTools.md)
   - Command line tools useful in software development
   - Especially C and C++ software development
 * Arch Linux Notes

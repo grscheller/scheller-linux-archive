@@ -10,6 +10,9 @@ main(void)
     printf("Parent Process ID: %ld\n", (long)getppid());
     printf("Process Group ID: %ld\n", (long)getpgrp());
 
+    printf("User ID: %d\n", getuid());
+    printf("Group ID: %d\n", getgid());
+
     exit(EXIT_SUCCESS);
 }
 
@@ -21,9 +24,9 @@ main(void)
  *    we cast the return values of these library
  *    calls to long.
  * 2. According to the man page, the getpid,
- *    getppid, and getpgrp functions shall always
- *    be successful and no return values are 
- *    reserved to indicate errors.
+ *    getppid, getpgrp, getuid, getgid functions
+ *    shall always be successful and no return values
+ *    are reserved to indicate errors.
  *
  * Factoids:
  * 1. The glibc library is userr-space code that when

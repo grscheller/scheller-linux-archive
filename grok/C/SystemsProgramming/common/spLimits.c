@@ -8,6 +8,9 @@
  *   2. Some limits are indeterminate even at run time.
  *   3. Sometimes we have to make best guess.
  *
+ * Source code for: path_alloc
+ *                  open_max
+ *
  */
 #include "spHeaders.h"
 #include <errno.h>     // defines errno "variable," actually a macro
@@ -70,7 +73,7 @@ path_alloc(size_t *sizep)
         err_sys("malloc error for pathname");
 
     /* Return pointer to allocated space and set *sizep
-     * after idiot checking that it points somewhere valid
+     * after checking that it points somewhere valid.
      */
     if (sizep != NULL)
         *sizep = size;
@@ -91,18 +94,20 @@ long
 open_max(void)
 {
     /* Check if first time called */
-    errno = 0;
-    if ((openmax = sysconf(_SC_OPEN_MAX)) < 0) {
-        if (errno == 0)
-            openmax = OPEN_MAX_GUESS;   // indeterminate
-        else
-            err_sys("sysconf error for _SC_OPEN_MAX");
-    }
+    if (openmax == 0) {
+        errno = 0;
+        if ((openmax = sysconf(_SC_OPEN_MAX)) < 0) {
+            if (errno == 0)
+                openmax = OPEN_MAX_GUESS;   // indeterminate
+            else
+                err_sys("sysconf error for _SC_OPEN_MAX");
+        }
 
-#ifdef LONG_MAX
-    if (openmax == LONG_MAX)
-        openmax = OPEN_MAX_GUESS;
-#endif
+        #ifdef LONG_MAX
+        if (openmax == LONG_MAX)
+            openmax = OPEN_MAX_GUESS;
+        #endif
+    }
 
     return openmax;
 }

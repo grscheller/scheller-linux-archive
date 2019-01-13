@@ -7,7 +7,7 @@ int
 main(void)
 {
     int c;
-    while ( (c = getc(stdin)) != EOF )
+    while ((c = getc(stdin)) != EOF )
         if (putc(c, stdout) == EOF)
             err_sys("output error");
 

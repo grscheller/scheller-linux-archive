@@ -11,7 +11,7 @@ int
 main(int argc, char *argv[])
 {
     if (argc != 2)
-        err_quit("Usage: simple_ls <path-to-directory>");
+        err_quit("Usage: simpleLs <path-to-directory>");
 
     DIR *dp;
     if ( (dp = opendir(argv[1])) == NULL )

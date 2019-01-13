@@ -17,16 +17,19 @@ main(int argc, char *argv[])
     printf("O_RDONLY = %d\n", O_RDONLY);
     printf("O_WRONLY = %d\n", O_WRONLY);
     printf("O_RDWR = %d\n", O_RDWR);
-#ifdef O_EXEC
+
+    #ifdef O_EXEC
     printf("O_EXEC = %d\n", O_EXEC);
-#else
+    #else
     printf("O_EXEC not defined\n");
-#endif
-#ifdef O_SEARCH
+    #endif
+
+    #ifdef O_SEARCH
     printf("O_SEARCH = %d\n", O_SEARCH);
-#else
+    #else
     printf("O_SEARCH not defined\n");
-#endif
+    #endif
+
     printf("O_APPEND = %d\n", O_APPEND);
     printf("O_CLOEXEC = %d\n", O_CLOEXEC);
     printf("O_CREAT = %d\n", O_CREAT);
@@ -34,44 +37,49 @@ main(int argc, char *argv[])
     printf("O_NOCTTY = %d\n", O_NOCTTY);
     printf("O_NOFOLLOW = %d\n", O_NOFOLLOW);
     printf("O_NONBLOCK = %d\n", O_NONBLOCK);
-#ifdef O_NDELAY
+
+    #ifdef O_NDELAY
     printf("O_NDELAY = %d\n", O_NDELAY);
-#else
+    #else
     printf("O_NDELAY not defined\n");
-#endif
+    #endif
+
     printf("O_SYNC = %d\n", O_SYNC);
     printf("O_TRUNC = %d\n", O_TRUNC);
-#ifdef O_TTY_INIT
+
+    #ifdef O_TTY_INIT
     printf("O_TTY_INIT = %d\n", O_TTY_INIT);
-#else
+    #else
     printf("O_TTY_INIT not defined\n");
-#endif
-#ifdef O_DSYNC
+    #endif
+
+    #ifdef O_DSYNC
     printf("O_DSYNC = %d\n", O_DSYNC);
-#else
+    #else
     printf("O_DSYNC not defined\n");
-#endif
-#ifdef O_RSYNC
+    #endif
+
+    #ifdef O_RSYNC
     printf("O_RSYNC = %d\n", O_RSYNC);
-#else
+    #else
     printf("O_RSYNC not defined\n");
-#endif
+    #endif
 
     /* Special value for fd for openat meaning cwd */
     printf("\n");
-#ifdef AT_FDCWD
+    #ifdef AT_FDCWD
     printf("AT_FDCWD = %d\n", AT_FDCWD);
-#else
+    #else
     printf("AT_FDCWD not defined\n");
-#endif
+    #endif
 
     /* See if filename truncation happens for argv[1] */
     printf("\n");
-#ifdef _PC_NO_TRUNC
+    #ifdef _PC_NO_TRUNC
     pr_pathconf("_POSIX_NO_TRUNC =", argv[1], _PC_NO_TRUNC);
-#else
+    #else
     printf("no symbol for _PC_NO_TRUNC\n");
-#endif
+    #endif
 
     exit(EXIT_SUCCESS);
 }

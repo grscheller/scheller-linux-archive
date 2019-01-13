@@ -1,25 +1,27 @@
+ROOT=..
+INCLUDEDIR=$(ROOT)/include
+LIBDIR=$(ROOT)/lib
+
 CC=gcc
-INCLUDE=../include
-LIB=../lib
-CFLAGS=-Wall -std=c99 -I$(INCLUDE)
+CFLAGS=-Wall -std=c99 -I$(INCLUDEDIR)
 AR=/usr/bin/ar
 
-O_FILES=spErrorHandlers.o \
-        spLimits.o
+OBJS=spErrorHandlers.o \
+     spLimits.o
 
-default: $(LIB)/libspcommon.a
+default: $(LIBDIR)/libspcommon.a
 
-../lib/libspcommon.a: $(O_FILES)
-	$(AR) rcs $(LIB)/libspcommon.a $?
+../lib/libspcommon.a: $(OBJS)
+	$(AR) rcs $(LIBDIR)/libspcommon.a $?
 
 spErrorHandlers.o: spErrorHandlers.c \
-                   $(INCLUDE)/spHeaders.h
+                   $(INCLUDEDIR)/spHeaders.h
 	$(CC) $(CFLAGS) -c $<
 
 spLimits.o: spLimits.c \
-            $(INCLUDE)/spHeaders.h
+            $(INCLUDEDIR)/spHeaders.h
 	$(CC) $(CFLAGS) -c $<
 
 clean:
-	rm -f $(O_FILES)
-	rm -f $(LIB)/libspcommon.a
+	rm -f $(OBJS)
+	rm -f $(LIBDIR)/libspcommon.a

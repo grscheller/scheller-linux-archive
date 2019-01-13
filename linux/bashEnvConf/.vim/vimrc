@@ -107,7 +107,7 @@ set spelllang=en_us
 " To turn it off spellchecking  :set nospell
 
 " Set default tabstops and replace tabs with spaces
-set tabstop=8
+set tabstop=4
 set shiftwidth=4
 set softtabstop=4
 set expandtab

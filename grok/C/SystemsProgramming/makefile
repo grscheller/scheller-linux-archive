@@ -1,43 +1,25 @@
 MAKE=/usr/bin/make
 
-default: spcommonlib chapters
+CHAPTERS=chap01 chap02 chap03 
 
-chapters: chap01build chap02build chap03build
+default: spcommon chapters
 
-clean_chapters: chap01clean chap02clean chap03clean
-
-spcommonlib:
-	cd common; \
-        $(MAKE)
-
-chap01build:
-	cd chap01; \
-        $(MAKE) binaries
-
-chap02build:
-	cd chap02; \
-        $(MAKE) binaries
-
-chap03build:
-	cd chap03; \
-        $(MAKE) binaries
-
-clean_spcommonlib:
-	cd common; \
-        $(MAKE) clean
-
-chap01clean:
-	cd chap01; \
-        $(MAKE) clean
-
-chap02clean:
-	cd chap02; \
-        $(MAKE) clean
-
-chap03clean:
-	cd chap03; \
-        $(MAKE) clean
-
-clean: clean_spcommonlib \
+clean: clean_spcommon \
        clean_chapters
 	rm -f include/*.h.gch
+
+spcommon:
+	(cd common && echo -e "\nmaking lib$@.a" && $(MAKE)) || exit 1
+
+chapters:
+	for ii in $(CHAPTERS); do \
+		(cd $$ii && echo -e "\nmaking $$ii" && $(MAKE) binaries) || exit 1; \
+	done
+
+clean_spcommon:
+	(cd common && echo -e "\ncleaning lib$@.a" && $(MAKE) clean) || exit 1
+
+clean_chapters:
+	for ii in $(CHAPTERS); do \
+		(cd $$ii && echo -e "\ncleaning $$ii" && $(MAKE) clean) || exit 1; \
+	done

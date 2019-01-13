@@ -1,7 +1,7 @@
 /*
  * Print out information on current process
  */
-#include "spHeaders.h"
+#include "apue2.h"
 
 int
 main(void)

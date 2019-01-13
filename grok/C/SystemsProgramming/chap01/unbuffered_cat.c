@@ -1,7 +1,7 @@
 /*
  * Copy bytes fron stdin to stdout
  */
-#include "spHeaders.h"
+#include "apue2.h"
 
 #define BUFFSIZE 4192
 

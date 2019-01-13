@@ -1,7 +1,7 @@
 ROOT=..
 INCLUDEDIR=$(ROOT)/include
 LIBDIR=$(ROOT)/lib
-COMMON=$(ROOT)/common
+COMMONLIBS=$(ROOT)/commonlibs
 
 CC=gcc
 CFLAGS=-Wall -std=c99 -I$(INCLUDEDIR) -L$(LIBDIR)
@@ -10,20 +10,20 @@ MAKE=/usr/bin/make
 BINARIES=cpp_constants \
          seekTest
 
-default: spcommonlib binaries
+default: spcommonLib binaries
 
-spcommonlib:
-	cd $(COMMON); $(MAKE)
+spcommonLib:
+	cd $(COMMONLIBS); $(MAKE)
 
 binaries: $(BINARIES)
 
 cpp_constants: cpp_constants.c \
-               $(INCLUDEDIR)/spHeaders.h \
-               $(LIBDIR)/libspcommon.a
-	$(CC) $(CFLAGS) -o $@ $< -lspcommon 
+               $(INCLUDEDIR)/apue2.h \
+               $(LIBDIR)/libapue2.a
+	$(CC) $(CFLAGS) -o $@ $< -lapue2 
 
 seekTest: seekTest.c \
-          $(INCLUDEDIR)/spHeaders.h
+          $(INCLUDEDIR)/apue2.h
 	$(CC) $(CFLAGS) -o $@ $<
 
 clean:

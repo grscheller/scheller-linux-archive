@@ -10,8 +10,8 @@
  *
  */
 
-#ifndef _SP_HEADERS_H
-#define _SP_HEADERS_H
+#ifndef _APUE2_H
+#define _APUE2_H
 
 #define _POSIX_C_SOURCE 200809L // Compile to POSIX.1-2008 standard
 #if defined(SOLARIS)
@@ -54,4 +54,4 @@ long open_max(void);         // Determining number of file descriptors.
 
 __END_DECLS
 
-#endif    // _SP_HEADERS_H 
+#endif    // _APUE2_H 

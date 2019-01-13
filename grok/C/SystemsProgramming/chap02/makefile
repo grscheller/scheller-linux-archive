@@ -2,6 +2,7 @@ ROOT=..
 INCLUDEDIR=$(ROOT)/include
 LIBDIR=$(ROOT)/lib
 COMMON=$(ROOT)/common
+COMMONLIBS=$(ROOT)/commonlibs
 
 CC=gcc
 CFLAGS=-Wall -std=c99 -I$(INCLUDEDIR) -L$(LIBDIR)
@@ -10,17 +11,17 @@ AWK=/usr/bin/awk
 
 BINARIES=sysLimits
 
-default: spcommonlib binaries
+default: commonLib binaries
 
-spcommonlib:
-	cd $(COMMON); $(MAKE)
+commonLib:
+	cd $(COMMONLIBS); $(MAKE)
 
 binaries: $(BINARIES)
 
 sysLimits: sysLimits.c \
-           $(INCLUDEDIR)/spHeaders.h \
-           $(LIBDIR)/libspcommon.a
-	$(CC) $(CFLAGS) -o $@ $< -lspcommon
+           $(INCLUDEDIR)/apue2.h \
+           $(LIBDIR)/libapue2.a
+	$(CC) $(CFLAGS) -o $@ $< -lapue2
 
 sysLimits.c: genSysLimits.awk \
              sysConf.sym \

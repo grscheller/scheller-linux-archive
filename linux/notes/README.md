@@ -7,13 +7,16 @@ software development and system administration.
   - Notes I took while learning GIT
   - Adapted to share with my coworkers
 * [Vim Notes](vimNotes/README.md)
-  - Everything I know about VIM (VI-iMproved).
-  - Making VIM play nice in a hybrid CLI/GUI workflow.
+  - Everything I know about VIM (VI-iMproved)
+  - Making VIM play nice in a hybrid CLI/GUI workflow
   - Configuring VIM plug-ins with Vundle plugin manager
 * [Make Notes](MakeNotes/MakeNotes.txt)
-  - GNU Make software build utility.
+  - GNU Make software build utility
 * [Unix Commands](UnixCommands/UnixCommands.txt)
-  - General Unix/POSIX command line utilities.
+  - General Unix/POSIX command line utilities
+* [Software Development Tools](softwareDevTools/softwareDevTools.md)
+  - Command line tools useful in software development
+  - Especially C and C++ software development
 * Arch Linux Notes
   - [Arch Linux Commands](ArchLinuxNotes/archCommands.txt)
   - [Gnome 3 Configuration](ArchLinuxNotes/gnomeConf.md)

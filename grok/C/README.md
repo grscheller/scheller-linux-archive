@@ -1,8 +1,7 @@
 # C Programming
 Various C programming projects.
-* [C Systems Programming](SystemsProgramming/)
-  - Based on the books by W. Richard Stevens
-  - Stevens' books are well written classics which hold up well
+* [Advanced Programming in the UNIX Environment](APUE/)
+  - Based on the book of that title by W. Richard Stevens
   - Portability a higher priority
 * [C Language Exemplars](CExemplars/)
   - Short examples of best practices in ISO-C coding

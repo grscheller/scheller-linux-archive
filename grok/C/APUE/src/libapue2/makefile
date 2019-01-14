@@ -1,8 +1,7 @@
 ROOT=../..
 include $(ROOT)/make.definitions
 
-OBJS=errorHandlers.o \
-     limits.o
+OBJS=errorHandlers.o limits.o
 
 default: $(LIBAPUE2)
 

@@ -1,12 +1,11 @@
 ROOT=.
 include $(ROOT)/make.definitions
 
-LIBSRC=src/libapue2
 CHAPTERS=chap01 chap02 chap03 
 
 .PHONY: default libapue2 chapters clean 
 
-default: libapue2 chapters
+all: libapue2 chapters
 
 libapue2:
 	(cd $(LIBSRC) && echo -e "\nmaking $@.a" && $(MAKE)) || exit 1

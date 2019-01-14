@@ -1,13 +1,16 @@
-# C Systems Programming
+# C Systems Programming - APUE
 I have always admired W. Richard Stevens' books on Unix System
 programming.  Back in the mid 1990's, I thought someday I would
 work my way through them.  Well, I have finally gotten around to
 it, in 2018.  Thanks to POSIX standards, Stevens' books are as
 relevant today as they were back then.
 
-The books being used are his
-"Advanced Programming in the UNIX Environment" third edition and his
-Unix Network Programming two volume set.
+The book being used are this project is his
+"Advanced Programming in the UNIX Environment" 3rd edition.
+The book has a website with source code, 
+[APUE](http://apuebook.com/), but the makefiles provided by
+the co-author of the 3rd edition are rudimentary and don't
+document the build well.  I think I can do better.
 
 ### Common Infrastructure
 #### include/apue2.h
@@ -25,6 +28,7 @@ Unix Network Programming two volume set.
 #### make based build
 * Hierarchical build
 * Individual src/ subdirectories can be built independently of each other
+* make.definitions contain system specific info for build
 
 ### UNIX System Overview - Chapter 1
 #### simpleLs.c

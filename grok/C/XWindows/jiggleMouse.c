@@ -1,7 +1,7 @@
 /*
  *   Simulate mouse movements to keep system alive
  *
- *     Usage:  jiggleMouse [delay [timeout [jiggle]]]
+ *     Usage: jiggleMouse [delay [timeout [deltaX [deltaT]]]]
  *
  */
 #include <X11/Xlib.h>
@@ -10,26 +10,29 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+void exit_usage(char *);
+
 int
-main(int argc, char * argv[])
+main(int argc, char *argv[])
 {
     /* Parse cmdline arguments */
-    int jiggle = 1;   // amount of X-coords to "jiggle the mouse"
-    int delay = 300;  // seconds between jiggles (5 minutes)
+    int delay = 120;  // seconds between jiggles (5 minutes)
     int timeout = 0;  // no timeout
+    int deltaX = 1;   // amount of XWin-coords to "jiggle the mouse"
+    int deltaT = 0;  // fast as possible
     bool countdown;
 
-    if (argc > 4) {
-        fprintf(stderr, "Error: invalid number of arguments\n");
-        fprintf(stderr, "  Usage: jiggleMouse [delay [timeout [jiggle]]]\n");
-        fprintf(stderr, "    delay  = time in seconds between jiggles\n");
-        fprintf(stderr, "    jiggle = amount to jiggle\n");
-        fprintf(stderr, "    timeout = end after timeout seconds\n");
-        exit(EXIT_FAILURE);
+    if (argc > 5) {
+        exit_usage("invalid number of arguments");
+    } else if (argc == 5) {
+        delay = atoi(argv[1]);
+        timeout = atoi(argv[2]);
+        deltaX = atoi(argv[3]);
+        deltaT = atoi(argv[4]);
     } else if (argc == 4) {
         delay = atoi(argv[1]);
         timeout = atoi(argv[2]);
-        jiggle = atoi(argv[3]);
+        deltaX = atoi(argv[3]);
     } else if (argc == 3) {
         delay = atoi(argv[1]);
         timeout = atoi(argv[2]);
@@ -39,8 +42,11 @@ main(int argc, char * argv[])
 
     if (timeout == 0)
         countdown = False;
-    else
+    else {
         countdown = True;
+        if (deltaT > timeout)
+            exit_usage("deltaT too large for timeout");
+    }
 
     /* Get display or fail */
     Display *display = XOpenDisplay(NULL);
@@ -86,8 +92,10 @@ main(int argc, char * argv[])
         
         /* Jiggle the mouse */
         XWarpPointer(display, None, *(root_windows+ii),
-                     0, 0, 0, 0, root_x+jiggle, root_y+jiggle);
+                     0, 0, 0, 0, root_x+deltaX, root_y+deltaX);
         XFlush(display);
+        if (deltaT > 0)
+            sleep(deltaT);
         XWarpPointer(display, None, *(root_windows+ii),
                      0, 0, 0, 0, root_x, root_y);
         XFlush(display);
@@ -95,11 +103,26 @@ main(int argc, char * argv[])
         /* Sleep and setup for next jiggle */
         sleep(delay);
         if (countdown)
-            timeout -= delay;
+            timeout = timeout - delay + deltaT;
     }
 
     free(root_windows);
     XCloseDisplay(display);
 
     exit(EXIT_SUCCESS);
+}
+
+void
+exit_usage(char *msg)
+{
+    fprintf(stderr, "Error: %s\n", msg);
+    fprintf(stderr, "Usage: jiggleMouse [delay [timeout [deltaX [deltaT]]]\n\n");
+    fprintf(stderr, "  delay  = time in seconds between jiggles\n");
+    fprintf(stderr, "  timeout = end program after timeout seconds\n");
+    fprintf(stderr, "  deltaX = distance to jiggle\n");
+    fprintf(stderr, "  deltaT = time it takes to jiggle\n\n");
+    fprintf(stderr, "where timeout > deltaT when timeout > 0,\n");
+    fprintf(stderr, "      timeout = 0 means no timeout\n");
+
+  exit(EXIT_FAILURE);
 }

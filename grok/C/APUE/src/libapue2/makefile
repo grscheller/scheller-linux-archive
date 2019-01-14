@@ -6,6 +6,7 @@ OBJS=errorHandlers.o limits.o
 default: $(LIBAPUE2)
 
 ../../lib/libapue2.a: $(OBJS)
+	[ -d $(LIBDIR) ] || mkdir $(LIBDIR)
 	$(AR) rcs $(LIBAPUE2) $?
 
 errorHandlers.o: errorHandlers.c \

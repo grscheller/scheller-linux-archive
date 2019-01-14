@@ -1,3 +1,12 @@
 **/*.o
 lib/lib*.a
 include/*.h.gch
+src/intro/buffered_cat
+src/intro/pidInfo
+src/intro/simpleLs
+src/intro/tinyShell
+src/intro/unbuffered_cat
+src/standards/sysLimits
+src/standards/sysLimits.c
+src/fileio/cpp_constants
+src/fileio/seekTest

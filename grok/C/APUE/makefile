@@ -1,11 +1,13 @@
+# Recursive makefiles usually not the best approach
+
 ROOT=.
 include $(ROOT)/make.definitions
 
-CHAPTERS=chap01 chap02 chap03 
+CHAPTERS = intro standards fileio 
 
 .PHONY: default libapue2 chapters clean 
 
-all: libapue2 chapters
+default: libapue2 chapters
 
 libapue2:
 	(cd $(LIBSRC) && echo -e "\nmaking $@.a" && $(MAKE)) || exit 1

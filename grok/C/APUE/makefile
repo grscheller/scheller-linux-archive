@@ -1,25 +1,26 @@
-# Recursive makefiles usually not the best approach
+# Non-recursive, hierarchical makefile to build an APUE project.
+# Based on the third edition of the W. Richard Stevens' book
+# "Advanced Programming  in the UNIX Environment" as interpreted
+# by Geoffrey Scheller (geoffrey@scheller.com).
 
-ROOT=.
-include $(ROOT)/make.definitions
+# System specific and build configurations
+include definitions.mk
 
-CHAPTERS = intro standards fileio 
+# APUE Book Chapters
+#CHAPTERS := intro standards fileio 
+CHAPTERS := intro
 
-.PHONY: default libapue2 chapters clean 
+# Default source code directory
+SRC = src
 
-default: libapue2 chapters
+.PHONY: all $(CHAPTERS) clean 
 
-libapue2:
-	(cd $(LIBSRC) && echo -e "\nmaking $@.a" && $(MAKE)) || exit 1
+all: $(LIBAPUE) $(CHAPTERS)
 
-chapters:
-	for ii in $(CHAPTERS); do \
-		(cd src/$$ii && echo -e "\nmaking $$ii" && $(MAKE) binaries) || exit 1; \
-	done
+include $(LIBAPUESRC)/libapue.mk
+include $(SRC)/intro/intro.mk
+# include $(SRC)/standards/make.standards
+# include $(SRC)/fileio/make.fileio
 
-clean:
-	(cd $(LIBSRC) && echo -e "\ncleaning $(LIBSRC)" && $(MAKE) clean) || exit 1
-	for ii in $(CHAPTERS); do \
-		(cd src/$$ii && echo -e "\ncleaning $$ii" && $(MAKE) clean) || exit 1; \
-	done
+clean: cleanlib cleanintro
 	rm -f $(INCLUDE)/*.h.gch

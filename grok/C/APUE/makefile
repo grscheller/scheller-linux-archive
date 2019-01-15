@@ -7,20 +7,17 @@
 include definitions.mk
 
 # APUE Book Chapters
-#CHAPTERS := intro standards fileio 
-CHAPTERS := intro
-
-# Default source code directory
-SRC = src
-
-.PHONY: all $(CHAPTERS) clean 
+CHAPTERS := intro standards fileio 
+CLEANCHAPTERS := $(addprefix clean,$(CHAPTERS))
 
 all: $(LIBAPUE) $(CHAPTERS)
 
 include $(LIBAPUESRC)/libapue.mk
-include $(SRC)/intro/intro.mk
-# include $(SRC)/standards/make.standards
-# include $(SRC)/fileio/make.fileio
+include src/intro/intro.mk
+include src/standards/standards.mk
+include src/fileio/fileio.mk
 
-clean: cleanlib cleanintro
+clean: cleanlib $(CLEANCHAPTERS)
 	rm -f $(INCLUDE)/*.h.gch
+
+.PHONY: all $(CHAPTERS) clean cleanlib $(CLEANCHAPTERS)

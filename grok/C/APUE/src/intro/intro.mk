@@ -1,28 +1,24 @@
-PATHINTRO := src/intro
+PATH_INTRO := src/intro
+PROGS_INTRO := buffered_cat simpleLs tinyShell pidInfo unbuffered_cat
 
-INTROPROGS := buffered_cat \
-              simpleLs \
-              tinyShell \
-              pidInfo \
-              unbuffered_cat
+PROGS_INTRO_FULL = $(addprefix $(PATH_INTRO)/,$(PROGS_INTRO))
 
-intro: $(addprefix $(PATHINTRO)/,$(INTROPROGS))
+intro: $(PROGS_INTRO_FULL)
 
-$(PATHINTRO)/buffered_cat: $(PATHINTRO)/buffered_cat.c $(APUE_H) $(LIBAPUE)
+$(PATH_INTRO)/buffered_cat: $(PATH_INTRO)/buffered_cat.c $(APUE_H) $(LIBAPUE)
 	$(LINK.c) -o $@ $< $(LDLIBS)
 
-$(PATHINTRO)/simpleLs: $(PATHINTRO)/simpleLs.c $(APUE_H) $(LIBAPUE)
+$(PATH_INTRO)/simpleLs: $(PATH_INTRO)/simpleLs.c $(APUE_H) $(LIBAPUE)
 	$(LINK.c) -o $@ $< $(LDLIBS)
 
-$(PATHINTRO)/tinyShell: $(PATHINTRO)/tinyShell.c $(APUE_H) $(LIBAPUE)
+$(PATH_INTRO)/tinyShell: $(PATH_INTRO)/tinyShell.c $(APUE_H) $(LIBAPUE)
 	$(LINK.c) -o $@ $< $(LDLIBS)
 
-$(PATHINTRO)/pidInfo: $(PATHINTRO)/pidInfo.c $(APUE_H) $(LIBAPUE)
+$(PATH_INTRO)/pidInfo: $(PATH_INTRO)/pidInfo.c $(APUE_H) $(LIBAPUE)
 	$(LINK.c) -o $@ $< $(LDLIBS)
 
-$(PATHINTRO)/unbuffered_cat: $(PATHINTRO)/unbuffered_cat.c $(APUE_H) $(LIBAPUE)
+$(PATH_INTRO)/unbuffered_cat: $(PATH_INTRO)/unbuffered_cat.c $(APUE_H) $(LIBAPUE)
 	$(LINK.c) -o $@ $< $(LDLIBS)
 
-.PHONY: cleanintro
 cleanintro:
-	rm -f $(addprefix $(PATHINTRO)/,$(INTROPROGS))
+	rm -f $(addprefix $(PATH_INTRO)/,$(PROGS_INTRO))

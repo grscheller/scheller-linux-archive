@@ -1,6 +1,6 @@
 #!/usr/bin/awk -f
 BEGIN   {
-    printf("#include \"apue2.h\"\n")
+    printf("#include \"apue.h\"\n")
     printf("#include <errno.h>\n")
     printf("#include <limits.h>\n")
     printf("\n")

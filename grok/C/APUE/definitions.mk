@@ -13,12 +13,12 @@ LDLIBS = $(LDDIRS) $(PRE_LDLIBS) $(LDAPUE) $(POST_LDLIBS)
 INCLUDE = include
 LIBDIR = lib
 
-# Other UNIX utilities
-AR = /usr/bin/ar
-AWK = /usr/bin/awk
-
 # Steven's API for UNIX System Programming
 LIBAPUE = $(LIBDIR)/libapue.a
 LDAPUE = -lapue
 LIBAPUESRC = src/libapue
 APUE_H = $(INCLUDE)/apue.h
+
+# Other UNIX utilities
+AR = /usr/bin/ar
+AWK = /usr/bin/awk

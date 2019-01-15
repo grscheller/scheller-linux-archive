@@ -1,7 +1,7 @@
 /*
  * Print out information on current process
  */
-#include "apue2.h"
+#include "apue.h"
 
 int
 main(void)

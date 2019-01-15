@@ -1,5 +1,5 @@
 # Path to directory from root of build
-PATHLIBAPUE := src/libapue2
+PATHLIBAPUE := src/libapue
 
 APUE_OBJS=errorHandlers.o \
           limits.o

@@ -14,20 +14,11 @@ INCLUDE = include
 LIBDIR = lib
 
 # Other UNIX utilities
-SHELL = /bin/sh
 AR = /usr/bin/ar
 AWK = /usr/bin/awk
 
 # Steven's API for UNIX System Programming
-LIBAPUE = $(LIBDIR)/libapue2.a
-LDAPUE = -lapue2
-LIBAPUESRC = src/libapue2
-APUE_H = $(INCLUDE)/apue2.h
-
-# Lets be explicit about implicit rules
-.SUFFIXES:
-.SUFFIXES: .c .o
-# .SUFFIXES: .y .c
-
-%:	%.o $(LIBAPUE)
-	$(LINK.o) $@.o -o $@ $(LDLIBS)
+LIBAPUE = $(LIBDIR)/libapue.a
+LDAPUE = -lapue
+LIBAPUESRC = src/libapue
+APUE_H = $(INCLUDE)/apue.h

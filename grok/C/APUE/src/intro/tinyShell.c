@@ -1,7 +1,7 @@
 /*
  * A tiny shell to illustrate fork, exec, and waitpid.
  */
-#include "apue2.h"
+#include "apue.h"
 #include <sys/wait.h>
 
 static void sig_int(int);  // Signel handler

@@ -3,7 +3,7 @@
  *
  *     Usage: simple_ls <path-to-directory>
  */
-#include "apue2.h"
+#include "apue.h"
 #include <sys/types.h>
 #include <dirent.h>
 

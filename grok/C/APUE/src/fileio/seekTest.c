@@ -1,7 +1,7 @@
 /*
  * Test whether standard input is seekable
  */
-#include "apue2.h"
+#include "apue.h"
 
 int
 main(void)

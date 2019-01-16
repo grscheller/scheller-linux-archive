@@ -1,21 +1,22 @@
-# Path to directory from root of build
+# Included makefile for libapue.a static library
+
 PATH_APUE := src/libapue
-APUE_OBJS := errorHandlers.o limits.o
+OBJS_APUE := errorHandlers.o limits.o
 
-APUE_OBJS_FULL := $(addprefix $(PATH_APUE)/,$(APUE_OBJS))
+OBJS_APUE_FULL := $(addprefix $(PATH_APUE)/,$(OBJS_APUE))
 
-$(LIBAPUE): $(APUE_OBJS_FULL)
+libapue: $(LIBAPUE_A)
+
+$(LIBAPUE_A): $(OBJS_APUE_FULL)
 	[ -d $(LIBDIR) ] || mkdir $(LIBDIR)
 	ln $? .
-	$(AR) rcsv $(LIBAPUE) $(notdir $?)
+	$(AR) rcsv $(LIBAPUE_A) $(notdir $?)
 	rm $(notdir $?)
 
 $(PATH_APUE)/errorHandlers.o: $(PATH_APUE)/errorHandlers.c $(APUE_H)
-	$(COMPILE.c) -o $@ $< 
 
 $(PATH_APUE)/limits.o: $(PATH_APUE)/limits.c $(APUE_H)
-	$(COMPILE.c) -o $@ $< 
 
-cleanlib:
+cleanlibapue:
 	rm -f $(PATH_APUE)/*.o
-	rm -f $(LIBAPUE)
+	rm -f $(LIBAPUE_A)

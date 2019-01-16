@@ -1,23 +1,26 @@
-# File containing system and compiler specific options.
-# Also, select implementaion of APUE API.
+# APUE Project Configuration
+#
+# This is NOT a recursive Make build.  The build is
+# done from the root APUE directory.
+
+# APUE project defaults and directory stucture 
+LIBDIR := lib
+INCLUDE := include
+CFLAGS_DEFAULT := -Wall -I$(INCLUDE)
+LDFLAGS_DEFAULT := -L$(LIBDIR)
+
+# Support an implementation of W. Richard Steven's API
+# for UNIX System Programminga.
+LIBAPUE_A := $(LIBDIR)/libapue.a
+APUE_H := $(INCLUDE)/apue.h
+LDFLAGS_APUE := -lapue
 
 # C compiler configuration
 CC = /usr/bin/gcc
+CFLAGS = $(CFLAG_DEFAULT) $(CFLAGS_EXTRA)
+LDFLAGS = $(LDFLAGS_DEFAULT) $(LDFLAGS_APUE) $(LDFLAGS_EXTRA)
 COMPILE.c = $(CC) $(CFLAGS) $(CPPFLAGS) -c
 LINK.c = $(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS)
-INCLUDES = $(PRE_INCLUDES) -I$(INCLUDE) $(POST_INCLUDES)
-CFLAGS = -Wall $(INCLUDES) $(CEXTRAFLAGS)
-LDFLAGS = $(LDEXTRAFLAGS)
-LDDIRS = $(PRE_LDDIRS) -L$(LIBDIR) $(POST_LDDIRS)
-LDLIBS = $(LDDIRS) $(PRE_LDLIBS) $(LDAPUE) $(POST_LDLIBS)
-INCLUDE = include
-LIBDIR = lib
-
-# Steven's API for UNIX System Programming
-LIBAPUE = $(LIBDIR)/libapue.a
-LDAPUE = -lapue
-LIBAPUESRC = src/libapue
-APUE_H = $(INCLUDE)/apue.h
 
 # Other UNIX utilities
 AR = /usr/bin/ar

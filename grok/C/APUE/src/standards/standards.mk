@@ -14,4 +14,4 @@ $(PATH_STDS)/sysLimits.c: $(PATH_STDS)/genSysLimits.awk \
 	cd $(PATH_STDS); $(AWK) -f $(notdir $<) > $(notdir $@)
 
 cleanstandards:
-	rm -f $(PROGS_STD_FULL) $(PATH_STDS)/sysLimits.c
+	rm -f $(PROGS_STDS_FULL) $(PATH_STDS)/sysLimits.c

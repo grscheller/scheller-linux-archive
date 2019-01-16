@@ -4,7 +4,7 @@
 # by Geoffrey Scheller (geoffrey@scheller.com).
 
 # System specific and build configurations
-include definitions.mk
+include config.mk
 
 # APUE Book Chapters
 CHAPTERS := intro standards fileio 

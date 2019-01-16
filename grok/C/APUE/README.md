@@ -10,25 +10,27 @@ The book being used are this project is his
 The book has a website with source code, 
 [APUE](http://apuebook.com/), but the makefiles provided by
 the co-author of the 3rd edition are rudimentary and don't
-document the build well.  I think I can do better.
+document the build well.
 
 ### Common Infrastructure
-#### include/apue2.h
+#### include/apue.h
 * Common header file to be included before all other header files
 * Builds executables conforming to __POSIX.1-2008__ and __XSI 7__ standards
 * POSIX is a portmanteau of "Portable Operating System" and "Unix"
 * XSI stands for X/OPEN System Interfaces
-#### src/libapue2/errorHandlers.c
+#### src/libapue/errorHandlers.c
 * Error handling routines
 * Compiled to `errorHandlers.o` and archived to lib/libapue2.a
-#### src/libapue2/limits.c
+#### src/libapue/limits.c
 * Contains routines to determine variaous systems limits at run time.
 * `path_alloc` uses malloc to allocate space for pathnames
 * `open_max` returns maximum number of possible open file descriptures
 #### make based build
-* Hierarchical build
-* Individual src/ subdirectories can be built independently of each other
-* make.definitions contain system specific info for build
+* Unlike the books source code, my build is not recursive
+* Individual config files are distributed throughout the directory structure.
+* Pulled together via make include statements into esentually one makefile.
+* Results in faster, more reliable software builds.
+* For vim Syntastic plug-in to work, launch vim from directory with makefile.
 
 ### UNIX System Overview - Chapter 1
 #### simpleLs.c

@@ -1,8 +1,8 @@
 # Path to directory from root of build
-PATHLIBAPUE := src/libapue
+PATH_APUE := src/libapue
 APUE_OBJS := errorHandlers.o limits.o
 
-APUE_OBJS_FULL := $(addprefix $(PATHLIBAPUE)/,$(APUE_OBJS))
+APUE_OBJS_FULL := $(addprefix $(PATH_APUE)/,$(APUE_OBJS))
 
 $(LIBAPUE): $(APUE_OBJS_FULL)
 	[ -d $(LIBDIR) ] || mkdir $(LIBDIR)
@@ -10,12 +10,12 @@ $(LIBAPUE): $(APUE_OBJS_FULL)
 	$(AR) rcsv $(LIBAPUE) $(notdir $?)
 	rm $(notdir $?)
 
-$(PATHLIB)/errorHandlers.o: $(PATHLIBAPUE)/errorHandlers.c $(APUE_H)
+$(PATH_APUE)/errorHandlers.o: $(PATH_APUE)/errorHandlers.c $(APUE_H)
 	$(COMPILE.c) -o $@ $< 
 
-$(PATHLIB)/limits.o: $(PATHLIBAPUE)/limits.c $(APUE_H)
+$(PATH_APUE)/limits.o: $(PATH_APUE)/limits.c $(APUE_H)
 	$(COMPILE.c) -o $@ $< 
 
 cleanlib:
-	rm -f $(PATHLIBAPUE)/*.o
+	rm -f $(PATH_APUE)/*.o
 	rm -f $(LIBAPUE)

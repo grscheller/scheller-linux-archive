@@ -8,54 +8,40 @@ relevant today as they were back then.
 The book being used are this project is his
 "Advanced Programming in the UNIX Environment" 3rd edition.
 The book has a website with source code, 
-[APUE](http://apuebook.com/), but the makefiles provided by
-the co-author of the 3rd edition are rudimentary and don't
-document the build well.
+[APUE](http://apuebook.com/), but this version has a more
+robust GNU Make based build.
 
-### Common Infrastructure
-#### include/apue.h
+The grok/C/APUE project is actually two projects.  One is just working
+through the chapters of the APUE book.  The other is more interesting.
+I am creating an implementation of Stevens' UNIX System Programming API.
+* API implementation: libapue.a and apue.h
+* GNU Make build as an initial template for future projects
+
+Currently I only have access to Linux based systems, but I hope to
+eventually adapt to and test on other Unix like OS's.
+
+## APUE Infrastructure
+### [apue.h](include/apue.h)
 * Common header file to be included before all other header files
 * Builds executables conforming to __POSIX.1-2008__ and __XSI 7__ standards
 * POSIX is a portmanteau of "Portable Operating System" and "Unix"
 * XSI stands for X/OPEN System Interfaces
-#### src/libapue/errorHandlers.c
-* Error handling routines
-* Compiled to `errorHandlers.o` and archived to lib/libapue2.a
-#### src/libapue/limits.c
+
+### libapue.a static library
+#### errorHandlers.c
+* Error handling routines: errorHandlers.c
 * Contains routines to determine variaous systems limits at run time.
 * `path_alloc` uses malloc to allocate space for pathnames
 * `open_max` returns maximum number of possible open file descriptures
-#### make based build
-* Unlike the books source code, my build is not recursive
-* Individual config files are distributed throughout the directory structure.
-* Pulled together via make include statements into esentually one makefile.
+
+### GNU Make based build
+* Unlike source code on the book's website, my build is not recursive.
+* Individual configuration files are distributed throughout the directory structure.
+* Using make include statements to pull everyhing together into one makefile.
 * Results in faster, more reliable software builds.
-* For vim Syntastic plug-in to work, launch vim from directory with makefile.
+* For vim Syntastic plug-in to work, launch vim from directory with Makefile.
 
+## APUE Book Chapters
 ### UNIX System Overview - Chapter 1
-#### simpleLs.c
-* Application to display file names in a directory.
-#### myUnbufferedCat.c
-* Lower level IO
-* Defined in unistd.h
-#### myBufferedCat.c
-* Buffered IO
-* Defined in stdio.h
-#### pidInfo.c
-* Process ID information
-#### tinyShell.c
-* Illustrates fork, exec, and waitpid functions
-
 ### UNIX Standardization and Implementation - Chapter 2
-#### genSysLimits.awk
-* Awk Script based on one from Stevens' book
-* Generates __sysLimits.c__ from __sysConf.sym__ and __pathConf.sym__
-* Makefile will generate sysLimits executable
-* Executable prints values of precompiler constants from __unistd.h__
-* Also prints associated runtime values
-
 ### File I/O - Chapter 3
-#### `cpp_constants.c`
-* Lists constants from __fcntl.h__ and related runtime parameters
-#### `seekTest.c`
-* Determine if stdin is seekable

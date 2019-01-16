@@ -13,10 +13,20 @@ SRC = src
 LIBAPUE_A = $(LIBDIR)/libapue.a
 APUE_H = $(INCLUDE)/apue.h
 
+# Compiler flags for specific OS's and/or compiler combinations
+LINUX_GCC_FLAGS = -ansi -DLINUX -D_GNU_SOURCE
+FREEBSD_FLAGS = -ansi -DBSD -D__BSD_VISIBLE
+MACOS_FLAGS = -ansi -DMACOS -D_DARWIN_C_SOURCE
+SOLARIS_FLAGS = -std=c99 -m64 -DSOLARIS -D__EXTENSIONS__
+LINUX_GCC_GEOFFREY_FLAGS = -DLINUX -D_GNU_SOURCE -O3
+
+# Select for your system
+SYSTEM_FLAGS = $(LINUX_GCC_GEOFFREY_FLAGS)
+
 # C compiler configuration
 CC = /usr/bin/gcc
 CPPFLAGS =
-CFLAGS = -Wall -I$(INCLUDE)
+CFLAGS = $(SYSTEM_FLAGS) -Wall -I$(INCLUDE)
 LDFLAGS = -L$(LIBDIR) -lapue
 
 # Other UNIX utilities

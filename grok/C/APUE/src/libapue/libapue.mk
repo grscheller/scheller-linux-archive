@@ -13,9 +13,8 @@ $(LIBAPUE_A): $(OBJS_APUE_FULL)
 	$(AR) rcsv $(LIBAPUE_A) $(notdir $?)
 	rm $(notdir $?)
 
-$(PATH_APUE)/errorHandlers.o: $(PATH_APUE)/errorHandlers.c $(APUE_H)
-
-$(PATH_APUE)/limits.o: $(PATH_APUE)/limits.c $(APUE_H)
+$(PATH_APUE)/%.o: $(PATH_APUE)/%.c $(APUE_H)
+	$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ -c $<
 
 cleanlibapue:
 	rm -f $(PATH_APUE)/*.o

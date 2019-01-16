@@ -7,7 +7,8 @@ PROGS_STDS_FULL := $(addprefix $(PATH_STDS)/,$(PROGS_STDS))
 
 standards: $(PROGS_STDS_FULL)
 
-$(PATH_STDS)/sysLimits: $(PATH_STDS)/sysLimits.c $(APUE_H) $(LIBAPUE_A)
+$(PATH_STDS)/%: $(PATH_STDS)/%.c $(APUE_H) $(LIBAPUE_A)
+	$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ $< $(LDFLAGS)
 
 $(PATH_STDS)/sysLimits.c: $(PATH_STDS)/genSysLimits.awk \
 	                      $(PATH_STDS)/sysConf.sym \

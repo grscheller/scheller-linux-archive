@@ -14,10 +14,20 @@
 #define _APUE_H
 
 #define _POSIX_C_SOURCE 200809L /* Compile to POSIX.1-2008 standard */
+
 #if defined(SOLARIS)
-#define _XOPEN_SOURCE 600       /* Use XSI 6 extention for Solaris 10 */
+#define _XOPEN_SOURCE 600   /* Use XSI 6 extention for Solaris < 11 */
+#define __EXTENSIONS__
 #else
-#define _XOPEN_SOURCE 700       /* Otherwise use XSI 7 extention */
+#define _XOPEN_SOURCE 700   /* Otherwise use XSI 7 extention */
+#endif
+
+#if defined(BSD)
+#define __BSD_VISIBLE
+#endif
+
+#if defined(MACOS)
+#define _DARWIN_C_SOURCE
 #endif
 
 #include <sys/types.h>      /* some systems still require this */

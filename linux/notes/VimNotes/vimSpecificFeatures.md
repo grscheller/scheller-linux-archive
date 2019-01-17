@@ -119,7 +119,7 @@ or "Unix System programming" in similar ways.  You want "Unix" replaced
 by "UNIX" and the "p" capitalized:
 ```
     qa/Unix<ret>l~~~fp~q
-    @a
+    @a@a@a@a
 ```
 if you what to be able to make the choice whether or to perform
 the macro, for instance you don't want to change "Unix is perfect".

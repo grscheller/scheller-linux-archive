@@ -97,21 +97,21 @@ You can assign values to it in _Command Mode_ via
    :let @/ = "Some String"
 ```
 ## Vim Macros:
-A useful __normal mode__ feature of vim is the `.` command which
-repeats the last normal __mode command__ which changed text.  Combining
+A useful _Normal Mode_ feature of vim is the `.` command which
+repeats the last normal _Command Mode_ which changed text.  Combining
 with the `n` command is an extremely useful and powerful paradigm.
 
 But what if you want to do a series of commands between searches?  The
 vim macro feature comes to the rescue.
 
-This feature allows you to repeat a sequence of __normal mode__ and
-__command mode__ commands.  Macros are stored in vim registers.
+This feature allows you to repeat a sequence of _Normal Mode_ and
+_Command Mode_ commands.  Macros are stored in vim registers.
 
-To create a macro, issue the __normal mode__ `q` command followed by a
+To create a macro, issue the _Normal Mode_ `q` command followed by a
 vim register name, say `a`.  At the bottom of the screen you see the
-text `recording @a`.  Issue both __normal mode__ and __command mode__
+text `recording @a`.  Issue both _Normal Mode_ and _Command Mode_
 commands and edit as usual.  To finish, issue another
-__normal mode__ `q` command.  At a later time, to execute this macro
+_Normal Mode_ `q` command.  At a later time, to execute this macro
 and repeat the sequence of commands, type `@a`.
 
 As an example, say you want to change instances of "Unix programming"

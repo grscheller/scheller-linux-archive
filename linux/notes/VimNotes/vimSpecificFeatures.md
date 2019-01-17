@@ -96,3 +96,35 @@ You can assign values to it in _Command Mode_ via
 ```
    :let @/ = "Some String"
 ```
+## Vim Macros:
+A useful __normal mode__ feature of vim is the `.` command which
+repeats the last normal __mode command__ which changed text.  Combining
+with the `n` command is an extremely useful and powerful paradigm.
+
+But what if you want to do a series of commands between searches?  The
+vim macro feature comes to the rescue.
+
+This feature allows you to repeat a sequence of __normal mode__ and
+__command mode__ commands.  Macros are stored in vim registers.
+
+To create a macro, issue the __normal mode__ `q` command followed by a
+vim register name, say `a`.  At the bottom of the screen you see the
+text `recording @a`.  Issue both __normal mode__ and __command mode__
+commands and edit as usual.  To finish, issue another
+__normal mode__ `q` command.  At a later time, to execute this macro
+and repeat the sequence of commands, type `@a`.
+
+As an example, say you want to change instances of "Unix programming"
+or "Unix System programming" in similar ways.  You want "Unix" replaced
+by "UNIX" and the "p" capitalized:
+```
+    qa/Unix<ret>l~~~fp~q
+    @a
+```
+if you what to be able to make the choice whether or to perform
+the macro, for instance you don't want to change "Unix is perfect".
+```
+    /Unix<ret>
+    qbl~~~fp~q
+    nn@bn@bnnn2@b
+```

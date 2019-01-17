@@ -13,16 +13,16 @@
 #ifndef _APUE_H
 #define _APUE_H
 
-#define _POSIX_C_SOURCE 200809L // Compile to POSIX.1-2008 standard
+#define _POSIX_C_SOURCE 200809L /* Compile to POSIX.1-2008 standard */
 #if defined(SOLARIS)
-#define _XOPEN_SOURCE 600       // Use XSI 6 extention for Solaris 10
+#define _XOPEN_SOURCE 600       /* Use XSI 6 extention for Solaris 10 */
 #else
-#define _XOPEN_SOURCE 700       // Otherwise use XSI 7 extention
+#define _XOPEN_SOURCE 700       /* Otherwise use XSI 7 extention */
 #endif
 
-#include <sys/types.h>      // some systems still require this
+#include <sys/types.h>      /* some systems still require this */
 #include <sys/stat.h>
-#include <sys/termios.h>    // for winsize
+#include <sys/termios.h>    /* for winsize */
 
 #if defined(MACOS) || !defined(TIOCGWINSZ)
 #include <sys/ioctl.h>
@@ -49,9 +49,9 @@ void err_ret(const char *, ...);
 void err_sys(const char *, ...) __attribute__((noreturn));
 
 /* Determining runtime limits */
-char *path_alloc(size_t *);  // Dynamically allocate space for pathname.
-long open_max(void);         // Determining number of file descriptors.
+char *path_alloc(size_t *);  /* Dynamically allocate space for pathname. */
+long open_max(void);         /* Determining number of file descriptors. */
 
 __END_DECLS
 
-#endif    // _APUE_H 
+#endif    /* _APUE_H  */

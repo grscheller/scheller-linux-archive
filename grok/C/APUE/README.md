@@ -28,11 +28,19 @@ eventually adapt to and test on other Unix like OS's.
 * XSI stands for X/OPEN System Interfaces
 
 ### libapue.a static library
-#### errorHandlers.c
+##### errorHandlers.c
 * Error handling routines: errorHandlers.c
-* Contains routines to determine variaous systems limits at run time.
-* `path_alloc` uses malloc to allocate space for pathnames
-* `open_max` returns maximum number of possible open file descriptures
+  * `err_cont` - nonfatal error unrelated to a system call
+  * `err_dump` - fatal error related to a system call
+  * `err_exit` - fatal error unrelated to a system call
+  * `err_msg ` - nonfatal error unrelated to a system call
+  * `err_quit` - fatal error unrelated to a system call
+  * `err_ret ` - nonfatal error related to a system call
+  * `err_sys ` - fatal error related to a system call
+##### limits.c
+* Contains routines determining variaous systems limits at run time
+  * `path_alloc` - uses malloc to allocate space for pathnames
+  * `open_max` - returns maximum number of possible open file descriptures
 
 ### GNU Make based build
 * Unlike source code on the book's website, my build is not recursive.
@@ -42,6 +50,6 @@ eventually adapt to and test on other Unix like OS's.
 * For vim Syntastic plug-in to work, launch vim from directory with Makefile.
 
 ## APUE Book Chapters
-### UNIX System Overview - Chapter 1
-### UNIX Standardization and Implementation - Chapter 2
-### File I/O - Chapter 3
+##### UNIX System Overview - Chapter 1
+##### UNIX Standardization and Implementation - Chapter 2
+##### File I/O - Chapter 3

@@ -21,7 +21,7 @@ SOLARIS_FLAGS = -std=c99 -m64 -DSOLARIS -D__EXTENSIONS__
 LINUX_GCC_GEOFFREY_FLAGS = -DLINUX -D_GNU_SOURCE -O3
 
 # Select for your system
-SYSTEM_FLAGS = $(LINUX_GCC_GEOFFREY_FLAGS)
+SYSTEM_FLAGS = $(LINUX_GCC_FLAGS)
 
 # C compiler configuration
 CC = /usr/bin/gcc

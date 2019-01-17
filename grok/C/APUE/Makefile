@@ -10,7 +10,8 @@ include config.mk
 CHAPTERS := intro standards fileio 
 CLEAN_CHAPTERS := $(addprefix clean,$(CHAPTERS))
 
-# Implementation of W. Richard Stevens' APUE Systems Programming API
+# Implementation of W. Richard Stevens' "Advanced Programming
+# in the UNIX Environment" Systems Programming API
 APUE := libapue
 CLEAN_APUE := clean$(APUE)
 

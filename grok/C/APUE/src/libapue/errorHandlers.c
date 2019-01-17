@@ -4,10 +4,18 @@
  * Purpose: Keep error handling activity
  *          to one line in the programs.
  *
+ * Source code for: err_cout
+ *                  err_dump
+ *                  err_exit
+ *                  err_msg
+ *                  err_quit
+ *                  err_ret
+ *                  err_sys
+ *
  */
 #include "apue.h"
-#include <errno.h>     // defines errno "variable," actually a macro
-#include <stdarg.h>    // ISO C variable arguments
+#include <errno.h>     /* defines errno "variable," actually a macroa */
+#include <stdarg.h>    /* ISO C variable arguments */
 
 static void err_doit(int, int, const char *, va_list ap);
 
@@ -37,8 +45,8 @@ err_dump(const char *fmt, ...)
     err_doit(1, errno, fmt, ap);
     va_end(ap);
 
-    abort();     // Dump core and terminate
-    exit(EXIT_FAILURE);     // Should never get here
+    abort();                /* Dump core and terminate */
+    exit(EXIT_FAILURE);     /* Should never get here */
 }
 
 /* Fatal error unrelated to a system call,

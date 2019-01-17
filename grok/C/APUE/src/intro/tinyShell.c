@@ -4,7 +4,7 @@
 #include "apue.h"
 #include <sys/wait.h>
 
-static void sig_int(int);  // Signel handler
+static void sig_int(int);  /* Signel handler */
 
 #define PROMPT "%% "
 
@@ -19,7 +19,7 @@ main(void)
     if (signal(SIGINT, sig_int) == SIG_ERR)
         err_sys("Signal error");
 
-    printf(PROMPT);    // Prints "% " as user prompt
+    printf(PROMPT);    /* Prints "% " as user prompt */
 
     while (fgets(buf, MAXLINE, stdin) != NULL ) {
         if (buf[strlen(buf) - 1] == '\n')

@@ -1,4 +1,3 @@
-
 /*
  * Limit allocation and determination functions
  *
@@ -13,8 +12,8 @@
  *
  */
 #include "apue.h"
-#include <errno.h>     // defines errno "variable," actually a macro
-#include <limits.h>    // ISO C variable arguments
+#include <errno.h>     /* defines errno "variable," actually a macro */
+#include <limits.h>    /* ISO C variable arguments */
 
 #ifdef PATH_MAX
 static long pathmax = PATH_MAX;
@@ -52,11 +51,11 @@ path_alloc(size_t *sizep)
         errno = 0;
         if  ((pathmax = pathconf("/", _PC_PATH_MAX)) < 0) {
             if (errno == 0)
-                pathmax = PATH_MAX_GUESS;   // indeterminate
+                pathmax = PATH_MAX_GUESS;   /* indeterminate */
             else
                 err_sys("pathconf error for _PC_PATH_MAX");
         } else {
-            pathmax++;   // add "1" since it's relative to "/"
+            pathmax++;   /* add "1" since it's relative to "/" */
         }
     }
 
@@ -98,7 +97,7 @@ open_max(void)
         errno = 0;
         if ((openmax = sysconf(_SC_OPEN_MAX)) < 0) {
             if (errno == 0)
-                openmax = OPEN_MAX_GUESS;   // indeterminate
+                openmax = OPEN_MAX_GUESS;   /* indeterminate */
             else
                 err_sys("sysconf error for _SC_OPEN_MAX");
         }

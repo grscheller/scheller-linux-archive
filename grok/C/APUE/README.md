@@ -1,4 +1,4 @@
-# C Systems Programming - APUE
+# Advanced Programming in the UNIX Environment (APUE)
 I have always admired W. Richard Stevens' books on Unix System
 programming.  Back in the mid 1990's, I thought someday I would
 work my way through them.  Well, I have finally gotten around to
@@ -8,7 +8,7 @@ relevant today as they were back then.
 The book being used are this project is his
 "Advanced Programming in the UNIX Environment" 3rd edition.
 The book has a website with source code, 
-[APUE](http://apuebook.com/), but this version has a more
+[APUE](http://apuebook.com/), but my version has a more
 robust GNU Make based build.
 
 The grok/C/APUE project is actually two projects.  One is just working
@@ -20,7 +20,7 @@ I am creating an implementation of Stevens' UNIX System Programming API.
 Currently I only have access to Linux based systems, but I hope to
 eventually adapt to and test on other Unix like OS's.
 
-## APUE Infrastructure
+## APUE API & Infrastructure
 ### [apue.h](include/apue.h)
 * Common header file to be included before all other header files
 * Builds executables conforming to __POSIX.1-2008__ and __XSI 7__ standards
@@ -28,7 +28,7 @@ eventually adapt to and test on other Unix like OS's.
 * XSI stands for X/OPEN System Interfaces
 
 ### libapue.a static library
-##### errorHandlers.c
+#### errorHandlers.c
 * Error handling routines: errorHandlers.c
   * `err_cont` - nonfatal error unrelated to a system call
   * `err_dump` - fatal error related to a system call
@@ -37,7 +37,7 @@ eventually adapt to and test on other Unix like OS's.
   * `err_quit` - fatal error unrelated to a system call
   * `err_ret ` - nonfatal error related to a system call
   * `err_sys ` - fatal error related to a system call
-##### limits.c
+#### limits.c
 * Contains routines determining variaous systems limits at run time
   * `path_alloc` - uses malloc to allocate space for pathnames
   * `open_max` - returns maximum number of possible open file descriptures
@@ -50,6 +50,6 @@ eventually adapt to and test on other Unix like OS's.
 * For vim Syntastic plug-in to work, launch vim from directory with Makefile.
 
 ## APUE Book Chapters
-##### UNIX System Overview - Chapter 1
-##### UNIX Standardization and Implementation - Chapter 2
-##### File I/O - Chapter 3
+* UNIX System Overview - Chapter 1
+* UNIX Standardization and Implementation - Chapter 2
+* File I/O - Chapter 3

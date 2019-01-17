@@ -1,6 +1,6 @@
 # C Programming
 Various C programming projects.
-* [Advanced Programming in the UNIX Environment](APUE/)
+* [Advanced Programming in the UNIX Environment (APUE)](APUE/)
   - Based on the book of that title by W. Richard Stevens
   - Portability a higher priority
 * [C Language Exemplars](CExemplars/)
@@ -8,4 +8,4 @@ Various C programming projects.
   - Lots of factoids and asides
 * [X Windows](XWindows/)
   - Low level X Windows coding
-  - using the XLIB and XCB Libraries
+  - Using the XLIB and XCB Libraries

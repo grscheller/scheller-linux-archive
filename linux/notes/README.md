@@ -20,10 +20,6 @@ software development and system administration.
 * Arch Linux Notes
   - [Arch Linux Commands](ArchLinuxNotes/archCommands.txt)
   - [Gnome 3 Configuration](ArchLinuxNotes/gnomeConf.md)
-  - [Cinnamon Configuration](ArchLinuxNotes/cinnamonConf.txt)
-  - [XFCE Configuration](ArchLinuxNotes/xfceConf.txt)
-* [Build GCC on CentOS 6](CentOS6/buildGCC.txt)
-* [Install Haskell Stack Locally](CentOS6/installStackLocally.txt)
 * [Unicode Cheatsheet](Unicode/unicodeCheatSheet.txt)
   - Code points I can cut-and-paste from vim
   - How to enter in a modern Unix terminal emulator

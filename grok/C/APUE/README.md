@@ -23,7 +23,7 @@ eventually adapt to and test on other Unix like OS's.
 ## APUE API & Infrastructure
 ### [apue.h](include/apue.h)
 * Common header file to be included before all other header files
-* Builds executables conforming to __POSIX.1-2008__ and __XSI 7__ standards
+* Builds code conforming to __POSIX.1-2008__ and __XSI 7__ standards
 * POSIX is a portmanteau of "Portable Operating System" and "Unix"
 * XSI stands for X/OPEN System Interfaces
 
@@ -49,9 +49,9 @@ eventually adapt to and test on other Unix like OS's.
   * `log_msg ` - log nonfatal errors unrelated to a system/library calls
   * `log_quit` - log fatal errors unrelated to a system/library calls
 #### limits.c
-* Contains routines determining variaous systems limits at run time
+* Contains routines determining various systems limits at run time
   * `path_alloc` - uses malloc to allocate space for pathnames
-  * `open_max` - returns maximum number of possible open file descriptures
+  * `open_max` - returns maximum number of possible open file descriptors
 
 ### GNU Make based build
 * Unlike source code on the book's website, my build is not recursive.

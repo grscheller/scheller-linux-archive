@@ -5183,6 +5183,7 @@ Note: Basically rebuilt system from scratch starting on 2017-06-20
 2018-09-25:
   Installed Gnome-shell Clipboard Indicator extension from AUR.
 
+    $ mkdir -p ~/build/AUR/gnome-extensions; cd ~/build/AUR/gnome-extensions
     $ git clone https://aur.archlinux.org/gnome-shell-extension-clipboard-indicator-git.git
     $ cd gnome-shell-extension-clipboard-indicator-git
     $ makepkg -sri

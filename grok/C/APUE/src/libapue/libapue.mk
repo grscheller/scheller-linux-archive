@@ -1,7 +1,7 @@
 # Included makefile for libapue.a static library
 
 PATH_APUE := src/libapue
-OBJS_APUE := errorHandlers.o limits.o
+OBJS_APUE := error.o errorlog.o limits.o
 
 OBJS_APUE_FULL := $(addprefix $(PATH_APUE)/,$(OBJS_APUE))
 

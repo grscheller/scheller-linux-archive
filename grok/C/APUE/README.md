@@ -28,15 +28,26 @@ eventually adapt to and test on other Unix like OS's.
 * XSI stands for X/OPEN System Interfaces
 
 ### libapue.a static library
-#### errorHandlers.c
-* Error handling routines: errorHandlers.c
-  * `err_cont` - nonfatal error unrelated to a system call
-  * `err_dump` - fatal error related to a system call
-  * `err_exit` - fatal error unrelated to a system call
-  * `err_msg ` - nonfatal error unrelated to a system call
-  * `err_quit` - fatal error unrelated to a system call
-  * `err_ret ` - nonfatal error related to a system call
-  * `err_sys ` - fatal error related to a system call
+#### error.c
+* Error handling routines
+  * `err_ret ` - nonfatal errors for system/library calls (using errno)
+  * `err_sys ` - fatal errors for system/library calls (using errno)
+  * `err_dump` - same as above but also dump core
+  * `err_cont` - nonfatal errors for system/library calls (supply error num)
+  * `err_exit` - fatal errors for system/library calls (supply error num)
+  * `err_msg ` - nonfatal errors unrelated to a system/library calls
+  * `err_quit` - fatal errors unrelated to a system/library calls
+#### errorlog.c
+* Error logging routines
+* `log_cont` & `log_info` not in book
+  * `log_open` - initialize syslog
+  * `log_ret ` - log nonfatal errors for system/library calls (using errno)
+  * `log_sys ` - log fatal errors for system/library calls (using errno)
+  * `log_cont` - log nonfatal errors for system/library calls (supply error num)
+  * `log_exit` - log fatal errors for system/library calls (supply error num)
+  * `log_info` - log messages, unrelated to system/library calls
+  * `log_msg ` - log nonfatal errors unrelated to a system/library calls
+  * `log_quit` - log fatal errors unrelated to a system/library calls
 #### limits.c
 * Contains routines determining variaous systems limits at run time
   * `path_alloc` - uses malloc to allocate space for pathnames

@@ -25,7 +25,7 @@ this tweak tool with the base DE is puzzling.
 ### gnome-tweak
 * Changed default theme from Adwaita to Adwaita-dark
 * Turned on removable drive menu (to left of status menu)
-* Tured on "Launch Mew Instance" extension
+* Turned on "Launch Mew Instance" extension
 * Turned on "Clipboard Indicator" extension (after installing from AUR)
 
 ### Layout
@@ -33,10 +33,10 @@ this tweak tool with the base DE is puzzling.
   - switches between normal and overview mode
   - click, mouse to upper LH corner, super-key up event
 * Dash: Vertical toolbar on LHS screen (overview mode)
-  - Docky-like
+  - Docky like
 * Menu Dropdown: right of Activities Button
   - for active window
-  - Mac-like
+  - Mac like
 * Notification Area: Center Top Toolbar
   - notifications balloons appear under it
   - day of week and time displayed
@@ -55,18 +55,20 @@ this tweak tool with the base DE is puzzling.
   - creates/deletes workspaces as needed
 
 ### Keyboard & mouse shortcuts:
-* super-tab: switch between windows on current desktop
-* super-L: lock screen
+* super+tab: switch between windows on current desktop
+* super+L: lock screen
 * super key-up-event: switches between the desktop and overview mode
-* super-up-arrow: maximize window with focus 
-* super-down-arrow: regular size window
-* super-left-arrow: tile window with focus LHS workspace
-* super-right-arrow: tile window with focus RHS workspace
-* super-H: hide (minimize) window
-* super-click: raise window
-* click-titlebar: raise window
-* middle-click-titlebar: drop window below all other windows
-* double-click-titlebar: toggle maximize window
+* super+up-arrow: maximize window with focus 
+* super+down-arrow: regular size window
+* super+left-arrow: tile window with focus LHS workspace
+* super+right-arrow: tile window with focus RHS workspace
+* super+H: hide (minimize) window
+* super+click: raise window
+* click titlebar: raise window
+* middle-click titlebar: drop window below all other windows
+* double-click titlebar: toggle maximize window
+* ctrl+alt+up-arrow: move up one workspace
+* ctrl+alt+down-arrow: move up one workspace
 
 ### Paradigms
 No desktop icons.  Desktop acts as a window manager.  The Dash

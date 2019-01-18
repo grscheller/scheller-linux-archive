@@ -28,30 +28,35 @@ eventually adapt to and test on other Unix like OS's.
 * XSI stands for X/OPEN System Interfaces
 
 ### libapue.a static library
-#### error.c
-* Error handling routines
-  * `err_ret ` - nonfatal errors for system/library calls (using errno)
-  * `err_sys ` - fatal errors for system/library calls (using errno)
-  * `err_dump` - same as above but also dump core
-  * `err_cont` - nonfatal errors for system/library calls (supply error num)
-  * `err_exit` - fatal errors for system/library calls (supply error num)
-  * `err_msg ` - nonfatal errors unrelated to a system/library calls
-  * `err_quit` - fatal errors unrelated to a system/library calls
-#### errorlog.c
-* Error logging routines
-* `log_cont` & `log_info` not in book
-  * `log_open` - initialize syslog
-  * `log_ret ` - log nonfatal errors for system/library calls (using errno)
-  * `log_sys ` - log fatal errors for system/library calls (using errno)
-  * `log_cont` - log nonfatal errors for system/library calls (supply error num)
-  * `log_exit` - log fatal errors for system/library calls (supply error num)
-  * `log_info` - log messages, unrelated to system/library calls
-  * `log_msg ` - log nonfatal errors unrelated to a system/library calls
-  * `log_quit` - log fatal errors unrelated to a system/library calls
-#### limits.c
-* Contains routines determining various systems limits at run time
-  * `path_alloc` - uses malloc to allocate space for pathnames
-  * `open_max` - returns maximum number of possible open file descriptors
+#### error.c: Error handling routines
+* Functions:
+  * `err_ret() ` - nonfatal errors for system/library calls (using errno)
+  * `err_sys()` - fatal errors for system/library calls (using errno)
+  * `err_dump()` - same as above but also dump core
+  * `err_cont()` - nonfatal errors for system/library calls (supply error num)
+  * `err_exit()` - fatal errors for system/library calls (supply error num)
+  * `err_msg() ` - nonfatal errors unrelated to a system/library calls
+  * `err_quit()` - fatal errors unrelated to a system/library calls
+
+#### errorlog.c: Error logging routines
+* Functions:
+  * `log_open()` - initialize syslog
+  * `log_ret()` - log nonfatal errors for system/library calls (using errno)
+  * `log_sys()` - log fatal errors for system/library calls (using errno)
+  * `log_cont()` - log nonfatal errors for system/library calls (supply error num)
+  * `log_exit()` - log fatal errors for system/library calls (supply error num)
+  * `log_info()` - log messages, unrelated to system/library calls
+  * `log_msg()` - log nonfatal errors unrelated to a system/library calls
+  * `log_quit()` - log fatal errors unrelated to a system/library calls
+*  Callers must globally define and set `log_to_stderr`
+  * int `log_to_stderr` = 0: use syslog()
+  * int `log_to_stderr` = 1: behave like corresponding `err_*()` vers
+* `log_cont()` & `log_info()` not in book
+
+#### limits.c: Determining various systems limits at run time
+* Functions:
+  * `path_alloc()` - uses malloc to allocate space for pathnames
+  * `open_max()` - returns maximum number of possible open file descriptors
 
 ### GNU Make based build
 * Unlike source code on the book's website, my build is not recursive.

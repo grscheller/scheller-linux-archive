@@ -6,7 +6,9 @@ for java.  What here is just a rudimentary start.
 I might come back someday to continue when I better understand the
 java ecosystem.
 
-In the age of SBT, using Make for Java is probably dead.
+In the age of SBT, using Make for Java is probably dead.  Anyway, this
+example illustrates the use of suffix rules, which I have gotten away
+from in favor of more powerful pattern rules.
 
 ### To build:
 ```

@@ -1,7 +1,7 @@
 # Included makefile for chapter 2 - Unix Standards and Implementations
 
 PATH_STDS := src/standards
-PROGS_STDS := sysLimits
+PROGS_STDS := sysLimits confstrTest
 
 PROGS_STDS_FULL := $(addprefix $(PATH_STDS)/,$(PROGS_STDS))
 

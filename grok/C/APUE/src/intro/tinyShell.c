@@ -58,17 +58,16 @@ sig_int(int signo)
 }
 
 /*  Notes:
- *  1. we need to convert the terminal '\n' in buf to a '\0',
- *     this is in addition to the one put there by fgets.
- *  2. The test for '\n' is for the extrodinary case of
- *     the when the actual '\n' gets overwritten by the
- *     null termination.
+ *  1. we need to convert a possible terminating '\n' in
+ *     buf to a '\0', this is in addition to the one put
+ *     there by fgets.
  *
  *  Factoids:
  *  1. The execlp function will look through the evironment
  *     path if first argument does not include a '/'.
- *  2. The fgets function returns bufPt on success, and NULL on
+ *  2. The fgets function returns buf on success, and NULL on
  *     error or when end of file occurs while no characters
- *     have yet been read.
+ *     have yet been read.  Program is not checking for error
+ *     conditions.
  *
  */

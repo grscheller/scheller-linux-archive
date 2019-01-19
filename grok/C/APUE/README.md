@@ -21,39 +21,39 @@ Currently I only have access to Linux based systems, but I hope to
 eventually adapt to and test on other Unix like OS's.
 
 ## APUE API & Infrastructure
-### [apue.h](include/apue.h)
+### [apue.h](include/apue.h) header
 * Common header file to be included before all other header files
 * Builds code conforming to __POSIX.1-2008__ and __XSI 7__ standards
 * POSIX is a portmanteau of "Portable Operating System" and "Unix"
 * XSI stands for X/OPEN System Interfaces
 
-### libapue.a static library
-#### error.c: Error handling routines
+### [libapue.a](src/libapue) static library
+#### Error handling routines: error.c 
 * Functions:
-  * `err_ret() ` - nonfatal errors for system/library calls (using errno)
-  * `err_sys()` - fatal errors for system/library calls (using errno)
+  * `err_ret()`  - nonfatal errors for system/library calls (using errno)
+  * `err_sys()`  - fatal errors for system/library calls (using errno)
   * `err_dump()` - same as above but also dump core
   * `err_cont()` - nonfatal errors for system/library calls (supply error num)
   * `err_exit()` - fatal errors for system/library calls (supply error num)
-  * `err_msg() ` - nonfatal errors unrelated to a system/library calls
+  * `err_msg()`  - nonfatal errors unrelated to a system/library calls
   * `err_quit()` - fatal errors unrelated to a system/library calls
 
-#### errorlog.c: Error logging routines
+#### Error logging routines: errorlog.c 
 * Functions:
   * `log_open()` - initialize syslog
-  * `log_ret()` - log nonfatal errors for system/library calls (using errno)
-  * `log_sys()` - log fatal errors for system/library calls (using errno)
+  * `log_ret()`  - log nonfatal errors for system/library calls (using errno)
+  * `log_sys()`  - log fatal errors for system/library calls (using errno)
   * `log_cont()` - log nonfatal errors for system/library calls (supply error num)
   * `log_exit()` - log fatal errors for system/library calls (supply error num)
   * `log_info()` - log messages, unrelated to system/library calls
-  * `log_msg()` - log nonfatal errors unrelated to a system/library calls
+  * `log_msg()`  - log nonfatal errors unrelated to a system/library calls
   * `log_quit()` - log fatal errors unrelated to a system/library calls
-*  Callers must globally define and set `log_to_stderr`
-  * int `log_to_stderr` = 0: use syslog()
-  * int `log_to_stderr` = 1: behave like corresponding `err_*()` vers
+* Callers must globally define and set `log_to_stderr`
+  * `log_to_stderr` = 0: use syslog()
+  * `log_to_stderr` = 1: behave like corresponding `err_*()` versions
 * `log_cont()` & `log_info()` not in book
 
-#### limits.c: Determining various systems limits at run time
+#### Determining systems limits at run time: limits.c 
 * Functions:
   * `path_alloc()` - uses malloc to allocate space for pathnames
   * `open_max()` - returns maximum number of possible open file descriptors

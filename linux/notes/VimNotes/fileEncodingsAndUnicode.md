@@ -8,7 +8,7 @@ Vim is capable of working with different character encodings.
 
 | Command                  | Description                                  |
 |:------------------------ |:-------------------------------------------- |
-| :set encoding`           | list current character encoding              |
+| :set encoding            | list current character encoding              |
 | :set encoding=utf-8      | set current character encoding vim displays  |
 | :set fileencoding        | list current encoding in which to save files |
 | :set encoding=latin1     | edit using la character encoding             |
@@ -61,4 +61,5 @@ the terminal or by typing into gvim.
 | Command                  | Description            |
 |:------------------------ |:---------------------- |
 | <ctrl-shift-u>u03b2<ret> | enter the character β  |
+| <ctrl-shift-u>u3bb<ret>  | enter the character λ  |
 

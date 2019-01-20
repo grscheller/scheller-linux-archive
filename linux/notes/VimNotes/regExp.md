@@ -148,11 +148,11 @@ meta-meaning.  The character `.` is meta without escaping.
 
 ### Examples
 
-| RegExp                        | Examples                              |
-|:----------------------------- |:------------------------------------- |
-| `:1,$s/U\(nix\|NIX\)/Linux/g` | Replace "Unix" & "UNIX" with "Linux"  |
-| `/re\(f\\|g\)`                | Find next "ref" or "reg"              |
-| `/re[fg]`                     | Find next "ref" or "reg"              |
+| RegExp                         | Examples                              |
+|:------------------------------ |:------------------------------------- |
+| `:1,$s/U\(nix\\|NIX\)/Linux/g` | Replace "Unix" & "UNIX" with "Linux"  |
+| `/re\(f\\|g\)`                 | Find next "ref" or "reg"              |
+| `/re[fg]`                      | Find next "ref" or "reg"              |
 
 ## POSIX.2 Regular Expressions:
 For a description of POSIX.2 regular expressions see

@@ -124,7 +124,7 @@ compatibility with vi.
 ## Extended Regexp examples:
 It is usually easiest to learn regular expressions using simple examples.
 
-| RegExp           | Examples                                       |
+| RegExp           | Description                                    |
 |:---------------- |:---------------------------------------------- |
 | `foo.*`          | match foo followed by zero or more characters  |
 | `fooba+r`        | match foobar, foobaar, foobaaar, ...           |
@@ -148,7 +148,7 @@ meta-meaning.  The character `.` is meta without escaping.
 
 ### Examples
 
-| RegExp                         | Examples                              |
+| RegExp                         | Description                           |
 |:------------------------------ |:------------------------------------- |
 | `:1,$s/U\(nix\\|NIX\)/Linux/g` | Replace "Unix" & "UNIX" with "Linux"  |
 | `/re\(f\\|g\)`                 | Find next "ref" or "reg"              |

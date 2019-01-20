@@ -151,7 +151,7 @@ meta-meaning.  The character `.` is meta without escaping.
 | RegExp                        | Examples                              |
 |:----------------------------- |:------------------------------------- |
 | `:1,$s/U\(nix\|NIX\)/Linux/g` | Replace "Unix" & "UNIX" with "Linux"  |
-| `/re\(f\\\|g\)`               | Find next "ref" or "reg"              |
+| `/re\(f\\|g\)`                | Find next "ref" or "reg"              |
 | `/re[fg]`                     | Find next "ref" or "reg"              |
 
 ## POSIX.2 Regular Expressions:

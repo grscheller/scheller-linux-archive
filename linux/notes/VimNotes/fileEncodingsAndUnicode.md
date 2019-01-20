@@ -40,7 +40,7 @@ are using via 2 character "diagraph" sequences.  While in _Insert Mode_,
 type `<ctrl-k> followed by a two character sequence.
 
 | Command     | Description                                   |
-|:----------- |:--------------------------------------------- |
+|:-----------:|:--------------------------------------------- |
 | :dig        | list diagraphs available for current encoding |
 | <ctrl-k>a^  | enter the character â                         |
 | <ctrl-k>o:  | enter the character ö                         |

@@ -22,7 +22,7 @@ hexidecimal codepoint:
   '0x3b2'
 
 Code points can be entered from the terminal or directly into Libre Office
-via <ctrl>+<shift>+u3b2<ret>.  The <ctrl>+<shift>+u is typed by pressing
+via <ctrl>+<shift>+u3b2<ret>.  The <ctrl>+<shift>+u is typed by pressing the
 u key while holding down the <ctrl> and <shift> keys.  The unicode character
 is entered when the <ret> key is pressed. 
 

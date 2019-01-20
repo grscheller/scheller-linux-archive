@@ -11,6 +11,7 @@ notes invaluable in my journey to master Vim.
 * [Advanced Traditional Vi Commands](advTradViCommands.md)
 * [Using Multiple Vim Windows](multipleVimWindows.md)
 * [Vim Specific Features](vimSpecificFeatures.md)
+* [Encodings and Unicode](fileEncodingsAndUnicode.md)
 * [Regular Expressions](regExp.md)
 * [Configuring Vim](vimrcConfigFile.md)
 

@@ -98,7 +98,7 @@ You can assign values to it in _Command Mode_ via
 ```
 ## Vim Macros:
 A useful _Normal Mode_ feature of vim is the `.` command which
-repeats the last normal _Command Mode_ which changed text.  Combining
+repeats the last _Normal Mode_ command which changed text.  Combining
 with the `n` command is an extremely useful and powerful paradigm.
 
 But what if you want to do a series of commands between searches?  The

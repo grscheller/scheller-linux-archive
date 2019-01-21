@@ -11,7 +11,3 @@ administrating my Arch Linux system.
 * [Haskell Admin Log](HaskellAdmin.log)
   - Initially only using the Stack tool.
   - Started using locally installed Haskell via Cabal.
-* [Build GHC Arch Linux Log](BuildGHCArchLinux.log)
-  - Documents my steps building the Glasgow Haskell Compilation System on Arch.
-  - Built from Github source.
-  - Build relies heavily having a current Haskell tool chain already installed.

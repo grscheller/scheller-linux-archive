@@ -1,15 +1,52 @@
-## Purpose: Gnome 3 configuration on CentOS 7
+## Purpose: Gnome 3 configuration on Arch Linux
 
 ### GNOME Version:
 ```
    $ gnome-shell --version
-   GNOME SHELL 3.30.0
+   GNOME Shell 3.30.2
 ```
+### gnome-tweak (Tweaks)
+* General -> Animations (on)
+* General -> Over-Amplification (on)
+* Appearance -> Themes -> Applications -> Adwaita-dark
+* Appearance -> Background: to select background image
+* Appearance -> Lock Screen: to select background image
+* Extensions -> Clipboard indicator (on)
+* Extensions -> Launch new instance (on)
+* Extensions -> Removable drive menu (on)
+* Fonts: Made adjustments
+* Keyboard & Mouse -> Mouse -> Pointer Location (on)
+* Keyboard & Mouse -> Mouse -> Middle Click Paste (on)
+* Keyboard & Mouse -> Touchpad -> Disable While Typing (on)
+* Keyboard & Mouse -> Touchpad -> Mouse Click Emulation -> Area
+* Top Bar -> Application Menu (on)
+* Top Bar -> Battery Percentage (on)
+* Top Bar -> Clock -> Weekday (on)
+* Top Bar -> Clock -> Date (on)
+* Window Titlebars -> Titlebar Actions -> Double-Click -> Toggle Maximize
+* Window Titlebars -> Titlebar Actions -> Middle-Click -> Lower
+* Window Titlebars -> Titlebar Actions -> Secondary-Click -> Menu
+* Window Titlebars -> Titlebar Buttons -> Maximize (off)
+* Window Titlebars -> Titlebar Buttons -> Minimize (on)
+* Window Titlebars -> Titlebar Buttons -> Placement -> Right
+* Windows -> Attach Modal Dialogs (on)
+* Windows -> Edge Tiling (on)
+* Windows -> Window Focus -> Focus on Hover
+* Workspaces -> Dynamic Workspaces
 
-### Configure via gsettings:
-All the below can be done with gnome-tweak.  Why they don't just provide
-this tweak tool with the base DE is puzzling.
+### gnome-control-center (Settings)
+* Wifi & Network(Ethernet) configurable
+* Bluetooth configurable
+* Set background and lock screen images
+* Notifications configuration
+* Search configuration
+* Online Account configuration
+* Sound configuration
+* Power settings
+* Devices
+* Details
 
+### Configurable via on command line too
 * Enable sloopy focus
 ```
    $ gsettings set org.gnome.desktop.wm.preferences focus-mode sloppy
@@ -18,17 +55,9 @@ this tweak tool with the base DE is puzzling.
 ```
 * Set background and screenlock images
 ```
-
    $ gsettings set org.gnome.desktop.background picture-uri file:///home/geoff/Pictures/Wallpapers/RachelHawkFalls.jpg
    $ gsettings set org.gnome.desktop.screensaver picture-uri file:///home/geoff/Pictures/Wallpapers/ErWangDongCave.jpg
-``
-
-### gnome-tweak
-* Changed default theme from Adwaita to Adwaita-dark
-* Turned on removable drive menu (to left of status menu)
-* Turned on "Launch Mew Instance" extension
-* Turned on "Clipboard Indicator" extension (after installing from AUR)
-
+```
 ### Layout
 * Activities Button: LHS Top Toolbar
   - switches between normal and overview mode
@@ -72,10 +101,8 @@ this tweak tool with the base DE is puzzling.
 * ctrl+alt+down-arrow: move up one workspace
 
 ### Paradigms
-No desktop icons.  Desktop acts as a window manager.  The Dash
-acts like a program manager.  With the "Launch Mew Instance"
-extension turned on, clicking Dash icons will launch new
-instances instead of the horrible Win10 conflated behavior
-of giving focus to some random already running instance.  By
-right clicking, you can select amoung the running instances,
-regardless of the workspace. 
+* No desktop icons
+* Desktop acts as a window manager
+* The Dash acts like a program manager
+  * make sure "launch new instance" turned on
+  * right-click to select amoung running instances

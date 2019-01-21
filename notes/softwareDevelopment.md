@@ -3,12 +3,12 @@
   - Everything I know about VIM (VI-iMproved) text editor
   - Making VIM play nice in a hybrid CLI/GUI workflow
   - Configuring VIM plug-ins with Vundle plugin manager
-* [Bash Notes](BashNotes/bashNotes.txt)
+* [Bash Notes](bashNotes.txt)
   - My personal Bash Shell notes/cheatsheet
-* [GIT Notes](GitNotes/gitNotes.txt)
+* [GIT Notes](gitNotes.txt)
   - Notes I took while learning GIT
   - Adapted to share with my coworkers
-* [Make Notes](MakeNotes/makeNotes.txt)
+* [Make Notes](makeNotes.txt)
   - GNU Make software build utility
 * [Software Development Tools](softwareDevTools.md)
   - Command line tools useful in software development

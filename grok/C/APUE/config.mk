@@ -14,18 +14,18 @@ APUE_H = $(INCLUDE)/apue.h
 
 # Compiler flags for specific OS's
 # All feature macros defined in apue.h
-LINUX_CFLAGS = -std=c99 -DLINUX
-FREEBSD_CFLAGS = -ansi -DBSD                     # untested
-MACOS_CFLAGS = -ansi -DMACOS                     # untested
-SOLARIS_CFLAGS = -std=c99 -m64 -DSOLARIS         # untested
+LINUX_CFLAGS := -std=c99 -DLINUX
+FREEBSD_CFLAGS := -ansi -DBSD                  # untested
+MACOS_CFLAGS := -ansi -DMACOS                  # untested
+SOLARIS_CFLAGS := -std=c99 -m64 -DSOLARIS      # untested
 
 # Select for your system
 SYSTEM_CFLAGS := $(LINUX_CFLAGS)
 
 # C compiler configuration
 CC = gcc
-CPPFLAGS =
-CFLAGS = $(SYSTEM_CFLAGS) -Wall -I$(INCLUDE)
+CPPFLAGS = 
+CFLAGS = $(CPPFLAGS) $(SYSTEM_CFLAGS) -Wall -I$(INCLUDE)
 LDFLAGS = -L$(LIBDIR) -lapue
 
 # Other UNIX utilities

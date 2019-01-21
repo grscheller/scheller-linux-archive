@@ -3,8 +3,6 @@
   - Everything I know about VIM (VI-iMproved) text editor
   - Making VIM play nice in a hybrid CLI/GUI workflow
   - Configuring VIM plug-ins with Vundle plugin manager
-* [Bash Notes](bashNotes.txt)
-  - My personal Bash Shell notes/cheatsheet
 * [GIT Notes](gitNotes.txt)
   - Notes I took while learning GIT
   - Adapted to share with my coworkers
@@ -13,3 +11,10 @@
 * [Software Development Tools](softwareDevTools.md)
   - Command line tools useful in software development
   - Especially C and C++ software development
+* [Bash Notes](bashNotes.txt)
+  - My personal Bash Shell notes/cheatsheet
+* [Shell Utilities](shellUtilities.txt)
+  - head, tail
+  - grep
+  - sed
+  - minimal awk

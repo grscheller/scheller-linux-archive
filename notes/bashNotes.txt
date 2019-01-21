@@ -158,7 +158,7 @@ of doing things; it just that I don't know EMACS that well.
    This is NOT the same as
      cmd 2>/dev/null
    Alot of times the former and latter seem to accomplish the same
-   thing, they gag error messages.  In the latter, we are dependingr
+   thing, they gag error messages.  In the latter, we are depending
    that cmd is smart enough to know what to do in case it encounters
    descriptor (as in C language file descriptor).
    This can be used for efficiency, but depends on knowledge of the
@@ -174,59 +174,7 @@ of doing things; it just that I don't know EMACS that well.
      good
      bye
 
-4. Heads and Tails:
-
-   Prints first 5 lines of Filename or stdin if Filename omitted.
-
-     $ head -5 Filename
-
-   Does same thing.
-
-     $ head -n 5 Filename
-
-   Prints all but the last 5 lines of Filename.
-
-     $ head -n -5 Filename
-
-   Note: tail is similar but not quite duel,
-
-     $ tail -n 2 Filename
-     $ tail -n -2 Filename
-
-   both print out the last 2 lines of Filename.
-
-   Prints out last 3 lines of Filename after last 5 lines have
-   been stripped off.
-
-     $ head -n -5 Filename | tail -n 3
-
-5. $* verses $@:
-
-   The shell variables $* amd $@ represent script and function command
-   line arguments.  Without quotes, they are the same.  Positional
-   parameters loose their identity and the $IFS characters are used to
-   split the arguments.
-
-   With double quotes, "$@" will split along positional parameters.
-   Each parmeter expands to a separate word.
-   "$@" is the same as typing "$1" "$2" "$3" ...
-
-   "$*" expands to a single word.  All the contiguous $IFS characters not
-   protected via quoting have been consolidated into a single character,
-   the first character of the $IFS string.
-
-   Suppose IPS=$'c \t\n',
-   then "$*" is the same as typing $1c$2c$3c... If IFS is null, no
-   character is use.  If IFS unset, a space is used.
-   (Acts as if IPS=$' \t\n')
-
-   Without quotes, $* and $@ both get all their leading and trailing 
-   $IFS characters stripped off. All other contiguous $IFS characters get
-   consolidated.  All quotes removed before stripping and consolidation.
-
-   Array variables ${foo[@]} and ${foo[*]} behave similarly when quoted.
-
-6. Array variables:
+5. Array variables:
 
    In bash, all variables are array variables.
 
@@ -282,7 +230,7 @@ of doing things; it just that I don't know EMACS that well.
       $ echo ${!gang[@]}
       0 1 2 3 4 5
 
-7. Speaking of redirection, 
+6. Speaking of redirection, 
 
       $ foo=bar
       $ bar=baz
@@ -291,7 +239,7 @@ of doing things; it just that I don't know EMACS that well.
       $ echo ${!foo}
       baz
 
-8. Default values for shell variables:
+7. Default values for shell variables:
 
    Use := within the {} to specify a default value for a shell variable,
    if it is unset.
@@ -304,7 +252,7 @@ of doing things; it just that I don't know EMACS that well.
       $ echo $FavoriteCake 
       Chocolotte Cake
 
-9. Comments begin with a # and can occur anywhere on a line:
+8. Comments begin with a # and can occur anywhere on a line:
       # This is a comment
       Foo="foo"  # This is a comment too.
       Bar="bar"
@@ -314,7 +262,7 @@ of doing things; it just that I don't know EMACS that well.
                          # It will work without the brackets, but I think
                          # they make the command more readable.
 
-10. Shell variables verses environment variables.
+9. Shell variables verses environment variables.
 
    To define a shell variable, use an = with no unquoted spaces.
    These are only known to the current shell.  So that other programs
@@ -373,7 +321,7 @@ of doing things; it just that I don't know EMACS that well.
       $ bash -c 'echo $cap and $snd'
       kirk and
 
-11. Big and little nibbles:
+10. Big and little nibbles:
 
     Let 
    
@@ -393,16 +341,15 @@ of doing things; it just that I don't know EMACS that well.
       $ echo ${aString%% *}      # A space followed by anything from end
       Hello
 
-12. Never use [ ... ], use [[ ... ]] instead.
+11. Prefer using [[ ... ]] over [ ... ].
 
     In standard Bourn shell `[' was an actual program called test.  
     They are located here: /usr/bin/[
                            /use/bin/test
 
-    On CentOS Linux they are separate commands.  On other Unixes,
-    I have seen them sim and hard linked to the same executable.  I have
-    seen bizzarre bugs in shell scripts when people have used test as 
-    a shell variable name.  (So don't do this either.)
+    On different Unixes, I have seen them sym-linked, hard-linked, and as
+    separate commands.  I have seen bizzarre bugs in shell scripts when
+    people have used test as a shell variable name.
 
     Anycase, when performing tests, always use [[ ... ]].  Double
     brackets are reserve words in Bash and are much more tolerant
@@ -419,9 +366,9 @@ of doing things; it just that I don't know EMACS that well.
       > fi
       No Fruit
 
-   The above will give you a syntac error if you use single [ and ].
+   The above will give you a syntax error if you use single [ and ].
 
-      Aside: In older Bourn shell scripts (and even new Bash scripts!)
+      Aside: In older shell scripts (and even new Bash scripts!)
              you frequently see constructs like
 
              $ if [ FOO$Fruit == FOO ]
@@ -429,7 +376,10 @@ of doing things; it just that I don't know EMACS that well.
              for the first line of the test above. This is to get
              around an old wart from the Bourn shell.  
 
-13. [[ ... ]] is a "command" on its own and not part of the `if' command
+   Unfortunately, utilities like make and X-Window start-up scripts
+   use POSIX shell, you still need to be able to deal with [ ... ].
+
+12. [[ ... ]] is a "command" on its own and not part of the `if' command
     syntax.  
 
       $ if ls foo >& /dev/null
@@ -454,7 +404,7 @@ of doing things; it just that I don't know EMACS that well.
       > fi
       Neither file, foo nor bar, is there.
 
-14. Use (( ... )) instead of [[ ... ]] for arithmetic and numeric
+13. Use (( ... )) instead of [[ ... ]] for arithmetic and numeric
     testing in Bash.
 
     Do this:
@@ -481,7 +431,7 @@ of doing things; it just that I don't know EMACS that well.
           jj=`expr $jj + 1`
       done
 
-15. Use $(...) instead of back tics `...`.
+14. Use $(...) instead of back tics `...`.
 
     $(...) is used to embed the output of a bash command or
     pipeline into a bash script as if you typed it.  It is
@@ -514,7 +464,7 @@ of doing things; it just that I don't know EMACS that well.
       $ echo $otherUsers
       dbus polkitd postfix rtkit systemd+ UID
  
-16. Comparisons via [[ ... ]] and the non-stictness of && and ||.
+15. Comparisons via [[ ... ]] and the non-stictness of && and ||.
 
     Strings and numerics use different sets of operators:
 
@@ -557,7 +507,7 @@ of doing things; it just that I don't know EMACS that well.
       > fi
       MATLAB file
 
-17. Looping constructs:
+16. Looping constructs:
 
     Loop a fixed number of times,
 
@@ -605,7 +555,7 @@ of doing things; it just that I don't know EMACS that well.
       Quit? [y|Y]: y
       $ 
 
-18. Shell functions:
+17. Shell functions:
 
     Shell functions are bash subroutines that execute in the context
     of the current shell.  These "functions" don't return values.
@@ -670,7 +620,7 @@ of doing things; it just that I don't know EMACS that well.
     $ echo $a $b
     a2 b1
 
-19. Aliases:
+18. Aliases:
 
     The alias command allows a string to be substituted as the first
     word of a simple command.  Useful if you want to change the default
@@ -698,7 +648,7 @@ of doing things; it just that I don't know EMACS that well.
       shopt -s expand_aliases
 
 
-20. Editting differences between vi/vim and bash in vi mode:
+19. Editting differences between vi/vim and bash in vi mode:
 
     Use 
 

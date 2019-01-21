@@ -1,23 +1,22 @@
-These are my own personal Bash notes/cheatsheet.  Intially never intended 
-as a tutorial or, for that matter, other people's use.  They are a work
-in progress.  For a good tutorial, I suggest using "The Linux Command Line"
-by William Shotts.  Most of what I know about shell programming comes from
-David Korns ksh book and the Unix/Linux man pages.  Bash is a superset of
-the Bourn shell (sh) with the best features of both the Korn shell (ksh)
-and the C shell (csh) added.
-
 Probably you will get the most out of these notes if you already are
-functional with Bash.
+functional with Bash.  For a good introductory tutorial, I suggest
+using "The Linux Command Line" by William Shotts.  Most of what I
+know about shell programming comes from David Korn's ksh book and
+the Unix/Linux man pages.  Bash is a superset of the Bourn Shell
+with the best features of both the Korn Shell and the C Shell
+added.
 
-The original Bourn shell was flawed.  There are features of the Bourn shell 
-that are in Bash for backward compatibility.  These should be 
-avoided as indicated later in the notes.
+The original Bourn Shell was flawed.  There are features of the
+Bourn Shell that are in Bash for backward compatibility.  These
+should be avoided as indicated later in the notes.  POSIX Shell
+is not the the original AT&T Bourn Shell.  POSIX Shell is based
+on the subset of ksh and ideas from C Shell.
 
-C shell was revolutionary in its day.  It provides for enhanced 
+C Shell was revolutionary in its day.  It provides for enhanced 
 interactive user operability.  Its syntax was modeled after the C
 programming language which made it easier for C programmers to learn. 
 Unfortunately, it has an inconsistent grammer and its syntax is
-not really consistent across the language.  Compared to Bash, it is
+rather adhoc across the language.  Compared to Bash, it is
 really, really slow.
 
 Bash command line editting can use either EMACS or VI mode.  Emacs and
@@ -27,7 +26,7 @@ I have invested a lot of time learning vi, I use that mode by doing
 the command "set -o vi" in my .bashrc file.  I also do some other 
 modifications in .bashrc to further enhance the power of VI mode
 and interacting with the shell history.  I have written entire shell
-scripts interactively in vi mode.  I make bash very ksh-like in its
+scripts interactively in VI mode.  I make bash very ksh-like in its
 command line editting.  That said, EMACS mode is certainly a fine way
 of doing things; it just that I don't know EMACS that well.
 
@@ -485,7 +484,8 @@ of doing things; it just that I don't know EMACS that well.
 15. Use $(...) instead of back tics `...`.
 
     $(...) is used to embed the output of a bash command or
-    pipeline into a bash script as if you typed it.
+    pipeline into a bash script as if you typed it.  It is
+    also part of the POSIX standard shell!
 
     Example:
 
@@ -704,7 +704,7 @@ of doing things; it just that I don't know EMACS that well.
 
       $ set -o vi
 
-    to switch from the default emacs bass cmdline editing mode.
+    to switch from the default emacs bash cmdline editing mode.
 
     You can edit a command with vi by esc-v , this in
     particularly useful in editting multiline commands.

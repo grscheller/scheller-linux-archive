@@ -1,8 +1,15 @@
-#!/usr/bin/awk -f
-BEGIN   {
+# Generates the source code for sysLimits.c which
+# gets compiled into the sysLimits and sysNoLimits
+# executables.
+#
+# Format of the C Preprocessor directives chosen to
+# make source code most readable in this file.
+BEGIN {
     printf("#include \"apue.h\"\n")
-    printf("#include <errno.h>\n")
+    printf("#include <errno.h>\n\n")
+    printf("#ifndef NO_LIMITS\n")
     printf("#include <limits.h>\n")
+    printf("#endif\n")
     printf("\n")
     printf("void pr_confstr(char *, int);\n")
     printf("void pr_sysconf(char *, int);\n")

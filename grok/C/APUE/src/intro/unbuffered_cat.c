@@ -3,7 +3,7 @@
  */
 #include "apue.h"
 
-#define BUFFSIZE 4192
+#define BUFFSIZE 4096
 
 int
 main(void)

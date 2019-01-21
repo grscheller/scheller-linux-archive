@@ -1,7 +1,7 @@
 # Included makefile for chapter 2 - Unix Standards and Implementations
 
 PATH_STDS := src/standards
-PROGS_STDS := sysLimits
+PROGS_STDS := sysLimits sysNoLimits
 
 PROGS_STDS_FULL := $(addprefix $(PATH_STDS)/,$(PROGS_STDS))
 
@@ -14,6 +14,11 @@ $(PATH_STDS)/sysLimits: $(PATH_STDS)/sysLimits.c \
                         $(PATH_STDS)/sysLimitsUtils.o \
                         $(APUE_H) $(LIBAPUE_A)
 	$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ $< $(PATH_STDS)/sysLimitsUtils.o $(LDFLAGS)
+
+$(PATH_STDS)/sysNoLimits: $(PATH_STDS)/sysLimits.c \
+                        $(PATH_STDS)/sysLimitsUtils.o \
+                        $(APUE_H) $(LIBAPUE_A)
+	$(CC) $(CFLAGS) -DNO_LIMITS $(CPPFLAGS) -o $@ $< $(PATH_STDS)/sysLimitsUtils.o $(LDFLAGS)
 
 $(PATH_STDS)/sysLimits.c: $(PATH_STDS)/genSysLimits.awk \
 	                      $(PATH_STDS)/confstr.sym \

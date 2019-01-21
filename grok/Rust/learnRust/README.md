@@ -1,4 +1,4 @@
-# Rust systems programming language:
+## Rust systems programming language:
 Explore the Rust toolchain and come up to speed with the language.  A good
 introduction to the Rust, know as the
 [book](https://doc.rust-lang.org/book) can be found on the Rust
@@ -61,11 +61,11 @@ To later update the installed toolchains,
 ```
    $ rustup update
 ```
-### 3. First steps Rust toolchain - [baby_steps](baby_steps/):
+### 3. First steps Rust toolchain - [babySteps](babySteps/):
 Create a new project with a main function,
 ```
    $ cargo new --bin babySteps
-        Created binary (application) `babySteps` project
+        Created binary (application) babySteps project
 ```
 If I had not created it within a git repository, it would have set up the
 babySteps directory it created as a git repo with .git file.  I put a copy
@@ -111,7 +111,7 @@ To build or run a "release" version with full optimization,
 ```
    $ cargo build --release
    $ cargo run --release
-```
+``
 The executable is `./target/release/babySteps`.
 
 ### 4. Guessing game - [guessing_game](guessing_game/):

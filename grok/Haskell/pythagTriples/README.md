@@ -1,4 +1,4 @@
-# A Pythagorean Triple generation program
+## A Pythagorean Triple generation program
 
 A Pythagoean Triple is a tuple `(a, b, c)` such that `a^2 + b^2 = c^2`.
 

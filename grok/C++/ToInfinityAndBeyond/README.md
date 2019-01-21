@@ -1,4 +1,4 @@
-# C++ to Infinity and Beyond
+## C++ to Infinity and Beyond
 * Explore later versions of C++
 * Playing with standard library
 * Application programming language

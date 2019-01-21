@@ -1,10 +1,10 @@
-# My Haskell Notes:
+## My Haskell Notes:
 Goal is to keep these notes sufficiently short to be able to wrap my head
 around them, even at the price of them not being properly logically
 grounded, perhaps even circular.  Notes taken from the course, the
 Haskell reference manuals, or my general observations.
 
-## Haskell
+### Haskell
 1. Haskell is a strongly-type, lazy, pure, functional language.
     * Types are compile time entities.
     * Values need not have the run time overhead of encoding their types.
@@ -18,8 +18,8 @@ Haskell reference manuals, or my general observations.
     * Functions have no side effects.
     * Functions are first class values.
 
-## Scoping
-### Progam Structure
+### Scoping
+#### Progam Structure
 1. Top most level a Haskell program is a set of modules.
     * Provide way to control namespaces.
     * Allows re-use of software in large projects.
@@ -41,7 +41,7 @@ Haskell reference manuals, or my general observations.
 5. Bottom level is Haskell's lexical structure.
     * Captures concrete lexical structure of Haskell programs in text files.
 
-### let vs. where
+#### let vs. where
 * Used to bind names in local scopes.
 * Difference is more subtle than just whether definitions come first or last.
 * Deep within the Haskell kernel, both probably implemented as λ-expressions.
@@ -56,7 +56,7 @@ Haskell reference manuals, or my general observations.
     * Comes after the definition, means applies to the entire definition.
     * Scope extends over all guards within the definition.
 
-## Haskell Type System
+### Haskell Type System
 * Strong, flexible type system with powerful type inference algorithms.
 * The type system partitions the universe of values and expressions into
   equivalence classes limiting how elements of these equivalence classes
@@ -67,7 +67,7 @@ Haskell reference manuals, or my general observations.
   different instantiations of an expressions.
 * `=` is not an operator, it is part of the language, `(=) foo 5` does not work!
 
-### Algebraic Data Types (ADT)
+#### Algebraic Data Types (ADT)
 * All nullary constructors are "grounded."
 * If `n` is grounded, then so is `S n`.
 * Non-grounded expreessions exist,
@@ -76,7 +76,7 @@ Haskell reference manuals, or my general observations.
    infinity = S infinity
 ```
 
-#### Simplified versions of predefined ADTs
+##### Simplified versions of predefined ADTs
 These types are either predefined into the Prelude, or they are "cooked"
 into the runtime implementation.
 
@@ -136,7 +136,7 @@ into the runtime implementation.
       [1,2,3]
 ```
 
-#### Deconstructiong types
+##### Deconstructiong types
 With pattern matching,
 ```
    addMaybes (Just x) (Just y) = Just (x + y)
@@ -153,7 +153,7 @@ and λ-abstractions can also deconstruct patterns
                       -- guards & multiple bindings not allowed.
 ```
 
-## Haskell Syntax
+### Haskell Syntax
 Function application is most fundamental concept, so function
 application is just done by justiposition.
 ```
@@ -165,8 +165,8 @@ Some say arguments are "separated by spaces."  But
 ```
 would be parsed as justiposition too, but considered "bad style."
 
-### Operators
-#### Very few operators reserved by language syntax
+#### Operators
+##### Very few operators reserved by language syntax
 In Haskell, most predefined operators are either just library functions
 or are cooked into the parser, examples of these are:
 ```
@@ -175,7 +175,7 @@ or are cooked into the parser, examples of these are:
 You can go crazy and define your own operators, or even use your own
 definitions instead of the system ones.
 
-#### Define precedence operators with fixity declarations
+##### Define precedence operators with fixity declarations
 * Keywords: `infixl` | `infixr` | `infix` for left/right/no associativity
 * Syntax: infix-keyword [0-9] operator [, operator]
 * Allowed wherever a type declaration is allowed

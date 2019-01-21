@@ -1,4 +1,4 @@
-# Scala
+## Scala
 Scala is a hybrid functional/oo language which runs on
 the Java Virtual Machine (JVM).
 * [functional programming in scala](fpinscala/)

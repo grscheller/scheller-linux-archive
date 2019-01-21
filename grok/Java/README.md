@@ -1,4 +1,4 @@
-# Java
+## Java
 An attempt to familiarize myself with Java coming
 at it from a Python and Scala perspective.  Java code
 compiles down to byte code which runs on any system that
@@ -9,7 +9,7 @@ The JVM converts portions of byte code to actual machine
 code of the underlying hardware.
 * [Testing JVM for Word Tearing](wordTearing/)
   - Test for "word tearing" in underlying Java Virtual Machine (JVM)
-  - I suspect the Java 10 compiler "optimizing" away execution
+  - I suspect the Java 10 compiler is "optimizing" away execution
 * [Java FX Examples](javafxExamples/)
   - GUI programming using Java FX libraries
   - Code currently does not work with Java 10

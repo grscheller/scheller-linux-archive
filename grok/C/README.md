@@ -1,4 +1,4 @@
-# C Programming
+## C Programming
 Various C programming projects.
 * [Advanced Programming in the UNIX Environment (APUE)](APUE/)
   - Based on the book of that title by W. Richard Stevens

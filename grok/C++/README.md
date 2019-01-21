@@ -1,4 +1,4 @@
-# C++ Programming
+## C++ Programming
 Various C++ programming projects.
 * [To Infiity and Beyond](ToInfinityAndBeyond/)
   - Inspired by Bjarne Stroustup's "A Tour of C++" 2nd Edition

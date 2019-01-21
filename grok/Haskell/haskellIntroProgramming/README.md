@@ -1,4 +1,4 @@
-# "Intro" to Haskell
+## "Intro" to Haskell
 My attempts to work through the course exercises from and mini-projects
 inspired by the University of Chicago's introduction to programming course
 sequence.  I put "Intro" in quotes because this course would be

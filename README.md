@@ -1,16 +1,19 @@
 ## Geoffrey Scheller's Linux Software Development Archive
-#### Linux Configuration, Tools & Administration
-  - [Bash Environment Configuration](linux/bashEnvConf/)
-  - [Linux Notes](linux/notes/)
-  - [My Arch Linux Admin Logs](linux/ArchLinuxAdminLogs/)
+#### Linux/POSIX Notes
+  - [Linux/POSIX Software Development](notes/softwareDevelopment.md)
+  - [Linux/POSIX System Configuration](notes/systemConfiguration.md)
+  - [Vim Notes](notes/VimNotes/README.md)
 #### Grokking Computer Languages
   - [C](grok/C)
+    - [Advanced Programming in the UNIX Environment (APUE)](grok/C/APUE)
   - [C++](grok/C++)
-  - [Scala](grok/Scala/)
   - [Haskell](grok/Haskell/)
-  - [Rust](grok/Rust/)
-  - [Python](grok/Python)
+    - [Pythagorean Triples](grok/Haskell/pythagTriples)
   - [Java](grok/Java/)
+  - [Python](grok/Python)
+  - [Rust](grok/Rust/)
+  - [Scala](grok/Scala/)
+    - [Functional Programming in Scala (fpinscala)](grok/Scala/fpinscala)
 #### WWW Info
   - [Private homepage](web/homepage/)
 

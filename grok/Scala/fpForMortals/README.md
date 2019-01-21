@@ -1,4 +1,4 @@
-# FP for Mortals with Scalaz
+## FP for Mortals with Scalaz
 Working through the book [Functional Programming for Mortals with Scalaz][1]
 by Sam Halliday.
 

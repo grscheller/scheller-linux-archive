@@ -1,4 +1,4 @@
-# Haskell Parallel & Concurrent Programming
+## Haskell Parallel & Concurrent Programming
 Example code bits inspired by the book
 [Haskell Parallel & Concurrent Programming in Haskell](http://shop.oreilly.com/product/0636920026365.do)
 by Simon Marlow.

@@ -1,4 +1,4 @@
-# Basic Scala Language Constructs:
+## Basic Scala Language Constructs:
 
 Explore Scala language and build constructions.
 

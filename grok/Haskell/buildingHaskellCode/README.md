@@ -1,4 +1,4 @@
-# Building Haskell Code
+## Building Haskell Code
 I am finding that Cabal has advantages over Stack when dealing with
 the locally installed Arch GHC.  Stack is more for freezing a build
 consistently across different architectures.  Cabal seems to work well with

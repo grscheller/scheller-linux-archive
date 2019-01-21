@@ -1,8 +1,7 @@
-# Python
+## Python
 A pure runtime object oriented language.  Like Smalltalk,
 everything is an object, including classes.  Type classes
 implemented via "duck-typing."
-
 * [pureMath](pureMath/)
   - A mathematics library centered around integer arithmetic
   - An old project of mine back when I first learned Python

@@ -1,4 +1,4 @@
-# Haskell
+## Haskell
 A pure, compile time functional programming language. 
 * [Pythagorean Triples](pythagTriples/)
   - Haskell project that generates Pythagorean triples

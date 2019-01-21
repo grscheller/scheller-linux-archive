@@ -1,4 +1,4 @@
-# Java Word Tearing
+## Java Word Tearing
 A java class to test if multiple threads of the underlying
 JVM can update adjacent elements of a byte array.
 

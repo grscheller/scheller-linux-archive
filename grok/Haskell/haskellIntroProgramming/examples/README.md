@@ -1,4 +1,4 @@
-# Haskell Examples
+## Haskell Examples
 
 ### Lazy evaluation:
 * [Sorting a list](sort.md)

@@ -1,4 +1,4 @@
-# Advanced Programming in the UNIX Environment (APUE)
+## Advanced Programming in the UNIX Environment (APUE)
 I have always admired W. Richard Stevens' books on Unix System
 programming.  Back in the mid 1990's, I thought someday I would
 work my way through them.  Well, I have finally gotten around to

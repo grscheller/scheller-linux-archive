@@ -1,4 +1,4 @@
-# Purpose: Gnome 3 configuration on CentOS 7
+## Purpose: Gnome 3 configuration on CentOS 7
 
 ### GNOME Version:
 ```
@@ -18,9 +18,10 @@ this tweak tool with the base DE is puzzling.
 ```
 * Set background and screenlock images
 ```
+
    $ gsettings set org.gnome.desktop.background picture-uri file:///home/geoff/Pictures/Wallpapers/RachelHawkFalls.jpg
    $ gsettings set org.gnome.desktop.screensaver picture-uri file:///home/geoff/Pictures/Wallpapers/ErWangDongCave.jpg
-```
+``
 
 ### gnome-tweak
 * Changed default theme from Adwaita to Adwaita-dark

@@ -3,6 +3,14 @@ Command line tools useful in software development, especially
 C and C++ software development.
 
 See the system manpages for detailed descriptions of these commands.
+## cc
+Compile C language programs,
+### Partially building a C program
+* gcc -E  --> preprocessor, but don't compile
+* gcc -S  --> compile but don't assemble
+* gcc -c  --> assemble but don't link
+* gcc     --> build an executable
+
 ## ar
 Create, modify, and extract items from archives.  Usually what is
 created or modified is a static shared library of `*.o` object files.

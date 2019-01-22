@@ -26,13 +26,16 @@ can be internalized and eventually become part of your "muscle memory."
 | `e, E`         | move forward to end of word                      |
 | `$`            | move to end of line                              |
 | `^`            | move to first non-whitespace character on line   |
-| `0`            | move to beginning of line                  |
+| `0`            | move to beginning of line                        |
 | `G`            | move to last line in file                        |
 | `gg`           | move to first line in file                       |
 | `f<char>`      | move forward to next <char> on current line      |
+| `F<char>`      | move backward to next <char> on current line     |
+| `f<char>`      | move forward before next <char> on current line  |
+| `F<char>`      | move backward to next <char> on current line     |
 | `;`            | move forward to target of last f command         |
 | `,`            | move backward to target of last f command        |
-| `3f<char>`     | move forward to 3rd occurrence of <char> on line |
+| `3fw     `     | move forward to 3rd w on current line            |
 | `/RegExp<ret>` | forward search for regular expression pattern    |
 | `?RegExp<ret>` | backward search for regular expression pattern   |
 | `/<ret>`       | search forward for last pattern                  |

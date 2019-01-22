@@ -1,8 +1,9 @@
 ## Geoffrey Scheller's Linux Software Development Archive
 #### Linux/POSIX Notes
   - [Linux/POSIX Software Development](notes/softwareDevelopment.md)
+    - [Bash Environment Configuration](notes/BashEnvConf)
+    - [Vim Notes](notes/VimNotes/README.md)
   - [Linux/POSIX System Configuration](notes/systemConfiguration.md)
-  - [Vim Notes](notes/VimNotes/README.md)
 #### Grokking Computer Languages
   - [C](grok/C)
     - [Advanced Programming in the UNIX Environment (APUE)](grok/C/APUE)

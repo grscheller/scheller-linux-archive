@@ -31,8 +31,8 @@ can be internalized and eventually become part of your "muscle memory."
 | `gg`           | move to first line in file                       |
 | `f<char>`      | move forward to next <char> on current line      |
 | `F<char>`      | move backward to next <char> on current line     |
-| `f<char>`      | move forward before next <char> on current line  |
-| `F<char>`      | move backward to next <char> on current line     |
+| `t<char>`      | move forward before next <char> on current line  |
+| `T<char>`      | move backward after next <char> on current line  |
 | `;`            | move forward to target of last f command         |
 | `,`            | move backward to target of last f command        |
 | `3fw     `     | move forward to 3rd w on current line            |

@@ -1,7 +1,7 @@
 ## GNU Make
-This document is intended to be concise reference with examples
+This document is intended to be a concise reference with examples
 and advice on makefile best practices.  It is not to be considered
-a make tutorial.  For more complete documentation see the
+a make tutorial.  For more complete documentation see the official
 [GNU Make documentation](https://www.gnu.org/software/make/).
 
 ### Automtic variables
@@ -17,7 +17,7 @@ Automtic variables are set by make after a rule is matched.
 |        `$*`        | Target with suffix removed                          | 
 |        `$%`        | Filename element of an archive member specification |
 
-* Use of `#*` is discouraged outside of pattern rules.
+* Use of `$*` is discouraged outside of pattern rules.
 
 ### Special Built-in Target Names
 Names that when used as targets, change the behavior of Make.
@@ -42,7 +42,7 @@ Names that when used as targets, change the behavior of Make.
 
 Notes on Built-in Targets:
 * `.PHONY`: an optimization and avoids conflict with real files of same name
-* `.INTERMEDIATE`: with no prereqs has no effect
+* `.INTERMEDIATE`: with no prerequisites has no effect
   * intermediates are automatically deleted when no longer needed
 * `.SECONDARY`: with no prereqs causes all targets to be secondary
 * `.SECONDARYEXPANSION`: has no prereqs, applies to targets defined after it
@@ -61,11 +61,11 @@ Notes on Built-in Targets:
   * bad idea, global change is all or nothing
   * see [Automating Tasks](#automating-tasks) below to write oneliners
 * `.POSIX`: no prerequisits
-  * GNU Make extensions that still available
+  * GNU Make extensions are still available
   * use POSIX behavior when it differs from GNU behavior
   * POSIX shells get past `-e` option 
 
-[1]: https://www.gnu.org/software/make/manual/html_node/One-Shell.html#One-Shell
+[1]: https://www.gnu.org/software/make/manual/html_node/Secondary-Expansion.html
 
 ### Comments in makefiles
 Comments begin with a #
@@ -89,7 +89,7 @@ Make rules can automate tasks.  Only the line which begins the
 POSIX shell action, the one with the "do", needs to starts with
 a <tab>.  What we just escaping the final <new-line>.
 ```
-    timeit: $(SUMIT_BINARIES)
+    timeit: $(BINARIES)
 	for bb in $(BINARIES); \
 	do \
         echo -ne "\n$$bb: "; \
@@ -102,4 +102,6 @@ a <tab>.  What we just escaping the final <new-line>.
     .PHONY: timeit clean
 ```
 Notes on automating tasks: 
-* `$$` prevents make variable expansion and passes the shell a single `s`
+* `$$` prevents make variable expansion and passes the shell a single `$`
+* using `./` for start of path to executable
+* also, I don't put `.`in my `$PATH` 

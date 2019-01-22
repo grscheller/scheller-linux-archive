@@ -6,7 +6,7 @@
 * [GIT Notes](gitNotes.txt)
   - Notes I took while learning GIT
   - Adapted to share with my coworkers
-* [Make Notes](makeNotes.txt)
+* [Make Notes](makeNotes.md)
   - GNU Make software build utility
 * [Software Development Tools](softwareDevTools.md)
   - Command line tools useful in software development

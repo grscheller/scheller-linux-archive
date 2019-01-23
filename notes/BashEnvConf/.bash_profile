@@ -4,8 +4,11 @@
 #  Configure initial environment of login shells
 #  via a hook in .bashrc.
 #
-#  Then perform any tasks you wish to apply to 
-#  new login shells, like console or ssh logins.
+#  Non-existent path and duplicate path elements
+#  will be dealt with via the pathTrim script.
+#
+#  Perform any tasks you wish to apply to 
+#  new login shells.
 #
 
 export VIRGIN_PATH=${VIRGIN_PATH:=$PATH}
@@ -15,8 +18,8 @@ export BASH_PROFILE_SOURCED=${BASH_PROFILE_SOURCED:=0}
 
 if [[ -f .bashrc ]]
 then
-    # force resource of .bash_initconf
-    unset -f bash_initconf_ran
+    # force resource of .bash_initenv
+    unset -f bash_init_sourced
     # shellcheck source=/dev/null
     source ~/.bashrc
 fi

@@ -1,11 +1,9 @@
 ## Bash Environment Configuration
-Documents how I configure my Linux/POSIX environments.
-* Example Bash configuration files
-* Simple, ~/bin bash scripts illustrating bash scripting techniques
-* ~/.vim/vimrc configuration files (including Vundle and Syntastic)
-* ~/.inputrc to configure GNU readline library
-* ~/.xinitrc and ~/.xprofile files for X desktops
-  - Note: These last two are POSIX shell scripts, not BASH
+Configure files and associated scripts to bootstrap
+my Linux/POSIX environments.
+* Example Bash and other Linux configuration files
+* Useful ~/bin Bash scripts
+* Vim configuration
 
 For these configuration files to fully work, the Bash
 scripts in the [bin](bin) directory need to be put into

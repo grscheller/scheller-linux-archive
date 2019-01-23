@@ -1,0 +1,70 @@
+#
+# ~/.bash_init
+#
+#  Configure initial path, environment variables, 
+#  aliases and shell functions which you want to be
+#  able to change and be inherited, not reset, in 
+#  child bash shells.
+#
+#  This was traditionally done in bash_profile
+#  whenever a login shell was created.  Unfortunately,
+#  in most Desktop Environments, the bash shells
+#  in terminal emulators inherit not from a login
+#  shell, but the POSIX shell scripts which kick off
+#  the X-session.  As a result, only ~/.bashrc can
+#  be counted on to be consistently run.
+#
+
+export BASH_INIT=${BASH_INITCONF:=0}
+((BASH_INITCONF++))
+
+## Sentinel value to mark completion of initial configuration
+#
+#  This will not be defined when a display manager is used.
+#
+function bash_init_sourced () {
+    return 0
+}
+
+export -f bash_init_sourced
+
+# Default file permissions
+umask ug=rwx,o=
+
+export EDITOR=vim
+export VISUAL=vim
+
+## My e-mail address
+export ME='geoffrey@scheller.com'
+
+## Set locale so applications (like Python3) display unicode correctly
+export LANG=en_US.utf8
+
+## To supercede what comes with the Linux distribution.
+PATH=~/local/bin:$PATH
+
+## Python pip configuration
+export PIP_REQUIRE_VIRTUALENV=true
+
+## For Haskell locally contained and administered via stack
+PATH=~/.local/bin:$PATH
+
+## Location Rust Toolchain
+PATH=~/.cargo/bin:$PATH
+
+## Locally installed SBT (Scala Build Tool)
+PATH=~/opt/sbt/bin:$PATH
+
+## My private utils bin and current directory last.
+PATH=$PATH:~/bin
+
+## Clean up PATH
+[[ -x ~/bin/pathTrim ]] && PATH=$(~/bin/pathTrim "$PATH")
+
+## For ssh shell wrapper functions defined in .bashrc
+#
+#                Host-Name                   port   login'
+export  GAUSS17='gauss17                     35881  geoff'
+export MAXWELL4='maxwell4                    29801  geoffrey'
+export    RYGAR='kpsrbylzntj42.testichem.com    22  grscheller'
+

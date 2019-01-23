@@ -6,64 +6,67 @@
 # Usage: realPath /path/to/first/item another/path/to/second/item
 #
 # Purpose: To find the real locations of files and directories.
-#          Will give some limited info on failures other than
-#          just not finding anything.  Not a symlink report tool.
 #
 # Works well with whence,
 #
 #     realPath $(whence java javac scala python cc gcc ghc)
 #
-# Bugs: 1. Execute permission needed in all directories traversed.
-#       2. Don't know how to gag FUNCNEST recursion limit error messages.
-#
 
-export FUNCNEST=50   # For safety, put a limit on the recursion,
-                     # FUNCNEST=0 means no limit, but not a good
-                     # idea for a script that recursively creates
-                     # subshells.
+function check() {
 
-# Recursively resolves all the symlinks
-function followLinks() {
+  errorIP="realPath: ERROR: Insufficient Permitions along path to "
+  errorBL="realPath: ERROR: Broken or circular link: "
+  errorEx="realPath: ERROR: Does not exist: "
+
   Path="$1"
-  currDir="$(pwd)"
-  if [[ -L $Path ]]
+
+  [[ -h $Path ]] && [[ ! -e $Path ]] && echo -n "$errorBL" >&2 && return 1
+  [[ ! -e $Path ]] && echo -n "$errorEx" >&2 && return 1
+  if [[ -d $Path ]]
   then
-      # Basename a symlink
-      symBase="$(basename "$Path")"
-      symDir="$(dirname "$Path")"
+      # Target is directory
       (
-        cd "${symDir}" 2>/dev/null || {
-            echo "$0: For ${currTarget}: Cannot access symlink ${symDir} from ${currDir}" >&2
-            exit
-        }
-        longLS="$(ls -l "${symBase}")"
-        target="${longLS#*-> }"
-        followLinks "$target"
+        if cd -P "$Path" 
+        then
+            # cd directly success
+            pwd -P 
+        else
+            # cd directly failed
+            if cd -P "$(dirname "$Path")"
+            then
+                # cd parent success - Recursion needed here???
+                echo "$(pwd -P)/$(basename "$Path")"
+            else
+                # cd parent failed
+                echo -n "$errorIP" >&2 && exit 1
+            fi
+        fi
       )
   else
-      # Basename not a symlink
-      dirName="$(dirname "$Path")"
-      baseName="$(basename "$Path")"
+      # Target something else
       (
-        cd "$dirName" 2>/dev/null || {
-            echo "$0: For ${currTarget}: Cannot access directory ${dirName} from ${currDir}" >&2
-            exit
-        }
-        if [[ -e $baseName ]]
+        if cd -P "$(dirname "$Path" )"
         then
-            echo -n "$(pwd -P)"
-            if [[ $baseName == . ]]
+            # cd parent success
+            BASENAME=$(basename "$Path")
+            if [[ ! -h "$BASENAME" ]]
             then
-                echo
+                # Not a symlink
+                echo "$(pwd -P)/$BASENAME"
             else
-                echo "/${baseName}"
+                # Recursion needed here!!!
+                longLS="$(ls -l "$BASENAME")"
+                echo "$(pwd -P)/${longLS#*-> }"
             fi
+        else
+            # cd parent failed
+            echo -n "$errorIP" >&2 && exit 1
         fi
       )
   fi
 }
 
-for currTarget in "$@"
+for target in "$@"
 do
-    followLinks "${currTarget}" || echo "$0: For ${currTarget}: Possible circular links" >&2
+    check "$target"  || echo "$target" >&2
 done

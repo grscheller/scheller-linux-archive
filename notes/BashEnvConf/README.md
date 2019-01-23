@@ -1,7 +1,7 @@
 ## Bash Environment Configuration
-Configure files and associated scripts to bootstrap
-my Linux/POSIX environments.
-* Example Bash and other Linux configuration files
+Configuration files and associated scripts to bootstrap
+a Linux/POSIX environments.
+* Example Bash startup scripts
 * Useful ~/bin Bash scripts
 * Vim configuration
 

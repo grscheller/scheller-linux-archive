@@ -12,19 +12,25 @@
 #     realPath $(whence java javac scala python cc gcc ghc)
 #
 
+function follow() {
+    echo "Need to implement similar to original realPath"
+}
+
 function check() {
 
   errorIP="realPath: ERROR: Insufficient Permitions along path to "
-  errorBL="realPath: ERROR: Broken or circular link: "
+  errorBL="realPath: ERROR: Broken or circular symlinaks: "
   errorEx="realPath: ERROR: Does not exist: "
 
   Path="$1"
 
+  # First take care of some edge cases
   [[ -h $Path ]] && [[ ! -e $Path ]] && echo -n "$errorBL" >&2 && return 1
   [[ ! -e $Path ]] && echo -n "$errorEx" >&2 && return 1
+
   if [[ -d $Path ]]
   then
-      # Target is directory
+      # Target exists and is a directory
       (
         if cd -P "$Path" 
         then
@@ -43,7 +49,7 @@ function check() {
         fi
       )
   else
-      # Target something else
+      # Target exists and is not a directory
       (
         if cd -P "$(dirname "$Path" )"
         then

@@ -26,7 +26,7 @@ else
     if [[  $(type -t bash_initconf_ran)  != function ]]
     then 
         # shellcheck source=/dev/null
-        source ~/.bash_initconf
+        source ~/.bash_init
     fi
 
     ## Make sure git asks for passwords on the command line

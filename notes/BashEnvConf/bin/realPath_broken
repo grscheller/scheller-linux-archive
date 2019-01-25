@@ -1,0 +1,94 @@
+#!/bin/bash
+#
+# Purpose: Find the actual locations of files and
+#          directoriea in the file system.
+#
+#   Usage: realPath /path/to/a/file another/path/to/a/directory
+#
+# Works well with whence,
+#
+#   realPath $(whence java javac scala python cc gcc ghc)
+#
+
+errStr=
+errorIP="realPath: ERROR: Insufficient Permitions along path to"
+errorBL="realPath: ERROR: Broken or circular symlinaks:"
+errorEx="realPath: ERROR: Does not exist:"
+
+export FUNCNEST=50   # We try to avoid recursion, but if
+                     # we need to, put a limit on it,
+                     # FUNCNEST=0 means no limit
+
+function follow() {
+    echo "Need to implement similar to original realPath"
+}
+
+function check() {
+
+  local Path="$1"
+
+  # First take care of some edge cases
+#  [[ -h $Path ]] && [[ ! -e $Path ]] && errStr=$errorBL >&2 && return 1
+#  [[ ! -e $Path ]] && errStr=$errorEx && return 1
+
+  if [[ ! -e $Path ]]
+  then
+     if [[ -d $Path ]]
+     then
+        # Target exists and is a directory
+        (
+          echo "directory1 $errorIP"
+          errorIP=foo
+          echo "directory2 $errorIP"
+          if cd -P "$Path" 
+          then
+             # directly success
+             pwd -P 
+          else
+             # cd directly failed
+             if cd -P "$(dirname "$Path")"
+             then
+                # cd parent success - Recursion needed here???
+                echo "$(pwd -P)/$(basename "$Path")"
+             else
+                # cd parent failed
+                errStr=$errorIP && return 1
+             fi
+          fi
+        )
+     else
+        # Target exists and is not a directory
+        (
+          echo "file1 $errorBL"
+          errorBL=bar
+          echo "file2 $errorBL"
+          if cd -P "$(dirname "$Path" )"
+          then
+             # cd parent success
+             BASENAME=$(basename "$Path")
+             if [[ ! -h "$BASENAME" ]]
+             then
+                # Not a symlink
+                echo "$(pwd -P)/$BASENAME"
+             else
+                # Recursion needed here!!!
+                longLS="$(ls -l "$BASENAME")"
+                echo "$(pwd -P)/${longLS#*-> }"
+             fi
+          else
+              # cd parent failed
+              errStr=$errorIP && exit 1
+          fi
+        )
+     fi
+  else
+    :
+  fi
+
+}
+ 
+for path2target in "$@"
+do
+   errStr=
+   check "$path2target"  || echo "geoff $errStr $path2target" >&2
+done

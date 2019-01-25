@@ -30,23 +30,30 @@ scripts interactively in VI mode.  I make bash very ksh-like in its
 command line editting.  That said, EMACS mode is certainly a fine way
 of doing things; it just that I don't know EMACS that well.
 
-1. Extended globbing:
+1. Globbing:
 
-   I usually turn on extended shell pattern matching.  This is
-   not to be confused with regular expression pattern matching
-   which is used by commands like grep and sed or programming
-   languages like Python or Perl.
+   Bash will "wildcard match" filenames in the directory structure.
+   This is not to be confused with regular expression pattern
+   matching, which is used by commands like grep and sed or
+   programming languages like Python and Perl.
 
-   When shopt -s extglob is set, in addition to
-      *
-      ? 
-      []
-   you can also use,
-      ?() zero or one occurances of pattern
-      *() zero or more occurances of pattern
-      +() one or more occurances of pattern
-      @() one occurance of pattern
-      !() anything except the pattern
+        * match 0 or more characters
+        ? match any character
+       [] match any one character between the brackets
+
+2. Extended globbing:
+
+   I usually turn on extended shell pattern matching.
+
+     $ shopt -s extglob
+
+   When turned on, to
+   you can additionally use,
+       ?() zero or one occurances of pattern
+       *() zero or more occurances of pattern
+       +() one or more occurances of pattern
+       @() one occurance of pattern
+       !() anything except the pattern
 
    case $1 in
        a*           ) foo;;   # match anything starting with a
@@ -56,18 +63,17 @@ of doing things; it just that I don't know EMACS that well.
        @(a|e|i|o|u) ) quux;;  # match one vowel
    esac
 
-   Aside: Names like foo, bar, baz, and values like 42 are examples of
-          what are called "metasyntactic variables."  They are just
-          meaningless place holders when illustrating syntax.  In the above
-          they can represent Linux commands or shell functions.  Can
-          also be multiple statements separated by newlines or semicolens.
-
+   Note: Names like foo, bar, baz, and values like 42 are examples of
+         what are called "metasyntactic variables."  They are just
+         meaningless place holders when illustrating syntax.  In the above
+         they can represent Linux commands or shell functions.  Can
+         also be multiple statements separated by newlines or semicolens.
 
    Note: Case statements end with a "esac", case spelled backwards.
          If statements end similarly with an "fi".  This comes from
          the original Bourn shell where it was stolen from Algol.
 
-2. In Bash4 and later, case has (in addition to ;;) ;& and ;;&
+3. In Bash4 and later, case has (in addition to ;;) ;& and ;;&
 
        ;&  fall through without testing next case (like in C without break)
        ;;& means don't terminate, continue testing 
@@ -88,7 +94,7 @@ of doing things; it just that I don't know EMACS that well.
                 ;;
            esac
                 
-3. Redirection tricks:
+5. Redirection tricks:
 
    Read from commands or pipes as if they were files.
      $ cat <(echo -e "Hello,\nEveryone" | sed 's/^E.*/there/') <(echo 'World!')
@@ -174,7 +180,7 @@ of doing things; it just that I don't know EMACS that well.
      good
      bye
 
-5. Array variables:
+6. Array variables:
 
    In bash, all variables are array variables.
 
@@ -230,7 +236,7 @@ of doing things; it just that I don't know EMACS that well.
       $ echo ${!gang[@]}
       0 1 2 3 4 5
 
-6. Speaking of redirection, 
+7. Speaking of redirection, 
 
       $ foo=bar
       $ bar=baz
@@ -239,7 +245,7 @@ of doing things; it just that I don't know EMACS that well.
       $ echo ${!foo}
       baz
 
-7. Default values for shell variables:
+8. Default values for shell variables:
 
    Use := within the {} to specify a default value for a shell variable,
    if it is unset.
@@ -252,7 +258,7 @@ of doing things; it just that I don't know EMACS that well.
       $ echo $FavoriteCake 
       Chocolotte Cake
 
-8. Comments begin with a # and can occur anywhere on a line:
+9. Comments begin with a # and can occur anywhere on a line:
       # This is a comment
       Foo="foo"  # This is a comment too.
       Bar="bar"
@@ -262,24 +268,24 @@ of doing things; it just that I don't know EMACS that well.
                          # It will work without the brackets, but I think
                          # they make the command more readable.
 
-9. Shell variables verses environment variables.
+10. Shell variables verses environment variables.
 
-   To define a shell variable, use an = with no unquoted spaces.
-   These are only known to the current shell.  So that other programs
-   (but not sub-shells) know nothing about them, you need to "export
-   them to the environment."
+    To define a shell variable, use an = with no unquoted spaces.
+    These are only known to the current shell.  Other programs
+    (but not sub-shells) know nothing about them, you need to
+    "export them to the environment."
 
       $ answer=42
-      $ bash          # We are now in a completely different instance of bash
+      $ bash          # Now in a completely different instance of bash
       $ echo "The answer is ${answer}."
       The answer is .
       $ exit                 # We are back in the original shell.
-      $ export answer     # answer is now known to the environment.
-      $ bash     # sub-shell again
+      $ export answer        # Answer is now known to the environment.
+      $ bash                 # Brand new instance again.
       $ echo "The answer is ${answer}."
       The answer is 42.
-      $ exit   # ctrl-d will also get you back to the original shell
-      $ answer=53
+      $ exit         # Also <ctrl-d> will exit you from the shell.
+      $ answer=53    # Don't have to "re-export" to the environment.
       $ bash
       $ echo "The answer is ${answer}."
       The answer is 53.
@@ -290,38 +296,53 @@ of doing things; it just that I don't know EMACS that well.
       $ echo "The answer is ${answer}."   # value unchanged in parent shell
       The answer is 53.
 
-   Note: Unlike the standard sh, you don't have to re-export a shell
-   variable to the environment every time you change it.  Also, csh
-   contains two separate namespaces for shell and environment variables,
-   which can get very confusing for someone coming from bash without
-   a heads up.
+    Note: Unlike the old AT&T Bourn Shell, not to be confused with
+          POSIX/Standard Shell, you don't need to re-export shell
+          variables every time you change them for their new values
+          to be picked up by the environment.
 
-   Also note: Bash subshells are not separate instances of bash:
+    Note: C Shell (csh) contains two separate namespaces for shell and
+          environment variables, which can be very confusing for someone
+          with Bash or POSIX/Standard Shell experience.
 
-      # Export one shell variable but not the other
-      $ export cap=kirk; snd=spock
+    Bash subshells are not separate instances of bash:
 
-      $ echo $cap and $snd
-      kirk and spock
+       # Export one shell variable but not the other
+       $ export cap=kirk
+       $ snd=spock
 
-      # Shell substitution happens in subshell
-      $ (cap=picard; snd=riker; echo $cap and $snd)
-      picard and riker
+       $ echo $cap and $snd
+       kirk and spock
 
-      # You can force substitution to happen in parent shell
-      $ eval "(cap=picard; snd=riker; echo $cap and $snd)"
-      kirk and spock
+       # Shell substitution happens in subshell.
+       $ (cap=picard; snd=riker; echo $cap and $snd)
+       picard and riker
 
-      # Unexported shell variable snd known to subshell
-      $ (cap=picard; echo $cap and $snd)
-      picard and spock
+       # Even if unexported, when not defined in
+       # the subshell, shell variables will inherit
+       # their values from the ones in the parent shell.
+       $ (cap=picard; echo $cap and $snd)
+       picard and spock
 
-      # But not to a child process (which in this case happens to be 
-      #                             just another instance of bash)
-      $ bash -c 'echo $cap and $snd'
-      kirk and
+       # This doesn't hold for child processes.
+       $ bash -c 'echo $cap and $snd'
+       kirk and
 
-10. Big and little nibbles:
+       # You can force substitution to happen in the parent shell
+       $ eval "(cap=picard; snd=riker; echo $cap and $snd)"
+       kirk and spock
+
+       # Bad idea to abuse this feature and start
+       # treating Bash like a macro language.
+       $ cap2=cap; snd2=snd
+       $ dollar='$'
+       $ eval "(cap=picard; snd=riker   
+           echo $cap and $snd    
+           echo ${dollar}$cap2 and ${dollar}$snd2)"
+       kirk and spock
+       picard and riker
+
+11. Big and little nibbles:
 
     Let 
    
@@ -341,7 +362,7 @@ of doing things; it just that I don't know EMACS that well.
       $ echo ${aString%% *}      # A space followed by anything from end
       Hello
 
-11. Prefer using [[ ... ]] over [ ... ].
+12. Prefer using [[ ... ]] over [ ... ].
 
     In standard Bourn shell `[' was an actual program called test.  
     They are located here: /usr/bin/[
@@ -379,7 +400,7 @@ of doing things; it just that I don't know EMACS that well.
    Unfortunately, utilities like make and X-Window start-up scripts
    use POSIX shell, you still need to be able to deal with [ ... ].
 
-12. [[ ... ]] is a "command" on its own and not part of the `if' command
+13. [[ ... ]] is a "command" on its own and not part of the `if' command
     syntax.  
 
       $ if ls foo >& /dev/null
@@ -404,7 +425,7 @@ of doing things; it just that I don't know EMACS that well.
       > fi
       Neither file, foo nor bar, is there.
 
-13. Use (( ... )) instead of [[ ... ]] for arithmetic and numeric
+14. Use (( ... )) instead of [[ ... ]] for arithmetic and numeric
     testing in Bash.
 
     Do this:
@@ -431,7 +452,7 @@ of doing things; it just that I don't know EMACS that well.
           jj=`expr $jj + 1`
       done
 
-14. Use $(...) instead of back tics `...`.
+15. Use $(...) instead of back tics `...`.
 
     $(...) is used to embed the output of a bash command or
     pipeline into a bash script as if you typed it.  It is
@@ -464,7 +485,7 @@ of doing things; it just that I don't know EMACS that well.
       $ echo $otherUsers
       dbus polkitd postfix rtkit systemd+ UID
  
-15. Comparisons via [[ ... ]] and the non-stictness of && and ||.
+16. Comparisons via [[ ... ]] and the non-stictness of && and ||.
 
     Strings and numerics use different sets of operators:
 
@@ -507,7 +528,7 @@ of doing things; it just that I don't know EMACS that well.
       > fi
       MATLAB file
 
-16. Looping constructs:
+17. Looping constructs:
 
     Loop a fixed number of times,
 
@@ -555,7 +576,7 @@ of doing things; it just that I don't know EMACS that well.
       Quit? [y|Y]: y
       $ 
 
-17. Shell functions:
+18. Shell functions:
 
     Shell functions are bash subroutines that execute in the context
     of the current shell.  These "functions" don't return values.
@@ -620,7 +641,7 @@ of doing things; it just that I don't know EMACS that well.
     $ echo $a $b
     a2 b1
 
-18. Aliases:
+19. Aliases:
 
     The alias command allows a string to be substituted as the first
     word of a simple command.  Useful if you want to change the default
@@ -648,7 +669,7 @@ of doing things; it just that I don't know EMACS that well.
       shopt -s expand_aliases
 
 
-19. Editting differences between vi/vim and bash in vi mode:
+21. Editting differences between vim and bash in vi mode:
 
     Use 
 
@@ -656,32 +677,32 @@ of doing things; it just that I don't know EMACS that well.
 
     to switch from the default emacs bash cmdline editing mode.
 
-    You can edit a command with vi by esc-v , this in
+    You can edit a command with vim by <esc>v , this in
     particularly useful in editting multiline commands.
 
-    Some differences from vim while in command mode are:
+    Some differences from vim while in cmdline editing mode are:
 
-      cntl-k  delete from cursor to end of line
-      cntl-u  delete from before cursor beginning of line
-      k           move to previous command in history (beginning of line)
-      up-arrow    move to previous command in history (beginning of line)
-      j           move to next line in history (beginning of line)
-      down-arror  move to next line in history (beginning of line)
-      #         prepend # to current line and put in history
+      <cntl-k>      delete from cursor to end of line
+      <cntl-u>      delete from before cursor beginning of line
+      k             move to previous command in history (beginning of line)
+      <up-arrow>    move to previous command in history (beginning of line)
+      j             move to next line in history (beginning of line)
+      <down-arrow>  move to next line in history (beginning of line)
+      #             prepend # to current line and put in history
 
-    while in type mode:
+    while in typing mode:
 
-      up-arrow    move to previous command in history (end of line)
-      down-arror  move to next line in history (end of line)
+      <up-arrow>    move to previous command in history (end of line)
+      <down-arror>  move to next line in history (end of line)
 
     and in either command or typing mode:
 
-      ctrl-r    reverse search history, <ret> to execute, <esc> to edit
-      ctrl-s    forward search history, <ret> to execute, <esc> to edit
+      <ctrl-r>    reverse search history, <ret> to execute, <esc> to edit
+      <ctrl-s>    forward search history, <ret> to execute, <esc> to edit
 
-    Note: To use ctrl-s, you need to turn off terminal flow
+    Note: To use <ctrl-s>, you need to turn off terminal flow
           control.  To do this, use the "stty -ixon" command.
-          You will no longer be able to use ctrl-s to stop
-          output and ctrl-u to start it again.  Use "stty ixon"
+          You will no longer be able to use <ctrl-s> to stop
+          output and <ctrl-u> to start it again.  Use "stty ixon"
           to turn flow control back on.
 

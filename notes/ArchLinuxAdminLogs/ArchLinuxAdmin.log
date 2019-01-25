@@ -5490,3 +5490,17 @@ Note: Basically rebuilt system from scratch starting on 2017-06-20
   on other useful information.  The Linux manpages are their own
   pacman package, so man time reported on /usr/bin/time without the
   time package being installed.
+
+2019-02-24:
+  Installed a light weight, POSIX compliant shell call Dash.
+
+    $ sudo pacman -Syu dash
+
+  Reason was`that when bash is in POSIX compliant mode via 
+
+    $ bash -o posix
+
+  bash extensions are not disabled.  By "compliant" they mean
+  that if you limit yourself to a POSIX compliant subset of
+  bash, then bash will behave as closely as possible to the
+  POSIX standard.

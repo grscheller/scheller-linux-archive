@@ -62,6 +62,14 @@ else
       kpsrbylzntj42)
         HOST=rygar
         ;;
+      SCOTCh)
+        if [[ $(uname) == CYGWIN_NT-10.0 ]]
+        then
+            HOST=cygwin
+        else
+            HOST=mingwin
+        fi
+        ;;
     esac
 
     case $TERM in

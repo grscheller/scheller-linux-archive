@@ -16,12 +16,15 @@ unset Fields Path Dir
 # Standarize the $PATH list:
 #   - remove redundant / and :
 #   - remove trailing /'s on directory names
-#   - /./ -> /  path components.
+#   - /./ -> / 
 #
-SED=$(command -p getconf PATH)/sed
-Path=$(echo "$@" | $SED -E -e's!/+!/!g' -e's!:+!:!g' -e's!/:!:!g' -e's!/\./!/!g')
+regExp='s!/+!/!g
+        s!:+!:!g
+        s!/:!:!g
+        s!/\./!/!g'
+Path=$(echo "$@" | command -p sed -E -e"$regExp" <(echo -n "$@"))
 
-# Search for duplicates and add entries for only existing dirctories
+# Search for duplicates and add entries for only dirctories that exist
 OLDIFS=$IFS; IFS=':'
 for Dir in $Path
 do
@@ -37,7 +40,7 @@ done
 IFS=$OLDIFS
 
 # Construct new path string and send to stdout
-Path=''
+Path=
 for Field in "${Fields[@]}"  # Create PATH string from array
 do
     Path+=${Field}:

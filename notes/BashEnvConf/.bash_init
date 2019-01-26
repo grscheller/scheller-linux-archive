@@ -78,7 +78,7 @@ export   GALAGA='kpsrbyftyyh07.testichem.com    22  grscheller'
 #  Mingw stuff from $PATH.
 if [[ $(uname) == CYGWIN_NT-10.0 ]]
 then
-sedScript='s!:/cygdrive/c/Program Files/Git/[^:]*:!:!g
+sedScript='s!/cygdrive/c/Program Files/Git/[^:]*:!!g
            s!:+!:!g'
 PATH=$(command -p sed -E -e"$sedScript" <(echo -n "$PATH"))
 fi

@@ -22,7 +22,7 @@ regExp='s!/+!/!g
         s!:+!:!g
         s!/:!:!g
         s!/\./!/!g'
-Path=$(echo "$@" | command -p sed -E -e"$regExp" <(echo -n "$@"))
+Path=$(command -p sed -E -e"$regExp" <(echo -n "$@"))
 
 # Search for duplicates and add entries for only dirctories that exist
 OLDIFS=$IFS; IFS=':'

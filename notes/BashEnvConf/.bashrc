@@ -50,28 +50,25 @@ else
     HISTFILESIZE=10000
     HISTCONTROL="ignoredups"
 
-    ## Set up prompt, save history whenever displayed
+    ## Assign more memorable names to hosts
     export HOST=${HOSTNAME%%.*}
     case $HOST in
-      gauss17)
-        HOST=gauss17
-        ;;
-      maxwell4)
-        HOST=maxwell4
+      kpsrbyftyyh07)
+        HOST=galaga
         ;;
       kpsrbylzntj42)
         HOST=rygar
         ;;
       SCOTCh)
-        if [[ $(uname) == CYGWIN_NT-10.0 ]]
-        then
+        if [[ $(uname) == CYGWIN_NT-10.0 ]]; then
             HOST=cygwin
-        else
-            HOST=mingwin
+        elif [[ $(uname) == MINGW64_NT-10.0 ]]; then
+            HOST=mingw
         fi
         ;;
     esac
 
+    ## Save history whenever prompt displayed
     case $TERM in
       xterm*|rxvt*|urxvt*|kterm*|gnome*)
         PROMPT_COMMAND='history -a; echo -ne "\033]0;${USER}@${HOST}\007"'
@@ -191,6 +188,7 @@ else
     alias gauss17='sshToSystem ${GAUSS17}'
     alias maxwell4='sshToSystem ${MAXWELL4}'
     alias rygar='sshToSystem ${RYGAR}'
+    alias galaga='sshToSystem ${GALAGA}'
 
     ## scp related functions and aliases
     function toSystem() {
@@ -222,6 +220,9 @@ else
 
     alias toRygar='toSystem ${RYGAR}'
     alias fromRygar='fromSystem ${RYGAR}'
+
+    alias toGalaga='toSystem ${GALAGA}'
+    alias fromGalaga='fromSystem ${GALAGA}'
 
     ## Bash completion for stack (Haskell)
     #eval "$(stack --bash-completion-script stack)"

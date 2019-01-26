@@ -29,5 +29,8 @@ fi
 
 ## Perform tasks unique to login shells
 
-# Log when this file gets sourced
-echo "$(date): by $(ps h -q $$)" >> ~/.log_source_bash_profile
+# Add grs modules if on HPCMP Supercomputers
+if [[ -n $MODULEPATH ]] && [[ -d ~/grs_modulefiles ]]
+then
+    MODULEPATH=$MODULEPATH:~/grs_modulesfiles
+fi

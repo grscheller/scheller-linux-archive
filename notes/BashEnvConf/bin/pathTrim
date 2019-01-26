@@ -18,11 +18,11 @@ unset Fields Path Dir
 #   - remove trailing /'s on directory names
 #   - /./ -> / 
 #
-regExp='s!/+!/!g
-        s!:+!:!g
-        s!/:!:!g
-        s!/\./!/!g'
-Path=$(command -p sed -E -e"$regExp" <(echo -n "$@"))
+sedScript='s!/+!/!g
+           s!:+!:!g
+           s!/:!:!g
+           s!/\./!/!g'
+Path=$(command -p sed -E -e"$sedScript" <(echo -n "$@"))
 
 # Search for duplicates and add entries for only dirctories that exist
 OLDIFS=$IFS; IFS=':'

@@ -64,6 +64,8 @@ else
             HOST=Cygwin
         elif [[ $(uname) == MINGW64_NT-10.0 ]]; then
             HOST=MinGW
+        elif [[ $(uname) == MSYS_NT-10.0 ]]; then
+            HOST=MSYS2
         fi
         ;;
     esac
@@ -144,7 +146,7 @@ else
     function fm () {
         local DiR="$1"
         [[ -n $DiR ]] || DiR="$PWD"
-        if [[ $HOST =~ (Cygwin|MinGW) ]]
+        if [[ $HOST =~ (Cygwin|MinGW|MSYS2) ]]
         then
             explorer "$(cygpath -w $DiR)"
         else
@@ -154,7 +156,7 @@ else
 
     # Terminal which inherits environment of parent shell
     function tm () {
-        if [[ $HOST =~ (Cygwin|MinGW) ]]; then
+        if [[ $HOST =~ (Cygwin|MinGW|MSYS2) ]]; then
             ( mintty & )
         elif [[ -x /usr/bin/gnome-terminal ]]; then
             ( /usr/bin/gnome-terminal & )

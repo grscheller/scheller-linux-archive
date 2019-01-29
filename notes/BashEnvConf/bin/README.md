@@ -1,5 +1,10 @@
 ## Bash Utilities
 Theses are the bash utilities I put into my Linux ~/bin directory
+
+Design goals are:
+* In POSIX compliant environment, these should "always work"
+* In a "sufficiently" POSIX like environment, should "more or less work"
+* In a non-POSIX environment, your "mileage will vary"
 ### [path](path)
 * Spreads $PATH out in a more user readable form
 * Output more appropriate as input to other shell commands

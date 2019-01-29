@@ -1,102 +1,69 @@
 #!/bin/bash
 #
-# Purpose: Find the actual locations of files and
-#          directoriea in the file system.
+# Resolve symlinks and print out the real path for each
+# path given on the commandline.
 #
-#   Usage: realPath /path/to/a/file another/path/to/a/directory
+# Usage: realPath /path/to/first/item another/path/to/second/item
+#
+# Purpose: To find the real locations of files and directories.
+#          Will give some limited info on failures other than
+#          just not finding anything.  Not a symlink report tool.
 #
 # Works well with whence,
 #
-#   realPath $(whence java javac scala python cc gcc ghc)
+#     realPath $(whence java javac scala python cc gcc ghc)
+#
+# Bugs: 1. Execute permission needed in all directories traversed.
+#       2. Don't know how to gag FUNCNEST recursion limit error messages.
 #
 
-## Todo: 1. get rid of the subshells
-##       2. cd one process
-##       3. bash array of chased down directories
-##       4. trap to return to original directory if failure
+export FUNCNEST=50   # For safety, put a limit on the recursion,
+                     # FUNCNEST=0 means no limit, but not a good
+                     # idea for a script that recursively creates
+                     # subshells.
 
-errMsg=
-errStr="realPath: ERROR: "
-errorIP="${errStr}Permition problems along path to"; ((errIP=1))
-errorBL="${errStr}Broken or circular symlinaks:";    ((errBL=2))
-errorEx="${errStr}Does not exist:";                  ((errEx=3))
-
-SED=$(command -p getconf PATH)/sed
-
-export FUNCNEST=50   # We try to avoid recursion, but if
-                     # we need to, put a limit on it,
-                     # FUNCNEST=0 means no limit
-
-function follow() {
-    echo "Need to implement similar to original realPath"
-}
-
-function check() {
-
-  local Path="$1"
-
-  # Standarize the $PATH list:
-  Path=$(echo "$1" | $SED -E -e's!/+!/!g' -e's!:+!:!g' -e's!/:!:!g' -e's!/\./!/!g')
-
-  # First take care of some edge cases
-  [[ -h $Path ]] && [[ ! -e $Path ]] && errStr=$errorBL >&2 && return 1
-  [[ ! -e $Path ]] && errStr=$errorEx && return 1
-
-  if [[  -e $Path ]]
+# Recursively resolves all the symlinks
+followLinks () {
+  Path="$1"
+  currDir="$(pwd)"
+  if [[ -L $Path ]]
   then
-     if [[ -d $Path ]]
-     then
-        # Target exists and is a directory
-        (
-          if cd -P "$Path" 
-          then
-             # directly success
-             pwd -P 
-          else
-             # cd directly failed
-             if cd -P "$(dirname "$Path")"
-             then
-                # cd parent success - Recursion needed here???
-                echo "$(pwd -P)/$(basename "$Path")"
-             else
-                # cd parent failed
-                errStr=$errorIP && return 1
-             fi
-          fi
-        )
-     else
-        # Target exists and is not a directory
-        (
-          echo "file1 $errorBL"
-          errorBL=bar
-          echo "file2 $errorBL"
-          if cd -P "$(dirname "$Path" )"
-          then
-             # cd parent success
-             BASENAME=$(basename "$Path")
-             if [[ ! -h "$BASENAME" ]]
-             then
-                # Not a symlink
-                echo "$(pwd -P)/$BASENAME"
-             else
-                # Recursion needed here!!!
-                longLS="$(ls -l "$BASENAME")"
-                echo "$(pwd -P)/${longLS#*-> }"
-             fi
-          else
-              # cd parent failed
-              errStr=$errorIP && exit 1
-          fi
-        )
-     fi
+      # Basename a symlink
+      symBase="$(basename "$Path")"
+      symDir="$(dirname "$Path")"
+      (
+        cd "${symDir}" 2>/dev/null || {
+            echo "$0: For ${currTarget}: Cannot access symlink ${symDir} from ${currDir}" >&2
+            exit
+        }
+        longLS="$(ls -l "${symBase}")"
+        target="${longLS#*-> }"
+        followLinks "$target"
+      )
   else
-    :
+      # Basename not a symlink
+      dirName="$(dirname "$Path")"
+      baseName="$(basename "$Path")"
+      (
+        cd "$dirName" 2>/dev/null || {
+            echo "$0: For ${currTarget}: Cannot access directory ${dirName} from ${currDir}" >&2
+            exit
+        }
+        if [[ -e $baseName ]]
+        then
+            echo -n "$(pwd -P)"
+            if [[ $baseName == . ]]
+            then
+                echo
+            else
+                echo "/${baseName}"
+            fi
+        fi
+      )
   fi
-
 }
- 
-for path2target in "$@"
+
+for currTarget in "$@"
 do
-   errMes=
-   check "$path2target"  || echo "geoff $errStr $path2target" >&2
+    followLinks "${currTarget}" || echo "$0: For ${currTarget}: Possible circular links" >&2
 done

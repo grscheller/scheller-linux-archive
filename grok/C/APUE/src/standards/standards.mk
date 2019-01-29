@@ -3,19 +3,19 @@
 PATH_STDS := src/standards
 PROGS_STDS := sysLimits sysNoLimits
 
-PROGS_STDS_FULL := $(addprefix $(PATH_STDS)/,$(PROGS_STDS))
+PROGS_STDS_FULL := $(addprefix $(PATH_STDS)/,$(addsuffix $(EXT),$(PROGS_STDS)))
 
 standards: $(PROGS_STDS_FULL)
 
-$(PATH_STDS)/%: $(PATH_STDS)/%.c $(APUE_H) $(LIBAPUE_A)
+$(PATH_STDS)/%$(EXT): $(PATH_STDS)/%.c $(APUE_H) $(LIBAPUE_A)
 	$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ $< $(LDFLAGS)
 
-$(PATH_STDS)/sysLimits: $(PATH_STDS)/sysLimits.c \
+$(PATH_STDS)/sysLimits$(EXT): $(PATH_STDS)/sysLimits.c \
                         $(PATH_STDS)/sysLimitsUtils.o \
                         $(APUE_H) $(LIBAPUE_A)
 	$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ $< $(PATH_STDS)/sysLimitsUtils.o $(LDFLAGS)
 
-$(PATH_STDS)/sysNoLimits: $(PATH_STDS)/sysLimits.c \
+$(PATH_STDS)/sysNoLimits$(EXT): $(PATH_STDS)/sysLimits.c \
                         $(PATH_STDS)/sysLimitsUtils.o \
                         $(APUE_H) $(LIBAPUE_A)
 	$(CC) $(CFLAGS) -DNO_LIMITS $(CPPFLAGS) -o $@ $< $(PATH_STDS)/sysLimitsUtils.o $(LDFLAGS)

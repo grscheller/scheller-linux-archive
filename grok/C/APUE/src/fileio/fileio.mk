@@ -3,11 +3,11 @@
 PATH_FILEIO := src/fileio
 PROGS_FILEIO := cpp_constants seekTest
 
-PROGS_FILEIO_FULL := $(addprefix $(PATH_FILEIO)/,$(PROGS_FILEIO))
+PROGS_FILEIO_FULL := $(addprefix $(PATH_FILEIO)/,$(addsuffix $(EXT),$(PROGS_FILEIO)))
 
 fileio: $(PROGS_FILEIO_FULL)
 
-$(PATH_FILEIO)/%: $(PATH_FILEIO)/%.c $(APUE_H) $(LIBAPUE_A)
+$(PATH_FILEIO)/%$(EXT): $(PATH_FILEIO)/%.c $(APUE_H) $(LIBAPUE_A)
 	$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ $< $(LDFLAGS) 
 
 cleanfileio:

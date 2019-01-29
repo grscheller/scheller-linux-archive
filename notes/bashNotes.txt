@@ -1,34 +1,35 @@
-Probably you will get the most out of these notes if you already are
-functional with Bash.  For a good introductory tutorial, I suggest
-using "The Linux Command Line" by William Shotts.  Most of what I
-know about shell programming comes from David Korn's ksh book and
-the Unix/Linux man pages.  Bash is a superset of the Bourn Shell
-with the best features of both the Korn Shell and the C Shell
-added.
+The purpose of these notes is to document Bash shell scripting
+techniques and give some best practices.  Bash is the official
+shell of the GNU Operating System.  The topics discussed are in
+no particular order.
 
-The original Bourn Shell was flawed.  There are features of the
-Bourn Shell that are in Bash for backward compatibility.  These
-should be avoided as indicated later in the notes.  POSIX Shell
-is not the the original AT&T Bourn Shell.  POSIX Shell is based
-on the subset of ksh and ideas from C Shell.
+These notes are not about how to write lowest common denominator,
+maximally portable, "POSIX Compliant/Standard Shell" scripts.
+POSIX/Standard Shell is a standard that various UNIX shells,
+to a greater or lesser extent, try adhering to.  It should NOT
+be confused with the original AT&T Bourne Shell.  POSIX/Standard
+Shell is acually based on a subset of the Korn Shell (Ksh) with
+interactive ideas from C Shell.
+
+The original Bourne Shell was flawed.  There are features of the
+Bourne Shell that are in Bash for backward and POSIX compatibility.
+When Bash scripting, These features should be avoided as indicated
+later in the notes.
 
 C Shell was revolutionary in its day.  It provides for enhanced 
 interactive user operability.  Its syntax was modeled after the C
 programming language which made it easier for C programmers to learn. 
 Unfortunately, it has an inconsistent grammer and its syntax is
-rather adhoc across the language.  Compared to Bash, it is
-really, really slow.
+rather adhoc across the language.  C Shell is still used by
+(non-computer science) scientists, but otherwise is dead.
 
-Bash command line editting can use either EMACS or VI mode.  Emacs and
-vi are text editting programs invented for terminal use.  Emacs and vi
-are both very powerful editors.  By default bash uses emacs mode.  Since
-I have invested a lot of time learning vi, I use that mode by doing
-the command "set -o vi" in my .bashrc file.  I also do some other 
-modifications in .bashrc to further enhance the power of VI mode
-and interacting with the shell history.  I have written entire shell
-scripts interactively in VI mode.  I make bash very ksh-like in its
-command line editting.  That said, EMACS mode is certainly a fine way
-of doing things; it just that I don't know EMACS that well.
+Korn Shell was AT&T's UNIX System V replacement for the Bourne Shell.
+Unfornuately it came out after AT&T made System V completely
+proprietary software.  It became very popular in proprietary Unices.
+
+To get the most out of these notes, one needs to be already
+functional with Bash.  For a good introductory tutorial,
+I suggest "The Linux Command Line" by William Shotts.
 
 1. Globbing:
 
@@ -71,9 +72,9 @@ of doing things; it just that I don't know EMACS that well.
 
    Note: Case statements end with a "esac", case spelled backwards.
          If statements end similarly with an "fi".  This comes from
-         the original Bourn shell where it was stolen from Algol.
+         the original Bourne shell where it was stolen from Algol.
 
-3. In Bash4 and later, case has (in addition to ;;) ;& and ;;&
+3. In Bash version 4 and later, case has (in addition to ;;) ;& and ;;&
 
        ;&  fall through without testing next case (like in C without break)
        ;;& means don't terminate, continue testing 
@@ -166,19 +167,19 @@ of doing things; it just that I don't know EMACS that well.
    Alot of times the former and latter seem to accomplish the same
    thing, they gag error messages.  In the latter, we are depending
    that cmd is smart enough to know what to do in case it encounters
-   descriptor (as in C language file descriptor).
+   closed file descriptor (as in C language file descriptor).
    This can be used for efficiency, but depends on knowledge of the
    internal workings of commands.  Usually cmd complains:
 
-     $ tee junk 1>&-
-     good
-     tee: standard output: Bad file descriptor
-     bye
-     tee: write error: Bad file descriptor
-     ^D
-     $ cat junk
-     good
-     bye
+     $ printf "Hello World\nGood bye for now\n" | tee junk1
+     Hello World
+     Good bye for now
+     $ printf "Hello World\nGood bye for now\n" | tee junk2 >&-
+     tee: 'standard output': Bad file descriptor
+     $ cat junk2
+     Hello World
+     Good bye for now
+     $ 
 
 6. Array variables:
 
@@ -296,7 +297,7 @@ of doing things; it just that I don't know EMACS that well.
       $ echo "The answer is ${answer}."   # value unchanged in parent shell
       The answer is 53.
 
-    Note: Unlike the old AT&T Bourn Shell, not to be confused with
+    Note: Unlike the old AT&T Bourne Shell, not to be confused with
           POSIX/Standard Shell, you don't need to re-export shell
           variables every time you change them for their new values
           to be picked up by the environment.

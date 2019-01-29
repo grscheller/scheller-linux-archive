@@ -1,69 +1,34 @@
 #!/bin/bash
 #
-# Resolve symlinks and print out the real path for each
-# path given on the commandline.
+# Drill down through $PATH to look for files or directories.
+# Like the ksh builtin whence, except it does not stop
+# after finding the first instance.  Handles spaces in file names 
+# and directories on $PATH.  Also shell patterns supported.
 #
-# Usage: realPath /path/to/first/item another/path/to/second/item
-#
-# Purpose: To find the real locations of files and directories.
-#          Will give some limited info on failures other than
-#          just not finding anything.  Not a symlink report tool.
-#
-# Works well with whence,
-#
-#     realPath $(whence java javac scala python cc gcc ghc)
-#
-# Bugs: 1. Execute permission needed in all directories traversed.
-#       2. Don't know how to gag FUNCNEST recursion limit error messages.
+# Usage: digPath file1 file2 ...
+#        digPath 'pattern'
 #
 
-export FUNCNEST=50   # For safety, put a limit on the recursion,
-                     # FUNCNEST=0 means no limit, but not a good
-                     # idea for a script that recursively creates
-                     # subshells.
+shopt -s extglob   # Turn on extended pattern matching
 
-# Recursively resolves all the symlinks
-followLinks () {
-  Path="$1"
-  currDir="$(pwd)"
-  if [[ -L $Path ]]
-  then
-      # Basename a symlink
-      symBase="$(basename "$Path")"
-      symDir="$(dirname "$Path")"
-      (
-        cd "${symDir}" 2>/dev/null || {
-            echo "$0: For ${currTarget}: Cannot access symlink ${symDir} from ${currDir}" >&2
-            exit
-        }
-        longLS="$(ls -l "${symBase}")"
-        target="${longLS#*-> }"
-        followLinks "$target"
-      )
-  else
-      # Basename not a symlink
-      dirName="$(dirname "$Path")"
-      baseName="$(basename "$Path")"
-      (
-        cd "$dirName" 2>/dev/null || {
-            echo "$0: For ${currTarget}: Cannot access directory ${dirName} from ${currDir}" >&2
-            exit
-        }
-        if [[ -e $baseName ]]
-        then
-            echo -n "$(pwd -P)"
-            if [[ $baseName == . ]]
-            then
-                echo
-            else
-                echo "/${baseName}"
-            fi
-        fi
-      )
-  fi
-}
-
-for currTarget in "$@"
+((i = 0))
+for File in "$@"
 do
-    followLinks "${currTarget}" || echo "$0: For ${currTarget}: Possible circular links" >&2
+   IFS=':'
+   for Dir in $PATH
+   do
+      if [[ -d "$Dir" ]]
+      then
+          for match in $Dir/$File
+          do
+              [[ -f $match ]] && FileList[((i++))]="$match"
+              [[ -d $match ]] && FileList[((i++))]="$match/"
+          done
+      fi
+   done
+done
+
+for File in "${FileList[@]}"
+do
+   echo "$File"
 done

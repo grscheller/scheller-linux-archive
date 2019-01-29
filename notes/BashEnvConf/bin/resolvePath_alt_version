@@ -3,11 +3,11 @@
 # Purpose: Find the actual locations of files and
 #          directoriea in the file system.
 #
-#   Usage: realPath /path/to/a/file another/path/to/a/directory
+#   Usage: resolvePath /path/to/a/file another/path/to/a/directory
 #
 # Works well with whence,
 #
-#   realPath $(whence java javac scala python cc gcc ghc)
+#   reslvePath $(whence java javac scala python cc gcc ghc)
 #
 
 ## Todo: 1. get rid of the subshells
@@ -16,7 +16,7 @@
 ##       4. trap to return to original directory if failure
 
 errMsg=
-errStr="realPath: ERROR: "
+errStr="resolvePath: ERROR: "
 errorIP="${errStr}Permition problems along path to"; ((errIP=1))
 errorBL="${errStr}Broken or circular symlinaks:";    ((errBL=2))
 errorEx="${errStr}Does not exist:";                  ((errEx=3))

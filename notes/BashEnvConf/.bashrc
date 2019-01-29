@@ -61,9 +61,9 @@ else
         ;;
       SCOTCh)
         if [[ $(uname) == CYGWIN_NT-10.0 ]]; then
-            HOST=cygwin
+            HOST=Cygwin
         elif [[ $(uname) == MINGW64_NT-10.0 ]]; then
-            HOST=mingw
+            HOST=MinGW
         fi
         ;;
     esac

@@ -140,31 +140,37 @@ else
 
     ## GUI-land aliases and functions
 
-    # Gnome's file manager
+    # Open Desktop or Windows file manager
     function fm () {
         local DiR="$1"
-        [[ -n $DiR ]] || DiR='.'
-        ( /usr/bin/nautilus "$DiR" & )
+        [[ -n $DiR ]] || DiR="$PWD"
+        if [[ $HOST =~ (Cygwin|MinGW) ]]
+        then
+            explorer "$(cygpath -w $DiR)"
+        else
+            xdg-open "$DiR" 
+        fi
     }
 
     # Terminal which inherits environment of parent shell
     function tm () {
-        if [[ -x /usr/bin/gnome-terminal ]]
-        then
-            ( /usr/bin/gnome-terminal &>/dev/null & )
+        if [[ $HOST =~ (Cygwin|MinGW) ]]; then
+            ( mintty & )
+        elif [[ -x /usr/bin/gnome-terminal ]]; then
+            ( /usr/bin/gnome-terminal & )
         else
-            ( /usr/bin/xterm &>/dev/null & )
+            ( /usr/bin/xterm & )
         fi
     }
 
     # PDF Reader
     function ev() {
-      ( /usr/bin/evince "$@" &>/dev/null & )
+      ( /usr/bin/evince "$@" >& /dev/null & )
     }
 
     # Firefox Browser
     function ff() {
-      ( /usr/bin/firefox "$@" &>/dev/null & )
+      ( /usr/bin/firefox "$@" >& /dev/null & )
     }
 
     ## LibreOffice

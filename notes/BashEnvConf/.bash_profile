@@ -25,5 +25,5 @@ fi
 # Add grs modules if on HPCMP Supercomputers
 if [[ -n $MODULEPATH ]] && [[ -d ~/grs_modulefiles ]]
 then
-    MODULEPATH=$MODULEPATH:~/grs_modulesfiles
+    MODULEPATH="$MODULEPATH:~/grs_modulesfiles"
 fi

@@ -1,0 +1,59 @@
+# !/bin/bash
+#
+# Installs BashEnvConf into imy home directory.
+#
+# To use:
+#    1. Make sure you know what you are doing,
+#    2. Unless you are me, use as a template
+#       for your own version.
+#    3. Does not automatically install the 
+#       X-Windows files, they are for one
+#       specific Archlinux computer.
+#    4. Run from the BashEnvConf directory.
+#
+
+export DOT_FILES BIN_SCRIPTS 
+
+###
+### First install the bash setup files.
+DOT_FILES='
+    .bashrc
+    .bash_profile
+    .bash_init
+    .bash_logout
+    .inputrc
+'
+
+cp -f $DOT_FILES ~
+( cd ~; chmod 640 $DOT_FILES )
+
+### Make sure ~/catch is there for the toSystem() shell function
+[[ -d ~/catch ]] || mkdir ~/catch || echo 'Warning: Failed to create ~/catch, do so manually.'
+
+### Install vimrc
+[[ ! -f ~/.vimrc ]] || mv -i  ~/.vimrc ~/.vimrc_old || echo 'Error: Failed to move existing ~/.vimrc'
+[[ -d ~/.vim ]] || mkdir ~/.vim || echo 'Error: Failed to create ~/.vim'
+
+cp -f ./.vim/vimrc ~/.vim
+chmod 750 ~/.vim/vimrc
+
+### Install ~/bin scripts
+[[ -d ~/bin ]] || mkdir ~/bin || echo 'Error: Failed to create ~/bin'
+chmod 750 ~/bin
+
+BIN_SCRIPTS='
+    digPath
+    g3ScaleBG
+    g3SetBG
+    path
+    pathTrim
+    resolvePath
+    rt
+    spin
+    viewJarManifest
+'
+
+cd ./bin
+cp -f $BIN_SCRIPTS ~/bin
+( cd ~/bin; chmod 555 $BIN_SCRIPTS )
+

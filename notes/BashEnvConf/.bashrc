@@ -5,9 +5,8 @@
 #  Configure what stays consistent across all my 
 #  interctive bash shells.
 #
-#  No need to source /etc/bashrc (none in Arch)
-#  /etc/profile sources /etc/bash.bashrc which
-#  brings in shell completion.
+#  No need to source /etc/bashrc (none in Arch
+#  and horribly broken in CentOS 6 & 7).
 #
 
 # shellcheck shell=bash
@@ -56,11 +55,17 @@ else
     ## Assign more memorable names to hosts
     export HOST=${HOSTNAME%%.*}
     case $HOST in
-      kpsrbyftyyh07)
+      rvsllschellerg2)
+        HOST=voltron
+        ;;
+      kprswvbylnzjt52)
         HOST=galaga
         ;;
-      kpsrbylzntj42)
-        HOST=rygar
+      rvsllmonetd1)
+        HOST=evergarden
+        ;;
+      rvswlschellerg1)
+        HOST=koala
         ;;
       SCOTCh)
         if [[ $(uname) == CYGWIN_NT-10.0 ]]; then
@@ -93,8 +98,10 @@ else
     PS4='+ '
 
     ## Aliases and Functions
-    unalias rm 2> /dev/null
-    unalias ls 2> /dev/null
+    unalias rm 2>-
+    unalias ls 2>-
+    unalias grep 2>-
+    unalias egrep 2>-
 
     alias lc='ls --color=auto'
     alias l1='ls -1'
@@ -128,12 +135,12 @@ else
     # Convert between hex and dec
     h2d ()
     {
-        echo "ibase=16; $*" | bc
+      echo "ibase=16; $*" | bc
     }
 
     d2h ()
     {
-        echo "obase=16; $*" | bc
+      echo "obase=16; $*" | bc
     }
 
     ## NVIDIA aliases
@@ -151,123 +158,132 @@ else
     # Open Desktop or Windows file manager
     fm ()
     {
-        local DiR="$1"
-        [[ -n $DiR ]] || DiR="$PWD"
-        if [[ $HOST =~ (Cygwin|MinGW|MSYS2) ]]
-        then
-            explorer "$(cygpath -w "$DiR")"
-        else
-            xdg-open "$DiR" 
-        fi
+      local DiR="$1"
+      [[ -n $DiR ]] || DiR="$PWD"
+      if [[ $HOST =~ (Cygwin|MinGW|MSYS2) ]]
+      then
+          explorer "$(cygpath -w "$DiR")"
+      else
+          xdg-open "$DiR" 
+      fi
     }
 
     # Terminal which inherits environment of parent shell
     tm ()
     {
-        if [[ $HOST =~ (Cygwin|MinGW|MSYS2) ]]; then
-            ( mintty & )
-        elif [[ -x /usr/bin/gnome-terminal ]]; then
-            ( /usr/bin/gnome-terminal & )
-        else
-            ( /usr/bin/xterm & )
-        fi
+       if [[ $HOST =~ (Cygwin|MinGW|MSYS2) ]]; then
+           ( mintty & )
+       elif [[ -x /usr/bin/gnome-terminal ]]; then
+           ( /usr/bin/gnome-terminal & )
+       else
+           ( /usr/bin/xterm & )
+       fi
     }
 
     # PDF Reader
     ev ()
     {
-        ( /usr/bin/evince "$@" >& /dev/null & )
+      ( /usr/bin/evince "$@" >& /dev/null & )
     }
 
     # Firefox Browser
     ff ()
     {
-        ( /usr/bin/firefox "$@" >& /dev/null & )
+      ( /usr/bin/firefox "$@" >& /dev/null & )
     }
 
     ## LibreOffice
     lo ()
     {
-        ( /usr/bin/libreoffice & )
+      ( /usr/bin/libreoffice & )
     }
     
     # LibreOffice writer
     low ()
     {
-        ( /usr/bin/libreoffice --writer "$@" & )
+      ( /usr/bin/libreoffice --writer "$@" & )
     }
 
     ## ssh related functions and aliases
+
+    # pkinit alias for HPC
+    alias pkhpc='pkinit schelleg@HPCMP.HPC.MIL'
+
     sshToSystem ()
     {
-        local system=$1
-        local port=$2
-        local user=$3
-        local hpcmp=$4
+      local system=$1
+      local port=$2
+      local user=$3
+      local hpc=$4
 
-        local SSH
-        if [[ $hpcmp == 'no' ]]
-        then
-            # Use system version of ssh
-            SSH=/usr/bin/ssh
-        else
-            # Use HPCMP version of ssh from $PATH
-            SSH=ssh
-        fi
+      local SSH
+      if [[ $hpc == 'no' ]]
+      then
+          # Use system version of ssh
+          SSH=/usr/bin/ssh
+      else
+          # Use HPCMP version of ssh from $PATH
+          SSH=ssh
+      fi
 
-        $SSH -p "${port}" "${user}@${system}"
+      $SSH -p "${port}" "${user}@${system}"
     }
 
     #  Single quotes intentional
     alias gauss17='sshToSystem ${GAUSS17}'
     alias maxwell4='sshToSystem ${MAXWELL4}'
-    alias rygar='sshToSystem ${RYGAR}'
+    alias voltron='sshToSystem ${VOLTRON}'
+    alias evergarden='sshToSystem ${EVERGARDEN}'
+    alias koala='sshToSystem ${KOALA}'
     alias galaga='sshToSystem ${GALAGA}'
+    alias topaz='sshToSystem ${TOPAZ}'
+    alias ust='sshToSystem ${UST}'
+    alias zambia='sshToSystem ${ZAMBIA}'
 
     ## scp related functions and aliases
     toSystem ()
     {
-        local system=$1
-        local port=$2
-        local user=$3
-        local hpcmp=$4
-        shift 4
+      local system=$1
+      local port=$2
+      local user=$3
+      local hpc=$4
+      shift 4
 
-        local SCP
-        if [[ $hpcmp == 'no' ]]
-        then
-            # Use system version of scp
-            SCP=/usr/bin/scp
-        else
-            # Use HPCMP version of scp from $PATH
-            SCP=scp
-        fi
+      local SCP
+      if [[ $hpc == 'no' ]]
+      then
+          # Use system version of scp
+          SCP=/usr/bin/scp
+      else
+          # Use HPCMP version of scp from $PATH
+          SCP=scp
+      fi
 
-        $SCP -P "${port}" -r "$@" "${user}@${system}:catch"
+      $SCP -P "${port}" -r "$@" "${user}@${system}:catch"
     }
 
     fromSystem () {
-        local system=$1
-        local port=$2
-        local user=$3
-        local hpcmp=$4
-        shift 4
+      local system=$1
+      local port=$2
+      local user=$3
+      local hpc=$4
+      shift 4
 
-        local SCP
-        if [[ $hpcmp == 'no' ]]
-        then
-            # Use system version of scp
-            SCP=/usr/bin/scp
-        else
-            # Use HPCMP version of scp from $PATH
-            SCP=scp
-        fi
+      local SCP
+      if [[ $hpc == 'no' ]]
+      then
+          # Use system version of scp
+          SCP=/usr/bin/scp
+      else
+          # Use HPCMP version of scp from $PATH
+          SCP=scp
+      fi
 
-        local each
-        for each in "$@"
-        do
-            $SCP -P "${port}" -r "${user}@${system}:${each}" .
-        done
+      local each
+      for each in "$@"
+      do
+          $SCP -P "${port}" -r "${user}@${system}:${each}" .
+      done
     }
 
     #  Single quotes intentional
@@ -277,11 +293,26 @@ else
     alias toMaxwell4='toSystem ${MAXWELL4}'
     alias fromMaxwell4='fromSystem ${MAXWELL4}'
 
-    alias toRygar='toSystem ${RYGAR}'
-    alias fromRygar='fromSystem ${RYGAR}'
+    alias toVoltron='toSystem ${VOLTRON}'
+    alias fromVoltron='fromSystem ${VOLTRON}'
+
+    alias toEvergarden='toSystem ${EVERGARDEN}'
+    alias fromEvergarden='fromSystem ${EVERGARDEN}'
+
+    alias toKoala='toSystem ${KOALA}'
+    alias fromKoala='fromSystem ${KOALA}'
 
     alias toGalaga='toSystem ${GALAGA}'
     alias fromGalaga='fromSystem ${GALAGA}'
+
+    alias toTopaz='toSystem ${TOPAZ}'
+    alias fromTopaz='fromSystem ${TOPAZ}'
+
+    alias toUST='toSystem ${UST}'
+    alias fromUST='fromSystem ${UST}'
+
+    alias toZambia='toSystem ${ZAMBIA}'
+    alias fromZambia='fromSystem ${ZAMBIA}'
 
     ## Bash completion for stack (Haskell)
     #eval "$(stack --bash-completion-script stack)"

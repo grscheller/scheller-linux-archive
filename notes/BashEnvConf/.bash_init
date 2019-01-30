@@ -15,6 +15,9 @@
 #  the X-session.  As a result, only ~/.bashrc can
 #  be counted on to be consistently run.
 #
+#  Non-existent path and duplicate path elements
+#  will be dealt with near end of script.
+#
 
 # shellcheck shell=bash
 
@@ -30,8 +33,10 @@ umask ug=rwx,o=
 export EDITOR=vim
 export VISUAL=vim
 
-## My e-mail address
+## My e-mail addresses
 export ME='geoffrey@scheller.com'
+export ME_MIL='geoffrey.scheller.1@us.af.mil'
+export ME_GOOGLE='grscheller@gmail.com'
 
 ## Set locale so applications (like Python3) display unicode correctly
 export LANG=en_US.utf8
@@ -42,6 +47,9 @@ PATH=~/local/bin:$PATH
 ## Python pip configuration
 export PIP_REQUIRE_VIRTUALENV=true
 
+## Kerberos utilities for HPCMP access.
+PATH=/usr/local/ossh/bin:/usr/local/krb5/bin:$PATH
+
 ## For Haskell locally contained and administered via stack
 PATH=~/.local/bin:$PATH
 
@@ -51,17 +59,24 @@ PATH=~/.cargo/bin:$PATH
 ## Locally installed SBT (Scala Build Tool)
 PATH=~/opt/sbt/bin:$PATH
 
-## My private utils bin and current directory last.
+## My private utils bin last.
+#  Note: Not putting current directory "." on PATH,
+#        better security and makes rsync happy.
 PATH=$PATH:~/bin
 
-## Clean up PATH
+## Clean up PATH - remove duplicate entries
 [[ -x ~/bin/pathTrim ]] && PATH=$(~/bin/pathTrim "$PATH")
 
 # system information for ssh configuration in .bashrc
 #
-#                Host-Name                   port   login          hpcmp
-export  GAUSS17='gauss17                     35881  geoff          no'
-export MAXWELL4='maxwell4                    29801  geoffrey       no'
-export    RYGAR='kpsrbylzntj42.testichem.com    22  grscheller     no'
-export   GALAGA='kpsrbyftyyh07.testichem.com    22  grscheller     no'
+#                  Host-Name           port   login      hpc
+export    GAUSS17='gauss17             35881  geoff       no'
+export   MAXWELL4='maxwell4            29801  geoffrey    no'
+export    VOLTRON='rvsllschellerg2        22  schelleg    no'
+export EVERGARDEN='rvsllmonetd1           22  schelleg    no'
+export      KOALA='rvswlschellerg1        22  schelleg    no'
+export     GALAGA='kprswvbylnzjt52        22  schelleg    no'
+export      TOPAZ='topaz.erdc.hpc.mil     22  schelleg   yes'
+export        UST='us.erdc.hpc.mil        22  schelleg   yes'
+export     ZAMBIA='zambia                 22  schelleg    no'
 

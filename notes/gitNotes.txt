@@ -103,7 +103,7 @@ II. Getting a Git Repository
          git clone schelleg@us.navo.hpc.mil:proj/grsHome.git
 
        This is not just a checkout, it clones the entire repository
-       of change controled files.  (Does not clone some of the server 
+       of change control files.  (Does not clone some of the server 
        side settings.)  The second version changes the name of the
        Git repository directory from libgit2 to mylibgit.
 
@@ -132,7 +132,7 @@ II. Getting a Git Repository
        environment.
 
        Now connect up our empty naked repository to somewhere where
-       we have done some prior development work:
+       we have done some prior GIT based development work:
 
          cd ourProject.git
          git remote add localDevel /home/schelleg/devel/myProject

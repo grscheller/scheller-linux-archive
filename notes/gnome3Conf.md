@@ -106,3 +106,18 @@
 * The Dash acts like a program manager
   * make sure "launch new instance" turned on
   * right-click to select amoung running instances
+
+### Gnome-Terminal
+* Create shortcut
+  * Settings => Keyboard => Custom Shortcuts(at bottom) => +
+    * Name: Terminal
+    * Command: gnome-terminal
+    * Shortcut: ctrl+alt+T
+* Change Terminal Colors
+  * From gnome-terminal application
+    * Edit => Preferences => Colers Tab
+    * Uncheck "Use colors from system theme"
+    * Palette: Linux console
+      * Text: White (lower right most)
+      * Background: Black (upper left most)
+      * Check Bold color: Yellow (bottom 4th from left)

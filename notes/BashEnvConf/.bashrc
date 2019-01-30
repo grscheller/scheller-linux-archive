@@ -1,3 +1,4 @@
+#  Bash shell functions and aliases
 #
 #  ~/.bashrc
 #
@@ -9,24 +10,26 @@
 #  brings in shell completion.
 #
 
+# shellcheck shell=bash
+# shellcheck source=/dev/null
+
 export BASHRC_NON_INTERACTIVE=${BASHRC_NON_INTERACTIVE:=0}
 export BASHRC_INTERACTIVE=${BASHRC_INTERACTIVE:=0}
 
 if [[ $- != *i* ]]
 then
-    ((BASHRC_NON_INTERACTIVE++))
     # Don't configure anything, non-interactive
     # shells are responsible for their own configuration.
-
+    :
 else
-    ((BASHRC_INTERACTIVE++))
     # Make sure initial shell environment is well defined,
-    # for both login shells and new terninal windows, even
+    # for both login shells and new terminal windows, even
     # if ~/.bash_profile not sourced.
-    if [[  $(type -t bash_initconf_ran)  != function ]]
+    ((BASHRC_INTERACTIVE++))
+
+    if [[ -f .bash_init ]] && [[ ${BASH_INIT_SOURCED} != bash_init_sourced ]] 
     then 
-        # shellcheck source=/dev/null
-        source ~/.bash_init
+        source .bash_init
     fi
 
     ## Make sure git asks for passwords on the command line
@@ -83,14 +86,13 @@ else
         ;;
     esac
 
-    # 3 line prompt with pwd
+    ## 3 line prompt with pwd
     PS1='\n[\u@${HOST}: \w]\n\$ '
     PS2='> '
     PS3='> '
     PS4='+ '
 
     ## Aliases and Functions
-    #  Need to use "shopt -s expand_aliases" in shell scripts.
     unalias rm 2> /dev/null
     unalias ls 2> /dev/null
 
@@ -110,7 +112,8 @@ else
     alias WgetMirror='/usr/bin/wget --mirror -p --convert-links -e robots=off'
 
     # pop up multiple directories
-    function ud() {
+    ud ()
+    {
       local upDir=../
       if [[ $1 =~ ^[1-9][0-9]*$ ]]
       then
@@ -123,10 +126,13 @@ else
     }
 
     # Convert between hex and dec
-    function h2d () {
+    h2d ()
+    {
         echo "ibase=16; $*" | bc
     }
-    function d2h () {
+
+    d2h ()
+    {
         echo "obase=16; $*" | bc
     }
 
@@ -143,19 +149,21 @@ else
     ## GUI-land aliases and functions
 
     # Open Desktop or Windows file manager
-    function fm () {
+    fm ()
+    {
         local DiR="$1"
         [[ -n $DiR ]] || DiR="$PWD"
         if [[ $HOST =~ (Cygwin|MinGW|MSYS2) ]]
         then
-            explorer "$(cygpath -w $DiR)"
+            explorer "$(cygpath -w "$DiR")"
         else
             xdg-open "$DiR" 
         fi
     }
 
     # Terminal which inherits environment of parent shell
-    function tm () {
+    tm ()
+    {
         if [[ $HOST =~ (Cygwin|MinGW|MSYS2) ]]; then
             ( mintty & )
         elif [[ -x /usr/bin/gnome-terminal ]]; then
@@ -166,30 +174,48 @@ else
     }
 
     # PDF Reader
-    function ev() {
-      ( /usr/bin/evince "$@" >& /dev/null & )
+    ev ()
+    {
+        ( /usr/bin/evince "$@" >& /dev/null & )
     }
 
     # Firefox Browser
-    function ff() {
-      ( /usr/bin/firefox "$@" >& /dev/null & )
+    ff ()
+    {
+        ( /usr/bin/firefox "$@" >& /dev/null & )
     }
 
     ## LibreOffice
-    function lo () {
+    lo ()
+    {
         ( /usr/bin/libreoffice & )
     }
+    
     # LibreOffice writer
-    function low () {
+    low ()
+    {
         ( /usr/bin/libreoffice --writer "$@" & )
     }
 
     ## ssh related functions and aliases
-    function sshToSystem() {
-      local system=$1
-      local port=$2
-      local user=$3
-      /usr/bin/ssh -p "${port}" "${user}@${system}"
+    sshToSystem ()
+    {
+        local system=$1
+        local port=$2
+        local user=$3
+        local hpcmp=$4
+
+        local SSH
+        if [[ $hpcmp == 'no' ]]
+        then
+            # Use system version of ssh
+            SSH=/usr/bin/ssh
+        else
+            # Use HPCMP version of ssh from $PATH
+            SSH=ssh
+        fi
+
+        $SSH -p "${port}" "${user}@${system}"
     }
 
     #  Single quotes intentional
@@ -199,24 +225,49 @@ else
     alias galaga='sshToSystem ${GALAGA}'
 
     ## scp related functions and aliases
-    function toSystem() {
-      local system=$1
-      local port=$2
-      local user=$3
-      shift 3
-      /usr/bin/scp -P "${port}" -r "$@" "${user}@${system}:catch"
+    toSystem ()
+    {
+        local system=$1
+        local port=$2
+        local user=$3
+        local hpcmp=$4
+        shift 4
+
+        local SCP
+        if [[ $hpcmp == 'no' ]]
+        then
+            # Use system version of scp
+            SCP=/usr/bin/scp
+        else
+            # Use HPCMP version of scp from $PATH
+            SCP=scp
+        fi
+
+        $SCP -P "${port}" -r "$@" "${user}@${system}:catch"
     }
 
-    function fromSystem() {
-      local system=$1
-      local port=$2
-      local user=$3
-      shift 3
-      local each
-      for each in "$@"
-      do
-          /usr/bin/scp -P "${port}" -r "${user}@${system}:${each}" .
-      done
+    fromSystem () {
+        local system=$1
+        local port=$2
+        local user=$3
+        local hpcmp=$4
+        shift 4
+
+        local SCP
+        if [[ $hpcmp == 'no' ]]
+        then
+            # Use system version of scp
+            SCP=/usr/bin/scp
+        else
+            # Use HPCMP version of scp from $PATH
+            SCP=scp
+        fi
+
+        local each
+        for each in "$@"
+        do
+            $SCP -P "${port}" -r "${user}@${system}:${each}" .
+        done
     }
 
     #  Single quotes intentional

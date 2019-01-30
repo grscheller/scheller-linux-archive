@@ -1,12 +1,13 @@
+#  Get functions and aliases
 #
-# ~/.bash_init
+#    ~/.bash_init
 #
 #  Configure initial path, environment variables, 
 #  aliases and shell functions which you want to be
 #  able to change and be inherited, not reset, in 
 #  child bash shells.
 #
-#  This was traditionally done in bash_profile
+#  This was traditionally done in .bash_profile
 #  whenever a login shell was created.  Unfortunately,
 #  in most Desktop Environments, the bash shells
 #  in terminal emulators inherit not from a login
@@ -15,18 +16,13 @@
 #  be counted on to be consistently run.
 #
 
-export BASH_INIT=${BASH_INITCONF:=0}
-((BASH_INITCONF++))
+# shellcheck shell=bash
 
 ## Sentinel value to mark completion of initial configuration
 #
 #  This will not be defined when a display manager is used.
 #
-function bash_init_sourced () {
-    return 0
-}
-
-export -f bash_init_sourced
+export BASH_INIT_SOURCED=bash_init_sourced
 
 # Default file permissions
 umask ug=rwx,o=
@@ -61,24 +57,11 @@ PATH=$PATH:~/bin
 ## Clean up PATH
 [[ -x ~/bin/pathTrim ]] && PATH=$(~/bin/pathTrim "$PATH")
 
-## For ssh shell wrapper functions defined in .bashrc
+# system information for ssh configuration in .bashrc
 #
-#                Host-Name                   port   login'
-export  GAUSS17='gauss17                     35881  geoff'
-export MAXWELL4='maxwell4                    29801  geoffrey'
-export    RYGAR='kpsrbylzntj42.testichem.com    22  grscheller'
-export   GALAGA='kpsrbyftyyh07.testichem.com    22  grscheller'
+#                Host-Name                   port   login          hpcmp
+export  GAUSS17='gauss17                     35881  geoff          no'
+export MAXWELL4='maxwell4                    29801  geoffrey       no'
+export    RYGAR='kpsrbylzntj42.testichem.com    22  grscheller     no'
+export   GALAGA='kpsrbyftyyh07.testichem.com    22  grscheller     no'
 
-## I have a work computer with both Cygwin and GIT for Windows.
-#
-#  GIT for Windows uses Mingw under the hood and integrates it
-#  with the Windows-10 ennvironment.  My use of Cygwin is as a
-#  stand alone POSIX environment.  So that none of the Mingw 
-#  environment leaks over into Cygwin, I need to strip out the
-#  Mingw stuff from $PATH.
-if [[ $(uname) == CYGWIN_NT-10.0 ]]
-then
-sedScript='s!/cygdrive/c/Program Files/Git/[^:]*:!!g
-           s!:+!:!g'
-PATH=$(command -p sed -E -e"$sedScript" <(echo -n "$PATH"))
-fi

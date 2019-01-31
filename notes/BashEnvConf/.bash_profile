@@ -20,9 +20,9 @@ then
     source .bashrc
 fi
 
-## Perform other tasks unique to login shells
+## Perform other tasks unique to actual login shells
 
-# Add grs modules if on HPCMP Supercomputers
+# Add user modules if on HPCMP Supercomputers, we always use ssh.
 if [[ -n $MODULEPATH ]] && [[ -d ~/grs_modulefiles ]]
 then
     MODULEPATH="$MODULEPATH:~/grs_modulesfiles"

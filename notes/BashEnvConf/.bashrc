@@ -102,6 +102,7 @@ else
     unalias ls 2>-
     unalias grep 2>-
     unalias egrep 2>-
+    unalias fgrep 2>-
 
     alias lc='ls --color=auto'
     alias l1='ls -1'
@@ -151,7 +152,7 @@ else
     #    Communicates with above daemon if running, otherwise
     #    directly with card in a deprecated manner.
     alias nv-off='sudo /usr/bin/nvidia-smi -pm 0'
-    alias nv-on='/usr/bin/sudo nvidia-smi -pm 1'
+    alias nv-on='sudo nvidia-smi -pm 1'
 
     ## GUI-land aliases and functions
 
@@ -174,22 +175,22 @@ else
        if [[ $HOST =~ (Cygwin|MinGW|MSYS2) ]]; then
            ( mintty & )
        elif [[ -x /usr/bin/gnome-terminal ]]; then
-           ( /usr/bin/gnome-terminal & )
+           ( /usr/bin/gnome-terminal >&- & )
        else
-           ( /usr/bin/xterm & )
+           ( /usr/bin/xterm 2>&1 >/dev/null & )
        fi
     }
 
     # PDF Reader
     ev ()
     {
-      ( /usr/bin/evince "$@" >& /dev/null & )
+      ( /usr/bin/evince "$@" &>- & )
     }
 
     # Firefox Browser
     ff ()
     {
-      ( /usr/bin/firefox "$@" >& /dev/null & )
+      ( /usr/bin/firefox "$@" &>- & )
     }
 
     ## LibreOffice

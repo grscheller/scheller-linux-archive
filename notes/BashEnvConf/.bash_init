@@ -91,3 +91,5 @@ export      TOPAZ='topaz.erdc.hpc.mil     22  schelleg   yes'
 export        UST='us.erdc.hpc.mil        22  schelleg   yes'
 export     ZAMBIA='zambia                 22  schelleg    no'
 
+echo "GRS in ~/.bash_init"
+

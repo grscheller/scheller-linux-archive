@@ -32,3 +32,6 @@ fi
 thing1 () { printf 'I am thing 1\n'; }
 thing2 () { printf 'I am thing 2\n'; }
 export thing1
+
+echo "GRS in ~/.bash_profile"
+

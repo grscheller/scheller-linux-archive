@@ -318,4 +318,6 @@ else
     ## Bash completion for stack (Haskell)
     #eval "$(stack --bash-completion-script stack)"
 
+    echo "GRS in ~/.bashrc"
+
 fi

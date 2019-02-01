@@ -27,3 +27,8 @@ if [[ -n $MODULEPATH ]] && [[ -d ~/grs_modulefiles ]]
 then
     MODULEPATH="$MODULEPATH:~/grs_modulesfiles"
 fi
+
+## Temporary test - to be removed
+thing1 () { printf 'I am thing 1\n'; }
+thing2 () { printf 'I am thing 2\n'; }
+export thing1

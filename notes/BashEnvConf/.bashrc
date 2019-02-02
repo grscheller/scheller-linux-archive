@@ -48,9 +48,8 @@ else
 
     # Reload Bash completion scripts if not already done above.
     # Note: usually done in either /etc/bashrc or /etc/bash.bashrc
-    # Note: not done in POSIX compliant mode
-    # Note: Cygwin environment startup scripts broken
-    if  shopt -oq posix  || [[ $uname == CYGWIN_NT-10.0 ]]
+    # Note: the Cygwin environment startup scripts are broken
+    if [[ $(type -t __parse_options) != function ]]
     then
         if [[ -f /usr/share/bash-completion/bash_completion ]]; then
             source /usr/share/bash-completion/bash_completion 

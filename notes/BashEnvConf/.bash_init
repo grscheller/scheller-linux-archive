@@ -21,6 +21,8 @@
 
 # shellcheck shell=bash
 
+echo "GRS entering ~/.bash_init"
+
 ## Sentinel value to mark completion of initial configuration
 #
 #  This will not be defined when a display manager is used.
@@ -91,5 +93,5 @@ export      TOPAZ='topaz.erdc.hpc.mil     22  schelleg   yes'
 export        UST='us.erdc.hpc.mil        22  schelleg   yes'
 export     ZAMBIA='zambia                 22  schelleg    no'
 
-echo "GRS in ~/.bash_init"
+echo "GRS exiting ~/.bash_init"
 

@@ -2,8 +2,8 @@
 #
 #  ~/.bashrc
 #
-#  Configure what stays consistent across all my 
-#  interctive bash shells.
+#  Configure what stays consistent across
+#  all my interctive bash shells.
 #
 #  No need to source /etc/bashrc (none in Arch
 #  and horribly broken in CentOS 6 & 7).
@@ -11,6 +11,8 @@
 
 # shellcheck shell=bash
 # shellcheck source=/dev/null
+
+echo "GRS entering ~/.bashrc"
 
 export BASHRC_NON_INTERACTIVE=${BASHRC_NON_INTERACTIVE:=0}
 export BASHRC_INTERACTIVE=${BASHRC_INTERACTIVE:=0}
@@ -21,7 +23,7 @@ then
     # shells are responsible for their own configuration.
     :
 else
-    # Make sure initial shell environment is well defined,
+    # Make sure an initial shell environment is well defined,
     # for both login shells and new terminal windows, even
     # if ~/.bash_profile not sourced.
     ((BASHRC_INTERACTIVE++))
@@ -29,6 +31,36 @@ else
     if [[ -f .bash_init ]] && [[ ${BASH_INIT_SOURCED} != bash_init_sourced ]] 
     then 
         source .bash_init
+    fi
+
+    # Mechanism used on Redhat & Redhat derived systems
+    # to configure system-wide aliases and functions.
+    # Note: Important for bash completion and D-Bus configuration.
+    #       Redhat /etc/bashrc reruns all the /etc/profile.d/*.sh
+    #       scripts.
+    # Note: Debian derived systems and Arch Linux compile bash with
+    #       an option (-DSYS_BASHRC) to source /etc/bash.bashrc
+    #       before this file.
+    if [[ -f /etc/bashrc ]]
+    then
+        source /etc/bashrc
+    fi
+
+    # Reload Bash completion scripts if not already done above.
+    # Note: usually done in either /etc/bashrc or /etc/bash.bashrc
+    # Note: not done in POSIX compliant mode
+    # Note: Cygwin environment startup scripts broken
+    if  shopt -oq posix  || [[ $uname == CYGWIN_NT-10.0 ]]
+    then
+        if [[ -f /usr/share/bash-completion/bash_completion ]]; then
+            source /usr/share/bash-completion/bash_completion 
+        elif [[ -f /usr/share/bash-completion/bash_completion.sh ]]; then
+            source /usr/share/bash-completion/bash_completion.sh
+        elif [[ -f /etc/bash_completion ]]; then
+            source /etc/bash_completion
+        elif [[ -f /etc/bash_completion.sh ]]; then
+            source /etc/bash_completion.sh
+        fi
     fi
 
     ## Make sure git asks for passwords on the command line
@@ -318,6 +350,6 @@ else
     ## Bash completion for stack (Haskell)
     #eval "$(stack --bash-completion-script stack)"
 
-    echo "GRS in ~/.bashrc"
+    echo "GRS exiting ~/.bashrc"
 
 fi

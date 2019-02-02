@@ -6,16 +6,18 @@
 # shellcheck shell=bash
 # shellcheck source=/dev/null
 
+echo "GRS entering ~/.bash_profile"
+
 export BASH_PROFILE_SOURCED=${BASH_PROFILE_SOURCED:=0}
 (( BASH_PROFILE_SOURCED++ ))
 
 ## Get functions and aliases
-#  Note: Initial environment configured
-#        via a hook in .bashrc
+#  Note: Initial shell environment customizations
+#        configured via a hook in .bashrc
 #
 if [[ -f .bashrc ]]
 then
-    # force resource of .bash_init within .bashrc
+    # force reintializing the shell environment
     unset BASH_INIT_SOURCED
     source .bashrc
 fi
@@ -28,10 +30,5 @@ then
     MODULEPATH="$MODULEPATH:~/grs_modulesfiles"
 fi
 
-## Temporary test - to be removed
-thing1 () { printf 'I am thing 1\n'; }
-thing2 () { printf 'I am thing 2\n'; }
-export thing1
-
-echo "GRS in ~/.bash_profile"
+echo "GRS exiting ~/.bash_profile"
 

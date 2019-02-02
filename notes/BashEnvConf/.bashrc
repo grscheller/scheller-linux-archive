@@ -12,8 +12,6 @@
 # shellcheck shell=bash
 # shellcheck source=/dev/null
 
-echo "GRS entering ~/.bashrc"
-
 export BASHRC_NON_INTERACTIVE=${BASHRC_NON_INTERACTIVE:=0}
 export BASHRC_INTERACTIVE=${BASHRC_INTERACTIVE:=0}
 
@@ -208,7 +206,7 @@ else
        elif [[ -x /usr/bin/gnome-terminal ]]; then
            ( /usr/bin/gnome-terminal >&- & )
        else
-           ( /usr/bin/xterm 2>&1 >/dev/null & )
+           ( /usr/bin/xterm >/dev/null 2>&1 & )
        fi
     }
 
@@ -348,7 +346,5 @@ else
 
     ## Bash completion for stack (Haskell)
     #eval "$(stack --bash-completion-script stack)"
-
-    echo "GRS exiting ~/.bashrc"
 
 fi

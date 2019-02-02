@@ -6,8 +6,6 @@
 # shellcheck shell=bash
 # shellcheck source=/dev/null
 
-echo "GRS entering ~/.bash_profile"
-
 export BASH_PROFILE_SOURCED=${BASH_PROFILE_SOURCED:=0}
 (( BASH_PROFILE_SOURCED++ ))
 
@@ -29,6 +27,4 @@ if [[ -n $MODULEPATH ]] && [[ -d ~/grs_modulefiles ]]
 then
     MODULEPATH="$MODULEPATH:~/grs_modulesfiles"
 fi
-
-echo "GRS exiting ~/.bash_profile"
 

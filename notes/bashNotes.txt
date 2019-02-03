@@ -537,10 +537,10 @@ I suggest "The Linux Command Line" by William Shotts.
       > do
       >    echo $ii
       > done
-      11
-      8
-      5
-      2
+      1
+      4
+      7
+      10
 
     More general construct modelled after C programming,
 

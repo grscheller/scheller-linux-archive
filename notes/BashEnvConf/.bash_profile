@@ -11,7 +11,9 @@ export BASH_PROFILE_SOURCED=${BASH_PROFILE_SOURCED:=0}
 
 ## Get functions and aliases
 #  Note: Initial shell environment customizations
-#        configured via a hook in .bashrc
+#        configured via ~/,bash_init hook in ~/.bashrc
+#  Note: Safe to resource this file to straighten
+#        out a messed up environment
 #
 if [[ -f .bashrc ]]
 then

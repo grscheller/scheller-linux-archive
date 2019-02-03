@@ -3,11 +3,13 @@
 #  ~/.bashrc
 #
 #  Configure what stays consistent across
-#  all my interctive bash shells.
+#  all my interctive bash sessions.
 #
-#  No need to source /etc/bashrc (none in Arch
-#  and horribly broken in CentOS 6 & 7).
-#
+#  .bash_init hook to properly set up an
+#  initial terminal environment,  Most
+#  Desktop Environments launched from a
+#  display managers never source ~/.bash_profile
+# 
 
 # shellcheck shell=bash
 # shellcheck source=/dev/null

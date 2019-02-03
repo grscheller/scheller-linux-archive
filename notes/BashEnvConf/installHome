@@ -14,8 +14,7 @@
 
 export DOT_FILES BIN_SCRIPTS 
 
-###
-### First install the bash setup files.
+### Install home directory dot-files
 DOT_FILES='
     .bashrc
     .bash_profile
@@ -42,12 +41,11 @@ chmod 750 ~/.vim/vimrc
 chmod 750 ~/bin
 
 BIN_SCRIPTS='
-    digPath
+    digpath
     g3ScaleBG
     g3SetBG
     path
-    pathTrim
-    resolvePath
+    pathtrim
     rt
     spin
     viewJarManifest

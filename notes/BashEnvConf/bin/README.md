@@ -1,36 +1,26 @@
 ## Bash Utilities
-Theses are the bash utilities I put into my Linux ~/bin directory
+Theses are the bash utilities I put into my Linux ~/bin directory.
+They are writen in Bash and need Bash to run.  Some may need at
+least Bash 4+ to run.
 
 Design goals are:
 * In POSIX compliant environment, these should "always work"
 * In a "sufficiently" POSIX like environment, should "more or less work"
 * In a non-POSIX environment, your "mileage will vary"
+
 ### [path](path)
 * Spreads $PATH out in a more user readable form
-* Output more appropriate as input to other shell commands
+* Output appropriate as input to other shell commands
 ```
    path | grep home
-   realPath $(path)
+   realpath $(path)
 ```
-### [pathTrim](pathTrim)
-* Used in my .bash\_profile.  Useful when $HOME and/or
-  bash\_profile are/is shared between several systems.
-* Trims off duplicate entries and non-existant director $PATH
+### [pathtrim](pathtrim)
+* Used in my Bash startup files.  Useful when $HOME directory,
+  or just the startup files, is shared between several systems.
+* Trims off duplicate and non-existant director $PATH
 ```
-   Usage: pathTrim colen:separated:list
-
-
-   Example: PATH=$(~/bin/pathTrim $PATH)
-```
-### [realPath](realPath)
-* Resolve symlinks and print out the real path for each
-  path given on the command line.
-```
-   Usage: realPath /path/to/first/item another/path/to/second/item
-```
-* Works well with whence
-```
-   Example: realPath $(whence java javac scala python cc gcc ghc)
+   Example: PATH=$(~/bin/pathtrim $PATH)
 ```
 ### [rt](rt)
 * Launch rtorrent Bit-Torrent peer-to-peer ncurses based CLI program.
@@ -47,7 +37,7 @@ Design goals are:
 ```
    Usage: viewJarManifest someJarFile.jar
 ```
-### [whence](whence)
+### [digpath](digpath)
 * Drill down through $PATH to look for files or directories.
 * Like ksh builtin whence, except doesn't stop after finding
   first instance.
@@ -55,7 +45,7 @@ Design goals are:
 * Shell patterns supported.
 ```
    Usage: whence file1 file2 ...
-   Example: whence 'pyth*' 'ghc*' 'filename with spaces'
+   Example: digpath 'pyth*' 'ghc*' 'filename with spaces'
 ```
 ### [g3SetBG](g3SetBG)
 * Set the GNOME 3 desktop background to a given JPG or PNG file

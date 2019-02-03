@@ -76,7 +76,7 @@ PATH=~/opt/sbt/bin:$PATH
 PATH=$PATH:~/bin
 
 ## Clean up PATH - remove duplicate entries
-[[ -x ~/bin/pathTrim ]] && PATH=$(~/bin/pathTrim "$PATH")
+[[ -x ~/bin/pathtrim ]] && PATH=$(~/bin/pathtrim "$PATH")
 
 # system information for ssh configuration in .bashrc
 #

@@ -2,10 +2,18 @@
 # Spread $PATH out in a more user readable form.
 #
 # Usage: path
+#        path /colon/separated/list:/of/forward/slashed/paths:.
 #
 
+if (( $# == 0 ))
+then
+    PathWord="$PATH"
+else
+    PathWord="$1"
+fi
+
 IFS=':'
-for P in $PATH
+for P in $PathWord
 do
     echo "$P"
 done

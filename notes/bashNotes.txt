@@ -506,7 +506,27 @@ I suggest "The Linux Command Line" by William Shotts.
     Aside: The && and || operators "short circuit" that
            is they are non-strict in their second argument.
 
-    You can match on regular expressions:
+17. Order of operations for && and || can be very confusing.
+
+    Both && and || short circuit and are left to right associative,
+    but their presidence depends on the context.
+
+    Inside a [[ ... ]] they are the usual mathematical presidence, && is higher than ||.
+    Outside a [[ ... ]] && and || have equal presidence.
+
+    Example:
+
+      $ { [[ x == x || x == y && x == y ]]; } && echo True
+      True
+
+      $ { [[ x == x ]] || [[ x == y ]] && [[ x == y ]]; } && echo True
+
+
+    Very confusing, you use one to establish "how Bash works" and can't
+    understand when the other fails!  It actually took me a while to
+    come up with the above examples.
+
+18. You can match on regular expressions with [[ ]]:
 
       $ fName=myMatlabProg.m
       $ if [[ $fName =~ .*\.m ]]
@@ -529,7 +549,7 @@ I suggest "The Linux Command Line" by William Shotts.
       > fi
       MATLAB file
 
-17. Looping constructs:
+19. Looping constructs:
 
     Loop a fixed number of times,
 
@@ -577,10 +597,11 @@ I suggest "The Linux Command Line" by William Shotts.
       Quit? [y|Y]: y
       $ 
 
-18. Shell functions:
+20. Shell functions:
 
     Shell functions are bash subroutines that execute in the context
-    of the current shell.  These "functions" don't return values.
+    of the current shell.  These "functions" don't really return values,
+    apart from small integer error codes.
 
     Two examples, I define these in my .bashrc,
 
@@ -642,7 +663,7 @@ I suggest "The Linux Command Line" by William Shotts.
     $ echo $a $b
     a2 b1
 
-19. Aliases:
+21. Aliases:
 
     The alias command allows a string to be substituted as the first
     word of a simple command.  Useful if you want to change the default
@@ -670,7 +691,7 @@ I suggest "The Linux Command Line" by William Shotts.
       shopt -s expand_aliases
 
 
-21. Editting differences between vim and bash in vi mode:
+22. Editting differences between vim and bash in vi mode:
 
     Use 
 

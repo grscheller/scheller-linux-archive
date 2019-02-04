@@ -4,17 +4,14 @@
 #
 # To use:
 #    1. Make sure you know what you are doing,
-#    2. Unless you are me, use as a template
-#       for your own version.
+#    2. Unless you are me, use this as a
+#       template for your own version.
 #    3. Does not automatically install the 
 #       X-Windows files, they are for one
-#       specific Archlinux computer.
+#       specific Arch Linux computer.
 #    4. Run from the BashEnvConf directory.
 #
 
-export DOT_FILES BIN_SCRIPTS 
-
-### Install home directory dot-files
 DOT_FILES='
     .bashrc
     .bash_profile
@@ -23,22 +20,32 @@ DOT_FILES='
     .inputrc
 '
 
-cp -f $DOT_FILES ~
-( cd ~; chmod 640 $DOT_FILES )
+### Back up existing dot-files in case things go wrong
+for File in $DOT_FILES
+do
+    [[ ! -f ~/$File ]] || cp ~/"$File" ~/"${File}.old" || { echo "Error: Failed to backup previous ~/$File" >&2; exit 1; }
+done
+
+### Install home directory dot-files
+for File in $DOT_FILES
+do
+    cp "$File" ~ || echo "Warning: Failed to install ~/$File" >&2
+    chmod u=rw,g=r,o= "$File" || "Warning: Failed to set permissions on ~/$File to 750" >&2
+done
 
 ### Make sure ~/catch is there for the toSystem() shell function
-[[ -d ~/catch ]] || mkdir ~/catch || echo 'Warning: Failed to create ~/catch, do so manually.'
+[[ -d ~/catch ]] || mkdir ~/catch || echo 'Warning: Failed to create ~/catch, do so manually.' >&2
 
 ### Install vimrc
-[[ ! -f ~/.vimrc ]] || mv -i  ~/.vimrc ~/.vimrc_old || echo 'Error: Failed to move existing ~/.vimrc'
-[[ -d ~/.vim ]] || mkdir ~/.vim || echo 'Error: Failed to create ~/.vim'
+[[ -f ~/.vimrc ]] && mv ~/.vimrc ~/.vimrc_old && echo 'Warning: Move existing ~/.vimrc => ~/.vimrcr_old' >&2
+[[ -d ~/.vim ]] || mkdir ~/.vim || echo 'Warning: Failed to create ~/.vim, punting on installing ~/.vim/`vimrc' >&2
+[[ -f ~/.vim/vimrc ]] && mv ~/.vim/vimrc ~/.vim/vimrc_old || echo 'Warning: Failed making backup of old ~/.vim/vimrc' >&2
+[[ -d ~/.vim ]] && cp ./.vim/vimrc ~/.vim || echo 'Warning: Failed to install ~/.vim/vimrc' >&2
+[[ -f ~/.vim/vimrc ]] && chmod u=rw,g=r,o= ~/.vim/vimrc || echo 'Warning: Failed to set permissions on ~/vim/vimrc to 640' >&2 
 
-cp -f ./.vim/vimrc ~/.vim
-chmod 750 ~/.vim/vimrc
-
-### Install ~/bin scripts
-[[ -d ~/bin ]] || mkdir ~/bin || echo 'Error: Failed to create ~/bin'
-chmod 750 ~/bin
+### Create ~/bin directory if necessary
+[[ -d ~/bin ]] || mkdir ~/bin || { echo 'Error: Failed to create ~/bin' >&2; exit 1; }
+chmod u=rwx,g=rx,o= ~/bin || echo 'Warning: Failed to set permissions on ~/bin to 750' >&2 
 
 BIN_SCRIPTS='
     digpath
@@ -50,8 +57,9 @@ BIN_SCRIPTS='
     spin
     viewJarManifest
 '
-
-cd ./bin
-cp -f $BIN_SCRIPTS ~/bin
-( cd ~/bin; chmod 555 $BIN_SCRIPTS )
-
+### Install ~/bin scripts
+for File in $BIN_SCRIPTS
+do
+    cp bin/"$File" ~/bin || echo "Warning: Failed to install ~/bin/$File" >&2
+    chmod u=rwx,g=rx,o= ~/bin/"$File" || "Warning: Failed to set permissions on /bin/$File to 750" >&2
+done

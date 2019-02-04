@@ -27,19 +27,8 @@
 #
 export BASH_INIT_SOURCED=bash_init_sourced
 
-## Source /etc/profile if necessary.
-#  If ~/bash_profile was not sourced, we are not the
-#  descendant of a login shell.  If so, we need to
-#  pick up the configurations /etc/profile provides.
-#  
-if [[ -z $BASH_PROFILE_SOURCED ]]
-then
-    source /etc/profile
-    export BASH_PROFILE_SOURCED=0
-fi
-
 ## Default file permissions
-umask ug=rwx,o=
+umask u=rwx,g=rx,o=
 
 export EDITOR=vim
 export VISUAL=vim

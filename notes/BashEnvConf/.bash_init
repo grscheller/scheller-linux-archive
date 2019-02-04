@@ -2,12 +2,11 @@
 #
 #    ~/.bash_init
 #
-#  Configure initial path, environment variables, 
-#  aliases and shell functions which you want to be
-#  able to change and be inherited, not reset, in 
-#  child bash shells.
+#  Configure initial value of $PATH and environment
+#  variables you wish child processes, perhaps other
+#  bash shells, to inherit.
 #
-#  This was traditionally done in .bash_profile
+#  This was traditionally done in .bash_profilex 
 #  whenever a login shell was created.  Unfortunately,
 #  in most Desktop Environments, the bash shells
 #  in terminal emulators inherit not from a login
@@ -21,36 +20,21 @@
 
 # shellcheck shell=bash
 
-## Sentinel value to mark completion of initial configuration
-#
-#  This will not be defined when a display manager is used.
-#
-export BASH_INIT_SOURCED=bash_init_sourced
+## Sentinel value to mark completion of
+#  an initial environment configuration.
+export BASH_INIT_SOURCED
 
-## Sourcing /etc/profile necessary on some OS's if
-#  ~/bash_profile was not sourced. If not sourced,
-#  we are not the descendant of a login shell.
-#
-#  The /etc/profile.d scripts seem to do important
-#  D-Bus and GUI configuration.
-#
-#  On CentOS these get resourced everytime from
-#  /etc/bashrc, but on Arch my X-session was failing
-#  under the gdm display manager when the following
-#  was removed.  Still was able to launch X no problem
-#  with startx, so I have added sourcing /etc/profile
-#  back in.
-#
-#  On Arch not able to login under gdm, even
-#  with /etc/skel/.bash* files, so problem is
-#  not here.  Commented out below until I can figure
-#  out what is going on.  Using startx on Arch for now.
-#  
-####if [[ -z $BASH_PROFILE_SOURCED ]]
-####then
-####    source /etc/profile
-####    export BASH_PROFILE_SOURCED=0
-####fi
+if [[ -z $BASH_PROFILE_SOURCED ]]
+then
+    # Shell not descendent from a login shell
+    export BASH_PROFILE_SOURCED=0
+fi
+
+if [[ -v BASH_PROFILE_RESOURCED ]]
+then
+    # Login shell or user sourced ~/.bash_profile
+    unset BASH_PROFILE_RESOURCED 
+fi
 
 ## Default file permissions
 umask u=rwx,g=rx,o=
@@ -91,6 +75,9 @@ PATH=$PATH:~/bin
 
 ## Clean up PATH - remove duplicate entries
 [[ -x ~/bin/pathtrim ]] && PATH=$(~/bin/pathtrim "$PATH")
+
+export PATH  # Not really necessary, PATH should
+             # already be in the environment.
 
 # system information for ssh configuration in .bashrc
 #

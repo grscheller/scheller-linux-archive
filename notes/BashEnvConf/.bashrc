@@ -25,30 +25,35 @@ then
 else
     # Make sure an initial shell environment is well defined,
     # for both login shells and new terminal windows, even
-    # if ~/.bash_profile not sourced.
+    # if ~/.bash_profile was never sourced.
     ((BASHRC_INTERACTIVE++))
 
-    if [[ -f .bash_init ]] && [[ ${BASH_INIT_SOURCED} != bash_init_sourced ]] 
+    if [[ ! -v BASH_INIT_SOURCED ]] || [[ -v BASH_PROFILE_RESOURCED ]] 
     then 
         source .bash_init
     fi
 
     # Mechanism used on Redhat & Redhat derived systems
     # to configure system-wide aliases and functions.
-    # Note: Important for bash completion and D-Bus configuration.
+    #
+    # Note: Important for bash completion and desktop configuration.
     #       Redhat /etc/bashrc reruns all the /etc/profile.d/*.sh
     #       scripts.
     # Note: Debian derived systems and Arch Linux compile bash with
     #       an option (-DSYS_BASHRC) to source /etc/bash.bashrc
-    #       before this file.
+    #       before user's ~/.bashrc file.
+    #
     if [[ -f /etc/bashrc ]]
     then
         source /etc/bashrc
     fi
 
     # Reload Bash completion scripts if not already done above.
-    # Note: usually done in either /etc/bashrc or /etc/bash.bashrc
-    # Note: the Cygwin environment startup scripts are broken
+    #
+    # Note: Usually done in either /etc/bashrc or /etc/bash.bashrc.
+    # Note: Cygwin environment startup scripts are broken, without
+    #       this bash completion only works in a top level shell.
+    #
     if [[ $(type -t __parse_options) != function ]]
     then
         if [[ -f /usr/share/bash-completion/bash_completion ]]; then
@@ -69,7 +74,6 @@ else
     TMOUT=60000
 
     ## Bash customizations when running interactively
-    set -o notify  # Do not wait until next prompt to report bg jobs status.
     set -o pipefail  # Return right most nonzero error, otherwise 0.
     shopt -s extglob  # Turn on extended pattern matching.
     shopt -s checkwinsize

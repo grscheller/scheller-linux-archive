@@ -5,7 +5,7 @@ my Linux/UNIX/POSIX Bash environments.
 * Useful ~/bin Bash scripts
 * Vim configuration
 * Readline Library configuration
-* BashEnvConf/installHome installs everything into $HOME
+* installHome installs everything into $HOME
 * Tested on:
   * Arch Linux
   * CentOS 7
@@ -19,20 +19,21 @@ Scripts in the [util](util) directory are for particular
 personal purposes and probably not of general interest.
 
 ### My philosophy on shell startup
-Bash sources `.bash_profile` for login shells and
-it sources `.bashrc` for non-login shells.  That is
-what it does.  What you do with it, is up to you.
+For login shells, Bash sources `.bash_profile`.  For non-login
+shells, Bash sources `.bashrc`.  That is what it does.
+What you do with it, is up to you.
 
-Traditionally, one would set up an initial shell environment
-when logging into a system via a login shell.  Bash would
-source `~/.bash_profile` to establish an initial $PATH and
-export shell variables.  The user would typically source 
-their `~/.bashrc` file to pick up shell functions and aliases.
+Traditionally, a UNIX shell sets up an initial shell environment
+when logging into a system via a login shell.  The shell would
+source a file like `~/.profile` to establish an initial $PATH and
+export shell variables.  The would source a file referenced by
+the environment variable $ENV, typically  `~/.shrc` to pick up
+shell functions and aliases.
 
 Aliases and shell functions are not exported to the environment
-and are picked up afresh with each new Bash session via
+but are picked up afresh with each new Bash session via
 sourcing `~/.bashrc`.  (Actually, shell functions can be exported
-to the environment, but this is not typically what is done.)
+to the environment, but this is not typically what is done)
 By Bash session, I am talking about a completely new instance
 of Bash, not just a subshell.
 
@@ -49,7 +50,7 @@ The problem is is that .bashrc will configure __every__ bash
 shell to the same initial configuration, not just your initial
 shell in a terminal window.
 
-When I first started using AT&T System V UNIX systems, I
+When I first started using AT&T System V UNIX, I
 would login at a real terminal, sometimes connected directly
 to computer, othertimes through a network terminal server,
 and after logging in be in a login shell.
@@ -59,10 +60,10 @@ telnet or hyperterminal pc client.  Again, involking a login shell.
 
 I first started using a UNIX Desktop Environment, CDE on
 Solaris 2.6 with an X-terminal.  An X-terminal was a TCP/IP
-networked CRT that ran an embedded X-server without a window
-manager.  It used the BOOTP protocol to figured out what
+networked CRT & keyboard that ran an embedded X-server without
+a window manager.  It used the BOOTP protocol to figured out what
 Solaris UNIX host to contact and display back an X-windows
-"console window" client.  After logging in with a
+"console window" client.  After logging in with such a
 "console window", guess what, you were in a ksh login shell.
 AFTER logging in, you would use the startx command to launch
 a remote Window Manager client to manage the remote applications
@@ -73,7 +74,7 @@ You see the pattern?  Configure your initial environment
 with `.profile` and used `.kshrc` to configure
 aliases and functions.  (Back then I only used functions
 in shell scripts and never used aliases at all - I may not 
-have even known of `.kshrc`.)  One file to establish a baseline
+have even known of `.kshrc`)  One file to establish a baseline
 environment for the initial shell invocation, and another to configure
 shell behaviors which are to stay consistent across all subsquent
 shell invocations.
@@ -81,7 +82,9 @@ shell invocations.
 So, to correctly configure an initial shell environment, I
 put a hook in `.bashrc` to source a file called `.bash_init`
 to set up my initial environment for the initial shell
-launched by the terminal window.  Notice that no shell variables
+launched by the terminal window.
+
+Notice that no shell variables
 get "exported" in .bashrc, it doesn't have to be unless I
 want programs other than Bash to see it.  In that case
 it would be better to put it in `.bash_init`, the surrogate
@@ -89,11 +92,11 @@ for `.bash_profile`.  That way, I can change it and not
 have it changed back as soon as I launch another instance of
 Bash.
 
-The file `.bash_profile` now just sources `.bashrc` to both
+The file `.bash_profile` now just sources `.bashrc` to
 set up an initial environment and bring in the aliases and
-functions.  It can also be used for tasks tasks unique to
-login shells, like when logging in via SSH or on the system
-console.
+functions to the login shell.  It can also be used for tasks
+tasks truely unique to login shells, like when logging in via
+ssh or on the system console.
 
 I have a shell function call tm
 ```
@@ -110,16 +113,18 @@ I have a shell function call tm
 ```
 which launches a new terminal window running a shell not only
 in the __same directory__, but with __the same environment__
-as the shell fron which I launched it.
+as the shell from which I launched it.
 
 My shell script, [pathtrim](bin/pathtrim) trims out non-existent
 and duplicate paths from my my $PATH.  Why would I put non-existent
 and duplicate paths in my $PATH?  
-* Systems admins put "helpful" additions into Bash system configuration files.
-* I can use exactly the same `~/.bash*` files on different computers.
+* Systems admins put "helpful" additions into Bash system configuration files
+  which I cannot change.
+* I can use exactly the same `~/.bash*` files on different computers,
+  even different OS's.
 * After installing the missing directories, I can source `.bash_profile`
   to pick them up.
 
 I wish my command line and desktop environments to complement and
 interact with each other.  I use shell environments to help
-manage programming environments.
+manage my programming environments.

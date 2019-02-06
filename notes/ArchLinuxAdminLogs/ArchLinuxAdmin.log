@@ -2810,7 +2810,7 @@ Note: Basically rebuilt system from scratch starting on 2017-06-20
   Reboot without USB thumbdrive, system failed to boot, forgot
   details.
 
-  Reboot thumbdrive, mount and compare /dev/sda1 to /dev/sdb1.  BAsed on the
+  Reboot thumbdrive, mount and compare /dev/sda1 to /dev/sdb1.  Based on the
   differences, I did:
  
   Updated /boot/loader/loader.conf to be (old version commented out)
@@ -2829,7 +2829,7 @@ Note: Basically rebuilt system from scratch starting on 2017-06-20
 
   These were the only differences, apart from the extra/intel-ucode
   package stuff.  The "magic number" fd153bda-5bf1-4a49-9728-4fb11b660949
-  looks problematic.  Indeed, as is it tries to mount /dev/sdb2 instead
+  looks problematic.  Indeed, as is, it tries to mount /dev/sdb2 instead
   of /dev/sda2 as root.  This results in failure loading kernel modules.
 
     # find /dev -name fd153bda-5bf1-4a49-9728-4fb11b660949
@@ -5504,3 +5504,81 @@ Note: Basically rebuilt system from scratch starting on 2017-06-20
   that if you limit yourself to a POSIX compliant subset of
   bash, then bash will behave as closely as possible to the
   POSIX standard.
+
+2019-02-05:
+  Using gdm, Gnome Display Manager, my login geoff fails to
+  launch GNOME desktop, the only one installed right now.
+
+  I have been messing with the ~/.bash* files, but login
+  fails even when I use /etc/skel files.
+
+  Disables gdm
+
+    # systemctl disable gdm
+
+  and rebooted.  No trouble launching a Gnome3 desktop
+  session.
+
+  Try creating a new user and see if it works for them,
+
+    # useradd -d //home/jorblow -c "Joe Blow" -m jb
+    # passwd jb
+
+  No problem logging in at VT04 as jb.
+
+  Enable gdm,
+
+    # systemctl enable gdm
+
+  and reboot.
+
+  Able to login as jb, not geoff.
+
+  lets look for differences between these two users:
+
+    $ journalctl -b | grep -E '(geoff|jb)'
+    ... gdm-password][854]: pam_unix(gdm-password:session): session opened for user jb by (uid=0)
+    ... systemd-logind[530]: New session 2 of user jb.
+    ... systemd[892]: pam_unix(systemd-user:session): session opened for user jb by (uid=0)
+    ... systemd[1]: Started Session 2 of user jb.
+    ... /usr/lib/gdm-x-session[908]: localuser:jb being added to access control list
+    ... gdm-password][854]: pam_unix(gdm-password:session): session closed for user jb
+    ... systemd[893]: pam_unix(systemd-user:session): session closed for user jb
+    ... gdm-password][1858]: pam_unix(gdm-password:session): session opened for user geoff by (uid=0)
+    ... systemd-logind[530]: New session 4 of user geoff.
+    ... systemd[1862]: pam_unix(systemd-user:session): session opened for user geoff by (uid=0)
+    ... systemd[1]: Started Session 4 of user geoff.
+    ... /usr/lib/gdm-x-session[1878]: /home/geoff/.profile: line 20: source: .bashrc: file not found
+    ... gdm-password][1858]: pam_unix(gdm-password:session): session closed for user geoff
+    ...
+
+  Humm... /home/geoff/.profile??? seems to be an earlier version
+  of .bash_profile.  Let's see what happens if we blow it away.
+
+  Works!!!  Logged into a GNOME3 desktop session via gdm as geoff
+  with no problem.
+
+  Don't know why the presence of .profile should do this, the
+  default shell for geoff is bash, see the entry in /etc/passwd:
+
+    geoff:x:1000:1000:Geoffrey Scheller:/home/geoff:/bin/bash
+
+  Bash man page says: "... it looks for ~/.bash_profile, ~/.bash_login,
+  and ~/.profile, in  that order, and reads and executes commands from
+  the first one that exists and is readable."
+
+  It is not Bash that is doing it,
+
+    ... /usr/lib/gdm-x-session[1878]: /home/geoff/.profile: line 20: source: .bashrc: file not found
+
+  Maybe GNOME3 is trying to "grok" the user environment???
+  Both dash and sh (bash run as sh) fail to source files unless "."
+  in on the PATH with similar verbiage, ... and I don't put "." on
+  the PATH.
+
+2019-02-05:
+  While poking around journalctl logs, I noticed:
+
+    ... NetworkManager[533]: <warn>  [1549415350.5391] device (wlp2s0): \
+    wifi-scan: active scanning for networks due to profiles with wifi.hidden=yes. \
+    This makes you trackable

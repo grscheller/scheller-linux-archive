@@ -5579,6 +5579,77 @@ Note: Basically rebuilt system from scratch starting on 2017-06-20
 2019-02-05:
   While poking around journalctl logs, I noticed:
 
-    ... NetworkManager[533]: <warn>  [1549415350.5391] device (wlp2s0): \
-    wifi-scan: active scanning for networks due to profiles with wifi.hidden=yes. \
+    ... NetworkManager[533]: <warn>  [1549415350.5391] \
+    device (wlp2s0): wifi-scan: active scanning for \
+    networks due to profiles with wifi.hidden=yes. \
     This makes you trackable
+
+2019-02-07:
+  Remove the script /etc/NetworkManager/dispatcher.d/70-wifi-wired-exclusive
+  which I installed on 2017-07-29.  This shut the wifi-down when an Ethernet
+  cabel was plugged into system.  Got in my way when I wanted to adjust
+  wifi settings while plugged directly into my cable modem.  Don't currently
+  have a need for this.
+
+  Now, lets not be so trackable (see last 2019-02-05 above),
+
+    # cd /etc/wicd
+    # grep 'hidden = True' wireless-settings.conf | wc
+      9      27     126
+
+  So, I went in and delete all entries out with "Hidden = True"
+  out.
+
+  Also, reenabled SSID broadcasting on my apartment router.
+  Disconnected Ethernet and plugged it directly from the the
+  cable "modem" to the wireless router.
+
+  Reboot.
+
+  Arch came up and immediately attached to the wireless router,
+  even though I had just BLOWN AWAY ALL OF THE CONFIGURATION INFO
+  from  /etc/wicd/wireless-settings.conf???
+
+  Files wired-settings.conf & wireless-settings.conf were dated
+  Jul 27 2017 but contain info of places I went to after that.
+
+  I not sure how any of this networking crap works anymore.
+
+  Now,
+
+    # grep 'hidden = True' wireless-settings.conf | wc
+    0       0       0
+
+  but still
+
+    $ journalctl -b | grep -i 'trackable'
+    Feb 07 00:47:57 gauss17 NetworkManager[539]: <warn>  [1549525677.7327] device (wlp2s0): wifi-scan: active scanning for networks due to profiles with wifi.hidden=yes. This makes you trackable
+
+  It does say NetworkManager,
+
+    $ ps -fu root | grep NetworkManager
+    root       539     1  0 00:47 ?        00:00:08 /usr/bin/NetworkManager --no-daemon 
+
+  Manpage for NetworkManager got me /etc/NetworkManager/ and
+  there is a directory called system-connections/.  This directory
+  contains a file for each wireless connection.
+
+  Well, these notes clearly show that on 2017-07-27 I replace Wicd
+  with NetworkManager.  Explains why wireless-settings.conf
+  was not being used.  I am an idiot, but at least now
+  a :-)aidiot.
+
+  There are 17 files with "hidden=true", some of which I know
+  the SSID's get broadcast.  Since I want to "walk lightly,"
+  I'll move these files to root's home.  If NetworkManager is
+  continuously broadcasting this collection, I am continuously
+  broadcasting a fingerprint!
+
+  Logged into wireless router and got network confuration
+  before reboot.
+
+  Reboot.
+
+  Just needed the SSID, and connected to my apartment router
+  the first try.  No "hidden=true" in the file genaerated in
+  /etc/NetworkManager/system-connections/.

@@ -22,7 +22,7 @@ main(void)
  * Factoids:
  *   1. lseek & close only needs unistd.h while open needs fcntl.h
  *   2. The "l" in lseek stands for "long int" which was the traditional
- *      type befor off_t.
+ *      type before off_t.
  *   3, lseek affects the read and write system calls
  *   4. By itself, lseek does not extend the size of a file, the
  *      write, truncate, and ftruncate system calls will.

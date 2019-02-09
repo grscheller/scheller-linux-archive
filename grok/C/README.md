@@ -5,7 +5,13 @@ Various C programming projects.
   - Portability a higher priority
 * [C Language Exemplars](CExemplars/)
   - Short examples of best practices in ISO-C coding
-  - Lots of factoids and asides
+  - Algorithms
+  - Compiler optimizations
+  - Coding techniques
+* [C Language Syntax](CSyntax/)
+  - Explore the syntax of the ISO-C language
+* [Reverse Engineering with C](CRevEngineer/)
+  - Reverse engineer your system with ISO-C
 * [X Windows](XWindows/)
   - Low level X Windows coding
   - Using the XLIB and XCB Libraries

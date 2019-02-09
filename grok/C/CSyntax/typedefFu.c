@@ -61,6 +61,5 @@ mult(int w, int z)
 int
 mult_a_sum(int i, int j, int k)
 {
-    mult(i, add(j, k));
+    return mult(i, add(j, k));
 }
-

@@ -87,8 +87,6 @@ export PATH  # Not really necessary, PATH should
 # system information for ssh configuration in .bashrc
 #
 #                  Host-Name           port   login      hpc
-export    GAUSS17='gauss17             35881  geoff       no'
-export   MAXWELL4='maxwell4            29801  geoffrey    no'
 export    VOLTRON='rvsllschellerg2        22  schelleg    no'
 export EVERGARDEN='rvsllmonetd1           22  schelleg    no'
 export      KOALA='rvswlschellerg1        22  schelleg    no'
@@ -96,4 +94,6 @@ export     GALAGA='kprswvbylnzjt52        22  schelleg    no'
 export      TOPAZ='topaz.erdc.hpc.mil     22  schelleg   yes'
 export        UST='us.erdc.hpc.mil        22  schelleg   yes'
 export     ZAMBIA='zambia                 22  schelleg    no'
+export   MAXWELL4='maxwell4            29801  geoffrey    no'
+export    GAUSS17='gauss17             31502  geoff       no'
 

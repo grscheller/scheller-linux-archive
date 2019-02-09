@@ -48,7 +48,7 @@ else
         source /etc/bashrc
         if [[ -f /etc/redhat-release ]]
         then
-            # "Domain Users" group way too broad at worka on CentOS 7
+            # "Domain Users" group way too broad on CentOS 7 at work 
             umask u=rwx,g=,o=
         fi
     fi
@@ -176,12 +176,12 @@ else
     # Convert between hex and dec
     h2d ()
     {
-      echo "ibase=16; $*" | bc
+      echo "ibase=16; $*" | /usr/bin/bc
     }
 
     d2h ()
     {
-      echo "obase=16; $*" | bc
+      echo "obase=16; $*" | /usr/bin/bc
     }
 
     ## NVIDIA aliases
@@ -215,9 +215,11 @@ else
        if [[ $HOST =~ (Cygwin|MinGW|MSYS2) ]]; then
            ( mintty & )
        elif [[ -x /usr/bin/gnome-terminal ]]; then
-           ( /usr/bin/gnome-terminal >&- & )
-       else
+           ( /usr/bin/gnome-terminal >&- )
+       elif [[ -x /usr/bin/xterm ]]; then
            ( /usr/bin/xterm >/dev/null 2>&1 & )
+       else
+           printf "tm: warning: suitable terminator not found\n" >&2
        fi
     }
 
@@ -230,7 +232,20 @@ else
     # Firefox Browser
     ff ()
     {
-      ( /usr/bin/firefox "$@" &>/dev/null & )
+      local FIREFOX=firefox
+      [[ -x /usr/bin/firefox ]] && FIREFOX=/usr/bin/firefox
+      [[ -x /usr/local/bin/firefox ]] && FIREFOX=/usr/local/bin/firefox
+      ( $FIREFOX "$@" >&- 2>&- & )
+    }
+
+    # Google Browser
+    gb ()
+    {
+      local CHROME=chrome
+      [[ -x /usr/bin/chrome ]] && CHROME=/usr/bin/chrome
+      [[ -x /usr/local/bin/chrome ]] && CHROME=/usr/local/bin/chrome
+      [[ -x /opt/google/chrome/chrome ]] && CHROME=/opt/google/chrome/chrome
+      ( $CHROME "$@" >&- 2>&- & )
     }
 
     ## LibreOffice

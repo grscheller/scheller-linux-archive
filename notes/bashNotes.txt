@@ -249,7 +249,7 @@ I suggest "The Linux Command Line" by William Shotts.
 8. Default values for shell variables:
 
    Use := within the {} to specify a default value for a shell variable,
-   if it is unset.
+   if it is unset or the empty string.
 
       $ PIE="Apple Pie"
       $ FavoritePie=${PIE:="Cherry Pie"}
@@ -521,10 +521,8 @@ I suggest "The Linux Command Line" by William Shotts.
 
       $ { [[ x == x ]] || [[ x == y ]] && [[ x == y ]]; } && echo True
 
-
-    Very confusing, you use one to establish "how Bash works" and can't
-    understand when the other fails!  It actually took me a while to
-    come up with the above examples.
+    Very confusing, if you use one to establish "how Bash works", then
+    when the other fails you don't understand why!
 
 18. You can match on regular expressions with [[ ]]:
 

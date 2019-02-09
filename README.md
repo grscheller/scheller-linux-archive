@@ -1,9 +1,7 @@
 ## Geoffrey Scheller's Linux Software Development Archive
-#### Linux/POSIX Notes
-  - [Linux/POSIX Software Development](notes/softwareDevelopment.md)
-    - [Vim Notes](notes/VimNotes/README.md)
-  - [Linux/POSIX System Configuration](notes/systemConfiguration.md)
-    - [Bash Environment Configuration](notes/BashEnvConf)
+#### Linux Environment Configuration
+  - [Bash Environment Configuration](bashEnvConf)
+
 #### Grokking Computer Languages
   - [C](grok/C)
     - [Advanced Programming in the UNIX Environment (APUE)](grok/C/APUE)
@@ -15,6 +13,12 @@
   - [Rust](grok/Rust/)
   - [Scala](grok/Scala/)
     - [Functional Programming in Scala (fpinscala)](grok/Scala/fpinscala)
+
+#### Linux/POSIX Notes
+  - [Linux/POSIX Software Development](notes/softwareDevelopment.md)
+    - [Vim Notes](notes/VimNotes/README.md)
+  - [Linux/POSIX System Configuration](notes/systemConfiguration.md)
+
 #### WWW Info
   - [Private homepage](web/homepage/)
 

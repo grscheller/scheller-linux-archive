@@ -46,9 +46,9 @@ can be launched.  The user is "logged" into the X-Session, __not__
 a login shell.  As a result, `.bash_profile` does not get run.
 
 Why not just use .bashrc to configure your initial environment?
-The problem is is that .bashrc will configure __every__ bash
-shell to the same initial configuration, not just your initial
-shell in a terminal window.
+The problem is is that .bashrc will force __every__ bash
+shell to the __exact same__ configuration, not just the first
+initial shell in a terminal window.
 
 When I first started using AT&T System V UNIX, I
 would login at a real terminal, sometimes connected directly
@@ -86,8 +86,8 @@ launched by the terminal window.
 
 Notice that no shell variables
 get "exported" in .bashrc, it doesn't have to be unless I
-want programs other than Bash to see it.  In that case
-it would be better to put it in `.bash_init`, the surrogate
+want programs other than Bash to see them.  In that case
+it would be better to put it in `.bash_init`, my surrogate
 for `.bash_profile`.  That way, I can change it and not
 have it changed back as soon as I launch another instance of
 Bash.
@@ -100,14 +100,17 @@ ssh or on the system console.
 
 I have a shell function call tm
 ```
+    # Terminal which inherits environment of parent shell
     tm ()
     {
        if [[ $HOST =~ (Cygwin|MinGW|MSYS2) ]]; then
            ( mintty & )
        elif [[ -x /usr/bin/gnome-terminal ]]; then
-           ( /usr/bin/gnome-terminal >&- & )
-       else
+           ( /usr/bin/gnome-terminal >&- )
+       elif [[ -x /usr/bin/xterm ]]; then
            ( /usr/bin/xterm >/dev/null 2>&1 & )
+       else
+           printf "tm: warning: suitable terminator not found\n" >&2
        fi
     }
 ```
@@ -117,13 +120,13 @@ as the shell from which I launched it.
 
 My shell script, [pathtrim](bin/pathtrim) trims out non-existent
 and duplicate paths from my my $PATH.  Why would I put non-existent
-and duplicate paths in my $PATH?  
+and duplicate paths on my $PATH?  
 * Systems admins put "helpful" additions into Bash system configuration files
   which I cannot change.
 * I can use exactly the same `~/.bash*` files on different computers,
   even different OS's.
-* After installing the missing directories, I can source `.bash_profile`
-  to pick them up.
+* After installing the missing directories, from the $HOME directory
+  I can source `.bash_profile` to pick them up.
 
 I wish my command line and desktop environments to complement and
 interact with each other.  I use shell environments to help

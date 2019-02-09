@@ -47,6 +47,8 @@ Design goals are:
    Usage: whence file1 file2 ...
    Example: digpath 'pyth*' 'ghc*' 'filename with spaces'
 ```
+### [monitor](monitor)
+* While running, maintain a log of who is on the system
 ### [g3SetBG](g3SetBG)
 * Set the GNOME 3 desktop background to a given JPG or PNG file
 ```

@@ -46,6 +46,11 @@ else
     if [[ -f /etc/bashrc ]]
     then
         source /etc/bashrc
+        if [[ -f /etc/redhat-release ]]
+        then
+            # "Domain Users" group way too broad at worka on CentOS 7
+            umask u=rwx,g=,o=
+        fi
     fi
 
     # Reload Bash completion scripts if not already done above.
@@ -133,11 +138,11 @@ else
     PS4='+ '
 
     ## Aliases and Functions
-    unalias rm 2>-
-    unalias ls 2>-
-    unalias grep 2>-
-    unalias egrep 2>-
-    unalias fgrep 2>-
+    unalias rm 2>&-
+    unalias ls 2>&-
+    unalias grep 2>&-
+    unalias egrep 2>&-
+    unalias fgrep 2>&-
 
     alias lc='ls --color=auto'
     alias l1='ls -1'
@@ -219,13 +224,13 @@ else
     # PDF Reader
     ev ()
     {
-      ( /usr/bin/evince "$@" &>- & )
+      ( /usr/bin/evince "$@" &>/dev/null & )
     }
 
     # Firefox Browser
     ff ()
     {
-      ( /usr/bin/firefox "$@" &>- & )
+      ( /usr/bin/firefox "$@" &>/dev/null & )
     }
 
     ## LibreOffice

@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+[[ -d ~/monitor ]] || mkdir ~/monitor
+cd ~/monitor
+cnt=1
+> hold2
+while ((1))
+do
+    who > hold1
+    diff hold1 hold2 >/dev/null 2>&1
+    if (( $? == 0 ))
+    then
+        sleep 60
+    else
+        cp hold1 change_${cnt}
+        cp hold1 hold2
+        (( cnt++ ))
+        echo $cnt
+        sleep 60
+    fi
+done

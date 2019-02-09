@@ -36,8 +36,13 @@ then
     unset BASH_PROFILE_RESOURCED 
 fi
 
-## Default file permissions
-umask u=rwx,g=rx,o=
+## Default file permissions - group way too broad for work CentOS 7
+if [[ ! -f /etc/redhat-release ]]
+then
+    umask u=rwx,g=rx,o=
+else
+    umask u=rwx,g=,o=
+fi
 
 export EDITOR=vim
 export VISUAL=vim

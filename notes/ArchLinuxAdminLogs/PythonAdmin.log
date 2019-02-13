@@ -215,3 +215,45 @@ Purpose: For tracking Python infrastructure installed locally as
 
   To be continued... (see ArchLinux_AdminLog.txt 2018-02-14)
 
+2019-02-12:
+  Since I am stuck in the Dark Ages at work on CentOS 7, and I need
+  to work with Python, I am reinstalling Anaconda into my geoff user's
+  home directory.  Now, conda is a shell function.  I bring it into
+  scope via the .bashrc snippet below:
+
+    ## Configure Anaconda3 Python Distribution
+    if [[ -d ~/opt/anaconda3 ]]
+    then
+        source ~/opt/anaconda3/etc/profile.d/conda.sh
+    fi
+
+  This is where I canonically always install it.  This shell function
+  based version of conda does a better job "staying out of the way"
+  when I want to ignore it and use the Arch system Python.
+
+    $ conda --version
+    conda 4.5.12
+   
+    $ conda update conda
+    ...
+
+    $ conda --version
+    conda 4.6.3
+
+  Create a machine learning virtual env for PyTorch,
+
+    $ conda create --name ml1 pytorch opencv scikit-learn scikit-image astropy
+
+    $ conda info --envs
+    # conda environments:
+    #
+    base                  *  /home/geoff/opt/anaconda3
+    ml1                      /home/geoff/opt/anaconda3/envs/ml1 
+
+    $ conda activate
+    (base)$ python --version
+    Python 3.7.1
+    (base)$ conda activate ml1
+    (ml1)$ python --version
+    Python 3.7.2
+

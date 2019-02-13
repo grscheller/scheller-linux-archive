@@ -373,4 +373,10 @@ else
     ## Bash completion for stack (Haskell)
     #eval "$(stack --bash-completion-script stack)"
 
+    ## Configure Anaconda3 Python Distribution
+    if [[ -d ~/opt/anaconda3 ]]
+    then
+        source ~/opt/anaconda3/etc/profile.d/conda.sh
+    fi
+
 fi

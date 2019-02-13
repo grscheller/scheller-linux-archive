@@ -10,6 +10,10 @@ my Linux/UNIX/POSIX Bash environments.
   * Arch Linux
   * CentOS 7
   * Cygwin on Windows 10
+* Won't work without minor modifications on:
+  * CentOS 6
+    * GNU coreutils version lacks /usr/bin/realpath
+    * Bash version lacks the -v conditional expression
 
 For these configuration files to fully work, the Bash
 scripts in the [bin](bin) directory need to be put into

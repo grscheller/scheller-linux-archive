@@ -20,7 +20,7 @@ if [[ -f .bashrc ]]
 then
     # force reintializing the shell environment
     export BASH_PROFILE_RESOURCED
-    source .bashrc
+    source ~/.bashrc
 fi
 
 ## Perform other tasks unique to actual login shells

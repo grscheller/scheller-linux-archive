@@ -30,7 +30,7 @@ else
 
     if [[ ! -v BASH_INIT_SOURCED ]] || [[ -v BASH_PROFILE_RESOURCED ]] 
     then 
-        source .bash_init
+        source ~/.bash_init
     fi
 
     # Mechanism used on Redhat & Redhat derived systems

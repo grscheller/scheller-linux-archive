@@ -13,3 +13,4 @@ src/fileio/cpp_constants
 src/fileio/fileSeekable
 src/fileio/stdinSeekable
 src/fileio/hole
+src/fileio/fs_flags

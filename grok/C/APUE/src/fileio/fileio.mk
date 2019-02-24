@@ -1,7 +1,7 @@
 # Included makefile for chapter 3 - File I/O
 
 PATH_FILEIO := src/fileio
-PROGS_FILEIO := cpp_constants stdinSeekable fileSeekable hole
+PROGS_FILEIO := cpp_constants stdinSeekable fileSeekable hole fs_flags
 
 PROGS_FILEIO_FULL := $(addprefix $(PATH_FILEIO)/,$(addsuffix $(EXT),$(PROGS_FILEIO)))
 

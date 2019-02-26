@@ -35,4 +35,4 @@ installstandards:
 
 cleanstandards:
 	rm -f $(PROGS_STDS_FULL) $(PATH_STDS)/sysLimits.c $(PATH_STDS)/*.o
-	rm -r $(PROGS_STDS_INST)
+	rm -f $(PROGS_STDS_INST)

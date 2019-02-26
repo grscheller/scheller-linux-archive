@@ -4,6 +4,7 @@ PATH_STDS := src/standards
 PROGS_STDS := sysLimits sysNoLimits
 
 PROGS_STDS_FULL := $(addprefix $(PATH_STDS)/,$(addsuffix $(EXT),$(PROGS_STDS)))
+PROGS_STDS_INST := $(addprefix $(BIN)/,$(addsuffix $(EXT),$(PROGS_STDS)))
 
 standards: $(PROGS_STDS_FULL)
 
@@ -29,5 +30,9 @@ $(PATH_STDS)/sysLimits.c: $(PATH_STDS)/genSysLimits.awk \
 $(PATH_STDS)/%.o: $(PATH_STDS)/%.c $(APUE_H)
 	$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ -c $<
 
+installstandards:
+	@cp $(PROGS_STDS_FULL) $(BIN)
+
 cleanstandards:
 	rm -f $(PROGS_STDS_FULL) $(PATH_STDS)/sysLimits.c $(PATH_STDS)/*.o
+	rm -r $(PROGS_STDS_INST)

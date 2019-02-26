@@ -6,6 +6,7 @@
 # APUE project defaults and directory stucture 
 LIBDIR = lib
 INCLUDE = include
+BIN = bin
 
 # Library and headerfile to support an implementation of
 # W. Richard Steven's API for UNIX System Programming.
@@ -20,9 +21,12 @@ FREEBSD_CFLAGS := -ansi -DBSD                  # untested
 MACOS_CFLAGS := -ansi -DMACOS                  # untested
 SOLARIS_CFLAGS := -std=c99 -m64 -DSOLARIS      # untested
 
+LINUX_GNU17_CFLAGS := -std=gnu17 -DLINUX
+
 # Uncomment one to select for your system
-SYSTEM_CFLAGS := $(LINUX_CFLAGS)
+# SYSTEM_CFLAGS := $(LINUX_CFLAGS)
 # SYSTEM_CFLAGS := $(CYGWIN_CFLAGS)
+SYSTEM_CFLAGS := $(LINUX_CFLAGS)
 
 # C compiler configuration
 CC = gcc

@@ -1,11 +1,14 @@
 # Included makefile for libapue.a static library
 
-PATH_APUE := src/libapue
+PATH_APUE := src/apue
 OBJS_APUE := error.o errorlog.o limits.o
 
 OBJS_APUE_FULL := $(addprefix $(PATH_APUE)/,$(OBJS_APUE))
 
-libapue: $(LIBAPUE_A)
+apue: $(APUE_H) $(LIBAPUE_A)
+
+$(APUE_H): $(PATH_APUE)/apue.h
+	cp $< $@
 
 $(LIBAPUE_A): $(OBJS_APUE_FULL)
 	[ -d $(LIBDIR) ] || mkdir $(LIBDIR)
@@ -16,6 +19,7 @@ $(LIBAPUE_A): $(OBJS_APUE_FULL)
 $(PATH_APUE)/%.o: $(PATH_APUE)/%.c $(APUE_H)
 	$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ -c $<
 
-cleanlibapue:
+cleanapue:
 	rm -f $(PATH_APUE)/*.o
 	rm -f $(LIBAPUE_A)
+	rm -f $(APUE_H)

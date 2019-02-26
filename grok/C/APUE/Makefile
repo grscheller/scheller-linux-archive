@@ -9,15 +9,15 @@ include config.mk
 # APUE Book Chapters
 CHAPTERS := intro standards fileio 
 CLEAN_CHAPTERS := $(addprefix clean,$(CHAPTERS))
+INSTALL_CHAPTERS := $(addprefix install,$(CHAPTERS))
 
-# Implementation of W. Richard Stevens' "Advanced Programming
-# in the UNIX Environment" Systems Programming API
-APUE := libapue
+# Implementation of APUE Systems Programming API
+APUE := apue
 CLEAN_APUE := clean$(APUE)
 
-all: $(CHAPTERS) $(APUE)
+all: $(APUE) $(CHAPTERS) $(INSTALL_CHAPTERS)
 
-include src/libapue/libapue.mk
+include src/apue/apue.mk
 include src/intro/intro.mk
 include src/standards/standards.mk
 include src/fileio/fileio.mk
@@ -25,5 +25,5 @@ include src/fileio/fileio.mk
 clean: $(CLEAN_CHAPTERS) $(CLEAN_APUE)
 	rm -f $(INCLUDE)/*.h.gch
 
-.PHONY: all $(CHAPTERS) $(APUE)
-.PHONY: clean $(CLEAN_CHAPTERS) $(CLEAN_APUE)
+.PHONY: all $(APUE) $(CHAPTERS) $(INSTALL_CHAPTERS)
+.PHONY: clean $(CLEAN_APUE) $(CLEAN_CHAPTERS)

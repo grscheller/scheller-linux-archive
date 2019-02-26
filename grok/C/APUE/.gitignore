@@ -1,5 +1,7 @@
 **/*.o
+bin/*
 lib/lib*.a
+include/*.h
 include/*.h.gch
 src/intro/buffered_cat
 src/intro/pidInfo

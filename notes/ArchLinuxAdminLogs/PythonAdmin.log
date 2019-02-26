@@ -257,3 +257,11 @@ Purpose: For tracking Python infrastructure installed locally as
     (ml1)$ python --version
     Python 3.7.2
 
+2018-02-26:
+  At work, did a
+
+    $ conda update conda
+    $ conda activate ml1
+    $ conda update --all
+
+  Need to repeat for Arch later today.

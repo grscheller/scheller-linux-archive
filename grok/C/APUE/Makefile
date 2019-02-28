@@ -20,5 +20,4 @@ include src/filedir/filedir.mk
 clean: $(CLEAN_CHAPTERS)
 	rm -f $(INCLUDE)/*.h.gch
 
-.PHONY: all $(CHAPTERS) $(INSTALL_CHAPTERS)
-.PHONY: clean $(CLEAN_CHAPTERS)
+.PHONY: all clean $(CHAPTERS) $(INSTALL_CHAPTERS) $(CLEAN_CHAPTERS)

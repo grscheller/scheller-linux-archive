@@ -9,7 +9,7 @@ PROGS_FILEDIR_INST := $(addprefix $(BIN)/,$(addsuffix $(EXT),$(PROGS_FILEDIR)))
 filedir: $(PROGS_FILEDIR_FULL)
 
 $(PATH_FILEDIR)/%$(EXT): $(PATH_FILEDIR)/%.c $(APUE_H) $(LIBAPUE_A)
-	$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ $< $(LDFLAGS) 
+	$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ $< $(LDFLAGS)
 
 installfiledir:
 	@cp $(PROGS_FILEDIR_FULL) $(BIN)

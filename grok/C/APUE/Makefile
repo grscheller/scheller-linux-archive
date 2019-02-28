@@ -1,29 +1,24 @@
-# Non-recursive, hierarchical makefile to build an APUE project.
-# Based on the third edition of the W. Richard Stevens' book
-# "Advanced Programming  in the UNIX Environment" as interpreted
-# by Geoffrey Scheller (geoffrey@scheller.com).
+# Non-recursive, hierarchical makefile to build an APUE project,
+# based on third edition of the book
+# "Advanced Programming  in the UNIX Environment" by W. Richard Stevens,
+# as interpreted by Geoffrey Scheller (geoffrey@scheller.com).
 
-# System specific and build configurations
-include config.mk
-
-# APUE Book Chapters
-CHAPTERS := intro standards fileio 
+# APUE API and Book Chapters
+CHAPTERS := apue intro standards fileio filedir
 CLEAN_CHAPTERS := $(addprefix clean,$(CHAPTERS))
 INSTALL_CHAPTERS := $(addprefix install,$(CHAPTERS))
 
-# Implementation of APUE Systems Programming API
-APUE := apue
-CLEAN_APUE := clean$(APUE)
+all: $(CHAPTERS) $(INSTALL_CHAPTERS)
 
-all: $(APUE) $(CHAPTERS) $(INSTALL_CHAPTERS)
-
+include config.mk
 include src/apue/apue.mk
 include src/intro/intro.mk
 include src/standards/standards.mk
 include src/fileio/fileio.mk
+include src/filedir/filedir.mk
 
-clean: $(CLEAN_CHAPTERS) $(CLEAN_APUE)
+clean: $(CLEAN_CHAPTERS)
 	rm -f $(INCLUDE)/*.h.gch
 
-.PHONY: all $(APUE) $(CHAPTERS) $(INSTALL_CHAPTERS)
-.PHONY: clean $(CLEAN_APUE) $(CLEAN_CHAPTERS)
+.PHONY: all $(CHAPTERS) $(INSTALL_CHAPTERS)
+.PHONY: clean $(CLEAN_CHAPTERS)

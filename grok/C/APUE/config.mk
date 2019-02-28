@@ -24,9 +24,9 @@ SOLARIS_CFLAGS := -std=c99 -m64 -DSOLARIS      # untested
 LINUX_GNU17_CFLAGS := -std=gnu17 -DLINUX
 
 # Uncomment one to select for your system
-# SYSTEM_CFLAGS := $(LINUX_CFLAGS)
-# SYSTEM_CFLAGS := $(CYGWIN_CFLAGS)
 SYSTEM_CFLAGS := $(LINUX_CFLAGS)
+# SYSTEM_CFLAGS := $(CYGWIN_CFLAGS)
+# SYSTEM_CFLAGS := $(LINUX_GNU17_CFLAGS)
 
 # C compiler configuration
 CC = gcc

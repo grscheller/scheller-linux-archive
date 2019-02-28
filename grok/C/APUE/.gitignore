@@ -17,3 +17,4 @@ src/fileio/stdinSeekable
 src/fileio/hole
 src/fileio/fs_flags
 src/fileio/atomic_cp
+src/filedir/filetype

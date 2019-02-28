@@ -16,7 +16,7 @@ export BASH_PROFILE_SOURCED=${BASH_PROFILE_SOURCED:=0}
 #  Note: Safe to resource ~/.bash_profile to straighten
 #        out a messed up environment
 #
-if [[ -f .bashrc ]]
+if [[ -f ~/.bashrc ]]
 then
     # force reintializing the shell environment
     export BASH_PROFILE_RESOURCED

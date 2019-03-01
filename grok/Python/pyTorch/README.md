@@ -178,7 +178,7 @@ using Anaconda instead of the Arch Linux Python.
 
     Proceed ([y]/n)? y
 
-    Downloading and Extracting Packages
+    Downloading and Extracting Psource /cygdrive/c/Users/scotch/Anaconda3/etc/profile.d/conda.shackages
     pytorch-1.0.1        | 375.4 MB  | ##################################### | 100% 
     pip-19.0.3           | 1.8 MB    | ##################################### | 100% 
     mkl_fft-1.0.10       | 169 KB    | ##################################### | 100% 
@@ -214,7 +214,7 @@ using Anaconda instead of the Arch Linux Python.
 
    The following packages will be downloaded:
 
-       package                    |            build
+       package                    source /cygdrive/c/Users/scotch/Anaconda3/etc/profile.d/conda.sh|            build
        ---------------------------|-----------------
        cudnn-7.3.1                |       cuda10.0_0       385.1 MB
        pytorch-1.0.1              |cuda100py37he554f03_0       344.6 MB
@@ -230,14 +230,51 @@ using Anaconda instead of the Arch Linux Python.
 
    Proceed ([y]/n)? y
 
-   Downloading and Extracting Packages
+   Downloading and Extracting Packages(base) C:\Users\scotch>conda update conda
+Solving environment: done
+
+## Package Plan ##
+
+  environment location: C:\Users\scotch\Anaconda3
+
+  added / updated specs:
+    - conda
+
+
+The following packages will be downloaded:
+
+    package                    |            build
+    ---------------------------|-----------------
+    conda-4.6.7                |           py37_0         1.7 MB
+
+The following packages will be UPDATED:
+
+    conda: 4.5.12-py37_0 --> 4.6.7-py37_0
+
+Proceed ([y]/n)?
+
+
+Downloading and Extracting Packages
+conda-4.6.7          | 1.7 MB    | ############################################################################ | 100%
+Preparing transaction: done
+Verifying transaction: done
+Executing transaction: done
+
+(base) C:\Users\scotch>conda env list
+# conda environments:
+#
+base                  *  C:\Users\scotch\Anaconda3
+play1                    C:\Users\scotch\Anaconda3\envs\play1
+
+
+(base) C:\Users\scotch>
    pytorch-1.0.1        | 344.6 MB  | #################################### | 100% 
    cudnn-7.3.1          | 385.1 MB  | #################################### | 100% 
    Preparing transaction: done
    Verifying transaction: done
    Executing transaction: done
 ```
-Seems to have installed cudnn-7.3.1 but is this consistent with line #167 above?
+Seems to have installed cudnn-7.3.source /cygdrive/c/Users/scotch/Anaconda3/etc/profile.d/conda.sh1 but is this consistent with line #167 above?
 Lets try again,
 ```
    (pytorch)$ conda update --all
@@ -259,7 +296,7 @@ Now try again while indicating the channel too,
    The following packages will be downloaded:
 
        package                    |            build
-       ---------------------------|-----------------
+       ---------------------------source /cygdrive/c/Users/scotch/Anaconda3/etc/profile.d/conda.sh|-----------------
        torchvision-0.2.2          |             py_2          44 KB  pytorch
        tqdm-4.31.1                |             py_0          47 KB
        ------------------------------------------------------------
@@ -276,7 +313,7 @@ Now try again while indicating the channel too,
 
    Proceed ([y]/n)? 
 
-   Downloading and Extracting Packages
+   Downloading and Extracting Packasource /cygdrive/c/Users/scotch/Anaconda3/etc/profile.d/conda.shges
    torchvision-0.2.2    | 44 KB     | ############################################################ | 100% 
    tqdm-4.31.1          | 47 KB     | ############################################################ | 100% 
    Preparing transaction: done
@@ -284,3 +321,112 @@ Now try again while indicating the channel too,
    Executing transaction: done
 ```
 My guess is that this time the version of pytorch built with cudnn 7.4.2 is used.
+
+### Installing on CUDA enabled Windows 10-64bit:
+Using the "GUI" installer, choose not to put Python on Path.  Also installed
+the Visual Studio VSCode.  Free  as in "Anaconda partner with MS."
+
+Installed to C:\Users\scotch\Anaconda3
+
+Updated end of my Cygwin `.bashrc` to be
+```
+   ## Configure Anaconda3 Python Distribution
+   if [[ -d ~/opt/anaconda3 ]]
+   then
+       source ~/opt/anaconda3/etc/profile.d/conda.sh
+   elif [[ -d /cygdrive/c/Users/scotch/Anaconda3 ]]
+   then
+       source /cygdrive/c/Users/scotch/Anaconda3/etc/profile.d/conda.sh
+   fi
+```
+Now lets see if conda works in Cygwin environment,
+```
+   $ conda create --name play1
+   Solving environment: ...working... done
+
+   CondaHTTPError: HTTP 000 CONNECTION FAILED for url <https://repo.anaconda.com/pkgs/pro/noarch/repodata.json.bz2>
+   Elapsed: -
+
+   An HTTP error occurred when trying to retrieve this URL.
+   HTTP errors are often intermittent, and a simple retry will get you on your way.
+
+   If your current network has https://www.anaconda.com blocked, please file
+   a support request with your network engineering team.
+
+   SSLError(MaxRetryError('HTTPSConnectionPool(host=\'repo.anaconda.com\', port=443): Max retries exceeded with url: /pkgs/pro/noarch/repodata.json.bz2 (Caused by SSLError("Can\'t connect to HTTPS URL because the SSL module is not available."))'))
+```
+
+OK, lets see if Conda GUI environment suffers from the same problem,
+launched `ANACONDA NAVIGATOR` from taskbar menu.
+* Horrible bright white with light gray lettering (can't read)
+* Able to launch a cmd.exe window
+```
+   (base) C:\Users\scotch>conda create --name play1
+   Solving environment: done
+
+   ==> WARNING: A newer version of conda exists. <==
+     current version: 4.5.12
+     latest version: 4.6.7
+
+   Please update conda by running
+
+       $ conda update -n base -c defaults conda
+
+   ## Package Plan ##
+
+      environment location: C:\Users\scotch\Anaconda3\envs\play1
+
+      Proceed ([y]/n)?
+
+      Preparing transaction: done
+      Verifying transaction: done
+      Executing transaction: done
+```
+Let's see if we can create a virtual environment,
+```
+   (base) C:\Users\scotch>conda activate play1
+
+   (play1) C:\Users\scotch>
+```(play1) C:\Users\scotch>deactivate
+
+   (base) C:\Users\scotch>
+```
+Upgrade conda,
+``
+   (base) C:\Users\scotch>conda update conda
+   Solving environment: done
+
+   ## Package Plan ##
+
+     environment location: C:\Users\scotch\Anaconda3
+
+     added / updated specs:
+       - conda
+
+   The following packages will be downloaded:
+
+       package                    |            build
+       ---------------------------|-----------------
+       conda-4.6.7                |           py37_0         1.7 MB
+
+   The following packages will be UPDATED:
+
+       conda: 4.5.12-py37_0 --> 4.6.7-py37_0
+
+   Proceed ([y]/n)?
+
+   Downloading and Extracting Packages
+   conda-4.6.7          | 1.7 MB    | ############################ | 100%
+   Preparing transaction: done
+   Verifying transaction: done
+   Executing transaction: done
+
+   (base) C:\Users\scotch>conda env list
+   # conda environments:
+   #
+   base                  *  C:\Users\scotch\Anaconda3
+   play1                    C:\Users\scotch\Anaconda3\envs\play1
+
+
+   (base) C:\Users\scotch>
+```

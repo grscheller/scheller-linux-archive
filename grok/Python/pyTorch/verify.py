@@ -7,7 +7,7 @@ print("Randon 5 by 3 \"tensor\":")
 print(x)
 
 if torch.cuda.is_available():
-    print("\nCuda is available.\n")
+    print("\nCUDA is available.\n")
 else:
-    print("\nCuda is not available.\n")
+    print("\nCUDA is not available.\n")
 

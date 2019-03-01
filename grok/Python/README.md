@@ -6,6 +6,10 @@ implemented via "duck-typing."
   - A mathematics library centered around integer arithmetic
   - An old project of mine back when I first learned Python
   - Example of code being both Python 2.7/3 compatible
-* [deep learning with python](deepLearning/)
-  - Code written while learning Python based Deep Learning
+* [TensorFlow](tensorflow/)
+  - Python based Deep Learning
   - Keras and TensorFlow libraries
+* [PyTorch](tensorflow/)
+  - Python based Deep Learning
+  - PyTorch library
+* [Calling C Code from Python](C_call/)

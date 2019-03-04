@@ -263,7 +263,11 @@ else
     ## ssh related functions and aliases
 
     # pkinit alias for HPC
-    alias pkhpc='pkinit schelleg@HPCMP.HPC.MIL'
+    pkhpc ()
+    {
+        module load hpc
+        pkinit schelleg@HPCMP.HPC.MIL
+    }
 
     sshToSystem ()
     {

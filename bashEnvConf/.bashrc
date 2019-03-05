@@ -381,9 +381,9 @@ else
     if [[ -d ~/opt/anaconda3 ]]
     then
         source ~/opt/anaconda3/etc/profile.d/conda.sh
-    elif [[ -d /cygdrive/c/Users/scotch/Anaconda3 ]]
+    elif [[ -d ~/Anaconda3 ]]
     then
-        source /cygdrive/c/Users/scotch/Anaconda3/etc/profile.d/conda.sh
+        source ~/Anaconda3/etc/profile.d/conda.sh
     fi
 
 fi

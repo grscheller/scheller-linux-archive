@@ -383,7 +383,7 @@ else
         source ~/opt/anaconda3/etc/profile.d/conda.sh
     elif [[ -d ~/Anaconda3 ]]
     then
-        source ~/Anaconda3/etc/profile.d/conda.sh
+        source ~/opt/Anaconda3/etc/profile.d/conda.sh
     fi
 
 fi

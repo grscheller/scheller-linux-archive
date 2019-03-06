@@ -495,7 +495,7 @@ Purpose: For tracking Python infrastructure installed locally as
         package                    source /cygdrive/c/Users/scotch/Anaconda3/etc/profile.d/conda.sh|            build
         ---------------------------|-----------------
         cudnn-7.3.1                |       cuda10.0_0       385.1 MB
-        pytorch-1.0.1              |cuda100py37he554f03_0       344.6 MB
+        pytorch-1.0.1              |cuda100py37he554f03_0   344.6 MB
         ------------------------------------------------------------
 
     The following NEW packages will be INSTALLED:
@@ -619,13 +619,13 @@ Purpose: For tracking Python infrastructure installed locally as
   launched `ANACONDA NAVIGATOR` from taskbar menu.
   - horrible bright white with light gray lettering (hard to read)
   - able to launch a cmd.exe window navigator app
-  - able to launch a cmd.exe window directly from Win10 menus too
+  - able to launch a cmd.Anaconda3/etc/profile.Anaconda3/etc/profile.d/conda.shd/conda.shexe window directly from Win10 menus too
 
     (base) C:\Users\scotch>conda create --name play1
     Solving environment: done
 
     ==> WARNING: A newer version of conda exists. <==
-      current version: 4.5.12
+      current version: 4Anaconda3/etc/profile.d/conda.sh.5Anaconda3/etc/profile.d/conda.sh.12
       latest version: 4.6.7
 
     Please update conda by running
@@ -654,10 +654,10 @@ Purpose: For tracking Python infrastructure installed locally as
   Upgrade conda,
 
     (base) C:\Users\scotch>conda update conda
-    Solving environment: done
+    Solving environment: dAnaconda3/etc/profile.d/conda.shone
 
     ## Package Plan ##
-
+Anaconda3/etc/profile.d/conda.sh
       environment location: C:\Users\scotch\Anaconda3
 
     added / updated specs:
@@ -688,7 +688,7 @@ Purpose: For tracking Python infrastructure installed locally as
 
     (base) C:\Users\scotch>
 
-2019-02-01: (Windows 10)
+2019-03-01: (Windows 10)
   Some issues when I run verify.py:
 
     (base) C:\cygwin64\home\scotch\devel\scheller-linux-archive\grok\Python\pyTorch>conda activate pytorch
@@ -712,9 +712,49 @@ Purpose: For tracking Python infrastructure installed locally as
   CUDA not available due to not having installed the CUDA drivers from
   the NVIDIA website.
 
-2019-02-01: (Windows 10)
+2019-03-01: (Windows 10)
   Download CUDA tools and drivers from NVIDEA website:
 
     https://developer.nvidia.com/cuda-toolkit
 
-  
+  Anaconda3/etc/profile.d/conda.sh
+
+2019-03-04: (Windows 10)
+  Remove and reinstall pytorch virtual environment,
+
+    $ conda env remove --name pytorch
+    $ conda update -n base -c defaults conda
+    $ conda create --name pytorch -c pytorch pytorch torchvision
+    $ conda activate pytorch
+    $ python verify.py
+    Randon 5 by 3 "tensor":
+    tensor([[0.2860, 0.5259, 0.7605],
+            [0.3410, 0.6272, 0.3312],
+            [0.3924, 0.9584, 0.7907],
+            [0.9699, 0.1791, 0.9951],
+            [0.3231, 0.3371, 0.2090]])
+
+    CUDA is not available
+
+  Got rid of the "numpy.ufunc size changed, may indicate binary incompatibility"
+  error, but still not finding CUDA.  
+
+  Do I need to "turn CUDA on" somehow?cuda.is_available
+
+2019-03-04: (Windows 10)
+  Installing MS Visual Studio Community Edition to make NVIDIA CUDA install happier.
+  Only selected python and data store stuff, nothing C# or C++.
+
+  What?!?!?! the blasted thing is installing Cpython and Andaconda3.ExE.x64
+
+  Installed, required reboot.
+
+  Now, reinstalling NVIDIA CUDA Toolkit.  Much happier now.
+  Also, installed 
+
+    Nsight for Visual Studio 2017
+    Nsight Monitor and HUD Launcher
+
+  Still
+
+      3.7.1 -> 3.6.5 (Anaconda) and 3.6.6 Python Software Foundation

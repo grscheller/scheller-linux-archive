@@ -5637,7 +5637,7 @@ Note: Basically rebuilt system from scratch starting on 2017-06-20
   Well, these notes clearly show that on 2017-07-27 I replace Wicd
   with NetworkManager.  Explains why wireless-settings.conf
   was not being used.  I am an idiot, but at least now
-  a :-)aidiot.
+  a :-) idiot.
 
   There are 17 files with "hidden=true", some of which I know
   the SSID's get broadcast.  Since I want to "walk lightly,"
@@ -5653,3 +5653,139 @@ Note: Basically rebuilt system from scratch starting on 2017-06-20
   Just needed the SSID, and connected to my apartment router
   the first try.  No "hidden=true" in the file genaerated in
   /etc/NetworkManager/system-connections/.
+
+2019-03-06:
+  Noticed that man -k did not work.  Manually as root ran mandb
+  and it fixed it.
+
+  But why is it not being updated?  In the olde days, it was
+  kicked off via cron.  Probably some Systemd service now-a-days.
+
+  Internet seaching shows most people want to turn it off, along
+  with updatedb, to increase boot time.
+
+    $ sudo pacman -Ss man-db
+    core/man-db 2.8.5-2 (base) [installed]
+        A utility for reading man pages
+
+    $ sudo pacman -Ss mlocate
+    core/mlocate 0.26.git.20170220-1 [installed]
+        Merging locate/updatedb implementation
+
+  I had to install mlocate.
+
+  But when I try to enable them, I get
+
+    $ sudo systemctl enable man-db.service 
+    The unit files have no installation config (WantedBy=, RequiredBy=, Also=,
+    Alias= settings in the [Install] section, and DefaultInstance= for template
+    units). This means they are not meant to be enabled using systemctl.
+ 
+    Possible reasons for having this kind of units are:
+    • A unit may be statically enabled by being symlinked from another unit's
+      .wants/ or .requires/ directory.
+    • A unit's purpose may be to act as a helper for some other unit which has
+      a requirement dependency on it.
+    • A unit may be started when needed via activation (socket, path, timer,
+      D-Bus, udev, scripted systemctl call, ...).
+    • In case of template units, the unit is meant to be enabled with some
+      instance name specified.
+
+    $ sudo systemctl enable updatedb.service 
+    The unit files have no installation config (WantedBy=, RequiredBy=, Also=,
+    Alias= settings in the [Install] section, and DefaultInstance= for template
+    units). This means they are not meant to be enabled using systemctl.
+ 
+    Possible reasons for having this kind of units are:
+    • A unit may be statically enabled by being symlinked from another unit's
+      .wants/ or .requires/ directory.
+    • A unit's purpose may be to act as a helper for some other unit which has
+      a requirement dependency on it.
+    • A unit may be started when needed via activation (socket, path, timer,
+      D-Bus, udev, scripted systemctl call, ...).
+    • In case of template units, the unit is meant to be enabled with some
+      instance name specified.
+
+  So, need to figure out what I need to enable to get these to update.
+
+    $ sudo systemctl enable man-db.timer
+    Created symlink /etc/systemd/system/timers.target.wants/man-db.timer → /usr/lib/systemd/system/man-db.timer.
+
+    $ sudo systemctl enable updatedb.timer
+    The unit files have no installation config (WantedBy=, RequiredBy=, Also=,
+    Alias= settings in the [Install] section, and DefaultInstance= for template
+    units). This means they are not meant to be enabled using systemctl.
+
+  Got, half of it
+
+    $ pacman -Qlq man-db | grep systemd
+    /usr/lib/systemd/
+    /usr/lib/systemd/system/
+    /usr/lib/systemd/system/man-db.service
+    /usr/lib/systemd/system/man-db.timer
+    /usr/lib/systemd/system/multi-user.target.wants/
+    /usr/lib/systemd/system/multi-user.target.wants/man-db.timer
+
+    $ pacman -Qlq mlocate | grep systemd
+    /usr/lib/systemd/
+    /usr/lib/systemd/system/
+    /usr/lib/systemd/system/multi-user.target.wants/
+    /usr/lib/systemd/system/multi-user.target.wants/updatedb.timer
+    /usr/lib/systemd/system/updatedb.service
+    /usr/lib/systemd/system/updatedb.timer
+
+    $ locate passwd
+    locate: can not stat () `/var/lib/mlocate/mlocate.db': No such file or directory
+
+    # updatedb
+
+    $ locate passwd
+    /etc/passwd
+    /etc/passwd-
+    /etc/pam.d/chgpasswd
+    /etc/pam.d/chpasswd
+    /etc/pam.d/passwd
+    ...
+
+  The updatedb ran reasonably quickly.
+
+  I can start the updatedb.service, but cannot enable neither it
+  nor updatedb.timer.
+
+    $ date
+    Thu Mar  7 00:33:53 MST 2019
+
+    $ sudo systemctl start updatedb.service
+
+    $ systemctl status updatedb.service
+    ● updatedb.service - Update locate database
+       Loaded: loaded (/usr/lib/systemd/system/updatedb.service; static; vendor preset: disabled)
+       Active: inactive (dead) since Thu 2019-03-07 00:34:00 MST; 4s ago
+      Process: 4682 ExecStart=/usr/bin/updatedb (code=exited, status=0/SUCCESS)
+     Main PID: 4682 (code=exited, status=0/SUCCESS)
+
+    Mar 07 00:34:00 gauss17 systemd[1]: Starting Update locate database...
+    Mar 07 00:34:00 gauss17 systemd[1]: updatedb.service: Succeeded.
+    Mar 07 00:34:00 gauss17 systemd[1]: Started Update locate database.
+
+    $ sudo updatedb
+ 
+    $ sudo systemctl enable updatedb.timer
+    The unit files have no installation config (WantedBy=, RequiredBy=, Also=,
+    Alias= settings in the [Install] section, and DefaultInstance= for template
+    units). This means they are not meant to be enabled using systemctl.
+     
+    Possible reasons for having this kind of units are:
+    • A unit may be statically enabled by being symlinked from another unit's
+      .wants/ or .requires/ directory.
+    • A unit's purpose may be to act as a helper for some other unit which has
+      a requirement dependency on it.
+    • A unit may be started when needed via activation (socket, path, timer,
+      D-Bus, udev, scripted systemctl call, ...).
+    • In case of template units, the unit is meant to be enabled with some
+      instance name specified.
+
+  I rarely use locate, so for now I can live with
+
+    $ sudo updatedb; locate foobar
+    /home/geoff/.cinnamon/spices.cache/applet/rwall@typicalfoobar.png

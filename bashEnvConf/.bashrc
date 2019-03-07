@@ -105,7 +105,7 @@ else
         HOST=littlejohn
         ;;
       rvswlcrabtreep1)
-        HOST=littlejohn
+        HOST=trex
         ;;
       kprswvbylnzjt52)
         HOST=galaga

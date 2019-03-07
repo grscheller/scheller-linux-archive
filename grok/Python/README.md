@@ -9,7 +9,7 @@ implemented via "duck-typing."
 * [TensorFlow](tensorflow/)
   - Python based Deep Learning
   - Keras and TensorFlow libraries
-* [PyTorch](tensorflow/)
+* [PyTorch](pyTorch/)
   - Python based Deep Learning
   - PyTorch library
 * [Calling C Code from Python](C_call/)

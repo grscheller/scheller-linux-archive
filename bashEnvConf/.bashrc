@@ -98,6 +98,9 @@ else
       rvsllschellerg2)
         HOST=voltron
         ;;
+      rvsllsherwoodj1)
+        HOST=sherwood
+        ;;
       kprswvbylnzjt52)
         HOST=galaga
         ;;
@@ -296,6 +299,7 @@ else
     alias evergarden='sshToSystem ${EVERGARDEN}'
     alias koala='sshToSystem ${KOALA}'
     alias galaga='sshToSystem ${GALAGA}'
+    alias sherwood='sshToSystem ${SHERWOOD}'
     alias topaz='sshToSystem ${TOPAZ}'
     alias ust='sshToSystem ${UST}'
     alias zambia='sshToSystem ${ZAMBIA}'
@@ -355,6 +359,9 @@ else
 
     alias toVoltron='toSystem ${VOLTRON}'
     alias fromVoltron='fromSystem ${VOLTRON}'
+
+    alias toSherwood='toSystem ${SHERWOOD}'
+    alias fromSherwood='fromSystem ${SHERWOOD}'
 
     alias toEvergarden='toSystem ${EVERGARDEN}'
     alias fromEvergarden='fromSystem ${EVERGARDEN}'

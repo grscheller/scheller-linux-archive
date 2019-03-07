@@ -83,9 +83,9 @@ object Either {
    */
   def traverse[E,A,B](as: List[A])(f: A => Either[E,B]): Either[E,List[B]] =
     as.foldRight(Right(Nil): Either[E,List[B]])(
-      (a, bsO) => 
+      (a, bsE) => 
         for {
-          bs <- bsO
+          bs <- bsE
           b <- f(a)
         } yield b :: bs )
 

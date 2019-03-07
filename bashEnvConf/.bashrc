@@ -121,6 +121,12 @@ else
         ;;
     esac
 
+    ## Setup work proxies when necessary
+    if [[ -f ~/.proxy_env ]]
+    then
+        source ~/.proxy_env
+    fi
+
     ## Save history whenever prompt displayed
     case $TERM in
       xterm*|rxvt*|urxvt*|kterm*|gnome*)

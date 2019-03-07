@@ -298,18 +298,6 @@ else
       $SSH -p "${port}" "${user}@${system}"
     }
 
-    #  Single quotes intentional
-    alias gauss17='sshToSystem ${GAUSS17}'
-    alias maxwell4='sshToSystem ${MAXWELL4}'
-    alias voltron='sshToSystem ${VOLTRON}'
-    alias evergarden='sshToSystem ${EVERGARDEN}'
-    alias koala='sshToSystem ${KOALA}'
-    alias galaga='sshToSystem ${GALAGA}'
-    alias sherwood='sshToSystem ${SHERWOOD}'
-    alias topaz='sshToSystem ${TOPAZ}'
-    alias ust='sshToSystem ${UST}'
-    alias zambia='sshToSystem ${ZAMBIA}'
-
     ## scp related functions and aliases
     toSystem ()
     {
@@ -356,34 +344,53 @@ else
       done
     }
 
+
     #  Single quotes intentional
+    alias gauss17='sshToSystem ${GAUSS17}'
     alias toGauss17='toSystem ${GAUSS17}'
     alias fromGauss17='fromSystem ${GAUSS17}'
 
+    alias maxwell4='sshToSystem ${MAXWELL4}'
     alias toMaxwell4='toSystem ${MAXWELL4}'
     alias fromMaxwell4='fromSystem ${MAXWELL4}'
 
+    alias voltron='sshToSystem ${VOLTRON}'
     alias toVoltron='toSystem ${VOLTRON}'
     alias fromVoltron='fromSystem ${VOLTRON}'
 
+    alias sherwood='sshToSystem ${SHERWOOD}'
     alias toSherwood='toSystem ${SHERWOOD}'
     alias fromSherwood='fromSystem ${SHERWOOD}'
 
+    alias littlejohn='sshToSystem ${LITTLEJOHN}'
+    alias toLittlejohn='toSystem ${LITTLEJOHN}'
+    alias fromLittlejohn='fromSystem ${LITTLEJOHN}'
+
+    alias trex='sshToSystem ${TREX}'
+    alias toTrex='toSystem ${TREX}'
+    alias fromTrex='fromSystem ${TREX}'
+
+    alias evergarden='sshToSystem ${EVERGARDEN}'
     alias toEvergarden='toSystem ${EVERGARDEN}'
     alias fromEvergarden='fromSystem ${EVERGARDEN}'
 
+    alias koala='sshToSystem ${KOALA}'
     alias toKoala='toSystem ${KOALA}'
     alias fromKoala='fromSystem ${KOALA}'
 
+    alias galaga='sshToSystem ${GALAGA}'
     alias toGalaga='toSystem ${GALAGA}'
     alias fromGalaga='fromSystem ${GALAGA}'
 
+    alias topaz='sshToSystem ${TOPAZ}'
     alias toTopaz='toSystem ${TOPAZ}'
     alias fromTopaz='fromSystem ${TOPAZ}'
 
+    alias ust='sshToSystem ${UST}'
     alias toUST='toSystem ${UST}'
     alias fromUST='fromSystem ${UST}'
 
+    alias zambia='sshToSystem ${ZAMBIA}'
     alias toZambia='toSystem ${ZAMBIA}'
     alias fromZambia='fromSystem ${ZAMBIA}'
 

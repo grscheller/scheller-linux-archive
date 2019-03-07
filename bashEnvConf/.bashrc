@@ -101,6 +101,12 @@ else
       rvsllsherwoodj1)
         HOST=sherwood
         ;;
+      rvswlwojcikj1)
+        HOST=littlejohn
+        ;;
+      rvswlcrabtreep1)
+        HOST=littlejohn
+        ;;
       kprswvbylnzjt52)
         HOST=galaga
         ;;

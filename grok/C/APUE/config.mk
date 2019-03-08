@@ -13,14 +13,18 @@ BIN = bin
 LIBAPUE_A = $(LIBDIR)/libapue.a
 APUE_H = $(INCLUDE)/apue.h
 
-# Compiler flags for specific OS's
 # All feature macros defined in apue.h
+
+# Compiler flags for specific OS's.
+# Here is where to select dialect of C Language, and define
+# macro flags for minimal conditional complilation.
 LINUX_CFLAGS := -std=c99 -DLINUX
 CYGWIN_CFLAGS := -std=c99 -DCYGWIN
 FREEBSD_CFLAGS := -ansi -DBSD                  # untested
 MACOS_CFLAGS := -ansi -DMACOS                  # untested
 SOLARIS_CFLAGS := -std=c99 -m64 -DSOLARIS      # untested
 
+LINUX_GNU11_CFLAGS := -std=gnu11 -DLINUX
 LINUX_GNU17_CFLAGS := -std=gnu17 -DLINUX
 
 # Uncomment one to select for your system

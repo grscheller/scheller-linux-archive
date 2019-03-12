@@ -135,12 +135,18 @@ else
     #  - might need to change this if I ever start running remote desktops
     proxyUp () {
         [[ -f ~/.proxy_env ]] && source ~/.proxy_env
-        [[ $DISPLAY =~ ^:0 ]] && gsettings set org.gnome.system.proxy mode manual
+        if [[ $DISPLAY =~ ^:0 ]] && [[ -x /usr/bin/gsettings ]]
+        then
+            gsettings set org.gnome.system.proxy mode manual
+        fi
     }
 
     downProxy () {
         unset http_proxy HTTP_PROXY https_proxy HTTPS_PROXY no_proxy NO_PROXY 
-        [[ $DISPLAY =~ ^:0 ]] && gsettings set org.gnome.system.proxy mode none
+        if [[ $DISPLAY =~ ^:0 ]] && [[ -x /usr/bin/gsettings ]]
+        then
+            gsettings set org.gnome.system.proxy mode none
+        fi
     }
 
     ## Save history whenever prompt displayed

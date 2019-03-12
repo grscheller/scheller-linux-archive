@@ -4,9 +4,9 @@
 # - Manually move to ~ on these systems
 # - .bashrc will source this file if it exits
 # 
-export HTTP_PROXY=kprs-wg-001.kprs.afrl-prs.hpc.mil:9090/
+export HTTP_PROXY=http://kprs-wg-001.kprs.afrl-prs.hpc.mil:9090
 export http_proxy=${HTTP_PROXY}
-export HTTPS_PROXY=kprs-wg-001.kprs.afrl-prs.hpc.mil:9090/
+export HTTPS_PROXY=https://kprs-wg-001.kprs.afrl-prs.hpc.mil:9090
 export https_proxy=${HTTPS_PROXY}
-export NO_PROXY=localhost,127.0.0.0/8,::1,*.kprs.afrl-prs.hpc.mil
+export NO_PROXY="localhost,127.0.0.0/8,::1,*.kprs.afrl-prs.hpc.mil"
 export no_proxy=${NO_PROXY}

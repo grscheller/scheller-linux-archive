@@ -127,11 +127,21 @@ else
         ;;
     esac
 
-    ## Setup work proxies when necessary
-    if [[ -f ~/.proxy_env ]]
-    then
-        source ~/.proxy_env
-    fi
+    ## Setup or tear down Network Manager proxies when necessary
+    #  - mostly for CentOS 7 work environment
+    #  - assumes you have manualyl set up the proxies in the Settings applet
+    #  - sets up Proxy environmental variables for current shell
+    #  - enable proxy for Network Manager if on the console
+    #  - might need to change this if I ever start running remote desktops
+    proxyUp () {
+        [[ -f ~/.proxy_env ]] && source ~/.proxy_env
+        [[ $DISPLAY =~ ^:0 ]] && gsettings set org.gnome.system.proxy mode manual
+    }
+
+    downProxy () {
+        unset http_proxy HTTP_PROXY https_proxy HTTPS_PROXY no_proxy NO_PROXY 
+        [[ $DISPLAY =~ ^:0 ]] && gsettings set org.gnome.system.proxy mode none
+    }
 
     ## Save history whenever prompt displayed
     case $TERM in

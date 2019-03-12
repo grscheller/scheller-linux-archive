@@ -33,3 +33,6 @@ then
     fi
     [[ -x ~/bin/pathtrim ]] && MODULEPATH=$(~/bin/pathtrim "$MODULEPATH")
 fi
+
+# Turn on Network Manager proxy if ~/.proxy_env exists
+[[ -f ~/.proxy_env ]] && proxyUp

@@ -11,7 +11,7 @@ Image="$*"
 # See if file exists and, if it does, get its full path.
 if [[ -f $Image ]]
 then
-    PathToImage="$(realPath $Image)"
+    PathToImage="$(realpath $Image)"
 else
     echo "File '$Image' not found as a regular file"
     exit 1

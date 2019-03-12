@@ -1,3 +1,5 @@
+## Symbols used by confstr
+#  to get configuration dependent string values
 _CS_PATH
 _CS_GNU_LIBC_VERSION
 _CS_GNU_LIBPTHREAD_VERSION

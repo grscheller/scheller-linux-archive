@@ -3,7 +3,8 @@
 # executables.
 #
 # Format of the C Preprocessor directives chosen to
-# make source code most readable in this file.
+# make source code readable in both this file and
+# the generated C code.
 BEGIN {
   printf("#include \"apue.h\"\n")
   printf("#include <errno.h>\n\n")
@@ -22,49 +23,47 @@ BEGIN {
   printf("        err_quit(\"usage: sysLimits <dirname>\");\n\n")
   FS="\t+"
   while (getline <"sysconf.sym" > 0) {
-    if ( /^[^#]/ && !/^$/ ) {
-        printf("#ifdef %s\n", $1)
+    if ( !/^[ \t]*#/ && !/^[ \t]*$/ ) {
+        printf("  #ifdef %s\n", $1)
         printf("    printf(\"%s defined to be %%ld\\n\", (long)%s+0);\n", $1, $1)
-        printf("#else\n")
+        printf("  #else\n")
         printf("    printf(\"no symbol for %s\\n\");\n", $1)
-        printf("#endif\n")
-        printf("#ifdef %s\n", $2)
+        printf("  #endif\n")
+        printf("  #ifdef %s\n", $2)
         printf("    pr_sysconf(\"%s =\", %s);\n", $1, $2)
-        printf("#else\n")
+        printf("  #else\n")
         printf("    printf(\"no symbol for %s\\n\");\n", $2)
-        printf("#endif\n")
+        printf("  #endif\n\n")
     }
   }
   close("sysconf.sym")
   while (getline <"pathconf.sym" > 0) {
-    if ( /^[^#]/ && !/^$/ ) {
-        printf("#ifdef %s\n", $1)
+    if ( !/^[ \t]*#/ && !/^[ \t]*$/ ) {
+        printf("  #ifdef %s\n", $1)
         printf("    printf(\"%s defined to be %%ld\\n\", (long)%s+0);\n", $1, $1)
-        printf("#else\n")
+        printf("  #else\n")
         printf("    printf(\"no symbol for %s\\n\");\n", $1)
-        printf("#endif\n")
-        printf("#ifdef %s\n", $2)
+        printf("  #endif\n")
+        printf("  #ifdef %s\n", $2)
         printf("    pr_pathconf(\"%s =\", argv[1], %s);\n", $1, $2)
-        printf("#else\n")
+        printf("  #else\n")
         printf("    printf(\"no symbol for %s\\n\");\n", $2)
-        printf("#endif\n")
+        printf("  #endif\n\n")
     }
   }
   close("pathconf.sym")
   while (getline <"confstr.sym" > 0) {
-    if ( /^[^#]/ && !/^$/ ) {
-        printf("#ifdef %s\n", $1)
+    if ( !/^[ \t]*#/ && !/^[ \t]*$/ ) {
+        printf("  #ifdef %s\n", $1)
         printf("    pr_confstr(\"%s -> \", %s);\n", $1, $1)
-        printf("#else\n")
+        printf("  #else\n")
         printf("    printf(\"no symbol for %s\\n\");\n", $1)
-        printf("#endif\n")
+        printf("  #endif\n\n")
     }
   }
   close("confstr.sym")
+  printf("\n")
+  printf("    exit(0);\n")
+  printf("}")
   exit
-}
-END {
-    printf("\n")
-    printf("    exit(0);\n")
-    printf("}")
 }

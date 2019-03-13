@@ -14,20 +14,24 @@ _POSIX_PIPE_BUF	_PC_POSIX_PIPE_BUF
 _POSIX_SSIZE_MAX	_PC_POSIX_SSIZE_MAX
 
 # POSIX Limits - pathname variable values, possibly indeterminate
-LINK_MAX	_PC_LINK_MAX	# Ref file either file or dir
-MAX_CANON	_PC_MAX_CANON	# Ref file must be terminal
-MAX_INPUT	_PC_MAX_INPUT	# Ref file must be terminal
-NAME_MAX	_PC_NAME_MAX	# Ref file must be dir, applies to files in directory
+FILESIZEBITS	_PC_FILESIZEBITS	# Min number bits to represent, as a signed int value,
+                                    # the max size of reg file's in the reference directory.
+LINK_MAX	_PC_LINK_MAX	# Max link count for the reference file or directory.
+MAX_CANON	_PC_MAX_CANON	# The uniform system limit (if any) for the amount of text in a
+                            # line of input when input editing is enabled. Ref file must be
+                            # terminal.
+MAX_INPUT	_PC_MAX_INPUT	# The uniform system limit (if any) for the total number of
+                            # characters typed ahead as input.  Ref file must be terminal.
+NAME_MAX	_PC_NAME_MAX	# ref file must be dir, applies to files in directory
 PATH_MAX	_PC_PATH_MAX	# ref file must be dir
 PIPE_BUF	_PC_PIPE_BUF	# ref file pipe or FIFO or dir, applies to FIFOs created in directory
 
 # POSIX Limits - execution time symbolic constants
-_POSIX_NO_TRUNC	_PC_NO_TRUNC	# Ref file must be directory, applies to files in directory
-_POSIX_VDISABLE	_PC_VDISABLE	# Ref file must be terminal
+_POSIX_NO_TRUNC	_PC_NO_TRUNC	# ref file must be directory, applies to files in directory
+_POSIX_VDISABLE	_PC_VDISABLE	# ref file must be terminal
 _POSIX_CHOWN_RESTRICTED	_PC_CHOWN_RESTRICTED	# ref file must be file or dir. applies to files in directory
 
 # Need to organize
-FILESIZEBITS	_PC_FILESIZEBITS
 _POSIX_ASYNC_IO	_PC_ASYNC_IO
 _POSIX_PRIO_IO	_PC_PRIO_IO
 _POSIX_SYNC_IO	_PC_SYNC_IO

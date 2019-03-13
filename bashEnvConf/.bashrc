@@ -135,7 +135,7 @@ else
     #  - might need to change this if I ever start running remote desktops
     proxyUp () {
         [[ -f ~/.proxy_env ]] && source ~/.proxy_env
-        if [[ $DISPLAY =~ ^:0 ]] && [[ -x /usr/bin/gsettings ]]
+        if [[ $DISPLAY =~ ^:[0-9] ]] && [[ -x /usr/bin/gsettings ]]
         then
             gsettings set org.gnome.system.proxy mode manual
         fi

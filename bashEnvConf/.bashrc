@@ -204,15 +204,16 @@ else
       cd $upDir || return
     }
 
-    # Convert between hex and dec
-    h2d ()
-    {
-      echo "ibase=16; $*" | /usr/bin/bc
-    }
-
+    # Convert from dec and hex
     d2h ()
     {
       echo "obase=16; $*" | /usr/bin/bc
+    }
+
+    # Convert from hex and dec, use capital A-F
+    h2d ()
+    {
+      echo "ibase=16; $*" | /usr/bin/bc
     }
 
     ## NVIDIA aliases

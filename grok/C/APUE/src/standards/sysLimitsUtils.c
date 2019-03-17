@@ -21,7 +21,7 @@ pr_confstr(char *mesg, int name)
         }
     } else {
         if (errno != 0)
-            err_sys("comfstr error, returned non-zero");
+            err_sys("confstr error, returned non-zero");
         if ((buff = malloc(n)) == NULL)
             err_sys("malloc returnec NULL");
         errno = 0;

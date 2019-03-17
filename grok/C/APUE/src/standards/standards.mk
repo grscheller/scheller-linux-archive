@@ -24,7 +24,8 @@ $(PATH_STDS)/sysNoLimits$(EXT): $(PATH_STDS)/sysLimits.c \
 $(PATH_STDS)/sysLimits.c: $(PATH_STDS)/genSysLimits.awk \
 	                      $(PATH_STDS)/confstr.sym \
 	                      $(PATH_STDS)/sysconf.sym \
-                          $(PATH_STDS)/pathconf.sym
+                          $(PATH_STDS)/pathconf.sym \
+                          $(PATH_STDS)/feature.sym
 	cd $(PATH_STDS); $(AWK) -f $(notdir $<) > $(notdir $@)
 
 $(PATH_STDS)/%.o: $(PATH_STDS)/%.c $(APUE_H)

@@ -1,10 +1,16 @@
-/* Header file for Error and Logging functions
+/* Header file for writing portable Unix applications
+ * based on the 3rd ed. of the W. Richard Stevens book
+ * Advanced Programming in the UNIX Environment (APUE).
  *
- * Purpose: 1. Set up standards used.
- *          2. Include frequently used headers - speeds up
- *             compilation via the include/spHeaders.h.gch
- *             compiler generated precompiled header.
- *          3. Prototypes for common error handling routines.
+ * Purpose: 1. Set up standards used via feature test macros,
+ *             done so in as much of as a cross OS compatible
+ *             way as possible.
+ *          2. Try to make executables cross platform compatible
+ *             within a given OS.
+ *          3. Include frequently used headers.
+ *          4. Define some convience macros
+ *          5. Prototype error and logging functions.
+ *          6. Prototype functions to determine runtime limits.
  *
  * IMPORTANT: To be included before all other header files.
  *
@@ -14,20 +20,14 @@
 #define _APUE_H
 
 #define _POSIX_C_SOURCE 200809L /* Compile to POSIX.1-2008 standard */
-
-#if defined(SOLARIS)
-#define _XOPEN_SOURCE 600   /* Use XSI 6 extention for Solaris < 11 */
-#define __EXTENSIONS__
-#else
-#define _XOPEN_SOURCE 700   /* Otherwise use XSI 7 extention */
-#endif
+#define _XOPEN_SOURCE 700       /* with XSI 7 extentions.           */
 
 #if defined(BSD)
-#define __BSD_VISIBLE
+# define __BSD_VISIBLE
 #endif
 
 #if defined(MACOS)
-#define _DARWIN_C_SOURCE
+# define _DARWIN_C_SOURCE
 #endif
 
 #include <sys/types.h>      /* some systems still require this */
@@ -35,7 +35,7 @@
 #include <sys/termios.h>    /* for winsize */
 
 #if defined(MACOS) || !defined(TIOCGWINSZ)
-#include <sys/ioctl.h>
+# include <sys/ioctl.h>
 #endif
 
 #include <stdio.h>

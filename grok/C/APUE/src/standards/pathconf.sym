@@ -2,7 +2,6 @@
 #  to get integer value configuration information
 #  associated with files and directories at run time.
 
-
 # POSIX Limits - invariant minimum values
 _POSIX_LINK_MAX	_PC_POSIX_LINK_MAX
 _POSIX_MAX_CANON	_PC_POSIX_MAX_CANON

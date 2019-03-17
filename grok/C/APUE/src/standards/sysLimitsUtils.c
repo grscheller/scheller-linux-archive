@@ -27,7 +27,7 @@ pr_confstr(char *mesg, int name)
         errno = 0;
         if (confstr(name, buff, n) == 0)
             err_sys("comstr error when getting value");
-        printf(" %s\n", buff);
+        printf(" \"%s\"\n", buff);
         free(buff);
     }
 }
@@ -71,5 +71,23 @@ pr_pathconf(char *mesg, char *path, int name)
         }
     } else {
         printf(" %ld\n", val);
+    }
+}
+
+void
+pr_feature(char *feature, char fmt, long value)
+{
+    switch(fmt) {
+        case 'n' :
+            printf("%s is defined\n", feature);
+            break;
+        case 'd' :
+            printf("%s is defined: %d\n", feature, (int)value);
+            break;
+        case 'l' :
+            printf("%s is defined: %ld\n", feature, (long)value);
+            break;
+        default :
+            err_quit("Unknown format: %c for feature test macro: %s\n", fmt, feature);
     }
 }

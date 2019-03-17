@@ -16,11 +16,11 @@ main(int argc, char *argv[])
         err_quit("%s\n%s", ErrorArg, Usage);
 
     int fd_in;
-    if ((fd_in = open(argv[1], O_RDONLY | FILE_MODE)) == -1 )
+    if ( (fd_in = open(argv[1], O_RDONLY)) == -1 )
         err_sys("Failed to open %s", argv[1]);
 
     int fd_out;
-    if ((fd_out = open(argv[2], O_WRONLY | O_CREAT)) == -1 )
+    if ( (fd_out = open(argv[2], O_WRONLY | O_CREAT, FILE_MODE)) == -1 )
         err_sys("Failed to open %s", argv[2]);
 
     char buf[BUFFSIZE];

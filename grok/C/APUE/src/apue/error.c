@@ -14,7 +14,7 @@
  *                  err_quit
  */
 #include "apue.h"
-#include <errno.h>     /* defines errno "variable," actually a macroa */
+#include <errno.h>     /* defines errno "variable," actually a macro */
 #include <stdarg.h>    /* ISO C variable arguments */
 
 static void err_doit(int, int, const char *, va_list ap);

@@ -85,7 +85,7 @@ pr_feature(char *feature, char fmt, long value)
             printf("%s is defined: %d\n", feature, (int)value);
             break;
         case 'l' :
-            printf("%s is defined: %ld\n", feature, (long)value);
+            printf("%s is defined: %ldL\n", feature, (long)value);
             break;
         default :
             err_quit("Unknown format: %c for feature test macro: %s\n", fmt, feature);

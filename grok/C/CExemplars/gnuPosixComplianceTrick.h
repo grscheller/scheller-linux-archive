@@ -24,7 +24,7 @@
  *
  *  I hate having to simultaneously program in more than
  *  one language at a time.  The less one has to use
- *  thr precompiler, the better.  Hopefully real modules
+ *  the C preprocessor, the better.  Hopefully real modules
  *  will be coming to C sometime soon, its beem 40 years 
  *  too late.
  */

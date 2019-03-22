@@ -1058,3 +1058,44 @@ Anaconda3/etc/profile.d/conda.sh
        CUDA is not available
 
      Don't know what is wrong.
+
+2019-03-22: (Windows 10)
+
+  Almost ready to give up trying to get working
+  Anaconda Python + NVIDIA drivers + Cygwin (or MSYS) + OEM Win10.
+
+  The NVIDIA Quadro M620 "should" be CUDA compatible.
+
+  Windows device manager (yes it still exists, totally disconnected from any
+  GUI/App/Tool which a naive user will stumble upon) says:
+
+    Windows cannot verify the digital signature for the drivers
+    required for this device. A recent hardware or software change
+    might have installed a file that is signed incorrectly or damaged,
+    or that might be malicious software from an unknown source. (Code 52)
+ 
+  I think this means that Windows is blacklisting the NVIDIA drivers.  Try
+  turning secure boot off in whatever UEFI thingy that replaced the BIOS.
+
+    $ conda activate pytorch
+    (pytorch)
+    [scotch@MinGW: ~/devel/scheller-linux-archive/grok/Python/pyTorch]
+    $ ./verify.py
+    Randon 5 by 3 "tensor":
+    tensor([[0.3569, 0.0797, 0.4054],
+            [0.7602, 0.2660, 0.3786],
+            [0.6438, 0.6318, 0.6975],
+            [0.6580, 0.9080, 0.4931],
+            [0.8850, 0.8149, 0.7688]])
+    
+    CUDA is available.
+
+  Success!!!!
+
+  Also, works in CYGWIN environment too, after doing
+
+    $ set -o ignlf
+
+  in ~/.bashrc.  Since, in my Cygwin environment,
+  ~/opt -> /cygdrive/c/Users/scoth/opt and
+  ~/opt/anaconda3/etc/profile.d/conda.sh contains LF characters.

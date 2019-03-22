@@ -423,6 +423,13 @@ else
     ## Configure Anaconda3 Python Distribution
     if [[ -d ~/opt/anaconda3 ]]
     then
+        # On Windows 10, Anaconda installed into the MSYS
+        # world, we must tell cygwin to ignore LF characters
+        # or conda shell function will fail.
+        if [[ $OSTYPE == cygwin ]]
+        then
+            set -o igncr
+        fi
         source ~/opt/anaconda3/etc/profile.d/conda.sh
     fi
 

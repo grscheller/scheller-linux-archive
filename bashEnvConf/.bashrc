@@ -14,23 +14,26 @@
 # shellcheck shell=bash
 # shellcheck source=/dev/null
 
-export BASHRC_NON_INTERACTIVE=${BASHRC_NON_INTERACTIVE:=0}
-export BASHRC_INTERACTIVE=${BASHRC_INTERACTIVE:=0}
+export BASHRC_NON_INTERACTIVE_LVL=${BASHRC_NON_INTERACTIVE_LVL:=0}
+export BASHRC_INTERACTIVE_LVL=${BASHRC_INTERACTIVE_LVL:=0}
+export BASH_PROFILE_LVL=${BASH_PROFILE_LVL:=0}
+export BASH_INIT_LVL=${BASH_INIT_LVL:=0}
 
 if [[ $- != *i* ]]
 then
+    ((BASHRC_NON_INTERACTIVE_LVL++))
+
     # Don't configure anything, non-interactive
     # shells are responsible for their own configuration.
-    :
 else
-    # Make sure an initial shell environment is well defined,
-    # for both login shells and new terminal windows, even
-    # if ~/.bash_profile was never sourced.
-    ((BASHRC_INTERACTIVE++))
+    ((BASHRC_INTERACTIVE_LVL++))
 
-    if [[ ! -v BASH_INIT_SOURCED ]] || [[ -v BASH_PROFILE_RESOURCED ]] 
+    # Make sure an initial shell environment is well defined,
+    # terminal windows are not descendant from login shells.
+    if ((BASH_INIT_LVL < 1)) || ((BASH_PROFILE_SOURCED == 1)) 
     then 
         source ~/.bash_init
+        unset BASH_PROFILE_SOURCED 
     fi
 
     # Mechanism used on Redhat & Redhat derived systems

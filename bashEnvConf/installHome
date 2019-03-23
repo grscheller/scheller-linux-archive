@@ -23,7 +23,7 @@ DOT_FILES='
 ### Back up existing dot-files in case things go wrong
 for File in $DOT_FILES
 do
-    diff ~/$File ~/${File}.old &>/dev/null && continue
+    diff ~/"$File" ~/"${File}.old" &>/dev/null && continue
     [[ ! -f ~/$File ]] || cp ~/"$File" ~/"${File}.old" || { echo "Error: Failed to backup previous ~/$File" >&2; exit 1; }
 done
 
@@ -84,25 +84,10 @@ fi
 if [[ -d $MATLAB_INSTALL_DIR ]]
 then
     #Find latest version of MATLAB and create symlinks
-    MATLAB_BIN=$MATLAB_INSTALL_DIR/$(for Rdir in $MATLAB_INSTALL_DIR/R*
+    MATLAB_BIN=$MATLAB_INSTALL_DIR/$(for Rdir in "$MATLAB_INSTALL_DIR"/R*
                                      do
-                                         echo ${Rdir##*/}
+                                         echo "${Rdir##*/}"
                                      done | sort | tail -1)/bin
     rm -f ~/bin/{matlab,mex}
-    ln -s $MATLAB_BIN/{matlab,mex} ~/bin 2> /dev/null
-fi
-
-### Fix .bashrc and .bash_init on CentOS 6
-sedScript='s/\[\[ ! -v B/\[\[ -z $B/
-           s/\[\[ -v B/\[\[ -n $B/'
-
-if [[ -f /etc/redhat-release ]]
-then
-    if [[ $(cat /etc/redhat-release) =~ "CentOS release 6" ]]
-    then
-        mv ~/.bash_init ~/.bash_init_7
-        mv ~/.bashrc ~/.bashrc_7
-        sed -e "$sedScript" ~/.bash_init_7 > ~/.bash_init
-        sed -e "$sedScript" ~/.bashrc_7 > ~/.bashrc
-    fi
+    ln -s "$MATLAB_BIN"/{matlab,mex} ~/bin 2> /dev/null
 fi

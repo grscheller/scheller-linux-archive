@@ -22,19 +22,7 @@
 
 ## Sentinel value to mark completion of
 #  an initial environment configuration.
-export BASH_INIT_SOURCED
-
-if [[ -z $BASH_PROFILE_SOURCED ]]
-then
-    # Shell not descendent from a login shell
-    export BASH_PROFILE_SOURCED=0
-fi
-
-if [[ -v BASH_PROFILE_RESOURCED ]]
-then
-    # Login shell or user sourced ~/.bash_profile
-    unset BASH_PROFILE_RESOURCED 
-fi
+(( BASH_INIT_LVL++ ))
 
 ## Default file permissions - group way too broad for work CentOS 7
 if [[ ! -f /etc/redhat-release ]]

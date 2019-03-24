@@ -20,8 +20,9 @@ APUE_H = $(INCLUDE)/apue.h
 # macro flags for minimal conditional complilation.
 LINUX_CFLAGS := -std=c99 -DLINUX
 CYGWIN_CFLAGS := -std=c99 -DCYGWIN
-FREEBSD_CFLAGS := -std=c99 -DBSD             # untested
-MACOS_CFLAGS := -std=c99 -DMACOS             # untested
+MSYS2_CFLAGS := -std=c99 -DMSYS2      # no C compilier
+FREEBSD_CFLAGS := -std=c99 -DBSD      # untested
+MACOS_CFLAGS := -std=c99 -DMACOS      # untested
 
 LINUX_ANSI_CFLAGS := -ansi -DLINUX           # will fail
 LINUX_FORTIFY_CFLAGS := -std=c99 -DLINUX -D_FORTIFY_SOURCE=1 -O2

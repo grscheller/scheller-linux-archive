@@ -14,13 +14,13 @@ _POSIX_SSIZE_MAX	_PC_POSIX_SSIZE_MAX
 
 # POSIX Limits - pathname variable values, possibly indeterminate
 FILESIZEBITS	_PC_FILESIZEBITS	# Min number bits to represent, as a signed int value,
-                                    # the max size of reg file's in the reference directory.
+                                	# the max size of reg file's in the reference directory.
 LINK_MAX	_PC_LINK_MAX	# Max link count for the reference file or directory.
 MAX_CANON	_PC_MAX_CANON	# The uniform system limit (if any) for the amount of text in a
-                            # line of input when input editing is enabled. Ref file must be
-                            # terminal.
+                         	# line of input when input editing is enabled. Ref file must be
+                         	# terminal.
 MAX_INPUT	_PC_MAX_INPUT	# The uniform system limit (if any) for the total number of
-                            # characters typed ahead as input.  Ref file must be terminal.
+                         	# characters typed ahead as input.  Ref file must be terminal.
 NAME_MAX	_PC_NAME_MAX	# ref file must be dir, applies to files in directory
 PATH_MAX	_PC_PATH_MAX	# ref file must be dir
 PIPE_BUF	_PC_PIPE_BUF	# ref file pipe or FIFO or dir, applies to FIFOs created in directory

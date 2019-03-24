@@ -6,11 +6,11 @@ void
 pr_confstr(char *mesg, int name)
 {
     char *buff;
-    size_t n;
+    size_t len;
 
     fputs(mesg, stdout);
     errno = 0;
-    if ((n = confstr(name, (char *)NULL, (size_t)0)) == 0) {
+    if ((len = confstr(name, (char *)NULL, (size_t)0)) == 0) {
         if (errno != 0) {
             if (errno == EINVAL)
                 fputs(" (invalid value)\n", stdout);
@@ -22,10 +22,10 @@ pr_confstr(char *mesg, int name)
     } else {
         if (errno != 0)
             err_sys("confstr error, returned non-zero");
-        if ((buff = malloc(n)) == NULL)
-            err_sys("malloc returnec NULL");
+        if ((buff = malloc(len)) == NULL)
+            err_sys("malloc returned NULL");
         errno = 0;
-        if (confstr(name, buff, n) == 0)
+        if (confstr(name, buff, len + 1) == 0)
             err_sys("comstr error when getting value");
         printf(" \"%s\"\n", buff);
         free(buff);

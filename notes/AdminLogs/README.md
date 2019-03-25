@@ -1,6 +1,6 @@
-## My Arch Linux Admin Logs
+## My System Admin Logs
 Date ordered log files documenting changes made when
-administrating my Arch Linux system.
+administrating my various computer system.
 * [ArchLinux Admin Log](ArchLinuxAdmin.log)
   - Documents system administration on my Arch Linux laptop
   - Cronologically ordered

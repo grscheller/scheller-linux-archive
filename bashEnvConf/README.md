@@ -8,12 +8,8 @@ my Linux/UNIX/POSIX Bash environments.
 * installHome installs everything into $HOME
 * Tested on:
   * Arch Linux
-  * CentOS 7
-  * Cygwin on Windows 10
-* Won't work without minor modifications on:
-  * CentOS 6
-    * GNU coreutils version lacks /usr/bin/realpath
-    * Bash version lacks the -v conditional expression
+  * CentOS 6 & 7
+  * Cygwin & MSYS2 on Windows 10
 
 For these configuration files to fully work, the Bash
 scripts in the [bin](bin) directory need to be put into
@@ -23,21 +19,21 @@ Scripts in the [util](util) directory are for particular
 personal purposes and probably not of general interest.
 
 ### My philosophy on shell startup
-For login shells, Bash sources `.bash_profile`.  For non-login
-shells, Bash sources `.bashrc`.  That is what it does.
+Facts: For login shells, Bash sources `.bash_profile`.
+For non-login shells, Bash sources `.bashrc`.  That is what it does.
 What you do with it, is up to you.
 
 Traditionally, a UNIX shell sets up an initial shell environment
 when logging into a system via a login shell.  The shell would
 source a file like `~/.profile` to establish an initial $PATH and
-export shell variables.  The would source a file referenced by
+export shell variables.  Then it would source a file referenced by
 the environment variable $ENV, typically  `~/.shrc` to pick up
 shell functions and aliases.
 
 Aliases and shell functions are not exported to the environment
 but are picked up afresh with each new Bash session via
 sourcing `~/.bashrc`.  (Actually, shell functions can be exported
-to the environment, but this is not typically what is done)
+to the environment, but this is not typically what is done).
 By Bash session, I am talking about a completely new instance
 of Bash, not just a subshell.
 

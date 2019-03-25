@@ -5821,8 +5821,27 @@ Note: Basically rebuilt system from scratch starting on 2017-06-20
      $ glxinfo -B
      Error: Unable to open display
 
-  so itis an X thing, not a driver thing.  Also, a lot of neat graphics
-  demo programs installed, to see what they are:
+  so it is an X thing, not a driver thing.  Also, a lot of neat graphics
+  demo programs installed, to see what they are,
 
      $ pacman -Qlq mesa-demos | grep '/bin/'
 
+2019-03-25:
+  Noticed typo when I created user jb home directory,
+  from /etc/profile:
+
+    jb:x:1001:1001:Joe Blow://home/jorblow:/bin/bash
+
+  Fixed it via
+
+    # usermod -d /home/joeblow -m jb
+
+  This changed home directory in system files and moved user jb's
+  files to new location.
+
+  /etc/passwd now reads
+
+    jb:x:1001:1001:Joe Blow:/home/joeblow:/bin/bash
+
+  The home directory name deliberately not the same as 
+  the login name.

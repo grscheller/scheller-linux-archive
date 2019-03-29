@@ -101,6 +101,18 @@ else
       rvsllschellerg2)
         HOST=voltron
         ;;
+      rvwllfrithj1)
+        HOST=rygar
+        ;;
+      rvsllmonetd1)
+        HOST=evergarden
+        ;;
+      rvswlschellerg1)
+        HOST=koala
+        ;;
+      kprswvbylnzjt52)
+        HOST=galaga
+        ;;
       rvsllsherwoodj1)
         HOST=sherwood
         ;;
@@ -109,15 +121,6 @@ else
         ;;
       rvswlcrabtreep1)
         HOST=trex
-        ;;
-      kprswvbylnzjt52)
-        HOST=galaga
-        ;;
-      rvsllmonetd1)
-        HOST=evergarden
-        ;;
-      rvswlschellerg1)
-        HOST=koala
         ;;
       SCOTCh)
         if [[ $(uname) == CYGWIN_NT-10.0 ]]; then
@@ -372,29 +375,13 @@ else
 
 
     #  Single quotes intentional
-    alias gauss17='sshToSystem ${GAUSS17}'
-    alias toGauss17='toSystem ${GAUSS17}'
-    alias fromGauss17='fromSystem ${GAUSS17}'
-
-    alias maxwell4='sshToSystem ${MAXWELL4}'
-    alias toMaxwell4='toSystem ${MAXWELL4}'
-    alias fromMaxwell4='fromSystem ${MAXWELL4}'
-
     alias voltron='sshToSystem ${VOLTRON}'
     alias toVoltron='toSystem ${VOLTRON}'
     alias fromVoltron='fromSystem ${VOLTRON}'
 
-    alias sherwood='sshToSystem ${SHERWOOD}'
-    alias toSherwood='toSystem ${SHERWOOD}'
-    alias fromSherwood='fromSystem ${SHERWOOD}'
-
-    alias littlejohn='sshToSystem ${LITTLEJOHN}'
-    alias toLittlejohn='toSystem ${LITTLEJOHN}'
-    alias fromLittlejohn='fromSystem ${LITTLEJOHN}'
-
-    alias trex='sshToSystem ${TREX}'
-    alias toTrex='toSystem ${TREX}'
-    alias fromTrex='fromSystem ${TREX}'
+    alias rygar='sshToSystem ${RYGAR}'
+    alias toRygar='toSystem ${RYGAR}'
+    alias fromRygar='fromSystem ${RYGAR}'
 
     alias evergarden='sshToSystem ${EVERGARDEN}'
     alias toEvergarden='toSystem ${EVERGARDEN}'
@@ -408,6 +395,18 @@ else
     alias toGalaga='toSystem ${GALAGA}'
     alias fromGalaga='fromSystem ${GALAGA}'
 
+    alias sherwood='sshToSystem ${SHERWOOD}'
+    alias toSherwood='toSystem ${SHERWOOD}'
+    alias fromSherwood='fromSystem ${SHERWOOD}'
+
+    alias littlejohn='sshToSystem ${LITTLEJOHN}'
+    alias toLittlejohn='toSystem ${LITTLEJOHN}'
+    alias fromLittleJohn='fromSystem ${LITTLEJOHN}'
+
+    alias trex='sshToSystem ${TREX}'
+    alias toTrex='toSystem ${TREX}'
+    alias fromTrex='fromSystem ${TREX}'
+
     alias topaz='sshToSystem ${TOPAZ}'
     alias toTopaz='toSystem ${TOPAZ}'
     alias fromTopaz='fromSystem ${TOPAZ}'
@@ -419,6 +418,14 @@ else
     alias zambia='sshToSystem ${ZAMBIA}'
     alias toZambia='toSystem ${ZAMBIA}'
     alias fromZambia='fromSystem ${ZAMBIA}'
+
+    alias gauss17='sshToSystem ${GAUSS17}'
+    alias toGauss17='toSystem ${GAUSS17}'
+    alias fromGauss17='fromSystem ${GAUSS17}'
+
+    alias maxwell4='sshToSystem ${MAXWELL4}'
+    alias toMaxwell4='toSystem ${MAXWELL4}'
+    alias fromMaxwell4='fromSystem ${MAXWELL4}'
 
     ## Bash completion for stack (Haskell)
     #eval "$(stack --bash-completion-script stack)"

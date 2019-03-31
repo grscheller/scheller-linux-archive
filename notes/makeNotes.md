@@ -104,4 +104,4 @@ a <tab>.  What we just escaping the final <new-line>.
 Notes on automating tasks: 
 * `$$` prevents make variable expansion and passes the shell a single `$`
 * using `./` for start of path to executable
-* also, I don't put `.`in my `$PATH` 
+* also, I don't put `.` in my `$PATH` 

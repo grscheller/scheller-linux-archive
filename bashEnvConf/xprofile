@@ -1,0 +1,16 @@
+#
+# /etc/xprofile or ~/.xprofile
+#
+# Configuration for an ACER E-14 laptop (E5-491G-70PX)
+# to accommodate an NVIDIA GEFORCE 940m OPTIMUS video
+# card run as the sole GPU.
+#
+# Sets the monitor on the Intel interface "modesetting"
+# to be an output source for the Nvidia interface "NVIDIA-0".
+# 
+# Sometime after Nov 2018 these commands no longer
+# seem to be needed for the my NVIDIA card to figure
+# out its output source..
+#
+xrandr --setprovideroutputsource modesetting NVIDIA-0
+xrandr --auto

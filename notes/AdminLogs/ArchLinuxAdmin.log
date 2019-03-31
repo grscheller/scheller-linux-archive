@@ -1,12 +1,16 @@
 Purpose: To indicate what was done to create gauss17 and 
          the rational behind it.
 
-Note: Basically rebuilt system from scratch starting on 2017-06-20
+Note: Qn 2017-06-20 rebuilt system from scratch starting 
       after swapping out the DVD with a SSD.
 
-      First time through ran into issues getting an NVidia Optimus
+      Originally ran into issues getting an NVidia Optimus
       graphics card working with the NVidia drivers.  On the rebuild
       Arch handled the card and drivers without much fuss.
+
+Note: On 2019-03-30 decided to look into the possibility of using the
+      Intel Graphics chipset for the Window Manager while still being
+      able to use the NVidia GPU for OpenCL/CUDA programming.
 
 2016-07-04:
   Installed ArchLinux on Acer E-14 Laptop (E5-491G-70PX).
@@ -5370,7 +5374,7 @@ Note: Basically rebuilt system from scratch starting on 2017-06-20
   running on TTY1.  Next time it came up on TTY2.
 
   The .bashrc hook configured my initial environment, note, 
-  ~/.bash_profile was not sourced!  But my .bashrca hooked worked.
+  ~/.bash_profile was not sourced!  But my .bashrc hooked worked.
 
     $ env|grep -i bash
     BASHRC_NON_INTERACTIVE=0
@@ -5845,3 +5849,557 @@ Note: Basically rebuilt system from scratch starting on 2017-06-20
 
   The home directory name deliberately not the same as 
   the login name.
+
+2019-03-30: (Prelude)
+  Decided to look into using the Intel graphics chipset for the
+  desktop GUI while retaining the ability to use the NVIDIA card
+  for OpenCL/CUDA.  Basically OpenGL on the integrated Intel Chipset.
+
+  1. Hopefully this will allow me to migrate my windowing environment to Wayland.
+  2. Frees up resources for the NVidia card.
+  3. Might not play 3D games as well, but I don't play 3D games.
+  4. Makes me feel better by being less reliant on proprietary NVidia drivers.
+
+  The second time I rebuilt the system, it was much easier getting
+  the Optimus card working as the primary video driver.
+
+  Now,
+
+    $ lspci -k | grep -A 2 -E "(VGA|3D)"
+    00:02.0 VGA compatible controller: Intel Corporation HD Graphics 530 (rev 06)
+    Subsystem: Acer Incorporated [ALI] HD Graphics 530
+    Kernel driver in use: i915
+    --
+    01:00.0 3D controller: NVIDIA Corporation GM108M [GeForce 940M] (rev a2)
+    Subsystem: Acer Incorporated [ALI] GM108M [GeForce 940M]
+    Kernel driver in use: nvidia
+
+  but back on 2016-07-08, before installing NVidia drivers I got
+
+    $ lspci -k | grep -A 2 -E "(VGA|3D)"
+    00:02.0 VGA compatible controller: Intel Corporation Skylake Integrated Graphics (rev 06)
+    Subsystem: Acer Incorporated [ALI] Device 0979
+    Kernel driver in use: i915
+    --
+    01:00.0 3D controller: NVIDIA Corporation GM108M [GeForce 940M] (rev a2)
+    Subsystem: Acer Incorporated [ALI] Device 097a
+    Kernel modules: nouveau
+
+  and after installing them, I had
+
+    $ lspci -k | egrep -A 2 "(VGA|3D)"
+    00:02.0 VGA compatible controller: Intel Corporation Skylake Integrated Graphics (rev 06)
+    Subsystem: Acer Incorporated [ALI] Device 0979
+    Kernel driver in use: i915
+    --
+    01:00.0 3D controller: NVIDIA Corporation
+       GM108M [GeForce 940M] (rev a2) Subsystem: Acer Incorporated [ALI] Device 097a
+    Kernel driver in use: nvidia
+
+  If I am understanding these, I already have the Intel drivers installed and don't need
+  the Nouveau driver at all.
+
+  BIG MISUNDERSTANDING on my part:
+  Nouveau is not "the generic linux graphics driver" for Linux, it is the open source
+  driver for NVidia cards on Linux (and now also NetBSD 7).
+
+  At this point, I beleive that my Optimus NVidia card is "floating", that is not directly
+  connected to my laptop screen.  It is rendering all the X-Org video processing, using the
+  prorietary nvidia driver, and using DRM (Direct Rendering Management) to relay "kernel
+  memory buffers" to the Intel i915 driver to display to my laptop screen.
+
+  See: https://en.wikipedia.org/wiki/Direct_Rendering_Manager
+  See: https://devtalk.nvidia.com/default/topic/957814/linux/prime-and-prime-synchronization/
+
+  So, I do want to go to Wayland, I still want to use the NVidia card primarily for
+  OpenCL/CUDA unrelated to graphics functionality, but would not mind utilizing it 
+  to offload 3D rendering tasks.
+
+  Is Bumblebee an option?  The Archwiki page says it will never support Vulkan.
+
+  What is Valkan?
+
+    https://wiki.archlinux.org/index.php/Vulkan
+    https://www.khronos.org/vulkan/
+
+  From the Khronos webpage
+
+    Vulkan is a new generation graphics and compute API
+    that provides high-efficiency, cross-platform access
+    to modern GPUs used in a wide variety of devices
+    from PCs and consoles to mobile phones and embedded
+    platforms
+
+  Who is the Khronos group?
+
+    Khronos royalty-free open standards for 3D graphics,
+    Virtual and Augmented Reality, Parallel Computing,
+    Neural Networks, and Vision Processing.
+
+  I think I know the direction I want to take.
+
+2019-03-30: (Step 1: Rip out stuff)
+  To minimize dependency issues, lets rip out some of the more
+  proprietary tools I have never gotten around to using.
+
+    $ sudo pacman -Rsu cuda
+    checking dependencies...
+    warning: removing cuda from target list
+    warning: removing opencl-nvidia from target list
+     there is nothing to do
+    
+    $ sudo pacman -Rc cuda
+    checking dependencies...
+    
+    Packages (8) cudnn-7.5.0.56-1  python-pycuda-2018.1.1-5
+                 python-pytorch-cuda-1.0.1-5  python-tensorflow-opt-cuda-1.13.1-4
+                 python-tensorflow-serving-api-1.13.0-1  tensorboard-1.13.1-1
+                 tensorflow-opt-cuda-1.13.1-4  cuda-10.1.105-6
+    
+    Total Removed Size:  9476.38 MiB
+    
+    :: Do you want to remove these packages? [Y/n] 
+    :: Processing package changes...
+    (1/8) removing tensorboard                         [######################] 100%
+    (2/8) removing python-tensorflow-serving-api       [######################] 100%
+    (3/8) removing tensorflow-opt-cuda                 [######################] 100%
+    (4/8) removing python-tensorflow-opt-cuda          [######################] 100%
+    (5/8) removing python-pytorch-cuda                 [######################] 100%
+    (6/8) removing python-pycuda                       [######################] 100%
+    (7/8) removing cudnn                               [######################] 100%
+    (8/8) removing cuda                                [######################] 100%
+    :: Running post-transaction hooks...
+    (1/1) Arming ConditionNeedsUpdate...
+
+  Lets see if anything "broke":
+
+    $ conda activate pytorch
+    (pytorch) $ ./verify.py
+    Randon 5 by 3 "tensor":
+    tensor([[0.8226, 0.8734, 0.9897],
+            [0.5831, 0.7660, 0.4855],
+            [0.1376, 0.8236, 0.7894],
+            [0.8839, 0.8824, 0.4311],
+            [0.6184, 0.7979, 0.5740]])
+
+    CUDA is available.
+
+  Anaconda Cuda stuff still works.
+
+    $ glxinfo -B
+    name of display: :1
+    display: :1  screen: 0
+    direct rendering: Yes
+    Memory info (GL_NVX_gpu_memory_info):
+        Dedicated video memory: 2048 MB
+        Total available memory: 2048 MB
+        Currently available dedicated video memory: 1657 MB
+    OpenGL vendor string: NVIDIA Corporation
+    OpenGL renderer string: GeForce 940M/PCIe/SSE2
+    OpenGL core profile version string: 4.6.0 NVIDIA 418.56
+    OpenGL core profile shading language version string: 4.60 NVIDIA
+    OpenGL core profile context flags: (none)
+    OpenGL core profile profile mask: core profile
+    
+    OpenGL version string: 4.6.0 NVIDIA 418.56
+    OpenGL shading language version string: 4.60 NVIDIA
+    OpenGL context flags: (none)
+    OpenGL profile mask: (none)
+    
+    OpenGL ES profile version string: OpenGL ES 3.2 NVIDIA 418.56
+    OpenGL ES profile shading language version string: OpenGL ES GLSL ES 3.20
+
+  So, driver/hardware still same.  Remove the OpenCL development tools.
+
+    $ sudo pacman -Rsu ocl-icd opencl-headers opencl-nvidia pyopencl-headers python-pyopencl
+    checking dependencies...
+    :: libmagick optionally requires ocl-icd: OpenCL support
+    :: nvidia-utils optionally requires opencl-nvidia: OpenCL support
+    :: opencv optionally requires opencl-icd-loader: For coding with OpenCL
+    
+    Packages (11) python-beaker-1.10.1-1  python-cffi-1.12.2-1  python-mako-1.0.8-1
+                  python-ply-3.11-2  python-pycparser-2.19-1
+                  python-pytools-2019.1-1  ocl-icd-2.2.12-3
+                  opencl-headers-2:2.2.20170516-2  opencl-nvidia-418.56-1
+                  pyopencl-headers-1:2018.2.5-1  python-pyopencl-1:2018.2.5-1
+    
+    Total Removed Size:  82.99 MiB
+    
+    :: Do you want to remove these packages? [Y/n] 
+    :: Processing package changes...
+    ( 1/11) removing python-pyopencl                   [######################] 100%
+    ( 2/11) removing python-pytools                    [######################] 100%
+    ( 3/11) removing python-mako                       [######################] 100%
+    ( 4/11) removing python-beaker                     [######################] 100%
+    ( 5/11) removing python-cffi                       [######################] 100%
+    ( 6/11) removing python-pycparser                  [######################] 100%
+    ( 7/11) removing python-ply                        [######################] 100%
+    ( 8/11) removing pyopencl-headers                  [######################] 100%
+    ( 9/11) removing opencl-nvidia                     [######################] 100%
+    (10/11) removing opencl-headers                    [######################] 100%
+    (11/11) removing ocl-icd                           [######################] 100%
+    :: Running post-transaction hooks...
+    (1/1) Arming ConditionNeedsUpdate...
+
+  Anaconda pytorch stuff still working.
+
+2019-03-30: (Step 2: attempt to run Xorg off Intel Chipset)
+  Attrmpt to run Xorg off of the i915 Intel driver instead of
+  the nvidia driver.
+
+    $ xrandr --listproviders
+    Providers: number : 2
+    Provider 0: id: 0x22a cap: 0x1, Source Output crtcs: 0 outputs: 0 associated providers: 1 name:NVIDIA-0
+    Provider 1: id: 0x45 cap: 0xf, Source Output, Sink Output, Source Offload, Sink Offload crtcs: 3 outputs: 3 associated providers: 1 name:modesetting
+
+  Back on 2018-10-19 I got the DM to work by creating 
+  the following /etc/xprofile file:
+
+    $ cat /etc/xprofile
+    #
+    # /etc/xprofile
+    #
+    # Configuration for an ACER E-14 laptop (E5-491G-70PX)
+    # to accommodate an NVIDIA GEFORCE 940m OPTIMUS video
+    # card run as the sole GPU.
+    #
+    xrandr --setprovideroutputsource modesetting NVIDIA-0
+    xrandr --auto
+
+  Was going to try "adjusting" /etc/xprofle by replacing
+  the first line with
+
+    xrandr --setprovideroffloadsink NVIDIA-0 modesetting 
+
+  and was surprised that it "worked"... But under closer 
+  examination, nothing seemed to have changed.  Found that
+  the startup scripts no longer even looks at /etc/xprofile.
+  After deleting both /etc/xprofile and ~/.xprofile Gnome
+  Desktop started up as usual.
+
+  Something has changed since 2018-10-19, Gnome Shell
+  was recently upgraded.  Currently on my system there
+  are two separate X-sessions going with different users.
+  Yeah, things have changed.
+
+  Well, there are no "used/root" configuration files which
+  points to one chipset over the other.  I'm back to my old
+  question of what is running what graphics chipwise.
+
+  The output of "glxinfo -B" above seems to indicate that
+  it is the NVidia card calling the shots.
+
+    $ echo $XDG_SESSION_TYPE
+    x11
+
+  Still running X11.
+
+  Another misunderstanding on my part, RandR is an Xorg
+  extension, so xrandr commands in /etc/xprofile were
+  talking to the X-Server.
+
+  According to these websites.
+
+    https://www.makeuseof.com/tag/using-linux-with-wayland/
+    https://wiki.archlinux.org/index.php/wayland
+
+  Gnome Desktop will work with NVidia cards.  NVidia cards
+  use EGLStreams instead of GBM.  Gnome implements EGLStreams.
+
+2019-03-30: (Step 3: be bold and just switch to Wayland)
+
+  Lets see what we currently got installed Wayland-wise:
+
+    $ pacman -Qs wayland
+    local/egl-wayland 1.1.2-1
+        EGLStream-based Wayland external platform
+    local/libva 2.4.0-1
+        Video Acceleration (VA) API for Linux
+    local/wayland 1.17.0-1
+        A computer display server protocol
+    local/wayland-protocols 1.17-1
+        Specifications of extended Wayland protocols
+    local/xorg-server-xwayland 1.20.4-1 (xorg)
+        run X clients under wayland
+
+  Hummm... wayland already installed.  Lets reinstall and
+  throw weston in too.
+
+    $ sudo pacman -Syu wayland weston
+    :: Synchronizing package databases...
+     core is up to date
+     extra is up to date
+     community is up to date
+    warning: wayland-1.17.0-1 is up to date -- reinstalling
+    :: Starting full system upgrade...
+    resolving dependencies...
+    looking for conflicting packages...
+    
+    Packages (2) wayland-1.17.0-1  weston-6.0.0-1
+    
+    Total Download Size:   1.19 MiB
+    Total Installed Size:  5.50 MiB
+    Net Upgrade Size:      4.78 MiB
+    
+    :: Proceed with installation? [Y/n] 
+    :: Retrieving packages...
+     weston-6.0.0-1-x86_64   1215.8 KiB  1289K/s 00:01 [######################] 100%
+    (2/2) checking keys in keyring                     [######################] 100%
+    (2/2) checking package integrity                   [######################] 100%
+    (2/2) loading package files                        [######################] 100%
+    (2/2) checking for file conflicts                  [######################] 100%
+    (2/2) checking available disk space                [######################] 100%
+    :: Processing package changes...
+    (1/2) reinstalling wayland                         [######################] 100%
+    (2/2) installing weston                            [######################] 100%
+    :: Running post-transaction hooks...
+    (1/1) Arming ConditionNeedsUpdate...    
+
+  Lets throw some more stuff in
+
+    $ sudo pacman -Syu qt5-wayland wayland-docs imv
+    :: Synchronizing package databases...
+     core is up to date
+     extra is up to date
+     community is up to date
+    :: Starting full system upgrade...
+    resolving dependencies...
+    looking for conflicting packages...
+    
+    Packages (7) freeimage-3.18.0-2  jxrlib-0.2.1-3  qt5-declarative-5.12.2-1
+                 sdl2_ttf-2.0.15-1  imv-3.0.0-3  qt5-wayland-5.12.2-1
+                 wayland-docs-1.17.0-1
+    
+    Total Download Size:    5.38 MiB
+    Total Installed Size:  27.46 MiB
+    
+    :: Proceed with installation? [Y/n] 
+    :: Retrieving packages...
+     qt5-declarative-5.1...     3.9 MiB   714K/s 00:06 [######################] 100%
+     qt5-wayland-5.12.2-...   812.2 KiB   799K/s 00:01 [######################] 100%
+     wayland-docs-1.17.0...   181.4 KiB   779K/s 00:00 [######################] 100%
+     sdl2_ttf-2.0.15-1-x...    17.6 KiB   880K/s 00:00 [######################] 100%
+     jxrlib-0.2.1-3-x86_64    203.3 KiB   671K/s 00:00 [######################] 100%
+     freeimage-3.18.0-2-...   301.0 KiB   971K/s 00:00 [######################] 100%
+     imv-3.0.0-3-x86_64        27.8 KiB  1388K/s 00:00 [######################] 100%
+    (7/7) checking keys in keyring                     [######################] 100%
+    (7/7) checking package integrity                   [######################] 100%
+    (7/7) loading package files                        [######################] 100%
+    (7/7) checking for file conflicts                  [######################] 100%
+    (7/7) checking available disk space                [######################] 100%
+    :: Processing package changes...
+    (1/7) installing qt5-declarative                   [######################] 100%
+    (2/7) installing qt5-wayland                       [######################] 100%
+    (3/7) installing wayland-docs                      [######################] 100%
+    (4/7) installing jxrlib                            [######################] 100%
+    Optional dependencies for jxrlib
+        java-runtime: Java bindings [installed]
+    (5/7) installing freeimage                         [######################] 100%
+    (6/7) installing sdl2_ttf                          [######################] 100%
+    (7/7) installing imv                               [######################] 100%
+    :: Running post-transaction hooks...
+    (1/2) Arming ConditionNeedsUpdate...
+    (2/2) Updating the desktop file MIME type cache.
+
+  Reboot.
+
+    $ loginctl
+    SESSION  UID USER  SEAT  TTY 
+          2 1000 geoff seat0 tty2
+         c1  120 gdm   seat0 tty1
+
+    2 sessions listed.
+
+    $ loginctl show-session 2 -p Type
+    Type=x11
+
+    $ echo $XDG_SESSION_TYPE
+    x11
+
+  Still running X11.  Lets start poking things with a stick:
+
+    $ sudo pacman -Rsu xorg
+    checking dependencies...
+    warning: removing xorg-xrdb from target list
+    warning: removing xorg-server from target list
+    warning: removing xorg-xhost from target list
+    warning: removing xorg-mkfontscale from target list
+    warning: removing xorg-server-xwayland from target list
+    warning: removing xorg-xmodmap from target list
+    warning: removing xorg-fonts-encodings from target list
+    warning: removing xorg-xset from target list
+    warning: removing xorg-bdftopcf from target list
+    warning: removing xorg-font-util from target list
+    warning: removing xorg-xauth from target list
+    warning: removing libfontenc from target list
+    warning: removing libxfont2 from target list
+    warning: removing xorg-server-common from target list
+    warning: removing xf86-input-libinput from target list
+    warning: removing xorg-xkbcomp from target list
+    warning: removing xorg-setxkbmap from target list
+    :: xdg-utils optionally requires xorg-xprop: for Xfce support in xdg-open
+    
+    Packages (4) xorg-xlsatoms-1.1.3-1  xorg-xlsclients-1.1.4-1  xorg-xprop-1.2.4-1
+                 xorg-xrandr-1.5.0-2
+    
+    Total Removed Size:  0.25 MiB
+    
+    :: Do you want to remove these packages? [Y/n] 
+    :: Processing package changes...
+    (1/4) removing xorg-xrandr                   [######################] 100%
+    (2/4) removing xorg-xprop                    [######################] 100%
+    (3/4) removing xorg-xlsclients               [######################] 100%
+    (4/4) removing xorg-xlsatoms                 [######################] 100%
+    :: Running post-transaction hooks...
+    (1/1) Arming ConditionNeedsUpdate...
+
+  Lost xrandr, reboot, no wayland.
+
+  Added to /etc/environment
+
+    MUTTER_ALLOW_HYBRID_GPUS=1
+
+  Reboot, no wayland.
+
+  From Archwiki article on Kernel mode setting,
+
+    https://wiki.archlinux.org/index.php/kernel_mode_setting#Early_KMS_start
+
+  Added to empty parens 
+
+    MODULES=(i915) 
+
+  Reboot, still x11.  Backing out above two changes.
+
+2019-03-31:
+  Reinstalled xorg-xrandr pacman package.  It provides a cmdline
+  interface libXrandr library.  Previously, at least 5 months ago,
+  the X server did not automatically enable displays attached to
+  the non-NVIDIA graphics device in this this type of configuration.
+
+    $ xrandr --setprovideroutputsource modesetting NVIDIA-0
+    $ xrandr --auto
+
+  These commands did this.  What is confusing to me is that the
+  term "modesetting" is the name of the Intel interface.  I think
+  it is short for "mode setting driver".
+
+2019-03-31:
+  Looked into blacklisting both nouveau and nvidia drivers but
+  nouveau seem to not want to die.  Also messing around with
+  mkinitcpio makes me nervous without having a throw away system
+  I can practive on.
+
+  Letstry uninstalling both nvidia and nouveau packages
+
+    $ sudo pacman -Rsu nvidia xf86-video-nouveau
+    $ sudo pacman -Rsu libvdpau nccl nvidia-utils pycuda-headers
+
+  Still finds the nouveau driver!
+
+    $ pacman -Qlq mesa|grep nouveau
+    /usr/lib/dri/nouveau_dri.so
+    /usr/lib/dri/nouveau_vieux_dri.so
+  
+    $ pacman -Ss mesa|grep -B1 open-sourc
+    extra/mesa 19.0.1-2 [installed]
+        An open-source implementation of the OpenGL specification
+
+  Windowing system without OpenGL functionality, doesn't sound
+  too useful.
+
+  At this point, I think I would have to uninstall the NVIDIA
+  card from the laptop to use the Intel Chipset to be used, or
+  some deep hackery that might make the system unusable.  Or
+  ask the Arch mailing list and have to explain way I am doing
+  this.
+
+  The real problem in that the NVIDIA card does not use the
+  kernel's DMR (Digital Management Resources) but something
+  called nvidia-dmr which only interacts with Xorg.  I am
+  beginning to understand way Linus Torvalds is so pissed off.
+
+  Lets put things back together again.
+
+    $ sudo pacman -Syu nvidia xf86-video-nouveau libvdpau nccl nvidia-utils pycuda-headers
+    :: Synchronizing package databases...
+     core is up to date
+     extra is up to date
+     community is up to date
+    :: Starting full system upgrade...
+    resolving dependencies...
+    looking for conflicting packages...
+    
+    Packages (8) egl-wayland-1.1.2-1  eglexternalplatform-1.0+3+g7c8f8e2-1  libvdpau-1.2-1  nccl-2.4.2-4  nvidia-418.56-3  nvidia-utils-418.56-1  pycuda-headers-2018.1.1-5  xf86-video-nouveau-1.0.16-1
+    
+    Total Installed Size:  357.83 MiB
+    Net Upgrade Size:      357.53 MiB
+    
+    checking keyring...
+    checking package integrity...
+    loading package files...
+    checking for file conflicts...
+    checking available disk space...
+    :: Processing package changes...
+    installing eglexternalplatform...
+    installing egl-wayland...
+    installing nvidia-utils...
+    If you run into trouble with CUDA not being available, run nvidia-modprobe first.
+    Optional dependencies for nvidia-utils
+        nvidia-settings: configuration tool
+        xorg-server-devel: nvidia-xconfig
+        opencl-nvidia: OpenCL support
+    installing nvidia...
+    installing xf86-video-nouveau...
+    reinstalling libvdpau...
+    installing nccl...
+    installing pycuda-headers...
+    :: Running post-transaction hooks...
+    (1/4) Updating linux module dependencies...
+    (2/4) Reloading system manager configuration...
+    (3/4) Creating system user accounts...
+    (4/4) Arming ConditionNeedsUpdate...
+
+  Reboot.  Launch Gnome 3 via startx.
+
+    $ lspci -k | grep -A 2 -E "(VGA|3D)"
+    00:02.0 VGA compatible controller: Intel Corporation HD Graphics 530 (rev 06)
+    	Subsystem: Acer Incorporated [ALI] HD Graphics 530
+    	Kernel driver in use: i915
+    --
+    01:00.0 3D controller: NVIDIA Corporation GM108M [GeForce 940M] (rev a2)
+    	Subsystem: Acer Incorporated [ALI] GM108M [GeForce 940M]
+    	Kernel driver in use: nvidia
+    
+    [geoff@gauss17: ~]
+    $ loginctl 
+    SESSION  UID USER  SEAT  TTY 
+          1 1000 geoff seat0 tty1
+
+  With startx, loginctl sees me as just logged into the virtual terminal.
+  Good to know.
+
+    $ sudo systemctl enable gdm
+
+  Reboot.
+
+    $ loginctl show-session 2 -p Type
+    Type=x11
+
+    $ lsmod | grep -E '(drm|nvidia|i915|Used by)'
+    Module                  Size  Used by
+    nvidia_drm             53248  8
+    nvidia_modeset       1089536  5 nvidia_drm
+    i915                 2162688  4
+    nvidia              17637376  420 nvidia_modeset
+    i2c_algo_bit           16384  1 i915
+    drm_kms_helper        208896  2 nvidia_drm,i915
+    drm                   499712  12 drm_kms_helper,nvidia_drm,i915
+    intel_gtt              24576  1 i915
+    ipmi_msghandler        65536  2 ipmi_devintf,nvidia
+    agpgart                53248  2 intel_gtt,drm
+    syscopyarea            16384  1 drm_kms_helper
+    sysfillrect            16384  1 drm_kms_helper
+    sysimgblt              16384  1 drm_kms_helper
+    fb_sys_fops            16384  1 drm_kms_helper
+    

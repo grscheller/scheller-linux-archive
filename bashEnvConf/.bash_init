@@ -82,7 +82,7 @@ export PATH  # Not really necessary, PATH should
 #
 #                  Host-Name           port   login      hpc
 export    VOLTRON='rvsllschellerg2        22  schelleg    no'
-export      RYGAR='rvwllfrithj1           22  schelleg    no'
+export      RYGAR='rvsllfrithj1           22  schelleg    no'
 export EVERGARDEN='rvsllmonetd1           22  schelleg    no'
 export      KOALA='rvswlschellerg1        22  schelleg    no'
 export     GALAGA='kprswvbylnzjt52        22  schelleg    no'

@@ -101,7 +101,7 @@ else
       rvsllschellerg2)
         HOST=voltron
         ;;
-      rvwllfrithj1)
+      rvsllfrithj1)
         HOST=rygar
         ;;
       rvsllmonetd1)

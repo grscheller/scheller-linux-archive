@@ -5,8 +5,7 @@ Documents how I configure a Windows 10 environment.
   * Powershell has POSIX-like aliases names, not behaviors
   * Configuration file is [Microsoft.PowerShell_profile.ps1][1]
   * Configuration file location`~\Documents\WindowsPowershell\
-* Cygwin
-* Git for Windows
-* POSIX Subsystem for Windows
+* Cygwin - POSIX compatible environment
+* MSYS2 - Minimal UNIX like environment
 
   [1]: Microsoft.PowerShell_profile.ps1

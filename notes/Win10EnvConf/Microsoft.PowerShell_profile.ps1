@@ -6,8 +6,7 @@
 
 ## Modify the Path environmental variable
 "Virgin Path: " + $env:Path
-$env:Path += "$home\psbin"      # Powershell scripts/programs I write.
-$env:Path += ";$home\opt\bin"   # For stuff I install locally.
+$env:Path += ";$home\opt\bin"
 
 ## Define some useful functions
 # Change the PowerShell prompt
@@ -90,45 +89,3 @@ ni -path alias:fm -value "C:\Windows\explorer.exe"
 ## Show what version of PowerShell we are using
 "`nPowerShell Version = " +  $PSVersionTable.PSVersion.toString()
 
-## Set Execution Policy - Can't change this without admin priviledges.
-# Since I only run local scripts, RemoteSigned would be the more secure choice.
-if ( (Get-ExecutionPolicy).ToString() -ne "Unrestricted" )
-{
-     Set-ExecutionPolicy Unrestricted
-}
-
-## Turn of all context colors since these don't play well with my vision problems.
-#  Works well with Settings -> Ease of Access -> High contrast -> High Constrast Black,
-#  keywords are just slightly highlighted.
-#
-#     In the shortcut for Powershell on my shortcut bar I 
-#        rt-click title bar -> Properties -> Colors
-#     Set Screen and Popup Background to 1, 36, 86
-#     Set Screen and Popup Text color to  238, 237, 240
-#
-#  The following lines I "script-kiddied" off of stack overflow.
-$fgColor = "White"
-$bgColor = "Black"
-Set-PSReadlineOption -TokenKind Parameter -ForegroundColor $fgColor -BackgroundColor $bgColor
-Set-PSReadlineOption -TokenKind String -ForegroundColor $fgColor -BackgroundColor $bgColor
-Set-PSReadlineOption -TokenKind Operator -ForegroundColor $fgColor -BackgroundColor $bgColor
-Set-PSReadlineOption -TokenKind Type -ForegroundColor $fgColor -BackgroundColor $bgColor
-Set-PSReadlineOption -TokenKind Variable -ForegroundColor $fgColor -BackgroundColor $bgColor
-Set-PSReadlineOption -TokenKind Number -ForegroundColor $fgColor -BackgroundColor $bgColor
-Set-PSReadlineOption -TokenKind Member -ForegroundColor $fgColor -BackgroundColor $bgColor
-Set-PSReadlineOption -TokenKind Command -ForegroundColor $fgColor -BackgroundColor $bgColor
-Set-PSReadlineOption -TokenKind Comment -ForegroundColor $fgColor -BackgroundColor $bgColor
-Set-PSReadlineOption -TokenKind Keyword -ForegroundColor $fgColor -BackgroundColor $bgColor
-Set-PSReadlineOption -ContinuationPromptForegroundColor $fgColor -ContinuationPromptBackgroundColor $bgColor
-Set-PSReadlineOption -EmphasisForegroundColor $fgColor -EmphasisBackgroundColor $bgColor
-Set-PSReadlineOption -ErrorForegroundColor $fgColor -ErrorBackgroundColor $bgColor
-(Get-Host).PrivateData.ErrorForegroundColor=$fgColor
-(Get-Host).PrivateData.ErrorBackgroundColor=$bgColor
-(Get-Host).PrivateData.WarningForegroundColor=$fgColor
-(Get-Host).PrivateData.WarningBackgroundColor=$bgColor
-(Get-Host).PrivateData.DebugForegroundColor=$fgColor
-(Get-Host).PrivateData.DebugBackgroundColor=$bgColor
-(Get-Host).PrivateData.VerboseForegroundColor=$fgColor
-(Get-Host).PrivateData.VerboseBackgroundColor=$bgColor
-(Get-Host).PrivateData.ProgressForegroundColor=$fgColor
-(Get-Host).PrivateData.ProgressBackgroundColor=$bgColor

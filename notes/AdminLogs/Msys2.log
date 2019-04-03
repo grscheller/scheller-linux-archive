@@ -1,0 +1,281 @@
+MSYS2 Admin log for installing on Windows 10.
+
+2019-04-03:
+  After having used GIT-for-Windows for a while, I decided to install
+  MSYS2 directly.
+
+  See ../Win10EnvConf/msys2factoids.md for my notes on MSYS2.
+
+  Downloaded 64-bit installation exe from here: https://www.msys2.org/
+
+  Had to run Pacman to upgrade twice, the first one told me to close
+  all Msys2 shells/windows.  Now get
+
+    $ pacman -Syu
+    :: Synchronizing package databases...
+     mingw32 is up to date
+     mingw64 is up to date
+     msys is up to date
+    :: Starting core system upgrade...
+     there is nothing to do
+    :: Starting full system upgrade...
+     there is nothing to do
+    
+  Seem to be missing some items: gcc, git, vim
+
+2019-04-03:
+  Lets install the GCC toolchain for both MSYS and MINGW64:
+
+    $ pacman -Ss gcc
+    mingw32/mingw-w64-i686-gcc 7.4.0-1 (mingw-w64-i686-toolchain)
+        GNU Compiler Collection (C,C++,OpenMP) for MinGW-w64
+    mingw32/mingw-w64-i686-gcc-ada 7.4.0-1 (mingw-w64-i686-toolchain)
+        GNU Compiler Collection (Ada) for MinGW-w64
+    mingw32/mingw-w64-i686-gcc-fortran 7.4.0-1 (mingw-w64-i686-toolchain)
+        GNU Compiler Collection (Fortran) for MinGW-w64
+    mingw32/mingw-w64-i686-gcc-libgfortran 7.4.0-1 (mingw-w64-i686-toolchain)
+        GNU Compiler Collection (libgfortran) for MinGW-w64
+    mingw32/mingw-w64-i686-gcc-libs 7.4.0-1 (mingw-w64-i686-toolchain)
+        GNU Compiler Collection (libraries) for MinGW-w64
+    mingw32/mingw-w64-i686-gcc-objc 7.4.0-1 (mingw-w64-i686-toolchain)
+        GNU Compiler Collection (ObjC,Obj-C++) for MinGW-w64
+    mingw32/mingw-w64-i686-lcov 1.13-2
+        front-end for GCC's coverage testing tool gcov
+    mingw32/mingw-w64-i686-perl 5.28.0-1
+        A highly capable, feature-rich programming language (mingw-w64)
+    mingw64/mingw-w64-x86_64-gcc 8.3.0-2 (mingw-w64-x86_64-toolchain)
+        GNU Compiler Collection (C,C++,OpenMP) for MinGW-w64
+    mingw64/mingw-w64-x86_64-gcc-ada 8.3.0-2 (mingw-w64-x86_64-toolchain)
+        GNU Compiler Collection (Ada) for MinGW-w64
+    mingw64/mingw-w64-x86_64-gcc-fortran 8.3.0-2 (mingw-w64-x86_64-toolchain)
+        GNU Compiler Collection (Fortran) for MinGW-w64
+    mingw64/mingw-w64-x86_64-gcc-libgfortran 8.3.0-2 (mingw-w64-x86_64-toolchain)
+        GNU Compiler Collection (libgfortran) for MinGW-w64
+    mingw64/mingw-w64-x86_64-gcc-libs 8.3.0-2 (mingw-w64-x86_64-toolchain)
+        GNU Compiler Collection (libraries) for MinGW-w64
+    mingw64/mingw-w64-x86_64-gcc-objc 8.3.0-2 (mingw-w64-x86_64-toolchain)
+        GNU Compiler Collection (ObjC,Obj-C++) for MinGW-w64
+    mingw64/mingw-w64-x86_64-lcov 1.13-2
+        front-end for GCC's coverage testing tool gcov
+    mingw64/mingw-w64-x86_64-perl 5.28.0-1
+        A highly capable, feature-rich programming language (mingw-w64)
+    msys/gcc 7.4.0-1 (msys2-devel)
+        The GNU Compiler Collection - C and C++ frontends
+    msys/gcc-fortran 7.4.0-1 (msys2-devel)
+        Fortran front-end for GCC
+    msys/gcc-libs 7.4.0-1 (base) [installed]
+        Runtime libraries shipped by GCC
+    msys/mingw-w64-cross-gcc 7.3.0-2 (mingw-w64-cross-toolchain mingw-w64-cross)
+        Cross GCC for the MinGW-w64
+
+  First go after the MSYS stuff first:
+
+    $ pacman -Syu gcc
+    :: Synchronizing package databases...
+     mingw32 is up to date
+     mingw64 is up to date
+     msys is up to date
+    :: Starting core system upgrade...
+     there is nothing to do
+    :: Starting full system upgrade...
+    resolving dependencies...
+    looking for conflicting packages...
+    
+    Packages (8) binutils-2.30-1  isl-0.19-1  mpc-1.1.0-1  msys2-runtime-devel-2.11.2-1  msys2-w32api-headers-6.0.0.5223.7f9d8753-1  msys2-w32api-runtime-6.0.0.5223.7f9d8753-1  windows-default-manifest-6.4-1
+                 gcc-7.4.0-1
+    
+    Total Download Size:    40.27 MiB
+    Total Installed Size:  272.85 MiB
+    
+    :: Proceed with installation? [Y/n]
+    :: Retrieving packages...
+     binutils-2.30-1-x86_64     4.6 MiB   852K/s 00:05 [###########################################################################] 100%
+     isl-0.19-1-x86_64        485.7 KiB  1376K/s 00:00 [###########################################################################] 100%
+     mpc-1.1.0-1-x86_64        74.1 KiB  1015K/s 00:00 [###########################################################################] 100%
+     msys2-runtime-devel-2.11.2-1-x86_64                      4.5 MiB   516K/s 00:09 [###########################################################################] 100%
+     msys2-w32api-headers-6.0.0.5223.7f9d8753-1-x86_64        4.7 MiB   534K/s 00:09 [###########################################################################] 100%
+     msys2-w32api-runtime-6.0.0.5223.7f9d8753-1-x86_64        1793.2 KiB   509K/s 00:04 [###########################################################################] 100%
+     windows-default-man$ pacman -Syu gcc
+    :: Synchronizing package databases...
+     mingw32 is up to date
+     mingw64 is up to date
+     msys is up to date
+    :: Starting core system upgrade...
+     there is nothing to do
+    :: Starting full system upgrade...
+    resolving dependencies...
+    looking for conflicting packages...
+    
+    Packages (8) binutils-2.30-1  isl-0.19-1  mpc-1.1.0-1  msys2-runtime-devel-2.11.2-1  msys2-w32api-headers-6.0.0.5223.7f9d8753-1  msys2-w32api-runtime-6.0.0.5223.7f9d8753-1  windows-default-manifest-6.4-1
+                 gcc-7.4.0-1
+    
+    Total Download Size:    40.27 MiB
+    Total Installed Size:  272.85 MiB
+    
+    :: Proceed with installation? [Y/n]
+    :: Retrieving packages...
+     binutils-2.30-1-x86_64                                   4.6 MiB   852K/s 00:05 [###########################################################################] 100%
+     isl-0.19-1-x86_64                                        485.7 KiB  1376K/s 00:00 [###########################################################################] 100%
+     mpc-1.1.0-1-x86_64                                       74.1 KiB  1015K/s 00:00 [###########################################################################] 100%
+     msys2-runtime-devel-2.11.2-1-x86_64                      4.5 MiB   516K/s 00:09 [###########################################################################] 100%
+     msys2-w32api-headers-6.0.0.5223.7f9d8753-1-x86_64        4.7 MiB   534K/s 00:09 [###########################################################################] 100%
+     msys2-w32api-runtime-6.0.0.5223.7f9d8753-1-x86_64        1793.2 KiB   509K/s 00:04 [###########################################################################] 100%
+     windows-default-manifest-6.4-1-x86_64                    1388.0   B  16.5K/s 00:00 [###########################################################################] 100%
+     gcc-7.4.0-1-x86_64                                       24.3 MiB   730K/s 00:34 [###########################################################################] 100%
+    (8/8) checking keys in keyring                            [###########################################################################] 100%
+    (8/8) checking package integrity                          [###########################################################################] 100%
+    (8/8) loading package files                               [###########################################################################] 100%
+    (8/8) checking for file conflicts                         [###########################################################################] 100%
+    (8/8) checking available disk space                       [###########################################################################] 100%
+    :: Processing package changes...
+    (1/8) installing binutils                                 [###########################################################################] 100%
+    (2/8) installing isl                                      [###########################################################################] 100%
+    (3/8) installing mpc                                      [###########################################################################] 100%
+    (4/8) installing msys2-runtime-devel                      [###########################################################################] 100%
+    (5/8) installing msys2-w32api-headers                     [###########################################################################] 100%
+    (6/8) installing ms$ pacman -Syu gcc
+:: Synchronizing package databases...
+ mingw32 is up to date
+ mingw64 is up to date
+ msys is up to date
+:: Starting core system upgrade...
+ there is nothing to do
+:: Starting full system upgrade...
+resolving dependencies...
+looking for conflicting packages...
+
+Packages (8) binutils-2.30-1  isl-0.19-1  mpc-1.1.0-1  msys2-runtime-devel-2.11.2-1  msys2-w32api-headers-6.0.0.5223.7f9d8753-1  msys2-w32api-runtime-6.0.0.5223.7f9d8753-1  windows-default-manifest-6.4-1
+             gcc-7.4.0-1
+
+Total Download Size:    40.27 MiB
+Total Installed Size:  272.85 MiB
+
+:: Proceed with installation? [Y/n]
+:: Retrieving packages...
+ binutils-2.30-1-x86_64                                                                                 4.6 MiB   852K/s 00:05 [###########################################################################] 100%
+ isl-0.19-1-x86_64                                                                                    485.7 KiB  1376K/s 00:00 [###########################################################################] 100%
+ mpc-1.1.0-1-x86_64                                                                                    74.1 KiB  1015K/s 00:00 [###########################################################################] 100%
+ msys2-runtime-devel-2.11.2-1-x86_64                                                                    4.5 MiB   516K/s 00:09 [###########################################################################] 100%
+ msys2-w32api-headers-6.0.0.5223.7f9d8753-1-x86_64                                                      4.7 MiB   534K/s 00:09 [###########################################################################] 100%
+ msys2-w32api-runtime-6.0.0.5223.7f9d8753-1-x86_64                                                   1793.2 KiB   509K/s 00:04 [###########################################################################] 100%
+ windows-default-manifest-6.4-1-x86_64                                                               1388.0   B  16.5K/s 00:00 [###########################################################################] 100%
+ gcc-7.4.0-1-x86_64                                                                                    24.3 MiB   730K/s 00:34 [###########################################################################] 100%
+(8/8) checking keys in keyring                                                                                                 [###########################################################################] 100%
+(8/8) checking package integrity                                                                                               [###########################################################################] 100%
+(8/8) loading package files                                                                                                    [###########################################################################] 100%
+(8/8) checking for file conflicts                                                                                              [###########################################################################] 100%
+(8/8) checking available disk space                                                                                            [###########################################################################] 100%
+:: Processing package changes...
+(1/8) installing binutils                                                                                                      [###########################################################################] 100%
+(2/8) installing isl                                                                                                           [###########################################################################] 100%
+(3/8) installing mpc                                                                                                           [###########################################################################] 100%
+(4/8) installing msys2-runtime-devel                                                                                           [###########################################################################] 100%
+(5/8) installing msys2-w32api-headers                                                                                          [###########################################################################] 100%
+(6/8) installing msys2-w32api-runtime                                                                                          [###########################################################################] 100%
+(7/8) installing windows-default-manifest                                                                                      [###########################################################################] 100%
+(8/8) installing gccys2-w32api-runtime                     [###########################################################################] 100%
+    (7/8) installing windows-default-manifest                 [###########################################################################] 100%
+    (8/8) installing gccifest-6.4-1-x86_64                    1388.0   B  16.5K/s 00:00 [###########################################################################] 100%
+     gcc-7.4.0-1-x86_64                                       24.3 MiB   730K/s 00:34 [###########################################################################] 100%
+    (8/8) checking keys in keyring                            [###########################################################################] 100%
+    (8/8) checking package integrity                          [###########################################################################] 100%
+    (8/8) loading package files                               [###########################################################################] 100%
+    (8/8) checking for file conflicts                         [###########################################################################] 100%
+    (8/8) checking available disk space                       [###########################################################################] 100%
+    :: Processing package changes...
+    (1/8) installing binutils                                 [###########################################################################] 100%
+    (2/8) installing isl                                      [###########################################################################] 100%
+    (3/8) installing mpc                                      [###########################################################################] 100%
+    (4/8) installing msys2-runtime-devel                      [###########################################################################] 100%
+    (5/8) installing msys2-w32api-headers                     [###########################################################################] 100%
+    (6/8) installing msys2-w32api-runtime                     [###########################################################################] 100%
+    (7/8) installing windows-default-manifest                 [###########################################################################] 100%
+    (8/8) installing gcc
+
+  I could have also have done this too
+
+    $ pacman -Syu msys/gcc
+    :: Synchronizing package databases...
+     mingw32 is up to date
+     mingw64 is up to date
+     msys is up to date
+    warning: gcc-7.4.0-1 is up to date -- reinstalling
+    :: Starting core system upgrade...
+     there is nothing to do
+    :: Starting full system upgrade...
+    resolving dependencies...
+    looking for conflicting packages...
+    
+    Packages (1) gcc-7.4.0-1
+    
+    Total Installed Size:  101.01 MiB
+    Net Upgrade Size:        0.00 MiB
+    
+    :: Proceed with installation? [Y/n] n
+
+  Now repeat for MINGW64 environment, still running pacman from MSYS environment,
+
+    $ pacman -Syu mingw64/mingw-w64-x86_64-gcc
+    :: Synchronizing package databases...
+     mingw32 is up to date
+     mingw64 is up to date
+     msys is up to date
+    :: Starting core system upgrade...
+     there is nothing to do
+    :: Starting full system upgrade...
+    resolving dependencies...
+    looking for conflicting packages...
+    
+    Packages (15) mingw-w64-x86_64-binutils-2.30-5  mingw-w64-x86_64-bzip2-1.0.6-6
+                  mingw-w64-x86_64-crt-git-7.0.0.5333.8e90a421-1
+                  mingw-w64-x86_64-gcc-libs-8.3.0-2  mingw-w64-x86_64-gmp-6.1.2-1
+                  mingw-w64-x86_64-headers-git-7.0.0.5333.8e90a421-1
+                  mingw-w64-x86_64-isl-0.19-1  mingw-w64-x86_64-libiconv-1.15-3
+                  mingw-w64-x86_64-libwinpthread-git-7.0.0.5325.11a5459d-1
+                  mingw-w64-x86_64-mpc-1.1.0-1  mingw-w64-x86_64-mpfr-4.0.2-2
+                  mingw-w64-x86_64-windows-default-manifest-6.4-3
+                  mingw-w64-x86_64-winpthreads-git-7.0.0.5325.11a5459d-1
+                  mingw-w64-x86_64-zlib-1.2.11-5  mingw-w64-x86_64-gcc-8.3.0-2
+    
+    Total Download Size:    53.94 MiB
+    Total Installed Size:  373.37 MiB
+    
+    :: Proceed with installation? [Y/n]
+    :: Retrieving packages...
+     mingw-w64-x86_64-li...   616.3 KiB  1707K/s 00:00 [#####################] 100%
+     mingw-w64-x86_64-gm...   486.0 KiB  2.27M/s 00:00 [#####################] 100%
+     mingw-w64-x86_64-mp...   345.9 KiB  2.21M/s 00:00 [#####################] 100%
+     mingw-w64-x86_64-mp...    78.9 KiB  1488K/s 00:00 [#####################] 100%
+     mingw-w64-x86_64-li...    44.0 KiB   815K/s 00:00 [#####################] 100%
+     mingw-w64-x86_64-gc...   581.5 KiB  2.20M/s 00:00 [#####################] 100%
+     mingw-w64-x86_64-bz...    81.3 KiB  1564K/s 00:00 [#####################] 100%
+     mingw-w64-x86_64-zl...   177.8 KiB  3.05M/s 00:00 [#####################] 100%
+     mingw-w64-x86_64-bi...    14.1 MiB  2.43M/s 00:06 [#####################] 100%
+     mingw-w64-x86_64-he...     5.1 MiB  2.43M/s 00:02 [#####################] 100%
+     mingw-w64-x86_64-cr...     3.0 MiB  2.70M/s 00:01 [#####################] 100%
+     mingw-w64-x86_64-is...   573.2 KiB  3.09M/s 00:00 [#####################] 100%
+     mingw-w64-x86_64-wi...    12.9 KiB   201K/s 00:00 [#####################] 100%
+     mingw-w64-x86_64-wi...    52.9 KiB  1018K/s 00:00 [#####################] 100%
+     mingw-w64-x86_64-gc...    28.7 MiB  2.81M/s 00:10 [#####################] 100%
+    (15/15) checking keys in keyring                   [#####################] 100%
+    (15/15) checking package integrity                 [#####################] 100%
+    (15/15) loading package files                      [#####################] 100%
+    (15/15) checking for file conflicts                [#####################] 100%
+    (15/15) checking available disk space              [#####################] 100%
+    :: Processing package changes...
+    ( 1/15) installing mingw-w64-x86_64-libiconv       [#####################] 100%
+    ( 2/15) installing mingw-w64-x86_64-gmp            [#####################] 100%
+    ( 3/15) installing mingw-w64-x86_64-mpfr           [#####################] 100%
+    ( 4/15) installing mingw-w64-x86_64-mpc            [#####################] 100%
+    ( 5/15) installing mingw-w64-x86_64-libwinpthr...  [#####################] 100%
+    ( 6/15) installing mingw-w64-x86_64-gcc-libs       [#####################] 100%
+    ( 7/15) installing mingw-w64-x86_64-bzip2          [#####################] 100%
+    ( 8/15) installing mingw-w64-x86_64-zlib           [#####################] 100%
+    ( 9/15) installing mingw-w64-x86_64-binutils       [#####################] 100%
+    (10/15) installing mingw-w64-x86_64-headers-git    [#####################] 100%
+    (11/15) installing mingw-w64-x86_64-crt-git        [#####################] 100%
+    (12/15) installing mingw-w64-x86_64-isl            [#####################] 100%
+    (13/15) installing mingw-w64-x86_64-windows-de...  [#####################] 100%
+    (14/15) installing mingw-w64-x86_64-winpthread...  [#####################] 100%
+    (15/15) installing mingw-w64-x86_64-gcc
+

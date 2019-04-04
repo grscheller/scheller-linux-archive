@@ -64,10 +64,6 @@ PATH=~/opt/sbt/bin:$PATH
 ## Put home bin directory near end
 PATH=$PATH:~/bin
 
-## Not putting current directory "." on PATH,
-#  better security and makes rsync happy.
-# PATH=$PATH:.
-
 ## Clean up PATH - remove duplicate entries
 [[ -x ~/bin/pathtrim ]] && PATH=$(~/bin/pathtrim "$PATH")
 

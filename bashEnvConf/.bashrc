@@ -135,28 +135,6 @@ else
         ;;
     esac
 
-    ## Setup or tear down Network Manager proxies when necessary
-    #  - mostly for CentOS 7 work environment
-    #  - assumes you have manualyl set up the proxies in the Settings applet
-    #  - sets up Proxy environmental variables for current shell
-    #  - enable proxy for Network Manager if on the console
-    #  - might need to change this if I ever start running remote desktops
-    proxyUp () {
-        [[ -f ~/.proxy_env ]] && source ~/.proxy_env
-        if [[ $DISPLAY =~ ^:[0-9]$ ]] && [[ -x /usr/bin/gsettings ]]
-        then
-            gsettings set org.gnome.system.proxy mode manual
-        fi
-    }
-
-    downProxy () {
-        unset http_proxy HTTP_PROXY https_proxy HTTPS_PROXY no_proxy NO_PROXY 
-        if [[ $DISPLAY =~ ^:[0-9]$ ]] && [[ -x /usr/bin/gsettings ]]
-        then
-            gsettings set org.gnome.system.proxy mode none
-        fi
-    }
-
     ## Save history whenever prompt displayed
     case $TERM in
       xterm*|rxvt*|urxvt*|kterm*|gnome*)
@@ -300,6 +278,61 @@ else
       ( /usr/bin/libreoffice --writer "$@" & )
     }
 
+    ## Setup or tear down Network Manager proxies when necessary
+    #  - mostly for CentOS 7 work environment
+    #  - assumes you have manualy set up the proxies in the Settings applet
+    #  - sets up Proxy environmental variables for current shell
+    #  - enable proxy for Network Manager if on the console
+    #  - might need to change this if I ever start running remote desktops
+    export ProxySettingsNotConfigured=${ProxySettingsNotConfigured:=1}
+
+    proxyUp ()
+    {
+        [[ -f ~/.proxy_env ]] && source ~/.proxy_env
+        if [[ $DISPLAY =~ ^:[0-9]$ ]] && [[ -x /usr/bin/gsettings ]]
+        then
+            gsettings set org.gnome.system.proxy mode manual
+        fi
+        ProxySettingsNotConfigured=0
+    }
+
+    downProxy ()
+    {
+        unset http_proxy HTTP_PROXY https_proxy HTTPS_PROXY no_proxy NO_PROXY 
+        if [[ $DISPLAY =~ ^:[0-9]$ ]] && [[ -x /usr/bin/gsettings ]]
+        then
+            gsettings set org.gnome.system.proxy mode none
+        fi
+        ProxySettingsNotConfigured=0
+    }
+
+   # Turn on Network Manager proxy if ~/.proxy_env exists
+   if ((ProxySettingsNotConfigured))
+   then
+       ProxySettingsNotConfigured=0
+       [[ -f ~/.proxy_env ]] && proxyUp
+   fi
+
+    # Allow switching between GNOME 3 and GNOME Classic
+    # without restarting your entire GNOME Session.  Work DM
+    # login screen does not give you the "ear icon" where
+    # you can choose GNOME session type.
+    gnew ()
+    {
+        if [[ $DISPLAY =~ ^:[0-9]$ ]] && [[ -x /usr/bin/gnome-shell ]]
+        then
+            ( /usr/bin/gnome-shell --mode=user -r 2>/dev/null & )
+        fi
+    }
+
+    gnold ()
+    {
+        if [[ $DISPLAY =~ ^:[0-9]$ ]] && [[ -x /usr/bin/gnome-shell ]]
+        then
+            ( /usr/bin/gnome-shell --mode=classic -r 2>/dev/null & )
+        fi
+    }
+
     ## ssh related functions and aliases
 
     # pkinit alias for HPC
@@ -435,9 +468,10 @@ else
     ## Configure Anaconda3 Python Distribution
     if [[ -d ~/opt/anaconda3 ]]
     then
-        # On Windows 10, Anaconda installed into the MSYS
-        # world, we must tell cygwin to ignore LF characters
-        # or conda shell function will fail.
+        # On Windows 10, Anaconda is installed into the
+        # MSYS2/Anaconda Prompt world.  We must tell
+        # Cygwin to ignore LF characters or the conda
+        # shell function will fail.
         if [[ $OSTYPE == cygwin ]]
         then
             set -o igncr

@@ -122,13 +122,15 @@ else
       rvswlcrabtreep1)
         HOST=trex
         ;;
-      SCOTCh)
-        if [[ $(uname) == CYGWIN_NT-10.0 ]]; then
-            HOST=Cygwin
-        elif [[ $(uname) == MINGW64_NT-10.0 ]]; then
-            HOST=MinGW
-        elif [[ $(uname) == MSYS_NT-10.0 ]]; then
+      *)
+        if [[ $(uname) =~ ^CYGWIN ]]; then
+            HOST=CYGWIN
+        elif [[ $(uname) =~ ^MSYS ]]; then
             HOST=MSYS2
+        elif [[ $(uname) =~ ^MINGW64 ]]; then
+            HOST=MINGW64
+        elif [[ $(uname) =~ ^MINGW32 ]]; then
+            HOST=MINGW32
         fi
         ;;
     esac

@@ -1,6 +1,6 @@
 ## Software Development Tools
 Command line tools useful in software development, especially
-C and C++ software development.
+C and C++ POSIX software development.
 
 See the system manpages for detailed descriptions of these commands.
 ### cc

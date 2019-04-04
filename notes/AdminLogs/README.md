@@ -7,7 +7,13 @@ administrating my various computer system.
   - Lots of factoid and asides
 * [Python Admin Log](PythonAdmin.log)
   - Initially tracked Anaconda Python installed by unprivalleged user.
-  - Now using Arch Linux's Python infrastructure.
+  - Using Arch Linux's Python infrastructure.
+  - Returned to Anaconda Python on various OS's
 * [Haskell Admin Log](HaskellAdmin.log)
   - Initially only using the Stack tool.
   - Started using locally installed Haskell via Cabal.
+* [MSYS2 Admin Log](MSYS2Admin.log)
+  - POSIX-like programming environment
+  - Geared to creating native Windows API applications
+  - POSIX tools
+  - Bash and other UNIX shells

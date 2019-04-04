@@ -1,7 +1,9 @@
 ### MYS2 General info
-Seems to be a fork of Cygwin/MSYS/MingW64/Mingw32.
+Seems to be a fork of Cygwin/MSYS/MinGW.  While Cygwin tries
+to create a POSIX compliant programming environment.  MSYS2
+is geared to create native Windows applications.
 * Three distint environments MSYS, MINGWIN64, MINGW32
-  * MSYS builds against a POSIX compatibility layer
+  * MSYS builds against a minimal POSIX compatibility layer
     * Default PATH:
       ```
          /usr/local/bin
@@ -34,7 +36,7 @@ Seems to be a fork of Cygwin/MSYS/MingW64/Mingw32.
          /c/Windows/System32/Wbem
          /c/Windows/System32/WindowsPowerShell/v1.0/
       ```
-* Uses pacman as its package manager
+* Uses Pacman as its package manager
   * Packages for each environments
     ```
        $ pacman -Ss curl
@@ -52,3 +54,12 @@ Seems to be a fork of Cygwin/MSYS/MingW64/Mingw32.
            Multi-protocol file transfer library (runtime)
        msys/libcurl-devel 7.64.0-2 (development)
            Libcurl headers and librarie
+    ```
+  * To install into an environment
+    ```
+       $ pacman -S[yu] [<msys|mingw64|mingw32>/]]<package-name>
+    ```
+  * Actually the package name alone encodes the environment
+* Git-for-Windows 
+  * thinly disguised MSYS2 environment
+  * GIT client built against MingW64

@@ -343,3 +343,23 @@ MSYS2 Admin log for installing on Windows 10.
 
     (MSYS)$ pacman -Syu msys/git msys/git-extras-git
     ...
+
+2019-04-04:
+  MSYS2 DOES NOT SUPPORT CYGWIN STYLE SIMLINKS!!!  And the
+  plan is never to support them.  IDIOTIC!
+
+  I discovered this while tring to create an ~/opt symlink.
+
+  Am I supoosed to have two copies of Anaconda hanging
+  around?  Under MSYS "ln -s" silently just COPIES THE FILES.
+  If "ln -s" should just fail, not do a copy.
+
+  Supports hardlinks of files supported, at least on NTFS
+  file system.
+
+  Some info on work-arounds can be found here:
+
+    https://www.joshkel.com/2018/01/18/symlinks-in-windows/
+
+  Todo: export  MYSYS=winsymlinks:nativestrict
+  Todo: also see https://www.cygwin.com/cygwin-ug-net/using.html#pathnames-symlinks

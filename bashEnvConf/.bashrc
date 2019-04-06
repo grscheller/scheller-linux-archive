@@ -95,7 +95,8 @@ else
     HISTFILESIZE=10000
     HISTCONTROL="ignoredups"
 
-    ## Assign more memorable names to hosts
+    ## Assign more memorable names to hosts and
+    ## other per host configurations.
     export HOST=${HOSTNAME%%.*}
     case $HOST in
       rvsllschellerg2)
@@ -125,12 +126,16 @@ else
       *)
         if [[ $(uname) =~ ^CYGWIN ]]; then
             HOST=CYGWIN
+            export CYGWIN=winsymlinks:nativestrict
         elif [[ $(uname) =~ ^MSYS ]]; then
             HOST=MSYS2
+            export MSYS=winsymlinks:nativestrict
         elif [[ $(uname) =~ ^MINGW64 ]]; then
             HOST=MINGW64
+            export MSYS=winsymlinks:nativestrict
         elif [[ $(uname) =~ ^MINGW32 ]]; then
             HOST=MINGW32
+            export MSYS=winsymlinks:nativestrict
         fi
         ;;
     esac

@@ -346,13 +346,13 @@ MSYS2 Admin log for installing on Windows 10.
 
 2019-04-04:
   MSYS2 DOES NOT SUPPORT CYGWIN STYLE SIMLINKS!!!  And the
-  plan is never to support them.  IDIOTIC!
+  plan is never to support them.
 
   I discovered this while tring to create an ~/opt symlink.
 
   Am I supoosed to have two copies of Anaconda hanging
   around?  Under MSYS "ln -s" silently just COPIES THE FILES.
-  If "ln -s" should just fail, not do a copy.
+  If "ln -s" should just fail, not do a copy.  Bad choice.
 
   Supports hardlinks of files supported, at least on NTFS
   file system.
@@ -361,5 +361,45 @@ MSYS2 Admin log for installing on Windows 10.
 
     https://www.joshkel.com/2018/01/18/symlinks-in-windows/
 
-  Todo: export  MYSYS=winsymlinks:nativestrict
-  Todo: also see https://www.cygwin.com/cygwin-ug-net/using.html#pathnames-symlinks
+2019-03-05:
+  Let go native and empower users to create native
+  Windows 10 NTFS symlinks.
+
+  To allow regular users to create NTFS symlinks, need to
+  put Windows 10 into "Developer Mode"
+
+    1. Open Settings App
+    2. Start typing "developer settings" into search box
+    3. Select "Developer Settings"
+    4. Push "Developer mode" radio button
+
+  Windows will try and scare tou off, but after you confirn,
+  will download and install a bunch of stuff.  
+
+  Next updates .bashrc to let MSYS2 to create native NTFS
+  symlinks:
+
+    export MSYS=winsymlinks:nativestrict
+
+  Similarly, for CygWin,
+
+    export CYGWIN=winsymlinks:nativestrict
+
+  Under cmd.exe, the built in command mklink creates
+  symbolic links:
+
+    > mklink theLink theTarget
+
+  exactly backwards to POSIX "ln -s theTarget theLink".
+  Also, theTarget has to exist.  Care will be now needed
+  with archive and version control utilities to ensure
+  files are created before links.
+
+  Rebooted system (stuff got installed on reboot)
+
+  Created NTFS symlink
+     /home/scotch/opt  ->  /c/Users/scotch/opt
+
+  Was able to activate the pytorch Anaconda environment
+  and run a CUDA enabled program all within a MSYS2 bash
+  shell.

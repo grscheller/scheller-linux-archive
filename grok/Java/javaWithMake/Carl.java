@@ -24,8 +24,9 @@ public class Carl {
 
     long sum = 0L;
     for (long ii = 1; ii <= N; ii++) {
-      sum = sum + ii;
+        sum = sum + ii;
     }
+
     System.out.println("Sum of 1 to " + N + " is " + sum);
   }
 

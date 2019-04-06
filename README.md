@@ -2,7 +2,7 @@
 ### Linux Environment Configuration
   - [Bash Environment Configuration](bashEnvConf)
 ### Linux/POSIX System Administration Logs
-  - [System Admin Logs](AdminLogs)
+  - [System Admin Logs](adminLogs)
 ### Linux/POSIX Notes
   - [Vim Notes](notes/VimNotes)
   - [GIT Notes](notes/gitNotes.txt)

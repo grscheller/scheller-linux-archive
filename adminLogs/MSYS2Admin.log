@@ -4,7 +4,7 @@ MSYS2 Admin log for installing on Windows 10.
   After having used GIT-for-Windows for a while, I decided to install
   MSYS2 directly.
 
-  See ../Win10EnvConf/msys2factoids.md for my notes on MSYS2.
+  See ../notes/Win10EnvConf/msys2factoids.md for my notes on MSYS2.
 
   Downloaded 64-bit installation exe from here: https://www.msys2.org/
 
@@ -354,7 +354,7 @@ MSYS2 Admin log for installing on Windows 10.
   around?  Under MSYS "ln -s" silently just COPIES THE FILES.
   If "ln -s" should just fail, not do a copy.  Bad choice.
 
-  Supports hardlinks of files supported, at least on NTFS
+  Hardlinking of files supported, at least on NTFS
   file system.
 
   Some info on work-arounds can be found here:
@@ -362,7 +362,7 @@ MSYS2 Admin log for installing on Windows 10.
     https://www.joshkel.com/2018/01/18/symlinks-in-windows/
 
 2019-03-05:
-  Let go native and empower users to create native
+  Let's go native and empower users to create native
   Windows 10 NTFS symlinks.
 
   To allow regular users to create NTFS symlinks, need to
@@ -373,10 +373,10 @@ MSYS2 Admin log for installing on Windows 10.
     3. Select "Developer Settings"
     4. Push "Developer mode" radio button
 
-  Windows will try and scare tou off, but after you confirn,
+  Windows will try and scare you off, but after you confirn,
   will download and install a bunch of stuff.  
 
-  Next updates .bashrc to let MSYS2 to create native NTFS
+  Next updates .bashrc to tell MSYS2 to create native NTFS
   symlinks:
 
     export MSYS=winsymlinks:nativestrict
@@ -403,3 +403,6 @@ MSYS2 Admin log for installing on Windows 10.
   Was able to activate the pytorch Anaconda environment
   and run a CUDA enabled program all within a MSYS2 bash
   shell.
+
+2019-03-05:
+  Repeated above, same date, for CYGWIN environment.

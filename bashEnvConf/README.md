@@ -6,6 +6,8 @@ my Linux/UNIX/POSIX Bash environments.
 * Vim configuration
 * Readline Library configuration
 * installHome installs everything into $HOME
+  * run from bashEnv/Conf directory
+  * use as template for your own version
 * Tested on:
   * Arch Linux
   * CentOS 6 & 7

@@ -1,6 +1,19 @@
-# Geoffrey's Linux Software Development Archive
+# Geoffrey's Linux Development/Administration Archive
 ### Linux Environment Configuration
   - [Bash Environment Configuration](bashEnvConf)
+### Linux/POSIX System Administration Logs
+  - [System Admin Logs](AdminLogs)
+### Linux/POSIX Notes
+  - [Vim Notes](notes/VimNotes)
+  - [GIT Notes](notes/gitNotes.txt)
+  - [POSIX/Unix Commands](notes/unixCommands.txt)
+  - [Arch Linux & systemd Commands](notes/archLinuxNotes.txt)
+  - [Bash Notes](notes/bashNotes.txt)
+  - [GNU Make Notes](notes/makeNotes.md)
+  - [Software Development Tools](notes/softwareDevTools.md)
+  - [Shell Utilities](notes/shellUtilities.txt)
+  - [Gnome 3 Configuration](notes/gnome3Conf.md)
+  - [Windows 10 "POSIX" Configurations](notes/Win10EnvConf/)
 ### Grokking Computer Languages
   - [C](grok/C)
     - [Advanced Programming in the UNIX Environment (APUE)](grok/C/APUE)
@@ -12,12 +25,8 @@
   - [Rust](grok/Rust/)
   - [Scala](grok/Scala/)
     - [Functional Programming in Scala (fpinscala)](grok/Scala/fpinscala)
-### Linux/POSIX Notes
-  - [Linux/POSIX Software Development](notes/softwareDevelopment.md)
-    - [Vim Notes](notes/VimNotes/README.md)
-  - [Linux/POSIX System Configuration](notes/systemConfiguration.md)
 ### WWW Info
-  - [Private homepage](web/homepage/)
+  - [Personal homepage](web/)
 
 
 For more information on this archive, please read

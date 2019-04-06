@@ -1,22 +1,90 @@
-Purpose: Useful commands and factoids most of which
-         can be done without root or sudo access.
+Purpose: Document useful commands and factoids most of
+         which can be done without root or sudo access.
 
-Journalctl:
+Journal Control:
   For scanning journalctl output, some useful options,
-    journalctl -f   // follows like tail -f
-    journalctl -x   // augment log lines with explanation texts
-    journalctl -b   // since last boot
+    $ journalctl -f   # follows like tail -f
+    $ journalctl -x   # augment log lines with explanation texts
+    $ journalctl -b   # since last boot
 
   System maintenance,
-    journalctl -p 3 -xb   // Look for high priority errors since last boot.
+    $ journalctl -p 3 -xb   # Look for high priority errors since last boot.
 
-Systemctl:
+System Control:
   Poweroff or restart system (when other users not logged on),
-    systemctl reboot
-    systemctl poweroff
+    $ systemctl reboot
+    $ systemctl poweroff
 
   System maintenance,
-    systemctl --failed
+    $ systemctl --failed
+
+Login Control:
+    $ loginctl 
+    SESSION  UID USER  SEAT  TTY 
+          2 1000 geoff seat0 tty2
+          4 1001 jb    seat0 tty3
+          6 1000 geoff seat0 tty4
+         c1  120 gdm   seat0 tty1
+    
+    4 sessions listed.
+    
+    $ loginctl show-session c1 -p Type
+    Type=x11
+    
+    $ loginctl show-session 2 -p Type
+    Type=x11
+    
+    $ loginctl show-session 4 -p Type
+    Type=x11
+    
+    $ loginctl show-session 6 -p Type
+    Type=tty
+    
+    $ loginctl show-session 6 
+    Id=6
+    User=1000
+    Name=geoff
+    Timestamp=Sat 2019-04-06 00:36:20 MDT
+    TimestampMonotonic=5250149214
+    VTNr=4
+    Seat=seat0
+    TTY=tty4
+    Remote=no
+    Service=login
+    Scope=session-6.scope
+    Leader=4188
+    Audit=6
+    Type=tty
+    Class=user
+    Active=no
+    State=online
+    IdleHint=no
+    IdleSinceHint=1554532580486666
+    IdleSinceHintMonotonic=5249958238
+    LockedHint=no
+    
+    $ loginctl show-session c1 
+    Id=c1
+    User=120
+    Name=gdm
+    Timestamp=Fri 2019-04-05 23:08:58 MDT
+    TimestampMonotonic=7687132
+    VTNr=1
+    Seat=seat0
+    TTY=tty1
+    Remote=no
+    Service=gdm-launch-environment
+    Scope=session-c1.scope
+    Leader=636
+    Audit=4294967295
+    Type=x11
+    Class=greeter
+    Active=no
+    State=online
+    IdleHint=yes
+    IdleSinceHint=1554527651467707
+    IdleSinceHintMonotonic=320939279
+    LockedHint=yes
 
 Pacman:
   For querying installed packages,

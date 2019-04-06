@@ -60,6 +60,7 @@ is geared to create native Windows applications.
        $ pacman -S[yu] [<msys|mingw64|mingw32>/]]<package-name>
     ```
   * Actually the package name alone encodes the environment
+
 * Git-for-Windows 
   * thinly disguised MSYS2 environment
-  * GIT client built against MingW64
+  * GIT client built against MINGW64 not MSYS

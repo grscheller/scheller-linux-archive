@@ -1,4 +1,4 @@
-# Geoffrey's Linux Development/Administration Archive
+# Geoffrey's Linux Archive
 ### Linux Environment Configuration
   - [Bash Environment Configuration](bashEnvConf)
 ### Linux/POSIX System Administration Logs

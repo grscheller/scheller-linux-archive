@@ -1,5 +1,5 @@
 ##  X Windows Programming
-Examples of low level XWindows coding.
+Examples of low level X11/XORG XWindows coding.
 
 ### XLIB Examples:
 #### jiggleMouse.c

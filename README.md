@@ -25,6 +25,9 @@
   - [Rust](grok/Rust/)
   - [Scala](grok/Scala/)
     - [Functional Programming in Scala (fpinscala)](grok/Scala/fpinscala)
+### Computer Graphics
+  - [XWindows](graphics/XWindows)
+  - [Cairo](graphics/Cairo)
 ### WWW Info
   - [Personal homepage](web/)
 

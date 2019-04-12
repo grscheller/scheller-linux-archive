@@ -57,16 +57,16 @@ In my .vim/vimrc file, I use
 to keep the cursor 3 lines from the edge of the screen.
 
 ### Commands to move screen view
-| Command    | Description                                |
-|:----------:|:------------------------------------------ |
-| `<ctrl-e>` | move view down one line                    |
-| `<ctrl-y>` | move view up one line                      |
-| `z<ret>`   | make current line top line of view         |
-| `nz<ret>`  | make line n top line of view               |
-| `z.`       | make current line middle line of view      |
-| `nz.`      | make line n middle line of view            |
-| `z-`       | make current line bottom line of view      |
-| `nz-`      | make line n bottom line of view            |
+| Command    | Description                            |
+|:----------:|:-------------------------------------- |
+| `<ctrl-e>` | move view down one line                |
+| `<ctrl-y>` | move view up one line                  |
+| `zt`       | make current line top line of view     |
+| `zz`       | make current line middle line of view  |
+| `zb`       | make current line bottom line of view  |
+| `<nn>zt`   | make line <nn> top line of view        |
+| `<nn>zz`   | make line <nn> middle line of view     |
+| `<nn>zb`   | make line <nn> bottom line of view     |
 
 Where applicable, you can type a number before these commands
 to repeat them that many times.

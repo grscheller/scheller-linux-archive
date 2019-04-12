@@ -34,8 +34,8 @@ using `$ jobs`.
 | `G`        | move to last line in file                  |
 | `ngg`      | move to nth line in file                   |
 | `gg`       | move to first line in file                 |
-| `\n\|`     | move to nth column in line                 |
-| `\\|`      | move to beginning of line                  |
+| `n\|`      | move to nth column in line                 |
+| `\|`       | move to beginning of line                  |
 | `0`        | move to beginning of line                  |
 | `H`        | move to top of screen                      |
 | `M`        | move to middle of screen                   |
@@ -104,6 +104,8 @@ defining "sections."
 | `A`        | advance cursor to end of line and enter _Insert Mode_     |
 | `x`        | delete char at cursor, stay in _Normal Mode_              |
 | `X`        | delete char before cursor, stay in _Normal Mode_          |
+| `>>`       | move entire line 1 tabstop right, stay in _Normal Mode_   |
+| `<<`       | move entire line 1 tabstop left, stay in _Normal Mode_    |
 
 ## _Insert Mode_ Commands:
 | Command          | Description                                       |

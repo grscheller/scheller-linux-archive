@@ -64,9 +64,9 @@ to keep the cursor 3 lines from the edge of the screen.
 | `zt`       | make current line top line of view     |
 | `zz`       | make current line middle line of view  |
 | `zb`       | make current line bottom line of view  |
-| `<nn>zt`   | make line <nn> top line of view        |
-| `<nn>zz`   | make line <nn> middle line of view     |
-| `<nn>zb`   | make line <nn> bottom line of view     |
+| `<nn>zt`   | make line `<nn>` top line of view      |
+| `<nn>zz`   | make line `<nn>` middle line of view   |
+| `<nn>zb`   | make line `<nn>` bottom line of view   |
 
 Where applicable, you can type a number before these commands
 to repeat them that many times.

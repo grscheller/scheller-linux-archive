@@ -8,6 +8,7 @@ if you don't know how to navigate multiple vim windows.
 * A _file buffer_ is the in memory text associated with a file
 * A _window_ is a viewport on a buffer
 * A _tab page_ is a collection of windows
+* A _terminal window_ is a window that displays a Shell
 
 ## Creating new windows _Command Mode_
 
@@ -25,6 +26,7 @@ if you don't know how to navigate multiple vim windows.
 | `<ctrl-w> n` | new window with empty buffer above      |
 | `<ctrl-w> s` | new window new view same buffer above   |
 | `<ctrl-w> v` | new window new view same buffer to left |
+| `<ctrl-w> T` | break current window out in new tab     |
 
 The directional sense of these commands can be adjusted via
 
@@ -73,6 +75,20 @@ but
 | `<ctrl-w> -` | decreaces active window height 1 lines |
 | `<ctrl-w> >` | increaces active window width 1 char   |
 | `<ctrl-w> <` | decreaces active window width 1 char   |
+
+## Tab pages:
+Allows one to group related windows together.  A Tab in vim
+is a collection of one or more windows.  With mouse support,
+can switch between windows via clicking the "tab".
+
+| Command           | Description                    |
+|:----------------- |:------------------------------ |
+| `:tabn`           | move to next tab               |
+| `:tabp`           | move to previous tab           |
+| `:tabnew`         | open new tab with empty buffer |
+| `:tabedit <file>` | open new tab to edit <file>    |
+| `gt`              | move to next tab               |
+| `gT`              | move to previous tab           |
 
 ## Starting Vim with multiple windows/tabs:
 ```

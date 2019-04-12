@@ -181,19 +181,25 @@ To enter _Visual Mode_ from _Normal Mode_
 | `gv`        | to reselect last selection |
  
 Highlight text with _Normal Mode_ cursor navigation commands
-like `h, j, k, l, w, e, W, B` or the arrow keys.
+like `h, j, k, l, w, e, W, B, f` or the arrow keys.
 Once selected, you can issue either _Normal Mode_ or 
-_Command Mode_ commands.  _Normal Mode_ commands such as
-`d, y, c, I, >>, <<` act on the highlighted region.  _Command Mode_
-commands act on the lines in their entirity that contain
-the selected region.
+_Command Mode_ commands.
+
+_Normal Mode_ commands such as `d, y, c, I, A, >>, <<`
+act on the highlighted region.  The behavior of some
+commands, like indenting commands `>>` or `<<`, vary
+depending on which _Visual Mode_ (character, line or block)
+you are in.
+
+_Command Mode_ commands act on the lines in their entirity
+that contain the selected region.
 
 To punt out of _Visual Mode_ without doing anything,
 hit the `<esc>` key.
 
 If you have enabled mouse support, mouse actions can cause you
-to enter _Visual Mode_.  That is one reason I only enable mouse support
-for _Normal Mode_ only.
+to enter _Visual Mode_.  That is one reason I enable mouse
+support for _Normal Mode_ only.
 
 ## Undo/redo commands:
 

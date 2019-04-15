@@ -6309,7 +6309,7 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   too useful.
 
   At this point, I think I would have to uninstall the NVIDIA
-  card from the laptop to use the Intel Chipset to be used, or
+  card from the laptop for the Intel Chipset to be used, or
   some deep hackery that might make the system unusable.  Or
   ask the Arch mailing list and have to explain way I am doing
   this.
@@ -6371,7 +6371,6 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     	Subsystem: Acer Incorporated [ALI] GM108M [GeForce 940M]
     	Kernel driver in use: nvidia
     
-    [geoff@gauss17: ~]
     $ loginctl 
     SESSION  UID USER  SEAT  TTY 
           1 1000 geoff seat0 tty1
@@ -6402,4 +6401,106 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     sysfillrect            16384  1 drm_kms_helper
     sysimgblt              16384  1 drm_kms_helper
     fb_sys_fops            16384  1 drm_kms_helper
+
+2019-04-13:
+  Decided to better configure gauss17 for OpenPGP functionality.
+
+  Initially following the following guide:
+
+    https://github.com/lfit/itpol/blob/master/protecting-code-integrity.md
+
+  - PGP (Pretty Good Privacy) - original commercial software
+  - OpenPGP - IETF standard compatible with original PGP tool
+  - GnuPG (Gnu Privacy Guard) - free software implementing OpenPGP standard
+  - gpg - command-line tool for GnuPG
+
+  I will use PGP (mot GnuPG, GPG, or OpenPGP) as an adjective:
+
+    - PGP key
+    - PGP signature
+    - PGP keyserver
+
+  Extremely simplified overview,
+
+    - public key known by everyone
+    - private key known only by owner
+
+  What I have,
+
+    $ gpg --version | head -1
+    gpg (GnuPG) 2.2.15
+
+  Types of keys,
+
+    [S] key used for signing
+    [E] key used for encryption
+    [A] key used for authentication
+    [C] key used for certifying other keys
+
+  There is no technical difference between a "master key"
+  and associated "sub keys".  At creation time keys are
+  assigned functional limitations by giving them specific
+  capabilities.
+
+  The key carrying the [C] capability is considered the
+  "master" key.  It is the only key used to
+
+    - add or revoke other keys ("subkeys") with [S|E|A]
+      capabilities
+    - add, change or revoke identities (uids) associated
+      with a key
+    - add or change the expiration date on itself or
+      any subkey
+    - sign other people's keys for the web of trust purposes
+  
+  Two flavors of use in the wild,
+
+    - Web of Trust (WOT) - the ideal
+    - Trust on First Use (TOFU) - what usually gets done
+
+  In the Free Software World, the [C] key is considered your
+  digital identity.
+
+  1. Decide upon a pass phrase, for now to exist only in my mind.
+
+  At this point the guide seems excessively paranoid for my
+  needs.  Pacman doesn't know about a package called paperkey.
+  Also, guide recommends using Yubikey based 2-factor authentication.
+
+  I feel I am fighting an existing PGP infarstructure, consider the
+  Joe Blow user I created
+
+    [jb@gauss17 ~]$ gpg --list-keys
+    gpg: directory '/home/joeblow/.gnupg' created
+    gpg: keybox '/home/joeblow/.gnupg/pubring.kbx' created
+    gpg: /home/joeblow/.gnupg/trustdb.gpg: trustdb created
     
+    [jb@gauss17 ~]$ gpg --list-keys
+    [jb@gauss17 ~]$ 
+
+2019-04-14:
+  Continue grokking PGP infrastructure.
+
+  Until I understand the gpg command better, I am hesitant about
+  putting its output in this public log.  I may need to "snip".
+
+    $ gpg --list-keys
+    /home/geoff/.gnupg/pubring.kbx
+    ------------------------------
+    pub   rsa2048 2016-08-07 [SCEA]
+          <snip>
+    uid           [ultimate] Geoffrey Scheller <geoffrey@scheller.com>
+    sub   rsa2048 2016-08-07 [SEA]
+    
+    pub   rsa4096 2014-12-15 [C] [expires: 2020-08-24]
+          EF6E286DDA85EA2A4BA7DE684E2C6E8793298290
+    uid           [ unknown] Tor Browser Developers (signing key) <torbrowser@torproject.org>
+    
+    pub   rsa4096 2015-12-13 [SC] [expired: 2017-12-12]
+          2B081ECE15BDF2CA70E1A492927912051716CE39
+    uid           [ expired] Magnus Therning <magnus@therning.org>
+
+  I seem to have a key and a subkey from when I first
+  installed and configured Claws e-mail client.  Since
+  going to Gnome, I have been using Evolution as my e-mail
+  client.  Probably the one I still use in TOFU mode.

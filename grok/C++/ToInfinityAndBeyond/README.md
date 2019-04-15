@@ -7,5 +7,6 @@
 
 ### G++ Out of the box
 * __hw.cpp__: Buzz Lightyear's Hello World C++ program.
+* __crtp__: Curriously Recurring Template Pattern
 
 ### Building on the bloody edge with `g++ -std=c++2a`.

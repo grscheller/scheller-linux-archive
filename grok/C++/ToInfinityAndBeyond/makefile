@@ -11,7 +11,7 @@ hw: hw.cpp
 	$(CXX) $(CPPFLAGS) -pthread hw.cpp -o hw
 
 crtp: crtp.cpp
-	$(CXX) $(CPPFLAGS) -pthread crtp.cpp -o crtp
+	$(CXX) $(CPPFLAGS) crtp.cpp -o crtp
 
 clean:
 	rm -f $(BINARIES)

@@ -6503,4 +6503,46 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   I seem to have a key and a subkey from when I first
   installed and configured Claws e-mail client.  Since
   going to Gnome, I have been using Evolution as my e-mail
-  client.  Probably the one I still use in TOFU mode.
+  client.  Probably this key the one I still currently use
+  in TOFU mode.
+
+2019-04-16:
+  Install pacman-contrib package,
+
+     $ sudo pacman -Syu pacman-contrib
+
+  mostly for the pactree command.
+
+  Orphaned packages:
+
+     $ pacman -Qdtq
+     absl-py
+     gamin
+     gcc7
+     gtk2-perl
+     haskell-gitrev
+     haskell-src-meta
+     idnkit
+     libnm-gtk
+     python-astor
+     python-gast
+     python-grpcio
+     python-keras-applications
+     python-keras-preprocessing
+     python-markdown
+     python-protobuf
+     python-sphinx_rtd_theme
+     python-sphinxcontrib-websupport
+     python-sqlalchemy
+     python-tensorflow-estimator
+     python-termcolor
+     python-werkzeug
+     python-wheel
+     python-whoosh
+     python2-dbus
+     python2-gobject
+     python2-setproctitle
+
+  Removed the orphans,
+
+     $ sudo pacman -Rs $(pacman -Qdtq)

@@ -1,17 +1,16 @@
 CXX=g++
-CPPFLAGS=-Wall -std=gnu++11
+CPPFLAGS=-Wall
 BINARIES=hw crtp
 
 default: binaries
 
 binaries: $(BINARIES)
 
-# guessing where -ptrhead goes
 hw: hw.cpp
-	$(CXX) $(CPPFLAGS) -pthread hw.cpp -o hw
+	$(CXX) $(CPPFLAGS) -std=gnu++11 -pthread hw.cpp -o hw
 
 crtp: crtp.cpp
-	$(CXX) $(CPPFLAGS) crtp.cpp -o crtp
+	$(CXX) $(CPPFLAGS) -std=gnu++11 crtp.cpp -o crtp
 
 clean:
 	rm -f $(BINARIES)

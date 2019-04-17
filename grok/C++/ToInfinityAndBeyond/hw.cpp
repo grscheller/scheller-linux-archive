@@ -5,7 +5,7 @@
 #include <string>
 #include <thread>
 
-auto hw {"  Hello World!"};         // Type inference (char* in this case).
+auto hw = "  Hello World!";         // Type inference (char* in this case).
 std::string gw {"Goodbye World!"};  // Uniform Initialization.
 
 void hello()
@@ -30,6 +30,9 @@ int main()
  *
  *  1. Uniform Initialization turns off C data narrowing misfeature.
  *  2. Unlike ANSI C, main's prototype indicates that it takes no arguments.
+ *  3. On older C++ compilers, like GCC 4.8.5, combining uniform
+ *     initialization with type inference with auto keyword, will
+ *     instantiate hw as a std::basic_string and not a char*.
  *
  */
 

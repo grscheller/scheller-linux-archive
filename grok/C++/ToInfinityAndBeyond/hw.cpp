@@ -2,23 +2,25 @@
  *  Traditional K&R Hello World program done in C++.
  */
 #include <iostream>
+#include <string>
 #include <thread>
 
-auto hw {"  Hello World!"};
-auto gw {"Goodbye World!"};
+auto hw {"  Hello World!"};         // Type inference (char* in this case).
+std::string gw {"Goodbye World!"};  // Uniform Initialization.
 
 void hello()
 {
-    using namespace std;
+    using namespace std;   // Use of namespaces in a lexiconic scope.
 
-    cout << hw+2 << endl;
+    cout << hw+2 << endl;  // Can still "fiddle the bits" with
+                           // pointers into character arrays
 }
 
 int main()
 {
     std::thread t(hello);
     t.join();
-    std::cout << gw << '\n';
+    std::cout << gw << '\n';  // can't do pointer arithmetic on gw object
 
     return 0;
 }
@@ -26,22 +28,8 @@ int main()
 /*
  *  Notes:
  *
- *  1. Type infarence via auto keyword
- *  2. IOSTREAM library
- *  3. Uniform Initialization turns off Fortran-like automatic
- *     data converion.
- *  4. Use of namespaces
- *  5. Still lets you "fiddle the bits" with
- *     pointers to chracter arrays
- *  6. Unlike ANSI C, main's prototype indicates
- *     that it takes no arguments.
- *  7. Function overloading makes << easy to deal with
- *  8. Built in std::thread library even with base compile
- *  9. Currently not specifying any sort of "standard"
- * 10. Need to compile with
- *       g++ -Wall -pthread hw.cpp -o hw
- *     otherwise linker error with pthread_create
- *     undefined.  Got the -pthread from the pthread_create 
- *     Linux, not POSIX, manpage.
+ *  1. Uniform Initialization turns off C data narrowing misfeature.
+ *  2. Unlike ANSI C, main's prototype indicates that it takes no arguments.
+ *
  */
 

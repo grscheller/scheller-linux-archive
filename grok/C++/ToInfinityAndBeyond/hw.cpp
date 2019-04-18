@@ -20,7 +20,7 @@ int main()
 {
     std::thread t(hello);
     t.join();
-    std::cout << gw << '\n';  // can't do pointer arithmetic on gw object
+    std::cout << gw << '\n';  // can't do pointer arithmetic on object gw 
 
     return 0;
 }
@@ -31,7 +31,7 @@ int main()
  *  1. Uniform Initialization turns off C data narrowing misfeature.
  *  2. Unlike ANSI C, main's prototype indicates that it takes no arguments.
  *  3. On older C++ compilers, like GCC 4.8.5, combining uniform
- *     initialization with type inference with auto keyword, will
+ *     initialization with type inference via auto keyword, will
  *     instantiate hw as a std::basic_string and not a char*.
  *
  */

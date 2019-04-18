@@ -27,8 +27,8 @@ struct counter
         --objects_alive;
     }
 };
-template <typename T> int counter<T>::objects_created(0);
-template <typename T> int counter<T>::objects_alive(0);
+template <typename T> int counter<T>::objects_created{0};
+template <typename T> int counter<T>::objects_alive{0};
 
 class Dog : counter<Dog>
 {

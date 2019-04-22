@@ -1,5 +1,5 @@
 /*
- *  Illustrating Curiously Recuring Template Pattern
+ *  Illustrating Curiously Recurring Template Pattern
  */
 #include <iostream>
 

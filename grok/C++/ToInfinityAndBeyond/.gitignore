@@ -1,4 +1,4 @@
-crtp
-hw
-*.o
-*.exe
+crtp/counter
+hw/hw
+**/*.o
+**/*.exe

@@ -5,8 +5,7 @@
 * A safer, socially palatable systems language replacement for ANSI-C? 
 * Inspired by Bjarne Stroustrup's "A Tour of C++" Second Edition.
 
-### G++ Out of the box
-* __hw.cpp__: Buzz Lightyear's Hello World C++ program.
-* __crtp__: Curriously Recurring Template Pattern
+### Projects
+* [__hw__](hw): Gratuitously complicated Hello World C++ program.
+* [__crtp__](crtp): Curiously Recurring Template Pattern
 
-### Building on the bloody edge with `g++ -std=c++2a`.

@@ -8,6 +8,9 @@ I have set up my own build.sbt file and am not using the canned SBT
 setup supplied [here](https://github.com/fpinscala/fpinscala) by the
 authors.
 
+Scala is a hybrid functional/oo language which runs on
+the Java Virtual Machine (JVM).
+
 ### Packages and corresponding book chapters
 * Chapter 2: [Getting started with functional programming in Scala](src/main/scala/fpinscala/gettingstarted/)
 * Chapter 3: [Functional data structures](src/main/scala/fpinscala/datastructures/)

@@ -15,22 +15,38 @@
   - [Gnome 3 Configuration](notes/gnome3Conf.md)
   - [Windows 10 "POSIX" Configurations](notes/Win10EnvConf/)
 ### Grokking Computer Languages
-  - [C](grok/C)
-    - [Advanced Programming in the UNIX Environment (APUE)](grok/C/APUE)
-  - [C++](grok/C++)
-  - [Haskell](grok/Haskell/)
+  - __C__
+    - [Advanced Programming in the UNIX Environment (APUE)](grok/C/APUE/)
+    - [C Language Exeplars](grok/C/CExemplars/)
+    - [C Language Syntax](grok/C/CSyntax/)
+    - [Reverse Engineering with C](grok/C/CRevEngineer/)
+  - __C++__
+    - [To Infiity and Beyond](grok/C++/ToInfinityAndBeyond/)
+  - __Haskell__
     - [Pythagorean Triples](grok/Haskell/pythagTriples)
-  - [Java](grok/Java/)
-  - [Python](grok/Python)
-  - [Rust](grok/Rust/)
+    - [Building Haskell Code with Cabal](grok/Haskell/buildingHaskellCode/)
+    - [Haskell Intro Programming](grok/Haskell/haskellIntroProgramming/)
+    - [Haskell Parallel and Concurrent](grok/Haskell/haskellParallelAndConcurrent/)
+  - __Java__
+    - [Java FX Examples](grok/Java/javafxExamples/)
+    - [Java with Make](grok/Java/javaWithMake/)
+    - [Testing JVM for Word Tearing](grok/Java/wordTearing/)
+  - __Python__
+    - [pureMath](grok/Python/pureMath/)
+    - [Calling C Code from Python](grok/Python/C_call/)
+    - [TensorFlow based Deep learning](grok/Python/tensorflow/)
+    - [PyTorch based Deep learning](grok/Python/pyTorch/)
+  - __Rust__
+    - [Learn Rust as General Purpose Language](grok/Rust/learnRust/)
   - [Scala](grok/Scala/)
-    - [Functional Programming in Scala (fpinscala)](grok/Scala/fpinscala)
+    - [Functional Programming in Scala (fpinscala)](grok/Scala/fpinscala/)
+    - [Functional Programming for Mortals](grok/Scala/fpForMortals/)
+    - [Learn Scala](grok/Scala/learnScala/)
 ### Computer Graphics
-  - [XWindows](graphics/XWindows)
-  - [Cairo](graphics/Cairo)
+  - [Low Level X11 (XLIB/XCB) Programming](graphics/XWindows)
+  - [Cairo 2D Vector Graphics](graphics/Cairo)
 ### WWW Info
   - [Personal homepage](web/)
-
 
 For more information on this archive, please read
 [CONTRIBUTING](CONTRIBUTING.md)

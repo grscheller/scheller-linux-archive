@@ -12,6 +12,7 @@ JVM can update adjacent elements of a byte array.
 * Eight Threads working indepently on each byte of a word.
 * The threads should not get in each others way unless the
   underlying java implementation can only work on whole words at a time.
+* I suspect the Java 10 compiler is "optimizing" away execution
 
 ### Usage:
 * Build via: `javac WordTearing.java`

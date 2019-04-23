@@ -1,4 +1,4 @@
-## Private Home Page
+## Private Personal Home Page
 Old fashioned personal home page.  Used in lieu
 of browser bookmarks.  Homepage available anywhere
 I can clone my repo.  Set homepage in browser to
@@ -9,4 +9,3 @@ I can clone my repo.  Set homepage in browser to
   - Kept very simple to facilitate "monkey see-monkey do" updating
 * [style.css](style.css)
   - All style formating done here
-

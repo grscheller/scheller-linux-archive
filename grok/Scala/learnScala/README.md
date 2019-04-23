@@ -1,6 +1,7 @@
 ## Basic Scala Language Constructs:
-
-Explore Scala language and build constructions.
+* Explore Scala language and build constructions
+* Documenting factoids about the Scala Language
+* Illustrate a hierarchical SBT Scala Build
 
 ### 1. Hierarchical SBT build.
 To compile all projects,

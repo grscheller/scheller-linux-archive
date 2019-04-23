@@ -1,16 +1,13 @@
 CC=gcc
 CFLAGS=-Wall
 SUMIT_BINARIES=sumItBasic sumItO2 sumItV sumItVO2
-BINARIES=removeSpaces gnuPosixComplianceTrick
+BINARIES=removeSpaces
 
 default: binaries
 
 binaries: $(BINARIES) sumIt
 
 removeSpaces: removeSpaces.c
-	$(CC) $(CFLAGS) -o $@ $<
-
-gnuPosixComplianceTrick: gnuPosixComplianceTrick.c gnuPosixComplianceTrick.h
 	$(CC) $(CFLAGS) -o $@ $<
 
 

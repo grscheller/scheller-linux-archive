@@ -7,13 +7,16 @@ FTM_BINARIES=ftmBasic \
              ftmPOSIX199309L ftmPOSIX199506L ftmPOSIX200112L \
              ftmPOSIX200809L ftmPOSIX202012L \
              ftmGNU
-BINARIES=endianness
+BINARIES=endianness gnuPosixComplianceTrick
 
 default: binaries
 
 binaries: $(BINARIES) ftm
 
 endianness: endianness.c
+	$(CC) $(CFLAGS) -o $@ $<
+
+gnuPosixComplianceTrick: gnuPosixComplianceTrick.c gnuPosixComplianceTrick.h
 	$(CC) $(CFLAGS) -o $@ $<
 
 

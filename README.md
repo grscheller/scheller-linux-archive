@@ -38,7 +38,7 @@
     - [PyTorch based Deep learning](grok/Python/pyTorch/)
   - __Rust__
     - [Learn Rust as General Purpose Language](grok/Rust/learnRust/)
-  - [Scala](grok/Scala/)
+  - __Scala__
     - [Functional Programming in Scala (fpinscala)](grok/Scala/fpinscala/)
     - [Functional Programming for Mortals](grok/Scala/fpForMortals/)
     - [Learn Scala](grok/Scala/learnScala/)

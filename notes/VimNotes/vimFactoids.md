@@ -53,7 +53,7 @@ with that buffer.
 When configured to use the mouse, vim will steal the mouse
 events from the terminal emulator.  To enable full vim mouse
 support, `:set mouse=a` and to disable the mouse and let the
-terminal emulator handle all mouse events, `:set mouse=`.
+terminal emulator handle all mouse events, `:set mouse=`
 
 Available mouse options are:
 
@@ -85,7 +85,7 @@ following lines in your ~/.vim/vimrc or ~/.vimrc file.
 ```
    
 ## Vi and Vim differences:
-* Vi only has one level of undo/redo, `<ctrl-u>` undo the
+* Vi only has one level of undo/redo, `u` undo the
   last change and, if hit again, will redo the change.
   `<ctrl-r>` has no effect.
 * On modern Linuxes, the vi "executable" is either a

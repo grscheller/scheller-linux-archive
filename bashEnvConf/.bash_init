@@ -50,7 +50,11 @@ PATH=~/local/bin:$PATH
 export PIP_REQUIRE_VIRTUALENV=true
 
 ## Kerberos utilities for HPCMP access.
-PATH=/usr/local/ossh/bin:/usr/local/krb5/bin:$PATH
+#
+#   Commented out until I start using HPCMP systems
+#   again at work.
+#   
+# PATH=/usr/local/ossh/bin:/usr/local/krb5/bin:$PATH
 
 ## For Haskell locally contained and administered via stack
 PATH=~/.local/bin:$PATH

@@ -6546,3 +6546,9 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   Removed the orphans,
 
      $ sudo pacman -Rs $(pacman -Qdtq)
+
+
+2019-07-17:
+  Removed the claws mail packages, using Evolution now.
+
+     $ sudo pacman -Rsu claws-mail claws-mail-themes clawsker

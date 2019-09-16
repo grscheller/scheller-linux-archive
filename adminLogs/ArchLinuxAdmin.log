@@ -6552,3 +6552,146 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   Removed the claws mail packages, using Evolution now.
 
      $ sudo pacman -Rsu claws-mail claws-mail-themes clawsker
+
+2019-09-10:
+  Upgrade Google Chrome.
+
+    $ cd ~/build/AUR/google-chrome_build/google-chrome
+    $ pacman -Qs google-chrome
+    local/google-chrome 74.0.3729.131-1
+        The popular and trusted web browser by Google (Stable Channel)
+    $ git pull
+    $ makepkg -sri
+    $ pacman -Qs google-chrome
+    local/google-chrome 77.0.3865.75-1
+        The popular and trusted web browser by Google (Stable Channel)
+
+2019-09-14:
+  Build and install MS OneDrive.  Following instructions from here
+
+    https://github.com/abraunegg/onedrive/blob/master/docs/INSTALL.md
+
+  I want an easier way to share files between Linux and Win10.
+
+    $ cd ~/build
+    $ mkdir OneDriveBuild; cd OneDriveBuild
+    $ git clone https://github.com/abraunegg/onedrive
+
+  Update everything first
+
+    $ sudo pacman -Syu
+    $ systemctl reboot
+
+  Needs these dependencies: libcurl, SQLite > 3.7.15, Digital Mars D Compiler
+
+    $ sudo pacman -Syu dmd
+
+  Pacman also pulled in libphoboas.
+
+  Now build it with notifications.  Systemd services files will be installed
+  in the appropriate locations.
+
+    $ cd ~/build/OneDriveBuild/onedrive
+    $ ./configure -enable-notifications
+    $ make clean
+    rm -f onedrive onedrive.o version
+    rm -rf autom4te.cache
+    rm -f config.log config.status
+    $ make
+    $ sudo make install
+    $ sudo make install
+    /usr/bin/install -c -D onedrive /usr/local/bin/onedrive
+    /usr/bin/install -c -D onedrive.1 /usr/local/share/man/man1/onedrive.1
+    /usr/bin/install -c -D -m 644 contrib/logrotate/onedrive.logrotate \
+                                  /usr/local/etc/logrotate.d/onedrive
+    mkdir -p /usr/local/share/doc/onedrive
+    /usr/bin/install -c -D -m 644 README.md config LICENSE CHANGELOG.md \
+                                  docs/Docker.md docs/INSTALL.md \
+                                  docs/Office365.md docs/USAGE.md \
+                                  /usr/local/share/doc/onedrive
+    /usr/bin/install -c -d -m 0755 /usr/lib/systemd/user \
+                                   /usr/lib/systemd/system
+    /usr/bin/install -c -m 0644 contrib/systemd/onedrive@.service \
+                                /usr/lib/systemd/system
+    /usr/bin/install -c -m 0644 contrib/systemd/onedrive.service \
+                                /usr/lib/systemd/user
+
+  Lets see what systemd knows
+
+    $ systemctl status onedrive
+    Unit onedrive.service could not be found.
+
+  Try a reboot.
+
+    $ systemctl reboot
+
+    $ systemctl status onedrive
+    Unit onedrive.service could not be found.
+
+  I'll worry about this later.
+
+  Now, following the directions from here
+
+    https://github.com/abraunegg/onedrive/blob/master/docs/USAGE.md
+
+  to configure onedrive and connect it to my Microsoft account.
+
+    $ onedrive
+    Authorize this app visiting:
+
+    <snip>
+
+    Enter the response uri: ^C
+
+  Well, when I follow the link in a browser, I sign in and all
+  I get is a blank webpage... no "response uri".  This happens
+  in both Linux and Windows browsers.
+
+  The onedrive CLI command is consistently giving me the same
+  URL whenever I run it.
+
+  According to this link,
+
+    https://www.maketecheasier.com/sync-onedrive-linux/
+
+  it is the URL of the blank white page that it wants you to paste
+  into the terminal window.
+
+  Well, something worked
+
+    $ onedrive
+    Authorize this app visiting:
+    
+    <snip>
+    
+    Enter the response uri: <snip>
+    
+    --synchronize or --monitor missing from your command options or use --help for further assistance
+    
+    No OneDrive sync will be performed without either of these two arguments being present
+    
+    $ onedrive
+    
+    --synchronize or --monitor missing from your command options or use --help for further assistance
+    
+    No OneDrive sync will be performed without either of these two arguments being present
+    
+    $ onedrive --synchronize
+    Initializing the Synchronization Engine ...
+    Syncing changes from OneDrive ...
+    Processing 9 changes
+    Creating directory: Documents
+    Downloading file Getting started with OneDrive.pdf ... done.
+    Downloading file night_sea_rocks_landscape-1920x1080.jpg ... done.
+    Creating directory: Pictures
+    Downloading file Pictures/night_sea_rocks_landscape-1920x1080.jpg ... done.
+    Creating directory: Pictures/Screenshots
+
+  It synced the "public?" folders, but not the "Personal Vault".
+  Moved my test file to ~/OneDrive/Documents and created another.
+
+    $ onedrive --synchronize
+
+  and same files available on Linux and Win10.  
+
+  For now, I'll ignore the systemd service.  I like the manual nature than the Windows autoupdates.

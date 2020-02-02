@@ -2714,7 +2714,7 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 2017-06-24:
   Had a small computer shop in Bethlehem PA,
 
-    Suoer Geek Computers
+    Super Geek Computers
     Owner - J. Powell
     http://supergeekcomputers.com
     484-202-0260
@@ -2758,7 +2758,7 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   Boot off of the thumbdrive, ethernet cable plugged in,
 
     # parted -l
-    # timedatectl set-nyp true
+    # timedatectl set-ntp true
     # parted /dev/sda
     (parted) mklabel gpt
     (parted) mkpart ESP fat32 1MiB 513MiB
@@ -2852,6 +2852,8 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     options root=PARTUUID=d6793ae6-1f23-4895-942a-6714e7a06de6 rw
 
   and system booted.
+
+  [ See first entry 2020-02-02 ]
 
 2017-06-26:
   Added geoff user to system via,
@@ -5525,7 +5527,7 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
   Try creating a new user and see if it works for them,
 
-    # useradd -d //home/jorblow -c "Joe Blow" -m jb
+    # useradd -d /home/jorblow -c "Joe Blow" -m jb
     # passwd jb
 
   No problem logging in at VT04 as jb.
@@ -6672,7 +6674,7 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     
     $ onedrive
     
-    --synchronize or --monitor missing from your command options or use --help for further assistance
+    --synchronize or --monitor missing frohttps://login.microsoftonline.com/common/oauth2/nativeclient?code=M851d4046-38bb-e950-2700-e3b902c37ce2m your command options or use --help for further assistance
     
     No OneDrive sync will be performed without either of these two arguments being present
     
@@ -6694,4 +6696,52 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
   and same files available on Linux and Win10.  
 
-  For now, I'll ignore the systemd service.  I like the manual nature than the Windows autoupdates.
+  For now, I'll ignore the systemd service.  I like the manual nature
+  than the Windows autoupdates.
+
+  [See second entry 2020-02-01]
+
+2020-02-01:
+  Added another phoney user jd aka "Jane Doe".
+
+    # useradd -d /home/janedoe -c "Jane Doe" -m jd
+    # passwd jd
+    # passwd jd
+
+  Primarily to test "out of the box" Gnome3.
+
+2020-02-01:
+  Got onedrive to synch.
+
+  I think the bloody Chrome and Firefox browsers are logging me right into
+  my MS account automatically.  At which point you are redirected to a blank
+  webpage.  Paste the URL of this blank page into the terminal window at
+  the "Enter the response uri:" prompt.
+  
+  Well it worked, but not exactly intuitive.  Especially when I assumed
+  that I hadn't even logged into my MS account.
+
+2020-02-02:
+  When I reinstalled Arch back on 2017-06-26, I had to reverse engineer
+  /boot/loader/loader.conf and poke around /dev to find the correct
+  PARTUUID to use in loader.conf by mounting each partition to see 
+  what was in it.
+
+  To get this info directly, I could have used the blkid command.
+
+    $ blkid 
+    /dev/sdb1: UUID="BC00-6365" BLOCK_SIZE="512" TYPE="vfat"
+        PARTUUID="8d391102-8cbb-4b07-a767-516b7e3bbe94"
+    /dev/sdb2: UUID="4b1b0623-c1d0-4da9-8164-20ee74253def" BLOCK_SIZE="4096" TYPE="ext4"
+        PARTUUID="fd153bda-5bf1-4a49-9728-4fb11b660949"
+    /dev/sdb3: UUID="a5945738-343f-4cfb-ad76-8ca012eb2576" TYPE="swap"
+        PARTUUID="3beb0f61-e57c-4686-bb35-7ed414194442"
+    /dev/sdb4: UUID="833c2579-bc84-463a-96a4-89478bd89e9e" BLOCK_SIZE="4096" TYPE="ext4"
+        PARTUUID="8a759be3-bd72-44f3-b29c-894eaaa75c30"
+    /dev/sda1: UUID="A024-8139" BLOCK_SIZE="512" TYPE="vfat"
+        PARTUUID="8d5e9cb9-1823-46e7-9150-885713ef5fc3"
+    /dev/sda2: UUID="0859da7c-f429-470d-818f-d3951b5d89af" BLOCK_SIZE="4096" TYPE="ext4"
+        PARTUUID="d6793ae6-1f23-4895-942a-6714e7a06de6"
+
+  tl;dr: Hey, today's date is a palidrone!
+

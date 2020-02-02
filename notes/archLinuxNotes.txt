@@ -41,88 +41,70 @@ Pacman:
     sudo -R <pkg>                   # Remove a single package.
     sudo pacman -Rs $(pacman -Qdtq) # Uninstall unneeded packages
 
-  Query (upstream) package DB:
+  Search for packages:
+    pacman -Qs <regex>   # search against local package database
+    pacman -Ss <regex>   # search against synced (remote) package database
 
+  Get information on packages:
+    pacman -Qi <pkg>   # Use local package database
+    pacman -Qii <pkg>  #   also include denendency and required by info
+    pacman -Si <pkg>   # Use synced (remote) package database
+    pacman -Sii <pkg>  #   also include denendency and required by info
+    pacman -Qlq <pkg>  # List files associated with a package, use local database
+    pacman -Flq <pkg>  # List files associated with a package, use synced databases
+
+  Find the package which owns a particular installed file,
+    pacman -Qo </full/path/to/file>
+    pacman -Qoq </full/path/to/file>
+  
   Query (local) package DB:
+    pacman -Q      # List all installed packages
+    pacman -Qe     # List all explicitly installed packages
+    pacman -Qet    # List all explicitly installed packages not 
+                   #   reqired by other packages
     pacman -Qdt    # List unneeded (orphan) packages
                    #    -d, --deps (restrict to packages
                    #       installed as dependencies of
                    #       other packages)
                    #    -t, --unrequired (restrict to
-                   #       packages not requiruerd or
+                   #       packages not required or
                    #       optionally required by other
                    #       packages)
-                   #    -q, --quiet (show less information,
-                   #       useful in scripts)
-    pactree <pkg>      # Packages <pkg> depends on
-    pactree -r <pkg>   # Packages depending on <pkg>
+                   #    -q, --quiet (omit version numbers, useful in scripts)
+    pacman -Qmq    # List all foreign (usually AUR) packages
 
-  Older stuff not yet migrated above:
-  For querying installed packages,
-    pacman -Qet   // List all explicitly installed packages
-    pacman -Q     // List all installed packages
-    pacman -Qi net-tools   // Get information on net-tools package
-    pacman -Qlq tor  // List files associated with tor package
-    pacman -Qmq      // List all foreign (usually AUR) packages
-    pacman -Q | grep '^linux '   // Get Linux kernel version
+    pactree -c <pkg>    # Packages <pkg> depends on, -c for colorization
+    pactree -u <pkg>    # List packages <pkg> depends on, only once
+    pactree -rc <pkg>   # Packages depending on <pkg>
+    pactree -ru <pkg>   # List packages depending on <pkg>, only once
 
-  Find the package which owns a particular installed file,
-    pacman -Qo /etc/profile
-
-  Find the package (not necessarily installed) that owns a file.
-    pacman -Fo /usr/bin/time
-    sudo pacman -Fyo /usr/bin/time      // sometimes necessary
-
-  Query orphan packages,
-    pacman -Qtdq
-
-  Find packages depending on a package
-    pacman -Sii net-tools
-
-  Find installed packages depending on an installed package
-    pacman -Qii net-tools
-
-  Pacman logs stored here
-    /var/log/pacman.log
-
-  To search for packages
-    pacman -Ss regex   // search for terms in package database
-    pacman -Qs regex   // search against the local database
+  Pacman logs stored here: /var/log/pacman.log
 
 
 Hostnamectl:
   Get info on an Arch System,
-    $ hostnamectl
+    $ hostnamectl 
        Static hostname: gauss17
              Icon name: computer-laptop
                Chassis: laptop
-            Machine ID: 89e16dfa61c542876d1da424b85a9cbb
-               Boot ID: a28fe2b54d714a7bb6a4288ff91f2d9c
+            Machine ID: <snip>
+               Boot ID: <snip>
       Operating System: Arch Linux
-                Kernel: Linux 4.10.1-1-ARCH
+                Kernel: Linux 5.4.15-arch1-1
           Architecture: x86-64
 
+  Other ways,
+    $ pacman -Q | grep '^linux '
+    linux 5.4.15.arch1-1
+
+    $ uname -r
+    5.4.15-arch1-1
+
+    $ uname -a
+    Linux gauss17 5.4.15-arch1-1 #1 SMP PREEMPT Sun, 26 Jan 2020 09:48:50 +0000 x86_64 GNU/Linux
+
+
 Time management:
-  To check if hardware clock is set to UTC time,
-
-    $ sudo hwclock --debug
-    hwclock from util-linux 2.31.1
-    System Time: 1517255432.147819
-    Trying to open: /dev/rtc0
-    Using the rtc interface to the clock.
-    Last drift adjustment done at 1498353865 seconds after 1969
-    Last calibration done at 1498353865 seconds after 1969
-    Hardware clock is on UTC time
-    Assuming hardware clock is kept in UTC time.
-    Waiting for clock tick...
-    ...got clock tick
-    Time read from Hardware Clock: 2018/01/29 19:50:33
-    Hw clock time : 2018/01/29 19:50:33 = 1517255433 seconds since 1969
-    Time since last adjustment is 18901568 seconds
-    Calculated Hardware Clock drift is 0.000000 seconds
-    2018-01-29 12:50:32.123321-0700
-
-  this shows HW clock is kept in UTC time.
   Since I use the systemd-timesyncd client,
 
     $ timedatectl
@@ -141,40 +123,80 @@ Time management:
     America/New_York
     $ sudo timedatectl set-timezone America/New_York
 
+  To check if hardware clock is set to UTC time,
+
+    $ sudo hwclock --verbose
+    hwclock from util-linux 2.35
+    System Time: 1580671267.025714
+    Trying to open: /dev/rtc0
+    Using the rtc interface to the clock.
+    Last drift adjustment done at 1498353865 seconds after 1969
+    Last calibration done at 1498353865 seconds after 1969
+    Hardware clock is on UTC time
+    Assuming hardware clock is kept in UTC time.
+    Waiting for clock tick...
+    ...got clock tick
+    Time read from Hardware Clock: 2020/02/02 19:21:08
+    Hw clock time : 2020/02/02 19:21:08 = 1580671268 seconds since 1969
+    Time since last adjustment is 82317403 seconds
+    Calculated Hardware Clock drift is 0.000000 seconds
+    2020-02-02 12:21:06.997828-07:00
+
+  This shows HW clock is actually kept in UTC time.
+
+
 Login Control:
     $ loginctl 
-    SESSION  UID USER  SEAT  TTY 
-          2 1000 geoff seat0 tty2
-          4 1001 jb    seat0 tty3
-          6 1000 geoff seat0 tty4
+    SESSION  UID USER  SEAT  TTY  
+          2 1000 geoff seat0 tty2 
+          4 1000 geoff       pts/3
+          5 1002 jd    seat0 tty4 
+          7 1001 jb    seat0 tty5 
          c1  120 gdm   seat0 tty1
-    4 sessions listed.
     
     $ loginctl show-session 2 -p Type
     Type=x11
-    
-    $ loginctl show-session 6 
-    Id=6
+
+    $ loginctl show-session 4
+    Id=4
     User=1000
     Name=geoff
-    Timestamp=Sat 2019-04-06 00:36:20 MDT
-    TimestampMonotonic=5250149214
-    VTNr=4
-    Seat=seat0
-    TTY=tty4
-    Remote=no
-    Service=login
-    Scope=session-6.scope
-    Leader=4188
-    Audit=6
+    Timestamp=Sun 2020-02-02 12:05:58 MST
+    TimestampMonotonic=67119046169
+    VTNr=0
+    TTY=pts/3
+    Remote=yes
+    RemoteHost=::1
+    Service=sshd
+    Scope=session-4.scope
+    Leader=16779
+    Audit=4
     Type=tty
     Class=user
-    Active=no
-    State=online
+    Active=yes
+    State=active
     IdleHint=no
-    IdleSinceHint=1554532580486666
-    IdleSinceHintMonotonic=5249958238
+    IdleSinceHint=1580670778717714
+    IdleSinceHintMonotonic=67539111506
     LockedHint=no
+
+    $ loginctl show-user geoff
+    UID=1000
+    GID=1000
+    Name=geoff
+    Timestamp=Sat 2020-02-01 17:27:43 MST
+    TimestampMonotonic=23966084
+    RuntimePath=/run/user/1000
+    Service=user@1000.service
+    Slice=user-1000.slice
+    Display=2
+    State=active
+    Sessions=4 2
+    IdleHint=no
+    IdleSinceHint=1580659420065201
+    IdleSinceHintMonotonic=56180458994
+    Linger=no
+
 
 DNSUTILS replacements:
   No longer have nslookup, dig, and host.
@@ -198,7 +220,7 @@ DNSUTILS replacements:
     $ drill dns1.fast.net
     ;; ->>HEADER<<- opcode: QUERY, rcode: NOERROR, id: 6512
     ;; flags: qr rd ra ; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 0 
-    ;; QUESTION SECTION:
+    ;; QUESTION mount - mount a filesystemSECTION:
     ;; dns1.fast.net.	IN	A
     
     ;; ANSWER SECTION:
@@ -207,16 +229,24 @@ DNSUTILS replacements:
     
     ;; AUTHORITY SECTION:
     
-    ;; ADDITIONAL SECTION:
+    ;; ADDITIONAmount - mount a filesystemL SECTION:
     
     ;; Query time: 414 msec
     ;; SERVER: 192.168.0.1
     ;; WHEN: Thu Jul  6 17:54:18 2017
     ;; MSG SIZE  rcvd: 71
 
-POSIX:
-  Get linux kernel version:
-    uname -r
 
-  System maintenance,
-    Look for errors in /var/log (some logs need root privs).
+Disk partitian grokking:
+  Between these three commands
+
+  parted - a partition manipulation program
+  blkid - locate/print block device attributes
+  mount - mount a filesystem
+
+  You can reverse engineer how your disk drives are carved up.
+
+    $ sudo parted --list
+    $ blkid
+    $ mount | grep '^/dev/'
+

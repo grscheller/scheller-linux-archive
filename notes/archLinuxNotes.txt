@@ -41,7 +41,7 @@ Pacman:
     sudo -R <pkg>                   # Remove a single package.
     sudo pacman -Rs $(pacman -Qdtq) # Uninstall unneeded packages
 
-  Search for packages:
+  Search on packages, groups and descriptions:
     pacman -Qs <regex>   # search against local package database
     pacman -Ss <regex>   # search against synced (remote) package database
 
@@ -52,6 +52,18 @@ Pacman:
     pacman -Sii <pkg>  #   also include denendency and required by info
     pacman -Qlq <pkg>  # List files associated with a package, use local database
     pacman -Flq <pkg>  # List files associated with a package, use synced databases
+
+  Get package group information:
+    pacman -Qg
+    pacman -Sq
+
+  Get package group information:
+    pacman -Qg
+    pacman -Sq
+    pacman -Qg <grp>  # List packages in <grp>, use local database
+    pacman -Sg <grp>  # List packages in <grp>, use synced database
+    pacman -Qg | cut -f1 -d\  | uniq | sort  # List names of groups in local database
+    pacman -Sg | cut -f1 -d\  | uniq | sort  # List names of groups in synced database
 
   Find the package which owns a particular installed file,
     pacman -Qo </full/path/to/file>
@@ -79,6 +91,8 @@ Pacman:
     pactree -ru <pkg>   # List packages depending on <pkg>, only once
 
   Pacman logs stored here: /var/log/pacman.log
+  Pacman configuration: /etc/pacman.conf
+  Pacman mirrors: /etc/pacman.d/mirrorlist
 
 
 Hostnamectl:

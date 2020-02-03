@@ -2671,6 +2671,8 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   the pacman tarballs to /var/cache/pacman/pkg with "sudo pacman -Syuw" and
   wait for either an ncurses or sbt upgrade.
 
+  [[ See second 2020-02-02 entry ]]
+
 2017-06-04:
   Pacman update followed by a downgrade of ncurses package,
 
@@ -2853,7 +2855,7 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
   and system booted.
 
-  [ See first entry 2020-02-02 ]
+  [[ See first entry 2020-02-02 ]]
 
 2017-06-26:
   Added geoff user to system via,
@@ -4710,7 +4712,7 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   Lets make a report,
 
   No, I did not type the following in at the command line,
-  I editted the command line in "set -i vi" mode via <esc>v
+  I editted the command line in "set -o vi" mode via <esc>v
 
     $ for login in $(for ii in 0 1 2
     >   do
@@ -4851,7 +4853,7 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
   1. I should upgrade my firewall enabled wireless router to
      IPv6 so I am not tempted to plug my Linux computer
-     directly into my cable "modem". 
+     directly into my cable "modem." 
   2. If I ever did this for a living, do it in Python.
   3. Learned a little bit more about grep, sed, and sort options.
   4. Confirmed I was not being targetted specifically.
@@ -5423,7 +5425,7 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   /etc/xprofile and/or ~/.xprofile.  Remember, these
   are run under POSIX sh, not bash.
   
-  Aside: pretty sure unset -f never was in the
+  Aside: pretty sure "unset -f" never was in the
          AT&T SYS V Bourne shell, I think it
          is a ksh-ism.
 
@@ -6699,7 +6701,7 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   For now, I'll ignore the systemd service.  I like the manual nature
   than the Windows autoupdates.
 
-  [See second entry 2020-02-01]
+  [[ See second entry 2020-02-01 ]]
 
 2020-02-01:
   Added another phoney user jd aka "Jane Doe".
@@ -6744,4 +6746,72 @@ Note: On 2019-03-30 decided to look into the possibility of using the
         PARTUUID="d6793ae6-1f23-4895-942a-6714e7a06de6"
 
   tl;dr: Hey, today's date is a palidrone!
+
+2020-02-02:
+  On 2017-06-02 I needed to downdrade the ncurses package.  The problem was that every
+  time a did "sudo pacman -Syu" the package was upgraded.  The proper way to have stopped
+  this from happening was to edit the /etc/pacman.conf file as follows:
+
+    #Pacman won't upgrade packages listed in IgnorePkg and members of IgnoreGroup
+    IgnorePkg   = ncurses
+    #IgnoreGroup =
+
+  The secobd entry, IgnoreGroup, is for package groups like base-devel or qt5.
+
+    $ pacman -Qgq dlang
+    dmd
+    libphobos
+
+    $ pacman -Sgq dlang
+    dcd
+    dfmt
+    dmd
+    dmd-docs
+    dscanner
+    dtools
+    dub
+    ldc
+    liblphobos
+    libphobos
+
+  tl;dr: There seems to be both a base package and a base group,
+
+    $ pacman -Qg | cut -f1 -d\ | uniq | sort
+    base
+    base-devel
+    default
+    dlang
+    dlang-dmd
+    gnome
+    gnome-extra
+    ipa-fonts
+    pro-audio
+    pyqt5
+    qt
+    qt5
+    telepathy
+    texlive-lang
+    texlive-most
+    vulkan-develpcmciautils
+    xorg
+    xorg-apps
+    xorg-drivers
+    xorg-fonts
+
+    $ pacman -Qg base
+    base gcc-libs
+    base pcmciautils
+
+    $ pacman -Sg base
+    base gcc-libs
+
+    $ pacman -Qs '^base$'
+    local/base 2-2
+        Minimal package set to define a basic Arch Linux installation
+    local/gcc-libs 9.2.0-4 (base)
+        Runtime libraries shipped by GCC
+    local/pcmciautils 018-8 (base)
+        Utilities for inserting and removing PCMCIA cards
+
+  Why doesn't pcmciautils show up with "pacman -Sg base"???
 

@@ -258,9 +258,90 @@ Disk partitian grokking:
   blkid - locate/print block device attributes
   mount - mount a filesystem
 
-  You can reverse engineer how your disk drives are carved up.
+  You can reverse engineer your disk drives and how
+  they are are carved up using these commands:
 
     $ sudo parted --list
-    $ blkid
     $ mount | grep '^/dev/'
+    $ blkid
+    $ lsblk -f
+    $ df -hT
 
+  What types of partitians do you have?
+
+    $ df -hT
+    Filesystem     Type      Size  Used Avail Use% Mounted on
+    dev            devtmpfs  7.8G     0  7.8G   0% /dev
+    run            tmpfs     7.8G  1.6M  7.8G   1% /run
+    /dev/sda2      ext4      117G  101G  9.7G  92% /
+    tmpfs          tmpfs     7.8G  274M  7.5G   4% /dev/shm
+    tmpfs          tmpfs     7.8G     0  7.8G   0% /sys/fs/cgroup
+    tmpfs          tmpfs     7.8G   16K  7.8G   1% /tmp
+    /dev/sda1      vfat      511M   48M  464M  10% /boot
+    /dev/sdb4      ext4      839G  181G  615G  23% /home
+    /dev/sdb2      ext4       63G  3.7G   56G   7% /extra
+    tmpfs          tmpfs     1.6G   28K  1.6G   1% /run/user/120
+    tmpfs          tmpfs     1.6G   44K  1.6G   1% /run/user/1000
+    /dev/sdc1      fuseblk    75G  135M   75G   1% /run/media/geoff/BUSLINK
+
+    $ mount | grep '^/dev'
+    /dev/sda2 on / type ext4 (rw,relatime)
+    /dev/sda1 on /boot type vfat (rw,relatime,fmask=0022,dmask=0022,codepage=437,
+        iocharset=iso8859-1,shortname=mixed,utf8,errors=remount-ro)
+    /dev/sdb4 on /home type ext4 (rw,relatime,data=ordered)
+    /dev/sdb2 on /extra type ext4 (rw,relatime,data=ordered)
+    /dev/sdc1 on /run/media/geoff/BUSLINK type fuseblk (rw,nosuid,nodev,relatime,
+        user_id=0,group_id=0,default_permissions,allow_other,blksize=4096,uhelper=udisks2)
+
+    $ lsblk -f
+    NAME   FSTYPE FSVER LABEL   UUID                                 FSAVAIL FSUSE% MOUNTPOINT
+    sda                                                                             
+    ├─sda1 vfat   FAT32         A024-8139                             463.1M     9% /boot
+    └─sda2 ext4   1.0           0859da7c-f429-470d-818f-d3951b5d89af    9.7G    87% /
+    sdb                                                                             
+    ├─sdb1 vfat   FAT32         BC00-6365                                           
+    ├─sdb2 ext4   1.0           4b1b0623-c1d0-4da9-8164-20ee74253def   55.5G     6% /extra
+    ├─sdb3 swap   1             a5945738-343f-4cfb-ad76-8ca012eb2576                [SWAP]
+    └─sdb4 ext4   1.0           833c2579-bc84-463a-96a4-89478bd89e9e  614.6G    22% /home
+    sdc                                                                             
+    └─sdc1 ntfs         BUSLINK 5E746ADE746AB903                       74.4G     0% /run/media/geoff/BUSLINK
+
+    $ sudo parted --list
+    Model: ATA Patriot Torch II (scsi)
+    Disk /dev/sda: 128GB
+    Sector size (logical/physical): 512B/512B
+    Partition Table: gpt
+    Disk Flags: 
+
+    Number  Start   End    Size   File system  Name  Flags
+     1      1049kB  538MB  537MB  fat32              boot, esp
+     2      538MB   128GB  127GB  ext4
+
+
+    Model: ATA WDC WD10JPVX-22J (scsi)
+    Disk /dev/sdb: 1000GB
+    Sector size (logical/physical): 512B/4096B
+    Partition Table: gpt
+    Disk Flags: 
+
+    Number  Start   End     Size    File system     Name  Flags
+     1      1049kB  538MB   537MB   fat32                 boot, esp
+     2      538MB   68.7GB  68.2GB  ext4fuse file system
+     3      68.7GB  85.9GB  17.2GB  linux-swap(v1)        swap
+     4      85.9GB  1000GB  914GB   ext4
+
+
+    Model: SAMSUNG HM080HI (scsi)
+    Disk /dev/sdc: 80.0GB
+    Sector size (logical/physical): 512B/512B
+    Partition Table: msdos
+    Disk Flags: 
+
+    Number  Start   End     Size    Type     File system  Flags
+     1      1049kB  80.0GB  80.0GB  primary  ntfsfuse file system
+
+  Notr that df -T and mount command report fuseblk instead of the
+  underlying NTFS filesystem.  FUSE (Filesystem in USEr space)
+  filesystem can in principle access filesystems unknown to
+  the Linux Kernel.  (FUSE has long since been folded into the
+  Linux Kernel.)

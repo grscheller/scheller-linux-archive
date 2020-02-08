@@ -32,8 +32,10 @@ confusing to new and intermediate vim users.  Simply
 creating an empty ~/.vimrc file can radically change
 vim behavior and the user has no clue how to recover
 previous desirable features.  Putting the line
-`let skip_defaults_vim=1` in `/etc/vimrc` will stop
-this "feature."
+```
+    let skip_defaults_vim=1
+```
+in `/etc/vimrc` will stop this "feature."
 
 In Arch Linux, the location of this default file is
 `/usr/share/vim/vim80/defaults.vim`.

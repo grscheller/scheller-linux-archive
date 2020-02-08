@@ -22,7 +22,7 @@ can be internalized and eventually become part of your "muscle memory."
 |:--------------:|:------------------------------------------------ |
 | `h,i,j,k`      | move cursor one character (also arrow keys)      |
 | `w, W`         | move forward to beginning next word              |
-| `b, B`         | move back to beginning of current/previous word  |
+| `b, B`         | move back to beginning word                      |
 | `e, E`         | move forward to end of word                      |
 | `$`            | move to end of line                              |
 | `^`            | move to first non-whitespace character on line   |
@@ -90,7 +90,7 @@ from multiple files and pasting them into other files.
 
 ### Commands to insert or manipulate text:
 These commands take vim from _Normal Mode_ to _Insert Mode_.
-To return to _Normal Mode_, type `<esc>`.
+To return to _Normal Mode_, type either `<esc>` or `<ctrl-[>` .
 
 | Command | Description                                                |
 |:-------:|:---------------------------------------------------------- |
@@ -136,7 +136,7 @@ and prompts you with `: `.
 | Command             | Description                                                   |
 |:------------------- |:------------------------------------------------------------- |
 | `:w`                | write to disk file you are editing                            |
-| `:w file`           | write to file, unlike MS Word, you are still editing orig file |
+| `:w file`           | write to file, unlike MS Word, you still edit original file   |
 | `:q`                | quit editing, vim will warn you if you have unsaved changes   |
 | `:wq`               | write to disk, then quit                                      |
 | `:q!`               | quit without saving unsaved changes                           |

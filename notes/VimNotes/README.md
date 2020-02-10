@@ -1,7 +1,7 @@
 # Vim - Vi iMproved
 These notes have evolved from a text file cheatsheet
 I maintained for myself.  I tried to put the MarkDown
-files linked below in an order that only relies on  
+files linked below in an order that only relies on
 the gist of the information in ones above it.
 I have found the act of creating/maintaining these
 notes invaluable in my journey to master Vim.

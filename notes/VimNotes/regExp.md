@@ -142,7 +142,7 @@ It is usually easiest to learn regular expressions using simple examples.
 ## Using Regular Expressions in Vim:
 I like to think of all my regular expressions as extended regular
 expressions.  When working with basic regular expressions I still
-think interms of extended regular expressions but with the need
+think in terms of extended regular expressions but with the need
 to escape the `(){}|+?` characters with a backslash to turn on their
 meta-meaning.  The character `.` is meta without escaping.
 

@@ -11,8 +11,8 @@ Vim is capable of working with different character encodings.
 | :set encoding            | list current character encoding              |
 | :set encoding=utf-8      | set current character encoding vim displays  |
 | :set fileencoding        | list current encoding in which to save files |
-| :set encoding=latin1     | edit using Latin-1 character encoding        |
-| :set fileencoding=latin1 | save files with Latin-1 encoding             |
+| :set encoding=latin1     | edit using LATIN-1 character encoding        |
+| :set fileencoding=latin1 | save files with LATIN-1 encoding             |
 | :set fileencodings       | list encodings to try when loading a file    |
 
 The two main ones are UTF-8 for UNIX, MAC-OS, and HTML/Web and UTF-16
@@ -63,3 +63,7 @@ the terminal or by typing into gvim.
 |  `<ctrl-shift-u>u03b2<ret>`  | enter the character β  |
 |  `<ctrl-shift-u>u3bb<ret>`   | enter the character λ  |
 
+## Unicode Cheatsheets:
+Finally, copy and paste from
+[my unicode cheatsheet](unicodeCheatSheet.txt)
+can be convinient.

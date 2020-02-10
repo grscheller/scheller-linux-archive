@@ -45,7 +45,7 @@ type `<ctrl-k> followed by a two character sequence.
 |  `<ctrl-k>a^`   | enter the character â                         |
 |  `<ctrl-k>o:`   | enter the character ö                         |
 |  `<ctrl-k>i'`   | enter the character í                         |
-|  `<ctrl-k>l\*`  | enter the character λ                         |
+|  `<ctrl-k>l*`   | enter the character λ                         |
 
 The choice of characters you can enter this way depends on the
 encoding you are using.

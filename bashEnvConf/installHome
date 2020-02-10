@@ -49,6 +49,7 @@ done
 chmod u=rwx,g=rx,o= ~/bin || echo 'Warning: Failed to set permissions on ~/bin to 750' >&2 
 
 BIN_SCRIPTS='
+    backup
     digpath
     g3ScaleBG
     g3SetBG

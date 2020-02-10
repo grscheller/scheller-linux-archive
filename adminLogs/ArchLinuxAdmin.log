@@ -1282,7 +1282,7 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   All the bit torrent sites using something called magnet links.
   I want the actual .torrent files.  There is an AUR called
   "magnet2torrent", but when I tried to build it, it had a missing
-  dependencyr, python-libtorrent-rasterbar, which does not seem 
+  dependency, python-libtorrent-rasterbar, which does not seem 
   to be in the AUR anymore.
 
   Anycase, python-libtorrent-rasterbar seems to be on the way
@@ -6814,4 +6814,54 @@ Note: On 2019-03-30 decided to look into the possibility of using the
         Utilities for inserting and removing PCMCIA cards
 
   Why doesn't pcmciautils show up with "pacman -Sg base"???
+
+2020-02-09:
+  Going to start backing up selective things I don't want to lose
+  to an external harddrive.
+
+  First instal Rsync utility:
+
+    $ sudo pacman -Syu rsync
+
+  Moved everything in ~/devel not cloned from elsewhere
+  to ~/devel/local.
+
+  The directories I want to backup are:
+
+    ~/devel/local
+    ~/.config  <- selected items
+    ~/info
+    ~/local   <- removed everything installed there (really dated)
+    ~/Music
+    ~/Pictures
+    ~/Videos   <- selected items
+
+  Made directory on my external HD for my user.
+
+    $ mkdir /run/media/geoff/BUSLINK/geoffBackup/
+
+  Added bash script ~/bin/backup to bin directory.  Basically a
+  wrapper for the "rsync -av --delete" command.
+
+  Also, rsync does not like how the Evolution e-mail
+  client stores its files.  The evolution-backup utility
+  also will safely shut evolution down before before 
+  creating a backup tarball.
+
+    $ /usr/lib/evolution/evolution-backup --help
+    Usage:
+      evolution-backup [OPTION…]
+    
+    Help Options:
+      -h, --help               Show help options
+      --help-all               Show all help options
+      --help-gtk               Show GTK+ Options
+    
+    Application Options:
+      --backup                 Back up Evolution directory
+      --restore                Restore Evolution directory
+      --check                  Check Evolution Back up
+      --restart                Restart Evolution
+      --gui                    With Graphical User Interface
+      --display=DISPLAY        X display to use
 

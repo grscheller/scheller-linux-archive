@@ -1,0 +1,115 @@
+#!/bin/bash
+#
+# Backup important files to my external HD
+#
+# Usage: backup
+#
+
+BackupLocation='/run/media/geoff/BUSLINK/geoffBackup'
+
+HomeDirs=(
+    info
+    local
+    Music
+    Pictures
+)
+
+DevelDirs=(
+    devel/local
+)
+
+Configs=(
+    .config/dconf
+    .config/onedrive
+    .config/zoomus.conf
+)
+
+Videos=(
+    Videos/Family
+    Videos/MartialArts
+)
+
+# Run script from home directory
+cd ~ || { echo "Error: Cannot cd to home dir."; exit 1; }
+
+# Make sure backup location available
+if [[ ! -d $BackupLocation ]]
+then
+    echo "Error: Backup location, $BackupLocation, not found."
+    exit 1
+fi
+
+# Make sure devel is setup
+if [[ ! -d $BackupLocation/devel ]]
+then
+    mkdir "$BackupLocation/devel" || {
+        echo "Error: failed creating $BackupLocation/devel"
+        exit 1
+    }
+fi
+
+# Make sure .config is setup
+if [[ ! -d $BackupLocation/.config ]]
+then
+    mkdir "$BackupLocation/.config" || {
+        echo "Error: failed creating $BackupLocation/.config"
+        exit 1
+    }
+fi
+
+# Make sure Videos is setup
+if [[ ! -d $BackupLocation/Videos ]]
+then
+    mkdir "$BackupLocation/Videos" || {
+        echo "Error: failed creating $BackupLocation/Videos"
+        exit 1
+    }
+fi
+
+# Backup Evolution to filesystem
+echo -e "INFO:  Attempting to backup Evolution\n"
+/usr/lib/evolution/evolution-backup --backup ~/info/EvolutionBackup/evolution_backup.tar.gz || 
+    echo "WARNING:  Evolution backup failed"
+
+echo -e "\nINFO: Now backup to external HD"
+
+# Backup $DevelDirs
+/usr/bin/rsync -a --delete "${DevelDirs[@]}" "$BackupLocation/devel" || {
+    RSYNC_FAILURE=$?
+    echo "ERROR: rsync failure with error $RSYNC_FAILURE"
+    echo "WARNING:  Failed backing up ${DevelDirs[*]}"
+    echo "WARNING:  Not backed up ${HomeDirs[*]}"
+    echo "WARNING:  Not backed up ${Configs[*]}"
+    echo "WARNING:  Not backed up ${Videos[*]}"
+    exit 1
+}
+
+# Backup $HomeDirs
+/usr/bin/rsync -a --delete "${HomeDirs[@]}" "$BackupLocation" || {
+    RSYNC_FAILURE=$?
+    echo "ERROR: rsync failure with error $RSYNC_FAILURE"
+    echo "WARNING:  Failed backing up ${HomeDirs[*]}"
+    echo "WARNING:  Not backed up ${Configs[*]}"
+    echo "WARNING:  Not backed up ${Videos[*]}"
+    exit 1
+}
+
+# Backup $Configs
+/usr/bin/rsync -a --delete "${Configs[@]}" "$BackupLocation/.config" || {
+    RSYNC_FAILURE=$?
+    echo "ERROR: rsync failure with error $RSYNC_FAILURE"
+    echo "WARNING:  Failed backing up ${Configs[*]}"
+    echo "WARNING:  Not backed up ${Videos[*]}"
+    exit 1
+}
+
+# Backup $Videos
+/usr/bin/rsync -a --delete "${Videos[@]}" "$BackupLocation/Videos" || {
+    RSYNC_FAILURE=$?
+    echo "ERROR: rsync failure with error $RSYNC_FAILURE"
+    echo "WARNING:  Failed backing up ${Videos[*]}"
+    exit 1
+}
+
+echo -e "\nINFO:  Backup to Ext HD Successful"
+exit 0

@@ -39,13 +39,13 @@ vim allows users to enter characters within whatever encodings they
 are using via 2 character "diagraph" sequences.  While in _Insert Mode_,
 type `<ctrl-k> followed by a two character sequence.
 
-|  Command      | Description                                   |
-|:-------------:|:--------------------------------------------- |
-|  :dig         | list diagraphs available for current encoding |
-|  <ctrl-k>a^   | enter the character â                         |
-|  <ctrl-k>o:   | enter the character ö                         |
-|  <ctrl-k>i'   | enter the character í                         |
-|  <ctrl-k>l\*  | enter the character λ                         |
+|  Command    `   | Description                                   |
+|:---------------:|:--------------------------------------------- |
+|   `:dig`        | list diagraphs available for current encoding |
+|  `<ctrl-k>a^`   | enter the character â                         |
+|  `<ctrl-k>o:`   | enter the character ö                         |
+|  `<ctrl-k>i'`   | enter the character í                         |
+|  `<ctrl-k>l\*`  | enter the character λ                         |
 
 The choice of characters you can enter this way depends on the
 encoding you are using.
@@ -58,8 +58,8 @@ beasts, but Libre Office handles the variable width code points just fine.
 While in _Insert Mode_, code points can be entered into vim either from
 the terminal or by typing into gvim.
 
-|  Command                   | Description            |
-|:--------------------------:|:---------------------- |
-|  <ctrl-shift-u>u03b2<ret>  | enter the character β  |
-|  <ctrl-shift-u>u3bb<ret>   | enter the character λ  |
+|  Command                     | Description            |
+|:----------------------------:|:---------------------- |
+|  `<ctrl-shift-u>u03b2<ret>`  | enter the character β  |
+|  `<ctrl-shift-u>u3bb<ret>`   | enter the character λ  |
 

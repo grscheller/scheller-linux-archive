@@ -37,8 +37,8 @@ export VISUAL=vim
 
 ## My e-mail addresses
 export ME='geoffrey@scheller.com'
-export ME_MIL='geoffrey.scheller.1@us.af.mil'
-export ME_GOOGLE='grscheller@gmail.com'
+export ME_GMAIL='grscheller@gmail.com'
+export ME_WORK='geoffrey.scheller.1@us.af.mil'
 
 ## Set locale so applications (like Python3) display unicode correctly
 export LANG=en_US.utf8

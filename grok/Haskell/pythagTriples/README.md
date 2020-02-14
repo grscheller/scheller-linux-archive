@@ -5,7 +5,8 @@ A Pythagoean Triple is a tuple `(a, b, c)` such that `a^2 + b^2 = c^2`.
 This program generates all possible pythagorean triples where
 `gcd(a, b, c) = 1` and `a, b, c > 0`.
 
-Implemented in Haskell using the stack buildtool.
+Implemented in Haskell using the stack buildtool.  See develLog.readme
+for some limited insight on how to run stack.
 
 ### Usage:
 ```

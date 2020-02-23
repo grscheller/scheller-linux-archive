@@ -6,10 +6,12 @@
 #  all my interctive bash sessions.
 #
 #  .bash_init hook to properly set up an
-#  initial terminal environment,  Most
-#  Desktop Environments launched from a
-#  display managers never source ~/.bash_profile
-# 
+#  initial terminal environment.
+#
+#  Bash shells when launched by the terminal emulator
+#  don't source ~/.bash_profile.  This is due to
+#  the environment coming from a display managear
+#  and not a login shell.
 
 # shellcheck shell=bash
 # shellcheck source=/dev/null
@@ -91,56 +93,40 @@ else
     shopt -s cmdhist     # Store multiline commands as single entry
     shopt -s lithist     # in history with embedded whitespace.
     shopt -s histappend    # Append, don't replace history file.
-    HISTSIZE=5000
+    HISTSIZE=10000
     HISTFILESIZE=10000
     HISTCONTROL="ignoredups"
 
-    ## Assign more memorable names to hosts and
-    ## other per host configurations.
+    ## Asign more memorable names to hosts.
+    ## Also, some cygwin/mysys2/mingwing configurations.
     export HOST=${HOSTNAME%%.*}
     case $HOST in
-      rvsllschellerg2)
-        HOST=voltron
-        ;;
-      rvsllfrithj1)
-        HOST=rygar
-        ;;
-      rvsllmonetd1)
-        HOST=evergarden
-        ;;
-      rvswlschellerg1)
-        HOST=koala
-        ;;
-      kprswvbylnzjt52)
-        HOST=galaga
-        ;;
-      rvsllsherwoodj1)
-        HOST=sherwood
-        ;;
-      rvswlwojcikj1)
-        HOST=littlejohn
-        ;;
-      rvswlcrabtreep1)
-        HOST=trex
-        ;;
-      *)
-        if [[ $(uname) =~ ^CYGWIN ]]; then
-            HOST=CYGWIN
-            export CYGWIN=winsymlinks:nativestrict
-        elif [[ $(uname) =~ ^MSYS ]]; then
-            HOST=MSYS2
-            export MSYS=winsymlinks:nativestrict
-        elif [[ $(uname) =~ ^MINGW64 ]]; then
-            HOST=MINGW64
-            export MSYS=winsymlinks:nativestrict
-        elif [[ $(uname) =~ ^MINGW32 ]]; then
-            HOST=MINGW32
-            export MSYS=winsymlinks:nativestrict
-        fi
-        ;;
+      rvsllschellerg2) HOST=voltron ;;
+      rvsllfrithj1)    HOST=rygar ;;
+      rvsllmonetd1)    HOST=evergarden ;;
+      rvswlschellerg1) HOST=koala ;;
+      kprswvbylnzjt52) HOST=galaga ;;
+      rvsllsherwoodj1) HOST=sherwood ;;
+      rvswlwojcikj1)   HOST=littlejohn ;;
+      rvswlcrabtreep1) HOST=trex ;;
+      *) if [[ $(uname) =~ ^CYGWIN ]]; then
+             HOST=CYGWIN
+             export CYGWIN=winsymlinks:nativestrict
+         elif [[ $(uname) =~ ^MSYS ]]; then
+             HOST=MSYS2
+             export MSYS=winsymlinks:nativestrict
+         elif [[ $(uname) =~ ^MINGW64 ]]; then
+             HOST=MINGW64
+             export MSYS=winsymlinks:nativestrict
+         elif [[ $(uname) =~ ^MINGW32 ]]; then
+             HOST=MINGW32
+             export MSYS=winsymlinks:nativestrict
+         fi
+         ;;
     esac
 
     ## Save history whenever prompt displayed
+    ## and update terminal window title.
     case $TERM in
       xterm*|rxvt*|urxvt*|kterm*|gnome*)
         PROMPT_COMMAND='history -a; echo -ne "\033]0;${USER}@${HOST}\007"'
@@ -153,7 +139,7 @@ else
         ;;
     esac
 
-    ## 3 line prompt with pwd
+    ## 3 line prompt
     PS1='\n[\u@${HOST}: \w]\n\$ '
     PS2='> '
     PS3='> '
@@ -189,10 +175,43 @@ else
       then
         for ((ii = 1; ii < $1; ii++))
         do
-          upDir=../$upDir
+            upDir=../$upDir
         done
       fi
       cd $upDir || return
+    }
+
+    # ax - archive extractor
+    # usage: ax <file>
+    ax ()
+    {
+      if [[ -f $1 ]]
+      then
+          case $1 in
+            *.tar)     tar -xvf "$1"                           ;;
+            *.tar.bz2) tar -xjvf "$1"                          ;;
+            *.tbz2)    tar -xjvf "$1"                          ;;
+            *.tar.gz)  tar -xzvf "$1"                          ;;
+            *.tgz)     tar -xzvf "$1"                          ;;
+            *.tar.Z)   tar -xZvf "$1"                          ;;
+            *.gz)      gunzip "$1"                             ;;
+            *.bz2)     bunzip2 "$1"                            ;;
+            *.zip)     unzip "$1"                              ;;
+            *.Z)       uncompress "$1"                         ;;
+            *.rar)     unrar x "$1"                            ;;
+            *.tar.xz)  xz -dc "$1" | tar -xvf -                ;;
+            *.tar.7z)  7za x -so "$1" | tar -xvf -             ;;
+            *.7z)      7z x "$1"                               ;;
+            *)         echo "Error ax: '$1' unknown file type" ;;
+          esac
+      else
+          if [[ -n $1 ]]
+          then
+              echo "Error ax: '$1' is not a file"
+          else
+              echo "Error ax: No file argument given"
+          fi
+      fi
     }
 
     # Convert from dec and hex
@@ -216,6 +235,7 @@ else
     #    directly with card in a deprecated manner.
     alias nv-off='sudo /usr/bin/nvidia-smi -pm 0'
     alias nv-on='sudo nvidia-smi -pm 1'
+
 
     ## GUI-land aliases and functions
 
@@ -242,7 +262,7 @@ else
        elif [[ -x /usr/bin/xterm ]]; then
            ( /usr/bin/xterm >/dev/null 2>&1 & )
        else
-           printf "tm: warning: suitable terminator not found\n" >&2
+           printf "tm: warning: terminat emulator not found\n" >&2
        fi
     }
 
@@ -283,6 +303,7 @@ else
       ( /usr/bin/libreoffice --writer "$@" & )
     }
 
+
     ## Setup or tear down Network Manager proxies when necessary
     #  - mostly for CentOS 7 work environment
     #  - assumes you have manualy set up the proxies in the Settings applet
@@ -293,22 +314,22 @@ else
 
     proxyUp ()
     {
-        [[ -f ~/.proxy_env ]] && source ~/.proxy_env
-        if [[ $DISPLAY =~ ^:[0-9]$ ]] && [[ -x /usr/bin/gsettings ]]
-        then
-            gsettings set org.gnome.system.proxy mode manual
-        fi
-        ProxySettingsNotConfigured=0
+      [[ -f ~/.proxy_env ]] && source ~/.proxy_env
+      if [[ $DISPLAY =~ ^:[0-9]$ ]] && [[ -x /usr/bin/gsettings ]]
+      then
+          gsettings set org.gnome.system.proxy mode manual
+      fi
+      ProxySettingsNotConfigured=0
     }
 
     downProxy ()
     {
-        unset http_proxy HTTP_PROXY https_proxy HTTPS_PROXY no_proxy NO_PROXY 
-        if [[ $DISPLAY =~ ^:[0-9]$ ]] && [[ -x /usr/bin/gsettings ]]
-        then
-            gsettings set org.gnome.system.proxy mode none
-        fi
-        ProxySettingsNotConfigured=0
+      unset http_proxy HTTP_PROXY https_proxy HTTPS_PROXY no_proxy NO_PROXY 
+      if [[ $DISPLAY =~ ^:[0-9]$ ]] && [[ -x /usr/bin/gsettings ]]
+      then
+          gsettings set org.gnome.system.proxy mode none
+      fi
+      ProxySettingsNotConfigured=0
     }
 
    # Turn on Network Manager proxy if ~/.proxy_env exists
@@ -319,32 +340,32 @@ else
    fi
 
     # Allow switching between GNOME 3 and GNOME Classic
-    # without restarting your entire GNOME Session.  Work DM
-    # login screen does not give you the "ear icon" where
-    # you can choose GNOME session type.
+    # without restarting your entire GNOME Session.  At work,
+    # DM login screen does not give you the the option to
+    # choose the GNOME session type.
     gnew ()
     {
-        if [[ $DISPLAY =~ ^:[0-9]$ ]] && [[ -x /usr/bin/gnome-shell ]]
-        then
-            ( /usr/bin/gnome-shell --mode=user -r 2>/dev/null & )
-        fi
+      if [[ $DISPLAY =~ ^:[0-9]$ ]] && [[ -x /usr/bin/gnome-shell ]]
+      then
+          ( /usr/bin/gnome-shell --mode=user -r 2>/dev/null & )
+      fi
     }
 
     gnold ()
     {
-        if [[ $DISPLAY =~ ^:[0-9]$ ]] && [[ -x /usr/bin/gnome-shell ]]
-        then
-            ( /usr/bin/gnome-shell --mode=classic -r 2>/dev/null & )
-        fi
+      if [[ $DISPLAY =~ ^:[0-9]$ ]] && [[ -x /usr/bin/gnome-shell ]]
+      then
+          ( /usr/bin/gnome-shell --mode=classic -r 2>/dev/null & )
+      fi
     }
 
     ## ssh related functions and aliases
 
-    # pkinit alias for HPC
+    # For HPC computers at work.
     pkhpc ()
     {
-        module load hpc
-        pkinit schelleg@HPCMP.HPC.MIL
+      module load hpc
+      pkinit schelleg@HPCMP.HPC.MIL
     }
 
     sshToSystem ()
@@ -367,7 +388,6 @@ else
       $SSH -p "${port}" "${user}@${system}"
     }
 
-    ## scp related functions and aliases
     toSystem ()
     {
       local system=$1
@@ -389,7 +409,8 @@ else
       $SCP -P "${port}" -r "$@" "${user}@${system}:catch"
     }
 
-    fromSystem () {
+    fromSystem ()
+    {
       local system=$1
       local port=$2
       local user=$3
@@ -412,7 +433,6 @@ else
           $SCP -P "${port}" -r "${user}@${system}:${each}" .
       done
     }
-
 
     #  Single quotes intentional
     alias voltron='sshToSystem ${VOLTRON}'

@@ -1,5 +1,4 @@
-# Work proxies for work systems that don't
-# configure themselves properly.
+# Proxies for work systems that don't configure themselves properly.
 #
 # - Manually move to ~ on these systems
 # - .bashrc will source this file if it exits

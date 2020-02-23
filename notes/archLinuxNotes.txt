@@ -39,7 +39,9 @@ Pacman:
                                     # required by other packages,
                                     #    -u, --uneeded
     sudo -R <pkg>                   # Remove a single package.
-    sudo pacman -Rs $(pacman -Qdtq) # Uninstall unneeded packages
+    sudo pacman -Rs $(pacman -Qdtq)  # Uninstall unneeded packages.
+    sudo pacman -Rns $(pacman -Qdtq) # Same as above, don't create
+                                     # any .pacsave conf files.
 
   Search on packages, groups and descriptions:
     pacman -Qs <regex>   # search against local package database
@@ -55,11 +57,7 @@ Pacman:
 
   Get package group information:
     pacman -Qg
-    pacman -Sq
-
-  Get package group information:
-    pacman -Qg
-    pacman -Sq
+    pacman -Sg
     pacman -Qg <grp>  # List packages in <grp>, use local database
     pacman -Sg <grp>  # List packages in <grp>, use synced database
     pacman -Qg | cut -f1 -d\  | uniq | sort  # List names of groups in local database
@@ -70,10 +68,10 @@ Pacman:
     pacman -Qoq </full/path/to/file>
   
   Query (local) package DB:
-    pacman -Q      # List all installed packages
-    pacman -Qe     # List all explicitly installed packages
-    pacman -Qet    # List all explicitly installed packages not 
-                   #   reqired by other packages
+    pacman -Q      # List all installed packages.
+    pacman -Qe     # List all explicitly installed packages.
+    pacman -Qet    # List all explicitly installed packages not
+                   #   reqired by other packages.
     pacman -Qdt    # List unneeded (orphan) packages
                    #    -d, --deps (restrict to packages
                    #       installed as dependencies of
@@ -83,7 +81,8 @@ Pacman:
                    #       optionally required by other
                    #       packages)
                    #    -q, --quiet (omit version numbers, useful in scripts)
-    pacman -Qmq    # List all foreign (usually AUR) packages
+    pacman -Qmq    # List all foreign (usually AUR) packages.
+    pacman -Qnq    # List all packages from the standard repos.
 
     pactree -c <pkg>    # Packages <pkg> depends on, -c for colorization
     pactree -u <pkg>    # List packages <pkg> depends on, only once

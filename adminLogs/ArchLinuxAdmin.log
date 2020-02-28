@@ -6953,3 +6953,23 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
     $ sudo pacman -Rns gvim
     $ sudo pacman -Syu vim
+
+2020-02-28:
+  Installed Skype for Linux from AUX.
+
+    $ cd ~/build/AUR/
+    $ mkdir skype_build
+    $ cd skype_build/
+    $ git clone https://aur.archlinux.org/skypeforlinux-stable-bin.git
+    $ cd skypeforlinux-stable-bin/
+    $ makepkg -sri
+    $ pacman -Qs skype
+    local/skypeforlinux-stable-bin 8.56.0.103-1
+        Skype for Linux - Stable/Release Version
+    $ digpath '*skype*'
+    /usr/bin/skypeforlinux
+
+  Once I lauched and configured it, I pinned it to Gnome
+  Activities menu next to Zoom.
+
+  Uses my MS geoffrey@scheller.com account.

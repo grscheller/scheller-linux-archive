@@ -188,28 +188,29 @@ else
       if [[ -f $1 ]]
       then
           case $1 in
-            *.tar)     tar -xvf "$1"                           ;;
-            *.tar.bz2) tar -xjvf "$1"                          ;;
-            *.tbz2)    tar -xjvf "$1"                          ;;
-            *.tar.gz)  tar -xzvf "$1"                          ;;
-            *.tgz)     tar -xzvf "$1"                          ;;
-            *.tar.Z)   tar -xZvf "$1"                          ;;
-            *.gz)      gunzip "$1"                             ;;
-            *.bz2)     bunzip2 "$1"                            ;;
-            *.zip)     unzip "$1"                              ;;
-            *.Z)       uncompress "$1"                         ;;
-            *.rar)     unrar x "$1"                            ;;
-            *.tar.xz)  xz -dc "$1" | tar -xvf -                ;;
-            *.tar.7z)  7za x -so "$1" | tar -xvf -             ;;
-            *.7z)      7z x "$1"                               ;;
-            *)         echo "Error ax: '$1' unknown file type" ;;
+            *.tar)     tar -xvf "$1"                        ;;
+            *.tar.bz2) tar -xjvf "$1"                       ;;
+            *.tbz2)    tar -xjvf "$1"                       ;;
+            *.tar.gz)  tar -xzvf "$1"                       ;;
+            *.tgz)     tar -xzvf "$1"                       ;;
+            *.tar.Z)   tar -xZvf "$1"                       ;;
+            *.gz)      gunzip "$1"                          ;;
+            *.bz2)     bunzip2 "$1"                         ;;
+            *.zip)     unzip "$1"                           ;;
+            *.Z)       uncompress "$1"                      ;;
+            *.rar)     unrar x "$1"                         ;;
+            *.tar.xz)  xz -dc "$1" | tar -xvf -             ;;
+            *.tar.7z)  7za x -so "$1" | tar -xvf -          ;;
+            *.7z)      7z x "$1"                            ;;
+            *.cpio)    cpio -idv < "$1"                     ;;
+            *) echo "ax: error: '$1' unknown file type" >&2 ;;
           esac
       else
           if [[ -n $1 ]]
           then
-              echo "Error ax: '$1' is not a file"
+              echo "ax: error: '$1' is not a file" >&2
           else
-              echo "Error ax: No file argument given"
+              echo "ax: error: No file argument given" >&2
           fi
       fi
     }

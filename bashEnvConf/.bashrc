@@ -89,7 +89,6 @@ else
     shopt -s checkwinsize
     shopt -s checkhash # Checks if hashed cmd exists, otherwise search path.
     # Command line history editing and terminal title
-    #set -o vi       # vi editing-mode, set here if not in ~/.inputrc
     shopt -s cmdhist     # Store multiline commands as single entry
     shopt -s lithist     # in history with embedded whitespace.
     shopt -s histappend    # Append, don't replace history file.

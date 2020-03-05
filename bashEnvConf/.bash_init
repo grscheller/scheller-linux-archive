@@ -34,6 +34,7 @@ fi
 
 export EDITOR=vim
 export VISUAL=vim
+#set -o vi  # vi editing-mode, set here if not configured in ~/.inputrc
 
 ## My e-mail addresses
 export ME='geoffrey@scheller.com'

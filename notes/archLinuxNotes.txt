@@ -116,6 +116,13 @@ Hostnamectl:
     $ uname -a
     Linux gauss17 5.4.15-arch1-1 #1 SMP PREEMPT Sun, 26 Jan 2020 09:48:50 +0000 x86_64 GNU/Linux
 
+Building via AUR:
+  1. Acquire tarball or clone via GIT.
+  2. Untar or clone in directory you want to build in,
+     I use ~/build/AUR/ for these.
+  3. Verify that the PKGBUILD and accompanying files are
+     not malicious or untrustworthy.
+  4. Run command: makepkg -sri
 
 Time management:
   Since I use the systemd-timesyncd client,
@@ -339,7 +346,7 @@ Disk partitian grokking:
     Number  Start   End     Size    Type     File system  Flags
      1      1049kB  80.0GB  80.0GB  primary  ntfsfuse file system
 
-  Notr that df -T and mount command report fuseblk instead of the
+  Note that df -T and mount command report fuseblk instead of the
   underlying NTFS filesystem.  FUSE (Filesystem in USEr space)
   filesystem can in principle access filesystems unknown to
   the Linux Kernel.  (FUSE has long since been folded into the

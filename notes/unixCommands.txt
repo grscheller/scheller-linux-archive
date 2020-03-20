@@ -33,7 +33,7 @@
 
 Secure Shell:
 
-  Loging into a remote Unix system:
+  Loging into a remote UNIX system:
     ssh username@host_name
   If login names are the same:
     ssh hostname
@@ -60,7 +60,7 @@ Secure Shell:
 
 Version Info:
 
-  To determine what type of Unix you are using, use the uname command:
+  To determine what type of UNIX you are using, use the uname command:
      uname -a
 
   Specifically what kernel
@@ -147,12 +147,12 @@ To distribute something in gzip tar format:
 View boot messages after system is booted:
   dmesg
 
-The Unix grep command has -B and -A options that
+The UNIX grep command has -B and -A options that
 will print a number of lines before and after
 the matching line.  These options eliminate about
-90% of the use cases for the Unix sed command.
+90% of the use cases for the UNIX sed command.
 
-Linux CUPS printer commands:
+UNIX CUPS printer commands:
   To list default printer,
      lpstat -d
   To show your current print jobs,
@@ -165,7 +165,7 @@ Linux CUPS printer commands:
   Send std out to printer, print two copies,
      echo 'Test of printer' | lp -n2
 
-Linux mailx  command:
+UNIX mailx  command:
   To Read mail,
      mailx
   To send mail with attachmented file and subject line to

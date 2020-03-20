@@ -6973,3 +6973,24 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   Activities menu next to Zoom.
 
   Uses my MS geoffrey@scheller.com account.
+
+2020-02-16:
+  Installed pacutils with Pacman.
+
+  Installs the following commands:
+
+    paccapability
+    paccheck
+    pacconf
+    pacfile
+    pacinfo
+    pacini
+    pacinstall
+    paclog
+    pacremove
+    pacrepairdb
+    pacrepairfile
+    pacreport
+    pacsift
+    pacsync
+    pactrans

@@ -52,7 +52,7 @@ Purpose: Steps taken to configure an AWS EC2 instance as a
 
     $ sudo yum update
 
-  This updated 10 package, including a kernel update.  No systemctl
+  This updated 10 packages, including a kernel update.  No systemctl
   command to reboot system.
 
     $ sudo shutdown -r now

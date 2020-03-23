@@ -1,0 +1,6 @@
+[BASIC]
+
+# Canonical mathy names:
+# m and n are arbitrary integers
+# a,b are the legs of right triangles
+good-names=m,n,a,b

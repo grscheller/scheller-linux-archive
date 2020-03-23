@@ -22,17 +22,18 @@ import pure_math as pm
 def main():
     """Main entry point for pythag3.py"""
 
-    # Argument processing with some idiot checking:
+    # Argument processing with some idiot checking
     args = sys.argv[1:]
 
     if len(args) == 1:
-        pythag3_iter = pm.pythag3(int(args[0]))
+        pythag3_iterator = pm.pythag3(int(args[0]))
     elif len(args) == 2:
-        pythag3_iter = pm.pythag3(int(args[0]), int(args[1]))
+        pythag3_iterator = pm.pythag3(int(args[0]), int(args[1]))
     else:
-        pythag3_iter = pm.pythag3()
+        pythag3_iterator = pm.pythag3()
 
-    for triple in pythag3_iter:
+    # Print out Pythagean Triples
+    for triple in pythag3_iterator:
         print(triple)
 
 if __name__ == "__main__":

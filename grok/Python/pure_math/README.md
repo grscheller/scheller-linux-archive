@@ -20,6 +20,6 @@ The .gitignore file is set up to ignore compiled Python byte code:
 ```
 
 The lib/.pylintrc file is to stop pylint from complain about variable
-names like `m`,`n`,`a`,`b`.  Normally these would horible names, but
+names like `m`,`n`,`a`,`b`.  Normally these would horrible names, but
 in the contect of mathy integer functions and pythagorean triples,
 they do make sense. 

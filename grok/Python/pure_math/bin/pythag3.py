@@ -1,20 +1,19 @@
 #!/usr/bin/env python
-"""This script finds all primative pythagorian triples up to a given
-   level.  A pythagorian triple are three integers (a,b,c) such
-   that a^2 + b^2 = c^2 where x,y,z > 0 and gcd(a,b,c) = 1
+"""Find all primative pythagorian triples up to a given level.
 
-   Usage: pythag3.py n [m]
+A pythagorian triple are three integers (a,b,c) such
+that a^2 + b^2 = c^2 where x,y,z > 0 and gcd(a,b,c) = 1
 
-   If called with one argument this program
-         generates all triples with  a <= n.
-   If called with two arguments it then generates
-         all triples where a <= n and a,b,c <= m
+Usage: pythag3.py n [m]
 
-   For pythag3.py to find pureMath library,
+If called with one argument generate all triples with a <= n.
+If called with two arguments generate all triples with
+a <= n and a,b,c <= m
 
-     export PYTHONPATH=../lib"""
+For pythag3.py to find pureMath library: export PYTHONPATH=../lib
+"""
 
-# shellcheck source=../lib
+__author__ = "Geoffrey Scheller"
 
 import sys
 import pure_math as pm

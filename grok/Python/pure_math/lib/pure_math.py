@@ -134,7 +134,7 @@ def ackermann(m=0, n=0):
     acker = [m, n]
 
     while len(acker) > 1:
-        [m, n] = acker[-2:]
+        m, n = acker[-2:]
         if m < 1:
             acker[-1] = acker.pop() + 1
         elif n < 1:

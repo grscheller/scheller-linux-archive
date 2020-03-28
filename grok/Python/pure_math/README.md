@@ -5,18 +5,20 @@
 ### Source Code:
 
 * [pure\_math.py](lib/pure_math.py): Library for integer mathematics
-* [pythag3.py](bin/pythag3.py): Program to compute Pythagorean triples
+* [pythag3.py](bin/pythag3.py): Computes Pythagorean triples
+* [ackermann.py](bin/ackermann.py): Computes Ackermann function
 
 ### Notes:
 
-So that bin Python executables find the pure\_math library, when testing from
+For executables to find the pure\_math library, when testing from
 within the bin directory,
-
-  export PYTHONPATH=../lib
+```
+   $ export PYTHONPATH=../lib
+```
 
 The .gitignore file is set up to ignore compiled Python byte code:
 ```
-    __pycache__        for Python 3
+   __pycache__        for Python 3
 ```
 
 The lib/.pylintrc file is to stop pylint from complain about variable

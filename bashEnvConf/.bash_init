@@ -47,7 +47,8 @@ export LANG=en_US.utf8
 ## To supercede what comes with the Linux distribution.
 PATH=~/local/bin:$PATH
 
-## Python pip configuration
+## Python configuration
+export PYTHONPATH=.:../lib:lib
 export PIP_REQUIRE_VIRTUALENV=true
 
 ## Kerberos utilities for HPCMP access.

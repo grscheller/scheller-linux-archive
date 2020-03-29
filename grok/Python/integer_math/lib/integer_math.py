@@ -10,6 +10,7 @@ import sys
 __all__ = ['gcd', 'lcm', 'prime_list', 'prime_range',
            'pythag3',
            'ackermann',
+           'drop', 'take',
            'fibonacci', 'fibonacci_list', 'fibonacci_tuple',
            'fibonacci_mult', 'fibonacci_mult_list', 'fibonacci_mult_tuple']
 
@@ -65,10 +66,10 @@ def prime_list(n=2, m=100):
             if pot_prime % prime == 0:
                 sieve.remove(pot_prime)
 
-    if n <= 3 < m:           # We missed [2, 3] but saved
-        sieve.insert(0, 3)   # about 60% of initial storage.
-    if n <= 2 < m:
-        sieve.insert(0, 2)
+    if n <= 3 < m:           # We missed [2, 3] but
+        sieve.insert(0, 3)   # saved about 60% for
+    if n <= 2 < m:           # the initial storage
+        sieve.insert(0, 2)   # space.
 
     # return sieve after trimming unwanted values
     return [x for x in sieve if x >= n]
@@ -80,6 +81,31 @@ def prime_range(n=2, m=100):
     """
 
     return iter(prime_list(n, m))
+
+
+## Functional utility functions
+
+def drop(n, iterator):
+    """Drop the first n elements on an iterator"""
+
+    try:
+        for _ in range(n):
+            next(iterator)
+    except StopIteration:
+        return iterator
+
+    return iterator
+
+
+def take(n, iterator):
+    """Iterator returning next n elements from iterator"""
+
+    for _ in range(n):
+        try:
+            next_val = next(iterator)
+        except StopIteration:
+            return
+        yield next_val
 
 
 ## Pythagorian Triples related mathematical functions.

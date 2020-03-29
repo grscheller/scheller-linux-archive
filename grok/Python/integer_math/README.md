@@ -16,6 +16,10 @@ within the bin directory,
    $ export PYTHONPATH=../lib
 ```
 
-The .pylintrc files are to stop pylint from complain about variable
+The file [.pylintrc](.pylintrc)
+is to stop pylint from complain about variable
 names like `m`,`n`,`a`,`b`.  Normally these would be horrible names,
-but in the contect of mathy integer functions, they do make sense. 
+but in the context of mathy integer functions, they do make sense. 
+You need to edit files with vim (assuming you are using with the
+Syntastic plug-in which uses pylint) from the `integer_math` root
+directory.

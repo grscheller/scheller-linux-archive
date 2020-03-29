@@ -32,7 +32,7 @@
     - [Java with Make](grok/Java/javaWithMake/)
     - [Testing JVM for Word Tearing](grok/Java/wordTearing/)
   - __Python__
-    - [pure\_math](grok/Python/pure_math/)
+    - [integer\_math Library and examples](grok/Python/integer_math/)
     - [Calling C Code from Python](grok/Python/C_call/)
     - [TensorFlow based Deep learning](grok/Python/tensorflow/)
     - [PyTorch based Deep learning](grok/Python/pyTorch/)

@@ -1,4 +1,4 @@
-"""Library of functions of a pure mathematical nature.
+"""Library of functions of an integer pure math nature.
 
 Note: Type checking the responsibility of the calling function.
 """
@@ -84,7 +84,7 @@ def prime_range(n=2, m=100):
 
 ## Pythagorian Triples related mathematical functions.
 
-def pythag3(a_max=3, all_max=0):
+def pythag3(a_max=3, all_max=None):
     """This iterator finds all primative pythagorian triples
     up to a given level.  A pythagorian triple are three
     integers (a,b,c) such that a^2 + b^2 = c^2 where
@@ -97,16 +97,21 @@ def pythag3(a_max=3, all_max=0):
     a <= a_max and a,b,c <= all_max
     """
 
-    if all_max == 0:
-        # No more triples beyond this.
+    if a_max < 3:
+        a_max = 2
+
+    if all_max is None:
+        # No more triples beyond this value of b.
         b_max = lambda a: (a**2 - 1)//2
     else:
-        # cap it
+        if all_max < 5:
+            all_max = 4
+        # Cap triples to those with sides no bigger than all_max
         if all_max < a_max + 2:
             a_max = all_max - 2
         b_max = lambda a: min((a**2 - 1)//2, int((all_max**2 - a**2)**0.5))
-    c_max = int((a_max**2 + b_max(a_max)**2)**(0.5))
 
+    c_max = int((a_max**2 + b_max(a_max)**2)**(0.5))
     squares = {}
     for hypotenuse in range(5, c_max + 1, 2):    # hypotenuse always odd
         squares[hypotenuse**2] = hypotenuse

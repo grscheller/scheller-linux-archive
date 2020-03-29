@@ -16,7 +16,7 @@ For pythag3.py to find pureMath library: export PYTHONPATH=../lib
 __author__ = "Geoffrey Scheller"
 
 import sys
-import pure_math as pm
+from integer_math import pythag3
 
 def main():
     """Main entry point for pythag3.py"""
@@ -25,14 +25,14 @@ def main():
     args = sys.argv[1:]
 
     if len(args) == 1:
-        pythag3_iterator = pm.pythag3(int(args[0]))
+        pythag3_iter = pythag3(int(args[0]))
     elif len(args) == 2:
-        pythag3_iterator = pm.pythag3(int(args[0]), int(args[1]))
+        pythag3_iter = pythag3(int(args[0]), int(args[1]))
     else:
-        pythag3_iterator = pm.pythag3()
+        pythag3_iter = pythag3()
 
     # Print out Pythagean Triples
-    for triple in pythag3_iterator:
+    for triple in pythag3_iter:
         print(triple)
 
 if __name__ == "__main__":

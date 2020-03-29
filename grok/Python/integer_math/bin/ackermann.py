@@ -13,7 +13,7 @@ Usage: ackermann.py m n
 __author__ = "Geoffrey Scheller"
 
 import sys
-import pure_math as pm
+from integer_math import ackermann
 
 def main():
     """Main entry point for ackerman.py"""
@@ -36,7 +36,7 @@ def main():
         sys.exit(1)
 
     # Compute value
-    print(pm.ackermann(m, n))
+    print(ackermann(m, n))
 
 if __name__ == "__main__":
     main()

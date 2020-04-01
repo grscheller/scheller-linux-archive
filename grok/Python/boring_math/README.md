@@ -1,6 +1,7 @@
-## Geoffrey's Boring Math Library
+## Geoffrey's Boring Math Libraries
 * Simple examples of Python libraries
 * Example executables to exercise libraries.
+* Name for this project was suggested by my 13 year old daughter Mary
 
 ### Source Code:
 
@@ -11,10 +12,10 @@
 
 ### Notes:
 
-When developing this code, I usually use the root interger\_math
+When developing this code, I usually use the root `boring\_math`
 directory as my working directory.  I set
 ```
-   $ export PYTHONPATH=../lib
+   $ export PYTHONPATH=lib:../lib
    $ export PATH=$PATH:bin
 ```
 so `python` and `pylint` can find these libraries and my shell can

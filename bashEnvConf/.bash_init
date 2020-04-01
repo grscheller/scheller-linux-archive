@@ -48,7 +48,7 @@ export LANG=en_US.utf8
 PATH=~/local/bin:$PATH
 
 ## Python configuration
-export PYTHONPATH=.:../lib:lib
+export PYTHONPATH=lib:../lib
 export PIP_REQUIRE_VIRTUALENV=true
 
 ## Kerberos utilities for HPCMP access.

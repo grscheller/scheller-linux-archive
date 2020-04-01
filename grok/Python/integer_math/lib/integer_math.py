@@ -17,7 +17,7 @@ __all__ = ['gcd', 'lcm', 'primes',
 ## Number Theory mathematical Functions.
 
 def gcd(n, m):
-    """Uses Euclidian algorithm to compute the gcd of two integers.
+    """Uses Euclidean algorithm to compute the gcd of two integers.
 
     Takes two integers, returns gcd >= 0.
 
@@ -108,11 +108,11 @@ def take(n, iterator):
         yield next_val
 
 
-## Pythagorian Triples related mathematical functions.
+## Pythagorean Triples related mathematical functions.
 
 def pythag3(a_max=3, all_max=None):
-    """This iterator finds all primative pythagorian triples
-    up to a given level.  A pythagorian triple are three
+    """This iterator finds all primative pythagorean triples
+    up to a given level.  A Pythagorean triple are three
     integers (a,b,c) such that a^2 + b^2 = c^2 where
     x,y,z > 0 and gcd(a,b,c) = 1
 
@@ -123,11 +123,15 @@ def pythag3(a_max=3, all_max=None):
     a <= a_max and a,b,c <= all_max
     """
 
+    # Limit values to those where geometry based
+    # optimization assumptions hold.
     if a_max < 3:
         a_max = 2
 
+    # Calculate limits for given values of a_max & all_max
     if all_max is None:
-        # Tor a given value of a, no more triples beyond this value of b
+        # Tor a given value of a, no more
+        # triples beyond this value of b
         b_max = lambda a: (a**2 - 1)//2
     else:
         if all_max < 5:
@@ -136,12 +140,13 @@ def pythag3(a_max=3, all_max=None):
         if all_max < a_max + 2:
             a_max = all_max - 2
         b_max = lambda a: min((a**2 - 1)//2, int((all_max**2 - a**2)**0.5))
-
     c_max = int((a_max**2 + b_max(a_max)**2)**(0.5))
-    squares = {}
-    for hypotenuse in range(5, c_max + 1, 2):    # hypotenuse always odd
-        squares[hypotenuse**2] = hypotenuse
 
+    # Hypothrnuse perfect square lookup dictionary
+    # Note: hypotenuse always odd for Pythagorean triples
+    squares = {h*h:h for h in range(5, c_max + 1, 2)}
+
+    # Calculate Pythagorean triples
     for a in range(3, a_max + 1):
         for b in range(a + 1, b_max(a) + 1):
             csq = a**2 + b**2

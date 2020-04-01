@@ -1,25 +1,25 @@
-## A Python Integer Math Library
-* A simple example of a Python library
-* with example executables to go with it.
+## Geoffrey's Boring Math Library
+* Simple examples of Python libraries
+* Example executables to exercise libraries.
 
 ### Source Code:
 
-* [integer\_math.py](lib/pure_math.py): Library for integer mathematics
+* [integer\_math.py](lib/integer_math.py): Integer mathematics library
+* [func\_tools.py](lib/func_tools.py): Functional programming library
 * [pythag3.py](bin/pythag3.py): Computes Pythagorean triples
 * [ackermann.py](bin/ackermann.py): Computes Ackermann function
 
 ### Notes:
 
-For executables to find the pure\_math library, when testing from
-within the bin directory,
+When developing this code, I usually use the root interger\_math
+directory as my working directory.  I set
 ```
    $ export PYTHONPATH=../lib
+   $ export PATH=$PATH:bin
 ```
-
-The file [.pylintrc](.pylintrc)
-is to stop pylint from complain about variable
-names like `m`,`n`,`a`,`b`.  Normally these would be horrible names,
-but in the context of mathy integer functions, they do make sense. 
-You need to edit files with vim (assuming you are using with the
-Syntastic plug-in which uses pylint) from the `integer_math` root
-directory.
+so `python` and `pylint` can find these libraries and my shell can
+find the executables.  I also have a [.pylintrc](.pylintrc) file
+here so that variable names like `m`,`n`,`a`,`b` don't make `pylint`
+complain too much.  Normally these would be horrible names, but
+in the context of mathy integer functions and functional programming,
+they do make sense.

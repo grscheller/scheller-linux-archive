@@ -6,11 +6,11 @@ Note: Type checking the responsibility of the calling function.
 __author__ = "Geoffrey Scheller"
 
 import sys
+from func_tools import take
 
 __all__ = ['gcd', 'lcm', 'primes',
            'pythag3',
            'ackermann',
-           'drop', 'take', 'drop_while', 'take_while',
            'fibonacci', 'fibonacci_list', 'fibonacci_tuple',
            'fibonacci_mult', 'fibonacci_mult_list', 'fibonacci_mult_tuple']
 
@@ -81,50 +81,6 @@ def primes(n=2, m=100):
     """
 
     return iter(_prime_list(n, m))
-
-
-## Functional utility functions
-
-def drop(n, iterator):
-    """Drop the first n elements on an iterator"""
-
-    try:
-        for _ in range(n):
-            next(iterator)
-    except StopIteration:
-        return iterator
-
-    return iterator
-
-
-def take(n, iterator):
-    """Iterator returning next n elements from iterator"""
-
-    for _ in range(n):
-        try:
-            next_val = next(iterator)
-        except StopIteration:
-            return
-        yield next_val
-
-
-def drop_while(pred, iterator):
-    """Drop iterator elements while predicate true"""
-
-    for next_val in iterator:
-        if pred(next_val):
-            continue
-        yield next_val
-
-
-def take_while(pred, iterator):
-    """Take iterator elements while predicate true"""
-
-    for next_val in iterator:
-        if pred(next_val):
-            yield next_val
-        else:
-            break
 
 
 ## Pythagorean Triples related mathematical functions.

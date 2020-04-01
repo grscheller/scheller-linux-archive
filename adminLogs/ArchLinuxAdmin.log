@@ -6994,3 +6994,7 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     pacsift
     pacsync
     pactrans
+
+2020-03-29:
+  Installed pkgstats package via packman,  Sends a report to the
+  Arch maintainers weekly on what packages are installed.

@@ -10,7 +10,7 @@ import sys
 __all__ = ['gcd', 'lcm', 'primes',
            'pythag3',
            'ackermann',
-           'drop', 'take',
+           'drop', 'take', 'drop_while', 'take_while',
            'fibonacci', 'fibonacci_list', 'fibonacci_tuple',
            'fibonacci_mult', 'fibonacci_mult_list', 'fibonacci_mult_tuple']
 
@@ -106,6 +106,25 @@ def take(n, iterator):
         except StopIteration:
             return
         yield next_val
+
+
+def drop_while(pred, iterator):
+    """Drop iterator elements while predicate true"""
+
+    for next_val in iterator:
+        if pred(next_val):
+            continue
+        yield next_val
+
+
+def take_while(pred, iterator):
+    """Take iterator elements while predicate true"""
+
+    for next_val in iterator:
+        if pred(next_val):
+            yield next_val
+        else:
+            break
 
 
 ## Pythagorean Triples related mathematical functions.

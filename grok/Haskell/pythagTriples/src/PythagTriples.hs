@@ -2,9 +2,13 @@ module PythagTriples
   ( printTriples
   , pythagTriplesOrdered
   , pythagTriplesFast
+  , showTriple
   , sortTriple
   , Triple
   ) where
+
+import Data.List (intercalate)
+import Data.List.Split (splitOn)
 
 type Triple = (Int, Int, Int)
 
@@ -15,7 +19,7 @@ sortTriple triple =
     _                 -> triple
 
 printTriples :: [Triple] -> IO()
-printTriples triples = mapM_ putStrLn (map show triples)
+printTriples triples = mapM_ putStrLn (map showTriple triples)
 
 pythagTriplesFast :: [Triple]
 pythagTriplesFast = [ (a, 2*m*n, c) |
@@ -36,3 +40,8 @@ pythagTriplesOrdered = [ (a, b, floor.sqrt $ fromIntegral csq) |
   where
     isPerfectSquare :: Int -> Bool
     isPerfectSquare n = n == (floor.sqrt $ fromIntegral n)^2
+
+-- | Print out Pythagorean Triples with space
+-- | after comma, like how Python prints tuples.
+showTriple :: Triple -> String
+showTriple = (intercalate ", ").(splitOn ",").show

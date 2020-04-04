@@ -273,3 +273,66 @@ gcd(a,b,c) = 1 and a, b, c > 0.
     (8,15,17)
     (9,40,41)
 
+2020-04-03:
+  Replace use of show with showTriples in
+
+    printTriples :: [Triple] -> IO()
+    printTriples triples = mapM_ putStrLn (map show triples)
+
+  where
+
+    showTriple = (intercalate ", ").(splitOn ",").show
+
+  from
+
+    Data.List.intercalate
+    Data.List.Split.splitOn
+
+  I did that so output matches the output of my Python
+  version.  This allows me to benchmark and compare the
+  output between them.
+
+2020-04-03:
+  When building with stack, could not find Data.List.Split module.
+  Maybe something new?  Try upgrading from ghc-8.2.1 to ghc-8.8.3.
+
+  In stack.yaml, set
+
+    resolver: ghc-8.8.3
+
+  Still ntach t finding it.  Let's see I can build it with ghc native
+  to Arch Linux:
+
+    $ cd ~/devel/scheller-linux-archive/grok/Haskell/pythagTriples/src
+    $ ghc -Wall -dynamic PythagTriples.hs
+    $ cp ../app/Main.hs pythagTriple.hs
+    $ ghc -Wall -dynamic pythagTriple.hs
+    $ ./pythagTriple -o 5
+    (3, 4, 5)
+    (5, 12, 13)
+    (7, 24, 25)
+    (8, 15, 17)
+    (9, 40, 41)
+
+2020-04-04:
+  Took a while to get it to build via stack, so I'll skip over the
+  dead ends.
+
+  1. Added split to the library build-depends in the
+     pythagTriples.cabal file.
+  2. Build failed, but stack suggested I add to the extra-deps
+     section of the stack.yaml file the same version of split
+     that pacman installed on Arch.  This suggestion also included
+     information on the sha256 checksum of the split package.
+  3. Now stack build suceeded.  A file called stack.yaml.lock was
+     created.
+  4. The "stack exec -- pythagTriples -o 100" also worked.
+  5. Repeated above but without the sha256 info.  Lock file was
+     still created and contained info on split version I indicated in
+     stack.yaml as well as the sha256 checksum that was used in
+     the build.
+  6. Best proctices is to include stack.yaml.lock in the GIT repo.
+     This info helps others obtain a more consistant build.
+
+  Note: Adding info to just the stack.yaml file did not trigger
+        stack to be helpful like it did above, 

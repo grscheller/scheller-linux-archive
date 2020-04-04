@@ -21,6 +21,7 @@ sortTriple triple =
 printTriples :: [Triple] -> IO()
 printTriples triples = mapM_ putStrLn (map showTriple triples)
 
+-- | Standard algorithm to generate Pythagorean Triples
 pythagTriplesFast :: [Triple]
 pythagTriplesFast = [ (a, 2*m*n, c) |
     m <- [2 ..]
@@ -30,6 +31,7 @@ pythagTriplesFast = [ (a, 2*m*n, c) |
   , let c = m*m + n*n
   , gcd a c == 1 ]
 
+-- | Generate ordered Pythagorean Triples via a list comprehension 
 pythagTriplesOrdered :: [Triple]
 pythagTriplesOrdered = [ (a, b, floor.sqrt $ fromIntegral csq) |
       a <- [3 .. ]

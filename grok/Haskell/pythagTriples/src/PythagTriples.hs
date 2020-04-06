@@ -1,6 +1,7 @@
 module PythagTriples
   ( printTriples
-  , pythagTriplesOrdered
+  , pythagTriplesOrdered1
+  , pythagTriplesOrdered2
   , pythagTriplesFast
   , showTriple
   , sortTriple
@@ -31,17 +32,35 @@ pythagTriplesFast = [ (a, 2*m*n, c) |
   , let c = m*m + n*n
   , gcd a c == 1 ]
 
--- | Generate ordered Pythagorean Triples via a list comprehension 
-pythagTriplesOrdered :: [Triple]
-pythagTriplesOrdered = [ (a, b, floor.sqrt $ fromIntegral csq) |
+-- | Generate ordered Pythagorean Triples lexiconically ordered
+pythagTriplesOrdered1:: [Triple]
+pythagTriplesOrdered1 = [ (a, b, c) |
       a <- [3 .. ]
     , b <- [a+1, a+3 .. ((a*a - 1) `div` 2)]
     , gcd b a == 1
-    , let csq = a*a + b*b
-    , isPerfectSquare csq ]
-  where
-    isPerfectSquare :: Int -> Bool
-    isPerfectSquare n = n == (floor.sqrt $ fromIntegral n)^2
+    , let csqr = a*a + b*b
+    , isPerfectSquare csqr
+    , let c = floorSqrt csqr ]
+
+-- | Generate ordered Pythagorean Triples lexiconically ordered
+pythagTriplesOrdered2 :: [Triple]
+pythagTriplesOrdered2 = [ (a, b, c) |
+      b <- [4 .. ]
+    , a <- [(floorSqrt $ 2*b + 1) .. b - 1]
+    , gcd b a == 1
+    , let csqr = a*a + b*b
+    , isPerfectSquare csqr
+    , let c = floorSqrt csqr ]
+
+-- Utility functions
+
+floorSqrt :: Int -> Int
+floorSqrt = floor.sqrt.fromIntegral
+
+isPerfectSquare :: Int -> Bool
+isPerfectSquare = \n ->
+    let m = floorSqrt n
+    in  n == m * m
 
 -- | Print out Pythagorean Triples with space
 -- | after comma, like how Python prints tuples.

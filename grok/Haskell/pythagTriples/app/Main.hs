@@ -17,16 +17,17 @@ main = do
     ["-o2", numStr] -> printTriples $ triplesOrdered2 (read numStr)
     ["-f", numStr]  -> printTriples $ triplesFast (read numStr)
     ["-fs", numStr] -> printTriples $ sort $ map sortTriple $ triplesFast (read numStr)
-    ["-h"]          -> putStrLn $ usageString ++ infoString
-    ('-':_):_       -> error("\n\n"
-                             ++ "Error: Called with an invalid option or wrong"
-                             ++ " number of arguments.\n" ++ usageString
-                            )
+    "-h":_          -> putStrLn $ usageString ++ infoString
+    "--help":_      -> putStrLn $ usageString ++ infoString
+    "-o1":_         -> errorOut "option -o1 takes one argument"
+    "-o2":_         -> errorOut "option -o2 takes one argument"
+    "-f":_          -> errorOut "option -f takes one argument"
+    "-fs":_         -> errorOut "option -fs takes one argument"
+    ('-':x:rest):_  -> errorOut $ '-':x:rest ++ " is an invalid option"
     [numStr]        -> printTriples $ triplesFast (read numStr)
-    _               -> error("\n\n  Error: Called with invalid arguments.\n"
-                             ++ usageString
-                            )
-
+    _               -> errorOut "called with invalid arguments"
+  where
+    errorOut str =  error $ "\n  error: " ++ str
 
 triplesOrdered1 :: Int -> [Triple]
 triplesOrdered1 num = take num pythagTriplesOrdered1
@@ -40,7 +41,7 @@ triplesFast num = take num pythagTriplesFast
 usageString :: String
 usageString = unlines [
     "  "
-  , "  Usage: pythagTriples  [-o|-f|-fs|-h] number"
+  , "  Usage: pythagTriples  [-o1|-o2|-f|-fs|-h] number"
   , "    where"
   , "      number = number of triples to print"
   , "    and"
@@ -48,12 +49,12 @@ usageString = unlines [
   , "          that is a < b < c, where a,b,c have no common factors."
   , "          Algorithm prints all possible b's and c's before"
   , "          going onto the next a."
-  , "      -o2 Triples (a, b, c) are generated ordered by b then a,"
-  , "          all a < b are generated a given b"
+  , "      -o2 Triples (a, b, c) are generated ordered first by b"
+  , "          then by a.  For each b, all a < b are generated"
   , "      -f  Use a fast algorithm where triples (a, b, c) are such"
   , "          that a is odd, b is even, and a,b,c have no common"
   , "          factors."
-  , "      -fs Use the fast algorithm, but sort results a < b < c."
+  , "      -fs Use above fast algorithm, sort results a < b < c."
   , "      -h  Print usage and general information."
   ]
 
@@ -61,7 +62,7 @@ infoString :: String
 infoString = unlines [
     "    "
   , "    Pathagorean triples are integers 0 < a, b, c such that"
-  , "    a^2 + b^2 = c^2.  Both algorithms only print triples"
+  , "    a^2 + b^2 = c^2.  These algorithms only print triples"
   , "    with no common factors, that is  gcd(a,b,c) = 1."
   ]
 

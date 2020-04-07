@@ -10,19 +10,21 @@ for some limited insight on how to run stack.
 
 ### Usage:
 ```
-pythagTriples [-o|-f|-fs|-h] number
-  where
-    number = number of triples to print
-  and
-    -o  Triples (a, b, c) are printed in lexiconical order,
-        that is a < b < c, and a, b, c have no common factors.
-        Algorithm does prints all possible b's and c's before
-        going onto next `a`.
-    -f  Use fast algorithm where triples (a, b, c) are such
-        that `a` is odd, `b` is even, and a,b,c have no common
+pythagTriples  [-o1|-o2|-f|-fs|-h] number"
+  where"
+    number = number of triples to print"
+  and"
+    -o1 Triples (a, b, c) are generated in lexiconical order,
+        that is a < b < c, where a,b,c have no common factors.
+        Algorithm prints all possible b's and c's before
+        going onto the next a.
+    -o2 Triples (a, b, c) are generated ordered first by b
+        then by a,  For each b, all a < b are generated.
+    -f  Use a fast algorithm where triples (a, b, c) are such
+        that a is odd, b is even, and a,b,c have no common
         factors.
-    -fs Use fast algorithm, but sort results a < b < c.
-    -h  Print help message.
+    -fs Use above fast algorithm, but sort results a < b < c.
+    -h  Print usage and general information.
 ```   
 Both algorithms only print triples with no common factors.
 

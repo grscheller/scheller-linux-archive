@@ -10,7 +10,7 @@ JVM can update adjacent elements of a byte array.
 * Most of this code is lifted verbatum from the Java language
   Specification, Java SE 8 Edition.
 * Eight Threads working indepently on each byte of a word.
-* The threads should not get in each others way unless the
+* The threads should not get in each other's way unless the
   underlying java implementation can only work on whole words at a time.
 * I suspect the Java 10 compiler is "optimizing" away execution
 

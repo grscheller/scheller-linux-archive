@@ -1,43 +1,56 @@
-name:                pythagTriples
-version:             0.3.0.0
-synopsis:            Pythagorean triple CLI generation program
-description:         Please see README.md
-homepage:            https://github.com/grscheller/scheller-linux-archive
-license:             MIT
-license-file:        LICENSE
-author:              Geoffrey Scheller
-maintainer:          geoffrey@scheller.com
-copyright:           Copyright: (c) 2020 Geoffrey R. Scheller
-category:            Example
-build-type:          Simple
--- extra-source-files:
-cabal-version:       >=1.10
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 71eeee3fce6cd5c7020a70cbd7b0d27485837bb7ace1495f99186ed77d3d9128
+
+name:           pythagTriples
+version:        0.3.1.0
+synopsis:       Pythagorean triple CLI generation program
+category:       Example
+author:         Geoffrey Scheller <geoffrey@scheller.com>
+maintainer:     Geoffrey Scheller <geoffrey@scheller.com>
+copyright:      (c) 2016-2020 Geoffrey R Scheller
+license:        MIT
+license-file:   LICENSE
+build-type:     Simple
 
 library
-  hs-source-dirs:      src
-  exposed-modules:     PythagTriples
-  build-depends:       base >= 4.7 && < 5
-                     , split
-  ghc-options:         -Wall
-  default-language:    Haskell2010
+  exposed-modules:
+      PythagTriples
+  other-modules:
+      Paths_pythagTriples
+  hs-source-dirs:
+      src
+  ghc-options: -Wall
+  build-depends:
+      base >=4.7 && <5
+    , split
+  default-language: Haskell2010
 
 executable pythagTriples
-  hs-source-dirs:      app
-  main-is:             Main.hs
-  ghc-options:         -Wall -dynamic -threaded -rtsopts -with-rtsopts=-N
-  build-depends:       base
-                     , pythagTriples
-  default-language:    Haskell2010
+  main-is: Main.hs
+  other-modules:
+      Paths_pythagTriples
+  hs-source-dirs:
+      app
+  ghc-options: -Wall -dynamic -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , pythagTriples
+  default-language: Haskell2010
 
-test-suite pythagTriples-test
-  type:                exitcode-stdio-1.0
-  hs-source-dirs:      test
-  main-is:             Spec.hs
-  build-depends:       base
-                     , pythagTriples
-  ghc-options:         -Wall -dynamic -threaded -rtsopts -with-rtsopts=-N
-  default-language:    Haskell2010
-
-source-repository head
-  type:     git
-  location: https://github.com/grscheller/scheller-linux-archive
+test-suite spec
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Paths_pythagTriples
+  hs-source-dirs:
+      test
+  ghc-options: -Wall -dynamic -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , pythagTriples
+  default-language: Haskell2010

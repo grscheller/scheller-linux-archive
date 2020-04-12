@@ -274,22 +274,22 @@ gcd(a,b,c) = 1 and a, b, c > 0.
     (9,40,41)
 
 2020-04-03:
-  Replace use of show with showTriples in
+  Replace use of show with showTriple in
 
     printTriples :: [Triple] -> IO()
-    printTriples triples = mapM_ putStrLn (map show triples)
+    printTriples triples = mapM_ putStrLn (map showTriple triples)
 
   where
 
     showTriple = (intercalate ", ").(splitOn ",").show
 
-  from
+  these come from
 
     Data.List.intercalate
     Data.List.Split.splitOn
 
   I did that so output matches the output of my Python
-  version.  This allows me to benchmark and compare the
+  version.  This helps allows me to benchmark and compare the
   output between them.
 
 2020-04-03:
@@ -300,8 +300,8 @@ gcd(a,b,c) = 1 and a, b, c > 0.
 
     resolver: ghc-8.8.3
 
-  Still ntach t finding it.  Let's see I can build it with ghc native
-  to Arch Linux:
+  Still not finding it.  Let's see I can build it with the ghc
+  which is  native to Arch Linux:
 
     $ cd ~/devel/scheller-linux-archive/grok/Haskell/pythagTriples/src
     $ ghc -Wall -dynamic PythagTriples.hs
@@ -336,3 +336,23 @@ gcd(a,b,c) = 1 and a, b, c > 0.
 
   Note: Adding info to just the stack.yaml file did not trigger
         stack to be helpful like it did above, 
+
+2020-12-11:
+  One should use the package.yaml file to create the
+  pythagTriple.cabal via stack.  Also could use the hpack
+  utility directly if I wanted to generate it without
+  stack if using cabal directly.
+
+  Bootstrapped the project with package.yaml via stack.
+
+    $ rm stack.yaml stack.yaml.lock pythagTriples.cabal Setup.hs
+    $ stack init
+    $ stack build
+    $ stack run -- -o2 5
+    (3, 4, 5)
+    (5, 12, 13)
+    (8, 15, 17)
+    (20, 21, 29)
+    (7, 24, 25)
+
+  Curiously, stack init did not generate a Setup.hs file.

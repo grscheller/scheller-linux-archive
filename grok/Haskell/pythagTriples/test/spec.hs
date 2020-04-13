@@ -11,7 +11,7 @@ test1 nn =
     putStrLn ("\nTest1: Compare " ++ show nn ++ " (Ordered, Sorted Fast)") >>
     mapM_ (putStrLn.show) (zip py3Ordered py3SortedFast)
   where
-    py3Ordered = take nn pythagTriplesOrdered
+    py3Ordered = take nn pythagTriplesOrdered1
     py3SortedFast = sortTriples $ take nn pythagTriplesFast
 
 
@@ -20,7 +20,7 @@ test2 nn =
     (putStrLn ("\nTest2: " ++ show nn)) >> 
     mapM_ (putStrLn.show) (zip py3Ordered py3SortedFast)
   where
-    ordered    = take nn pythagTriplesOrdered
+    ordered    = take nn pythagTriplesOrdered1
     sortedFast = sortTriples $ take nn pythagTriplesFast
     lastEq     = lastNotEq ordered sortedFast
     py3Ordered    = take 5 $ drop (lastEq - 1) ordered

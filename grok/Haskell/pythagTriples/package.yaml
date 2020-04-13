@@ -1,34 +1,33 @@
 name: pythagTriples
-version: 0.3.1.0
+version: 0.3.2
 synopsis: Pythagorean triple CLI generation program
-author: Geoffrey Scheller <geoffrey@scheller.com>
-maintainer: Geoffrey Scheller <geoffrey@scheller.com>
-copyright: (c) 2016-2020 Geoffrey R Scheller
-license: MIT
-license-file: LICENSE
 category: Example
+author: Geoffrey Scheller <geoffrey@scheller.com>
+copyright: (c) 2016-2020 Geoffrey R Scheller
+license: BSD3
+license-file: LICENSE
+extra-source-files:
+  - README.md
 
 dependencies:
   - base >= 4.7 && < 5
+  - split
+
+source-dirs:
+  - src
 
 library:
-  source-dirs: src
-  dependencies:
-    - split
   exposed-modules: PythagTriples
   ghc-options: -Wall
 
-executable:
-  source-dirs: app
-  main: Main.hs
-  dependencies:
-    - pythagTriples
-  ghc-options: -Wall -dynamic -threaded -rtsopts -with-rtsopts=-N
+executables:
+  pythagTriples:
+    source-dirs: bin
+    main: pythagTriples.hs
+    ghc-options: -Wall -dynamic -threaded -rtsopts -with-rtsopts=-N
 
 tests:
   spec:
     source-dirs: test
-    main: Spec.hs
-    dependencies:
-      - pythagTriples
+    main: spec.hs
     ghc-options: -Wall -dynamic -threaded -rtsopts -with-rtsopts=-N

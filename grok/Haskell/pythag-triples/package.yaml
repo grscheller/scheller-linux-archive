@@ -1,13 +1,15 @@
-name: pythagTriples
-version: 0.3.2
+name: pythag-triples
+version: 0.4.0
 synopsis: Pythagorean triple CLI generation program
 category: Example
-author: Geoffrey Scheller <geoffrey@scheller.com>
+author: Geoffrey Scheller
+maintainer: Geoffrey Scheller <geoffrey@scheller.com>
 copyright: (c) 2016-2020 Geoffrey R Scheller
 license: BSD3
 license-file: LICENSE
 extra-source-files:
   - README.md
+  - CHANGELOG.md
 
 dependencies:
   - base >= 4.7 && < 5

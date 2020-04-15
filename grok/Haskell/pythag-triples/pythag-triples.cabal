@@ -4,13 +4,13 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 80afc85e197caa2ac22c1862dfa31acc9c7312f8206df426e72bc7a8638d9e17
+-- hash: 8667b80765b5f8437ea1e6935442ea67dd549b8bee037bf7ae7acf781cdbc4d7
 
-name:           pythagTriples
-version:        0.3.2
+name:           pythag-triples
+version:        0.4.0
 synopsis:       Pythagorean triple CLI generation program
 category:       Example
-author:         Geoffrey Scheller <geoffrey@scheller.com>
+author:         Geoffrey Scheller
 maintainer:     Geoffrey Scheller <geoffrey@scheller.com>
 copyright:      (c) 2016-2020 Geoffrey R Scheller
 license:        BSD3
@@ -18,12 +18,13 @@ license-file:   LICENSE
 build-type:     Simple
 extra-source-files:
     README.md
+    CHANGELOG.md
 
 library
   exposed-modules:
       PythagTriples
   other-modules:
-      Paths_pythagTriples
+      Paths_pythag_triples
   hs-source-dirs:
       src
   ghc-options: -Wall
@@ -36,7 +37,7 @@ executable pythagTriples
   main-is: pythagTriples.hs
   other-modules:
       PythagTriples
-      Paths_pythagTriples
+      Paths_pythag_triples
   hs-source-dirs:
       src
       bin
@@ -51,7 +52,7 @@ test-suite spec
   main-is: spec.hs
   other-modules:
       PythagTriples
-      Paths_pythagTriples
+      Paths_pythag_triples
   hs-source-dirs:
       src
       test

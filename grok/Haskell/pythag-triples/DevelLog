@@ -337,7 +337,7 @@ gcd(a,b,c) = 1 and a, b, c > 0.
   Note: Adding info to just the stack.yaml file did not trigger
         stack to be helpful like it did above, 
 
-2020-12-11:
+2020-04-11:
   One should use the package.yaml file to create the
   pythagTriple.cabal via stack.  Also could use the hpack
   utility directly if I wanted to generate it without
@@ -356,3 +356,27 @@ gcd(a,b,c) = 1 and a, b, c > 0.
     (7, 24, 25)
 
   Curiously, stack init did not generate a Setup.hs file.
+
+2020-04-13:
+  Changing package PythagTriples to pythag-triples with
+  the PythagTriple module and pythagTriple executive.
+
+  Seems that snake-case-names for packages seems to be
+  more the Haskell social norm.
+  Package my-super-thingy containing one or more modules
+  with module names like MySuperThingy and executables
+  like myThingy and myOtherThingy.
+
+  Factoid: Haskell packages are not part of the language.
+           Pragmatically, packages are the things on Hackage.
+
+  A module  is a set of functions, types, classes, ...
+  put together in a common namespace.
+
+  A library is a set of modules which make sense to be
+  together and that can be used in a program or another
+  library.
+
+  A package is a unit of distribution that can contain
+  libraries and/or executables, together with data such
+  as versions and descriptions..

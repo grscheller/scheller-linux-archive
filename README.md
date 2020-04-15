@@ -23,7 +23,7 @@
   - __C++__
     - [To Infiity and Beyond](grok/C++/ToInfinityAndBeyond/)
   - __Haskell__
-    - [Pythagorean Triples](grok/Haskell/pythagTriples)
+    - [pythagorean-triples package](grok/Haskell/pythag-triples)
     - [Building Haskell Code with Cabal](grok/Haskell/buildingHaskellCode/)
     - [Haskell Intro Programming](grok/Haskell/haskellIntroProgramming/)
     - [Haskell Parallel and Concurrent](grok/Haskell/haskellParallelAndConcurrent/)

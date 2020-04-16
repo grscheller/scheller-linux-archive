@@ -13,7 +13,7 @@ Implemented in Haskell using the Stack buildtool.
     * [Build Considerations](#build-considerations)
     * [CHANGELOG](CHANGELOG.md)
 
-### Usage
+### Usage <a name="usage"></a>
 pythagTriples  [-o1|-o2|-f|-fs|-h] number"
   where"
     number = number of triples to print"
@@ -32,7 +32,7 @@ pythagTriples  [-o1|-o2|-f|-fs|-h] number"
 ```   
 All algorithms only print triples with no common factors.
 
-### Design Considerations:
+### Design Considerations <a name="design-considerations"></a>
 1. These algorithms generate pathagorean triples with no common factors.
    ```
        a^2 + b^2 = c^2  where gcd(a, b, c) = 1
@@ -97,7 +97,6 @@ All algorithms only print triples with no common factors.
 
    But what about the case if `a` and `b` both odd?  That would imply `c`
    could be even.  Concider this case,
-
    ```
       a^2 + b^2 = c^2
       (2*m+1)^2 + (2*n+1)^2 = (2*p)^2
@@ -115,11 +114,10 @@ All algorithms only print triples with no common factors.
    ```
       [(m^2 - n^2, 2*m*n, m^2 + n^2) | m <- [1 ..] , n <- [1 .. m-1]]
    ```
-
    Also seems to produce results where `gcd(a,b,c) > 1`
    like `(8, 6, 10)` and `(40, 42, 58)`.
 
-### Build Considerations
+### Build Considerations <a name="build-considerations"></a>
 This project is more about using the Stack buildtool for Haskell
 than Pythagorean Triples.  Pathagorean Triples just being an
 interesting fairly self contained topic to base this project on.

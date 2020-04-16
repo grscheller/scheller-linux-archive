@@ -8,12 +8,13 @@ This program generates all possible pythagorean triples where
 Implemented in Haskell using the Stack buildtool.
 
 ### Table of Contents
-    * [Usage](#usage)
-    * [Design Considerations](#design-considerations)
-    * [Build Considerations](#build-considerations)
-    * [CHANGELOG](CHANGELOG.md)
+* [Usage](#usage)
+* [Design Considerations](#design-considerations)
+* [Build Considerations](#build-considerations)
+* [CHANGELOG](CHANGELOG.md)
 
 ### Usage <a name="usage"></a>
+```   
 pythagTriples  [-o1|-o2|-f|-fs|-h] number"
   where"
     number = number of triples to print"

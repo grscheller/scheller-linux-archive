@@ -11,7 +11,7 @@ to generate all possible pythagorean triples such that
 gcd(a,b,c) = 1 and a, b, c > 0.
 
 2016-10-16:
-  Use stack to create boilerplate fo the project:
+  Used stack to create boilerplate fo the project:
 
     $ stack new pythagTriples new-template -p "category:Example"
     Downloading template "new-template" to create project "pythagTriples" in pythagTriples/ ...
@@ -359,13 +359,13 @@ gcd(a,b,c) = 1 and a, b, c > 0.
 
 2020-04-13:
   Changing package PythagTriples to pythag-triples with
-  the PythagTriple module and pythagTriple executive.
+  the PythagTriple module and pythagTriple executable.
 
-  Seems that snake-case-names for packages seems to be
-  more the Haskell social norm.
-  Package my-super-thingy containing one or more modules
-  with module names like MySuperThingy and executables
-  like myThingy and myOtherThingy.
+  Seems that snake-case-names for packages are more the
+  Haskell social norm.  Example:
+    Package named my-super-thingy containing one or
+    more modules with module names like MySuperThingy
+    and executables like myThingy and myOtherThingy.
 
   Factoid: Haskell packages are not part of the language.
            Pragmatically, packages are the things on Hackage.
@@ -374,9 +374,14 @@ gcd(a,b,c) = 1 and a, b, c > 0.
   put together in a common namespace.
 
   A library is a set of modules which make sense to be
-  together and that can be used in a program or another
-  library.
+  grouped together and that can be used in a program or
+  another library.
 
   A package is a unit of distribution that can contain
   libraries and/or executables, together with data such
   as versions and descriptions..
+
+2020-04-15:
+  The hpack package not only contains the hpack executable
+  but also the Hpack module.  This module is not intended
+  for endusers but for build tools like stack or cabal2nix.

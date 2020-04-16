@@ -6998,3 +6998,8 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 2020-03-29:
   Installed pkgstats package via packman,  Sends a report to the
   Arch maintainers weekly on what packages are installed.
+
+2020-04016:
+  Had to take manual intervention for Pacman.  As per Arch website.
+
+    $ sudo pacman -Syu --overwrite /usr/lib\*/p11-kit-trust.so

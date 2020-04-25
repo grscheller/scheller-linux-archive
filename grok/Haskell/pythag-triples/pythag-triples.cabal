@@ -4,10 +4,10 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 8667b80765b5f8437ea1e6935442ea67dd549b8bee037bf7ae7acf781cdbc4d7
+-- hash: e047e10338e59a6115d618611aa1270f9b79950759b8fdfe7a8532951f22b8c1
 
 name:           pythag-triples
-version:        0.4.0
+version:        0.4.1
 synopsis:       Pythagorean triple CLI generation program
 category:       Example
 author:         Geoffrey Scheller
@@ -29,35 +29,33 @@ library
       src
   ghc-options: -Wall
   build-depends:
-      base >=4.7 && <5
+      base >=4.3 && <5
     , split
   default-language: Haskell2010
 
 executable pythagTriples
   main-is: pythagTriples.hs
   other-modules:
-      PythagTriples
       Paths_pythag_triples
   hs-source-dirs:
-      src
-      bin
+      drivers
   ghc-options: -Wall -dynamic -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base >=4.7 && <5
+      base >=4.3 && <5
+    , pythag-triples
     , split
   default-language: Haskell2010
 
 test-suite spec
   type: exitcode-stdio-1.0
-  main-is: spec.hs
+  main-is: Spec.hs
   other-modules:
-      PythagTriples
       Paths_pythag_triples
   hs-source-dirs:
-      src
       test
   ghc-options: -Wall -dynamic -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base >=4.7 && <5
+      base >=4.3 && <5
+    , pythag-triples
     , split
   default-language: Haskell2010

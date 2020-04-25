@@ -1,4 +1,4 @@
-module Main where
+module Main (main) where
 
 import System.Environment (getArgs)
 import Data.List (sort)
@@ -65,4 +65,3 @@ infoString = unlines [
   , "    a^2 + b^2 = c^2.  These algorithms only print triples"
   , "    with no common factors, that is  gcd(a,b,c) = 1."
   ]
-

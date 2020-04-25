@@ -1,5 +1,5 @@
 name: pythag-triples
-version: 0.4.0
+version: 0.4.1
 synopsis: Pythagorean triple CLI generation program
 category: Example
 author: Geoffrey Scheller
@@ -12,24 +12,24 @@ extra-source-files:
   - CHANGELOG.md
 
 dependencies:
-  - base >= 4.7 && < 5
+  - base >= 4.3 && < 5
   - split
 
-source-dirs:
-  - src
-
 library:
+  source-dirs: src
   exposed-modules: PythagTriples
   ghc-options: -Wall
 
 executables:
   pythagTriples:
-    source-dirs: bin
+    source-dirs: drivers
     main: pythagTriples.hs
     ghc-options: -Wall -dynamic -threaded -rtsopts -with-rtsopts=-N
+    dependencies: pythag-triples
 
 tests:
   spec:
     source-dirs: test
-    main: spec.hs
+    main: Spec.hs
     ghc-options: -Wall -dynamic -threaded -rtsopts -with-rtsopts=-N
+    dependencies: pythag-triples

@@ -895,7 +895,7 @@ XI. Syncing repositories:
 
          git config remote.origin.url https://grscheller@github.com/grscheller/scheller-linux-environment.git
 
-       Not recommended, but seting it to
+       Not recommended, but setting it to
        "https://grscheller:MYPASSWORD@github.com/grscheller/scheller-linux-environment.git"
        would allow you to not have to type your password.
 
@@ -908,7 +908,34 @@ XI. Syncing repositories:
          above value for remote.origin.url still worked, but
          changing the repo name part of it to something random
          like, like scheller-linux-foofoo, failed. 
-  
+
+   12. Using SSH with GITHUB:
+
+       From the GITHUB website, go to 
+
+         Settings -> SSH and GPG keys
+
+       Paste contents of ~/.ssh/id_rsa to the SSH text box.  Leave
+       off system name at end.  No newlines.
+
+       Next, from the repo, tell git to use ssh protocal,
+
+         $ git remote set-url origin git@github.com:grscheller/scheller-linux-archive
+
+       Now, 
+
+         $ git remote -v
+         origin     git@github.com:grscheller/scheller-linux-archive (fetch)
+         origin     git@github.com:grscheller/scheller-linux-archive (push)
+
+       Able to push to GITHUB without the password.
+
+       I created a shell alias to restart the ssh-keyserver if it should
+       ever get hung.
+
+         $ alias addkey
+         alias addkey='eval $(ssh-agent) && ssh-add'
+ 
 XII. Tagging:
 
     1. List available tags.

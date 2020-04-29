@@ -8,6 +8,7 @@
 BackupLocation='/run/media/geoff/BUSLINK/geoffBackup'
 
 HomeDirs=(
+    .ssh
     info
     local
     Music

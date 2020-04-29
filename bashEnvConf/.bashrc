@@ -154,7 +154,8 @@ else
     alias lc='ls --color=auto'
     alias l1='ls -1'
     alias la='ls -a'
-    alias ll='ls -ltrh'
+    alias ll='ls -ltr'
+    alias lh='ls -ltrh'
     alias lla='ls -ltrah'
     alias l.='ls -dA .* --color=auto'
 
@@ -360,6 +361,11 @@ else
     }
 
     ## ssh related functions and aliases
+
+    # Restart SSH key-agent and add your private
+    # key located here: ~/.ssh/id_rsa
+    # Useful when using SSH authentication with GITHUB.
+    alias addkey='eval $(ssh-agent) && ssh-add'
 
     # For HPC computers at work.
     pkhpc ()

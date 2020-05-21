@@ -13,6 +13,7 @@
   - [Software Development Tools](notes/softwareDevTools.md)
   - [Shell Utilities](notes/shellUtilities.txt)
   - [Gnome 3 Configuration](notes/gnome3Conf.md)
+  - [Java Development on Arch Linux](notes/archJava.txt)
   - [Windows 10 "POSIX" Configurations](notes/Win10EnvConf/)
 ### Grokking Computer Languages
   - __C__

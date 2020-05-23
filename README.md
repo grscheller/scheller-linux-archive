@@ -23,6 +23,8 @@
     - [Reverse Engineering with C](grok/C/CRevEngineer/)
   - __C++__
     - [To Infiity and Beyond](grok/C++/ToInfinityAndBeyond/)
+  - __Gradle__
+    - [Gradle Babysteps](grok/Gradle/babysteps/)
   - __Haskell__
     - [pythagorean-triples package](grok/Haskell/pythag-triples)
     - [Building Haskell Code with Cabal](grok/Haskell/buildingHaskellCode/)

@@ -43,14 +43,15 @@ Notes on using OpenJDK on Arch Linux:
    some application:
 
      #!/bin/sh
-     export PATH="/usr/lib/jvm/java-8-openjdk/jre/bin/:$PATH"
+     export JAVA_HOME=/usr/lib/jvm/java-8-openjdk
+     export PATH="$JAVA_HOME/jre/bin/:$PATH"
      exec /path/to/application "$@"
 
    When developing from command line, or giving hits
    to gradle or sbt?
 
      $ export JAVA_HOME=/usr/lib/jvm/java-8-openjdk
-     $ PATH=/usr/lib/jvm/java-8-openjdk/bin:$PATH
+     $ PATH=$JAVA_HOME/bin:$PATH
 
 6. Installed Gradle Java buildtool & documentation
 

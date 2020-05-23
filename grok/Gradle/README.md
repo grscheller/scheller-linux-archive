@@ -1,8 +1,9 @@
 # Learn the Gradle build tool
 * Tool is JVM based
 * Can build both JVM and Native code
+1. [Baby Steps](#baby-steps) 
 
-## Babysteps
+## Baby Steps
 ### first-attempt:
   Gradle can use Groovy or Kotlin as a DSL in its 
   build.gradle configuration file.  This example uses Groovy. 
@@ -54,5 +55,4 @@
     BUILD SUCCESSFUL in 14s
     2 actionable tasks: 2 executed
   ```
-
   Menu items above seem to have been added post tutorial.

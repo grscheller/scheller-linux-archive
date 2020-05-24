@@ -51,29 +51,26 @@ class Actor[A](strategy: Strategy)
   private val head = new AtomicReference(tail.get)
 
   /** Alias for `apply` */
-  def !(a: A) {
+  def !(a: A): Unit = {
     val n = new Node(a)
     head.getAndSet(n).lazySet(n)
     trySchedule()
   }
 
   /** Pass the message `a` to the mailbox of this actor */
-  def apply(a: A) {
+  def apply(a: A): Unit = {
     this ! a
   }
 
   def contramap[B](f: B => A): Actor[B] =
     new Actor[B](strategy)((b: B) => (this ! f(b)), onError)
 
-  private def trySchedule() {
+  private def trySchedule(): Unit =
     if (suspended.compareAndSet(1, 0)) schedule()
-  }
 
-  private def schedule() {
-    strategy(act())
-  }
+  private def schedule(): Unit = strategy(act())
 
-  private def act() {
+  private def act(): Unit = {
     val t = tail.get
     val n = batchHandle(t, 1024)
     if (n ne t) {

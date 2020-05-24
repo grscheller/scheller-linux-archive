@@ -55,7 +55,7 @@ object sgenTest {
     val maxProp = forAll(smallIntList) {
       ns => 
         val max = ns.max
-        ! ns.exists(_ > max)
+        !ns.exists(_ > max)
     }
 
     println("Test a true property:\n")
@@ -65,7 +65,7 @@ object sgenTest {
     val falseProp = forAll(smallIntList) {
       ns => 
         val min = ns.min
-        ! ns.exists(_ > min + 19)
+        !ns.exists(_ > min + 19)
     }
 
     print("\nTest a property that occasionally fails,")
@@ -85,12 +85,12 @@ object sgenTest {
 
     // A property that fails rarely
     val seldomFailProp1 = forAll(largeIntList) {
-      ns => ! ns.exists(_ == 42)
+      ns => !ns.exists(_ == 42)
     }
 
     // A property that fails rarely
     val seldomFailProp2 = forAllPow2Banded(largeIntList) {
-      ns => ! ns.exists(_ == 42)
+      ns => !ns.exists(_ == 42)
     }
 
     println("\nTest a property that seldom fails with Prop.forAll,")

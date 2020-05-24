@@ -31,10 +31,10 @@ object randTest {
     println("\nTest map and map2 by throwing dice:")
 
     def dieRoll: Rand[Int] =
-      Rand.nonNegInt.map(die => die % 6 + 1)
+      Rand.nonNegInt map { die => die % 6 + 1 }
 
     def twoDiceRoll: Rand[Int] =
-      dieRoll.map2(dieRoll)(_ + _)
+      (dieRoll map2 dieRoll) { _ + _ }
 
     // Roll some dice
     println("Auto rolling 2 dice 10 and 20 times -")
@@ -86,14 +86,18 @@ object randTest {
     print("Compare with different RNGs -")
     val tenInts1 = Rand.ints(10)(rng42)
     val tenInts2 = Rand.ints(10)(rng666)
-    print("\n10 Ints: "); tenInts1.foreach(x => print(x + " "))
-    print("\n10 Ints: "); tenInts2.foreach(x => print(x + " "))
+    print("\n10 Ints: ")
+    tenInts1 foreach { x => print(s"$x ") }
+    print("\n10 Ints: ")
+    tenInts2 foreach { x => print(s"$x ") }
 
     print("\n\nCompare different syntax -")
     print("\n10 Ints: ")
-    Rand.ints(10)(rng666).foreach(x => print(x + " "))
+    Rand.ints(10)(rng666).foreach(x => print(s"$x "))
     print("\n10 Ints: ")
-    Rand.ints(10)(rng666) foreach { x => print(x + " ") }
+    Rand.ints(10)(rng666) foreach {
+      x => print(s"$x ")
+    }
 
     // Test Rand.nonNegIntLessThan
     print("\n\nTest Rand.nonNegIntLessThan and ")
@@ -104,7 +108,7 @@ object randTest {
 
     print("100 random non-neg Ints less than 10")
     println(" (using Rand.nonNegIntLessThan) -")
-    for (ii <- baz(100, 10)(rng42)) {print(ii + " ")}
+    for (ii <- baz(100, 10)(rng42)) { print("$ii ") }
 
     print("\n\n50 random non-neg Ints less than 200000000")
     println(" (using Rand.nonNegIntLessThan) -")

@@ -37,7 +37,7 @@ object ParJavaFutures2 {
       val t0 = System.nanoTime
       val hold = fibMinus0.run(es)
       val t1 = System.nanoTime
-      "is " + hold + " in " + (t1 - t0)/1000000000.0 + " seconds.\n"
+      "is " + hold.toString + " in " + (t1 - t0)/1000000000.0 + " seconds.\n"
     }
 
     // Test Par.sequence
@@ -115,7 +115,7 @@ object ParJavaFutures2 {
       val t0 = System.nanoTime
       val hold = futEvenRandList_1A.get
       val t1 = System.nanoTime
-      hold.length + " in " + (t1 - t0)/1000.0 + " μs"
+      hold.length.toString + " in " + (t1 - t0)/1000.0 + " μs"
     }
 
     print("Repeat without parallelism:      ")
@@ -123,7 +123,7 @@ object ParJavaFutures2 {
       val t0 = System.nanoTime
       val hold = randList filter (_ % 2 == 0)
       val t1 = System.nanoTime
-      hold.length + " in " + (t1 - t0)/1000.0 + " μs\n"
+      hold.length.toString + " in " + (t1 - t0)/1000.0 + " μs\n"
     }
 
     // Test 2:
@@ -133,7 +133,7 @@ object ParJavaFutures2 {
       val t0 = System.nanoTime
       val hold = futEvenRandList_2A.get
       val t1 = System.nanoTime
-      hold.length + " in " + (t1 - t0)/1000.0 + " μs"
+      hold.length.toString + " in " + (t1 - t0)/1000.0 + " μs"
     }
 
     print("Repeat without parallelism:      ")
@@ -141,7 +141,7 @@ object ParJavaFutures2 {
       val t0 = System.nanoTime
       val hold = randList filter (_ % 5 == 0)
       val t1 = System.nanoTime
-      hold.length + " in " + (t1 - t0)/1000.0 + " μs\n"
+      hold.length.toString + " in " + (t1 - t0)/1000.0 + " μs\n"
     }
 
     // Test 3:
@@ -151,7 +151,7 @@ object ParJavaFutures2 {
       val t0 = System.nanoTime
       val hold = futEvenRandList_3B.get
       val t1 = System.nanoTime
-      hold.length + " in " + (t1 - t0)/1000.0 + " μs"
+      hold.length.toString + " in " + (t1 - t0)/1000.0 + " μs"
     }
 
     print("Repeat without parallelism:      ")
@@ -159,7 +159,7 @@ object ParJavaFutures2 {
       val t0 = System.nanoTime
       val hold = randList filter (_ % 2 == 0)
       val t1 = System.nanoTime
-      hold.length + " in " + (t1 - t0)/1000.0 + " μs\n"
+      hold.length.toString + " in " + (t1 - t0)/1000.0 + " μs\n"
     }
 
     // Test 4:
@@ -169,7 +169,7 @@ object ParJavaFutures2 {
       val t0 = System.nanoTime
       val hold = futEvenRandList_4B.get
       val t1 = System.nanoTime
-      hold.length + " in " + (t1 - t0)/1000.0 + " μs"
+      hold.length.toString + " in " + (t1 - t0)/1000.0 + " μs"
     }
 
     print("Repeat without parallelism:      ")
@@ -177,7 +177,7 @@ object ParJavaFutures2 {
       val t0 = System.nanoTime
       val hold = randList filter (_ % 3 == 0)
       val t1 = System.nanoTime
-      hold.length + " in " + (t1 - t0)/1000.0 + " μs\n"
+      hold.length.toString + " in " + (t1 - t0)/1000.0 + " μs\n"
     }
 
     es_A.shutdown
@@ -197,7 +197,7 @@ object ParJavaFutures2 {
       val t0 = System.nanoTime
       val hold = futFib.get
       val t1 = System.nanoTime
-      hold.length + " in " + (t1 - t0)/1000000000.0 + " seconds"
+      hold.length.toString + " in " + (t1 - t0)/1000000000.0 + " seconds"
     }
 
     es_fib.shutdown
@@ -207,7 +207,7 @@ object ParJavaFutures2 {
       val t0 = System.nanoTime
       val hold = fibParms map fib
       val t1 = System.nanoTime
-      hold.length + " in " + (t1 - t0)/1000000000.0 + " seconds"
+      hold.length.toString + " in " + (t1 - t0)/1000000000.0 + " seconds"
     }
 
     println()

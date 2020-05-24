@@ -36,7 +36,7 @@ object rngStandaloneTest {
     println("\nFunctionally print ten random doubles in [0,1):")
 
     val getNextRanPair = (x: (Double, RNG)) => RNG.double(x._2)
-    val rngS = Stream.iterate(RNG.double(rng42))(getNextRanPair) map (_._1) take 10
+    val rngS = LazyList.iterate(RNG.double(rng42))(getNextRanPair) map (_._1) take 10
     for (ranDouble <- rngS) println(ranDouble)
 
     // Test intDouble and doubleInt
@@ -156,7 +156,7 @@ object rngStandaloneTest {
     print("Average of " + numRolls + " two dice rolls(RevFL) is ")
     println(rolledDiceRevFL.sum.toDouble/numRolls)
 
-    // I need to straighten out this the difference
+    // I need to straighten this out, the difference
     // between RNG.sequenceFL and RNG.sequenceFLRev.
     // What is confusimg me is the above list are all
     // the "same" random action (twoDiceRoll: Rand).
@@ -198,21 +198,22 @@ object rngStandaloneTest {
     print("Compare with different RNGs:")
     val (tenInts1, _) = RNG.ints(10)(rng42)
     val (tenInts2, _) = RNG.ints(10)(rng666)
-    print("\n10 Ints: "); tenInts1.foreach(x => print(x + " "))
-    print("\n10 Ints: "); tenInts2.foreach(x => print(x + " "))
+    print("\n10 Ints: "); tenInts1 foreach { x => print(s"$x ") }
+    print("\n10 Ints: "); tenInts2.foreach { x => print(s"$x ") }
 
     print("\n\nTest if ints can be partially applied:")
     val tenInts = RNG.ints(10)(_)
     val tenInts3 = tenInts(rng666)._1
-    print("\n10 Ints: "); tenInts3.foreach(x => print(x + " "))
     print("\n10 Ints: ")
-    tenInts(rng666)._1.foreach(x => print(x + " "))
+    tenInts3 foreach { x => print(s"$x ") }
+    print("\n10 Ints: ")
+    tenInts(rng666)._1 foreach { x => print(s"$x ") }
 
     print("\n\nCompare different syntax:")
     print("\n10 Ints: ")
-    RNG.ints(10)(rng666)._1.foreach(x => print(x + " "))
+    RNG.ints(10)(rng666)._1.foreach(x => print(s"$x "))
     print("\n10 Ints: ")
-    RNG.ints(10)(rng666)._1 foreach {x => print(x + " ")}
+    RNG.ints(10)(rng666)._1 foreach { x => print(s"$x ") }
 
     // Test nonNegativeLessThan implementations
 

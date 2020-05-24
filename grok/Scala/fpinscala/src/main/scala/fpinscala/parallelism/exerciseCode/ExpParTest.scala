@@ -5,7 +5,7 @@ import java.util.concurrent._
 import fpinscala.parallelism.Par
 import Par._
 
-import scala.collection.immutable.Stream.{cons, from}
+import scala.collection.immutable.LazyList.{cons, from}
 
 /** Compare different implementations for exponential Taylor series exapansion.
  *
@@ -23,7 +23,7 @@ object ExpParTest {
    */
   def expParStream(x: Double, maxTerm: Int): Par[Double] = {
 
-    lazy val xs: Stream[Double] = cons(x, xs)
+    lazy val xs: LazyList[Double] = cons(x, xs)
 
     /** Par for nth term of the Taylor series about 0 */
     def enPar(n: Int): Par[Double] =
@@ -134,35 +134,35 @@ object ExpParTest {
       val t0 = System.nanoTime
       val hold = scala.math.exp(1.0)
       val t1 = System.nanoTime
-      hold + " in " + (t1 - t0)/1000.0 + " μs."
+      hold.toString + " in " + (t1 - t0)/1000.0 + " μs."
     }
     println {
       print("expParStream(1.0, 20).run(es) = ")
       val t0 = System.nanoTime
       val hold = expParStream(1.0, 20).run(es)
       val t1 = System.nanoTime
-      hold + " in " + (t1 - t0)/1000.0 + " μs."
+      hold.toString + " in " + (t1 - t0)/1000.0 + " μs."
     }
     println {
       print("expParMap(1.0, 20).run(es) = ")
       val t0 = System.nanoTime
       val hold = expParMap(1.0, 20).run(es)
       val t1 = System.nanoTime
-      hold + " in " + (t1 - t0)/1000.0 + " μs."
+      hold.toString + " in " + (t1 - t0)/1000.0 + " μs."
     }
     println {
       print("expFun(1.0, 20) = ")
       val t0 = System.nanoTime
       val hold = expFun(1.0, 20)
       val t1 = System.nanoTime
-      hold + " in " + (t1 - t0)/1000.0 + " μs."
+      hold.toString + " in " + (t1 - t0)/1000.0 + " μs."
     }
     println {
       print("expLoopFun(1.0, 20) = ")
       val t0 = System.nanoTime
       val hold = expLoopFun(1.0, 20)
       val t1 = System.nanoTime
-      hold + " in " + (t1 - t0)/1000.0 + " μs."
+      hold.toString + " in " + (t1 - t0)/1000.0 + " μs."
     }
 
     println()
@@ -172,35 +172,35 @@ object ExpParTest {
       val t0 = System.nanoTime
       val hold = scala.math.exp(0.42)
       val t1 = System.nanoTime
-      hold + " in " + (t1 - t0)/1000.0 + " μs."
+      hold.toString + " in " + (t1 - t0)/1000.0 + " μs."
     }
     println {
       print("expParStream(0.42, 20).run(es) = ")
       val t0 = System.nanoTime
       val hold = expParStream(0.42, 20).run(es)
       val t1 = System.nanoTime
-      hold + " in " + (t1 - t0)/1000.0 + " μs."
+      hold.toString + " in " + (t1 - t0)/1000.0 + " μs."
     }
     println {
       print("expParMap(0.42, 20).run(es) = ")
       val t0 = System.nanoTime
       val hold = expParMap(0.42, 20).run(es)
       val t1 = System.nanoTime
-      hold + " in " + (t1 - t0)/1000.0 + " μs."
+      hold.toString + " in " + (t1 - t0)/1000.0 + " μs."
     }
     println {
       print("expFun(0.42, 20) = ")
       val t0 = System.nanoTime
       val hold = expFun(0.42, 172)
       val t1 = System.nanoTime
-      hold + " in " + (t1 - t0)/1000.0 + " μs."
+      hold.toString + " in " + (t1 - t0)/1000.0 + " μs."
     }
     println {
       print("expLoopFun(0.42, 20) = ")
       val t0 = System.nanoTime
       val hold = expLoopFun(0.42, 20)
       val t1 = System.nanoTime
-      hold + " in " + (t1 - t0)/1000.0 + " μs."
+      hold.toString + " in " + (t1 - t0)/1000.0 + " μs."
     }
 
     println()

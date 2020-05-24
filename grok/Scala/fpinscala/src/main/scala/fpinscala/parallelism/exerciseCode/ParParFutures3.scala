@@ -19,7 +19,7 @@ object ParParFutures3 {
       val t0 = System.nanoTime
       val hold = par.run(es)
       val t1 = System.nanoTime
-      hold + " in " + (t1 - t0)/1000000000.0 + " seconds"
+      hold.toString + " in " + (t1 - t0)/1000000000.0 + " seconds"
     }
 
   def timeIt[A,B](it: A => B, arg: A, comment: String): Unit =
@@ -28,7 +28,7 @@ object ParParFutures3 {
       val t0 = System.nanoTime
       val hold = it(arg)
       val t1 = System.nanoTime
-      hold + " in " + (t1 - t0)/1000000000.0 + " seconds"
+      hold.toString + " in " + (t1 - t0)/1000000000.0 + " seconds"
     }
 
   /** Parse input args to determine scale of datastructure */

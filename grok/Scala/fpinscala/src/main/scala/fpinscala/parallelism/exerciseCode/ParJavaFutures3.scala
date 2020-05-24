@@ -129,7 +129,7 @@ object ParJavaFutures3 {
       val t0 = System.nanoTime
       val hold = smallList map fib
       val t1 = System.nanoTime
-      hold + " in " + (t1 - t0)/1000000000.0 + " seconds\n"
+      hold.toString + " in " + (t1 - t0)/1000000000.0 + " seconds\n"
     }
  
     println {
@@ -137,7 +137,7 @@ object ParJavaFutures3 {
       val t0 = System.nanoTime
       val hold = parMap(smallList)(fib).run(es)
       val t1 = System.nanoTime
-      hold + " in " + (t1 - t0)/1000000000.0 + " seconds\n"
+      hold.toString + " in " + (t1 - t0)/1000000000.0 + " seconds\n"
     }
 
     println {
@@ -145,7 +145,7 @@ object ParJavaFutures3 {
       val t0 = System.nanoTime
       val hold = bigList map fib
       val t1 = System.nanoTime
-      hold + " in " + (t1 - t0)/1000000000.0 + " seconds\n"
+      hold.toString + " in " + (t1 - t0)/1000000000.0 + " seconds\n"
     }
  
     println {
@@ -153,7 +153,7 @@ object ParJavaFutures3 {
       val t0 = System.nanoTime
       val hold = parMap(bigList)(fib).run(es)
       val t1 = System.nanoTime
-      hold + " in " + (t1 - t0)/1000000000.0 + " seconds\n"
+      hold.toString + " in " + (t1 - t0)/1000000000.0 + " seconds\n"
     }
  
     val foo: Par[List[Long]] =
@@ -171,7 +171,7 @@ object ParJavaFutures3 {
       val t0 = System.nanoTime
       val hold = foo.run(es)
       val t1 = System.nanoTime
-      hold + " in " + (t1 - t0)/1000000000.0 + " seconds\n"
+      hold.toString + " in " + (t1 - t0)/1000000000.0 + " seconds\n"
     }
  
     println {
@@ -179,7 +179,7 @@ object ParJavaFutures3 {
       val t0 = System.nanoTime
       val hold = bar.run(es)
       val t1 = System.nanoTime
-      hold + " in " + (t1 - t0)/1000000000.0 + " seconds\n"
+      hold.toString + " in " + (t1 - t0)/1000000000.0 + " seconds\n"
     }
  
     val baz = parFilter(bigList)(a => fib(a)%2 == 0)
@@ -189,7 +189,7 @@ object ParJavaFutures3 {
       val t0 = System.nanoTime
       val hold = baz.run(es)
       val t1 = System.nanoTime
-      hold + " in " + (t1 - t0)/1000000000.0 + " seconds\n"
+      hold.toString + " in " + (t1 - t0)/1000000000.0 + " seconds\n"
     }
  
     println {
@@ -197,7 +197,7 @@ object ParJavaFutures3 {
       val t0 = System.nanoTime
       val hold = bigList filter { a => fib(a)%2 == 0 }
       val t1 = System.nanoTime
-      hold + " in " + (t1 - t0)/1000000000.0 + " seconds\n"
+      hold.toString + " in " + (t1 - t0)/1000000000.0 + " seconds\n"
     }
 
     val boz = parFilter(smallList)(a => fib(a)%2 == 0)
@@ -207,7 +207,7 @@ object ParJavaFutures3 {
       val t0 = System.nanoTime
       val hold = boz.run(es)
       val t1 = System.nanoTime
-      hold + " in " + (t1 - t0)/1000000000.0 + " seconds\n"
+      hold.toString + " in " + (t1 - t0)/1000000000.0 + " seconds\n"
     }
  
     println {
@@ -215,7 +215,7 @@ object ParJavaFutures3 {
       val t0 = System.nanoTime
       val hold = smallList filter { a => fib(a)%2 == 0 }
       val t1 = System.nanoTime
-      hold + " in " + (t1 - t0)/1000000000.0 + " seconds\n"
+      hold.toString + " in " + (t1 - t0)/1000000000.0 + " seconds\n"
     }
 
     es.shutdown

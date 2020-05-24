@@ -71,12 +71,12 @@ object candyMachine {
     val ((coin1, candy1), m1) = simulation(inputs1).run(initState)
     val ((coin2, candy2), m2) = simulation(inputs2).run(m1)
 
-    print("\nFirst set inputs are "); println(inputs1 + ".")
+    print("\nFirst set inputs are "); println(inputs1.toString + ".")
     println("After the first set of inputs, the candy machine has "
             + candy1 + " candies and " + coin1 + " coins.")
     println("The candy machine is now in state: " + m1)
 
-    print("\nSecond set of inputs are "); println(inputs2 + ".")
+    print("\nSecond set of inputs are "); println(inputs2.toString + ".")
     println("After the second set of inputs, the candy machine has "
             + candy2 + " candies and " + coin2 + " coins.")
     println("The candy machine is now in state: " + m2)

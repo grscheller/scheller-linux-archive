@@ -48,11 +48,15 @@ case class FibCache(f0: BigInt = 0, f1: BigInt = 1) {
  *
  *  @note Just hand the client the bloody cached Stream
  *  and let them deal with the Streams API.
+ *
+ *  @note Share fibs with the canonical start values 0, 1 
  */
 object FibStream {
 
   /** Recursively, and lazily, build a stream of Fibonacci numbers. */
   def fibStream(a: BigInt = 0, b: BigInt = 1): Stream[BigInt] =
     a #:: fibStream(b, a+b)
+
+  lazy val fibs: Stream[BigInt] = fibStream()
 
 }

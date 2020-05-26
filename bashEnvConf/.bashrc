@@ -493,6 +493,31 @@ else
     alias toMaxwell4='toSystem ${MAXWELL4}'
     alias fromMaxwell4='fromSystem ${MAXWELL4}'
 
+    ## Setup JDK on Arch
+    archJDK ()
+    {
+      local version=$1
+
+      if [[ ! $version =~ ^[0-9]+$ ]] 
+      then
+         echo "Malformed JDK version number: \"$version\""
+         return
+      fi
+      
+      if [[ -d /usr/lib/jvm/java-${version}-openjdk ]]
+      then
+          export JAVA_HOME=/usr/lib/jvm/java-${version}-openjdk
+          if [[ $PATH =~ ^/usr/lib/jvm/java-[0-9]+-openjdk/bin: ]]
+          then
+              PATH=${PATH#[^:]*:}
+          fi
+          PATH=$JAVA_HOME/bin:$PATH
+      else
+          echo "No JDK found for Java \"$version\" in the"
+          echo "standard location for Arch: /usr/lib/jvm/"
+      fi
+    }
+
     ## Bash completion for stack (Haskell)
     #eval "$(stack --bash-completion-script stack)"
 

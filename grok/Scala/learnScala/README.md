@@ -139,7 +139,7 @@ Codeblocks, like any good closures, can contain state.
 
 ### 5. Sort a polymorphic ordered list: [Sort.scala](sort/Sort.scala)
 Compare this to the Haskell implementation in
-[here](../grokHaskell/haskellIntroProgramming/examples/Sort.hs).
+[here](../../Haskell/haskellIntroProgramming/examples/Sort.hs).
 
 ### 6. Scala oop: [oop](oop/)
 Exploring Scala OOP features.  When an OOP model fits the problem, it is not
@@ -215,3 +215,6 @@ and using the Scala REPL
    scala> :t foo.f3
    Int => Int
 ```
+
+### 11. Compare Fibonacci implementations: [Package ficompare](fib/fibcompare.scala)
+A simple example of package level coding.

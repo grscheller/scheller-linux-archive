@@ -183,7 +183,7 @@ located in the
 This is my original implimentation of `fpinscala.state.rand.Rand`.
 I reimplemented it there as a case class containing a `State(RNG,A)`.
 
-### 10. Convert methods to functions: [MethodAsFunctions](convertMethodToFunctions/)
+### 10. Convert methods to functions: [MethodAsFunctions](methodAsFunctions/methodAsFunctions.scala)
 Explore how a Scala instance method can be converted to a function.
 
 Consider the class in the file methodAsFunction.scala:
@@ -216,5 +216,5 @@ and using the Scala REPL
    Int => Int
 ```
 
-### 11. Compare Fibonacci implementations: [Package ficompare](fib/fibcompare.scala)
+### 11. Compare Fibonacci implementations: [Package fibcompare](fib/fibcompare.scala)
 A simple example of package level coding.

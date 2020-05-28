@@ -100,7 +100,7 @@ I found something I thought peculiar while in the scala REPL:
 If you put a single lambda in the middle of a code block, my expectation
 was that the lambda would be ignored and I'd get back just `()` as the
 value of `dog`, which comes from the last println function call in
-the code block.  Instead, it returned value a `function1` where the
+the code block.  Instead, it returned a `function1` value where the
 statements after the lambda become part of the `function1`.  Statements
 before the lambda were executed only once as expected when the code block
 was first run, but statements after the lambda get executed each time `dog`

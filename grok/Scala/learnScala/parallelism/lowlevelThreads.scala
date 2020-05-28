@@ -11,7 +11,7 @@ object LowlevelThreads {
     val helloThread =
       new Thread(
         new Runnable {
-          def run() {
+          def run(): Unit = {
             println("hello from thread")
             Thread.sleep(1000)
             println("so long from thread")

@@ -33,11 +33,11 @@ object FibImperitive {
 
 }
 
-/** Hold onto a Stream of BigInt Fibonacci numbers
+/** Hold onto a LazyList of BigInt Fibonacci numbers
  *  @note Use case is to cache intermediate results in an object.
  */
 case class FibCache(f0: BigInt = 0, f1: BigInt = 1) {
-  val cachedFibs: Stream[BigInt] = f0 #:: f1 #:: {
+  val cachedFibs: LazyList[BigInt] = f0 #:: f1 #:: {
     (cachedFibs zip cachedFibs.tail) map { case ((m, n)) => m + n }
   }
 
@@ -46,17 +46,17 @@ case class FibCache(f0: BigInt = 0, f1: BigInt = 1) {
 
 /** Name space for a method which returns stream of Fibonacci BigInts
  *
- *  @note Just hand the client the bloody cached Stream
- *  and let them deal with the Streams API.
+ *  @note Just hand the client the bloody cached LazyList
+ *  and let them deal with the LazyList API.
  *
  *  @note Share fibs with the canonical start values 0, 1 
  */
-object FibStream {
+object FibLazyList {
 
   /** Recursively, and lazily, build a stream of Fibonacci numbers. */
-  def fibStream(a: BigInt = 0, b: BigInt = 1): Stream[BigInt] =
-    a #:: fibStream(b, a+b)
+  def fibLazyList(a: BigInt = 0, b: BigInt = 1): LazyList[BigInt] =
+    a #:: fibLazyList(b, a+b)
 
-  lazy val fibs: Stream[BigInt] = fibStream()
+  lazy val fibs: LazyList[BigInt] = fibLazyList()
 
 }

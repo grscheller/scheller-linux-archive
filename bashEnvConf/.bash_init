@@ -84,16 +84,8 @@ export PATH  # Not really necessary, PATH should
 #
 #                  Host-Name           port   login      hpc
 export    VOLTRON='rvsllschellerg2        22  schelleg    no'
-export      RYGAR='rvsllfrithj1           22  schelleg    no'
-export EVERGARDEN='rvsllmonetd1           22  schelleg    no'
 export      KOALA='rvswlschellerg1        22  schelleg    no'
-export     GALAGA='kprswvbylnzjt52        22  schelleg    no'
-export   SHERWOOD='rvsllsherwoodj1        22  schelleg    no'
 export LITTLEJOHN='rvswlwojcikj1          22  schelleg    no'
-export       TREX='rvswlcrabtreep1        22  schelleg    no'
-export      TOPAZ='topaz.erdc.hpc.mil     22  schelleg   yes'
-export        UST='us.erdc.hpc.mil        22  schelleg   yes'
-export     ZAMBIA='zambia                 22  schelleg    no'
-export    GAUSS17='gauss17             31502  geoff       no'
+export    GAUSS17='gauss17             31502  grs         no'
 export   MAXWELL4='maxwell4            29801  geoffrey    no'
 

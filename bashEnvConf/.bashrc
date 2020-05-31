@@ -80,8 +80,8 @@ else
     ## Make sure git asks for passwords on the command line
     unset SSH_ASKPASS
 
-    ## Timeout bash sessions after about 8 hours of inactivity
-    TMOUT=60000
+    ## Assign more realistic inactivity timeout period (8 hours)
+    [[ -n $TMOUT ]] && TMOUT=28800
 
     ## Bash customizations when running interactively
     set -o pipefail  # Return right most nonzero error, otherwise 0.
@@ -101,13 +101,8 @@ else
     export HOST=${HOSTNAME%%.*}
     case $HOST in
       rvsllschellerg2) HOST=voltron ;;
-      rvsllfrithj1)    HOST=rygar ;;
-      rvsllmonetd1)    HOST=evergarden ;;
       rvswlschellerg1) HOST=koala ;;
-      kprswvbylnzjt52) HOST=galaga ;;
-      rvsllsherwoodj1) HOST=sherwood ;;
       rvswlwojcikj1)   HOST=littlejohn ;;
-      rvswlcrabtreep1) HOST=trex ;;
       *) if [[ $(uname) =~ ^CYGWIN ]]; then
              HOST=CYGWIN
              export CYGWIN=winsymlinks:nativestrict
@@ -156,7 +151,7 @@ else
     alias la='ls -a'
     alias ll='ls -ltr'
     alias lh='ls -ltrh'
-    alias lla='ls -ltrah'
+    alias lla='ls -ltra'
     alias l.='ls -dA .* --color=auto'
 
     alias pst="ps axjf | sed -e '/^ PPID.*$/d' -e's/.*:...//'"
@@ -273,6 +268,12 @@ else
       ( /usr/bin/evince "$@" &>/dev/null & )
     }
 
+    # LBRY AppImage
+    lbry ()
+    {
+      ( ~/build/AppImages/LBRY_0.45.2.AppImage &>/dev/null & )
+    }
+
     # Firefox Browser
     ff ()
     {
@@ -304,75 +305,12 @@ else
       ( /usr/bin/libreoffice --writer "$@" & )
     }
 
-
-    ## Setup or tear down Network Manager proxies when necessary
-    #  - mostly for CentOS 7 work environment
-    #  - assumes you have manualy set up the proxies in the Settings applet
-    #  - sets up Proxy environmental variables for current shell
-    #  - enable proxy for Network Manager if on the console
-    #  - might need to change this if I ever start running remote desktops
-    export ProxySettingsNotConfigured=${ProxySettingsNotConfigured:=1}
-
-    proxyUp ()
-    {
-      [[ -f ~/.proxy_env ]] && source ~/.proxy_env
-      if [[ $DISPLAY =~ ^:[0-9]$ ]] && [[ -x /usr/bin/gsettings ]]
-      then
-          gsettings set org.gnome.system.proxy mode manual
-      fi
-      ProxySettingsNotConfigured=0
-    }
-
-    downProxy ()
-    {
-      unset http_proxy HTTP_PROXY https_proxy HTTPS_PROXY no_proxy NO_PROXY 
-      if [[ $DISPLAY =~ ^:[0-9]$ ]] && [[ -x /usr/bin/gsettings ]]
-      then
-          gsettings set org.gnome.system.proxy mode none
-      fi
-      ProxySettingsNotConfigured=0
-    }
-
-   # Turn on Network Manager proxy if ~/.proxy_env exists
-   if ((ProxySettingsNotConfigured))
-   then
-       ProxySettingsNotConfigured=0
-       [[ -f ~/.proxy_env ]] && proxyUp
-   fi
-
-    # Allow switching between GNOME 3 and GNOME Classic
-    # without restarting your entire GNOME Session.  At work,
-    # DM login screen does not give you the the option to
-    # choose the GNOME session type.
-    gnew ()
-    {
-      if [[ $DISPLAY =~ ^:[0-9]$ ]] && [[ -x /usr/bin/gnome-shell ]]
-      then
-          ( /usr/bin/gnome-shell --mode=user -r 2>/dev/null & )
-      fi
-    }
-
-    gnold ()
-    {
-      if [[ $DISPLAY =~ ^:[0-9]$ ]] && [[ -x /usr/bin/gnome-shell ]]
-      then
-          ( /usr/bin/gnome-shell --mode=classic -r 2>/dev/null & )
-      fi
-    }
-
     ## ssh related functions and aliases
 
     # Restart SSH key-agent and add your private
     # key located here: ~/.ssh/id_rsa
     # Useful when using SSH authentication with GITHUB.
     alias addkey='eval $(ssh-agent) && ssh-add'
-
-    # For HPC computers at work.
-    pkhpc ()
-    {
-      module load hpc
-      pkinit schelleg@HPCMP.HPC.MIL
-    }
 
     sshToSystem ()
     {
@@ -445,45 +383,13 @@ else
     alias toVoltron='toSystem ${VOLTRON}'
     alias fromVoltron='fromSystem ${VOLTRON}'
 
-    alias rygar='sshToSystem ${RYGAR}'
-    alias toRygar='toSystem ${RYGAR}'
-    alias fromRygar='fromSystem ${RYGAR}'
-
-    alias evergarden='sshToSystem ${EVERGARDEN}'
-    alias toEvergarden='toSystem ${EVERGARDEN}'
-    alias fromEvergarden='fromSystem ${EVERGARDEN}'
-
     alias koala='sshToSystem ${KOALA}'
     alias toKoala='toSystem ${KOALA}'
     alias fromKoala='fromSystem ${KOALA}'
 
-    alias galaga='sshToSystem ${GALAGA}'
-    alias toGalaga='toSystem ${GALAGA}'
-    alias fromGalaga='fromSystem ${GALAGA}'
-
-    alias sherwood='sshToSystem ${SHERWOOD}'
-    alias toSherwood='toSystem ${SHERWOOD}'
-    alias fromSherwood='fromSystem ${SHERWOOD}'
-
     alias littlejohn='sshToSystem ${LITTLEJOHN}'
     alias toLittlejohn='toSystem ${LITTLEJOHN}'
     alias fromLittleJohn='fromSystem ${LITTLEJOHN}'
-
-    alias trex='sshToSystem ${TREX}'
-    alias toTrex='toSystem ${TREX}'
-    alias fromTrex='fromSystem ${TREX}'
-
-    alias topaz='sshToSystem ${TOPAZ}'
-    alias toTopaz='toSystem ${TOPAZ}'
-    alias fromTopaz='fromSystem ${TOPAZ}'
-
-    alias ust='sshToSystem ${UST}'
-    alias toUST='toSystem ${UST}'
-    alias fromUST='fromSystem ${UST}'
-
-    alias zambia='sshToSystem ${ZAMBIA}'
-    alias toZambia='toSystem ${ZAMBIA}'
-    alias fromZambia='fromSystem ${ZAMBIA}'
 
     alias gauss17='sshToSystem ${GAUSS17}'
     alias toGauss17='toSystem ${GAUSS17}'

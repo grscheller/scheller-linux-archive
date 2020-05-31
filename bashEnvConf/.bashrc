@@ -271,7 +271,7 @@ else
     # LBRY AppImage
     lbry ()
     {
-      ( ~/build/AppImages/LBRY_0.45.2.AppImage &>/dev/null & )
+      ( ~/opt/AppImages/LBRY_0.45.2.AppImage &>/dev/null & )
     }
 
     # Firefox Browser

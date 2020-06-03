@@ -7140,4 +7140,116 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     $ sudo cp -R ../geoff/opt/AppImages opt/
     $ sudo chown -R grs:grs opt/AppImages/
 
+2020-06-02:
+  Cannot find much info on web about migrating Evolution email client
+  from one login to another.  Lets try something rather crude:
 
+    # rm -rf /home/grs/.config/evolution/
+    # mv /home/geoff/evolution/ /home/grs/.config/
+    # chown -R grs:grs /home/grs/evolution/
+
+  More than I expected, picked up Hover e-mail configs, not gmail
+  configurations.
+
+  Lets try sending an encrypted e-mail, I expect this to fail since
+  this should reach out to the grs "keyring."  Got following error
+  message in Evolution GUI:
+
+    Could not create message.
+    You may need to select different mail options.
+
+    Detailed error: Output from gpg2:
+    gpg: skipped "14CD82A5": No secret key
+    gpg: signing failed: No secret key
+
+  Searching on this error message and hitting the gpg man
+  pages helped.  Lets try exporting public & private keys and
+  re-importing them,
+
+    [geoff]$ gpg --export > pubkeys.asc
+    [geoff]$ gpg --export-secret-keys > privkeys.asc
+
+  Note: second one did not work when I used "su - geoff", had
+        to use ssh.  Asked for the passphase in a pop-up dialog.
+
+    # cp /home/geoff/*.asc /home/grs/
+    # chown grs:grs /home/grs/*.asc
+
+  Now try importing them,
+
+    [grs]$ gpg --import pubkeys.asc
+    gpg: key ...
+    gpg: key ...
+    gpg: key ...
+    gpg: key ...
+    gpg: key ...
+    gpg: Total number processed: 3
+    gpg:               imported: 3
+    gpg: no ultimately trusted keys found
+
+    [grs]$ gpg --import privkeys.asc 
+    gpg: key ...
+    gpg: key ...
+    gpg: Total number processed: 1
+    gpg:              unchanged: 1
+    gpg:       secret keys read: 1
+    gpg:   secret keys imported: 1
+
+  Second command popped a dialog and asked me for the passkey.
+
+  Sent myself email from Hover to Hover.  Was asked for Hover 
+  password, added it to "keyring."
+
+  Got e-mail, Evolution tells me
+
+    Valid signature, but cannot verify sender
+    (Geoffrey Scheller <geoffrey@scheller.com>)
+
+  Since I know I sent it, might as well trust it.
+
+    $ gpg --list-keys
+    <snip>
+    $ gpg --edit-key <snip>
+    <snip>
+    Please decide how far you trust this user to correctly verify other users' keys
+    (by looking at passports, checking fingerprints from different sources, etc.)
+    
+      1 = I don't know or won't say
+      2 = I do NOT trust
+      3 = I trust marginally
+      4 = I trust fully
+      5 = I trust ultimately
+      m = back to the main menu
+    
+    Your decision? 5
+    <snip>
+
+2020-06-02:
+  Configured Gmail with evolution.  First enabled IMAP from Gmail settings in
+  browser (it was not previously enabled - though I did use it before with Evolution.
+
+  Added account in Evolution via File -> New -> Mail Account
+
+  Fumbled my way throgh, authenicated via my Android cell phone.
+
+  Note: Last time I did this, Google Mail was "special."  This time thing got
+        handled like other IMAP servers.
+
+  Note: Not able to GPG digitally sign nor encrypt Gmail emails.
+
+  Note: When sending Hover emails, I am given SMINE options as well as GPG
+        options.  Haven't investigated SMIME.
+
+2020-06-02:
+  Let's see if we can find my lost Evolution emails,
+
+    $ sudo find /home -name '*ZZZ\.AAA*'
+    /home/geoff/.local/share/evolution/mail/local/.ZZZ.AAA Sent
+    /home/geoff/.local/share/evolution/mail/local/.ZZZ.AAA Sent.cmeta
+    /home/grs/.local/share/evolution/mail/local/.ZZZ.AAA Sent
+    /home/grs/.local/share/evolution/mail/local/.ZZZ.AAA Sent.cmeta
+
+  I found if I recreated my local folders manually within Evolution, I can
+  just copy the e-mail files over.  Didn't work right to move the entire
+  directory structure over.  I will probably just copy over select
+  emails.

@@ -7253,3 +7253,121 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   just copy the e-mail files over.  Didn't work right to move the entire
   directory structure over.  I will probably just copy over select
   emails.
+
+2020-06-02:
+  Removed geoff user from system.
+
+    $ sudo userdel -r geoff
+
+  Previously moved /home/geoff/.config to /home/grs/fromGeoff/config
+  Moved other misc items to ~/fromGeoff.
+
+  Still need to configure OneDrive and Zoom. 
+
+2020-06-03:
+  Zoom worked by just moving its config file.
+  Uninstalled and reinstalled MS OneDrive.  Reconnected
+  to OneDrive via social media fumbleware methods.
+
+2020-06-04:
+  On last "sudo pacman -Syu" I noticed some
+  /etc/libvirt/*.conf.pacnew files.
+
+    $ pacman -Qs libvirt
+    local/libvirt 6.4.0-1
+        API for controlling virtualization engines
+          (openvz,kvm,qemu,virtualbox,xen,etc)
+    local/libvirt-glib 3.0.0-1
+        GLib bindings for libvirt
+
+    $ pactree -r libvirt
+    libvirt
+    └─libvirt-glib
+      └─gnome-boxes
+
+  Since I am not a fan of virtualization, let's get rid
+  of it
+
+    $ sudo pacman -Rsc gnome-boxes
+    checking dependencies...
+    :: gnupg optionally requires pcsclite: scdaemon
+    :: weston optionally requires freerdp: support rdp backend
+
+  Removed packages were: freerdp, gtk-vnc, libcacard, libgssglue,libslirp,
+     libvirt, libvirt-glib, mtools, pcsclite, phodav, qemu, seabios, spice,
+     spice-gtk, usbredir,vde2, virglrenderer, yajl, gnome-boxes
+
+  Put back the optional dependencies,
+
+    $ sudo pacman -Syu pcsclite freerdp
+  
+  Reinstalled packages: libgssglue, freerdp, pcsclite
+
+  Cleaned up libvirt *.conf.pacsave files,
+
+    # rm -rf /etc/libvirt/
+
+2020-06-04:
+  Needed to upgrade Zoom client.  Client refused to join a
+  meeting until I upgraded.  Client directed me here:
+
+    https://zoom.us/download
+
+  Hsd 9 choices of Linux flavors, includinf Arch Linux.  Downloaded
+  a file "zoom_x86_64.pkg.tar" but
+
+    $ file zoom_x86_64.pkg.tar
+    zoom_x86_64.pkg.tar: XZ compressed data
+
+  So, added an .xz extension and
+
+    $ sudo pacman -U zoom_x86_64.pkg.tar.xz
+
+  I found the following on Zoom's support site:
+
+    Important Notice: Please update all of your Zoom applications to
+    version 5.0 or higher. After May 30, 2020, all Zoom applications
+    on older versions will receive a forced upgrade when trying to
+    join meetings as GCM Encryption will be fully enabled across the
+    Zoom platform.
+
+  GCM stands for Galois/Counter Mode Encryption.
+
+2020-06-05:
+  From systemctl and "journalctl -b", Postfix mail delievery agent
+  is failing.  Since I don't use local Unix mail anymore, might as
+  well just remove it.
+
+    $ pacman -Qs postfix
+    local/postfix 3.5.2-1
+        Fast, easy to administer, secure mail server
+
+    $ sudo pacman -Rsc postfix
+  
+  Reboot.
+
+    $ systemctl --failed
+      UNIT LOAD ACTIVE SUB DESCRIPTION
+    0 loaded units listed.
+
+2020-06-06:
+  Need to take a decision on the direction of my Arch
+  Linux laptop, gauss17.  Right now I feel that I have
+  "a thing on a thing on a thing."  That is Gnome Shell,
+  on Systemd services, on Arch Linux.  Do I try to go
+  more minimalist or embrace the social trends of
+  Linux distributions?   
+
+  At this point, I think I will go with the social
+  trends and enbrace Systemd.  I basically modeled
+  gauss17 after my Ubuntu, Redhat, and Fedora
+  experiences.  Systemd got shoehorned in under me
+  and Gnome shell was initially the best choice due
+  to me embracing Wayland but having proprietary
+  Nvidia drivers.
+
+  To satisfy my minimalistic Unix tastes, I think I will
+  bring up another system probably with one of the BSD's.
+  I am leaning towards OpenBSD, but haven't ruled out
+  FreeBSD.  Tentative name: euler7.
+

@@ -49,10 +49,8 @@ done
 chmod u=rwx,g=rx,o= ~/bin || echo 'Warning: Failed to set permissions on ~/bin to 750' >&2 
 
 BIN_SCRIPTS='
-    backup
+    buArch
     digpath
-    g3ScaleBG
-    g3SetBG
     monitor
     path
     pathtrim
@@ -67,28 +65,3 @@ do
     cp bin/"$File" ~/bin || echo "Warning: Failed to install ~/bin/$File" >&2
     chmod u=rwx,g=rx,o= ~/bin/"$File" || "Warning: Failed to set permissions on /bin/$File to 750" >&2
 done
-
-# Setup Symlinks for MATLAB
-# Find where MATLAB is installed:
-if [[ -d ~/opt/MATLAB ]]; then
-    MATLAB_INSTALL_DIR=~/opt/MATLAB
-elif [[ -d ~/local/MATLAB ]]; then
-    MATLAB_INSTALL_DIR=~/local/MATLAB
-elif [[ -d /opt/MATLAB ]]; then
-    MATLAB_INSTALL_DIR=/usr/local/MATLAB
-elif [[ -d /usr/local/MATLAB ]]; then
-    MATLAB_INSTALL_DIR=/usr/local/MATLAB
-else
-    MATLAB_INSTALL_DIR=""
-fi
-
-if [[ -d $MATLAB_INSTALL_DIR ]]
-then
-    #Find latest version of MATLAB and create symlinks
-    MATLAB_BIN=$MATLAB_INSTALL_DIR/$(for Rdir in "$MATLAB_INSTALL_DIR"/R*
-                                     do
-                                         echo "${Rdir##*/}"
-                                     done | sort | tail -1)/bin
-    rm -f ~/bin/{matlab,mex}
-    ln -s "$MATLAB_BIN"/{matlab,mex} ~/bin 2> /dev/null
-fi

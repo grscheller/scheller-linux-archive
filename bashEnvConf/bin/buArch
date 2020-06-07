@@ -2,15 +2,14 @@
 #
 # Backup important files to my external HD
 #
-# Usage: backup
+# Usage: buArch
 #
 
-BackupLocation='/run/media/geoff/BUSLINK/geoffBackup'
+BackupLocation='/run/media/grs/BUSLINK/grsBackupArch'
 
 HomeDirs=(
     .ssh
     info
-    local
     Music
     Pictures
 )
@@ -20,9 +19,17 @@ DevelDirs=(
 )
 
 Configs=(
+    .config/autostart
     .config/dconf
+    .config/discord
+    .config/lbry
     .config/onedrive
     .config/zoomus.conf
+)
+
+LocalShareDirs=(
+    .local/share/keyrings
+    .local/share/lbry
 )
 
 Videos=(
@@ -58,6 +65,15 @@ then
     }
 fi
 
+# Make sure .local/share is setup
+if [[ ! -d $BackupLocation/.local/share ]]
+then
+    mkdir -p "$BackupLocation/.local/share" || {
+        echo "Error: failed creating $BackupLocation/.local/share"
+        exit 1
+    }
+fi
+
 # Make sure Videos is setup
 if [[ ! -d $BackupLocation/Videos ]]
 then
@@ -81,6 +97,7 @@ echo -e "\nINFO: Now backup to external HD"
     echo "WARNING:  Failed backing up ${DevelDirs[*]}"
     echo "WARNING:  Not backed up ${HomeDirs[*]}"
     echo "WARNING:  Not backed up ${Configs[*]}"
+    echo "WARNING:  Not backed up ${LocalShareDirs[*]}"
     echo "WARNING:  Not backed up ${Videos[*]}"
     exit 1
 }
@@ -91,6 +108,7 @@ echo -e "\nINFO: Now backup to external HD"
     echo "ERROR: rsync failure with error $RSYNC_FAILURE"
     echo "WARNING:  Failed backing up ${HomeDirs[*]}"
     echo "WARNING:  Not backed up ${Configs[*]}"
+    echo "WARNING:  Not backed up ${LocalShareDirs[*]}"
     echo "WARNING:  Not backed up ${Videos[*]}"
     exit 1
 }
@@ -100,6 +118,16 @@ echo -e "\nINFO: Now backup to external HD"
     RSYNC_FAILURE=$?
     echo "ERROR: rsync failure with error $RSYNC_FAILURE"
     echo "WARNING:  Failed backing up ${Configs[*]}"
+    echo "WARNING:  Not backed up ${LocalShareDirs[*]}"
+    echo "WARNING:  Not backed up ${Videos[*]}"
+    exit 1
+}
+
+# Backup $LocalShareDirs
+/usr/bin/rsync -a --delete "${LocalShareDirs[@]}" "$BackupLocation/.local/share" || {
+    RSYNC_FAILURE=$?
+    echo "ERROR: rsync failure with error $RSYNC_FAILURE"
+    echo "WARNING:  Failed backing up ${LocalShareDirs[*]}"
     echo "WARNING:  Not backed up ${Videos[*]}"
     exit 1
 }

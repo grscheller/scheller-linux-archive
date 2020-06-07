@@ -49,21 +49,4 @@ Design goals are:
 ```
 ### [monitor](monitor)
 * While running, maintain a log of who is on the system
-### [g3SetBG](g3SetBG)
-* Set the GNOME 3 desktop background to a given JPG or PNG file
-```
-   Usage: g3SetBG image_file.jpg
-          g3SetBG image_file.png
-```
-### [g3ScaleBG](g3SetBG)
-* Change the scaling of the GNOME 3 desktop background image
-* Choices are:
-   - Centered
-   - Spanned
-   - Stretched
-   - Scaled
-   - Zoom
-   - Wallpaper
-```
-   Usage: g3ScaleBG 
 ```

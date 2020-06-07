@@ -3115,7 +3115,7 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
     $ sudo timedatectl set-timezone America/Denver
 
-  Use Systemd built-in NTP deamon
+  Use systemd built-in NTP deamon
 
     $ sudo timedatectl set-ntp true
 
@@ -5667,7 +5667,7 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   and it fixed it.
 
   But why is it not being updated?  In the olde days, it was
-  kicked off via cron.  Probably some Systemd service now-a-days.
+  kicked off via cron.  Probably some systemd service now-a-days?
 
   Internet seaching shows most people want to turn it off, along
   with updatedb, to increase boot time.
@@ -7354,12 +7354,12 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   Need to take a decision on the direction of my Arch
   Linux laptop, gauss17.  Right now I feel that I have
   "a thing on a thing on a thing."  That is Gnome Shell,
-  on Systemd services, on Arch Linux.  Do I try to go
+  on systemd services, on Arch Linux.  Do I try to go
   more minimalist or embrace the social trends of
   Linux distributions?   
 
   At this point, I think I will go with the social
-  trends and enbrace Systemd.  I basically modeled
+  trends and embrace systemd.  I basically modeled
   gauss17 after my Ubuntu, Redhat, and Fedora
   experiences.  Systemd got shoehorned in under me
   and Gnome shell was initially the best choice due

@@ -1,7 +1,7 @@
-# Geoffrey's Linux Archive
-### Linux Environment Configuration
-  - [Bash Environment Configuration](bashEnvConf)
-### Linux/POSIX System Administration Logs
+# Geoffrey's Archive
+### POSIX Environment Configurations
+  - [Cross Platform Environment Configurations](envConf)
+### Linux/OpenBSD/POSIX System Administration Logs
   - [System Admin Logs](adminLogs)
 ### Linux/POSIX Notes
   - [Vim Notes](notes/VimNotes)

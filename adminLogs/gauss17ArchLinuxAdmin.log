@@ -7371,3 +7371,19 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   I am leaning towards OpenBSD, but haven't ruled out
   FreeBSD.  Tentative name: euler7.
 
+2020-06-07:
+  Installing ksh package.  Arch gives me a choice between
+  ksh and mksh.  The former provides ksh93.  Other AUR
+  versions seem unmaintained, including an OpenBSD version.
+
+    $ sudo pacman -Syu ksh
+
+    $ chsh -l
+    /bin/sh
+    /bin/bash
+    /usr/bin/git-shell
+    /bin/dash
+    /bin/ksh
+    /usr/bin/ksh
+
+  No intension of making this my login shell on Linux.

@@ -17,8 +17,8 @@
 #  Non-existent path and duplicate path elements
 #  will be dealt with near end of script.
 #
-
 # shellcheck shell=bash
+# shellcheck source=/dev/null
 
 ## Sentinel value to mark completion of
 #  an initial environment configuration.

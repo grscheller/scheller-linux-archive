@@ -16,20 +16,10 @@
 # shellcheck shell=bash
 # shellcheck source=/dev/null
 
-export BASHRC_NON_INTERACTIVE_LVL=${BASHRC_NON_INTERACTIVE_LVL:=0}
-export BASHRC_INTERACTIVE_LVL=${BASHRC_INTERACTIVE_LVL:=0}
-export BASH_PROFILE_LVL=${BASH_PROFILE_LVL:=0}
 export BASH_INIT_LVL=${BASH_INIT_LVL:=0}
 
-if [[ $- != *i* ]]
+if [[ $- == *i* ]]
 then
-    ((BASHRC_NON_INTERACTIVE_LVL++))
-
-    # Don't configure anything, non-interactive
-    # shells are responsible for their own configuration.
-else
-    ((BASHRC_INTERACTIVE_LVL++))
-
     # Make sure an initial shell environment is well defined,
     # terminal windows are not descendant from login shells.
     if ((BASH_INIT_LVL < 1)) || ((BASH_PROFILE_SOURCED == 1)) 

@@ -1,4 +1,5 @@
-## Bash Environment Configuration
+## Unix Environment Configurations
+### Bash Configuration
 Configuration files and associated scripts to bootstrap
 my Linux/UNIX/POSIX Bash environments.
 * Bash startup scripts
@@ -17,8 +18,9 @@ For these configuration files to fully work, the Bash
 scripts in the [bin](bin) directory need to be put into
 the ~/bin directory.
 
-Scripts in the [util](util) directory are for particular
-personal purposes and probably not of general interest.
+### KSH Configuration
+Config files for ksh93.  So far for ksh installed on Linux.
+* .kshrc
 
 ### My philosophy on shell startup
 Facts: For login shells, Bash sources `.bash_profile`.
@@ -55,7 +57,7 @@ initial shell in a terminal window.
 When I first started using AT&T System V UNIX, I
 would login at a real terminal, sometimes connected directly
 to computer, othertimes through a network terminal server,
-and after logging in be in a login shell.
+and, after logging in, be in a login shell.
 
 Later I would telnet or dial into the UNIX host via a DOS/Windows
 telnet or hyperterminal pc client.  Again, involking a login shell.

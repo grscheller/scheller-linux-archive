@@ -1,5 +1,6 @@
 gnuPosixComplianceTrick
 endianness
+korn
 ftm*
 *.o
 *.exe

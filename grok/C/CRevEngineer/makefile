@@ -7,7 +7,7 @@ FTM_BINARIES=ftmBasic \
              ftmPOSIX199309L ftmPOSIX199506L ftmPOSIX200112L \
              ftmPOSIX200809L ftmPOSIX202012L \
              ftmGNU
-BINARIES=endianness gnuPosixComplianceTrick
+BINARIES=endianness gnuPosixComplianceTrick korn
 
 default: binaries
 
@@ -19,6 +19,8 @@ endianness: endianness.c
 gnuPosixComplianceTrick: gnuPosixComplianceTrick.c gnuPosixComplianceTrick.h
 	$(CC) $(CFLAGS) -o $@ $<
 
+korn: korn.c
+	$(CC) $(CFLAGS) -o $@ $<
 
 ftm: $(FTM_BINARIES)
 

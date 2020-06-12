@@ -1,26 +1,23 @@
 ## Unix Environment Configurations
-### Bash Configuration
+### Shell Configuration
 Configuration files and associated scripts to bootstrap
-my Linux/UNIX/POSIX Bash environments.
-* Bash startup scripts
+my Linux/UNIX/POSIX Bash and Ksh environments.
+* Bash & Ksh startup scripts
 * Useful ~/bin Bash scripts
 * Vim configuration
 * Readline Library configuration
 * installHome installs everything into $HOME
-  * run from bashEnvConf directory
+  * run from envConf directory
   * use as template for your own version
 * Tested on:
   * Arch Linux
-  * CentOS 6 & 7
+  * CentOS 7
+  * AWS Linux
   * Cygwin & MSYS2 on Windows 10
 
 For these configuration files to fully work, the Bash
 scripts in the [bin](bin) directory need to be put into
 the ~/bin directory.
-
-### KSH Configuration
-Config files for ksh93.  So far for ksh installed on Linux.
-* .kshrc
 
 ### My philosophy on shell startup
 Facts: For login shells, Bash sources `.bash_profile`.

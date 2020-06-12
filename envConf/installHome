@@ -14,15 +14,19 @@
 
 DOT_FILES='
     .bashrc
-    .bash_profile
-    .bash_init
     .bash_logout
+    .env_init
     .inputrc
     .kshrc
+    .profile
+'
+
+RM_DOT_FILES='
+    .bash_profile
 '
 
 ### Back up existing dot-files in case things go wrong
-for File in $DOT_FILES
+for File in $DOT_FILES $RM_DOT_FILES
 do
     diff ~/"$File" ~/"${File}.old" &>/dev/null && continue
     [[ ! -f ~/$File ]] || cp ~/"$File" ~/"${File}.old" || { echo "Error: Failed to backup previous ~/$File" >&2; exit 1; }
@@ -32,7 +36,13 @@ done
 for File in $DOT_FILES
 do
     cp "$File" ~ || echo "Warning: Failed to install ~/$File" >&2
-    chmod u=rw,g=r,o= "$File" || "Warning: Failed to set permissions on ~/$File to 750" >&2
+    chmod u=rw,g=r,o= "$File" || echo "Warning: Failed to set permissions on ~/$File to 640" >&2
+done
+
+### Remove files (example: want bash to use .profile not .bash_profile)
+for File in $RM_DOT_FILES
+do
+    [[ ! -f ~/$File ]] || rm -f ~/"$File" || echo "Warning: Failed to remove old ~/$File" >&2
 done
 
 ### Make sure ~/catch is there for the toSystem() shell function

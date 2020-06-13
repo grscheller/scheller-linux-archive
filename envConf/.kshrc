@@ -15,7 +15,7 @@ export ENV_INIT_LVL=${ENV_INIT_LVL:=0}
 ## Make sure an initial shell environment well defined
 #
 #  Shells in terminal windows not necessarily
-#  descendant from login shells.
+#  descendant from a login shell.
 if ((ENV_INIT_LVL < 1)) || ((DOT_PROFILE_SOURCED == 1)) 
 then 
     source ~/.env_init
@@ -43,6 +43,7 @@ case $HOST in
   *) if [[ $(uname) =~ ^CYGWIN ]]; then
          HOST=CYGWIN
          export CYGWIN=winsymlinks:nativestrict
+         set -o igncr  # for Anaconda3 Python conda.sh
      elif [[ $(uname) =~ ^MSYS ]]; then
          HOST=MSYS2
          export MSYS=winsymlinks:nativestrict
@@ -56,14 +57,28 @@ case $HOST in
      ;;
 esac
 
+## Terminal window title prompt string
+LOGIN_NAME="$(id -un)"
+case $TERM in
+  xterm*|rxvt*|urxvt*|kterm*|gnome*)
+    TERM_TITLE=$'\e]0;'"${LOGIN_NAME}@${HOST}"$'\007'
+    ;;
+  screen)
+    TERM_TITLE=$'\e_'"${LOGIN_NAME}@${HOST}"$'\e\\'
+    ;;
+  *)
+    TERM_TITLE=''
+    ;;
+esac
+
 # Setup 3 line primary prompt
-PS1=$'\n[$(id -un)@${HOST}: $(relative_pwd)]\n% '
+PS1="${TERM_TITLE}"$'\n['"${LOGIN_NAME}@${HOST}"$': $(relative_pwd)]\n$ '
 PS2='> '
 PS3='#? '
 PS4='++ '
 
 ## Set default behaviors
-set -o vi      # Vi editing mode
+set -o vi        # Vi editing mode
 set -o pipefail  # Return right most nonzero error, otherwise 0.
 HISTSIZE=5000
 HISTCONTROL="ignoredups"

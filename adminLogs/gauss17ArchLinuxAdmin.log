@@ -7387,3 +7387,35 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     /usr/bin/ksh
 
   No intension of making this my login shell on Linux.
+
+2020-06-13:
+  The start up scrips for thr grs login now support both
+  bash and ksh.  Both share .profile (written in POSIX shell)
+  and .kshrc (written in a commen subset of both ksh and bash).
+  The .bashrc file is bash specific, it primary purpose is to
+  configure bash like ksh.  It is compatible for a wide variety
+  of relatively complient POSIX systems where bash is installed.
+
+  Note: I am using my usual 3 line prompt.  For ksh it ends with
+        "$ " and "% " for ksh and bash respectfully.  For these
+        notes, I will use "$ " and  "% " as the prompts to
+        indicate which shell I am in.
+
+  The version of ksh I am using is
+
+    $ ksh --version
+    version         sh (AT&T Research) 2020.0.0
+  
+  which is very similar in behavior to ksh93.
+
+  I really like ksh and decided to make it my default login
+  shell on gauss17.  Pretty easy,
+
+    % chsh -s /bin/ksh
+    Changing shell for grs.
+    Password: 
+    Shell changed.
+
+  Factoid: Until I logged out and back into my desktop session,
+           the gnome-terminal daemon countined to launch
+           new terminals using the old login shell.

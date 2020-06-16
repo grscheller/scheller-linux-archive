@@ -6,10 +6,7 @@
 #    1. Make sure you know what you are doing,
 #    2. Unless you are me, use this as a
 #       template for your own version.
-#    3. Does not automatically install the 
-#       X-Windows files, they are for one
-#       specific Arch Linux computer.
-#    4. Run from the envConf directory.
+#    3. Run from the envConf directory.
 #
 
 DOT_FILES='
@@ -23,44 +20,11 @@ DOT_FILES='
 
 RM_DOT_FILES='
     .bash_profile
+    .vimrc
 '
 
-### Back up existing dot-files in case things go wrong
-for File in $DOT_FILES $RM_DOT_FILES
-do
-    diff ~/"$File" ~/"${File}.old" &>/dev/null && continue
-    [[ ! -f ~/$File ]] || cp ~/"$File" ~/"${File}.old" || { echo "Error: Failed to backup previous ~/$File" >&2; exit 1; }
-done
-
-### Install home directory dot-files
-for File in $DOT_FILES
-do
-    cp "$File" ~ || echo "Warning: Failed to install ~/$File" >&2
-    chmod u=rw,g=r,o= "$File" || echo "Warning: Failed to set permissions on ~/$File to 640" >&2
-done
-
-### Remove files (example: want bash to use .profile not .bash_profile)
-for File in $RM_DOT_FILES
-do
-    [[ ! -f ~/$File ]] || rm -f ~/"$File" || echo "Warning: Failed to remove old ~/$File" >&2
-done
-
-### Make sure ~/catch is there for the toSystem() shell function
-[[ -d ~/catch ]] || mkdir ~/catch || echo 'Warning: Failed to create ~/catch, do so manually.' >&2
-
-### Install vimrc
-[[ -f ~/.vimrc ]] && mv ~/.vimrc ~/.vimrc_old && echo 'Warning: Move existing ~/.vimrc => ~/.vimrcr_old' >&2
-[[ -d ~/.vim ]] || mkdir ~/.vim || echo 'Warning: Failed to create ~/.vim, punting on installing ~/.vim/`vimrc' >&2
-[[ -f ~/.vim/vimrc ]] && mv ~/.vim/vimrc ~/.vim/vimrc_old || echo 'Warning: Failed making backup of old ~/.vim/vimrc' >&2
-[[ -d ~/.vim ]] && cp ./.vim/vimrc ~/.vim || echo 'Warning: Failed to install ~/.vim/vimrc' >&2
-[[ -f ~/.vim/vimrc ]] && chmod u=rw,g=r,o= ~/.vim/vimrc || echo 'Warning: Failed to set permissions on ~/vim/vimrc to 640' >&2 
-
-### Create ~/bin directory if necessary
-[[ -d ~/bin ]] || mkdir ~/bin || { echo 'Error: Failed to create ~/bin' >&2; exit 1; }
-chmod u=rwx,g=rx,o= ~/bin || echo 'Warning: Failed to set permissions on ~/bin to 750' >&2 
-
 BIN_SCRIPTS='
-    buArch
+    buGauss17
     digpath
     monitor
     path
@@ -70,9 +34,73 @@ BIN_SCRIPTS='
     viewJarManifest
 '
 
-### Install ~/bin scripts
+## Back up existing dot-files in case things go wrong
+#  and then remove the following files:
+#    ~/.bash_profile  <- want bash to use ~/.profile 
+#    ~/.vimrc         <- want  vim to use ~/.vim/vmrc
+#
+for File in $DOT_FILES $RM_DOT_FILES
+do
+    diff ~/"$File" ~/"${File}.old" &>/dev/null && continue
+    [[ ! -f ~/$File ]] || cp ~/"$File" ~/"${File}.old" || {
+        printf 'Error: Failed to backup previous ~/%s\n' "$File" >&2
+        exit 1
+    }
+done
+for File in $RM_DOT_FILES
+do
+    [[ ! -f ~/$File ]] || rm -f ~/"$File" ||
+        printf 'Warning: Failed to remove old ~/%s\n' "$File" >&2
+done
+
+## Install home directory dot-files
+for File in $DOT_FILES
+do
+    cp "$File" ~ ||
+        printf 'Warning: Failed to install ~/%s\n' "$File" >&2
+    chmod u=rw,g=r,o= ~/"$File" || {
+        printf 'Warning: Failed to set permissions' >&2
+        printf ' on ~/%s to 640\n' ~/"$File"        >&2
+    }
+done
+
+## Make sure ~/catch is there for the toSystem() shell function
+[[ -d ~/catch ]] || mkdir ~/catch ||
+    printf 'Warning: Failed to create ~/catch, do so manually' >&2
+
+## Install vimrc
+[[ -d ~/.vim ]] || mkdir ~/.vim || {
+    printf 'Error: Failed to create ~/.vim,'     >&2
+    printf ' punting on installing ~/.vim/vimrc' >&2
+    exit 1
+}
+
+[[ ! -f ~/.vim/vimrc ]] || mv ~/.vim/vimrc ~/.vim/vimrc.old || {
+    printf 'Error: Failed backing up old ~/.vim/vimrc' >&2
+    exit 1
+}
+
+[[ -d ~/.vim ]] && cp ./.vim/vimrc ~/.vim ||
+    printf 'Warning: Failed to install ~/.vim/vimrc' >&2
+
+[[ -f ~/.vim/vimrc ]] && chmod u=rw,g=r,o= ~/.vim/vimrc ||
+    printf 'Warning: Failed to set permissions on ~/vim/vimrc to 640' >&2 
+
+## Create ~/bin directory if necessary
+[[ -d ~/bin ]] || mkdir ~/bin || {
+    printf 'Error: Failed to create ~/bin' >&2
+    exit 1
+}
+chmod u=rwx,g=rx,o= ~/bin ||
+    printf 'Warning: Failed to set permissions on ~/bin to 750' >&2 
+
+## Install ~/bin scripts
 for File in $BIN_SCRIPTS
 do
-    cp bin/"$File" ~/bin || echo "Warning: Failed to install ~/bin/$File" >&2
-    chmod u=rwx,g=rx,o= ~/bin/"$File" || "Warning: Failed to set permissions on /bin/$File to 750" >&2
+    cp bin/"$File" ~/bin ||
+        printf 'Warning: Failed to install ~/bin/%s\n' "$File" >&2
+    chmod u=rwx,g=rx,o= ~/bin/"$File" || {
+        printf 'Warning: Failed to set permissions' >&2
+        printf ' on ~/bin/%s to 750\n' "$File"      >&2
+    }
 done

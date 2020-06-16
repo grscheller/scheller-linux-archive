@@ -3,7 +3,7 @@
 Configuration files and associated scripts to bootstrap
 my Linux/UNIX/POSIX Bash and Ksh environments.
 * Bash & Ksh startup scripts
-* Useful ~/bin Bash scripts
+* Useful ~/bin Shell scripts
 * Vim configuration
 * Readline Library configuration
 * installHome installs everything into $HOME

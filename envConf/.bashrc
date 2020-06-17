@@ -1,26 +1,23 @@
-#   ~/.bashrc
+#  ~/.bashrc
 #
 # Bash configuration across multiple, more or
 # or less, POSIX complient systems.
 #
-# Reads in shell functions and aliases from ~/.kshrc
-#
 # shellcheck shell=bash
 # shellcheck source=/dev/null
+
+export ENV_INIT_LVL=${ENV_INIT_LVL:=0}
 
 ## If not interactive, don't do anything.
 [[ $- != *i* ]] && return
 
-## System wide configurations
-#
-# Mechanism used on Redhat & Redhat derived systems
-[[ -f /etc/bashrc ]] && source /etc/bashrc
-#
 # Debian and Arch Linux derived systems typically
 # compile bash with option -DSYS_BASHRC which causes
 # bash to source /etc/bash.bashrc before ~/.bashrc.
 #
-# Reload Bash completion scripts if not already done above.
+# Mechanism used on Redhat & Redhat derived systems
+[[ -f /etc/bashrc ]] && source /etc/bashrc
+
 # Note: Cygwin/MinGW/MYSYS2 environment startup scripts
 #       are broken, without this bash completion only works
 #       in a top level shell.
@@ -37,21 +34,32 @@ then
     fi
 fi
 
-## Make BASH more KSH like
-shopt -s extglob  # Turn on extended pattern matching.
+## Make BASH more Korn Shell like
+shopt -s extglob
 shopt -s checkwinsize
 shopt -s checkhash
-shopt -s cmdhist   # Store multiline commands as single entry
-shopt -s lithist   # in history with embedded whitespace.
-shopt -s histappend  # Append, don't replace history file.
-PROMPT_COMMAND='history -a' # Save history whenever prompt displayed
+shopt -s cmdhist
+shopt -s lithist
+shopt -s histappend
+PROMPT_COMMAND='history -a'
 HISTFILESIZE=5000
 
-## Read in aliases and functions
-source ~/.kshrc
+## Make sure an initial shell environment well defined
+#
+#    Shells in terminal windows not necessarily
+#    descendant from a login shell.
+#
+if ((ENV_INIT_LVL < 1)) || ((DOT_PROFILE_SOURCED == 1)) 
+then 
+    source ~/.env_init
+    unset DOT_PROFILE_SOURCED 
+fi
 
-## Modify prompt for Bash - use % instead of $
-PS1="${PS1%\$ }% "
+## Read in aliases and functions
+source ~/.envrc
+
+## Modify 3 line prompt for Bash - end with  '% '
+PS1="${PS1%\> }% "
 
 ## Bash completion for stack (Haskell)
 eval "$(stack --bash-completion-script stack)"

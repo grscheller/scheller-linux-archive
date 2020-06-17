@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/ksh
 #
 # Install Bash Environment & other config. files into home directory
 #
@@ -13,14 +13,18 @@ DOT_FILES='
     .bashrc
     .bash_logout
     .env_init
+    .envrc
     .inputrc
     .kshrc
     .profile
 '
 
-RM_DOT_FILES='
+RM_FILES='
     .bash_profile
     .vimrc
+    bin/buArch
+    bin/g3ScaleBG
+    bin/g3SetBG
 '
 
 BIN_SCRIPTS='
@@ -39,17 +43,17 @@ BIN_SCRIPTS='
 #    ~/.bash_profile  <- want bash to use ~/.profile 
 #    ~/.vimrc         <- want  vim to use ~/.vim/vmrc
 #
-for File in $DOT_FILES $RM_DOT_FILES
+for File in $DOT_FILES $RM_FILES
 do
-    diff ~/"$File" ~/"${File}.old" &>/dev/null && continue
+    diff ~/"$File" ~/"${File}.old" 2>&- >&-  && continue
     [[ ! -f ~/$File ]] || cp ~/"$File" ~/"${File}.old" || {
         printf 'Error: Failed to backup previous ~/%s\n' "$File" >&2
         exit 1
     }
 done
-for File in $RM_DOT_FILES
+for File in $RM_FILES
 do
-    [[ ! -f ~/$File ]] || rm -f ~/"$File" ||
+    [[ ! -f ~/$File ]] || rm ~/"$File" 2>- ||
         printf 'Warning: Failed to remove old ~/%s\n' "$File" >&2
 done
 

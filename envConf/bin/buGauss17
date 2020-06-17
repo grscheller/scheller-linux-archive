@@ -1,9 +1,10 @@
-#!/bin/ksh
+#!env ksh
 #
 # Backup important files to my external HD
 #
-# Usage: buArch
+# Usage: buGauss17
 #
+# shellcheck shell=ksh
 
 ## Backup configuration
 
@@ -12,6 +13,7 @@ BackupLocation='/run/media/grs/BUSLINK/grsBackupArch'
 HomeFiles=(
     .bashrc
     .env_init
+    .envrc
     .inputrc
     .kshrc
     .profile
@@ -22,6 +24,7 @@ HomeDirs=(
     info
     Music
     Pictures
+    .zoom
 )
 
 VimFile=.vim/vimrc

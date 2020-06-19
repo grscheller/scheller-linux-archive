@@ -14,7 +14,12 @@ export DOT_PROFILE_SOURCED=1
 #  since there is no guarentee that this
 #  file will ever be sourced.
 MyShell=${0#-}; MyShell=${MyShell##*/}
-[ "$MyShell"X == bashX ] && [ -r ~/.bashrc ] && . ~/.bashrc
-[ "$MyShell"X == kshX ]  && [ -r ~/.kshrc ]  && . ~/.kshrc
+[ "$MyShell"X == bashX ] && [ -r ~/.bashrc ] && {
+    . ~/.bashrc
+}
+[ "$MyShell"X == kshX ]  && [ -r ~/.kshrc ]  && {
+    export ENV=~/.kshrc
+    . ~/.kshrc
+}
 
 ## Perform other tasks unique to actual login shells

@@ -26,5 +26,4 @@ fi
 . ~/.envrc
 
 ## Modify 3 line prompt for KSH - end with  '$ '
-PS1="${PS1%\> }$ "
-
+PS1="${PS1%??}$ "

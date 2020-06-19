@@ -59,10 +59,13 @@ fi
 . ~/.envrc
 
 ## Modify 3 line prompt for Bash - end with  '% '
-PS1="${PS1%\> }% "
+PS1="${PS1%??}% "
 
 ## Bash completion for stack (Haskell)
-eval "$(stack --bash-completion-script stack)"
+if ~/bin/digpath stack > /dev/null 2>&1
+then
+    eval "$(stack --bash-completion-script stack)"
+fi
 
 ## Configure Anaconda3 Python Distribution
 if [[ -d ~/opt/anaconda3 ]]

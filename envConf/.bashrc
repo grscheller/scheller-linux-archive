@@ -16,7 +16,7 @@ export ENV_INIT_LVL=${ENV_INIT_LVL:=0}
 # bash to source /etc/bash.bashrc before ~/.bashrc.
 #
 # Mechanism used on Redhat & Redhat derived systems
-[[ -f /etc/bashrc ]] && source /etc/bashrc
+[[ -f /etc/bashrc ]] && . /etc/bashrc
 
 # Note: Cygwin/MinGW/MYSYS2 environment startup scripts
 #       are broken, without this bash completion only works
@@ -24,13 +24,13 @@ export ENV_INIT_LVL=${ENV_INIT_LVL:=0}
 if [[ $(type -t __parse_options) != function ]]
 then
     if [[ -f /usr/share/bash-completion/bash_completion ]]; then
-        source /usr/share/bash-completion/bash_completion 
+        . /usr/share/bash-completion/bash_completion 
     elif [[ -f /usr/share/bash-completion/bash_completion.sh ]]; then
-        source /usr/share/bash-completion/bash_completion.sh
+        . /usr/share/bash-completion/bash_completion.sh
     elif [[ -f /etc/bash_completion ]]; then
-        source /etc/bash_completion
+        . /etc/bash_completion
     elif [[ -f /etc/bash_completion.sh ]]; then
-        source /etc/bash_completion.sh
+        . /etc/bash_completion.sh
     fi
 fi
 
@@ -51,12 +51,12 @@ HISTFILESIZE=5000
 #
 if ((ENV_INIT_LVL < 1)) || ((DOT_PROFILE_SOURCED == 1)) 
 then 
-    source ~/.env_init
+    . ~/.env_init
     unset DOT_PROFILE_SOURCED 
 fi
 
 ## Read in aliases and functions
-source ~/.envrc
+. ~/.envrc
 
 ## Modify 3 line prompt for Bash - end with  '% '
 PS1="${PS1%\> }% "
@@ -68,5 +68,5 @@ eval "$(stack --bash-completion-script stack)"
 if [[ -d ~/opt/anaconda3 ]]
 then
     # Have not tested out under ksh - so left this here
-    source ~/opt/anaconda3/etc/profile.d/conda.sh
+    . ~/opt/anaconda3/etc/profile.d/conda.sh
 fi

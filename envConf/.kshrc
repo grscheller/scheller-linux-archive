@@ -18,12 +18,12 @@ export ENV_INIT_LVL=${ENV_INIT_LVL:=0}
 #
 if ((ENV_INIT_LVL < 1)) || ((DOT_PROFILE_SOURCED == 1)) 
 then 
-    source ~/.env_init
+    . ~/.env_init
     unset DOT_PROFILE_SOURCED 
 fi
 
 ## Read in aliases and functions
-source ~/.envrc
+. ~/.envrc
 
 ## Modify 3 line prompt for KSH - end with  '$ '
 PS1="${PS1%\> }$ "

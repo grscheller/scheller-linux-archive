@@ -25,5 +25,9 @@ fi
 ## Read in aliases and functions
 . ~/.envrc
 
+## Should already be in environment
+export ENV=~/.kshrc
+
 ## Modify 3 line prompt for KSH - end with  '$ '
 PS1="${PS1%??}$ "
+

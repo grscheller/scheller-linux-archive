@@ -1,6 +1,8 @@
-#!/bin/ksh
+#!/bin/bash
 #
-# Install Bash Environment & other config. files into home directory
+# Install Bash and Korn Shell environments
+# as well as other config. files into home
+# directory
 #
 # To use:
 #    1. Make sure you know what you are doing,

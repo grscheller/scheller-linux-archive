@@ -44,7 +44,7 @@ shopt -s histappend
 PROMPT_COMMAND='history -a'
 HISTFILESIZE=5000
 
-## Make sure an initial shell environment well defined
+## Make sure an initial shell environment is well defined
 #
 #    Shells in terminal windows not necessarily
 #    descendant from a login shell.
@@ -61,6 +61,19 @@ fi
 ## Modify 3 line prompt for Bash - end with  '% '
 PS1="${PS1%??}% "
 
+## Make sure ksh has its environment
+if ~/bin/digpath ksh > /dev/null 2>&1
+then
+    alias ksh='ENV=~/.kshrc ksh'
+    if ~/bin/digpath mksh > /dev/null 2>&1
+    then
+        alias mksh='ENV=~/.kshrc mksh'
+    fi
+elif ~/bin/digpath mksh > /dev/null 2>&1
+then
+    alias ksh='ENV=~/.kshrc mksh'
+fi
+
 ## Bash completion for stack (Haskell)
 if ~/bin/digpath stack > /dev/null 2>&1
 then
@@ -70,6 +83,6 @@ fi
 ## Configure Anaconda3 Python Distribution
 if [[ -d ~/opt/anaconda3 ]]
 then
-    # Have not tested out under ksh - so left this here
+    # Have not tested out under ksh
     . ~/opt/anaconda3/etc/profile.d/conda.sh
 fi

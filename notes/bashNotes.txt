@@ -12,20 +12,22 @@ Shell is acually based on a subset of the Korn Shell (Ksh) with
 interactive ideas from C Shell.
 
 The original Bourne Shell was flawed.  There are features of the
-Bourne Shell that are in Bash for backward and POSIX compatibility.
-When Bash scripting, These features should be avoided as indicated
+Bourne Shell that are in Bash for backward compatibility.  When
+Bash scripting,these features should be avoided as indicated
 later in the notes.
 
 C Shell was revolutionary in its day.  It provides for enhanced 
-interactive user operability.  Its syntax was modeled after the C
-programming language which made it easier for C programmers to learn. 
-Unfortunately, it has an inconsistent grammer and its syntax is
-rather adhoc across the language.  C Shell is still used by
-(non-computer science) scientists, but otherwise is dead.
+interactive user operability.  Its syntax was modeled after the
+C programming language which made it easier for C programmers
+to learn.  Unfortunately, it has an inconsistent grammer and its
+syntax is rather adhoc across the language.  C Shell is still
+sometimes used by (non-computer science) scientists, but
+otherwise is dead.
 
-Korn Shell was AT&T's UNIX System V replacement for the Bourne Shell.
-Unfornuately it came out after AT&T made System V completely
-proprietary software.  It became very popular in proprietary Unices.
+Korn Shell was AT&T's UNIX System V replacement for the Bourne
+Shell.  Unfornuately it came out after AT&T made System V
+completely proprietary software.  It became very popular in
+proprietary UNIXs.
 
 To get the most out of these notes, one needs to be already
 functional with Bash.  For a good introductory tutorial,
@@ -33,10 +35,11 @@ I suggest "The Linux Command Line" by William Shotts.
 
 1. Globbing:
 
-   Bash will "wildcard match" filenames in the directory structure.
-   This is not to be confused with regular expression pattern
-   matching, which is used by commands like grep and sed or
-   programming languages like Python and Perl.
+   Bash will "wildcard match" filenames in the directory
+   structure.  This is not to be confused with regular
+   expression pattern matching, which is used by commands
+   like grep and sed or programming languages like
+   Python and Perl.
 
         * match 0 or more characters
         ? match any character
@@ -58,26 +61,30 @@ I suggest "The Linux Command Line" by William Shotts.
 
    case $1 in
        a*           ) foo;;   # match anything starting with a
-       b?           ) bar;;   # match 2 char string starting with b
+       b?           ) bar;;   # match 2 characters first being b
        c[de]        ) baz;;   # match cd or ce
        me?(e)t      ) qux;;   # match met or meet
        @(a|e|i|o|u) ) quux;;  # match one vowel
    esac
 
-   Note: Names like foo, bar, baz, and values like 42 are examples of
-         what are called "metasyntactic variables."  They are just
-         meaningless place holders when illustrating syntax.  In the above
-         they can represent Linux commands or shell functions.  Can
-         also be multiple statements separated by newlines or semicolens.
+   Note: Names like foo, bar, baz, and values like 42 are
+         examples of what are called "metasyntactic variables."
+         They are just meaningless place holders when illustrating
+         syntax.  In the above they can represent Linux commands
+         or shell functions.  Can also be multiple statements
+         separated by newlines or semicolens.
 
-   Note: Case statements end with a "esac", case spelled backwards.
-         If statements end similarly with an "fi".  This comes from
-         the original Bourne shell where it was stolen from Algol.
+   Note: Case statements end with a "esac", case spelled
+         backwards.  If statements end similarly with an "fi".
+         This comes from the original Bourne shell where it
+         was borrowed from Algol.
 
-3. In Bash version 4 and later, case has (in addition to ;;) ;& and ;;&
+3. In Bash version 4 and later, case in addition to ;; has
+   ;& and ;;&
 
-       ;&  fall through without testing next case (like in C without break)
-       ;;& means don't terminate, continue testing 
+       ;&   Fall through without testing next case,
+            like in C without break.
+       ;;&  Means don't terminate, continue testing.
 
           case $greating in
               hello*)
@@ -160,16 +167,21 @@ I suggest "The Linux Command Line" by William Shotts.
      cmd >> file 2>&1
 
    Less commonly known is that you can close file descriptures,
-   for example, this closes stderr
-     cmd 2>&-
+   for example, this closes stderr:
+
+     $ cmd 2>&-
+
    This is NOT the same as
-     cmd 2>/dev/null
-   Alot of times the former and latter seem to accomplish the same
-   thing, they gag error messages.  In the latter, we are depending
-   that cmd is smart enough to know what to do in case it encounters
-   closed file descriptor (as in C language file descriptor).
-   This can be used for efficiency, but depends on knowledge of the
-   internal workings of commands.  Usually cmd complains:
+
+     $ cmd 2>/dev/null
+
+   Alot of times the former and latter seem to accomplish
+   the same thing, they gag error messages.  In the latter,
+   we are depending that cmd is smart enough to know what
+   to do in case it encounters closed file descriptor
+   (as in C language file descriptor).  This can be used
+   for efficiency, but depends on knowledge of the internal
+   workings of commands.  Sometimes cmd complains:
 
      $ printf "Hello World\nGood bye for now\n" | tee junk1
      Hello World
@@ -179,7 +191,8 @@ I suggest "The Linux Command Line" by William Shotts.
      $ cat junk2
      Hello World
      Good bye for now
-     $ 
+
+   Actually, this is POSIX Shell compliant.
 
 6. Array variables:
 
@@ -248,8 +261,8 @@ I suggest "The Linux Command Line" by William Shotts.
 
 8. Default values for shell variables:
 
-   Use := within the {} to specify a default value for a shell variable,
-   if it is unset or the empty string.
+   Use := within the {} to specify a default value for a
+   shell variable, if it is unset or the empty string.
 
       $ PIE="Apple Pie"
       $ FavoritePie=${PIE:="Cherry Pie"}
@@ -260,14 +273,17 @@ I suggest "The Linux Command Line" by William Shotts.
       Chocolotte Cake
 
 9. Comments begin with a # and can occur anywhere on a line:
+
       # This is a comment
       Foo="foo"  # This is a comment too.
       Bar="bar"
       # Silly to type comments at the shell prompt, but comments
       # help the reader of a shell script know what is going on.
-      echo ${Foo}${Bar}  # This will print "foobar" without the quotes.
-                         # It will work without the brackets, but I think
-                         # they make the command more readable.
+      echo ${Foo}${Bar}  # This will print "foobar"
+                         # without the quotes.
+                         # It will work without the brackets,i
+                         # but I think they make the command
+                         # more readable.
 
 10. Shell variables verses environment variables.
 
@@ -277,16 +293,16 @@ I suggest "The Linux Command Line" by William Shotts.
     "export them to the environment."
 
       $ answer=42
-      $ bash          # Now in a completely different instance of bash
+      $ bash          # Completely different instance of bash
       $ echo "The answer is ${answer}."
       The answer is .
-      $ exit                 # We are back in the original shell.
-      $ export answer        # Answer is now known to the environment.
-      $ bash                 # Brand new instance again.
+      $ exit             # We are back in the original shell.
+      $ export answer    # Answer is now known to the environment.
+      $ bash           # Brand new instance again.
       $ echo "The answer is ${answer}."
       The answer is 42.
-      $ exit         # Also <ctrl-d> will exit you from the shell.
-      $ answer=53    # Don't have to "re-export" to the environment.
+      $ exit       # Also <ctrl-d> will a;so exit you.
+      $ answer=53  # Don't have to "re-export" to the environment.
       $ bash
       $ echo "The answer is ${answer}."
       The answer is 53.
@@ -294,17 +310,18 @@ I suggest "The Linux Command Line" by William Shotts.
       $ echo "The answer is ${answer}."
       The answer is 0.
       $ exit
-      $ echo "The answer is ${answer}."   # value unchanged in parent shell
+      $ echo "The answer is ${answer}."   # value unchanged
       The answer is 53.
 
-    Note: Unlike the old AT&T Bourne Shell, not to be confused with
-          POSIX/Standard Shell, you don't need to re-export shell
-          variables every time you change them for their new values
-          to be picked up by the environment.
+    Note: Unlike the old Solaris Bourne Shell, not to be confused
+          with POSIX/Standard Shell, you don't need to re-export
+          shell variables every time you change them for their
+          new values to be picked up by the environment.
 
-    Note: C Shell (csh) contains two separate namespaces for shell and
-          environment variables, which can be very confusing for someone
-          with Bash or POSIX/Standard Shell experience.
+    Note: C Shell (csh) contains two separate namespaces for
+          shell and environment variables, which can be very
+          confusing for someone with Bash or POSIX/Standard
+          Shell experience.
 
     Bash subshells are not separate instances of bash:
 
@@ -349,18 +366,19 @@ I suggest "The Linux Command Line" by William Shotts.
    
       $ aString="Hello big wide world"
 
-    Little nibbles are conservative(delete smallest possible pattern):
+    Little nibbles are conservative, they delete the
+    smallest possible pattern, # from front, % from rear:
 
-      $ echo ${aString#* }      # Anything followed by a space from front
+      $ echo ${aString#* }
       big wide world
-      $ echo ${aString% *}      # A space followed by anything from end
+      $ echo ${aString% *}
       Hello big wide
 
-    Big nibbles are greedy(delete largest possible pattern):
+    Big nibbles are greedy, deleting largest possible pattern.
       
-      $ echo ${aString##* }      # Anything followed by a space from front
+      $ echo ${aString##* }
       world
-      $ echo ${aString%% *}      # A space followed by anything from end
+      $ echo ${aString%% *}
       Hello
 
 12. Prefer using [[ ... ]] over [ ... ].
@@ -369,9 +387,9 @@ I suggest "The Linux Command Line" by William Shotts.
     They are located here: /usr/bin/[
                            /use/bin/test
 
-    On different Unixes, I have seen them sym-linked, hard-linked, and as
-    separate commands.  I have seen bizzarre bugs in shell scripts when
-    people have used test as a shell variable name.
+    On different Unixes, I have seen them sym-linked, hard-linked,
+    and separate commands.  I have seen bizzarre bugs in shell
+    scripts when people have used test as a shell variable name.
 
     Anycase, when performing tests, always use [[ ... ]].  Double
     brackets are reserve words in Bash and are much more tolerant
@@ -388,26 +406,33 @@ I suggest "The Linux Command Line" by William Shotts.
       > fi
       No Fruit
 
-   The above will give you a syntax error if you use single [ and ].
+   The above will give you a syntax error if you use
+   single [ and ].
 
-      Aside: In older shell scripts (and even new Bash scripts!)
-             you frequently see constructs like
+   Aside: In older shell scripts (and even new Bash scripts!)
+          you frequently see constructs like
 
-             $ if [ FOO$Fruit == FOO ]
+            $ if [ FOO$Fruit == FOO ]
 
-             for the first line of the test above. This is to get
-             around an old wart from the Bourn shell.  
+          for the first line of the test above. This is to get
+          around this old wart from the Bourn shell.  This is
+          why the [ ... ] shell built-in has the semantics of
+          an external command.
 
-   Unfortunately, utilities like make and X-Window start-up scripts
-   use POSIX shell, you still need to be able to deal with [ ... ].
+   Unfortunately, utilities like make and X-Windows start-up
+   scripts use POSIX shell, you still need to be able to deal
+   with [ ... ].  
 
-13. [[ ... ]] is a "command" on its own and not part of the `if' command
-    syntax.  
+   Unlike  [ ... ], [[ ... ]] turns off "file globbing" and
+   "field splitting."
 
-      $ if ls foo >& /dev/null
+13. [[ ... ]] is a "command" on its own and not part of
+    the `if' command syntax.  
+
+      $ if ls foo >&- 2>&-
       > then
       >     echo "File foo is there."
-      > elif ls bar >& /dev/null
+      > elif ls bar >/dev/null 2>&1
       > then
       >     echo "File bar, but not foo, is there"
       > else 
@@ -445,7 +470,7 @@ I suggest "The Linux Command Line" by William Shotts.
            let jj=$jj+1
        done 
  
-    And absolutely never this (Bourn shell):
+    And absolutely never this (Bourne shell):
 
       jj=39; while [ $jj -lt 42 ]
       do
@@ -468,8 +493,8 @@ I suggest "The Linux Command Line" by William Shotts.
         rm target/scala-2.11/classes/grockScala/datastructures/$rootName.class
       done
 
-    OK, the back tics save you from typing one extra character, but
-    they are hard to see and THEY DON'T NEST.
+    OK, the back tics save you from typing one extra character,
+    but they are hard to see and THEY DON'T NEST.
 
       $ ls -l $(ls $(ls *.pdf))
       -rwxrwxrwx. 1 geoff geoff 2057650 Jan 31 12:13 TLCL.pdf
@@ -506,25 +531,129 @@ I suggest "The Linux Command Line" by William Shotts.
     Aside: The && and || operators "short circuit" that
            is they are non-strict in their second argument.
 
-17. Order of operations for && and || can be very confusing.
+19. Some properties of square bracket expressions:
 
-    Both && and || short circuit and are left to right associative,
-    but their presidence depends on the context.
+      [ ... ] are tests
+      [[ ... ]] evaluate conditional expressions
 
-    Inside a [[ ... ]] they are the usual mathematical presidence, && is higher than ||.
-    Outside a [[ ... ]] && and || have equal presidence.
+    Empty tests and an empty test false:
+
+      $ [ ]
+      $ echo $?
+      1
+
+      $ test
+      $ echo $?
+      1
+
+      $ [ '' ]; echo $?
+      1
+
+      $ [ $(false) ] && echo '$(false) evaluates to the empty string'
+      $
+
+    A non-empty (non-special) single string tests true:
+
+      $ [ some_string ]; echo $?
+      0
+
+      $ [ 1 ]; echo $?
+      0
+
+      $ [ 0 ]; echo $?
+      0
+
+      $ [ ' ' ]; echo $?
+      0
+
+      $ [ false ] && echo "false is just a string, not the built-in"
+      false is just a string, not the built-in
+
+    Multiple (non-special) strings is an error:
+
+      $ [ some strings ]
+      bash: [: some: unary operator expected
+
+      $ [ more than one ]
+      bash: [: than: binary operator expected
+
+      $ [ 3 -lt  5 ] && echo yes
+      yes
+
+      $ [ 3 -gt  5 ] || echo no
+      no
+
+    Empty conditional expressions are syntax errors:
+
+      $ [[ ]]
+      bash: syntax error near `]]'
+
+    An empty string evaluates false:
+
+      $ [[ '' ]]; echo $?
+      1
+
+      $ [[ $(true) ]] || echo '$(true) evaluates to an empty string'
+      $(true) evaluates to an empty string
+      $ echo '>>>'$(true)'<<<'
+      >>><<<
+
+    A single string evaluates true
+
+      $ [[ foobar ]]; echo $?
+      0
+
+    Note: I would never write a script that depends on a lot of
+          the above behaviors.  But it is helpful to understand
+          the above when debugging other people's "POSIX compliant"
+          shell scripts.
+
+18. Like & or |&, && and || cannot be used within single
+    square brackets.  Foe "and" and "or" comparisons:
+
+      # Traditional way
+      $ [ 4 -eq 2 -a 5 -gt 3 ] || echo False
+      False
+      $ [ 4 -eq 2 -o 5 -gt 3 ] && echo True
+      True
+
+      # Preferred way
+      $ [ 4 -eq 2 ] && [ 5 -gt 3 ] || echo False
+      False
+      $ [ 4 -eq 2 ] || [ 5 -gt 3 ] && echo True
+      True
+
+19. Order of operations for logical operators can be very
+    confusing.
+
+    Both && and || short circuit and are left to right
+    associative, but their precedence depends on the context.
+
+    Outside of double square brackets [[ ... ]], && and ||
+    behave like functions (operators) which return (integer)
+    values 0 for true and 1 for false.  Like the true and false
+    shell built-in functions, they have no "side effects",
+    that is they don't print anything to the terminal.
+
+    Outside of square brackets, && and || have equal precedence.
+
+    Inside double square brackets they have their usual
+    mathematical precedence, && is higher than ||.
 
     Example:
 
-      $ { [[ x == x || x == y && x == y ]]; } && echo True
-      True
+      $ [[ x == x ]] || [[ x == y ]] && [[ x == y ]]
+      $ echo $?
+      1
 
-      $ { [[ x == x ]] || [[ x == y ]] && [[ x == y ]]; } && echo True
+      $ [[ x == x || x == y && x == y ]]
+      $ echo $?
+      0
 
-    Very confusing, if you use one to establish "how Bash works", then
-    when the other fails you don't understand why!
+    Very confusing, if you use one to establish "how Bash works,"
+    then when the other "fails" you don't understand why!
 
-18. You can match on regular expressions with [[ ]]:
+20. You can match on regular expressions with [[ ]]:
 
       $ fName=myMatlabProg.m
       $ if [[ $fName =~ .*\.m ]]
@@ -547,7 +676,7 @@ I suggest "The Linux Command Line" by William Shotts.
       > fi
       MATLAB file
 
-19. Looping constructs:
+21. Looping constructs:
 
     Loop a fixed number of times,
 
@@ -595,30 +724,30 @@ I suggest "The Linux Command Line" by William Shotts.
       Quit? [y|Y]: y
       $ 
 
-20. Shell functions:
+21. Shell functions:
 
-    Shell functions are bash subroutines that execute in the context
-    of the current shell.  These "functions" don't really return values,
-    apart from small integer error codes.
+    Shell functions are bash subroutines that execute in the
+    context of the current shell.  These "functions" don't really
+    return values apart from small integer error codes.
 
-    Two examples, I define these in my .bashrc,
+    Two examples, first POSIX style, second Korn Shell style
 
       # PDF Reader
-      function ev() {
+      ev() {
         ( /usr/bin/evince "$@" &>/dev/null & )
       }
 
       ## pop up multiple directories (takes an optional parameter)
-      function ud() {
-        upDir=../
-        if [[ $1 =~ ^[1-9][0-9]*$ ]]
-        then
-          for ((ii = 1; ii < $1; ii++))
-          do
-            upDir=../$upDir
-          done
-        fi
-        cd $upDir
+      function ud {
+          local upDir=../
+          if [[ $1 =~ ^[1-9][0-9]*$ ]]
+          then
+            for ((ii = 1; ii < $1; ii++))
+            do
+              upDir=../$upDir
+            done
+          fi
+          cd $upDir
       }
 
     To list the names of all the shell functions defined in your
@@ -640,13 +769,14 @@ I suggest "The Linux Command Line" by William Shotts.
          ( /usr/bin/evince "$@" &> /dev/null & )
      }
 
-  Variables can be declared local to the function body via the `local' keyword,
+  Variables can be declared local to the function body via
+  the `local' keyword,
 
     $ a=a1; b=b1
     $ echo $a $b
     a1 b1
 
-    $ function baz() {
+    $ function baz {
     >   echo $a $b
     >   a=a2
     >   local b=b2
@@ -661,35 +791,36 @@ I suggest "The Linux Command Line" by William Shotts.
     $ echo $a $b
     a2 b1
 
-21. Aliases:
+22. Aliases:
 
-    The alias command allows a string to be substituted as the first
-    word of a simple command.  Useful if you want to change the default
-    behavior of a command.
+    The alias command allows a string to be substituted as the
+    first word of a simple command.  Useful if you want to
+    change the default behavior of a command.
 
-      $ unalias ls 2>/dev/null  # Undo any evil done in startup scripts.
-      $ alias la='ls -a'   # Also show .files.
+      $ unalias ls 2>&-  # Undo any evil done in startup scripts.
+      $ alias la='ls -a'   # Show .files.
       $ alias l.='ls -dA .* --color=auto'   # Show just .files, with color.   
-      $ alias vi=vim   # Helps me overcome years of muscle memory.
+      $ alias vi=vim   # Overcome years of muscle memory.
       $ alias gvim='gvim -c "colorscheme desert"'
 
-    Alias are intended as typing conveniences and should only be used
-    for simple substitutions.  For any thing more complicated than say
+    Alias are intended as typing conveniences and should only be
+    used for simple substitutions.  For any thing more complicated
+    than say
 
       $ alias pst="ps axjf | sed -e '/^ PPID.*$/d' -e's/.*:...//'"
 
-    I would use a shell function instead.  The Bash man page actually
-    says "For almost every purpose, aliases are superseded by shell
-    functions."
+    Use a shell function instead.  The Bash man page actually
+    says "For almost every purpose, aliases are superseded by
+    shell functions."
 
     Alias substitution was intended only for interactive shell
-    sessions.  To enable alias substitution in a shell script, include
-    this line in the script:
+    sessions.  To enable alias substitution in a shell script,
+    include this line in the script:
 
-      shopt -s expand_aliases
+      shopt -s expand_aliases   # Probably a bad idea
 
 
-22. Editting differences between vim and bash in vi mode:
+23. Editting differences between vim and bash in vi mode:
 
     Use 
 
@@ -704,21 +835,25 @@ I suggest "The Linux Command Line" by William Shotts.
 
       <cntl-k>      delete from cursor to end of line
       <cntl-u>      delete from before cursor beginning of line
-      k             move to previous command in history (beginning of line)
-      <up-arrow>    move to previous command in history (beginning of line)
-      j             move to next line in history (beginning of line)
-      <down-arrow>  move to next line in history (beginning of line)
+      k             previous command in history (at beginning)
+      <up-arrow>    previous command in history (at beginning)
+      j             next line in history (at beginning)
+      <down-arrow>  next line in history (at beginning)
       #             prepend # to current line and put in history
 
     while in typing mode:
 
-      <up-arrow>    move to previous command in history (end of line)
-      <down-arror>  move to next line in history (end of line)
+      <up-arrow>    previous command in history (end of line)
+      <down-arror>  next line in history (end of line)
 
     and in either command or typing mode:
 
-      <ctrl-r>    reverse search history, <ret> to execute, <esc> to edit
-      <ctrl-s>    forward search history, <ret> to execute, <esc> to edit
+      <ctrl-r>    reverse search history,
+                    <ret> to execute
+                    <esc> to edit
+      <ctrl-s>    forward search history,
+                    <ret> to execute
+                    <esc> to edit
 
     Note: To use <ctrl-s>, you need to turn off terminal flow
           control.  To do this, use the "stty -ixon" command.

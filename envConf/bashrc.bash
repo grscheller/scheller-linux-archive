@@ -1,10 +1,11 @@
+#!/bin/bash
+# shellcheck shell=bash
+# shellcheck source=/dev/null
+#
 #  ~/.bashrc
 #
 # Bash configuration across multiple, more or
 # or less, POSIX complient systems.
-#
-# shellcheck shell=bash
-# shellcheck source=/dev/null
 
 export ENV_INIT_LVL=${ENV_INIT_LVL:=0}
 
@@ -86,3 +87,4 @@ then
     # Have not tested out under ksh
     . ~/opt/anaconda3/etc/profile.d/conda.sh
 fi
+

@@ -1,29 +1,39 @@
 ## Unix Environment Configurations
 ### Shell Configuration
 Configuration files and associated scripts to bootstrap
-my Linux/UNIX/POSIX Bash and Ksh environments.
-* Bash & Ksh startup scripts
+my Linux/UNIX/POSIX Bash and Korn Shell environments.
+* bash & ksh startup scripts
 * Useful ~/bin Shell scripts
 * Vim configuration
 * Readline Library configuration
-* installHome installs everything into $HOME
+* [installHome](installHome) installs everything into $HOME
   * run from envConf directory
   * use as template for your own version
-* Tested on:
-  * Arch Linux
-  * CentOS 7
-  * AWS Linux
-  * Cygwin & MSYS2 on Windows 10
 
 For these configuration files to fully work, the Bash
-scripts in the [bin](bin) directory need to be put into
-the ~/bin directory.
+scripts in the [bin](bin) directory need to be installed into
+the ~/bin directory.  The installHome script will configuration
+files and ~/bin executables.
+
+### Facts
+For login shells:
+* Bash first sources /etc/profile
+* Bash then sources `~/.bash_profile`
+  * if not found, sources `~/.bash_login`
+  * if not found, sources `~/.profile`
+* Ksh first sources /etc/profile
+* Ksh then sources `~/.profile`
+* Ksh then sources $ENV if it exists as a file
+* If $ENV unset, some versions of Ksh will source ~/.kshrc
+
+For non-login interactive shells and non-interactive shells:
+* Bash sources `$BASH_ENV` if it exits as a file
+* Otherwise, at least for non-login interactive shells, Bash sources ~/.bashrc
+* Similarly for Ksh
+
+That is what these shell do.  What you do with it, is up to you.
 
 ### My philosophy on shell startup
-Facts: For login shells, Bash sources `.bash_profile`.
-For non-login shells, Bash sources `.bashrc`.  That is what it does.
-What you do with it, is up to you.
-
 Traditionally, a UNIX shell sets up an initial shell environment
 when logging into a system via a login shell.  The shell would
 source a file like `~/.profile` to establish an initial $PATH and

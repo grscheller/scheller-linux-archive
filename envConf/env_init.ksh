@@ -1,10 +1,12 @@
+#!/bin/ksh
+# shellcheck shell=ksh
+# shellcheck source=/dev/null
 #
 #    ~/.env_init
 #
 #  Configure initial values of $PATH and environment
 #  variables you wish child processes, perhaps other
-#  shells, to inherit.  This file is sourced by both
-#  bash and ksh.
+#  shells, to initially inherit.
 #
 #  This was traditionally done in .profile or .bash_profile
 #  whenever a login shell was created.  Unfortunately,
@@ -14,10 +16,8 @@
 #  Non-existent path and duplicate path elements
 #  will be dealt with near end of script.
 #
-#  This file is sourced by both bash and ksh.
-#
-# shellcheck shell=ksh
-# shellcheck source=/dev/null
+#  This file is sourced by both bash and ksh, so is written
+#  in a common subset of both.
 
 ## Sentinel value to mark completion of
 #  an initial environment configuration.
@@ -67,8 +67,9 @@ PATH=$PATH:~/bin
 
 ## Put a relative bin directory at end of PATH, this is for projects
 #  where my user takes up residence in the project's root directory.
-# [[ $PATH =~ :bin(:|$) ]] || PATH=$PATH:bin 
-[[ ($PATH == *:bin:*) || ($PATH == *:bin) ]] || PATH=$PATH:bin 
+[[ $PATH =~ :bin(:|$) ]] || PATH=$PATH:bin 
+# Older version of ksh (pdksh & ksh88) don't support =~ regex matching
+#[[ ($PATH == *:bin:*) || ($PATH == *:bin) ]] || PATH=$PATH:bin 
 
 ## Information for ssh configuration
 #

@@ -1,10 +1,11 @@
+#!/bin/ksh
+# shellcheck shell=ksh
+# shellcheck source=/dev/null
+#
 #  ~/.kshrc
 #
 # Korn Shell configuration across multiple, more or
 # or less, POSIX complient systems.
-#
-# shellcheck shell=ksh
-# shellcheck source=/dev/null
 
 export ENV_INIT_LVL=${ENV_INIT_LVL:=0}
 

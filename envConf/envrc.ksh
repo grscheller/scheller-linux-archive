@@ -1,14 +1,15 @@
+#!/bin/ksh
+# shellcheck shell=ksh
+# shellcheck source=/dev/null
+#
 #  ~/.envrc
 #
 # Shell functions and aliases
-#
-# Sourced directly by both ~/.kshrc & ~/.bashrc
 # 
 # Contains functions and aliases common to
 # both my ksh and bash ahell environments.
 #
-# shellcheck shell=bash
-# shellcheck source=/dev/null
+# Sourced directly by both ~/.kshrc & ~/.bashrc
 
 ## Setup up prompt
 
@@ -60,7 +61,6 @@ esac
 
 # Setup 3 line primary promptt
 PS1="${TERM_TITLE}"$'\n['"$(id -un)@${HOST}"$': $(relative_pwd)]\n> '
-PS1="${TERM_TITLE}"$'\n['"$(id -un)@${HOST}"$': $(relative_pwd)]\n> '
 PS2='> '
 PS3='#? '
 PS4='++ '
@@ -80,10 +80,9 @@ function ud
   local nDirs="$1"
   if [[ $nDirs == @([1-9])*([0-9]) ]]
   then
-      until [[ $nDirs -le 1 ]]
+      until (( nDirs-- <= 1 ))
       do
           upDir=../$upDir
-          nDirs=$((nDirs - 1))
       done
   fi
   cd $upDir || return

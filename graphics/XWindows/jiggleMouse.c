@@ -16,10 +16,10 @@ int
 main(int argc, char *argv[])
 {
     /* Parse cmdline arguments */
-    int delay = 120;  // seconds between jiggles (5 minutes)
-    int timeout = 0;  // no timeout
-    int deltaX = 1;   // amount of XWin-coords to "jiggle the mouse"
-    int deltaT = 0;  // fast as possible
+    int delay = 15;   // seconds between jiggles in seconds
+    int timeout = 0;  // timeout in seconds, 0 for no timeout
+    int deltaX = 50;  // amount of win_x & win_y coords to "jiggle the mouse"
+    int deltaT = 5;   // pause 5 seconds during jiggle
     bool countdown;
 
     if (argc > 5) {

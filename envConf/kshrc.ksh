@@ -26,6 +26,10 @@ fi
 ## Read in aliases and functions
 . ~/.envrc
 
+## Make sure other shells have their environments
+alias dash='ENV=~/.dashrc dash'
+alias sh='ENV=~/.shrc sh --posix'
+
 ## Should already be in environment
 export ENV=~/.kshrc
 

@@ -66,10 +66,11 @@ PS3='#? '
 PS4='++ '
 
 ## Set default behaviors
-set -o vi        # Vi editing mode
+set -o vi        # vi editing mode
 set -o pipefail  # Return right most nonzero error, otherwise 0.
 HISTSIZE=5000
 HISTCONTROL="ignoredups"
+FCEDIT=vim
 
 ## Command line utility functions
 

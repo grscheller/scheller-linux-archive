@@ -1,8 +1,15 @@
 ## Unix Environment Configurations
+###  Assumptions
+* System installed upon is, more or less, POSIX compliant.
+* Korn or Bash as the login shell, have not tested yet with ZSH
 ### Shell Configuration
 Configuration files and associated scripts to bootstrap
-my Linux/UNIX/POSIX Bash and Korn Shell environments.
-* bash & ksh startup scripts
+my Linux/UNIX/POSIX Bash, Korn and other Shell environments.
+* Shell startup scripts
+  * bash
+  * ksh
+  * dash - not as login shell
+  * sh (assumed POSIX) - not as login shell
 * Useful ~/bin Shell scripts
 * Vim configuration
 * Readline Library configuration

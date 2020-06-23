@@ -62,7 +62,9 @@ fi
 ## Modify 3 line prompt for Bash - end with  '% '
 PS1="${PS1%??}% "
 
-## Make sure ksh has its environment
+## Make sure other shells have their environments
+alias dash='ENV=~/.dashrc dash'
+alias sh='ENV=~/.shrc sh --posix'
 if ~/bin/digpath ksh > /dev/null 2>&1
 then
     alias ksh='ENV=~/.kshrc ksh'

@@ -19,11 +19,13 @@
 DOT_FILES='
     bash_logout.bash
     bashrc.bash
+    dashrc.dash
     env_init.ksh
     envrc.ksh
     inputrc
     kshrc.ksh
     profile.sh
+    shrc.sh
 '
 
 RM_FILES='

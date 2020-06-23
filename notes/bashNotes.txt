@@ -861,3 +861,22 @@ I suggest "The Linux Command Line" by William Shotts.
           output and <ctrl-u> to start it again.  Use "stty ixon"
           to turn flow control back on.
 
+23. Example here document.
+
+      #!/bin/bash
+      
+      name=Foofoo
+      
+      cat <<DOC1
+      hello World
+      $name rules!
+      DOC1
+      
+      cat >&2 <<DOC2
+      death to all who
+      oppose the $name!
+      DOC2
+
+    Method of using text in the shell script itself
+    as stdin.  Good for generating boiler plate for
+    mailx command.

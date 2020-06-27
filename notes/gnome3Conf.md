@@ -3,7 +3,7 @@
 ### GNOME Version:
 ```
    $ gnome-shell --version
-   GNOME Shell 3.30.2
+   GNOME Shell 3.36.3
 ```
 ### gnome-tweak (Tweaks)
 * General -> Animations (on)
@@ -12,17 +12,18 @@
 * Appearance -> Background: to select background image
 * Appearance -> Lock Screen: to select background image
 * Extensions -> Clipboard indicator (on)
-* Extensions -> Launch new instance (on)
-* Extensions -> Removable drive menu (on)
+* Extensions -> Clipboard indicator -> Settings
 * Fonts: Made adjustments
 * Keyboard & Mouse -> Mouse -> Pointer Location (on)
 * Keyboard & Mouse -> Mouse -> Middle Click Paste (on)
 * Keyboard & Mouse -> Touchpad -> Disable While Typing (on)
 * Keyboard & Mouse -> Touchpad -> Mouse Click Emulation -> Area
-* Top Bar -> Application Menu (on)
+* Startup Applications -> Added "ignore-lid-switch-tweak"
+* Top Bar -> Activies Overview Hot Corner (off)
 * Top Bar -> Battery Percentage (on)
 * Top Bar -> Clock -> Weekday (on)
 * Top Bar -> Clock -> Date (on)
+* Top Bar -> Calendar -> Week Numbers (off)
 * Window Titlebars -> Titlebar Actions -> Double-Click -> Toggle Maximize
 * Window Titlebars -> Titlebar Actions -> Middle-Click -> Lower
 * Window Titlebars -> Titlebar Actions -> Secondary-Click -> Menu
@@ -31,8 +32,10 @@
 * Window Titlebars -> Titlebar Buttons -> Placement -> Right
 * Windows -> Attach Modal Dialogs (on)
 * Windows -> Edge Tiling (on)
-* Windows -> Window Focus -> Focus on Hover
+* Windows -> Window Focus -> Focus on Hover (on)
+* Windows -> Raise Windows When Focused (off)
 * Workspaces -> Dynamic Workspaces
+* Workspaces -> Display Handling -> Workspaces span displays
 
 ### gnome-control-center (Settings)
 * Wifi & Network(Ethernet) configurable
@@ -114,10 +117,16 @@
     * Command: gnome-terminal
     * Shortcut: ctrl+alt+T
 * Change Terminal Colors
-  * From gnome-terminal application
-    * Edit => Preferences => Colers Tab
+  * Click profile (Geoffrey)
+    * Colers Tab
     * Uncheck "Use colors from system theme"
     * Palette: Linux console
-      * Text: White (lower right most)
-      * Background: Black (upper left most)
+    * Default color
+        * Text: White (lower right most)
+        * Background: Black (upper left most)
       * Check Bold color: Yellow (bottom 4th from left)
+      * Uncheck Cursor color
+      * Check Highlight color
+        * Text: Black
+        * Background: Gray (upper right most)
+    * Check Show bold text in bright colors

@@ -5,12 +5,14 @@ Note: Qn 2017-06-20 rebuilt system from scratch starting
       after swapping out the DVD with a SSD.
 
       Originally ran into issues getting an NVidia Optimus
-      graphics card working with the NVidia drivers.  On the rebuild
-      Arch handled the card and drivers without much fuss.
+      graphics card working with the NVidia drivers.  On
+      the rebuild Arch handled the card and drivers without
+      much fuss.
 
-Note: On 2019-03-30 decided to look into the possibility of using the
-      Intel Graphics chipset for the Window Manager while still being
-      able to use the NVidia GPU for OpenCL/CUDA programming.
+Note: On 2019-03-30 decided to look into the possibility of
+      using the Intel Graphics chipset for the Window Manager
+      while still being able to use the NVidia GPU for
+      OpenCL/CUDA programming.
 
 2016-07-04:
   Installed ArchLinux on Acer E-14 Laptop (E5-491G-70PX).
@@ -562,7 +564,8 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
 2016-07-17:
   Installed Libre-Office with some latex support.
-    Pacman: libreoffice-fresh libreoffice-extension-texmaths libreoffice-extension-writer2latex
+    Pacman: libreoffice-fresh libreoffice-extension-texmaths
+            libreoffice-extension-writer2latex
 
 2016-07-17:
   Installed youtube-dl and some optional dependencies
@@ -772,11 +775,12 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     Jul 24 15:43:34 gauss17 kernel: nvidia-nvlink: Nvlink Core is being initialized, major device number 242
     Jul 24 15:43:34 gauss17 kernel: NVRM: loading NVIDIA UNIX x86_64 Kernel Module  367.35  Mon Jul 11 23:14:21 PDT 2016
 
-  After bouncing around on the internet, I beleive these are related to
-  the nvidia drives not being able to work with the Optimus features
-  of the card and that the nvidia-beta drivers address the problem.
-  I will investigate installing them from AUR.  This "beta" version
-  has been around for about 3 years so should be stable enough.
+  After bouncing around on the internet, I beleive these are
+  related to the nvidia drives not being able to work with the
+  Optimus features of the card and that the nvidia-beta drivers
+  address the problem.  I will investigate installing them from
+  AUR.  This "beta" version has been around for about 3 years
+  so should be stable enough.
 
 2016-07-25:
   Installed GIMP help files.
@@ -795,14 +799,16 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
   From the Bumblebee FAQ:
 
-    "Bumblebee is an effort to make NVIDIA Optimus enabled laptops
-    work in GNU/Linux systems. Such feature involves two graphics
-    cards with two different power consumption profiles plugged in
-    a layered way sharing a single framebuffer."
+    "Bumblebee is an effort to make NVIDIA Optimus enabled
+     laptops work in GNU/Linux systems. Such feature involves
+     two graphics cards with two different power consumption
+     profiles plugged in a layered way sharing a single
+     framebuffer."
 
-  Bumblebee's use case is by disabling the nvidia card, power is
-  saved. This improves battery life. If you need more graphical
-  performance, Bumblebee can run the program using the Nvidia card.
+  Bumblebee's use case is by disabling the nvidia card, power
+  is saved. This improves battery life. If you need more
+  graphical performance, Bumblebee can run the program using
+  the Nvidia card.
 
   My use case: Can I use my Nvidia card only? I don't care about
                power consumption.  When X not running, I want to
@@ -846,31 +852,33 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   Direct Rendering Manager (DRM) is interesting.  Wikipedia
   has a good article:
 
-    "The Direct Rendering Manager (DRM) is a subsystem of the Linux
-     kernel responsible for interfacing with GPUs of modern video
-     cards. DRM exposes an API that user space programs can use to
-     send commands and data to the GPU, and perform operations such
-     as configuring the mode setting of the display. DRM was first
-     developed as the kernel space component of the X Server's Direct
-     Rendering Infrastructure, but since then it has been used by
-     other graphic stack alternatives such as Wayland.
+    "The Direct Rendering Manager (DRM) is a subsystem of the
+     Linux kernel responsible for interfacing with GPUs of
+     modern video cards. DRM exposes an API that user space
+     programs can use to send commands and data to the GPU,
+     and perform operations such as configuring the mode setting
+     of the display. DRM was first developed as the kernel space
+     component of the X Server's Direct Rendering Infrastructure,
+     but since then it has been used by other graphic stack
+     alternatives such as Wayland.
 
-     User space programs can use the DRM API to command the GPU to
-     do hardware accelerated 3D rendering, video decoding as well as
-     GPGPU computing."
+     User space programs can use the DRM API to command the GPU
+     to do hardware accelerated 3D rendering, video decoding as
+     well as GPGPU computing."
 
-  Before this, userspace programs usually assumed that each were the
-  only entity touching the GPU.  Each set resources in its own way,
-  most times ending catastrophically.
+  Before this, userspace programs usually assumed that each were
+  the only entity touching the GPU.  Each set resources in its
+  own way, most times ending catastrophically.
 
   I am assuming that David Airlie's Prime work will eventually
   be folded into DRM and I will not try to "add" it.  In the
   Windows laptop environment, Optimus use case is that the
   integrated chipset is primarily responsible for the video
   rendering and that only certain "blessed" programs (usually
-  video games) have access to the NVIDIA GPU.  Once GPU processing
-  is complete, "frame buffers?" are PCI bus'ed over to the integrated
-  chipset for display.  This is done for power management reasons.
+  video games) have access to the NVIDIA GPU.  Once GPU
+  processing is complete, "frame buffers?" are PCI bus'ed
+  over to the integrated chipset for display.  This is donei
+  for power management reasons.
 
   Here is more confirmation that X is only using the NVIDIA GPU -
   the contents of /etc/X11/xorg.conf are:
@@ -917,7 +925,9 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     Pacman: libffado celt jack
 
 2016-07-30:
-  To be able to manage gnome-keyring from userland, install seahorse.
+  To be able to manage gnome-keyring from userland, install
+  seahorse.
+
     Pacman: seahorse
 
   Install an Erlang development environment.
@@ -944,7 +954,8 @@ Note: On 2019-03-30 decided to look into the possibility of using the
            GDBus.Error:org.freedesktop.DBus.Error.Spawn.ChildExited:
            Process org.gnome.keyring.SystemPrompter exited with status 1
 
-  Maybe being started too soon, before GUI sufficiently brought up?
+  Maybe being started too soon, before GUI sufficiently
+  brought up?
 
   Added the line
     dbus-update-activation-environment --systemd DISPLAY
@@ -962,9 +973,10 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   Enabled dhcpcd on boot, since wicd might need it.
     sudo systemctl enable dhcpcd
 
-  This is currently not necessary in the Heritage Center since WICD
-  manually configures that interface.  Need to test out with my
-  apartment wireless/ether_cable and coffee shop.
+  This is currently not necessary in the Heritage Center
+  since WICD manually configures that interface.  Need to
+  test out with my apartment wireless/ether_cable and
+  coffee shop.
 
 2016-08-03:
   Made changes to PAM configuration files so that gnome-keyring
@@ -978,10 +990,10 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   to agree.  Also as geoff tweaked session-managers startup
   applications to start up all the gnome-keyring component.
 
-  Chrome is still asking me for the keyring password when
-  started for the first time.  Do I need to fire it off manually
-  in the .xinitrc scripts or is org.gnome.keyring.SystemPrompter
-  still broken?
+  Chrome is still asking me for the keyring password
+  when started for the first time.  Do I need to fire
+  it off manually in the .xinitrc scripts or is
+  org.gnome.keyring.SystemPrompter still broken?
 
   There was a typo in /etc/pam.d/login which was not autostarting
   the gnome_keyring deamon.  Fixed it.  Now when I login at the
@@ -1005,15 +1017,16 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     01:00.0 3D controller: NVIDIA Corporation GM108M [GeForce 940M]
       (rev a2)
 
-  I beleive the NVIDIA proprietary drivers are functioning correctly.
+  I beleive the NVIDIA proprietary drivers are functioning
+  correctly.
 
   My question is: Am I just using the NVIDIA GPU only or is it
   functioning in some sort of OPTIMUS mode where the Intel chipset
   is plumbed into the display and the NVIDIA GPU does rendering
-  that gets ported over to Intel chipset via PCI bus?  Most info I
-  find indicates the former, but many Optimus branded laptops don't
-  connect the NVIDIA GPU in anyway to video output.  Sort of a poor
-  man's Tesla card.
+  that gets ported over to Intel chipset via PCI bus?  Most info
+  I find indicates the former, but many Optimus branded laptops
+  don't connect the NVIDIA GPU in anyway to video output.  Sort
+  of a poor man's Tesla card.
 
   To finially get to the bottom of this,
     Pacman: mesa-demos nvdock nvidia-settings
@@ -1033,33 +1046,36 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   with and without the grep, seems to indicate that only the
   NVIDIA GPU is at play.  I have plumbed X into using only the
   NVIDIA card.  The Intel chipset is just sitting there, so
-  the NVIDIA card is talking directly with the LCD laptop display.
-  Running nvidia-settings also indicates that the NVIDIA GPU is
-  talking directly to the display.  Various internet blogs indicate
-  that under Linux only one of the chipsets of an OPTIMUS laptop
-  is being used at anyone time.
+  the NVIDIA card is talking directly with the LCD laptop
+  display.  Running nvidia-settings also indicates that the
+  NVIDIA GPU is talking directly to the display.  Various
+  internet blogs indicate that under Linux only one of the
+  chipsets of an OPTIMUS laptop is being used at anyone time.
 
 2016-08-03:
   Went ahead and installed CUDA infrastructure into /opt/cuda/.
+
     Pacman: cuda pycuda-headers python-pycuda
 
   This dragged in gcc 5.4.0 since CUDA doesn't seem to be working
   with gcc 6.0+ right now.
 
 2016-08-03:
-  Disabled dhcpcd on boot, since it is giving me trouble with wireless
-  connections.
-    sudo systemctl disable dhcpcd
+  Disabled dhcpcd on boot, since it is giving me trouble withi
+  wireless connections.
+
+    $ sudo systemctl disable dhcpcd
 
   I seem to have problems connecting to wireless networks
-  when dhcpcd enabled at boot.  Autoconnect networks connect on
-  the link level even without starting XFCE.
+  when dhcpcd enabled at boot.  Autoconnect networks connect
+  on the link level even without starting XFCE.
 
 2016-08-05:
-  Decided to install pulseaudio.  Seems to be becoming the defacto
-  standard in Linux desktop environments.
+  Decided to install pulseaudio.  Seems to be becoming the
+  defacto standard in Linux desktop environments.
 
-  When running vlc from terminal I see the following error messages:
+  When running vlc from terminal I see the following error
+  messages:
 
     [00000000020430c8] pulse audio output error: PulseAudio server
        connection failure: Connection refused
@@ -1089,7 +1105,9 @@ Note: On 2019-03-30 decided to look into the possibility of using the
       $ pulseaudio --start
       $ pulseaudio --kill
 
-    Some of its components have been split out into different packages.
+    Some of its components have been split out into different
+    packages.
+
       pulseaudio-alsa package:
         Will allow pulseaudio and ALSA to peacefully coexist with
         pulseaudio in charge (recommended).  This will allow ALSA
@@ -1112,7 +1130,9 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   one installs older packages from AUR, a bluetooth head set
   will only use pulseaudio,  See the wiki if you ever need to
   go bluetooth.
-    Pacman: pulseaudio pulseaudio-alsa paprefs pavucontrol ponymix
+
+    Pacman: pulseaudio pulseaudio-alsa paprefs
+            pavucontrol ponymix
 
   Reboot.  No configuration.
 
@@ -1132,9 +1152,9 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
   See https://bbs.archlinux.org/viewtopic.php?id=158070
 
-  Things now just work.  Even from the console, running ogg123 will
-  cause pulseaudio daemon to come up.  From thunar clicking on a
-  music file brings up vlc.  I am happy.
+  Things now just work.  Even from the console, running ogg123
+  will cause pulseaudio daemon to come up.  From thunar clicking
+  on a music file brings up vlc.  I am happy.
 
 2016-08-05:
   Postfix was not working because it was completely unconfigured.
@@ -1220,33 +1240,37 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
     https://harbhag.wordpress.com/2010/06/30/tutorial-using-rtorrent-on-linux-like-a-pro/
 
-  The ncurses program rtorrent uses ^S and ^Q, so I had to do some
-  stty magic in the /home/geoff/bin/rt wrapper script to turn off
-  their special flow control meaning.  The program needs an
-  *.torrent file to know what to download.  Able to paste an
-  URL to a *.torrent file into the CLI as well as navigate to a
-  *.torrent file I saves in the file system.
+  The ncurses program rtorrent uses ^S and ^Q, so I had to do
+  some stty magic in the /home/geoff/bin/rt wrapper script to
+  turn off their special flow control meaning.  The program
+  needs an *.torrent file to know what to download.  Able to
+  paste an URL to a *.torrent file into the CLI as well as
+  navigate to a *.torrent file I saves in the file system.
 
   Also possible to configure rtorrent to pick up *.torrent files
   from a ~/watch directory and deliever downloads to a ~/torrent
   directory.
 
-  In a misguided attempt to configure rtorrent as a systemd service,
-  I installed a prerequisite for the AUR rtorrent-systemd package.
+  In a misguided attempt to configure rtorrent as a systemd
+  service, I installed a prerequisite for the AUR
+   rtorrent-systemd package.
+
     Pacman: xorg-xhost
 
-  This AUR is more for headless servers running many instances of
-  rtorrent.  Also, the use case of tmux and screens - where you are
-  running rtorrent in a terminal on a server and attach the terminal
-  to various X-servers.
+  This AUR is more for headless servers running many instancesi
+  of rtorrent.  Also, the use case of tmux and screens - where
+  you are running rtorrent in a terminal on a server and attach
+  the terminal to various X-servers.
 
 2016-08-14:
   Installed a variety of DVD related software.
+
     Pacman: libdvdcss libdvdnav brasero unrar handbrake handbrake-cli
 
 2016-08-19:
-  Installed TOR (2nd generation onion router) and ARM (Anonymizing
-  Relay Monitor.
+  Installed TOR (2nd generation onion router) and ARM
+  (Anonymizing Relay Monitor).
+
     Pacman: tor arm
 
   as first steps in anonymous internet browsing (other activity?).
@@ -1281,13 +1305,15 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 2016-08-19:
   All the bit torrent sites using something called magnet links.
   I want the actual .torrent files.  There is an AUR called
-  "magnet2torrent", but when I tried to build it, it had a missing
-  dependency, python-libtorrent-rasterbar, which does not seem
-  to be in the AUR anymore.
+  "magnet2torrent", but when I tried to build it, it had a
+  missing dependency, python-libtorrent-rasterbar, which does
+  not seem to be in the AUR anymore.
 
-  Anycase, python-libtorrent-rasterbar seems to be on the way
-  to be deprecated.  I'll install a better C++ library replacement
-  and wait and see if magnet2torrent gets updated to use it:
+  Anycase, python-libtorrent-rasterbar seems to be on the
+  way to be deprecated.  I'll install a better C++ library
+  replacement and wait and see if magnet2torrent gets updated
+  to use it:
+
     Pacman: libtorrent-rasterbar
 
 2016-08-19:
@@ -1345,28 +1371,32 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
 2016-08-20:
   Tried to install a game called aquaria from two AUR,
-  aquaria-ose and aquaria-hib.  Now, aquaria-ose is an open source
-  engine, built and installed no problem.  But, aquaria-hib is
-  a wrapper for the commercial data files for the game.  Needs
-  the actual data files from the Humble Bundle release.  The only
-  "sources" for these is the manufacturer or questionally legal
-  torrent sites.  Torrent sites business models seems to be
-  for you to pay to avoid their black hat spy/adware/captcha-ware.
-  Lifetime memberships to sights that only been around for a
-  year and "popular" for the last couple of months?  Sounds like
-  a site about ready to be shutdown.
+  aquaria-ose and aquaria-hib.  Now, aquaria-ose is an
+  open source engine, built and installed no problem.
+  But, aquaria-hib is a wrapper for the commercial data
+  files for the game.  Needs the actual data files from
+  the Humble Bundle release.  The only "sources" for these
+  is the manufacturer or questionally legal torrent sites.
+  Torrent sites business models seems to be for you to pay
+  to avoid their black hat spy/adware/captcha-ware.
+  Lifetime memberships to sites that only been around for
+  a year and "popular" for the last couple of months?
+  Sounds like a site about ready to be shutdown.
 
-  I have no desire to steal anyone's intellectual property nor pay
-  real money for things not really important, like games.
+  I have no desire to steal anyone's intellectual property
+  nor pay real money for things not really important, like
+  games.
 
   I uninstalled the game-engine:
+
     $ sudo pacman -Rsu aquaria-ose
 
-  Lesson learned: So far, the only torrent "culture" I have found
-    is one looking to ripoff the naive.  Have not yet found any
-    equivalent to the pre-internet BBS culture.
+  Lesson learned: So far, the only torrent "culture" I have
+  found is one looking to ripoff the naive.  Have not yet
+  found any equivalent to the pre-internet BBS culture.
 
   Along the way, I did manage to install cmake as a dependency.
+
     Pacman: cmake
 
 2016-08-21:
@@ -1384,7 +1414,7 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   the academic journals designed to keep outsiders out.  Regular
   "Google" searches don't pick up this type of technical info.
 
-  Next step, I will examine Tor website https://www.torproject.org/
+  Next step, is to examine Tor website https://www.torproject.org
   for clues to any evolving, possible hidden, clutures I need to
   be aware of.  Also, learn the tools needed for to navigate such
   cultures.  Starting with arm.
@@ -1399,21 +1429,23 @@ Note: On 2019-03-30 decided to look into the possibility of using the
        - Human Readable
        - Decentralized
        - Secure
-     Zooko Wilcox-O'Hearn conjecture is that no single kind of
-     name can achive more than two.
-  3. Replace traditional VPNs, which reveal the exact amount and
-     timing of communication. Which locations have employees working
-     late? Which locations have employees consulting job-hunting
-     websites? Which research divisions are communicating with the
-     company's patent lawyers?
-  4. ARM (Anonymizing Relay Monitor): The arm command works similarly
-     to how top works for system usage.  Provides statistics for
-        - bandwidth, cpu, and memory usage
-        - relay circuit configuration
-        - logging events
-        - connection details (ip, hostname, figerprint, consensus data)
-  5. Atlas: https://atlas.torproject.org/
-     Site providing an overview of the Tor network.
+     Zooko Wilcox-O'Hearn conjecture is that no single kind
+     of name can achive more than two.
+  3. Replace traditional VPNs, which reveal the exact amount
+     and timing of communication - which locations have employees
+     working late, which locations have employees consulting
+     job-hunting websites, which research divisions are
+     communicating with the company's patent lawyers?
+  4. ARM (Anonymizing Relay Monitor): The arm command works
+     similarly to how top works for system usage.  Provides
+     statistics for:
+       - bandwidth, cpu, and memory usage
+       - relay circuit configuration
+       - logging events
+       - connection details (ip, hostname, figerprint,
+                              consensus data)
+  5. Atlas: https://atlas.torproject.org/ site providing
+     an overview of the Tor network.
   6. STEM: Python controller library for Tor.
 
 2016-08-22:
@@ -1449,12 +1481,14 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
 2016-09-01:
   Installed a modern Lisp called Racket.
+
     Pacman: racket racket-doc
 
-  Formally known as PLT-Scheme.  Very good beginner tutorials and
-  documentation.  Might be a good first language for my children.
-  Wish to compare it to Clojure, also a LISP.  If you familiar with
-  Racket, it makes learnin Haskell a lot easier.
+  Formally known as PLT-Scheme.  Very good beginner tutorials
+  and documentation.  Might be a good first language for my
+  children.  Wish to compare it to Clojure, also a LISP.
+  If you familiar with Racket, it makes learning Haskell a
+  lot easier.
 
 2016-09-04:
   Seems regular search engines more useful then tor search
@@ -1509,15 +1543,16 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   Noticed that
     $ pacman -Qi mesa
     ...
-    Optional Deps : opengl-man-pages: for the OpenGL API man pages
-                    mesa-vdpau: for accelerated video playback
-                    libva-mesa-driver: for accelerated video playback
+    Optional Deps : opengl-man-pages: OpenGL API man pages
+                    mesa-vdpau: Accelerated video playback
+                    libva-mesa-driver: Accelerated video playback
     ...
 
   So I am missing some video capability.
 
 2016-09-12:
-  Install opengl man pages and some accelerated playback functions.
+  Install opengl man pages and accelerated playback functions.
+
     Pacman: opengl-man-pages
     Pacman: mesa-vdpau libva-mesa-driver
 
@@ -1526,14 +1561,15 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
 2016-09-12:
   From the Arch Linux hardware accelleration wiki:
+
     - For Intel Graphics use VA-API
     - For NVIDIA cards use VDPAU
     - For AMD cards you can use both (with mesa)
 
   There are two specific types of drivers for VA-API and VDPAU
-    - libva-vdpau-driver, which uses VDPAU as a backend for VA-API.
-    - libvdpau-va-gl, which uses VA-API as a backend for VDPAU.
-    - For pre-2007 cards see XvMC.
+    - libva-vdpau-driver, which uses VDPAU as backend for VA-API
+    - libvdpau-va-gl, which uses VA-API as a backend for VDPAU
+    - For pre-2007 cards see XvMC
 
   Tip: It is recommended to install and configure both VA-API
        and VDPAU to achieve support in different scenarios,
@@ -1543,15 +1579,15 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   Warning: Do not use libva-vdpau-driver and libvdpau-va-gl
            together as it will create an (infinite) loop between
            VA-API and VDPAU, which will result in something either
-           really bad or really fun. But if you try it anyway
-           please share your experiences.
+           really bad or really fun.
 
-  OK, for my NVIDIA video card and proprietary drivers, I need use
-  the VDPAU facing toward hardware and libva-vdpau-drive for an
-  interface to VA-API applications.  The mesa stuff is implementing
-  OpenGL.
+  OK, for my NVIDIA video card and proprietary drivers, I need
+  use the VDPAU facing toward hardware and libva-vdpau-drive
+  for an interface to VA-API applications.  The mesa stuff
+  implements OpenGL.
 
   Currently:
+
     $ pacman -Ss nvidia-utils
     ...
     extra/nvidia-utils 370.28-1 [installed]
@@ -1566,6 +1602,7 @@ Note: On 2019-03-30 decided to look into the possibility of using the
         VDPAU driver with OpenGL/VAAPI backend
 
   So, install libva-vdpau-driver:
+
     Pacman: libva-vdpau-driver
     Pacman: vdpauinfo
 
@@ -1590,7 +1627,8 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
   Actually I guessed right.  Building and installing this package
   just installed data files into /usr/lib/firmware/nouveau where
-  it will probably just sit since I am not using the nouveau driver.
+  it will probably just sit since I am not using the nouveau
+  driver.
 
   After some digging through internet blogs, the errors above
   with vainfo and vdpauinfo, are due to my GEFORCE 940M Optimus
@@ -1601,7 +1639,9 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   decoding.
 
   So, uninstalled packages that the NVIDIA card doesn't support,
-    Pacman:(Remove) mesa-vdpau libva-mesa-driver libva-vdpau-driver
+
+    Pacman:(Remove) mesa-vdpau  libva-vdpau-driver
+    Pacman:(Remove) libva-vdpau-driver
 
   Running vlc:
     Playing DVD - load average: 0.41, 0.41, 0.32
@@ -1647,7 +1687,6 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     On branch master
     Your branch is up-to-date with 'origin/master'.
     Untracked files:
-      (use "git add <file>..." to include in what will be committed)
 
         nqp-2016.08.1-1-any.pkg.tar.xz
         nqp-2016.08.1.tar.gz
@@ -1661,9 +1700,10 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
   Is it possible to build rakudo against my versions in ~/local?
 
-  First, get the AUR versions I just installed out of the way.  See
-  if I can install what was pulled in from AUR into ~/local.  (Doing
-  another makepkg will fail since I remove the prerequisits.)
+  First, get the AUR versions I just installed out of the way.
+  See if I can install what was pulled in from AUR into ~/local.
+  (Doing another makepkg will fail since I remove the
+  prerequisits.)
 
     $ sudo pacman -Rsu nqp moarvm
     $ cd src/rakudo
@@ -1734,19 +1774,21 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   I used Pacman to install to get comonads to work.
 
     Pacman(Remove): haskell-gtk haskell-connection haskell-comonad
-    Pacman(Remove): haskell-contravariant haskell-contravariant-extras
+    Pacman(Remove): haskell-contravariant
+    Pacman(Remove): haskell-contravariant-extras
     Pacman(Remove): haskell-free haskell-juicypixels
     Pacman(Remove): haskell-project-template haskell-haddock-api
-    Pacman(Remove): haskell-haddock-library ghc-mod haskell-ghc-mod
+    Pacman(Remove): haskell-haddock-library ghc-mod 
+    Pacman(Remove): haskell-ghc-mod
     Pacman(Remove): ghc cabal-install happy alex
 
   From userland, installed stack to /usr/local/bin via
 
     $ curl -sSL https://get.haskellstack.org/ | sh
 
-  It asked for sudo password once while installing it.  On CentOS, this
-  trys to use yum (yuck!).  See userland_Adminlog.txt for my
-  adventures with stack.
+  It asked for sudo password once while installing it.
+  On CentOS, this trys to use yum (yuck!).  See
+  HaskellAdmin.txt for my adventures with stack.
 
   Other stuff installed -
 
@@ -1778,24 +1820,26 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
     Pacman: speedtest-cli iperf
 
-  speedtest-cli is a python script that gives a command-line-interface
-  to the http://www.zdnet.com/broadband-speedtest/ website.  I find it
+  speedtest-cli is a python script that gives a
+  command-line-interface to the
+  http://www.zdnet.com/broadband-speedtest/ website.  I find it
   alot more easy and user friendly than the actual website.
 
-  iperf is both a client and server that can perform TCP speed test
-  between two systems.
+  iperf is both a client and server that can perform TCPi
+  speed test between two systems.
 
     On server run: $ iperf -s
     On client run: $ iperf -c host
 
-  where host is IP of server.  Man page for iperf is quite complete.
-  Can also run UDP tests.
+  where host is IP of server.  Man page for iperf is quite
+  complete.  Can also run UDP tests.
 
 2016-10-24:
-  Something wrong with XFCE gui environment.  Not working smoothly.
+  Something wrong with XFCE gui environment.  Not working
+  smoothly.
 
 2016-10-25:
-  Over last few days I noticed XFCE gui environment getting
+  Over last few days I noticed XFCE GUI environment getting
   slower, terminals & browser windows failed to spin up.
 
   Previously, I have noticed that I am getting quite a
@@ -1807,7 +1851,7 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   running.
 
   I don't know if this has anything to do with it, but the
-  XFCE gui environment really started steadily going downhill
+  XFCE GUI environment really started steadily going downhill
   after a pacman update that brought in gtk/gtk3 stuff.
 
 2016-10-25:
@@ -1891,7 +1935,7 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
   Revisionist history to follow (took a while to work out):
 
-  In 'Sessions and Startup' Xfce config gui, checked 'Prompt
+  In 'Sessions and Startup' Xfce config GUI, checked 'Prompt
   on logout' and unchecked 'Launch thunar in daemon mode'.
   Killed off all the running Thunar Daemons.  On 'Log Out'
   checked 'Save session for future logins'.
@@ -1900,7 +1944,7 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
   So, I have an unconfigured display manager installed that
   I have disabled.  In retrospect, I could have fixed original
-  problem with kill command and gui settings.
+  problem with kill command and GUI settings.
 
   Never had to reinstall thunar, thunar-archive-plugin,
   thunar-media-tags-pluggin, and thunar-volman.  My external
@@ -2169,8 +2213,8 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   I will go through these to see which to update and which
   to remove.
 
-    sudo pacman -Rsu nouveau-fw    <- Don't need (see above).
-    sudo pacman -Rsu moarvm nqp    <- Clutter from perl6 build attemp.
+    sudo pacman -Rsu nouveau-fw   <- Don't need (see above).
+    sudo pacman -Rsu moarvm nqp   <- Clutter from perl6 build
 
     sudo pacman -Rsu google-chrome <- Remove AUR built chrome.
     sudo pacman -Syu chromium      <- Replace with chromium
@@ -2215,8 +2259,8 @@ Note: On 2019-03-30 decided to look into the possibility of using the
         $ ss
         $ ip route
 
-  The warning is due to the -Rs option.  With -R, -s means to recursively
-  remove all dependencies provided:
+  The warning is due to the -Rs option.  With -R, -s means to
+  recursively remove all dependencies provided:
 
     1. They are not required by any other packages.
     2. They were not explicity installed.
@@ -2228,8 +2272,8 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   shows that net-tools is a dependency for 21 installed packages, one of
   which is wicd.
 
-  Therefore, after net-tools was removed from the list of packages
-  to be removed, there was "nothing to do".
+  Therefore, after net-tools was removed from the list of
+  packages to be removed, there was "nothing to do".
 
 2017-02-04:
   Installed haveged, a daemon that generates system entropy;
@@ -2252,8 +2296,8 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     initrd /initramfs-linux.img
     options root=PARTUUID=fd153bda-5bf1-4a49-9728-4f
 
-  Added the 3rd line above.  I finally configured the intel-ucode
-  package I installed back in 2016-07-04.
+  Added the 3rd line above.  I finally configured the
+  intel-ucode package I installed back in 2016-07-04.
 
   Configuration from Arch Linux Wiki:
     https://wiki.archlinux.org/index.php/Microcode
@@ -2413,15 +2457,18 @@ Note: On 2019-03-30 decided to look into the possibility of using the
    generated post-install has been moved into the package
    proper."
 
-   # pacman -Syuw                           # download packages
-   # rm /etc/ssl/certs/ca-certificates.crt  # remove conflicting file
-   # pacman -Su                             # perform upgrade
+   Download packages
 
-   Here is what I actually did,
+     # pacman -Syuw
+
+   Remove conflicting file
 
      # rm /etc/ssl/certs/ca-certificates.crt
+
+   Perform upgrade
+
      # pacman -Su
-     $ sudo pacman -Syu
+     # sudo pacman -Syu
 
 04-02-2017:
   Today, after "sudo pacman -Syu", I had
@@ -2435,10 +2482,10 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   My heart skipped...
 
   I checked my e-mail for announcements and the Arch-Linux Wiki,
-  (actually I did a DuckDuckGo search on "arch linux shadow.pacnew")
-  and found that the only changes, as shown in git, are the removal
-  of hard-coded uuidd and dbus users, which would get added back
-  by the dbus and libutil-linux packages.
+  (actually did a DuckDuckGo search on "arch linux shadow.pacnew")
+  and found that the only changes, as shown in git, are the
+  removal of hard-coded uuidd and dbus users, which would get
+  added back by the dbus and libutil-linux packages.
 
   The initial response from the wiki was "Standard answer: Ignore
   group/passwd pacnew files."
@@ -2486,18 +2533,19 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
   http://www.tomshardware.com/forum/368288-33-disable-nvidia-optimus-nvidia-card
 
-  "I've got a solution for you, but I don't know if you're gonna like it.
-   Optimus is integrated into your windows, so the only way to get rid of
-   it is to reinstall normal Windows 7 version (not the one that came with
-   your laptop; though, the same key will work of course)."
+  "I've got a solution for you, but I don't know if you're
+   gonna like it.  Optimus is integrated into your windows,
+   so the only way to get rid of it is to reinstall normal
+   Windows 7 version (not the one that came with your laptop;
+   though, the same key will work of course)."
 
-  My guess is that ACER also hacked up the UFI firmware to not allow the
-  "enduser to screw things up" by disabling either GPU because Acer's
-  hacked up Optimus drivers assume both Nvidia and Intel video hardware
-  are in place.
+  My guess is that ACER also hacked up the UFI firmware to
+  not allow the "enduser to screw things up" by disabling
+  either GPU because Acer's hacked up Optimus drivers assume
+  both Nvidia and Intel video hardware are in place.
 
-  The only use case for Optimus is for business endusers who frequently
-  take 6 hour airline flights.
+  The only use case for Optimus is for business endusers who
+  frequently take 6 hour airline flights.
 
 2017-04-18:
   Getting Blu-Ray to work.
@@ -2506,19 +2554,20 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
     Pacman: libaacs libbluray
 
-  From http://www.labdv.com/aacs/ download KEYDB.cfg and copy it
-  to the ~/.config/aacs directory.
+  From http://www.labdv.com/aacs/ download KEYDB.cfg and
+  copy it to the ~/.config/aacs directory.
 
     $ mkdir ~/.config/aacs; cd ~/.config/aacs
     $ wget http://www.labdv.com/aacs/KEYDB.cfg
 
   From the Arch Linux Wiki:
-  "BD+ mainly works by adding errors to the video stream, not enough
-   to make it unwatchable due to constant artifacting." Requires
-   downloading "fixup" tables from the internet.  There is an AUR library
-   to fix this, but "libbdplus stopped working a long time ago, and
-   for right now there's no open source method of playing discs with
-   BD+ protection."
+
+  "BD+ mainly works by adding errors to the video stream, not
+   enough to make it unwatchable due to constant artifacting."
+   Requires downloading "fixup" tables from the internet.
+   There is an AUR library to fix this, but "libbdplus stopped
+   working a long time ago, and for right now there's no open
+   source method of playing discs with BD+ protection."
 
   Start playback with vlc via command line
 
@@ -2541,20 +2590,22 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     error: failed to prepare transaction (could not satisfy dependencies)
     :: banshee: installing libsoup (2.58.0-1) breaks dependency 'libsoup-gnome'
 
-  Lets address error first.  Let's uninstall banshee, I never use it.
+  Lets address error first.  Let's uninstall banshee,
+  I never use it.
 
     $ sudo pacman -Rsu banshee
     $ sudo pacman -Syu          # Now works.
 
-  The pacman update was huge, will reboot after putting back some optional
-  dependencies the pacman -Rsu removed.
+  The pacman update was huge, will reboot after putting back
+  some optional dependencies the pacman -Rsu removed.
 
     $ sudo pacman -Syu mono libgme libmtp webkitgtk2
 
-  Took several reboots before system sorted itself out, kernel update
-  snuck by me.
+  Took several reboots before system sorted itself out, kernel
+  update snuck by me.
 
-  Now, "pacman -Syu" just giving me the warning, so lets address that.
+  Now, "pacman -Syu" just giving me the warning, so lets
+  address that.
 
     $ pacman -Qi openimageio
     ...
@@ -2582,8 +2633,8 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   Later in the day, "pacman -Syu" updated openimageio to 1.7.13-2.
 
 2017-04-24:
-  Enabling DoD CAC reader and certificates.  From Arch Wiki Common
-  Access Card page.
+  Enabling DoD CAC reader and certificates.
+  From Arch Wiki Common Access Card page.
 
     $ sudo pacman -Syu ccid opensc
     $ sudo pacman -Syu pcsc-tools     # Optional
@@ -2603,7 +2654,8 @@ Note: On 2019-03-30 decided to look into the possibility of using the
       "PKI CA Certificate Bundles: PKCS#7" ->
          "For DoD PKI Only - Version 5.0" (ZIP Download)
 
-  I downloaded them to ~/info/CAC/Certificates_PKCS7_v5.0u1_DoD.zip
+  I downloaded them to
+  ~/info/CAC/Certificates_PKCS7_v5.0u1_DoD.zip
   and unzipped it.
 
   Using pscs_scan utility, a Dell CAC keyboard works, Cherry CAC
@@ -2617,9 +2669,9 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     3. DoD_Root_CA_2__0x05__DoD_Root_CA_4.cer
     4. Certificates_PKCS7_v5.0u1_DoD.pem.p7b
 
-  Note: Based on info/CAC/Certificates_PKCS7_v5.0u1_DoD/README.txt,
-        I deviated from the Wiki and for #4 above installed the
-        pem version instead of the der version.
+  Note: Based on info/CAC/Certificates_PKCS7_v5.0u1_DoD/README.txt
+        file, I deviated from the Wiki and for #4 above installed
+        the pem version instead of the der version.
 
   Missed this step:
 
@@ -2635,9 +2687,9 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   From Arch Linux website, www.archlinux.org, it is stated that
   ca-certicates-utils need manual intervention:
 
-    # pacman -Syuw                           # download packages
-    # rm /etc/ssl/certs/ca-certificates.crt  # remove conflicting file
-    # pacman -Su                             # perform upgrade
+    # pacman -Syuw
+    # rm /etc/ssl/certs/ca-certificates.crt
+    # pacman -Su
 
   So, package is installed and symlink still there, hmmm...
 
@@ -2647,12 +2699,14 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     $ sudo rm /etc/ssl/certs/ca-certificates.crt
     $ sudo pacman -Syu ca-certificates-utils
 
-  Pacman warned me it was reinstalling package.  Symlink was recreated.
+  Pacman warned me it was reinstalling package.
+  Symlink was recreated.
 
 2017-06-02:
-  After a "sudo pacman -Syu", the SBT REPL stopped working correctly.
-  Error message indicated that sbt failed to create a terminal.
-  From /var/log/pacman.log the only thing that might relate to this was
+  After a "sudo pacman -Syu", the SBT REPL stopped working
+  correctly.  Error message indicated that sbt failed to create
+  a terminal.  From /var/log/pacman.log the only thing that might
+  relate to this was
 
   [2017-06-02 13:03] [ALPM] upgraded ncurses (6.0+20170429-1 -> 6.0+20170527-1)
 
@@ -2667,9 +2721,10 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
     $ sudo pacman -U ncurses-6.0+20170429-1-x86_64.pkg.tar.xz
 
-  This downgrade temporarily fixed the problem.  For now, I will just pull down
-  the pacman tarballs to /var/cache/pacman/pkg with "sudo pacman -Syuw" and
-  wait for either an ncurses or sbt upgrade.
+  This downgrade temporarily fixed the problem.  For now, I will
+  just pull down the pacman tarballs to /var/cache/pacman/pkg
+  with "sudo pacman -Syuw" and wait for either an ncurses or
+  sbt upgrade.
 
   [[ See second 2020-02-02 entry ]]
 
@@ -2690,28 +2745,29 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   SBT now works again.
 
 2017-06-11:
-  Brought ncurses up-to-date.  Temporarily fixing SBT/ncurses problem by puting the
-  following in my geoff login's ~/.bashrc file,
+  Brought ncurses up-to-date.  Temporarily fixing SBT/ncurses
+  problem by puting the following in my geoff login's
+  ~/.bashrc file,
 
     regExForXtermType='xterm.*'
     [[ $TERM =~ $regExForXtermType ]] && TERM=xterm
 
 2017-06-20:
-  Going to Upgrade the system by adding a Solid State Hard Drive and
-  increasing memory to 16GiB.
+  Going to Upgrade the system by adding a Solid State Hard
+  Drive and increasing memory to 16GiB.
 
   Some problems to work around:
-    1. This Acer E-14 Laptop (E5-491G-70PX) will require removing the
-       motherboard for these upgrades.
-    2. I forgot the UEFI firmware password.
-    3. The only place to put the SD HD is to replace the DVD drive.
+    1. This Acer E-14 Laptop (E5-491G-70PX) will require removing
+       the motherboard for these upgrades
+    2. I forgot the UEFI firmware password
+    3. The only place to put the SD HD is to replace the DVD drive
 
-  So, I will have a computer repair shop install the upgrades and hopefully
-  break into the UEFI firmwere and reset password.
+  So, I will have a computer repair shop install the upgrades
+  and hopefully break into the UEFI firmwere and reset password.
 
-  Since I will nolonger have the internal DVD drive, I will need a USB thumb
-  drive for emergency system recovery/access instead of booting off the DVD
-  for such.
+  Since I will nolonger have the internal DVD drive, I will need
+  a USB thumb drive for emergency system recovery/access instead
+  of booting off the DVD for such.
 
 2017-06-24:
   Had a small computer shop in Bethlehem PA,
@@ -2721,27 +2777,28 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     http://supergeekcomputers.com
     484-202-0260
 
-  upgrade memory to 16GB (8GBx2 DDRL) and replace the internal DVD drive
-  with an 128GB SSD.  They easily broke into the UEFI firmware and changed
-  the boot order to
+  upgrade memory to 16GB (8GBx2 DDRL) and replace the internal
+  DVD drive with an 128GB SSD.  They easily broke into the UEFI
+  firmware and changed the boot order to
 
     1. USB Thumbdrive
     2. New SSD hard drive
 
-  Unfortuately, they could not reset the UEFI firmware password without
-  knowing the old one.  They did give me a link to a website that would
-  allow me to break in if I needed.
+  Unfortuately, they could not reset the UEFI firmware password
+  without knowing the old one.  They did give me a link to a
+  website that would allow me to break in if I needed.
 
     http://www.tech-faq.com/how-do-i-reset-an-acer-bios-password.html
 
-  They also gave me a 16GB thumbdrive with the latest bootable image
-  of Arch Linux on it.
+  They also gave me a 16GB thumbdrive with the latest bootable
+  image of Arch Linux on it.
 
 2017-06-26:
-  Instead of moving / to the new drive, I decided to just install a fresh
-  version of Arch.  This may clear out some old cruft too.  The procedure
-  follows the "readme" file on the bootable thumb drive, which closely
-  follows the Arch wiki beginners guide.
+  Instead of moving / to the new drive, I decided to just
+  install a fresh version of Arch.  This may clear out some
+  old cruft too.  The procedure follows the "readme" file
+  on the bootable thumb drive, which closely follows the
+  Arch wiki beginners guide.
 
   Approximate intended disk layout:
 
@@ -2780,7 +2837,8 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     # mkdir /mnt/extra
     # mount /dev/sdb2 /mnt/extra
 
-  Editted out all non-US/Canada services from /etc/pacman.d/mirrorlist.
+  Editted out all non-US/Canada services from
+  the /etc/pacman.d/mirrorlist.
 
     # pacstrap /mnt base base-devel
     # genfstab -U /mnt >> /mnt/etc/fstab
@@ -2798,10 +2856,11 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
     127.0.0.1   localhost.localdomaini  localhost
 	::          localhost.localdomain   localhost
-	127.0.1.1   gauss17.localdomain     gauss17
+    127.0.1.1   gauss17.localdomain     gauss17
 
-    [[ See postfix configuration on 2017-06-30, changed /etc/hosts
-       for newaliases.  Also, never was quite sure about the 127.0.1.1 ]]
+    [[ See postfix configuration on 2017-06-30, changed
+       /etc/hosts for newaliases.  Also, never was quite
+       sure about the 127.0.1.1 ]]
 
     # passwd
     # ^D
@@ -2816,10 +2875,10 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   Reboot without USB thumbdrive, system failed to boot, forgot
   details.
 
-  Reboot thumbdrive, mount and compare /dev/sda1 to /dev/sdb1.  Based on the
-  differences, I did:
+  Reboot thumbdrive, mount and compare /dev/sda1 to /dev/sdb1.
+  Based on the differences, I did:
 
-  Updated /boot/loader/loader.conf to be (old version commented out)
+  Updated /boot/loader/loader.conf to (old version commented out)
 
     default arch
     timeout 5
@@ -2833,10 +2892,12 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     initrd /initramfs-linux.img
     options root=PARTUUID=fd153bda-5bf1-4a49-9728-4fb11b660949 rw
 
-  These were the only differences, apart from the extra/intel-ucode
-  package stuff.  The "magic number" fd153bda-5bf1-4a49-9728-4fb11b660949
-  looks problematic.  Indeed, as is, it tries to mount /dev/sdb2 instead
-  of /dev/sda2 as root.  This results in failure loading kernel modules.
+  These were the only differences, apart from the
+  extra/intel-ucode package stuff.  The "magic number"
+  fd153bda-5bf1-4a49-9728-4fb11b660949 looks problematic.
+  Indeed, as is, it tries to mount /dev/sdb2 instead
+  of /dev/sda2 as root.  This results in failure loading
+  kernel modules.
 
     # find /dev -name fd153bda-5bf1-4a49-9728-4fb11b660949
     /dev/disk/by-partuuid/fd153bda-5bf1-4a49-9728-4fb11b660949
@@ -2846,10 +2907,11 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     8a759be3-bd72-44f3-b29c-894eaaa75c30  d6793ae6-1f23-4895-942a-6714e7a06de6
     8d391102-8cbb-4b07-a767-516b7e3bbe94  fd153bda-5bf1-4a49-9728-4fb11b660949
 
-  These are the unique identifies for the 6 partitions I created.  Booting
-  from the thumbdrive and mounting each via the mount cmd, I found that
-  the d6793ae6-1f23-4895-942a-6714e7a06de6 is the partuuid I need.  Changed
-  last line of /boot/loader/entries/arch.conf to
+  These are the unique identifies for the 6 partitions I created.
+  Booting from the thumbdrive and mounting each via the mount
+  cmd, I found that the d6793ae6-1f23-4895-942a-6714e7a06de6
+  is the partuuid I need.  Changed last line of
+  /boot/loader/entries/arch.conf to
 
     options root=PARTUUID=d6793ae6-1f23-4895-942a-6714e7a06de6 rw
 
@@ -2863,11 +2925,13 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     # useradd -d /home/geoff -c "Geoffrey Scheller" -m geoff
     # passwd geoff
 
-  Since /home/geoff directory already existed, the skeleton files from
-  /etc/skel were not copied.  The UID for geoff login created was 1000,
-  so I did not have to change ownership of the files in /home/geoff.
+  Since /home/geoff directory already existed, the skeleton
+  files from /etc/skel were not copied.  The UID for geoff
+  login created was 1000, so I did not have to change ownership
+  of the files in /home/geoff.
 
-  Added geoff to wheel group in preparation of adding sudo package,
+  Added geoff to wheel group in preparation of adding sudo
+  package,
 
     # usermod -aG wheel geoff
 
@@ -2902,7 +2966,8 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     3: wlp2s0: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
         link/ether ac:e0:10:8a:3d:85 brd ff:ff:ff:ff:ff:ff
 
-  Good start, linux is seeing the ethernet card.  Now turn on DHCP
+  Good start, linux is seeing the ethernet card.
+  Now turn on DHCP
 
     # systemctl enable dhcpcd
 
@@ -2946,11 +3011,13 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     # pacman -Syu git python ipython python-nose
     # pacman -Syu sudo
 
-  Where I used visudo to allow users of the wheel group to use sudo without
-  requiring their password.  I also resticted commands to the suggested secure
-  path "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" instead
-  of the user's path.  Also uncommented the "env_keep" lines to allow sudo to
-  work cleanly with the users X11 GUI environment.
+  where I used visudo to allow users of the wheel group
+  to use sudo without requiring their password.  I also
+  resticted commands to the suggested secure path
+  "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+  instead of the user's path.  Also uncommented the "env_keep"
+  lines to allow sudo to work cleanly with the users X11 GUI
+  environment.
 
   Install power management tools,
 
@@ -2989,8 +3056,8 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
   Reboot.
 
-  No WIFI interface, wicd also not running.  Try fixing 2nd one first,
-  even though first might be causing 2nd?
+  No WIFI interface, wicd also not running.  Try fixing 2nd
+  one first, even though first might be causing 2nd?
 
     $ sudo systemctl enable wicd
 
@@ -3021,33 +3088,35 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
     $ startx
 
-  I see home wireless network.  Lets see if I can copy over the old
-  wireless settings,
+  I see home wireless network.  Lets see if I can copy over
+  the old wireless settings,
 
     $ sudo cp /extra/etc/wicd/wireless-settings.conf /etc/wicd
 
   Several reboots.
 
-  Wicd now reliably bring up wireless network on reboot, even when not
-  running under X.  About ~30% of time, wlp2s0 does not come up.  One
-  time system failed to boot due to the old rfkill issue.
+  Wicd now reliably bring up wireless network on reboot,
+  even when not running under X.  About ~30% of time, wlp2s0
+  does not come up.  One time system failed to boot due to
+  the old rfkill issue.
 
 2017-06-27:
   Installed firefox,
 
     $ sudo pacman -Syu firefox
 
-  This brought in hunspell, so I might as well drag hunspell universe
-  in for Libre-Office.
+  This brought in hunspell, so I might as well drag hunspell
+  universe in for Libre-Office.
 
     $ sudo pacman -Syu hunspell-en hyphen-en languagetool libmythes mythes-en
 
-  And this brought in an open-jdk java8 runtime environment.  Might as well
-  bring in the development environment too.
+  And this brought in an open-jdk java8 runtime environment.
+  Might as well bring in the development environment too.
 
     $ sudo pacman -Syu jdk8-openjdk openjdk8-doc java-openjfx java-openjfx-doc
 
-  Some optional media decodings as suggested for dependencies of above,
+  Some optional media decodings as suggested for dependencies
+  of above,
 
     $ sudo pacman -Syu gst-libav gst-plugins-good gst-plugins-base
 
@@ -3105,7 +3174,8 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   -rwxr-xr-x 7 geoff geoff 11676416 Jun 27 20:06 rust-lldb
   -rwxr-xr-x 7 geoff geoff 11676416 Jun 27 20:06 rustup
 
-  Refine changes to ~/.bash_profile where rust.sh put ~/.cargo/bin on PATH.
+  Refine changes to ~/.bash_profile where rust.sh
+  put ~/.cargo/bin on PATH.
 
 2017-06-28:
   Reset timezone to Mountain time,
@@ -3126,27 +3196,29 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     $ cp /home/geoff/.xinitrc .
     $ startx
 
-  VLC won't run as root.  Log out and log into XFCE as geoff.  Still
-  no sound with VLC.
+  VLC won't run as root.  Log out and log into XFCE as geoff.
+  Still no sound with VLC.
 
     $ pulseaudio --start
 
   Still no sound, "fiddle" with VLC controls, got sound.
   Restart vlc, got sound immediately.
 
-  Reboot, log into XFCE as geoff, VLC works with sound off-the-bat.
+  Reboot, log into XFCE as geoff, VLC works with sound
+  off-the-bat.
 
-  Well, next time I rebuild the system, I will try to nail down exactly
-  what in the above trashing made pulseaudio work.
+  Well, next time I rebuild the system, I will try to nail down
+  exactly what in the above trashing made pulseaudio work.
 
-  Note, doesn't seem to be a /etc/libao.conf to edit (see 2016-08-05).
+  Note, doesn't seem to be a /etc/libao.conf to edit
+  (see 2016-08-05).
 
   But, ... when I went to install vorbis-tools,
 
     $ sudo pacman -Syu vorbis-tools
 
-  It pulled in the libao package containing /etc/libao.conf.  Made same
-  changes to it as before,
+  It pulled in the libao package containing /etc/libao.conf.
+  Made same changes to it as before,
 
     from:
       default_driver=alsa
@@ -3231,18 +3303,19 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
   After this change, XFCE seems to come up faster.
 
-  Also, gnome-keyring was not installed.  The Arch Linux PGP keyring,
-  core/archlinux-keyring was installed instead.  That is why I did not
-  repeat the PAM configuratons mentioned on 2016-08-03.
+  Also, gnome-keyring was not installed.  The Arch Linux PGP
+  keyring, core/archlinux-keyring was installed instead.  That
+  is why I did not repeat the PAM configuratons mentioned on
+  2016-08-03.
 
-  Finally, removed /etc/X11/xorg.conf that I put in place earlier.  I
-  believe, except for perhaps ~/.xinitrc, XFCE completely unconfigured
-  and using NVIDIA card.  On enduser level, XFCE still personalized
-  from previous incarnation.
+  Finally, removed /etc/X11/xorg.conf that I put in place
+  earlier.  I believe, except for perhaps ~/.xinitrc, XFCE
+  completely unconfigured and using NVIDIA card.  On enduser
+  level, XFCE still personalized from previous incarnation.
 
 2017-06-30:
-  Today I updated the steps from 2017-06-26 that I took paper notes
-  on.
+  Today I updated the steps from 2017-06-26 that I took paper
+  notes on.
 
   Will continue making updates for the items I mentioned on 2017-06-29.
 
@@ -3287,19 +3360,19 @@ Note: On 2019-03-30 decided to look into the possibility of using the
       > root:		geoff
 
     diff main.cf_orig(<)  main.cf(>):
-      > myhostname = gauss17
-      > mydomain = localdomain
-      < #myorigin = $myhostname
-      > myorigin = $myhostname
-      < #inet_interfaces = $myhostname, localhost
-      > inet_interfaces = $myhostname, localhost
-      > mydestination = $myhostname, localhost.$mydomain, localhost
-      > mynetworks_style = host
-      >
-      > # Added by geoff so that external mail errors out and
-      > # does not get stuck in a queue forever
-      > #
-      > default_transport = error:outside mail is not deliverable
+    > myhostname = gauss17
+    > mydomain = localdomain
+    < #myorigin = $myhostname
+    > myorigin = $myhostname
+    < #inet_interfaces = $myhostname, localhost
+    > inet_interfaces = $myhostname, localhost
+    > mydestination = $myhostname, localhost.$mydomain, localhost
+    > mynetworks_style = host
+    >
+    > # Added by geoff so that external mail errors out and
+    > # does not get stuck in a queue forever
+    > #
+    > default_transport = error:outside mail is not deliverable
 
   Also changed /etc/hosts to
 
@@ -3332,8 +3405,9 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     2.8M KEYDB.cfg	2.4M KEYDB.cfg_old
 
 2017-07-01:
-  Up to now, everything installed on the rebuilt system has been from
-  the official Arch Repos.  I wish to install Dropbox from AUR.
+  Up to now, everything installed on the rebuilt system has
+  been from the official Arch Repos.  I wish to install Dropbox
+  from AUR.
 
   Note: News item on www.archlinux.org/ - abs deprecated, use asp
         instead.  I have installed neither.
@@ -3364,7 +3438,8 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 2017-07-01:
   I consider the SSD hardrive and 16GiB memory upgdades complete.
 
-  I only reinstalled the tools I am actually using or want at hand.
+  I only reinstalled the tools I am actually using or want
+  at hand.
 
   To help enable a future rebuild to go faster,
 
@@ -3528,19 +3603,19 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   when I send e-mail with PGP signature.
 
 2017-07-06:
-  Install ldns package which replaces functionality of the deprecated
-  former core/dnsutils package.
+  Install ldns package which replaces functionality of the
+  deprecated former core/dnsutils package.
 
     $ sudo pacman -Syu ldns
 
-  The drill program replces dig and hosts, and to a lesser extent the
-  nslookup package.  The getent program is a better replacement to
-  the nslookup command than drill.
+  The drill program replces dig and hosts, and to a lesser
+  extent the nslookup package.  The getent program is a better
+  replacement to the nslookup command than drill.
 
-  The old System V dns utilities were deprecated several years ago.
-  There is a compatibility package I choose not to instll this time
-  around.  These compatibity utilities are closely associated with
-  Bind.
+  The old System V dns utilities were deprecated several
+  years ago.  There is a compatibility package I choose
+  not to instll this time around.  These compatibity utilities
+  are closely associated with Bind.
 
 2017-07-06:
   Installed rust tool chain.
@@ -3587,16 +3662,17 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
     $ sudo pacman-optimize
 
-  Bash script attempts to localize the many small files that make up
-  the pacman database.
+  Bash script attempts to localize the many small files
+  that make up the pacman database.
 
 2017-07-13:
   Figured out how to hibernate the system.
 
     $ systemctl hybrid-sleep
 
-  Works as a regular user.  System completely powers off.  Powers back up
-  very fast, even though the gauss17 swap partian is on the slow HD.
+  Works as a regular user.  System completely powers off.
+  Powers back up very fast, even though the gauss17 swap
+  partian is on the slow HD.
 
 2017-07-16:
   Swapped in mirrorlist.pacnew and used the command
@@ -3610,31 +3686,32 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
     $ sudo pacman -Rsu sbt
 
-  and installed sbt version 0.13.15 locally into ~/opt/sbt.  I wanted
-  my sbt builds to be more consistent across my various Linux and
-  Windows10 operating systems.
+  and installed sbt version 0.13.15 locally into ~/opt/sbt.
+  I wanted my sbt builds to be more consistent across my
+  various Linux and Windows10 operating systems.
 
-  Actually, Arch sbt version downloaded sbt version I used under Windows10
-  based on a project/build.properties file I committed to my GITHUB repo.
+  Actually, Arch sbt version downloaded sbt version I used
+  under Windows10 based on a project/build.properties file I
+  committed to my GITHUB repo.
 
 2017-07-27:
   Replace Wicd with NetworkManager.
 
-  NetworkManager was developed by Redhat and is the default in Gnome.
-  In case I go to 3G internet solution, NetworkManager has support for
-  this.  Better support VPN, which also might be a future possibility.
-  Also, hope this cures having to configure static IP's in some
-  wifi hotspots.
+  NetworkManager was developed by Redhat and is the default
+  in Gnome.  In case I go to 3G internet solution, NetworkManager
+  has support for this.  Better support VPN, which also might
+  be a future possibility.  Also, hope this cures having to
+  configure static IP's in some wifi hotspots.
 
     $ sudo pacman -Syu networkmanager nm-connection-editor \
                        networkmanager-dispatcher-sshd dhclient
 
-  First two items needed for functionality.  Haven't reconfigured sshd
-  since the rebuild, hence third item.  Forth item for requesting a
-  routeable IPv6 address.
+  First two items needed for functionality.  Haven't reconfigured
+  sshd since the rebuild, hence third item.  Forth item for
+  requesting a routeable IPv6 address.
 
-  I am guessing second item replaces package network-manager-applet
-  mentioned in the Network-Manager Arch Wiki. [Bad guess]
+  I'm guessing second item replaces package network-manager-applet
+  mentioned in the Network-Manager Arch Wiki. [[Bad guess]]
 
   Now, unconfigure Wicd an configure NetworkManager:
 
@@ -3654,9 +3731,9 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
   a good sign.
 
-  When I log into XFCE, looks like the network applet in my top panel
-  is Wicd specific, gives warning message: "Could not connect to
-  wicd's D-Bus interface..."
+  When I log into XFCE, looks like the network applet in my topr
+  panel is Wicd specific, gives warning message: "Could not
+  connect to wicd's D-Bus interface..."
 
   Missing
 
@@ -3682,12 +3759,12 @@ Note: On 2019-03-30 decided to look into the possibility of using the
        MotoG3 8195  Infra  1     54 Mbit/s  52      ▂▄__  WPA2
        2100-429     Infra  1     54 Mbit/s  29      ▂___  WPA2
 
-  The nmcli-examples page has a good example of a NetworkManager dispatcher
-  script to make Ethernet and Wi-Fi mutually exclusive.
+  The nmcli-examples page has a good example of a NetworkManager
+  dispatcher script to make Ethernet and Wi-Fi mutually exclusive.
 
-  Examples seem more ethernet oriented.  Don't see getting around having to
-  configure text files, so I will punt and go back to Wicd to pacman
-  in the missing network-manager-applet package.
+  Examples seem more ethernet oriented.  Don't see getting around
+  having to configure text files, so I will punt and go back to
+  Wicd to pacman in the missing network-manager-applet package.
 
   Installed network-manager-applet
 
@@ -3695,16 +3772,16 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
   and reconfigured system back to NetworkManager.
 
-  XFCE did not know anything about nm-applet until I ran it from the
-  command line.  After that, it integrated itself into my XFCE
-  startup settings.  Just clicking on a wifi connection does not
-  bring up a configuration menu, I had to configure through the
-  "Connect to hidden WiFi Network" menu.  Deactivated the Wicd applet
-  counterpart to nm-applet.
+  XFCE did not know anything about nm-applet until I ran it
+  from the command line.  After that, it integrated itself
+  into my XFCE startup settings.  Just clicking on a wifi
+  connection does not bring up a configuration menu, I had
+  to configure through the "Connect to hidden WiFi Network"
+  menu.  Deactivated the Wicd applet counterpart to nm-applet.
 
 2017-07-29:
-  Made Ethernet and WiFi mutually exclusive.  Plugging in an Ethernet
-  cable causes WiFi to go into Airplane mode.
+  Made Ethernet and WiFi mutually exclusive.  Plugging in an
+  Ethernet cable causes WiFi to go into Airplane mode.
 
   Put the following script,
 
@@ -3744,20 +3821,23 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     -rwx------ 1 root root 469 Jul 29 11:02 /etc/NetworkManager/dispatcher.d/70-wifi-wired-exclusive
 
 2017-09-29:
-  After a kernel update, system shutdown hangs waiting for two stopped jobs
-  to terminate.  One is a Network Manager process, the other WPA Supplement.
+  After a kernel update, system shutdown hangs waiting for two
+  stopped jobs to terminate.  One is a Network Manager process,
+  the other WPA Supplement.
 
-  Tried uninstalling wicd and wicd-gtk.
+  Tried uninstalling wicd and wicd-gtk, since it is unlikely I
+  will ever return to them.
 
-    $ sudo pacman -R wicd wicd-gtk, since it is unlikely I will return to them.
-    $ sudo pacnan -Syu
+    $ sudo pacman -R wicd wicd-gtk
+    $ sudo pacman -Syu
 
   Did not help the stopped processes to terminate.
 
 2017-10-09:
-  The system hangs or takes long time to shut down, but not when I am not using
-  wireless.  At the console, getting an error message from a kernel thread
-  regarding something "tainting the kernel."  It suggested a workarond to gag
+  The system hangs or takes long time to shut down, but not
+  when I am not using wireless.  At the console, getting an
+  error message from a kernel thread regarding something
+  "tainting the kernel."  It suggested a workarond to gag
   the message which I have tried:
 
     # echo 0 > /proc/sys/kernel/hung_task_timeout_secs
@@ -3765,7 +3845,8 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   I'll see if this helps or is persistent across reboots.
 
 2017-10-28:
-  Problem from 2017-10-09 gradually went away, won't worry about it.
+  Problem from 2017-10-09 gradually went away, won't worry
+  about it.
 
 2017-12-02:
   Replaced xscreensaver with xscreensaver-arch-logo from AUR.
@@ -3795,25 +3876,28 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     Dec 12 09:51:57 gauss17 systemd[1]: Listening on CUPS Scheduler.
     Dec 12 09:51:57 gauss17 systemd[1]: Started CUPS Scheduler.
 
-  There is a CUPS cli interface, but since printing to an actual printer
-  is something I rarely do, I want something GUI and idiot proof.  I looked
-  into installing the KDE Network Manager, but this would drag in way too
-  much KDE for my XFCE minimalistic approach.
+  There is a CUPS cli interface, but since printing to an
+  actual printer is something I rarely do, I want something
+  GUI and idiot proof.  I looked into installing the KDE Network
+  Manager, but this would drag in way too much KDE for my XFCE
+  minimalistic approach.
 
-  There appears to be a CUPS web interface running on: localhost:631
+  There appears to be a CUPS web interface running
+  on: localhost:631
 
-  Doesn't seem to see the HP Officejet Pro 8610.  Talked to my son
-  Jason who said he downloaded the HP drivers from
+  Doesn't seem to see the HP Officejet Pro 8610.  Talked to my
+  son Jason who said he downloaded the HP drivers from
 
     https://developers.hp.com/hp-linux-imaging-and-printing
 
-  and got working via a usb connection for his Arch Linux computer.
-  The pacakage was called HPLIP.  Lets check Arch Repos first.
+  and got working via a usb connection for his Arch Linux
+  computer.  The pacakage was called HPLIP.  Lets check Arch
+  Repos first.
 
     $ pacman -Ss hplip
     extra/hplip 3.17.11-1
-        Drivers for HP DeskJet, OfficeJet, Photosmart, Business Inkjet and some
-        LaserJet
+        Drivers for HP DeskJet, OfficeJet, Photosmart,
+        Business Inkjet and some LaserJet
 
     $ sudo pacman -Syu hplip
 
@@ -3822,21 +3906,23 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     $ sudo pacman -Syu sane xsane
     $ sudo pacman -Syu rpcbind
 
-  first to give faxing capabilities, the second I "think" it needs to enable
-  networking use.  The CUPS service on localhost 631 was not finding it.
+  first to give faxing capabilities, the second I "think" it
+  needs to enable networking use.  The CUPS service on
+  localhost 631 was not finding it.
 
     $ systemctl enable rpcbind.service
 
-  Reboot, since remote proceedure call service has to be started before
-  other services.
+  Reboot, since remote proceedure call service has to be
+  started before other services.
 
-  CUPS servce still not finding it.  After some poking around on Stackoverflow
-  I found that I had to run hp-setup,
+  CUPS servce still not finding it.  After some poking around
+  on Stackoverflow I found that I had to run hp-setup,
 
     $ sudo /usr/bin/hp-setup -i 192.168.1.17
 
-  The -i ran it as a CLI, would had to install QT libraries to run it as a GUI.
-  Was able to print a test page.  Printed another page from a browser.
+  The -i ran it as a CLI, would had to install QT libraries
+  to run it as a GUI.  Was able to print a test page.
+  Printed another page from a browser.
 
 2017-12-12:
   Added systemadm GUI front-end for systemctl.
@@ -3857,8 +3943,8 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   Added utility which can be used to control NUMA policy for
   processes or shared memory.
 
-  NUMA (stands for Non-Uniform Memory Access).  Presumably this is a
-  good thing for Intel i7 processes.
+  NUMA (stands for Non-Uniform Memory Access).  Presumably
+  this is a good thing for Intel i7 processes.
 
     $ journalctl -b | grep NUMA
     Dec 30 13:14:25 gauss17 kernel: No NUMA configuration found
@@ -3889,26 +3975,29 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     node   0
       0:  10
 
-  From the man page, numactl runs processes with a specific NUMA scheduling
-  or memory placement policy.  The policy is set for command and inherited
-  by all of its children.  In addition it can set persistent policy for
-  shared memory segments or files.
+  From the man page, numactl runs processes with a specific
+  NUMA scheduling or memory placement policy.  The policy is
+  set for command and inherited by all of its children.
+  In addition it can set persistent policy for shared memory
+  segments or files.
 
   More info found here:
 
     https://www.sharcnet.ca/help/index.php/Using_numactl
 
-  You can use numactl to control how your program uses memory quite precisely,
-  controlling which CPUs are used to execute a program and which memory nodes
-  are used. Quite often, simply using numactl to require that the program uses
-  only local memory can result in much improved performance. This can be
-  achieved by using numactl with flag -l.
+  You can use numactl to control how your program uses memory
+  quite precisely, controlling which CPUs are used to execute
+  a program and which memory nodes are used. Quite often,
+  simply using numactl to require that the program uses only
+  local memory can result in much improved performance.
+  This can be achieved by using numactl with flag -l.
 
     $ numctl --localalloc <my-multi-threaded-program>
 
-  The tradeoff is that the program can use only local memory, which is less
-  than the total memory, and will fail if it tries to allocate more memory
-  when the local memory is already full.
+  The tradeoff is that the program can use only local memory,
+  which is less than the total memory, and will fail if it
+  tries to allocate more memory when the local memory is
+  already full.
 
 2018-02-07:
 
@@ -3934,8 +4023,8 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
     libxfont: removing fontsproto breaks dependency 'fontsproto>=2.1.3'
 
-  Seems to be upgrading a lot of X11 stuff.  From Arch Linux forums,
-  libfont has been ophaned in 2017.
+  Seems to be upgrading a lot of X11 stuff.  From Arch Linux
+  forums, libfont has been ophaned in 2017.
 
     $ pacman -Ss libxfont
     extra/libxfont2 2.0.3-1 [installed]
@@ -3955,9 +4044,9 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
     $ sudo pacman -Syu
 
-  While sorting this out, there has been some major core and extra
-  updates, so along with a major X11 upgrade, I am getting a kernel
-  upgrade and NVIDIA upgrade.  Reboot needed.
+  While sorting this out, there has been some major core and
+  extra updates, so along with a major X11 upgrade, I am
+  getting a kernel upgrade and NVIDIA upgrade.  Reboot needed.
 
 2018-02-10:
   Glad to see Linux kernel developers are on the ball.
@@ -3976,13 +4065,15 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   This is way I use a "rolling distribution" like Arch.
 
 2018-02-14:
-  Today I will attempt to install the prerequisites needed to allow using the
-  Arch system Python for GPU based Tensorflow Deep-Learning programming with
-  Keras. I am using the book "Deep Learning with Python" by François Chollet.
-  Appendix A covers how to install the environment for Ubuntu.  I will be using
-  it as a rough guide for Arch.
+  Today I will attempt to install the prerequisites needed to
+  allow using the Arch system Python for GPU based Tensorflow
+  Deep-Learning programming with Keras. I am using the book
+  "Deep Learning with Python" by François Chollet.
+  Appendix A covers how to install the environment for Ubuntu.
+  I will be using it as a rough guide for Arch.
 
-  First make sure we are not conflating things with other Arch updates:
+  First make sure we are not conflating things with other
+  Arch updates:
 
      $ sudo pacman -Syu
 
@@ -3992,10 +4083,10 @@ Note: On 2019-03-30 decided to look into the possibility of using the
      $ pip --version
      pip 9.0.1 from /usr/lib/python3.6/site-packages (python 3.6)
 
-  Next the appendix uses sudo pip to install tensorflow-gpu into the Python
-  environment.  "Pacman -Ss tensorflow" tells me that there are four flavors,
-  basic, with CPU optimizations, with GPU optimizations, and with both.  Lets
-  go with the last one:
+  Next the appendix uses sudo pip to install tensorflow-gpu
+  into the Python environment.  "Pacman -Ss tensorflow" tells
+  me that there are four flavors, basic, with CPU optimizations,
+  with GPU optimizations, and with both.  Lets go with the last one:
 
      $ sudo pacman -Syu tensorflow-opt-cuda python-tensorflow-opt-cuda
 
@@ -4063,9 +4154,9 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
      $ sudo pacman -Syu python-pyopencl
 
-  Now, appendix installs python-opencv.  OpenCV is a computer vision
-  library.  Wondering if they meant OpenCL?  Doesn't seem to be an
-  python-opencv in the Arch Repos
+  Now, appendix installs python-opencv.  OpenCV is a computer
+  vision library.  Wondering if they meant OpenCL?  Doesn't
+  seem to be an python-opencv in the Arch Repos
 
     $ pacman -Ss opencv
     extra/opencv 3.4.0-2
@@ -4083,7 +4174,8 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
   Oh well, I tried.
 
-  I can skip over the setting up of the GPU, Pacman did this for me via dependencies.
+  I can skip over the setting up of the GPU, Pacman did this
+  for me via dependencies.
 
   Finally, install Keras,
 
@@ -4092,24 +4184,25 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     $ cd keras
     $ sudo python setup.py install
 
-  I think I am done! ... Nope.  Python is not finding module keras,
-  The python setup script installed a Keras-2.1.4-py3.6.egg file
-  here: /usr/lib/python3.6/site-packages
-  but there are no other "egg" files there, just directories and egg.info
+  I think I am done! ... Nope.  Python is not finding
+  module keras.  The python setup script installed a
+  Keras-2.1.4-py3.6.egg file here:
+  /usr/lib/python3.6/site-packages but there are no other
+  "egg" files there, just directories and egg.info
   directories.  Had root blow the egg file away.
 
   Try installing it not from the git clone,
 
     $ sudo pip install keras
 
-  It installed the same version, but this time in a similar format to
-  what is already there.  Python now imports it.
+  It installed the same version, but this time in a similar
+  format to what is already there.  Python now imports it.
 
 2018-02-25:
-  For the Keras libraries I installed, I had to go in as root to
-  fix the permissions on the Python modules.  Seems that "other"
-  didn't have any permisions.  Did a "chmod o+rx" on directories
-  and a "chmod o+r" on the files.
+  For the Keras libraries I installed, I had to go in as
+  root to fix the permissions on the Python modules.  Seems
+  that "other" didn't have any permisions.  Did a "chmod o+rx"
+  on directories and a "chmod o+r" on the files.
 
 2018-03-01:
   Orphan packages,
@@ -4168,13 +4261,16 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     load-module module-equalizer-sink
     load-module module-dbus-protocol
 
-  into either /etc/pulse/default.pa or ~/.config/pulse/default.pa.
-  I created the later and just put the above lines into it.  I hope
-  it works similarly to /etc/bash_profile and ~/.bash_profile. [Bad
-  choice, see below.]
+  into either
 
-  After reboot, not only don't I have sound, but no wireless network
-  either.
+     /etc/pulse/default.pa or ~/.config/pulse/default.pa
+
+  I created the later and just put the above lines into it.
+  I hope it works similarly to /etc/bash_profile and
+  ~/.bash_profile. [Bad choice, see below.]
+
+  After reboot, not only don't I have sound, but no wireless
+  network either.
 
     $ systemctl --failed --all --user
     UNIT                 LOAD   ACTIVE SUB    DESCRIPTION
@@ -4211,11 +4307,12 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
     ...ACPI group/action undefined: button/wlan / WLAN
 
-  After another reboot, wifi is back. Gremlins? Hit Fn-f3 odd number of
-  times?
+  After another reboot, wifi is back. Gremlins? Hit Fn-f3 odd
+  number of times?
 
-  Back to pulseaudio issues.  The above error message seems to indicate
-  that "module-equalizer-sink.c" is currently unsupported.
+  Back to pulseaudio issues.  The above error message seems
+  to indicate that "module-equalizer-sink.c" is currently
+  unsupported.
 
     $ find /usr -name module-equalizer-sink* 2>/dev/null
     /usr/lib/pulse-11.1/modules/module-equalizer-sink.so
@@ -4223,28 +4320,31 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     $ pacman -Qo /usr/lib/pulse-11.1/modules/module-equalizer-sink.so
     /usr/lib/pulse-11.1/modules/module-equalizer-sink.so is owned by pulseaudio-equalizer 11.1-1
 
-  Maybe should punt with the equalizer, but if I continue, I would try
-  and put the configurations lines I tried into /etc/pulse/default.pa
-  instead.  Let's see what happens.
+  Maybe should punt with the equalizer, but if I continue,
+  I would try and put the configurations lines I tried into
+  /etc/pulse/default.pa instead.  Let's see what happens.
 
   Reboot.
 
-  Everything still works, I "think" pavucontrol has gained some functionality.
-  Still get the error message
+  Everything still works, I "think" pavucontrol has gained some
+  functionality.  Still get the error message
 
     core audio output error: cannot add user audio filter "equalizer" (skipped)
 
-  when vlc is started.  Though it does not cache changes to its equalizer
-  settings between runs.  Have no idea where vlc's equalizer functionality
-  is implemented, within vlc? past down to pa?
+  when vlc is started.  Though it does not cache changes to its
+  equalizer settings between runs.  Have no idea where vlc's
+  equalizer functionality is implemented, within vlc? past down
+  to pa?
 
 2018-03-02:
   According to the Arch Linux PulseAudio Wiki,
 
     https://wiki.archlinux.org/index.php/PulseAudio
 
-  I should have copied /etc/pulse/default.pa to ~/.config/pulse/default.pa
-  and made my changes.  I'll do as recommended.
+  I should have copied /etc/pulse/default.pa to
+  ~/.config/pulse/default.pa and made my changes.
+
+  I'll do as recommended.
 
 2018-03-02:
   More pulseaudio wrangling, here is what I finally put
@@ -4258,9 +4358,10 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     load-module module-equalizer-sink
     load-module module-dbus-protocol
 
-  Don't think the #! is necessary, probably used by developers while
-  debugging the deamon.  Also, the .include minimizes having to keep
-  an eye out for /etc/pulse/default.pa.pacnew files.
+  Don't think the #! is necessary, probably used by developers
+  while debugging the deamon.  Also, the .include minimizes
+  having to keep an eye out for /etc/pulse/default.pa.pacnew
+  files.
 
     $ pacmd list-sinks|egrep -i 'index:|name:'
       index: 0
@@ -4272,13 +4373,14 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
   The * denotes the default channel.
 
-  The qpaeq command now launches a Python based GUI where I can adjust
-  frequency settings and save them.  It seems to be adjusting the
-  <combined.equalized> channel.  I need to figure out how to make this
-  the default channel.
+  The qpaeq command now launches a Python based GUI where
+  I can adjust frequency settings and save them.  It seems
+  to be adjusting the <combined.equalized> channel.  I need
+  to figure out how to make this the default channel.
 
-  Some nomenclature, you send audio to "sinks" (sound cards, servers, process),
-  you receive audio from "sources" (capture devices, processes).
+  Some nomenclature, you send audio to "sinks" (sound cards,
+  servers, process), you receive audio from "sources" (capture
+  devices, processes).
 
   To list sources,
 
@@ -4290,8 +4392,8 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     name: <combined.monitor>
     name: <combined.equalizer.monitor>
 
-  For now I am going to set the default sink, and leave sources alone.
-  File ~/.config/pulse/defauls.pa is now,
+  For now I am going to set the default sink, and leave sources
+  alone.  File ~/.config/pulse/defauls.pa is now,
 
     #!/usr/bin/pulseaudio -nF
 
@@ -4309,7 +4411,8 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     $ systemctl --failed --all --user
     0 loaded units listed.
 
-  To show all installed unit files use 'systemctl list-unit-files'.
+  To show all installed unit files,
+  use 'systemctl list-unit-files'.
 
     $ pacmd list-sinks|egrep -i 'index:|name:'
       index: 0
@@ -4319,12 +4422,13 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     * index: 2
          name: <combined.equalizer>
 
-  But, no sound initially with vlc.  Messing around with pauvcontrol,
-  I got sound and adjusting the equilizer with qpaeq.  Thought about
-  adding combined.equalizer.monitor as a "source" to see if things
-  defaulted correctly on reboot, but decided to just reboot and see
-  if problem repeated itself.  Something else happeded.  Now, vlc
-  played "out of the box" but qpaeq had no affect.  Also,
+  But, no sound initially with vlc.  Messing around with
+  pauvcontrol, I got sound and adjusting the equilizer with
+  qpaeq.  Thought about adding combined.equalizer.monitor
+  as a "source" to see if things defaulted correctly on
+  reboot, but decided to just reboot and see if problem
+  repeated itself.  Something else happeded.  Now, vlc
+  played "out of the box" but qpaeq had no effect.  Also,
 
     $ pacmd list-sinks|egrep -i 'index:|name:'
     * index: 0
@@ -4356,9 +4460,9 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   independently adjust their volumes.
 
 2018-03-05:
-  Noticed that Arch was not updating Rust toolchain.  Removed the rustup
-  package via pacman and manually by rm -rf ~/.cargo directory.
-  Reinstalled Rust locally, see 2017-06-27 for how.
+  Noticed that Arch was not updating Rust toolchain.  Removed
+  the rustup package via pacman and manually by rm -rf ~/.cargo
+  directory.  Reinstalled Rust locally, see 2017-06-27 for how.
 
   Installed version is now,
 
@@ -4372,20 +4476,23 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   gnome-keyring:
   I have been getting along fine without it, and the wiki does not
   seem to indicate whether or not it is a desirable thing to run.
+
     Pros: Don't have to remember password schema.
           Can enable/disable it with XFCE settings.
           Some WiFi wpa2/psk hotspots connecton issues solved.
     Cons: By enabling it, gpg-agent & ssh-agent not launched.
-          Have to mess with PAM to unlock keyring on login automatically.
-          Have to figure out how to backup keyring.
+          Have to mess with PAM to unlock keyring on login
+          automatically.  Have to figure out how to backup
+          keyring.
+
   For now, won't do anything.
 
   Preferred applications have no effect:
-  I noticed that different applications will launch firefox instead
-  of chrome, even though chrome is configured as the default.  Wiki
-  says the xorg-xprop package needs to be installed for xdg-open and
-  xdg-settings to detect and integrate with XFCE desktop environment
-  correctly.
+  I noticed that different applications will launch firefox
+  instead of chrome, even though chrome is configured as the
+  default.  Wiki says the xorg-xprop package needs to be
+  installed for xdg-open and xdg-settings to detect and
+  integrate with XFCE desktop environment correctly.
 
     $ pacman -Ss xorg-xprop
     extra/xorg-xprop 1.2.2-1 (xorg-apps xorg)
@@ -4422,11 +4529,12 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
   The web page says:
 
-    The Xfce Desktop requires an active ConsoleKit session to function
-    properly. ConsoleKit is used for system actions like shutdown, suspend
-    and (un)mounting devices (through Polkit for authorization). In case
-    you use a desktop manager, the DM will take care of that. For console
-    starts this is a bit different.
+    The Xfce Desktop requires an active ConsoleKit session to
+    function properly. ConsoleKit is used for system actions
+    like shutdown, suspend and (un)mounting devices (through
+    Polkit for authorization). In case you use a desktop manager,
+    the DM will take care of that. For console starts this is
+    a bit different.
 
   Well, didn't work.
 
@@ -4438,12 +4546,12 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
   it says:
 
-    ConsoleKit is currently not actively maintained. The focus has shifted
-    to the built-in seat/user/session management of Software/systemd called
-    systemd-logind!
+    ConsoleKit is currently not actively maintained. The focus
+    has shifted to the built-in seat/user/session management
+    of Software/systemd called systemd-logind!
 
-  So I removed --with-ck-launch from .xinitrc.  I need to check the dates
-  of crap I find in internet forums!
+  So I removed --with-ck-launch from .xinitrc.  I need to check
+  the dates of crap I find in internet forums!
 
 2018-03-08:
   Installed java 9 jdk and jre,
@@ -4488,8 +4596,8 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
     $ sudo pacman -Syu ghc-static haskell-ghc-paths
 
-  The second package brings names reversed engineered from the GHC build
-  system into the GHC.Paths module.
+  The second package brings names reversed engineered from
+  the GHC build system into the GHC.Paths module.
 
     $ ghci
     GHCi, version 8.2.2: http://www.haskell.org/ghc/  :? for help
@@ -4528,16 +4636,16 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     /usr/share/licenses/haskell-ghc-paths/
     /usr/share/licenses/haskell-ghc-paths/LICENSE
 
-  No *.a files.  Makes sense, we want it to give information on the system
-  it runs on, not the system it is compiled on.
+  No *.a files.  Makes sense, we want it to give information
+  on the system it runs on, not the system it is compiled on.
 
 2018-04-14:
   Installed python virtualenv tool,
 
     $ sudo pacman -Syu python-virtualenv
 
-  I wonder to what degree Anaconda's & Canopy's virtual environment
-  mechanisms derive from this.
+  I wonder to what degree Anaconda's & Canopy's virtual
+  environment mechanisms derive from this.
 
 2018-04-17:
   Updated Rust installation, not using Arch version.
@@ -4595,7 +4703,10 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
     Plugin 'vim-syntastic/syntastic'
 
-  Configured Syntastic as per https://github.com/vim-syntastic/syntastic
+  Configured Syntastic as per
+
+    https://github.com/vim-syntastic/syntastic
+
   by putting the following lines
 
     set statusline+=%#warningmsg#
@@ -4607,32 +4718,35 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     let g:syntastic_check_on_open = 1
     let g:syntastic_check_on_wq = 0
 
-  Needed to explicitly turn syntax on in .vimrc to get syntax colors.
+  Needed to explicitly turn syntax on in .vimrc to get
+  syntax colors.
 
-  Need to verify, but subjectly syntax colors are better for different
-  programming file types than with raw vim.
+  Need to verify, but subjectly syntax colors are better
+  for different programming file types than with raw vim.
 
-  Not sure if syntax checking is not working or if I just don't know
-  how to use it yet.
+  Not sure if syntax checking is not working or if I just
+  don't know how to use it yet.
 
-  Good news, syntax checking works as advertised with :w a C file.
+  Good news, syntax checking works as advertised
+  with :w a C file.
 
 2018-04-19:
   Swapped in a new /etc/pacman.d/mirrorlist
 
-  After uncommenting the Wordwide, Canada, German, Netherlands and
-  United States servers, used the command
+  After uncommenting the Wordwide, Canada, German,
+  Netherlands and United States servers, used the command
 
      $ rankmirrors -v /etc/pacman.d/mirrorlist
 
-  to rank these servers.  Kept the top 25.  One Worldwide, the rest
-  in the United States.
+  to rank these servers.  Kept the top 25.  One Worldwide,
+  the rest in the United States.
 
 2018-04-21:
-  Someone was knowing on my door while gauss17 was directly connected
-  directly connected to the Internet.
+  Someone was knocking on my door while gauss17 was directly
+  connected directly connected to the Internet.
 
-  From Etherage I noticed alot of ssh activity from 222.186.52.123.
+  From Etherage I noticed alot of ssh activity from
+  222.186.52.123.
 
   Partial output from "journalctl -u sshd":
     ...
@@ -4657,8 +4771,9 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     sshd[24204]: Disconnecting authenticating user root 222.186.52.123 port 31380: Too many authentication failures [preauth]
     ...
 
-  Before I rebuilt gauss17, I had moved the ssh port to 30303, lets move it
-  somewhere else, not allow passwd ssh, and deny root direct ssh access.
+  Before I rebuilt gauss17, I had moved the ssh port to 30303,
+  lets move it somewhere else, not allow passwd ssh, and deny
+  root direct ssh access.
 
   Edit /etc/ssh/sshd_config:
 
@@ -4670,8 +4785,9 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   See 2018-04-23.
 
 2019-04-22:
-  Following up from yesterday, since I tightened up on sshd security,
-  I am not seeing any unusual activity using `journalctl -u sshd -f' running all night.
+  Following up from yesterday, since I tightened up on sshd
+  security, I am not seeing any unusual activity using
+  `journalctl -u sshd -f' running all night.
 
   Data mined journalctl logs:
 
@@ -4876,11 +4992,13 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 2018-05-08:
   Did /etc/..../*.pacnew merging.  Mostly updating comments.
 
-  Factoid: systemd now maintains /etc/{passwd,shadow,gshadow,group}
-  The only reason to manually update them is to update the
-  comments, so these *.pacnew files can be safely deleted.  The
-  new versions of these files are just subs with root's info in
-  them.
+  Factoid: systemd now maintains
+               /etc/{passwd,shadow,gshadow,group}
+           The only reason to manually update them is to update
+           the comments, so these *.pacnew files can be safely
+           deleted.  The new versions of these files are just
+           subs with root's info in
+           them.
 
 2018-05-17:
   Installed a vulnerability scanner,
@@ -4933,10 +5051,12 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     cjs-3.8.0-1  clutter-1.26.2-1  clutter-gtk-1.8.4-1
     cogl-1.22.2+10+g3baa2d7a-1  exempi-2.4.5-1
     gnome-backgrounds-3.28.0-1  libgnomekbd-3.26.0+5+g1c1b585-1
-    muffin-3.8.1-1  nemo-3.8.2-1  python-atspi-2.26.0-1
-    python-pam-1.8.3-1  python-pillow-5.1.0-1  python-psutil-5.4.5-1
-    python-pyinotify-0.9.6-3  python-setproctitle-1.1.10-2
-    python-xapp-1.2.0-1  xapps-1.2.1-1  zenity-3.28.1-1
+    muffin-3.8.1-1  nemo-3.8.2-1
+    python-atspi-2.26.0-1 python-pam-1.8.3-1
+    python-pillow-5.1.0-1 python-psutil-5.4.5-1
+    python-pyinotify-0.9.6-3 python-setproctitle-1.1.10-2
+    python-xapp-1.2.0-1  
+    xapps-1.2.1-1  zenity-3.28.1-1
     cinnamon-3.8.3-1
 
   Now lets test,
@@ -4956,13 +5076,14 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
       $ startx foobar
 
-  passes "$@" = "xterm" "foobar" to it.  The /usr/bin/startx script
-  is your typical lowest common denomiator Posix/System V/BSD Bourne
-  Shell script.  As such, it is horribly overly complicated being
-  totally compatible with every possible Unix system ever invented.
-  Also impossible to change because you can't test it on "every possible
-  Unix system ever invented."  To get around this ugly wart, I changed
-  ~/.xinitrc to
+  passes "$@" = "xterm" "foobar" to it.  The /usr/bin/startx
+  script is your typical lowest common denomiator
+  Posix/System V/BSD Bourne Shell script.  As such, it is
+  horribly overly complicated being totally compatible with
+  every possible Unix system ever invented.
+  Also impossible to change because you can't test it
+  on "every possible Unix system ever invented."  To get
+  around this ugly wart, I changed ~/.xinitrc to
 
       session=${2:-cinnamon}
 
@@ -4972,167 +5093,47 @@ Note: On 2019-03-30 decided to look into the possibility of using the
           *              ) exec $2;;
       esac
 
-  I defaulted it to cinnamon because xfce has only 4 letters and I
-  don't have to think how to spell it.
+  I defaulted it to cinnamon because xfce has only 4 letters
+  and I don't have to think how to spell it.
 
   See Userland_Adminlog for adventures in configuring Cinnamon.
 
-2018-06-04:
-  Using the following as a guide,
-
-    The Hitchhiker's Guide to Python -
-    http://docs.python-guide.org/en/latest/
-
-  Definately Python3 oriented, not Arch Linux oriented.  Will tend
-  to default to pacman over pip.
-
-  Versions installed:
-
-     /usr/bin/python --version
-     Python 3.6.5
-
-     $ /usr/bin/pip --version
-     pip 10.0.1 from /usr/lib/python3.6/site-packages/pip (python 3.6)
-
-  Install pipenv:
-
-     $ pacman -Ss pipenv
-     community/python-pipenv 2018.05.18-1
-         Sacred Marriage of Pipfile, Pip, & Virtualenv.
-     community/python2-pipenv 2018.05.18-1
-         Sacred Marriage of Pipfile, Pip, & Virtualenv.
-
-     $ sudo pacman -Syu python-pipenv
-
-  This brought in
-
-     python-certifi
-     python-pew
-     python-virtualenv-clone
-     python-pipenv
-
-     $ pacman -Qs python-certifi
-     local/python-certifi 2018.4.16-1
-         Python package for providing Mozilla's CA Bundle
-
-     $ pacman -Qs python-pew
-     local/python-pew 1.1.5-1
-         Python Env Wrapper, a set of tools to manage multiple virtual environments
-
-     $ pacman -Qs python-virtualenv-clone
-     local/python-virtualenv-clone 0.3.0-1
-         A script for cloning a non-relocatable virtualenv.
-
-  So far, I am installing these system wide
-
-    $ python -m site --user-base
-
-  where /home/geoff/.local/bin is in my $PATH before system stuff.
-
-    $ ls -A ~/.local/bin
-    pythagTriples
-
-  Unlike non-rolling (stale) distribution, pacman will keep me more
-  up to date than trying to do this myself.
-
-  Following the Hitchhiker's guide,
-
-    $ mkdir ~/devel/myPythonProg; cd ~/devel/myPythonProg
-    $ pipenv install requests
-    $ ls -lA
-    total 8
-    -rw-rw---- 1 geoff geoff  153 Jun  4 23:35 Pipfile
-    -rw-r--r-- 1 geoff geoff 1911 Jun  4 23:35 Pipfile.lock
-
-  Now, create amin.py with the following contents:
-
-    import requests
-
-    response = requests.get('https://httpbin.org/ip')
-
-    print('Your IP is {0}'.format(response.json()['origin']))
-
-  Run this script,
-
-    $ pipenv run python main.py
-    Your IP is 73.26.43.14
-
-  Create a shell environment,
-
-    $ pipenv shell
-    Spawning environment shell (/bin/bash). Use 'exit' to leave.
-    . /home/geoff/.local/share/virtualenvs/myPythonProg--EYR82S2/bin/activate
-
-    $ path
-    /home/geoff/.local/share/virtualenvs/myPythonProg--EYR82S2/bin
-    /home/geoff/opt/sbt/bin
-    <clip>
-
-    $ exit
-    $ ll /home/geoff/.local/share/virtualenvs/myPythonProg--EYR82S2/bin
-    total 60
-    lrwxrwxrwx 1 geoff geoff    6 Jun  4 23:35 python3.6 -> python
-    lrwxrwxrwx 1 geoff geoff    6 Jun  4 23:35 python3 -> python
-    -rwxrwxr-x 1 geoff geoff 9992 Jun  4 23:35 python
-    -rwxrwxr-x 1 geoff geoff  287 Jun  4 23:35 easy_install-3.6
-    -rwxrwxr-x 1 geoff geoff  287 Jun  4 23:35 easy_install
-    -rwxrwxr-x 1 geoff geoff  269 Jun  4 23:35 pip3.6
-    -rwxrwxr-x 1 geoff geoff  269 Jun  4 23:35 pip3
-    -rwxrwxr-x 1 geoff geoff  269 Jun  4 23:35 pip
-    -rwxrwxr-x 1 geoff geoff  266 Jun  4 23:35 wheel
-    -rwxrwxr-x 1 geoff geoff 2376 Jun  4 23:35 python-config
-    -rw-rw---- 1 geoff geoff 1137 Jun  4 23:35 activate_this.py
-    -rw-rw---- 1 geoff geoff 2213 Jun  4 23:35 activate.fish
-    -rw-rw---- 1 geoff geoff 1059 Jun  4 23:35 activate.csh
-    -rw-rw---- 1 geoff geoff 2117 Jun  4 23:35 activate
-    -rwxrwxr-x 1 geoff geoff  278 Jun  4 23:35 chardetect
-
-    $ sha256sum /usr/bin/python
-    1c76835f82c022aa0da47d5edbadbe70ac4812c65d5418d694c2e7b28dcccc20  /usr/bin/python
-
-    $ sha256sum /home/geoff/.local/share/virtualenvs/myPythonProg--EYR82S2/bin/python
-    1c76835f82c022aa0da47d5edbadbe70ac4812c65d5418d694c2e7b28dcccc20  /home/geoff/.local/share/virtualenvs/myPythonProg--EYR82S2/bin/python
-
-  Seems to have copied the system python.
-
-  The pipenv command wrappers the lower level virtualenv.  Just
-  exit out of the pipenv shell.  (Things get confused if you use
-  a "deactivate".)
-
-  Has a very sbt feel to it.
-
 2018-06-27:
-  Installed East Asian fonts.  Like I did on 2017-01-11 with previous
-  incarnation of gauss17.
+  Installed East Asian fonts.  Like I did on 2017-01-11 with
+  previous incarnation of gauss17.
 
   Used
 
     $ pacman -Ss fonts|egrep -i -B 1 'japanese|chinese|korean'
 
-  to get names of font packages.  Baidu seems to display correctly.
+  to get names of font packages.  Now Baidu seems to display
+  correctly.
 
 2018-07-06:
-  Meeded to use my PC's built in SD card reader, so installed the
-  utilities for exFAT file system.
+  Meeded to use my PC's built in SD card reader, so installed
+  the utilities for exFAT file system.
 
     $ sudo pacman -Syu exfat-utils
 
   Note:
-    Package community/exfat-utils uses the extra/fuse2 package.  Utilities
-    that use fuse2 work in user space, not kernel space, so expect
-    a performance hit.  The filesystems which use fuse2 are:
+    Package community/exfat-utils uses the extra/fuse2 package.
+    Utilities that use fuse2 work in user space, not kernel
+    space, so expect a performance hit.  The filesystems which
+    use fuse2 are:
 
-      exfat-utils  gvfs  ntfs-3g
+      exfat-utils
+      gvfs
+      ntfs-3g
 
 2018-08-18:
-  Looked into Scala Natively.  Uses Clang.  Decided to build in Clang
-  toolchain support as a first step.
+  Looked into Scala Natively.  Uses Clang.  Decided to build
+  in Clang toolchain support as a first step.
 
     $ sudo pacman -Syu clang zapcc
 
-  zapcc is a "fast"  CC compiler.  Not sure what they mean, compiles fast
-  or runs fast?  Supposively creates memory efficient code useful for large
-  C++ programs.
+  zapcc is a "fast"  CC compiler.  Not sure what they mean,
+  compiles fast or runs fast?  Supposively creates memory
+  efficient code useful for large C++ programs.
 
 2018-18-18:
 
@@ -5180,7 +5181,7 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
     $ startx gnome
 
-  See Userland_Adminlog for how I configured Gnome 3.
+  See notes/gnome3Conf.md for how I configured Gnome 3.
 
 2018-09-25:
   Installed htop after discovering that top was reverted to the
@@ -5336,9 +5337,10 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
     https://wiki.archlinux.org/index.php/NVIDIA_Optimus
 
-  where I getting this information.  For GDM it says "Make
-  sure that GDM use X as default backend."  So uncommenting
-  the line in /etc/gdm/custom.conf as I tried above.
+  where I am getting this information.  For GDM it says
+  "Make sure that GDM use X as default backend."  So
+  uncommenting the line in /etc/gdm/custom.conf as I tried
+  above.
 
   Created two files,
 
@@ -5354,9 +5356,9 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     NoDisplay=true
     X-GNOME-Autostart-Phase=DisplayServer
 
-  Still does not work.  I am becoming wearly of magical incantations
-  that I don't know what they do, so i will stick with startx
-  for a while longer.
+  Still does not work.  I am becoming wearly of magical
+  incantations that I don't know what they do, so i will
+  stick with startx for a while longer.
 
   It may be just my imagination, but my desktop backgraound seems
   to be a lot sharper.
@@ -5481,7 +5483,8 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     Packages (2) z3-4.8.3-1  zapcc-5.0-1
     ...
 
-  Then upgrade went fine.  After that reinstalled z3 with no issues.
+  Then upgrade went fine.  After that reinstalled z3 with no
+  issues.
 
   Originally installed zapcc on 2018-08-18 as first step in
   installing Scala Natively, which I never followed through with.
@@ -5494,12 +5497,12 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   Note that time is also a bash built-in, so if you want to use
   the GNU version of time, use complete path name.
 
-  Bash version handles whole pipelines.  The GNU version can report
-  on other useful information.  The Linux manpages are their own
-  pacman package, so man time reported on /usr/bin/time without the
-  time package being installed.
+  Bash version handles whole pipelines.  The GNU version can
+  report on other useful information.  The Linux manpages are
+  their own pacman package, so man time reported on
+  /usr/bin/time without the time package being installed.
 
-2019-02-24:
+2019-01-24:
   Installed a light weight, POSIX compliant shell call Dash.
 
     $ sudo pacman -Syu dash
@@ -5508,7 +5511,7 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
     $ bash -o posix
 
-  bash extensions are not disabled.  By "compliant" they mean
+  bash extensions are not disabled!  By "compliant" they mean
   that if you limit yourself to a POSIX compliant subset of
   bash, then bash will behave as closely as possible to the
   POSIX standard.
@@ -5571,18 +5574,19 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
     geoff:x:1000:1000:Geoffrey Scheller:/home/geoff:/bin/bash
 
-  Bash man page says: "... it looks for ~/.bash_profile, ~/.bash_login,
-  and ~/.profile, in  that order, and reads and executes commands from
-  the first one that exists and is readable."
+  Bash man page says: "... it looks for ~/.bash_profile,
+  ~/.bash_login, and ~/.profile, in  that order, and reads
+  and executes commands from the first one that exists and
+  is readable."
 
   It is not Bash that is doing it,
 
     ... /usr/lib/gdm-x-session[1878]: /home/geoff/.profile: line 20: source: .bashrc: file not found
 
   Maybe GNOME3 is trying to "grok" the user environment???
-  Both dash and sh (bash run as sh) fail to source files unless "."
-  in on the PATH with similar verbiage, ... and I don't put "." on
-  the PATH.
+  Both dash and sh (bash run as sh) fail to source files
+  unless "." in on the PATH with similar verbiage, ... and
+  I don't put "." on the PATH.
 
 2019-02-05:
   While poking around journalctl logs, I noticed:
@@ -5593,11 +5597,13 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     This makes you trackable
 
 2019-02-07:
-  Remove the script /etc/NetworkManager/dispatcher.d/70-wifi-wired-exclusive
-  which I installed on 2017-07-29.  This shut the wifi-down when an Ethernet
-  cabel was plugged into system.  Got in my way when I wanted to adjust
-  wifi settings while plugged directly into my cable modem.  Don't currently
-  have a need for this.
+  Remove the script
+    /etc/NetworkManager/dispatcher.d/70-wifi-wired-exclusive
+  which I installed on 2017-07-29.  This shut the wifi-downi
+  when an Ethernet cable was plugged into system.  Got in my
+  way when I wanted to adjust wifi settings while plugged
+  directly into my cable modem.  Don't currently have a need
+  for this.
 
   Now, lets not be so trackable (see last 2019-02-05 above),
 
@@ -5714,7 +5720,8 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     • In case of template units, the unit is meant to be enabled with some
       instance name specified.
 
-  So, need to figure out what I need to enable to get these to update.
+  So, need to figure out what I need to enable to get these
+  to update.
 
     $ sudo systemctl enable man-db.timer
     Created symlink /etc/systemd/system/timers.target.wants/man-db.timer → /usr/lib/systemd/system/man-db.timer.
@@ -5829,8 +5836,8 @@ Note: On 2019-03-30 decided to look into the possibility of using the
      $ glxinfo -B
      Error: Unable to open display
 
-  so it is an X thing, not a driver thing.  Also, a lot of neat graphics
-  demo programs installed, to see what they are,
+  so it is an X thing, not a driver thing.  Also, a lot of neat
+  graphics demo programs installed, to see what they are,
 
      $ pacman -Qlq mesa-demos | grep '/bin/'
 
@@ -5857,15 +5864,18 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 2019-03-30: (Prelude)
   Decided to look into using the Intel graphics chipset for the
   desktop GUI while retaining the ability to use the NVIDIA card
-  for OpenCL/CUDA.  Basically OpenGL on the integrated Intel Chipset.
+  for OpenCL/CUDA.  Basically OpenGL on the integrated Intel
+  Chipset.
 
-  1. Hopefully this will allow me to migrate my windowing environment to Wayland.
+  1. Hopefully this will allow me to migrate my windowing
+     environment to Wayland.
   2. Frees up resources for the NVidia card.
   3. Might not play 3D games as well, but I don't play 3D games.
-  4. Makes me feel better by being less reliant on proprietary NVidia drivers.
+  4. Makes me feel better by being less reliant on proprietary
+     NVidia drivers.
 
-  The second time I rebuilt the system, it was much easier getting
-  the Optimus card working as the primary video driver.
+  The second time I rebuilt the system, it was much easier
+  getting the Optimus card working as the primary video driver.
 
   Now,
 
@@ -5900,26 +5910,31 @@ Note: On 2019-03-30 decided to look into the possibility of using the
        GM108M [GeForce 940M] (rev a2) Subsystem: Acer Incorporated [ALI] Device 097a
     Kernel driver in use: nvidia
 
-  If I am understanding these, I already have the Intel drivers installed and don't need
-  the Nouveau driver at all.
+  If I am understanding these, I already have the Intel drivers
+  installed and don't need the Nouveau driver at all.
 
   BIG MISUNDERSTANDING on my part:
-  Nouveau is not "the generic linux graphics driver" for Linux, it is the open source
-  driver for NVidia cards on Linux (and now also NetBSD 7).
+  Nouveau is not "the generic linux graphics driver" for Linux,
+  it is the open source driver for NVidia cards on Linux (and
+  now also NetBSD 7).
 
-  At this point, I beleive that my Optimus NVidia card is "floating", that is not directly
-  connected to my laptop screen.  It is rendering all the X-Org video processing, using the
-  prorietary nvidia driver, and using DRM (Direct Rendering Management) to relay "kernel
-  memory buffers" to the Intel i915 driver to display to my laptop screen.
+  At this point, I beleive that my Optimus NVidia card is
+  "floating", that is not directly connected to my laptop
+  screen.  It is rendering all the X-Org video processing,
+  using the prorietary nvidia driver, and using DRM (Direct
+  Rendering Management) to relay "kernel memory buffers" to
+  the Intel i915 driver to display to my laptop screen.
 
   See: https://en.wikipedia.org/wiki/Direct_Rendering_Manager
   See: https://devtalk.nvidia.com/default/topic/957814/linux/prime-and-prime-synchronization/
 
-  So, I do want to go to Wayland, I still want to use the NVidia card primarily for
-  OpenCL/CUDA unrelated to graphics functionality, but would not mind utilizing it
-  to offload 3D rendering tasks.
+  So, I do want to go to Wayland, I still want to use the
+  NVidia card primarily for OpenCL/CUDA unrelated to graphics
+  functionality, but would not mind utilizing it to offload 3D
+  rendering tasks.
 
-  Is Bumblebee an option?  The Archwiki page says it will never support Vulkan.
+  Is Bumblebee an option?  The Archwiki page says it will never
+  support Vulkan.
 
   What is Valkan?
 
@@ -6013,7 +6028,8 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     OpenGL ES profile version string: OpenGL ES 3.2 NVIDIA 418.56
     OpenGL ES profile shading language version string: OpenGL ES GLSL ES 3.20
 
-  So, driver/hardware still same.  Remove the OpenCL development tools.
+  So, driver/hardware still same.  Remove the OpenCL
+  development tools.
 
     $ sudo pacman -Rsu ocl-icd opencl-headers opencl-nvidia pyopencl-headers python-pyopencl
     checking dependencies...
@@ -6086,7 +6102,7 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   are two separate X-sessions going with different users.
   Yeah, things have changed.
 
-  Well, there are no "used/root" configuration files which
+  Well, there are no "user/root" configuration files which
   points to one chipset over the other.  I'm back to my old
   question of what is running what graphics chipwise.
 
@@ -6276,25 +6292,26 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   Reboot, still x11.  Backing out above two changes.
 
 2019-03-31:
-  Reinstalled xorg-xrandr pacman package.  It provides a cmdline
-  interface libXrandr library.  Previously, at least 5 months ago,
-  the X server did not automatically enable displays attached to
-  the non-NVIDIA graphics device in this this type of configuration.
+  Reinstalled xorg-xrandr pacman package.  It provides a
+  cmdline interface libXrandr library.  Previously, at
+  least 5 months ago, the X server did not automatically
+  enable displays attached to the non-NVIDIA graphics
+  device in this type of configuration.
 
     $ xrandr --setprovideroutputsource modesetting NVIDIA-0
     $ xrandr --auto
 
-  These commands did this.  What is confusing to me is that the
-  term "modesetting" is the name of the Intel interface.  I think
-  it is short for "mode setting driver".
+  These commands did this.  What is confusing to me is that
+  the term "modesetting" is the name of the Intel interface.
+  I think it is short for "mode setting driver".
 
 2019-03-31:
-  Looked into blacklisting both nouveau and nvidia drivers but
-  nouveau seem to not want to die.  Also messing around with
-  mkinitcpio makes me nervous without having a throw away system
-  I can practive on.
+  Looked into blacklisting both nouveau and nvidia drivers
+  but nouveau seem to not want to die.  Also messing
+  around with mkinitcpio makes me nervous without having
+  a "throw away system" I can practice on.
 
-  Letstry uninstalling both nvidia and nouveau packages
+  Lets try uninstalling both nvidia and nouveau packages
 
     $ sudo pacman -Rsu nvidia xf86-video-nouveau
     $ sudo pacman -Rsu libvdpau nccl nvidia-utils pycuda-headers
@@ -6379,8 +6396,8 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     SESSION  UID USER  SEAT  TTY
           1 1000 geoff seat0 tty1
 
-  With startx, loginctl sees me as just logged into the virtual terminal.
-  Good to know.
+  With startx, loginctl sees me as just logged into the
+  virtual terminal.  Good to know.
 
     $ sudo systemctl enable gdm
 
@@ -6415,7 +6432,7 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
   - PGP (Pretty Good Privacy) - original commercial software
   - OpenPGP - IETF standard compatible with original PGP tool
-  - GnuPG (Gnu Privacy Guard) - free software implementing OpenPGP standard
+  - GnuPG (Gnu Privacy Guard) - free software implementing OpenPGP
   - gpg - command-line tool for GnuPG
 
   I will use PGP (mot GnuPG, GPG, or OpenPGP) as an adjective:
@@ -6469,10 +6486,11 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
   At this point the guide seems excessively paranoid for my
   needs.  Pacman doesn't know about a package called paperkey.
-  Also, guide recommends using Yubikey based 2-factor authentication.
+  Also, guide recommends using Yubikey based 2-factor
+  authentication.
 
-  I feel I am fighting an existing PGP infarstructure, consider the
-  Joe Blow user I created
+  I feel I am fighting an existing PGP infarstructure,
+  consider the Joe Blow user I created
 
     [jb@gauss17 ~]$ gpg --list-keys
     gpg: directory '/home/joeblow/.gnupg' created
@@ -6586,14 +6604,18 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     $ sudo pacman -Syu
     $ systemctl reboot
 
-  Needs these dependencies: libcurl, SQLite > 3.7.15, Digital Mars D Compiler
+  Needs these dependencies:
+
+    libcurl
+    SQLite > 3.7.15
+    Digital Mars D Compiler
 
     $ sudo pacman -Syu dmd
 
   Pacman also pulled in libphoboas.
 
-  Now build it with notifications.  Systemd services files will be installed
-  in the appropriate locations.
+  Now build it with notifications.  Systemd services files
+  will be installed in the appropriate locations.
 
     $ cd ~/build/OneDriveBuild/onedrive
     $ ./configure -enable-notifications
@@ -6648,7 +6670,7 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     Enter the response uri: ^C
 
   Well, when I follow the link in a browser, I sign in and all
-  I get is a blank webpage... no "response uri".  This happens
+  I get is a blank webpage... no "response url".  This happens
   in both Linux and Windows browsers.
 
   The onedrive CLI command is consistently giving me the same
@@ -6658,8 +6680,8 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
     https://www.maketecheasier.com/sync-onedrive-linux/
 
-  it is the URL of the blank white page that it wants you to paste
-  into the terminal window.
+  it is the URL of the blank white page that it wants you
+  to paste into the terminal window.
 
   Well, something worked
 
@@ -6698,8 +6720,8 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
   and same files available on Linux and Win10.
 
-  For now, I'll ignore the systemd service.  I like the manual nature
-  than the Windows autoupdates.
+  For now, I'll ignore the systemd service.  I like the
+  manual nature more than the Windows autoupdates.
 
   [[ See second entry 2020-02-01 ]]
 
@@ -6715,19 +6737,20 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 2020-02-01:
   Got onedrive to synch.
 
-  I think the bloody Chrome and Firefox browsers are logging me right into
-  my MS account automatically.  At which point you are redirected to a blank
-  webpage.  Paste the URL of this blank page into the terminal window at
-  the "Enter the response uri:" prompt.
+  I think the bloody Chrome and Firefox browsers are logging
+  me right into my MS account automatically.  At which point
+  you are redirected to a blank webpage.  Paste the URL of
+  this blank page into the terminal window at the
+  "Enter the response uri:" prompt.
 
-  Well it worked, but not exactly intuitive.  Especially when I assumed
-  that I hadn't even logged into my MS account.
+  Well it worked, but not exactly intuitive.  Especially when
+  I assumed that I hadn't even logged into my MS account.
 
 2020-02-02:
-  When I reinstalled Arch back on 2017-06-26, I had to reverse engineer
-  /boot/loader/loader.conf and poke around /dev to find the correct
-  PARTUUID to use in loader.conf by mounting each partition to see
-  what was in it.
+  When I reinstalled Arch back on 2017-06-26, I had to reverse
+  engineer /boot/loader/loader.conf and poke around /dev to
+  find the correct PARTUUID to use in loader.conf by mounting
+  each partition to see what was in it.
 
   To get this info directly, I could have used the blkid command.
 
@@ -6748,15 +6771,18 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   tl;dr: Hey, today's date is a palidrone!
 
 2020-02-02:
-  On 2017-06-02 I needed to downdrade the ncurses package.  The problem was that every
-  time a did "sudo pacman -Syu" the package was upgraded.  The proper way to have stopped
-  this from happening was to edit the /etc/pacman.conf file as follows:
+  On 2017-06-02 I needed to downdrade the ncurses package.
+  The problem was that every time a did "sudo pacman -Syu"
+  the package was upgraded.  The proper way to have stopped
+  this from happening was to edit the /etc/pacman.conf file
+  as follows:
 
     #Pacman won't upgrade packages listed in IgnorePkg and members of IgnoreGroup
     IgnorePkg   = ncurses
     #IgnoreGroup =
 
-  The secobd entry, IgnoreGroup, is for package groups like base-devel or qt5.
+  The second entry, IgnoreGroup, is for package groups like
+  base-devel or qt5.
 
     $ pacman -Qgq dlang
     dmd
@@ -6816,8 +6842,8 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   Why doesn't pcmciautils show up with "pacman -Sg base"???
 
 2020-02-09:
-  Going to start backing up selective things I don't want to lose
-  to an external harddrive.
+  Going to start backing up selective things I don't want
+  to lose to an external harddrive.
 
   First instal Rsync utility:
 
@@ -6840,8 +6866,8 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
     $ mkdir /run/media/geoff/BUSLINK/geoffBackup/
 
-  Added bash script ~/bin/backup to bin directory.  Basically a
-  wrapper for the "rsync -av --delete" command.
+  Added bash script ~/bin/backup to bin directory.  Basically
+  a wrapper for the "rsync -av --delete" command.
 
   Also, rsync does not like how the Evolution e-mail
   client stores its files.  The evolution-backup utility
@@ -6948,7 +6974,7 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     $ sudo pacman -Syu
 
 2020-02-16:
-  Never use gvim, so remove it.  Note, gvim package currently
+  Never used gvim, so remove it.  Note, gvim package currently
   provides vim executable.
 
     $ sudo pacman -Rns gvim
@@ -7000,7 +7026,8 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   Arch maintainers weekly on what packages are installed.
 
 2020-04-16:
-  Had to take manual intervention for Pacman.  As per Arch website.
+  Had to take manual intervention for Pacman.
+  As per Arch website.
 
     $ sudo pacman -Syu --overwrite /usr/lib\*/p11-kit-trust.so
 
@@ -7026,9 +7053,9 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   Gnome website: https://extensions.gnome.org/ to add my beloved
   clipboard extension.
 
-  First I added the Chrome Extension browser plugin via link provided.
-  Indicates that I need to add the "native host connector."  Seems to
-  be an AUR package:
+  First I added the Chrome Extension browser plugin via link
+  provided.  Indicates that I need to add the "native host
+  connector."  Seems to be an AUR package:
 
     https://aur.archlinux.org/packages/chrome-gnome-shell-git
     Description: Native connector for integration with extensions.gnome.org
@@ -7082,11 +7109,12 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
     $ git clone https://github.com/Tudmotu/gnome-shell-extension-clipboard-indicator.git <extensions-dir>/clipboard-indicator@tudmotu.com
 
-    After cloning the repo, the extension is practically installed
-    yet disabled. In order to enable it, you need to use
-    gnome-tweak-tool - find the extension, titled 'Clipboard Indicator',
-    in the 'Extensions' screen and turn it 'On'.  You may need to
-    restart the shell (Alt+F2 and insert 'r' in the prompt) for the
+    After cloning the repo, the extension is practically
+    installed yet disabled. In order to enable it, you need
+    to use gnome-tweak-tool - find the extension, titled
+    'Clipboard Indicator', in the 'Extensions' screen and
+    turn it 'On'.  You may need to restart the shell
+    (Alt+F2 and insert 'r' in the prompt) for the
     extension to be listed there.
 
   So, lets put what I just unzipped there.
@@ -7111,8 +7139,8 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 2020-05-31:
   Lets see if this plug-in will work for the grs login.
 
-  Yes, it does!  Next time I install a GNOME Extension, I will just use Git
-  to clone it in from GitHub.
+  Yes, it does!  Next time I install a GNOME Extension, I
+  will just use Git to clone it in from GitHub.
 
   Time to start moving over from geoff to grs. 
 
@@ -7141,8 +7169,9 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     $ sudo chown -R grs:grs opt/AppImages/
 
 2020-06-02:
-  Cannot find much info on web about migrating Evolution email client
-  from one login to another.  Lets try something rather crude:
+  Cannot find much info on web about migrating Evolution
+  email client from one login to another.  Lets try something
+  rather crude:
 
     # rm -rf /home/grs/.config/evolution/
     # mv /home/geoff/evolution/ /home/grs/.config/
@@ -7151,9 +7180,9 @@ Note: On 2019-03-30 decided to look into the possibility of using the
   More than I expected, picked up Hover e-mail configs, not gmail
   configurations.
 
-  Lets try sending an encrypted e-mail, I expect this to fail since
-  this should reach out to the grs "keyring."  Got following error
-  message in Evolution GUI:
+  Lets try sending an encrypted e-mail, I expect this to fail
+  since this should reach out to the grs "keyring."  Got
+  following error message in Evolution GUI:
 
     Could not create message.
     You may need to select different mail options.
@@ -7225,20 +7254,21 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     <snip>
 
 2020-06-02:
-  Configured Gmail with evolution.  First enabled IMAP from Gmail settings in
-  browser (it was not previously enabled - though I did use it before with Evolution.
+  Configured Gmail with evolution.  First enabled IMAP
+  from Gmail settings in browser (it was not previously
+  enabled - though I did use it before with Evolution.
 
   Added account in Evolution via File -> New -> Mail Account
 
   Fumbled my way throgh, authenicated via my Android cell phone.
 
-  Note: Last time I did this, Google Mail was "special."  This time thing got
-        handled like other IMAP servers.
+  Note: Last time I did this, Google Mail was "special."  This
+  time thing got handled like other IMAP servers.
 
   Note: Not able to GPG digitally sign nor encrypt Gmail emails.
 
-  Note: When sending Hover emails, I am given SMINE options as well as GPG
-        options.  Haven't investigated SMIME.
+  Note: When sending Hover emails, I am given SMINE options
+        as well as GPG options.  Haven't investigated SMIME.
 
 2020-06-02:
   Let's see if we can find my lost Evolution emails,
@@ -7249,17 +7279,20 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     /home/grs/.local/share/evolution/mail/local/.ZZZ.AAA Sent
     /home/grs/.local/share/evolution/mail/local/.ZZZ.AAA Sent.cmeta
 
-  I found if I recreated my local folders manually within Evolution, I can
-  just copy the e-mail files over.  Didn't work right to move the entire
-  directory structure over.  I will probably just copy over select
-  emails.
+  I found if I recreated my local folders manually within
+  Evolution, I can just copy the e-mail files over.  Didn't
+  work right to move the entire directory structure over.
+  I will probably just copy over select emails.
 
 2020-06-02:
   Removed geoff user from system.
 
     $ sudo userdel -r geoff
 
-  Previously moved /home/geoff/.config to /home/grs/fromGeoff/config
+  Previously moved
+
+    /home/geoff/.config -> /home/grs/fromGeoff/config
+
   Moved other misc items to ~/fromGeoff.
 
   Still need to configure OneDrive and Zoom. 
@@ -7293,9 +7326,10 @@ Note: On 2019-03-30 decided to look into the possibility of using the
     :: gnupg optionally requires pcsclite: scdaemon
     :: weston optionally requires freerdp: support rdp backend
 
-  Removed packages were: freerdp, gtk-vnc, libcacard, libgssglue,libslirp,
-     libvirt, libvirt-glib, mtools, pcsclite, phodav, qemu, seabios, spice,
-     spice-gtk, usbredir,vde2, virglrenderer, yajl, gnome-boxes
+  Removed packages were: freerdp, gtk-vnc, libcacard, libgssglue,
+     libslirp, libvirt, libvirt-glib, mtools, pcsclite, phodav,
+     qemu, seabios, spice, spice-gtk, usbredir,vde2,
+     virglrenderer, yajl, gnome-boxes
 
   Put back the optional dependencies,
 
@@ -7313,8 +7347,8 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
     https://zoom.us/download
 
-  Hsd 9 choices of Linux flavors, includinf Arch Linux.  Downloaded
-  a file "zoom_x86_64.pkg.tar" but
+  Hsd 9 choices of Linux flavors, includinf Arch Linux.
+  Downloaded a file "zoom_x86_64.pkg.tar" but
 
     $ file zoom_x86_64.pkg.tar
     zoom_x86_64.pkg.tar: XZ compressed data
@@ -7325,18 +7359,18 @@ Note: On 2019-03-30 decided to look into the possibility of using the
 
   I found the following on Zoom's support site:
 
-    Important Notice: Please update all of your Zoom applications to
-    version 5.0 or higher. After May 30, 2020, all Zoom applications
-    on older versions will receive a forced upgrade when trying to
-    join meetings as GCM Encryption will be fully enabled across the
-    Zoom platform.
+    Important Notice: Please update all of your Zoom applications
+    to version 5.0 or higher. After May 30, 2020, all Zoom
+    applications on older versions will receive a forced upgrade
+    when trying to join meetings as GCM Encryption will be fully
+    enabled across the Zoom platform.
 
   GCM stands for Galois/Counter Mode Encryption.
 
 2020-06-05:
-  From systemctl and "journalctl -b", Postfix mail delievery agent
-  is failing.  Since I don't use local Unix mail anymore, might as
-  well just remove it.
+  From systemctl and "journalctl -b", Postfix mail delievery
+  agent is failing.  Since I don't use local Unix mail anymore,
+  might as well just remove it.
 
     $ pacman -Qs postfix
     local/postfix 3.5.2-1

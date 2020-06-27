@@ -14,7 +14,7 @@ esac
 HISTSIZE=5000
 FCEDIT=vim
 
-PS1='\$\$ '
+PS1='\$> '
 PS2='>> '
 
 ## Make sure other shells have their environments

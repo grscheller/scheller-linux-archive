@@ -11,10 +11,7 @@
 #   -  user uses same .bash_profile between various OS's
 #
 # Assumptions: Current $PATH contains the locations of
-#              usable sed and realpath commands.  Also,
-#              assumes #!/bin/bash finds bash.  Don't
-#              know how portable "sed -E" and "realpath"
-#              are on non-POSIX compliant OS's.
+#              usable sed and readlink commands.
 #       
 
 # Standarize the $PATH list:
@@ -29,7 +26,7 @@ sedScript='s!/+!/!g
            s!/$!!
            s!^:!!
            s!:$!!'
-Path=$(sed -E -e"$sedScript" <(printf %s "$1"))
+Path=$(sed -E -e "$sedScript" <(printf %s "$1"))
 
 # Extract directory path names from Path,
 # filter duplicates and keep directories
@@ -60,7 +57,7 @@ while (( nn < cnt ))
 do
     if [[ ${DirNames[$nn]} =~ ^/ ]]
     then
-        RealPaths+=("$(realpath -L "${DirNames[$nn]}")")
+        RealPaths+=("$(readlink -e "${DirNames[$nn]}")")
     else
         RealPaths+=("${DirNames[$nn]}")
     fi
@@ -88,9 +85,8 @@ do
     (( nn++ ))
 done
 
-# For all absolute paths given by user,
-# filter out directory paths that point to the
-# same physical directory as a previous one.
+# Filter out directory paths that point to
+# the same directory as a previous one.
 unset DirPaths
 (( nn = 0 ))
 while (( nn < cnt ))

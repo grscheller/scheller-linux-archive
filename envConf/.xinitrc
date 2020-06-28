@@ -1,5 +1,3 @@
-unset -f bash_initconf_ran
-
 [ -f /etc/xprofile ] && . /etc/xprofile
 
 session=${2:-gnome}

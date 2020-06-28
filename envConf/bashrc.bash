@@ -7,8 +7,6 @@
 # Bash configuration across multiple, more or
 # or less, POSIX complient systems.
 
-export ENV_INIT_LVL=${ENV_INIT_LVL:=0}
-
 ## If not interactive, don't do anything.
 [[ $- != *i* ]] && return
 
@@ -50,11 +48,8 @@ HISTFILESIZE=5000
 #    Shells in terminal windows not necessarily
 #    descendant from a login shell.
 #
-if ((ENV_INIT_LVL < 1)) || ((DOT_PROFILE_SOURCED == 1)) 
-then 
-    . ~/.env_init
-    unset DOT_PROFILE_SOURCED 
-fi
+export ENV_INIT_LVL=${ENV_INIT_LVL:=0}
+((ENV_INIT_LVL < 1)) && . ~/.env_init
 
 ## Read in aliases and functions
 . ~/.envrc
@@ -64,7 +59,7 @@ PS1="${PS1%??}% "
 
 ## Make sure other shells have their environments
 alias dash='ENV=~/.dashrc dash'
-alias sh='ENV=~/.shrc sh --posix'
+alias sh='ENV=~/.shrc sh'
 if ~/bin/digpath ksh > /dev/null 2>&1
 then
     alias ksh='ENV=~/.kshrc ksh'

@@ -66,11 +66,9 @@ PS3='#? '
 PS4='++ '
 
 ## Set default behaviors
-set -o vi        # vi editing mode
 set -o pipefail  # Return right most nonzero error, otherwise 0.
 HISTSIZE=5000
 HISTCONTROL="ignoredups"
-FCEDIT=vim
 
 ## Command line utility functions
 
@@ -87,6 +85,19 @@ function ud
       done
   fi
   cd $upDir || return
+}
+
+function path
+{
+  if (( $# == 0 ))
+  then
+      PathWord="$PATH"
+  else
+      PathWord="$1"
+  fi
+
+  # shellcheck disable=SC2086
+  ( IFS=':'; printf '%s\n' $PathWord )
 }
 
 # ax - archive extractor

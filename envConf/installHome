@@ -17,10 +17,9 @@
 #
 
 DOT_FILES='
-    bash_logout.bash
     bashrc.bash
     dashrc.dash
-    env_init.ksh
+    env_init.sh
     envrc.ksh
     inputrc
     kshrc.ksh
@@ -29,6 +28,7 @@ DOT_FILES='
 '
 
 RM_FILES='
+    .bash_logout
     .bash_profile
     .vimrc
     bin/buArch

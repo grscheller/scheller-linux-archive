@@ -10,7 +10,7 @@
 # 
 # Sometime after Nov 2018 these commands no longer
 # seem to be needed for the my NVIDIA card to figure
-# out its output source..
+# out its output source.
 #
 xrandr --setprovideroutputsource modesetting NVIDIA-0
 xrandr --auto

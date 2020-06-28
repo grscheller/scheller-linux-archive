@@ -12,11 +12,12 @@ case $- in
 esac
 
 HISTSIZE=5000
-FCEDIT=vim
+set -o vi
 
 PS1='$ '
 
 ## Make sure other shells have their environments
+alias sh='ENV=~/.shrc sh'
 alias dash='ENV=~/.dashrc dash'
 if ~/bin/digpath ksh > /dev/null 2>&1
 then

@@ -24,9 +24,11 @@ export ENV_INIT_LVL=${ENV_INIT_LVL:=0}
 ## Make sure other shells have their environments
 alias dash='ENV=~/.dashrc dash'
 alias sh='ENV=~/.shrc sh'
-
-## Should already be in environment
-export ENV=~/.kshrc
+alias bash='ENV= bash'
+if ~/bin/digpath mksh > /dev/null 2>&1
+then
+    alias mksh='ENV=~/.kshrc mksh'
+fi
 
 ## Modify 3 line prompt for KSH - end with  '$ '
 PS1="${PS1%??}$ "

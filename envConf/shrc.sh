@@ -17,8 +17,8 @@ set -o vi
 PS1='$ '
 
 ## Make sure other shells have their environments
-alias sh='ENV=~/.shrc sh'
 alias dash='ENV=~/.dashrc dash'
+alias bash='ENV= bash'
 if ~/bin/digpath ksh > /dev/null 2>&1
 then
     alias ksh='ENV=~/.kshrc ksh'

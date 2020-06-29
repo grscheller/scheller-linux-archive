@@ -5,19 +5,11 @@
 #
 # Usage: pathTrim /first/path/component:/second/path/coponent:.
 #
-# Useful when:
-#   - .bash_profile gets resourced
-#   -  user's home directory is shared between many systems
-#   -  user uses same .bash_profile between various OS's
-#
-# Assumptions: Current $PATH contains the locations of
-#              usable sed and readlink commands.
-#       
 
-# Standarize the $PATH list:
-#   - remove redundant / and :
-#   - remove trailing /'s on directory names
-#   - /./ -> / 
+## Standarize the $PATH list:
+#  - remove redundant / and :
+#  - remove trailing /'s on directory names
+#  - /./ -> / 
 #
 sedScript='s!/+!/!g
            s!:+!:!g
@@ -28,11 +20,11 @@ sedScript='s!/+!/!g
            s!:$!!'
 Path=$(sed -E -e "$sedScript" <(printf %s "$1"))
 
-# Extract directory path names from Path,
-# filter duplicates and keep directories
-# with absolute pathnames only when
-# they actually exists.  Strip inital ./
-# off relative paths.
+## Extract directory path names from Path,
+#  filter duplicates and keep directories
+#  with absolute pathnames only when
+#  they actually exists.  Strip inital ./
+#  off relative paths.
 OLDIFS=$IFS; IFS=':'; (( cnt = 0 ))
 unset DirNames
 for Dir in $Path
@@ -49,8 +41,8 @@ do
 done
 IFS=$OLDIFS
 
-# Get the resolved absolute pathnames
-# for all absolute paths given by user.
+## Get the resolved absolute pathnames
+#  for all absolute paths given by user.
 unset RealPaths
 (( nn = 0 ))
 while (( nn < cnt ))
@@ -64,9 +56,9 @@ do
     (( nn++ ))
 done
 
-# Prefer the first user supplied name unless
-# the user subsquently supplied the correct
-# physical name.
+## Prefer the first user supplied name unless
+#  the user subsquently supplied the correct
+#  physical name.
 (( nn = 0 ))
 while (( nn < cnt ))
 do
@@ -85,8 +77,8 @@ do
     (( nn++ ))
 done
 
-# Filter out directory paths that point to
-# the same directory as a previous one.
+## Filter out directory paths that point to
+#  the same directory as a previous one.
 unset DirPaths
 (( nn = 0 ))
 while (( nn < cnt ))
@@ -99,10 +91,10 @@ do
     (( nn++ ))
 done
 
-# Construct new path string and send to stdout
+## Construct new path string and send to stdout
 Path=
 for Dir in "${DirPaths[@]}"
 do
     Path+=${Dir}:
 done
-printf %s\\n "${Path%:}"
+printf '%s\n' "${Path%:}"

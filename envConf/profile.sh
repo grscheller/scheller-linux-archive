@@ -5,7 +5,7 @@
 #   ~/.profile
 #
 
-## Configurature an common initial interactive environment
+## Configurature a common initial interactive environment
 [ -r ~/.env_init ] && . ~/.env_init
 
 ## Get functions and aliases if ksh or bash

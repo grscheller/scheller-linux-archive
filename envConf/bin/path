@@ -1,4 +1,5 @@
 #!/bin/sh
+#
 # Spread $PATH out in a more user readable form.
 #
 # Usage: path
@@ -13,5 +14,4 @@ else
 fi
 
 IFS=':' 
-# shellcheck disable=SC2086
 printf '%s\n' $PathWord

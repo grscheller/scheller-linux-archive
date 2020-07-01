@@ -70,8 +70,8 @@ PATH=$PATH:~/bin
 #  root directory.
 PATH=$PATH:bin 
 
-## Clean up PATH - remove duplicate absolute path entries
-[ -x ~/bin/pathtrim ] && PATH=$(~/bin/pathtrim "$PATH")
+## Clean up PATH - remove duplicate and non-existent path entries
+[ -x ~/bin/pathtrim ] && PATH=$(~/bin/pathtrim)
 
 ## Information for ssh configuration
 #

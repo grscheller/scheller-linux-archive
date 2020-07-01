@@ -5,33 +5,30 @@
 # after finding the first instance.  Handles spaces in file names 
 # and directories on $PATH.  Also shell patterns supported.
 #
-# Usage: digPath file1 file2 ...
-#        digPath 'pattern'
+# Usage: digpath file1 file2 ...
+#        digpath 'pattern'
 #
 
 shopt -s extglob   # Turn on extended pattern matching
+IFS=':'
 
-((i = 0))
+((ii = 0))
 for File in "$@"
 do
-   IFS=':'
    for Dir in $PATH
    do
       if [[ -d "$Dir" ]]
       then
           for match in $Dir/$File
           do
-              [[ -f $match ]] && FileList[((i++))]="$match"
-              [[ -d $match ]] && FileList[((i++))]="$match/"
+              [[ -f $match ]] && FileList[((ii++))]="$match"
+              [[ -d $match ]] && FileList[((ii++))]="$match/"
           done
       fi
    done
 done
 
-for File in "${FileList[@]}"
-do
-   echo "$File"
-done
+printf '%s\n' "${FileList[@]}"
 
 if ((${#FileList[@]} > 0))
 then

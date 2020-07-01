@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 #
 # Launch rtorrent Bit-Torrent peer-to-peer
 # ncurses based CLI program.

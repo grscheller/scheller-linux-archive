@@ -1,100 +1,83 @@
-#!/bin/bash
+#!/bin/sh
 #
 # Trims off duplicate and non-existant directories
 # for colen separated lists of UNIX PATH components.
 #
-# Usage: pathTrim /first/path/component:/second/path/coponent:.
+# Usages: pathtrim /first/path/component:/second/path/coponent:.
+#         PATH="$(pathtrim)"
 #
+
+IFS=':'
+
+if [ $# -eq 0 ]
+then
+    Paths="$PATH"
+else
+    Paths="$1"
+fi
 
 ## Standarize the $PATH list:
 #  - remove redundant / and :
 #  - remove trailing /'s on directory names
 #  - /./ -> / 
+#  - escape tabs and spaces
+#  - chose not handle \n and \v in file and directory names
 #
 sedScript='s!/+!/!g
            s!:+!:!g
            s!/:!:!g
            s!/\./!/!g
+           s!:\./!:!g
+           s! !\\ !g
+           s!	!\\	!g
            s!/$!!
            s!^:!!
            s!:$!!'
-Path=$(sed -E -e "$sedScript" <(printf %s "$1"))
+Paths=$(printf %s "$Paths" | sed -E -e "$sedScript")
 
-## Extract directory path names from Path,
-#  filter duplicates and keep directories
-#  with absolute pathnames only when
-#  they actually exists.  Strip inital ./
-#  off relative paths.
-OLDIFS=$IFS; IFS=':'; (( cnt = 0 ))
-unset DirNames
-for Dir in $Path
+## Approximate arrays to store actual and relative paths,
+#  drop non-existant absolute paths, drop duplicates.
+cnt=0
+for Path in $Paths
 do
-    Dir=${Dir#./}
-    if [[ -d "$Dir" ]] || [[ ! $Dir =~ ^/ ]]
-    then
-        for DirName in "${DirNames[@]}"
-        do
-            [[ $DirName == "$Dir" ]] && continue 2
-        done
-        DirNames+=("$Dir"); (( cnt++ ))
-    fi
-done
-IFS=$OLDIFS
-
-## Get the resolved absolute pathnames
-#  for all absolute paths given by user.
-unset RealPaths
-(( nn = 0 ))
-while (( nn < cnt ))
-do
-    if [[ ${DirNames[$nn]} =~ ^/ ]]
-    then
-        RealPaths+=("$(readlink -e "${DirNames[$nn]}")")
-    else
-        RealPaths+=("${DirNames[$nn]}")
-    fi
-    (( nn++ ))
-done
-
-## Prefer the first user supplied name unless
-#  the user subsquently supplied the correct
-#  physical name.
-(( nn = 0 ))
-while (( nn < cnt ))
-do
-    (( mm = 0 ))
-    while (( mm < cnt ))
-    do
-        if [[ "${RealPaths[$nn]}" == "${RealPaths[$mm]}" ]]
-        then
-            if [[ "${DirNames[$mm]}" == "${RealPaths[$mm]}" ]]
+    case $Path in
+        /*) if readlink -e "$Path" >/dev/null
             then
-                DirNames[$nn]="${DirNames[$mm]}"
+                temp="$(readlink -e "$Path")"
+                nn=0; Found=no
+                while [ $nn -lt $cnt ]
+                do
+                    nn=$((nn + 1))
+                    eval [ "\$temp" = "\$Path_$nn" ] && Found=yes && break
+                done
+                if [ $Found = no ]
+                then
+                    cnt=$((cnt + 1))
+                    eval Path_$cnt="\"$temp\""
+                fi
             fi
-        fi
-        (( mm++ ))
-    done
-    (( nn++ ))
-done
-
-## Filter out directory paths that point to
-#  the same directory as a previous one.
-unset DirPaths
-(( nn = 0 ))
-while (( nn < cnt ))
-do
-    for Dir in "${DirPaths[@]}"
-    do
-        [[ ${DirNames[$nn]} == "$Dir" ]] && (( nn++ )) && continue 2
-    done
-    DirPaths+=("${DirNames[$nn]}")
-    (( nn++ ))
+            ;;
+        *)  nn=0; Found=no
+            while [ $nn -lt $cnt ]
+            do
+                nn=$((nn + 1))
+                eval [ "\$Path" = "\$Path_$nn" ] && Found=yes && break
+            done
+            if [ $Found = no ]
+            then
+                cnt=$((cnt + 1))
+                eval Path_$cnt="$Path"
+            fi
+            ;;
+    esac
 done
 
 ## Construct new path string and send to stdout
-Path=
-for Dir in "${DirPaths[@]}"
+Paths= ; nn=0
+while [ $nn -lt $cnt ]
 do
-    Path+=${Dir}:
+    nn=$((nn + 1))
+    eval Paths=\$Paths\$Path_$nn:
 done
-printf '%s\n' "${Path%:}"
+printf '%s\n' "${Paths%:}"
+

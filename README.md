@@ -1,6 +1,4 @@
 # Geoffrey's Archive
-### POSIX Environment Configurations
-  - [Cross Platform Environment Configurations](envConf)
 ### Linux/OpenBSD/POSIX System Administration Logs
   - [System Admin Logs](adminLogs)
 ### Linux/POSIX Notes
@@ -55,8 +53,5 @@ For more information on this archive, please read
 [CONTRIBUTING](CONTRIBUTING.md)
 and
 [Code of Conduct](CODE_OF_CONDUCT.md).
-Also, check out
-[my software development blog](https://github.com/grscheller/scheller-linux-archive/wiki/GRScheller-Software-Development-Blog)
-on the GitHub wiki.
 
 -Geoffrey Scheller

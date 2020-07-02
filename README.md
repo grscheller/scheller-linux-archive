@@ -1,6 +1,4 @@
 # Geoffrey's Archive
-### Linux/OpenBSD/POSIX System Administration Logs
-  - [System Admin Logs](adminLogs)
 ### Linux/POSIX Notes
   - [Vim Notes](notes/VimNotes)
   - [GIT Notes](notes/gitNotes.txt)
@@ -13,6 +11,10 @@
   - [Gnome 3 Configuration](notes/gnome3Conf.md)
   - [Java Development on Arch Linux](notes/archJava.txt)
   - [Windows 10 "POSIX" Configurations](notes/Win10EnvConf/)
+### Linux/OpenBSD/POSIX System Administration Logs
+  - [System Admin Logs](adminLogs)
+### WWW Info
+  - [Personal homepage](web/)
 ### Grokking Computer Languages
   - __C__
     - [Advanced Programming in the UNIX Environment (APUE)](grok/C/APUE/)
@@ -46,8 +48,6 @@
 ### Computer Graphics
   - [Low Level X11 (XLIB/XCB) Programming](graphics/XWindows)
   - [Cairo 2D Vector Graphics](graphics/Cairo)
-### WWW Info
-  - [Personal homepage](web/)
 
 For more information on this archive, please read
 [CONTRIBUTING](CONTRIBUTING.md)

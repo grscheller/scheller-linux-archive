@@ -1,5 +1,5 @@
 CXX := g++
-BINARIES := counter
+BINARIES := crtp
 
 binaries: $(BINARIES)
 

@@ -7453,3 +7453,9 @@ Note: On 2019-03-30 decided to look into the possibility of
   Factoid: Until I logged out and back into my desktop session,
            the gnome-terminal daemon countined to launch
            new terminals using the old login shell.
+
+2020-07-13:
+  Installed terraform infrastructure configuration tool.
+
+    $ sudo pacman -Syu terraform
+

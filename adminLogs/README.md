@@ -5,8 +5,8 @@ administrating my various computer system.
   - Documents system administration on my Arch Linux laptop
   - Cronologically ordered
   - Lots of factoid and asides
-* [euler7 BSD Admin Log](euler7BSDAdmin.log)
-  - Documents system administration on my Arch Linux laptop
+* [euler7 OpenBSD Admin Log](euler7OpenBSDAdmin.log)
+  - Documents system administration on a future OpenBSD system
 * [Python Admin Log](PythonAdmin.log)
   - Initially tracked Anaconda Python installed by unprivalleged user.
   - Using Arch Linux's Python infrastructure.

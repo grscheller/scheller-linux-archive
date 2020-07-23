@@ -3,7 +3,7 @@
 ### GNOME Version:
 ```
    $ gnome-shell --version
-   GNOME Shell 3.36.3
+   GNOME Shell 3.36.4
 ```
 ### gnome-tweak (Tweaks)
 * General -> Animations (on)
@@ -143,13 +143,13 @@
     ```
        $ git clone https://aur.archlinux.org/gnome-shell-extension-extensions-git.git
        $ cd gnome-shell-extension-extensions-git
-       $ make pkg -sri
+       $ makepkg -sri
     ```
     * This installs Extensions for all users
-    * After re-logging in, use gnome-tweaks to activate the extension
+    * After re-logging in, use gnome-tweaks to activate Extensions
     * Extensions provides a convenient way to activate/deactivate other extensions
       * Extensions app has an option to install Gnome extentions
         * This just takes you to the Gnome extensions page
         * Does not auto install from AUR.
   * Can clone in ~/.local/share/gnome-shell/extensions
-    * We be available only to that one user
+    * Will be available only to that one user

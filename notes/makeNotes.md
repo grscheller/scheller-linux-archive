@@ -86,8 +86,9 @@ Comments begin with a #
 ```
 ### Automating Tasks
 Make rules can automate tasks.  Only the line which begins the
-POSIX shell action, the one with the "do", needs to starts with
-a <tab>.  What we just escaping the final <new-line>.
+POSIX shell action, the one with the "for", needs to starts with
+a `<tab>`.  We are just escaping the final `<new-line>'s` and writing
+a "one-liner".
 ```
     timeit: $(BINARIES)
 	for bb in $(BINARIES); \
@@ -103,5 +104,6 @@ a <tab>.  What we just escaping the final <new-line>.
 ```
 Notes on automating tasks: 
 * `$$` prevents make variable expansion and passes the shell a single `$`
-* using `./` for start of path to executable
-* also, I don't put `.` in my `$PATH` 
+* Using `./` for start of path to executable
+* Also, I don't put `.` in my `$PATH` 
+* Using a tabstop of 4 in vim

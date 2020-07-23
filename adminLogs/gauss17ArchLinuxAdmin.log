@@ -7459,3 +7459,109 @@ Note: On 2019-03-30 decided to look into the possibility of
 
     $ sudo pacman -Syu terraform
 
+
+2020-07-22:
+  Noticed some differences regarding what is installed from
+  the pacman gnome group and what is available.
+
+    $ diff <(pacman -Sg gnome) <(pacman -Qg gnome)    
+    9,10d8
+    < gnome gnome-backgrounds
+    < gnome gnome-books
+    33c31
+    < gnome gnome-shell-extensions
+    ---
+    > gnome gnome-software
+    54a53
+    > gnome simple-scan
+    62,64d60
+    < gnome gnome-boxes
+    < gnome gnome-software
+    < gnome simple-scan
+
+  which reduces to
+
+    < gnome gnome-backgrounds
+    < gnome gnome-books
+    < gnome gnome-shell-extensions
+    < gnome gnome-boxes
+
+  Lets see what shell extensions are installed:
+
+    (grs)$ gsettings get org.gnome.shell enabled-extensions
+    ['clipboard-indicator@tudmotu.com']
+
+    (jb)$ gsettings get org.gnome.shell enabled-extensions
+    @as []
+
+    (jd)$ gsettings get org.gnome.shell enabled-extensions
+    ['clipboard-indicator@tudmotu.com']
+
+  From 2020-05-30, I manually installed the clipboard extendion.
+  I disabled it in gnome-tweak-tool, and "uninstalled" it via
+
+     rm -fr ~/.local/share/gnome-shell/extensions/clipboard-indicator@tudmotu.com
+
+  Now, restart gnome session.
+
+    $ sudo pacman -Syu gnome-shell-extensions
+    $ sudo pacman -Syu gnome-backgrounds
+    $ sudo pacman -Syu gnome-books
+    $ sudo pacman -Syu gnome-boxes
+
+  The last one involves remote desktop and virtualization.  It pulled
+  in the following packages:
+
+    gtk-vnc  libcacard  libslirp liburing  libvirt
+    libvirt-glib mtools  phodav  qemu  seabios
+    spice  spice-gtk  usbredir  vde2 virglrenderer
+    yajl  gnome-boxes
+    
+  VNC based?  Don't know when I will have a chance to play with it.
+
+  After a reboot, picked up 12 extenstions, none of which is my
+  beloved "Clipboard" extension.  Turned on "Launch new instance" extension.
+
+  My first thought was to  manage Gnome Extensions not managed thru Pacman
+  using the Gnome "Web" browser.  It seems that AUR has quite a collection
+  under the titles gnome-shell-extension-*.  The URL is
+
+    https://aur.archlinux.org/
+
+  and do a package search for
+
+    gnome-shell-extension
+
+2020-07-22:
+
+  First extension to build is gnome-shell-extension-clipboard-indicator.
+
+    $ mkdir ~/build/AUR/gnome-extensions/
+    $ cd ~/build/AUR/gnome-extensions/
+    $ git clone https://aur.archlinux.org/gnome-shell-extension-clipboard-indicator-git.git
+
+  As I did back on 2018-09-25, I will install this system wide.
+
+    $ cd gnome-shell-extension-clipboard-indicator
+    $ makepkg -sri
+
+  Not installed into ~/.local/share/gnome-shell/extensions, good.  Lets
+  check globally,
+
+    $ pacman -Qs gnome-shell-extension-clipboard-indicator
+    local/gnome-shell-extension-clipboard-indicator 34-1
+       Adds a clipboard indicator to the top panel, and caches clipboard history
+
+  Not showing up in Tweaks, logout and back in.
+
+  Now shows up in Tweaks.  Instead of activating it from there,
+  will install a dashboard app called gnome-shell-extension-extensions.
+  Repeat above for this one.  Repo is
+
+    https://aur.archlinux.org/gnome-shell-extension-extensions-git.git 
+
+  After reboot, installed Extensions via Twaeks, used Extensions to
+  activate Clipboard Indicator.
+
+  Extensions app has an option to install Gnome Extentions, but this
+  just takes you to the Gnome page, does not auto install from AUR.

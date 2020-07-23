@@ -130,3 +130,26 @@
         * Text: Black
         * Background: Gray (upper right most)
     * Check Show bold text in bright colors
+
+### Gnome-Shell-Extensions
+* Arch Linux using AUR
+  * Go to https://aur.archlinux.org/
+  * Search on gnome-shell-extension
+    ```
+       $ mkdir -p ~/build/AUR/gnome-extensions/
+       $ cd ~/build/AUR/gnome-extensions/
+    ```
+  * Example: Install gnome-shell-extension-extensions
+    ```
+       $ git clone https://aur.archlinux.org/gnome-shell-extension-extensions-git.git
+       $ cd gnome-shell-extension-extensions-git
+       $ make pkg -sri
+    ```
+    * This installs Extensions for all users
+    * After re-logging in, use gnome-tweaks to activate the extension
+    * Extensions provides a convenient way to activate/deactivate other extensions
+      * Extensions app has an option to install Gnome extentions
+        * This just takes you to the Gnome extensions page
+        * Does not auto install from AUR.
+  * Can clone in ~/.local/share/gnome-shell/extensions
+    * We be available only to that one user

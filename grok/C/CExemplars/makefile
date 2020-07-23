@@ -27,10 +27,10 @@ sumItVO2: sumit.c
 
 timeIt: $(SUMIT_BINARIES)
 	for bb in $(SUMIT_BINARIES);\
-	do\
-	    echo -ne "\n$$bb: ";\
-	    time ./$$bb;\
-	done
+    do\
+        echo -ne "\n$$bb: ";\
+        time ./$$bb;\
+    done
 
 clean:
 	rm -f $(BINARIES) $(SUMIT_BINARIES)

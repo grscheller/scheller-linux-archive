@@ -91,10 +91,10 @@ a `<tab>`.  We are just escaping the final `<new-line>'s` and writing
 a "one-liner".
 ```
     timeit: $(BINARIES)
-	for bb in $(BINARIES); \
-	do \
-        echo -ne "\n$$bb: "; \
-        time ./$$bb; \
+    for bb in $(BINARIES);\
+    do\
+        echo -ne "\n$$bb: ";\
+        time ./$$bb;\
     done
 
     clean:
@@ -106,4 +106,5 @@ Notes on automating tasks:
 * `$$` prevents make variable expansion and passes the shell a single `$`
 * Using `./` for start of path to executable
 * Also, I don't put `.` in my `$PATH` 
-* Using a tabstop of 4 in vim
+* I use a tabstop of 4 in vim, so spaces before
+  the "for" above need to be a tab.

@@ -10,18 +10,21 @@ Purpose: To indicate what was done to create euler7 and
   Tentative name: euler7.
 
 2020-06-06:
-  At this point ZSH would be the only reason to choose
+  The native root shell on FreeBSD is tcsh and for regular 
+  users is their version of the Bourne shell.  Bash is
+  available as a package or in the ports collection, but
+  is not considered native.  I don't like these choices.
+
+  At this point ZFS would be the only reason to choose
   FreeBSD over OpenBSD.  Since I can't afford the hardware
   to fully take advantage of ZFS without being hit by a
   massive performance penalty, I will be targetting OpenBSD
   for euler7.
 
-  The native root shell on FreeBSD is tcsh and for regular 
-  users is the Bourne shell.  Bash is available as a package
-  or in the ports collection, but is not considered native.
-  I don't like these choices.
-
   For OpenBSD, the default shell for both root and users
   is ksh.  This shell is an old friend, and close enough
   to bash so I should have no need to install bash.  My
   bash has a strong ksh dialect anyway.
+
+2020-07-22:
+  Probably will use XFCE as the GUI.

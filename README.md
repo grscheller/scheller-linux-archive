@@ -13,8 +13,6 @@
   - [Java Development on Arch Linux](notes/archJava.txt)
   - [Unicode Cheat Sheet](notes/unicodeCheatSheet.txt)
   - [Windows 10 "POSIX" Configurations](notes/Win10EnvConf/)
-### WWW Info
-  - [Personal homepage](web/)
 ### Grokking Computer Languages
   - __C__
     - [Advanced Programming in the UNIX Environment (APUE)](grok/C/APUE/)
@@ -42,12 +40,13 @@
   - __Rust__
     - [Learn Rust as General Purpose Language](grok/Rust/learnRust/)
   - __Scala__
-    - [Functional Programming in Scala (fpinscala)](grok/Scala/fpinscala/)
     - [Functional Programming for Mortals](grok/Scala/fpForMortals/)
     - [Learn Scala](grok/Scala/learnScala/)
-### Computer Graphics
-  - [Low Level X11 (XLIB/XCB) Programming](graphics/XWindows)
-  - [Cairo 2D Vector Graphics](graphics/Cairo)
+  - __Computer Graphics__
+    - [Low Level X11 (XLIB/XCB) Programming](grok/graphics/XWindows)
+    - [Cairo 2D Vector Graphics](grok/graphics/Cairo)
+### WWW Info
+  - [Personal homepage](web/)
 
 For more information on this archive, please read
 [CONTRIBUTING](CONTRIBUTING.md)

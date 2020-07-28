@@ -1,6 +1,7 @@
 # Geoffrey's Archive
+### Linux/OpenBSD/POSIX System Administration Logs
+  - [System Admin Logs](adminLogs)
 ### Linux/POSIX Notes
-  - [Vim Notes](notes/VimNotes)
   - [GIT Notes](notes/gitNotes.txt)
   - [POSIX/Unix Commands](notes/unixCommands.txt)
   - [Arch Linux & systemd Commands](notes/archLinuxNotes.txt)
@@ -10,9 +11,8 @@
   - [Shell Utilities](notes/shellUtilities.txt)
   - [Gnome 3 Configuration](notes/gnome3Conf.md)
   - [Java Development on Arch Linux](notes/archJava.txt)
+  - [Unicode Cheat Sheet](notes/unicodeCheatSheet.txt)
   - [Windows 10 "POSIX" Configurations](notes/Win10EnvConf/)
-### Linux/OpenBSD/POSIX System Administration Logs
-  - [System Admin Logs](adminLogs)
 ### WWW Info
   - [Personal homepage](web/)
 ### Grokking Computer Languages

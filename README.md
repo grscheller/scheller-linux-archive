@@ -15,7 +15,6 @@
   - [Windows 10 "POSIX" Configurations](notes/Win10EnvConf/)
 ### Grokking Computer Languages
   - __C__
-    - [Advanced Programming in the UNIX Environment (APUE)](grok/C/APUE/)
     - [C Language Exeplars](grok/C/CExemplars/)
     - [C Language Syntax](grok/C/CSyntax/)
     - [Reverse Engineering with C](grok/C/CRevEngineer/)

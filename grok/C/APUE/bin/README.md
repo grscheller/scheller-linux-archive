@@ -1,1 +1,0 @@
-### APUE executable installation directory

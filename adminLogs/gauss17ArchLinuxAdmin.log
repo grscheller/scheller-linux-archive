@@ -7550,7 +7550,8 @@ Note: On 2019-03-30 decided to look into the possibility of
 
     $ pacman -Qs gnome-shell-extension-clipboard-indicator
     local/gnome-shell-extension-clipboard-indicator 34-1
-       Adds a clipboard indicator to the top panel, and caches clipboard history
+       Adds a clipboard indicator to the top panel, and caches clipboard
+       history
 
   Not showing up in Tweaks, logout and back in.
 
@@ -7566,3 +7567,31 @@ Note: On 2019-03-30 decided to look into the possibility of
   Extensions app has an option to install Gnome Extentions, but this
   just takes you to the Gnome page, does not auto install from AUR.
 
+2020-08-01:
+  While investigating if I should "dump PulseAudio" in favor of some
+  hypothetical "systemd alternative" I heard about somewhere, I have
+  realize that like systemd, Pulseaudio has become the defacto
+  standard on desktop linux.
+
+  Actually, both are architected by Lennart Poettering.  Does not 
+  seem to be the case that systemd contains some streamlined version
+  of Pulseaudio and ALSA is really archaic.  PulseAudio is the
+  alternative to ALSA.
+
+  I have known for years that pulseaudio-equalizer was depricated, see
+  https://lists.freedesktop.org/archives/pulseaudio-discuss/2014-March/020174.html
+  and the Archlinux PulseAudio page.
+
+  Replacing pulseaudio-equalizer with pulseaudio-equalizer-ladspa 
+
+    $ pactree -r pulseaudio-equalizer
+    pulseaudio-equalizer
+    $ sudo pacman -R pulseaudio-equalizer
+    $ sudo pacman -Syu pulseaudio-equalizer-ladspa
+    $ pacman -Qlq pulseaudio-equalizer-ladspa | grep -E '^/usr/bin'
+    /usr/bin/
+    /usr/bin/pulseaudio-equalizer
+    /usr/bin/pulseaudio-equalizer-gtk
+
+  Much nicer user interface.  The pulseaudio-equalizer version is a
+  cmdline version for debugging/toubleshooting purposes only.

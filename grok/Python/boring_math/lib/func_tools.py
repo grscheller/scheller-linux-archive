@@ -10,11 +10,11 @@ import sys
 
 __all__ = ['drop', 'take', 'drop_while', 'take_while']
 
-def drop(n, iterator):
+def drop(num, iterator):
     """Drop the first n elements on an iterator"""
 
     try:
-        for _ in range(n):
+        for _ in range(num):
             next(iterator)
     except StopIteration:
         return iterator
@@ -22,10 +22,10 @@ def drop(n, iterator):
     return iterator
 
 
-def take(n, iterator):
+def take(num, iterator):
     """Iterator returning next n elements from iterator"""
 
-    for _ in range(n):
+    for _ in range(num):
         try:
             next_val = next(iterator)
         except StopIteration:

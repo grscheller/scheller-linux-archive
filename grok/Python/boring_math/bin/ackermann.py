@@ -22,9 +22,9 @@ def main():
     args = sys.argv[1:]
     if len(args) == 2:
         try:
-            m = int(args[0])
-            n = int(args[1])
-            if m < 0 or n < 0:
+            m_arg = int(args[0])
+            n_arg = int(args[1])
+            if m_arg < 0 or n_arg < 0:
                 print("Error: Negative integer argument given"
                       , file=sys.stderr)
                 sys.exit(1)
@@ -36,7 +36,7 @@ def main():
         sys.exit(1)
 
     # Compute value
-    print(ackermann(m, n))
+    print(ackermann(m_arg, n_arg))
 
 if __name__ == "__main__":
     main()

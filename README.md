@@ -1,6 +1,11 @@
 # Geoffrey's Archive
+I use this repo to maintain my less mature personal software
+development projects.  As such, this repo has many loose threads.
+As subtopics mature, I will spin them off to their own repos.
+
 ### Linux/OpenBSD/POSIX System Administration Logs
   - [System Admin Logs](adminLogs)
+
 ### Linux/POSIX Notes
   - [GIT Notes](notes/gitNotes.txt)
   - [POSIX/Unix Commands](notes/unixCommands.txt)
@@ -13,6 +18,7 @@
   - [Java Development on Arch Linux](notes/archJava.txt)
   - [Unicode Cheat Sheet](notes/unicodeCheatSheet.txt)
   - [Windows 10 "POSIX" Configurations](notes/Win10EnvConf/)
+
 ### Grokking Computer Languages
   - __C__
     - [C Language Exeplars](grok/C/CExemplars/)

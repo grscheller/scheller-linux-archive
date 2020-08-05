@@ -44,8 +44,6 @@
   - __Computer Graphics__
     - [Low Level X11 (XLIB/XCB) Programming](grok/graphics/XWindows)
     - [Cairo 2D Vector Graphics](grok/graphics/Cairo)
-### WWW Info
-  - [Personal homepage](web/)
 
 For more information on this archive, please read
 [CONTRIBUTING](CONTRIBUTING.md)

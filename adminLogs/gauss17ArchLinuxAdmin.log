@@ -1778,7 +1778,7 @@ Note: On 2019-03-30 decided to look into the possibility of
     Pacman(Remove): haskell-contravariant-extras
     Pacman(Remove): haskell-free haskell-juicypixels
     Pacman(Remove): haskell-project-template haskell-haddock-api
-    Pacman(Remove): haskell-haddock-library ghc-mod 
+    Pacman(Remove): haskell-haddock-library ghc-mod
     Pacman(Remove): haskell-ghc-mod
     Pacman(Remove): ghc cabal-install happy alex
 
@@ -2860,7 +2860,7 @@ Note: On 2019-03-30 decided to look into the possibility of
 
     [[ See postfix configuration on 2017-06-30, changed
        /etc/hosts for newaliases.  Also, never was quite
-       sure about the 127.0.1.1 ]]
+  n     sure about the 127.0.1.1 ]]
 
     # passwd
     # ^D
@@ -4997,8 +4997,7 @@ Note: On 2019-03-30 decided to look into the possibility of
            The only reason to manually update them is to update
            the comments, so these *.pacnew files can be safely
            deleted.  The new versions of these files are just
-           subs with root's info in
-           them.
+           subs with root's info in them.
 
 2018-05-17:
   Installed a vulnerability scanner,
@@ -5055,7 +5054,7 @@ Note: On 2019-03-30 decided to look into the possibility of
     python-atspi-2.26.0-1 python-pam-1.8.3-1
     python-pillow-5.1.0-1 python-psutil-5.4.5-1
     python-pyinotify-0.9.6-3 python-setproctitle-1.1.10-2
-    python-xapp-1.2.0-1  
+    python-xapp-1.2.0-1
     xapps-1.2.1-1  zenity-3.28.1-1
     cinnamon-3.8.3-1
 
@@ -7086,7 +7085,7 @@ Note: On 2019-03-30 decided to look into the possibility of
 
   Do a reboot.
 
-  From Chrome browser went to https://extensions.gnome.org/ and 
+  From Chrome browser went to https://extensions.gnome.org/ and
   went to install "Clipboard Indicator."  Asked for:
 
     Shell version: 3.36
@@ -7101,7 +7100,7 @@ Note: On 2019-03-30 decided to look into the possibility of
     $ cd ~/build/GnomeShellExtensions/clipboard-indicator
     $ ax clipboard-indicatortudmotu.com.v34.shell-extension.zip
 
-  OK, from the README.rst file, we have 
+  OK, from the README.rst file, we have
 
     Installation via git is performed by cloning the repo into
     your local gnome-shell extensions directory
@@ -7142,7 +7141,7 @@ Note: On 2019-03-30 decided to look into the possibility of
   Yes, it does!  Next time I install a GNOME Extension, I
   will just use Git to clone it in from GitHub.
 
-  Time to start moving over from geoff to grs. 
+  Time to start moving over from geoff to grs.
 
 2020-05-31:
   Copied over ~/.ssh files from geoff to grs.
@@ -7158,7 +7157,7 @@ Note: On 2019-03-30 decided to look into the possibility of
 
   Now, bootstrap Vim configuration (see ~/.vim/vimrc)
 
-    $ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim 
+    $ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
     $ vim
     :PluginInstall
 
@@ -7216,7 +7215,7 @@ Note: On 2019-03-30 decided to look into the possibility of
     gpg:               imported: 3
     gpg: no ultimately trusted keys found
 
-    [grs]$ gpg --import privkeys.asc 
+    [grs]$ gpg --import privkeys.asc
     gpg: key ...
     gpg: key ...
     gpg: Total number processed: 1
@@ -7226,7 +7225,7 @@ Note: On 2019-03-30 decided to look into the possibility of
 
   Second command popped a dialog and asked me for the passkey.
 
-  Sent myself email from Hover to Hover.  Was asked for Hover 
+  Sent myself email from Hover to Hover.  Was asked for Hover
   password, added it to "keyring."
 
   Got e-mail, Evolution tells me
@@ -7242,14 +7241,14 @@ Note: On 2019-03-30 decided to look into the possibility of
     <snip>
     Please decide how far you trust this user to correctly verify other users' keys
     (by looking at passports, checking fingerprints from different sources, etc.)
-    
+
       1 = I don't know or won't say
       2 = I do NOT trust
       3 = I trust marginally
       4 = I trust fully
       5 = I trust ultimately
       m = back to the main menu
-    
+
     Your decision? 5
     <snip>
 
@@ -7295,7 +7294,7 @@ Note: On 2019-03-30 decided to look into the possibility of
 
   Moved other misc items to ~/fromGeoff.
 
-  Still need to configure OneDrive and Zoom. 
+  Still need to configure OneDrive and Zoom.
 
 2020-06-03:
   Zoom worked by just moving its config file.
@@ -7334,7 +7333,7 @@ Note: On 2019-03-30 decided to look into the possibility of
   Put back the optional dependencies,
 
     $ sudo pacman -Syu pcsclite freerdp
-  
+
   Reinstalled packages: libgssglue, freerdp, pcsclite
 
   Cleaned up libvirt *.conf.pacsave files,
@@ -7377,12 +7376,14 @@ Note: On 2019-03-30 decided to look into the possibility of
         Fast, easy to administer, secure mail server
 
     $ sudo pacman -Rsc postfix
-  
+
   Reboot.
 
     $ systemctl --failed
       UNIT LOAD ACTIVE SUB DESCRIPTION
     0 loaded units listed.
+
+  [[ See note from 2020-08-12 ]]
 
 2020-06-06:
   Need to take a decision on the direction of my Arch
@@ -7390,7 +7391,7 @@ Note: On 2019-03-30 decided to look into the possibility of
   "a thing on a thing on a thing."  That is Gnome Shell,
   on systemd services, on Arch Linux.  Do I try to go
   more minimalist or embrace the social trends of
-  Linux distributions?   
+  Linux distributions?
 
   At this point, I think I will go with the social
   trends and embrace systemd.  I basically modeled
@@ -7439,7 +7440,7 @@ Note: On 2019-03-30 decided to look into the possibility of
 
     $ ksh --version
     version         sh (AT&T Research) 2020.0.0
-  
+
   which is very similar in behavior to ksh93.
 
   I really like ksh and decided to make it my default login
@@ -7447,7 +7448,7 @@ Note: On 2019-03-30 decided to look into the possibility of
 
     % chsh -s /bin/ksh
     Changing shell for grs.
-    Password: 
+    Password:
     Shell changed.
 
   Factoid: Until I logged out and back into my desktop session,
@@ -7464,7 +7465,7 @@ Note: On 2019-03-30 decided to look into the possibility of
   Noticed some differences regarding what is installed from
   the pacman gnome group and what is available.
 
-    $ diff <(pacman -Sg gnome) <(pacman -Qg gnome)    
+    $ diff <(pacman -Sg gnome) <(pacman -Qg gnome)
     9,10d8
     < gnome gnome-backgrounds
     < gnome gnome-books
@@ -7516,7 +7517,7 @@ Note: On 2019-03-30 decided to look into the possibility of
     libvirt-glib mtools  phodav  qemu  seabios
     spice  spice-gtk  usbredir  vde2 virglrenderer
     yajl  gnome-boxes
-    
+
   VNC based?  Don't know when I will have a chance to play with it.
 
   After a reboot, picked up 12 extenstions, none of which is my
@@ -7559,7 +7560,7 @@ Note: On 2019-03-30 decided to look into the possibility of
   will install a dashboard app called gnome-shell-extension-extensions.
   Repeat above for this one.  Repo is
 
-    https://aur.archlinux.org/gnome-shell-extension-extensions-git.git 
+    https://aur.archlinux.org/gnome-shell-extension-extensions-git.git
 
   After reboot, installed Extensions via Twaeks, used Extensions to
   activate Clipboard Indicator.
@@ -7573,7 +7574,7 @@ Note: On 2019-03-30 decided to look into the possibility of
   realize that like systemd, Pulseaudio has become the defacto
   standard on desktop linux.
 
-  Actually, both are architected by Lennart Poettering.  Does not 
+  Actually, both are architected by Lennart Poettering.  Does not
   seem to be the case that systemd contains some streamlined version
   of Pulseaudio and ALSA is really archaic.  PulseAudio is the
   alternative to ALSA.
@@ -7582,7 +7583,7 @@ Note: On 2019-03-30 decided to look into the possibility of
   https://lists.freedesktop.org/archives/pulseaudio-discuss/2014-March/020174.html
   and the Archlinux PulseAudio page.
 
-  Replacing pulseaudio-equalizer with pulseaudio-equalizer-ladspa 
+  Replacing pulseaudio-equalizer with pulseaudio-equalizer-ladspa
 
     $ pactree -r pulseaudio-equalizer
     pulseaudio-equalizer
@@ -7595,3 +7596,89 @@ Note: On 2019-03-30 decided to look into the possibility of
 
   Much nicer user interface.  The pulseaudio-equalizer version is a
   cmdline version for debugging/toubleshooting purposes only.
+
+2020-08-12:
+  Fixed local mail issues.
+
+    # pacman -Syu postfix perl-mail-sendmail
+
+  Had noticed /var/spool/mail only had a file for the
+  jb login.  I created ones for grs & jd logins.  Also,
+  the mailx command was complaining the sendmail
+  command was not found.
+
+    $ pacman -Qo /usr/bin/sendmail
+    /usr/bin/sendmail is owned by postfix 3.5.6-1
+
+  The sendmail command is not Sendmail, but the Postfix
+  to Sendmail compatibility interface.
+
+  I think the perl package just allows one to send e-mail
+  in Perl.
+
+  I guess an unconfigures Postfix is a requirement for
+  UNIX e-mail to work on Arch Linux.
+
+    $ pacman -Qo /usr/bin/mailx
+    /usr/bin/mailx is owned by s-nail 14.9.19-1
+
+    $ pacman -Qs s-nail
+    local/s-nail 14.9.19-1
+        Environment for sending and receiving mail
+
+    $ pactree s-nail
+    s-nail
+    ├─openssl
+    │ └─perl
+    │   │
+    .   .
+    .   .
+    .   .
+
+2020-08-12:
+  Email sent to root is failing.
+
+    $ cd /etc/postfix
+
+    $ ls *.pacsave
+    aliases.pacsave  main.cf.pacsave
+
+    $ ll aliases aliases.pacsave
+    -rw-r--r-- 1 root root 10520 May  8  2018 aliases.pacsave
+    -rw-r--r-- 1 root root 10519 Jul 27 03:15 aliases
+
+  Maybe these *.pacsave files were created from when I uninstalled
+  postfix?  On 2018-05-08 I was doing *.pacnew merging.
+
+  First checkout aliases
+
+    $ diff aliases aliases.pacsave
+    12c12
+    < #root:		you
+    ---
+    > root:		geoff
+
+  I guess I do want root's mail forwarded now to grs, might be
+  months until I am actually logged on as root.
+  [[ see 2016-08-05 ]]
+
+  Editted /etc/postfix/aliases and ran
+
+    # newaliases
+
+  Test message from jd login to root ended up being sent
+  to grs.
+
+  Here are the lines I added to /etc/postfix/main.cf
+
+    > myhostname = gauss17
+    > mydomain = localdomain
+    > myorigin = $myhostname
+    > inet_interfaces = $myhostname, localhost
+    > mydestination = $myhostname, localhost.$mydomain, localhost
+    > mynetworks_style = subnet
+    > mail_spool_directory = /var/spool/mail
+
+  Might want to change mynetworks_style to host if I find myself
+  on public networks a lot.  I am looking to be able to send
+  UNIX email within my home network.

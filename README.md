@@ -17,7 +17,8 @@ As subtopics mature, I will spin them off to their own repos.
   - [Gnome 3 Configuration](notes/gnome3Conf.md)
   - [Java Development on Arch Linux](notes/archJava.txt)
   - [Unicode Cheat Sheet](notes/unicodeCheatSheet.txt)
-  - [Windows 10 "POSIX" Configurations](notes/Win10EnvConf/)
+  - [MSYS2 Notes](notes/msys2Notes.txt)
+  - [Windows 10 Powershell Configuration](notes/win10PowershellConf/)
 
 ### Grokking Computer Languages
   - __C__

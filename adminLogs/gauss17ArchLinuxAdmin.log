@@ -7682,3 +7682,8 @@ Note: On 2019-03-30 decided to look into the possibility of
   Might want to change mynetworks_style to host if I find myself
   on public networks a lot.  I am looking to be able to send
   UNIX email within my home network.
+
+2020-08-20:
+  Added Node.js ecosystem for JavaScpript development.
+
+    $ sudo pacman -Syu nodejs npm npm-check-updates

@@ -1,11 +1,11 @@
 # Learn the Go Language
 * Both an interpreter and compiler
 * Simplified C like syntax
-1. [Baby Steps](#babysteps) 
+1. [Baby Steps](#baby-steps) 
 
 ## Baby Steps
 ### hello:
-Traditional "Hello World" program in file `hello.go`
+Traditional "Hello World" program in file [hello.go](hello.go)
 ```
    package main
    

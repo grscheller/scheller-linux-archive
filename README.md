@@ -16,6 +16,7 @@ As subtopics mature, I will spin them off to their own repos.
   * [Shell Utilities](notes/shellUtilities.txt)
   * [Gnome 3 Configuration](notes/gnome3Conf.md)
   * [Java Development on Arch Linux](notes/archJava.txt)
+  * [JavaScript Notes](notes/javaScriptNotes.txt)
   * [Unicode Cheat Sheet](notes/unicodeCheatSheet.txt)
   * [MSYS2 Notes](notes/msys2Notes.txt)
   * [Windows 10 Powershell Configuration](notes/win10PowershellConf/)

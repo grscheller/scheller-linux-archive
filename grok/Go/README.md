@@ -5,7 +5,8 @@
 
 ## Baby Steps
 ### hello:
-Traditional "Hello World" program in file [hello.go](hello.go)
+Traditional "Hello World" program in file
+[hello.go](babysteps/hello.go).
 ```
    package main
    

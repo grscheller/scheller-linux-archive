@@ -1,6 +1,9 @@
 # Node.js
 Node.js® is a JavaScript runtime built on
 Chrome's V8 JavaScript engine.
+1. [Installation](#installation)
+2. [npm](#npm)
+3. [Simple Example](#simple-example)
 
 ## Installation
 
@@ -42,3 +45,18 @@ maintained by npm, Inc. a subsidiary of GitHub.
 
 npm is written entirely in JavaScript and thus
 is cross platform.
+
+## Simple Example
+The Script, [app.js](app.js), will generates a  
+webpage webpage running off port 3000i which
+simply says "Hello World".
+```
+   $ node app.js                                                                  
+   Server running at http://192.168.1.22:3000/
+   ^C
+```
+Replace the IP given in app.js with the one of the
+machine you run the web service on, or just
+`localhost`.  Using localhost will only make the
+webpage available to browsers running on the machine
+node is running.

@@ -5,31 +5,31 @@
 
 ## Baby Steps
 ### first-attempt:
-  Gradle can use Groovy or Kotlin as a DSL in its 
-  build.gradle configuration file.  This example uses Groovy. 
-  ```
-    $ cd first-attempt
-    $ gradle -q intro
-    Hello World
-    I'm Gradle
-  ```
-  The -q means quiet (log errors only)
-  ```
-    $ gradle intro
+Gradle can use Groovy or Kotlin as a DSL in its 
+build.gradle configuration file.  This example uses Groovy. 
+```
+  $ cd first-attempt
+  $ gradle -q intro
+  Hello World
+  I'm Gradle
+```
+The -q means quiet (log errors only)
+```
+  $ gradle intro
 
-    > Task :hello
-    Hello World
-    
-    > Task :intro
-    I'm Gradle
-    
-    BUILD SUCCESSFUL in 445ms
-    2 actionable tasks: 2 executed
-  ```
+  > Task :hello
+  Hello World
+  
+  > Task :intro
+  I'm Gradle
+  
+  BUILD SUCCESSFUL in 445ms
+  2 actionable tasks: 2 executed
+```
 
 ### follow-tutorial:
-  Following a tutorial I found on the Gradle website:
-  https://guides.gradle.org/creating-new-gradle-builds/
+Following a tutorial I found on the Gradle website:
+https://guides.gradle.org/creating-new-gradle-builds/
   ```
     $ mkdir follow-tutorial; cd follow-tutorial
     $ gradle init
@@ -54,5 +54,5 @@
     
     BUILD SUCCESSFUL in 14s
     2 actionable tasks: 2 executed
-  ```
-  Menu items above seem to have been added post tutorial.
+```
+Menu items above seem to have been added post tutorial.

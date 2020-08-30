@@ -58,6 +58,9 @@ As subtopics mature, I will spin them off to their own repos.
     * [Low Level X11 (XLIB/XCB) Programming](grok/Graphics/XWindows)
     * [Cairo 2D Vector Graphics](grok/Graphics/Cairo)
 
+### Comparing Computer Languages
+  * [Abstract Data Types (ADT)](comp/ADT/)
+
 For more information on this archive, please read
 [CONTRIBUTING](CONTRIBUTING.md)
 and

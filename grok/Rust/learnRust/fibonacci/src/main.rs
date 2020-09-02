@@ -6,6 +6,7 @@
 //
 
 use std::io;
+use std::io::Write;
 
 // Compute the nth Fibonacci number.
 fn fib(n: u64) -> u64 {
@@ -30,7 +31,8 @@ fn main() {
     // Get n from user.
     loop {
         let mut n_user = String::new();
-        println!("Input n: ");
+        print!("Input n: ");
+        io::stdout().flush().unwrap();
         io::stdin()
             .read_line(&mut n_user)
             .expect("Failed to read user input");

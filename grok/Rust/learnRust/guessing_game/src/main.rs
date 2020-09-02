@@ -1,4 +1,4 @@
-// The comments below are about my early initial observations
+// The comments below are more about my early initial observations
 // regarding the Rust language than this guessing game application.
 
 // An external library ot "crate"

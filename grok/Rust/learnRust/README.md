@@ -50,15 +50,11 @@ OS kernel.
 
 ### 2. Locally installing Rust toolchain:
 The Rust toolchain really, really, really wants to be installed
-locally into a developer's home directory.  To do so,
+locally into a developer's home directory.  Following the Rust website,
 ```
-   $ curl -f https://sh.rushup.rs > rust.sh
-   $ chmod u+x rust.sh
-   $ ./rust.sh
+   $ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
 The Rust tool chain will be installed here: `~/.cargo/bin`
-
-I choose to make the "stable" toolchain the default.
 
 To later update the installed toolchains,
 ```
@@ -112,7 +108,7 @@ To build or run a "release" version with full optimization,
 ```
 The executable is `./target/release/baby_steps`.
 
-### 4. Guessing game - [guessingi\_game](guessing_game/):
+### 4. Guessing game - [guessing\_game](guessing_game/):
 Guessing game example taken from the official Rust 
 [book](https://doc.rust-lang.org/book/ch02-00-guessing-game-tutorial.html).
 

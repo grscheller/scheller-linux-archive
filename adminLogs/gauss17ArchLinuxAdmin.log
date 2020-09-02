@@ -7708,7 +7708,7 @@ Note: On 2019-03-30 decided to look into the possibility of
   I now have the JVM buulld tools SBT, Gradle, Ant, and Maven
   all installed.
 
-2020-00-01:
+2020-09-01:
   Reinstalled Rust toolchain locally into grs home directory.
 
     $ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -7724,3 +7724,32 @@ Note: On 2019-03-30 decided to look into the possibility of
       stable-x86_64-unknown-linux-gnu unchanged - rustc 1.46.0 (04488afe3 2020-08-24)
     
     info: cleaning up downloads & tmp directories
+
+2020-09-02:
+  Install Skype for Linux from AUR
+
+  1. First, update things so installations don't conflate.
+
+    $ sudo pacman -Syu
+
+  2. Get rid of what I did back on 2020-09-02
+
+    $ sudo pacman -R skypeforlinux-stable-bin
+    $ cd ~/build/AUR
+    $ rm -rf skypeforlinux-stable-bin/
+
+  3, Clone from AUR
+
+    $ git clone https://aur.archlinux.org/skypeforlinux-stable-bin.git
+
+  4. Build and install
+
+    $ cd skypeforlinux-stable-bin/
+    $ makepkg -sri
+
+  5. See where it was put, using my digpath script and ksh whence
+
+    $ digpath 'skype*'
+    /usr/bin/skypeforlinux
+    $ whence skypeforlinux
+    /usr/bin/skypeforlinux

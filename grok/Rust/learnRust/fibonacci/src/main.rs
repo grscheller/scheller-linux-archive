@@ -1,7 +1,7 @@
 // Compute the nth Fibonacci number where
 //   0 <= n <= 92
 // and
-//   fib(0) = 1
+//   fib(0) = 0
 //   fib(1) = 1
 //
 
@@ -10,7 +10,7 @@ use std::io;
 // Compute the nth Fibonacci number.
 fn fib(n: u64) -> u64 {
     let mut n = n;
-    let mut f_tup: (u64, u64) = (0, 1);
+    let mut f_tup: (u64, u64) = (1, 0);
     while n > 0 {
         f_tup = (f_tup.1, f_tup.0 + f_tup.1);
         n = n - 1;
@@ -19,14 +19,18 @@ fn fib(n: u64) -> u64 {
 }
 
 fn main() {
-    println!("\nCompute the nth Fibonacci number.\n");
+    println!();
+    if cfg!(debug_assertions) {
+        eprintln!("[[ Running debug version of code! ]]");
+    }
+    println!("Compute the nth Fibonacci number.\n");
 
     let n: u64;
 
     // Get n from user.
     loop {
         let mut n_user = String::new();
-        println!("Input n:");
+        println!("Input n: ");
         io::stdin()
             .read_line(&mut n_user)
             .expect("Failed to read user input");

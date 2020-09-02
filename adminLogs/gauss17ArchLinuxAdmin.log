@@ -7687,3 +7687,40 @@ Note: On 2019-03-30 decided to look into the possibility of
   Added Node.js ecosystem for JavaScpript development.
 
     $ sudo pacman -Syu nodejs npm npm-check-updates
+
+2020-08-31:
+  Installed Ant Java build tool.
+
+    $ pacman -Ss '^ant(-doc|$)'
+    extra/ant 1.10.8-1
+        Java based build tool
+    extra/ant-doc 1.10.8-1
+        Apache Ant build tool documentation
+    $ sudo pacman -Syu ant ant-doc
+
+  Installed Maven build tool.
+
+    $ pacman -Ss maven
+    community/maven 3.6.3-1
+        Java project management and project comprehension tool
+    $ sudo pacman -Syu maven
+
+  I now have the JVM buulld tools SBT, Gradle, Ant, and Maven
+  all installed.
+
+2020-00-01:
+  Reinstalled Rust toolchain locally into grs home directory.
+
+    $ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+  Magical incantation above from Rust website.  Told install not to
+  mangle my my .profile.  At least it figured out my default shell
+  was ksh.
+
+    $ rustup update
+    info: syncing channel updates for 'stable-x86_64-unknown-linux-gnu'
+    info: checking for self-updates
+    
+      stable-x86_64-unknown-linux-gnu unchanged - rustc 1.46.0 (04488afe3 2020-08-24)
+    
+    info: cleaning up downloads & tmp directories

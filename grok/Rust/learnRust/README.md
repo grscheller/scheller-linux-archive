@@ -64,15 +64,15 @@ To later update the installed toolchains,
 ```
    $ rustup update
 ```
-### 3. First steps Rust toolchain - [babySteps](babySteps/):
+### 3. First steps Rust toolchain - [baby\_steps](baby_steps/):
 Create a new project with a main function,
 ```
-   $ cargo new --bin babySteps
-        Created binary (application) babySteps project
+   $ cargo new --bin baby_steps
+        Created binary (application) baby_steps project
 ```
 If I had not created it within a git repository, it would have set up the
-babySteps directory it created as a git repo with .git file.  I put a copy
-of the .gitignore file it would have created in the babySteps directory.
+baby\_steps directory it created as a git repo with .git file.  I put a copy
+of the .gitignore file it would have created in the baby\_steps directory.
 
 The source code it created was the canonical "Hello World" program in the
 file `src/main.rs`,
@@ -84,24 +84,19 @@ file `src/main.rs`,
 To build and run the code,
 ```
    $ cargo run
-      Compiling babySteps v0.1.0 (file:///home/geoff/devel/scheller-linux-archive/grokRust/babySteps)
-   warning: crate `babySteps` should have a snake case name such as `baby_steps`
-     |
-     = note: #[warn(non_snake_case)] on by default
-
-       Finished dev [unoptimized + debuginfo] target(s) in 3.59 secs
-        Running `target/debug/babySteps`
+   $ cargo run
+      Compiling baby_steps v0.1.2 (/home/grs/devel/scheller-linux-archive/grok/Rust/learnRust/baby_steps)
+       Finished dev [unoptimized + debuginfo] target(s) in 0.22s
+        Running `target/debug/baby_steps`
    Hello, world!
 ```
-Since I never intend to publish babyStrps, I will keep the name as is.
-
 This also created a Cargo.lock file.  This file contains the configuration
 of the last successful complilation of the project.  I will add this file
 to the Git repo.
 
 Executable can be run from the commandline,
 ```
-   $ ./target/debug/babySteps 
+   $ ./target/debug/baby_steps 
    Hello, world!
 ```
 To just build,
@@ -114,12 +109,12 @@ To build or run a "release" version with full optimization,
 ```
    $ cargo build --release
    $ cargo run --release
-``
-The executable is `./target/release/babySteps`.
+```
+The executable is `./target/release/baby_steps`.
 
-### 4. Guessing game - [guessing_game](guessing_game/):
-Guessing game example taken from the second edition of the official Rust 
-[book](https://doc.rust-lang.org/book/second-edition/ch02-00-guessing-game-tutorial.html).
+### 4. Guessing game - [guessingi\_game](guessing_game/):
+Guessing game example taken from the official Rust 
+[book](https://doc.rust-lang.org/book/ch02-00-guessing-game-tutorial.html).
 
 I have added comments to the code documenting language features.
 

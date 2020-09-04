@@ -1,0 +1,8 @@
+[package]
+name = "twelve_days"
+version = "0.1.0"
+description = "Print out the lyrics to the Twelve Days of Christmas"
+authors = ["grscheller <geoffrey@scheller.com>"]
+edition = "2018"
+
+[dependencies]

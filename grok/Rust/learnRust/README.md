@@ -116,3 +116,6 @@ I have added comments to the code documenting language features.
 
 ### 5. Fibonacci program - [fibonacci](fibonacci/):
 Program to compute the nth Fiboncci number.
+
+### 6. Twelve Days of Christmas - [twelve-days](fibonacci/):
+Prints out the lyrics to the song "The Twelve Days of Christmas"

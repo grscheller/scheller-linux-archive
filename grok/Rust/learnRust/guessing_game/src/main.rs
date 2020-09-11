@@ -38,7 +38,7 @@ fn main() {
         // First line returns an io::Result, basically an either made
         // to act like an option:
         //
-        //   Either an Ok containing the number of bytes read or an Err
+        // Either an Ok, containing the number of bytes read, or is an Err
         //
         // The underlying std::result::Result, which the io::Result type
         // is based, is actually an enumeration.  Methods are added to

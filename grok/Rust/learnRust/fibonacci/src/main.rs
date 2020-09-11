@@ -9,9 +9,9 @@ use std::io;
 use std::io::Write;
 
 // Compute the nth Fibonacci number.
-fn fib(n: u64) -> u64 {
+fn fib(n: u32) -> u128 {
     let mut n = n;
-    let mut f_tup: (u64, u64) = (1, 0);
+    let mut f_tup: (u128, u128) = (1, 0);
     while n > 0 {
         f_tup = (f_tup.1, f_tup.0 + f_tup.1);
         n = n - 1;
@@ -26,7 +26,7 @@ fn main() {
     }
     println!("Compute the nth Fibonacci number.\n");
 
-    let n: u64;
+    let n: u32;
 
     // Get n from user.
     loop {
@@ -36,18 +36,18 @@ fn main() {
         io::stdin()
             .read_line(&mut n_user)
             .expect("Failed to read user input");
-        n = match n_user.trim().parse::<u64>() {
+        n = match n_user.trim().parse::<u32>() {
             Ok(num) => num,
             Err(_)  => continue
         };
         break;
     }
 
-    // Evaluate fib(n) only if 64-bit integer overflow will not happen.
-    if n < 93 {
+    // Evaluate fib(n) only if 128-bit integer overflow will not happen.
+    if n < 187 {
         println!("fib({}) = {}", n, fib(n));
     } else {
-        println!("n={} too large, fib({}) will overflow u64 integer", n, n)
+        println!("n={} too large, fib({}) will overflow u128 integer", n, n)
     }
 
 }

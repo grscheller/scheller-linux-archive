@@ -1,4 +1,4 @@
-## Rust systems programming language:
+## Rust programming language:
 Rust is a safe, hybrid functional/imperative programming language
 good for both systems and general purpose computer programming.
 
@@ -119,3 +119,6 @@ Program to compute the nth Fiboncci number.
 
 ### 6. Twelve Days of Christmas - [twelve-days](fibonacci/):
 Prints out the lyrics to the song "The Twelve Days of Christmas"
+
+### 7. Restaurant - [restaurant](restaurant/):
+Program to explore Rust's module system.

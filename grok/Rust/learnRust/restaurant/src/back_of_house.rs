@@ -1,14 +1,14 @@
 pub struct Breakfast {
-    pub appetizer_option: Option<Appetizer>,
-    pub toast: String,
+    pub appetizer: Appetizer,
+    pub toast: Toast,
     seasonal_fruit: String,
 }
 
 impl Breakfast {
-    pub fn summer(toast: &str) -> Breakfast {
+    pub fn summer_bf(toast: Toast, app: Appetizer) -> Breakfast {
         Breakfast {
-            appetizer_option: None,
-            toast: String::from(toast),
+            appetizer: app,
+            toast: toast,
             seasonal_fruit: String::from("peaches"),
         }
     }
@@ -17,11 +17,33 @@ impl Breakfast {
 pub enum Appetizer {
     Soup,
     Salad,
+    NoApp,
 }
 
-pub fn submit_order(order: &Breakfast) {
-    println!("One {} toast with {} needed!", order.toast, order.seasonal_fruit);
+pub enum Toast {
+    White,
+    Wheat,
+    Rye,
+    SourDough,
+}
+
+pub fn submit_order(order: Breakfast) {
+    print!("One {} toast with {} ", toast_to_string(order.toast), order.seasonal_fruit);
+    match order.appetizer {
+        Appetizer::Soup  => println!("and a Soup are needed"),
+        Appetizer::Salad => println!("and a Salad are needed"),
+        Appetizer::NoApp => println!("is needed!"),
+    };
     kitchen::cook_order();
+}
+
+fn toast_to_string(toast: Toast) -> String {
+    match toast {
+        Toast::White     => String::from("white"),
+        Toast::Wheat     => String::from("wheat"),
+        Toast::Rye       => String::from("rye"),
+        Toast::SourDough => String::from("sour dough"),
+    }
 }
 
 pub mod kitchen {

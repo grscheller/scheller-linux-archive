@@ -122,3 +122,9 @@ Prints out the lyrics to the song "The Twelve Days of Christmas"
 
 ### 7. Restaurant - [restaurant](restaurant/):
 Program to explore Rust's module system.
+
+This program was the first where I really had to think about
+Rust's ownership system.  It is not as simple as making all
+calls by immutable reference.  Also, Rust complains when you
+take a reference to something that is part of something else
+which has a shared reference.

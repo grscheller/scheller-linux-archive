@@ -1,6 +1,7 @@
 pub mod hosting {
-    pub fn add_to_waitlist() {
-        println!("Wait here noble customer.");
+    pub fn add_to_waitlist(customer: &str) {
+        let customer = String::from(customer);
+        println!("Please wait here, {}.", customer);
     }
 
     pub fn seat_at_table() {
@@ -9,12 +10,18 @@ pub mod hosting {
 }
 
 pub mod serving {
-    pub fn take_order() {
+
+    use crate::back_of_house::{Appetizer,Toast};
+
+    pub fn take_order(toast: Toast, appetizer: Appetizer) {
         println!("May I take your order?");
-        let mut meal = crate::back_of_house::Breakfast::summer("rye");
-        // change mind
-        meal.toast = String::from("wheat");
-        crate::back_of_house::submit_order(&meal);
+        let mut meal = crate::back_of_house::Breakfast::summer_bf(toast, appetizer);
+        // change mind if white bread
+        if let Toast::White = meal.toast {
+            println!("Customer changed their mind.");
+            meal.toast = Toast::Wheat;
+        }
+        crate::back_of_house::submit_order(meal);
     }
 
     pub fn serve_order() {

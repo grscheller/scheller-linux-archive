@@ -7753,3 +7753,9 @@ Note: On 2019-03-30 decided to look into the possibility of
     /usr/bin/skypeforlinux
     $ whence skypeforlinux
     /usr/bin/skypeforlinux
+
+2020-09-14:
+  Installing prerequisits for Scala Native as per
+  the scala-native.readthedocs.io website.
+
+    $ sudo pacman -Syu llvm clang gc re2

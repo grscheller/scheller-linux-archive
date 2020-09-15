@@ -1,17 +1,16 @@
 JAVAC = javac
-# JFLAGS = -g
-JFLAGS = 
+JFLAGS = -d classes
 
-.SUFFIXES: .java .class
-.java.class:
-	$(JAVAC) $(JFLAGS) $*.java
+classes/%.class: %.java
+	$(JAVAC) $(JFLAGS) $< 
 
-SOURCES = Carl.java Church.java IsPrime.java
+SOURCES = Carl.java IsPrime.java
 
-default: classes
+default: classfiles
 
-classes: $(SOURCES:.java=.class)
+classfiles: $(addprefix classes/,$(SOURCES:.java=.class))
 
 clean:
-	rm -f *.class
+	rm -fr classes
 
+.PHONY: clean classfiles

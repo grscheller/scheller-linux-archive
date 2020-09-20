@@ -4,7 +4,7 @@
  *   Usage: Carl n
  *
  * The purpose of this program is to
- * 1. First get a trivial java program to compile
+ * 1. Get a trivial java program to compile
  * 2. Gain experience with Java exceptions (all unchecked)
  * 3. Test different build schemes
  *

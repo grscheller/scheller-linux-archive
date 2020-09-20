@@ -3,9 +3,9 @@
  * parsed as unsigned longs, are prime.
  *
  * The purpose of this program is to
- * 1. Get a lambda to work by using an object of functional designed.
- * 2. Get parallism to work in Java.
- * 3. Test different build schemes.
+ * 1. Get a lambda to work
+ * 2. Get parallism to work in Java
+ * 3. Test different build schemes
  *
  * Note: Java does not seem to implement unsigned types.
  *
@@ -63,7 +63,7 @@ public class IsPrime {
       final long upto = (long)java.lang.Math.sqrt(num) + 1L;
       return LongStream.range(2, upto)
                        .parallel()
-                       .noneMatch(e -> num%e == 0);
+                       .noneMatch(e -> num % e == 0);
   }
 
 }

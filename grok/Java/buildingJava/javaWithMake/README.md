@@ -1,6 +1,6 @@
 ## Java with Make
 Using make as the build tool really helped me learn the
-underlying java and jar commands needed to build java
+underlying java and jar commands used to build java
 code.  Also a good opportunity to relearn make pattern
 rules.
 
@@ -34,6 +34,7 @@ Change directory to the base directory, the one with the makefile.
 
 From class files:
 ```
+   $ export CLASSPATH=classes
    $ java IsPrime 2 721692259 721692261
    2 is prime.
    721692259 is prime.

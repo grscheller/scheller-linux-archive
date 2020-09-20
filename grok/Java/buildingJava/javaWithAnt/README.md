@@ -1,8 +1,9 @@
 ## Java with Ant
-One of the older build tools for Java.  Make had the problem that
-you need different make rules for cmd.com on Windows and /bin/sh
-on Unix.  Think of Ant as a platform independent version of make
-which uses XML configuration files.
+Ant is one of the older build tools for Java.  Make had the
+problem that different makefile rules were needed for cmd.com
+on Windows and /bin/sh on Unix.  Think of Ant as a platform
+independent version of make, without pattern matching, which
+uses XML configuration files.
 
 ### Targets
 ```

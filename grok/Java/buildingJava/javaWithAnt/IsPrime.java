@@ -9,6 +9,9 @@
  *
  * Note: Java does not seem to implement unsigned types.
  *
+ * Note: Streams can only be run once, sort of the monster
+ *       child of a lazy list and a future.
+ *
  * @author Geoffrey Scheller
  *
  */
@@ -35,11 +38,11 @@ public class IsPrime {
                 }
             }
         } catch (Exception e) {
-            System.out.println(e);
+            System.err.println(e);
             return;
         }
     } else {
-        System.out.println("No arguments given");
+        System.err.println("No arguments given");
         return;
     }
 

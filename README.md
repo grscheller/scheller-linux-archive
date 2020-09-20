@@ -38,11 +38,11 @@ As subtopics mature, I will spin them off to their own repos.
   * [Haskell Intro Programming](grok/Haskell/haskellIntroProgramming/)
   * [Haskell Parallel and Concurrent](grok/Haskell/haskellParallelAndConcurrent/)
 * __Java__
+  * __Building Java__
+    * [Java with Make](grok/Java/buildingJava/javaWithMake/)
+    * [Java with Ant](grok/Java/buildingJava/javaWithAnt/)
   * [Java FX Examples](grok/Java/javafxExamples/)
   * [Testing JVM for Word Tearing](grok/Java/wordTearing/)
-  * __Building Java__
-    * [Java with Make](grok/Java/javaWithMake/)
-    * [Java with Ant](grok/Java/javaWithAnt/)
 * __JavaScript__
   * [Overview](grok/JavaScript/)
   * [Node Install](grok/JavaScript/node-install/)

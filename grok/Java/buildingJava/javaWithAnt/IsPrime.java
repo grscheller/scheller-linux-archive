@@ -28,13 +28,13 @@ public class IsPrime {
     if (argCnt > 0) {
         try {
             for (int ii = 0; ii < argCnt; ii++) {
-                long potentialPrime = Long.parseUnsignedLong(args[ii]);
-                if (potentialPrime < 0L) {
-                    throw new IllegalArgumentException(
-                      args[ii] + " too large to fit into signed long"
+                long potPrime = Long.parseUnsignedLong(args[ii]);
+                if (potPrime < 0L || args[ii] == "9223372036854775808") {
+                    throw new NumberFormatException(
+                      args[ii] + " parsed unsigned input as signed long <= 0"
                     );
                 } else {
-                    potPrimes[ii] = potentialPrime;
+                    potPrimes[ii] = potPrime;
                 }
             }
         } catch (Exception e) {
@@ -61,7 +61,6 @@ public class IsPrime {
 
   private static boolean isPrime(final Long num) {
       final long upto = (long)java.lang.Math.sqrt(num) + 1L;
-
       return LongStream.range(2, upto)
                        .parallel()
                        .noneMatch(e -> num%e == 0);

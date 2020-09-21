@@ -18,6 +18,7 @@ As subtopics mature, I will spin them off to their own repos.
 * [Java Development on Arch Linux](notes/archJava.txt)
 * [JavaScript Notes](notes/javaScriptNotes.txt)
 * [Unicode Cheat Sheet](notes/unicodeCheatSheet.txt)
+* [Functional Programing Random Ideas](notes/fpRandomIdeas.md)
 * [MSYS2 Notes](notes/msys2Notes.txt)
 * [Windows 10 Powershell Configuration](notes/win10PowershellConf/)
 

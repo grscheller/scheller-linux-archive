@@ -3,7 +3,7 @@
 ### GNOME Version:
 ```
    $ gnome-shell --version
-   GNOME Shell 3.36.4
+   GNOME Shell 3.36.6
 ```
 ### gnome-tweak (Tweaks)
 * General -> Animations (on)
@@ -32,6 +32,7 @@
 * Window Titlebars -> Titlebar Buttons -> Placement -> Right
 * Windows -> Attach Modal Dialogs (on)
 * Windows -> Edge Tiling (on)
+* Windows -> Window Action Key -> Super
 * Windows -> Window Focus -> Focus on Hover (on)
 * Windows -> Raise Windows When Focused (off)
 * Workspaces -> Dynamic Workspaces
@@ -49,13 +50,12 @@
 * Devices
 * Details
 
-### Configurable via on command line too
-* Enable sloopy focus
+### Configurables not available in GUI
+* Pass clicks to windows without raising them
 ```
-   $ gsettings set org.gnome.desktop.wm.preferences focus-mode sloppy
    $ gsettings set org.gnome.desktop.wm.preferences raise-on-click false
-   $ gsettings set org.gnome.desktop.wm.preferences action-middle-click-titlebar lower
 ```
+  - to raise windows use super+click, or click on title bar to raise window
 * Set background and screenlock images
 ```
    $ gsettings set org.gnome.desktop.background picture-uri file:///home/geoff/Pictures/Wallpapers/RachelHawkFalls.jpg
@@ -88,20 +88,22 @@
   - creates/deletes workspaces as needed
 
 ### Keyboard & mouse shortcuts:
+* super key-up-event: switches between the desktop and overview mode
 * super+tab: switch between windows on current desktop
 * super+L: lock screen
-* super key-up-event: switches between the desktop and overview mode
 * super+up-arrow: maximize window with focus 
 * super+down-arrow: regular size window
 * super+left-arrow: tile window with focus LHS workspace
 * super+right-arrow: tile window with focus RHS workspace
 * super+H: hide (minimize) window
-* super+click: raise window
+* super+click: raise window without passing click to window
+* super+shift+page-up: move window with focus up one workspace
+* super+shift+page-down: move window with focus down one workspace
+* ctrl+alt+up-arrow: move up one workspace
+* ctrl+alt+down-arrow: move up one workspace
 * click titlebar: raise window
 * middle-click titlebar: drop window below all other windows
 * double-click titlebar: toggle maximize window
-* ctrl+alt+up-arrow: move up one workspace
-* ctrl+alt+down-arrow: move up one workspace
 
 ### Paradigms
 * No desktop icons

@@ -51,11 +51,10 @@
 * Details
 
 ### Configurables not available in GUI
-* Pass clicks to windows without raising them
+* Pass clicks to windows without raising them - to raise, super+click, or click on title bar
 ```
    $ gsettings set org.gnome.desktop.wm.preferences raise-on-click false
 ```
-  - to raise windows use super+click, or click on title bar to raise window
 * Set background and screenlock images
 ```
    $ gsettings set org.gnome.desktop.background picture-uri file:///home/geoff/Pictures/Wallpapers/RachelHawkFalls.jpg

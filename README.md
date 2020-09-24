@@ -8,13 +8,13 @@ As subtopics mature, I will spin them off to their own repos.
 
 ### Linux/POSIX Notes
 * [GIT Notes](notes/gitNotes.txt)
+* [Gnome 3 Configuration](notes/gnome3Conf.md)
 * [POSIX/Unix Commands](notes/unixCommands.txt)
 * [Arch Linux & systemd Commands](notes/archLinuxNotes.txt)
 * [Bash Notes](notes/bashNotes.txt)
 * [GNU Make Notes](notes/makeNotes.md)
 * [Software Development Tools](notes/softwareDevTools.md)
 * [Shell Utilities](notes/shellUtilities.txt)
-* [Gnome 3 Configuration](notes/gnome3Conf.md)
 * [Java Development on Arch Linux](notes/archJava.txt)
 * [JavaScript Notes](notes/javaScriptNotes.txt)
 * [Unicode Cheat Sheet](notes/unicodeCheatSheet.txt)

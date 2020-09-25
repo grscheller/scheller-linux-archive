@@ -110,6 +110,7 @@
 * The Dash acts like a program manager
   * make sure "launch new instance" turned on
   * right-click to select amoung running instances
+  * shared menu top of screen - shows application for window with focus
 
 ### Gnome-Terminal
 * Create shortcut

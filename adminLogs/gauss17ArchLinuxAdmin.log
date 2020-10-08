@@ -7965,3 +7965,40 @@ Note: On 2019-03-30 decided to look into the possibility of
         Extensions to Ian Bicking's virtualenv too
 
     $ sudo pacman -Syu python-virtualenvwrapper
+
+2020-10-07:
+  Well gnome 3.38.1 got installed
+
+    $ gnome-shell --version
+    GNOME Shell 3.38.1
+
+  and my beloved clipboard manager stopped working.  After
+  trying to reinstall it like I did on 2020-07-22, decided
+  to remove the extensions I installed through AUR and look
+  for alternatives.
+
+    $ sudo pacman -Rs gnome-shell-extension-clipboard-indicator \
+                      gnome-shell-extension-extensions-git
+
+  After internet searching, I found gpaste.
+
+    $ pacman -Ss gpaste
+    extra/gpaste 3.38.2-1
+        Clipboard management system
+
+    $ pacman -Flq gpaste|grep -- gnome-shell|grep '\.js$'|head -3
+    usr/share/gnome-shell/extensions/GPaste@gnome-shell-extensions.gnome.org/aboutItem.js
+    usr/share/gnome-shell/extensions/GPaste@gnome-shell-extensions.gnome.org/deleteButton.js
+    usr/share/gnome-shell/extensions/GPaste@gnome-shell-extensions.gnome.org/deleteItemPart.js
+
+  Unlike other distributions, there is no
+  separate gnome-shell-extensions-gpaste package
+  in Arch.
+
+    $ sudo pacman -Syu gpaste
+
+  I like it better than the old clipboard manager!  Looks like
+  I could configure it to sync with the PRIMARY X11 clip buffer,
+  but I won't, having them separate I consider a valuable feature.
+  The only thing that might confuse a windows user is that replacing
+  highlighted text by pasting over it is application dependent.

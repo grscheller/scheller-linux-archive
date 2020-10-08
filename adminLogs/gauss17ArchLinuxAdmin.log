@@ -7720,9 +7720,9 @@ Note: On 2019-03-30 decided to look into the possibility of
     $ rustup update
     info: syncing channel updates for 'stable-x86_64-unknown-linux-gnu'
     info: checking for self-updates
-    
+
       stable-x86_64-unknown-linux-gnu unchanged - rustc 1.46.0 (04488afe3 2020-08-24)
-    
+
     info: cleaning up downloads & tmp directories
 
 2020-09-02:
@@ -7763,17 +7763,17 @@ Note: On 2019-03-30 decided to look into the possibility of
 2020-09-24:
   Change default version of Java to Java 11.
 
-    $ archlinux-java get   
+    $ archlinux-java get
     java-8-openjdk
-    
+
     $ sudo archlinux-java set java-11-openjdk
-    
-    $ archlinux-java get                     
+
+    $ archlinux-java get
     java-11-openjdk
 
     $ javac -version
     javac 11.0.8
-    $ java -version 
+    $ java -version
     openjdk version "11.0.8" 2020-07-14
     OpenJDK Runtime Environment (build 11.0.8+10)
     OpenJDK 64-Bit Server VM (build 11.0.8+10, mixed mode)
@@ -7790,6 +7790,178 @@ Note: On 2019-03-30 decided to look into the possibility of
         Simple OpenVPN GUI written in PyQt for systemd based distributions
     community/sslh 1.21c-1
         SSL/SSH/OpenVPN/XMPP/tinc port multiplexer
-    
+
     $ sudo pacman -Syu openvpn networkmanager-openvpn
 
+2020-10-06:
+  Support for Python 2 ended 1/1/2020.  Lets see if we
+  can get rid of it.
+
+  Lets see what still requires python2,
+
+    $ pactree -ru python2|sort
+    ibus
+    intellij-idea-community-edition
+    java11-openjfx
+    java8-openjfx
+    pygtk
+    python2
+    python2-cairo
+    python2-dbus
+    python2-gobject
+    python2-gobject2
+
+  Lets see what still requires python2 but not python3,
+
+    $ diff <(pactree -ru python2|sort) <(pactree -ru python|sort)|grep '^<'
+    < pygtk
+    < python2
+    < python2-cairo
+    < python2-dbus
+    < python2-gobject
+    < python2-gobject2
+
+  What is pygtk?
+
+    $ pacman -Ss pygtk
+    $ pacman -Qs pygtk
+    local/pygtk 2.24.0-8
+        Python bindings for the GTK widget set
+
+    $ pactree -ru pygtk
+    pygtk
+
+  Doubtful I'll be doing gtk GUI programming in Python any time soon.
+
+  Now, lets get rid of Python2
+
+    $ sudo pacman -Syu
+    $ sudo pacman -Rsc python2
+    checking dependencies...
+    :: gtk2 optionally requires python2: gtk-builder-convert
+    :: gvim optionally requires python2: Python 2 language support
+    :: jre8-openjdk optionally requires java8-openjfx: for JavaFX GUI components support
+    :: libglade optionally requires python2: libglade-convert script
+    :: libnewt optionally requires python2: libnewt support with the _snack module
+    :: libproxy optionally requires python2: Python 2.x bindings
+    :: net-snmp optionally requires python2: for the python modules
+    :: nmap optionally requires python2: various scripts
+    :: texlive-core optionally requires python2: for dviasm
+
+    Packages (11) ibus-1.5.22+8+gf591381e-1
+                  intellij-idea-community-edition-2:2020.2.2-1
+                  java11-openjfx-11.0.3.u1-1  java8-openjfx-8.u202-3  pygtk-2.24.0-8
+                  python2-cairo-1.18.2-4  python2-dbus-1.2.16-1
+                  python2-gobject-3.36.1-2  python2-gobject2-2.28.7-6
+                  zoom-5.0.418682.0603-1  python2-2.7.18-2
+
+    Total Removed Size:  1364.04 MiB
+
+    :: Do you want to remove these packages? [Y/n] n
+
+  Should have figured, zoom & intellij-idea-community-edition
+  still need Python2.
+
+  Might as well do some Python2 cleanup.
+
+    $ sudo pacman -Rsc pygtk
+
+    $ pactree -r python2
+    python2
+    ├─java11-openjfx
+    │ └─intellij-idea-community-edition
+    ├─java8-openjfx
+    ├─python2-dbus
+    │ └─ibus
+    │   └─zoom
+    ├─python2-gobject
+    │ └─ibus
+    └─python2-gobject2
+      └─ibus
+
+  Package zoom brings in ibus which needs Python2 stuff.
+
+    $ pactree -rc python2-gobject
+    python2-gobject
+    └─ibus
+      └─zoom
+
+    $ pactree -rc python2-gobject2
+    python2-gobject2
+    └─ibus
+      └─zoom
+
+    $ pactree -rc 'java8-openjfx'
+    java8-openjfx
+
+    $ pactree -rc 'java11-openjfx'
+    java11-openjfx
+    └─intellij-idea-community-edition
+
+  Looks like Intellij uses JavaFX in its GUI.  If I want to
+  do JavaFX development, I'll use Java11+.
+
+    $ sudo pacman -Rsc java8-openjfx
+
+  Let's see where we now stand
+
+    $ pactree -r python2
+    python2
+    ├─java11-openjfx
+    │ └─intellij-idea-community-edition
+    ├─python2-dbus
+    │ └─ibus
+    │   └─zoom
+    ├─python2-gobject
+    │ └─ibus
+    └─python2-gobject2
+      └─ibus
+
+    [grs@gauss17: ~/devel/local]
+    $ pactree -r python2-gobject
+    python2-gobject
+    └─ibus
+      └─zoom
+
+    [grs@gauss17: ~/devel/local]
+    $ pactree -r python2-gobject2
+    python2-gobject2
+    └─ibus
+      └─zoom
+
+  Seems that on Java14 openjfx only uses Python3
+
+    $ pactree -u java-openjfx|grep python
+    python
+
+    $ pactree -u java11-openjfx|grep python
+    python2
+    python
+
+  Java11 is LTS and the next LTS is Java17 in Sept 2021.
+  So, if I want the ability to use java??-openjfx on a
+  stable LTS Java release, I am stuck with Python2 until
+  then.  Intellij is compiled with Java11 and uses JavaFX.
+  This Python dependency is just a build dependency anyway,
+  see https://bbs.archlinux.org/viewtopic.php?id=255230 .
+
+  Zoom has both Python2 and Python3 dependencies for ibus,
+  a multilanguage text input tool.  My supposition is that
+  zoom is built to use either Python but Pacman cannot
+  take an "either or" as a dependency and can't make both
+  optional dependencies because ibus need one of them to
+  work.
+
+2020-10-07:
+  Installing Python virtualenvwrapper
+  see https://pypi.org/project/virtualenvwrapper/
+
+    $ pacman -Ss python-virtualenv
+    extra/python-virtualenv 20.0.23-1 [installed]
+        Virtual Python Environment builder
+    community/python-virtualenv-clone 0.5.4-1 [installed]
+        A script for cloning a non-relocatable virtualenv.
+    community/python-virtualenvwrapper 4.8.4-4
+        Extensions to Ian Bicking's virtualenv too
+
+    $ sudo pacman -Syu python-virtualenvwrapper

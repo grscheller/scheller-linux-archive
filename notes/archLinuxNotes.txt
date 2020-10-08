@@ -84,10 +84,10 @@ Pacman:
     pacman -Qmq    # List all foreign (usually AUR) packages.
     pacman -Qnq    # List all packages from the standard repos.
 
-    pactree -c <pkg>    # Packages <pkg> depends on, -c for colorization
-    pactree -u <pkg>    # List packages <pkg> depends on, only once
-    pactree -rc <pkg>   # Packages depending on <pkg>
-    pactree -ru <pkg>   # List packages depending on <pkg>, only once
+    pactree <pkg>      # Packages <pkg> depends on, -c for colorization
+    pactree -r <pkg>   # Packages depending on <pkg>
+    pactree -u <pkg>   # List packages <pkg> depends on, only once
+    pactree -ru <pkg>  # List packages depending on <pkg>, only once
 
   Pacman logs stored here: /var/log/pacman.log
   Pacman configuration: /etc/pacman.conf

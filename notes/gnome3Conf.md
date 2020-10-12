@@ -142,7 +142,7 @@
 * Desktop acts as a window manager
 * The Dash acts like a program manager
   * make sure "launch new instance" turned on
-  * right-click to select amoung running instances
+  * right-click to select among running instances
   * shared menu top of screen - shows application for window with focus
 
 ### Gnome-Terminal
@@ -167,7 +167,8 @@
     * Check Show bold text in bright colors
 
 ### Gnome-Shell-Extensions
-* Arch Linux - use Pacman if it is in main Arch repos (like gpaste)
+* Arch Linux
+  * Use Pacman if extension is in main Arch repos (like gpaste)
   * Turn on via Gnome-Tweak
 * Arch Linux using AUR
   * Go to https://aur.archlinux.org/
@@ -189,7 +190,7 @@
       * Extensions app has an option to install Gnome extentions
         * This just takes you to the Gnome extensions page (AppImages)
         * Does not auto install from AUR.
-  * Turn on via Gnome-Tweak
+    * Turn on via Gnome-Tweak
 # Download extension from [https://extensions.gnome.org/](https://extensions.gnome.org/)
   * Extract into `~/.local/share/gnome-shell/extensions`
   * Turn on via Gnome-Tweak
@@ -217,3 +218,8 @@ the environment variables and their defaults used by Gnome3
    * also other file objects such as sockets, named pipes, ...
    * directory MUST be owned by the user iand MUST have file permissions 0700
    * on Arch Linux: /run/user/<uid>
+
+Unfortunately, you can't just set these in your shell because the
+display manager launches your GNOME3 session before any sort of
+shell environment is involked.  You get the environment handed
+to you.

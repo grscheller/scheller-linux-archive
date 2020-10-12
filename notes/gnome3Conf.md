@@ -3,17 +3,67 @@
 ### GNOME Version:
 ```
    $ gnome-shell --version
-   GNOME Shell 3.36.6
+   GNOME Shell 3.38.1
 ```
-### gnome-tweak (Tweaks)
+### Settings (gnome-control-center)
+* Wifi & Network(Ethernet) configurations
+* Bluetooth configurations
+* Background configuration
+* Notifications configuration
+* Search configuration
+* Applications
+  * Can't change file associations???
+  * Manage with "Software" - AppImages??? 
+  * Does not handle Pacman packages
+* Privacy
+  * Location Services
+  * Camera & Microphone
+  * Thunderbolt (/sys/bus/thunderbolt not present on my laptop)
+  * File History & Trash
+  * Screen Lock
+* Online Account configuration
+* Sharing (grayed out)
+* Sound configuration
+* Power settings
+* Displays
+* Mouse & Touchpad
+* Keyboard Shortcuts
+  * Added <ctrl>+<alt>+T for gnome-terminal
+* Printers
+* Removable Media
+* Color management settings for monitors and Printers
+* Region & Language
+* Accessibility (pretty useless - better handled via themes & plug-ins)
+* Users 
+* Default Applications
+* Date & Time (use timedatectl from cmdline instead)
+* About
+
+### Tweaks (gnome-tweak)
 * General -> Animations (on)
 * General -> Over-Amplification (on)
 * Appearance -> Themes -> Applications -> Adwaita-dark
-* Appearance -> Background: to select background image
+* Appearance -> Themes -> Cursor -> Adwaita
+* Appearance -> Themes -> Icons -> Adwaita
+* Appearance -> Background: select background image
 * Appearance -> Lock Screen: to select background image
-* Extensions -> Clipboard indicator (on)
-* Extensions -> Clipboard indicator -> Settings
-* Fonts: Made adjustments
+* Extensions -> Gpaste (on) note: must be installed (see below)
+* Extensions -> Gpaste -> Settings -> General behaviour
+  * Track clipboard Changes (on)
+  * Close UI on select (on)
+  * Enable the gnome-shell extention (on)
+  * Save history
+* Extensions -> Lauch new instance (on) note: makes Dash much more useful
+* Extensions -> Native Window Placement (on)
+* Extensions -> Places status indicator (on)
+* Fonts: 
+  * Interface & Document Text: Cantarell Regular 11
+  * Monospace Text: Source Code Pro Regular 10
+  * Legacy Window Titles: Cantarell Bold 11
+  * Hinting: Slight
+  * Antialiasing: Subpixel (for LED screens)
+  * Scalting Factor: 1.00
+* Keyboard & Mouse -> Keyboard -> Show Extended Input Sources (on)
 * Keyboard & Mouse -> Mouse -> Pointer Location (on)
 * Keyboard & Mouse -> Mouse -> Middle Click Paste (on)
 * Keyboard & Mouse -> Touchpad -> Disable While Typing (on)
@@ -27,7 +77,7 @@
 * Window Titlebars -> Titlebar Actions -> Double-Click -> Toggle Maximize
 * Window Titlebars -> Titlebar Actions -> Middle-Click -> Lower
 * Window Titlebars -> Titlebar Actions -> Secondary-Click -> Menu
-* Window Titlebars -> Titlebar Buttons -> Maximize (off)
+* Window Titlebars -> Titlebar Buttons -> Maximize (on)
 * Window Titlebars -> Titlebar Buttons -> Minimize (on)
 * Window Titlebars -> Titlebar Buttons -> Placement -> Right
 * Windows -> Attach Modal Dialogs (on)
@@ -38,53 +88,36 @@
 * Workspaces -> Dynamic Workspaces
 * Workspaces -> Display Handling -> Workspaces span displays
 
-### gnome-control-center (Settings)
-* Wifi & Network(Ethernet) configurable
-* Bluetooth configurable
-* Set background and lock screen images
-* Notifications configuration
-* Search configuration
-* Online Account configuration
-* Sound configuration
-* Power settings
-* Devices
-* Details
-
-### Configurables not available in GUI
+### Configurables not available in Gnome Settings or Gnome Tweaks
 * Pass clicks to windows without raising them - to raise, super+click, or click on title bar
 ```
    $ gsettings set org.gnome.desktop.wm.preferences raise-on-click false
 ```
-* Set background and screenlock images
-```
-   $ gsettings set org.gnome.desktop.background picture-uri file:///home/geoff/Pictures/Wallpapers/RachelHawkFalls.jpg
-   $ gsettings set org.gnome.desktop.screensaver picture-uri file:///home/geoff/Pictures/Wallpapers/ErWangDongCave.jpg
-```
 ### Layout
 * Activities Button: LHS Top Toolbar
-  - switches between normal and overview mode
-  - click, mouse to upper LH corner, super-key up event
+  * switches between normal and overview mode
+  * click, mouse to upper LH corner, super-key up event
 * Dash: Vertical toolbar on LHS screen (overview mode)
-  - Docky like
-* Menu Dropdown: right of Activities Button
-  - for active window
-  - Mac like
+  * Docky like
+* Menu Dropdown: left side title bar
+  * for active window
+  * Mac like
 * Notification Area: Center Top Toolbar
-  - notifications balloons appear under it
-  - day of week and time displayed
-  - click to show notifications and calander
+  * notifications balloons appear under it
+  * day of week and time displayed
+  * click to show notifications and calander
 * Status Menu: RHS Top Toolbar
-  - speaker volume
-  - brightness control
-  - wired and wifi controls
-  - bluetooth control
-  - log out and account settings
-  - system settings
-  - power off
+  * speaker volume
+  * brightness control
+  * wired and wifi controls
+  * bluetooth control
+  * log out and account settings
+  * system settings
+  * power off
 * Work Space Switcher: vertical toolbar on RHS screen (overview mode)
-  - switch workspace
-  - move windows between workspaces
-  - creates/deletes workspaces as needed
+  * switch workspace
+  * move windows between workspaces
+  * creates/deletes workspaces as needed
 
 ### Keyboard & mouse shortcuts:
 * super key-up-event: switches between the desktop and overview mode
@@ -134,24 +167,53 @@
     * Check Show bold text in bright colors
 
 ### Gnome-Shell-Extensions
+* Arch Linux - use Pacman if it is in main Arch repos (like gpaste)
+  * Turn on via Gnome-Tweak
 * Arch Linux using AUR
   * Go to https://aur.archlinux.org/
   * Search on gnome-shell-extension
-    ```
+  * Create a place to build the extension
+  ```
        $ mkdir -p ~/build/AUR/gnome-extensions/
-       $ cd ~/build/AUR/gnome-extensions/
-    ```
+  ```
   * Example: Install gnome-shell-extension-extensions
-    ```
+  ```
+       $ cd ~/build/AUR/gnome-extensions/
        $ git clone https://aur.archlinux.org/gnome-shell-extension-extensions-git.git
        $ cd gnome-shell-extension-extensions-git
        $ makepkg -sri
-    ```
+  ```
     * This installs Extensions for all users
     * After re-logging in, use gnome-tweaks to activate Extensions
     * Extensions provides a convenient way to activate/deactivate other extensions
       * Extensions app has an option to install Gnome extentions
-        * This just takes you to the Gnome extensions page
+        * This just takes you to the Gnome extensions page (AppImages)
         * Does not auto install from AUR.
-  * Can clone in ~/.local/share/gnome-shell/extensions
-    * Will be available only to that one user
+  * Turn on via Gnome-Tweak
+# Download extension from [https://extensions.gnome.org/](https://extensions.gnome.org/)
+  * Extract into `~/.local/share/gnome-shell/extensions`
+  * Turn on via Gnome-Tweak
+  * Will be available only to that one user
+
+### Freedesktop.org XDG Directory Specification
+Gnome3 follows freedesktop.org desktop specifications (Gnome3 "upstream?").  Here are
+the environment variables and their defaults used by Gnome3
+* `$XDG_CONFIG_HOME`
+   * directory where user specific configuration files should be stored.
+   * default value: `$HOME/.config`
+* `$XDG_CONFIG_DIRS`
+   * search path for configuration files
+   * searched after `$XDG_CONFIG_HOME`
+   * default value: `/etc/xdg`
+* `$XDG_DATA_HOME`
+   * directory where user specific data files should be stored
+   * default value: `$HOME/.local/share`
+* `$XDG_DATA_DIRS`
+   * search path for data files
+   * searched after `$XDG_DATA_HOME`
+   * default value: `/usr/local/share/:/usr/share/`
+* `$XDG_RUNTIME_DIR`
+   * directory where user-specific non-essential runtime files stored
+   * also other file objects such as sockets, named pipes, ...
+   * directory MUST be owned by the user iand MUST have file permissions 0700
+   * on Arch Linux: /run/user/<uid>

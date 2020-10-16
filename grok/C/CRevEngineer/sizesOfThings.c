@@ -69,7 +69,7 @@ int main(void)
     printf("size of pointer to int = %lu bytes\n", sizeof(p));
     printf("value of pointer to int = %p\n", (void *) p);
     printf("size of int pointed to by pointer = %lu bytes\n", sizeof(*p));
-    printf("value of int pointed to by pointer = %d bytes\n", *p);
+    printf("value of int pointed to by pointer = %d\n", *p);
     printf("\n");
     
     void (*myFunc_ptr)(void);

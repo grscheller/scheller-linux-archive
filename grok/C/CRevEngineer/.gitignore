@@ -2,5 +2,6 @@ gnuPosixComplianceTrick
 endianness
 korn
 ftm*
+sizesOfThings
 *.o
 *.exe

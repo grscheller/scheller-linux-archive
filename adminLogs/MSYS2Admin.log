@@ -412,7 +412,7 @@ MSYS2 Admin log for installing on Windows 10.
 
     $ pacman -Syu msys/diffutils mingw64/mingw-w64-x86_64-diffutils
 
-  Lets see what each links to,
+  Lets see what libraries each links to,
 
     $ ldd /bin/diff
         ntdll.dll => /c/WINDOWS/SYSTEM32/ntdll.dll (0x7ffe98600000)
@@ -440,3 +440,32 @@ MSYS2 Admin log for installing on Windows 10.
         ADVAPI32.dll => /c/WINDOWS/System32/ADVAPI32.dll (0x7ffe96040000)
         sechost.dll => /c/WINDOWS/System32/sechost.dll (0x7ffe96c30000)
         RPCRT4.dll => /c/WINDOWS/System32/RPCRT4.dll (0x7ffe96960000)
+
+2020-10-17:
+  Some system shake ups.
+
+  Tried to install SBT the windows way from https://www.scala-sbt.org/ but
+  Windows did not want me t install it because the MSI file was not from
+  the "Microsoft Store."  Loosing this up in Settings did not work.
+
+  So, will install it locally into ~/opt via zip file,
+
+  Downloaded sbt-1.4.0.zip to ~/opt
+
+    $ pacman -S zip unzip
+    $ cd ~/opt
+    $ unzip sbt-1.4.0.zip
+
+  Need also to put java on $PATH, located here:
+  '/c/Program Files (x86)/Common Files/Oracle/Java/javapath'
+
+2020-10-17:
+  Desided to completely uninstall Cygwin.
+
+  First, shut down all Cygwin processes, then
+  from Windows command prompt,
+
+    > cd C:\
+    > takeown /r /d y /f cygwin
+    > icacls cygwin /t /grant Everyone:F
+    > rmdir /s /q cygwin

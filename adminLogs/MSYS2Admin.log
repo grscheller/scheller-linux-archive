@@ -352,7 +352,7 @@ MSYS2 Admin log for installing on Windows 10.
 
   Am I supoosed to have two copies of Anaconda hanging
   around?  Under MSYS "ln -s" silently just COPIES THE FILES.
-  If "ln -s" should just fail, not do a copy.  Bad choice.
+  "ln -s" should just fail, not do a copy.  Bad choice.
 
   Hardlinking of files supported, at least on NTFS
   file system.
@@ -442,10 +442,21 @@ MSYS2 Admin log for installing on Windows 10.
         RPCRT4.dll => /c/WINDOWS/System32/RPCRT4.dll (0x7ffe96960000)
 
 2020-10-17:
+  Decided to completely uninstall Cygwin.
+
+  First, shut down all Cygwin processes, then
+  from Windows command prompt,
+
+    > cd C:\
+    > takeown /r /d y /f cygwin
+    > icacls cygwin /t /grant Everyone:F
+    > rmdir /s /q cygwin
+
+2020-10-17:
   Some system shake ups.
 
   Tried to install SBT the windows way from https://www.scala-sbt.org/ but
-  Windows did not want me t install it because the MSI file was not from
+  Windows did not want me to install it because the MSI file was not from
   the "Microsoft Store."  Loosing this up in Settings did not work.
 
   So, will install it locally into ~/opt via zip file,
@@ -459,13 +470,7 @@ MSYS2 Admin log for installing on Windows 10.
   Need also to put java on $PATH, located here:
   '/c/Program Files (x86)/Common Files/Oracle/Java/javapath'
 
-2020-10-17:
-  Desided to completely uninstall Cygwin.
-
-  First, shut down all Cygwin processes, then
-  from Windows command prompt,
-
-    > cd C:\
-    > takeown /r /d y /f cygwin
-    > icacls cygwin /t /grant Everyone:F
-    > rmdir /s /q cygwin
+2020-10-19:
+  SBT just hangs after downloading a lot of stuff.  I noticed
+  that SBT was previously installed here   .  I suspect this
+  was installed by chocolately.

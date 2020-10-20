@@ -1,4 +1,5 @@
 CC=gcc
+#CC=clang
 CFLAGS=-Wall
 FTM_BINARIES=ftmBasic \
              ftmXOpen500 ftmXOpen600 ftmXOpen700 ftmXOpen \

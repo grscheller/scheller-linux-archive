@@ -1,7 +1,8 @@
 CC=gcc
+#CC=clang
 CFLAGS=-Wall
 SUMIT_BINARIES=sumItBasic sumItO2 sumItV sumItVO2
-BINARIES=removeSpaces
+BINARIES=removeSpaces makeMessage
 
 default: binaries
 

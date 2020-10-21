@@ -1,4 +1,6 @@
 ## SBT Dotty Template
+Purpose is to have a minimal Dotty template to
+begin new projects,
 
 ### Usage (from original boilerplate)
 
@@ -43,5 +45,5 @@ I will commit at this point, the only changes so far are
 to this README.md file and the name and location of the
 directory created.  I have not yet involked SBT.
 
-Commit Tag: 
+Commit Tag: 981108dcfeb53feb811259e916f816063d287065
 

@@ -58,6 +58,7 @@ As subtopics mature, I will spin them off to their own repos.
   * [Functional Programming for Mortals](grok/Scala/fpForMortals/)
   * [Learn Scala](grok/Scala/learnScala/)
   * [Type Level Programming in Scala](grok/Scala/typeLevelProgramming/)
+  * [Dotty Template](grok/Scala/sbtDottyTemplate)
 * __Computer Graphics__
   * [Low Level X11 (XLIB/XCB) Programming](grok/Graphics/XWindows)
   * [Cairo 2D Vector Graphics](grok/Graphics/Cairo)

@@ -74,7 +74,7 @@ void myFunc1(void);
 void myFunc2(void);
 void choose_myFunc(void (*func_ptr)(void));
 
-int main(void)
+int main(int argc, char *argv[])
 {
     char ch = '1';
     short si = 1;
@@ -183,7 +183,7 @@ int main(void)
     
     void (*myFunc_ptr)(void);
     void (*anotherFunc_ptr)(void);
-    int (*main_ptr)(void) = &main;
+    int (*main_ptr)(int, char**) = &main;
 
     myFunc_ptr = &myFunc1;
     anotherFunc_ptr = &myFunc2;
@@ -201,6 +201,27 @@ int main(void)
     printf("difference of function names (same type) = %td\n", myFunc1 - myFunc2);
     printf("difference of function ptrs (different types) = %td\n", (void *)myFunc_ptr - (void *)main_ptr);
     printf("difference of function names (different types) = %td\n", (void *)myFunc1 - (void *)main);
+    if (argc > 1) printf("\n");
+
+    int n;
+
+    for (int jj = 1; jj < argc; ++jj) {
+        printf(" %s %n\n", argv[jj], &n);
+        printf("|");
+        for (int kk = 0; kk < n - 2; ++kk)
+            printf("-");
+        printf("|\n");
+    }
+
+    if (argc > 1) printf("\n");
+
+    for (int jj = 1; jj < argc; ++jj) {
+        n = printf(" %s \n", argv[jj]) - 1;
+        printf(">");
+        for (int kk = 0; kk < n - 2; ++kk)
+            printf("-");
+        printf("<\n");
+    }
 
     return 0;
 }

@@ -8002,3 +8002,186 @@ Note: On 2019-03-30 decided to look into the possibility of
   but I won't, having them separate I consider a valuable feature.
   The only thing that might confuse a windows user is that replacing
   highlighted text by pasting over it is application dependent.
+
+2020-10-27:
+  From arch-announce Digest mailing list:
+
+    nvidia is currently partially incompatible with linux 5.9, see
+      https://forums.developer.nvidia.com/t/nvidia-driver-not-yet-supported-for-linux-kernel-5-9/157263
+      https://bugs.archlinux.org/task/68312
+      https://www.archlinux.org/news/nvidia-45528-is-incompatible-with-linux-59/
+    While graphics should work fine, CUDA, OpenCL, and likely other
+    features are broken.  Users who have already upgraded and need
+    those features are advised to switch to the linux-lts kernel for
+    the time being until a fix for nvidia is available.
+
+  Lets install the Linux LTS kernel for the time being.
+
+    $ pacman -Ss kernel|grep -A1 '^core/linux'
+    core/linux 5.9.1.arch1-1 [installed]
+        The Linux kernel and modules
+    core/linux-api-headers 5.8-1 [installed]
+        Kernel headers sanitized for use in userspace
+    core/linux-docs 5.9.1.arch1-1
+        Documentation for the Linux kernel
+    core/linux-headers 5.9.1.arch1-1
+        Headers and scripts for building modules for the Linux kernel
+    core/linux-lts 5.4.72-1
+        The LTS Linux kernel and modules
+    core/linux-lts-docs 5.4.72-1
+        Documentation for the LTS Linux kernel
+    core/linux-lts-headers 5.4.72-1
+        Headers and scripts for building modules for the LTS Linux kernel
+
+  Will install linux-lts.  First do a
+
+    $ sudo pacman -Syu
+
+  Need to reboot first, linux-firmware was installed.
+
+  After reboot,
+
+    $ sudo pacman -Syu linux-lts
+
+    $ uname -sr
+    Linux 5.9.1-arch1-1
+
+  Reboot again.
+
+    $ uname -sr
+    Linux 5.9.1-arch1-1
+
+  Have to adjust the UEFI,
+
+    $ ls /boot
+    EFI                                  intel-ucode.img
+    initramfs-linux-fallback.img         loader
+    initramfs-linux.img                  vmlinuz-linux
+    initramfs-linux-lts-fallback.img     vmlinuz-linux-lts
+    initramfs-linux-lts.img
+
+  Unfortunately, I don't know the UEFI password.  
+
+2020-10-27:
+    Need to look into restting my UEFI firmware password.
+
+    This info is from the link I got on 2017-06-24 fom the
+    computer repare shop.
+
+    This method involves fiddling with the computer hardware and
+    components.  Proceed only if you’re confident enough to do
+    this task. This may also void your warranty period. The steps
+    below are mentioned for both, desktop computers and laptops.
+    
+    Step 1: Disconnect the power cord from your laptop.
+    
+    Step 2: Turn laptop upside-down and remove the battery.  Open
+            the hard drive compartment by sliding the cover out.
+            Unscrew and pull out the hard drive from your laptop.
+    
+    Step 3: For a laptop, disconnect the tiny power lead that
+            connects the clock battery to the motherboard. Keep
+            it disconnected for at least an hour.
+    
+            Otherwise, you can also locate a BIOS reset jumper
+            marked CLRP1.  Move this jumper to Clear position.
+            Let it be in this condition for at least an hour.
+    
+    Step 4: After about an hour, replace the battery in the socket
+            or move the jumper back to the Run position.
+    
+    Step 5: Reassemble laptop and boot.
+    
+    If done right, your computer or laptop should boot up without
+    asking for any UEFI password.
+
+    Think I will try this this weekend, in case things go south.
+
+2020-10-27:
+  Continue getting system to boot off of LTS kernel.
+
+  From the note I made on 2016-07-04:
+
+    Only problem I had with the install was configuring the
+    boot loader.  The Arch Linux Wikis are excellent, but
+    dropped the ball on that point.  Using systemd-boot as
+    the boot loader with "secure boot" turned off [via firmware].
+
+  So, I assume I am using systemd-boot as my UEFI boot loader.
+
+  There are two files:
+
+    /boot/loader/loader.conf
+    /boot/loadder/entries/arch.conf
+
+  Let's see what they contain:
+
+    $ cat /boot/loader/loader.conf
+    default arch
+    timeout 5
+    editor 0
+    #default 03ab3a86a6b046d1bb4b74b0d52e0e5c-*
+
+    $ cat /boot/loader/entries/arch.conf 
+    title Arch Linux
+    linux /vmlinuz-linux
+    initrd /intel-ucode.img
+    initrd /initramfs-linux.img
+    options root=PARTUUID=d6793ae6-1f23-4895-942a-6714e7a06de6 rw
+
+  At this point, I don't think I will have to break into
+  the firmware.  But first, there is something I have to do...
+
+2020-10-27:
+  The nvidia package is only for the regular kernel.  Need to
+  also install nvidia-lts.
+
+    $ pacman -Ss ^nvidia$
+    extra/nvidia 455.28-7 [installed]
+        NVIDIA drivers for linux
+
+    $ pacman -Ss nvidia-lts
+    extra/nvidia-lts 1:455.28-7
+        NVIDIA drivers for linux-lts
+
+    $ sudo pacman -S nvidia-lts
+
+2020-10-27:
+  Lets adjust systemd-boot config files.
+
+    # cd /boot/loader/entries
+    # cp arch.conf arch-lts.conf
+    # vim arch-lts.conf
+
+  Change everything with "linux" to "linux-lts"
+
+    # cat arch-lts.conf
+    title Arch Linux-LTS
+    linux /vmlinuz-linux-lts
+    initrd /intel-ucode.img
+    initrd /initramfs-linux-lts.img
+    options root=PARTUUID=d6793ae6-1f23-4895-942a-6714e7a06de6 rw
+
+  Change default kernel to boot
+
+    # cd ..
+    # vim loader.conf
+    # cat loader.conf
+    default arch-lts
+    timeout 5
+    editor 0
+    #default 03ab3a86a6b046d1bb4b74b0d52e0e5c-*
+
+  OK, lets give it a try. (If I had half a brain, I would make
+                           sure I had a bootable USB stick.)
+
+  Reboot. (Lucky this time ... but I am still an idiot.)
+
+    $ uname -sr
+    Linux 5.4.72-1-lts
+
+    $ sudo pacman -Syu
+
+  I am amazed that at the time I originally installed Arch
+  Linux that I did not realize that I pointed the UEFI firmware
+  to systemd-boot instead of the Linux Kernel directly.

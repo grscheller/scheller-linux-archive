@@ -1,10 +1,13 @@
 CC=gcc
 CFLAGS=-Wall
-BINARIES=hw typedefFu
+BINARIES=concatAdjStrings hw typedefFu
 
 default: binaries
 
 binaries: $(BINARIES)
+
+concatAdjStrings: concatAdjStrings.c
+	$(CC) $(CFLAGS) -o $@ $<
 
 hw: hw.c
 	$(CC) $(CFLAGS) -o $@ $<

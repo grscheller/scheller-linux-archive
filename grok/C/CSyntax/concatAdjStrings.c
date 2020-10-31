@@ -10,17 +10,17 @@ int main(void)
     /* C concatenates adjacent string litterals */
     fprintf(stdout, "Hello " "World" "!\n");
 
-    char *foo = "one" " two" " three\n";
-    fprintf(stdout, foo);
+    char *foo = "one" " two" " three";
+    fprintf(stdout, "%s\n", foo);
 
-    char *bar = "\nSome very long string "
+    char *bar = "Some very long string "
                 "which is\n"
                 "stretched over many, many "
                 "lines\n"
                 "can be broken apart.\n\n"
                 "Without line continuations "
-                "to boot!\n";
-    fprintf(stdout, bar);
+                "to boot!";
+    fprintf(stdout, "\n%s\n", bar);
 
     return 0;
 }

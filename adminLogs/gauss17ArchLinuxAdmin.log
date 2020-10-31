@@ -986,6 +986,9 @@ Note: On 2019-03-30 decided to look into the possibility of
   the files "login" and "passwd" in /etc/pam.d based on info
   from Arch Linux wiki.
 
+  [[ eliminated ~/info/ArchLinux/admin on 2020-10-28
+     since it has fallen into disuse ]]
+
   Also, reset default gnome-keyring and geoff linux password
   to agree.  Also as geoff tweaked session-managers startup
   applications to start up all the gnome-keyring component.

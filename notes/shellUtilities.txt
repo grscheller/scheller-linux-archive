@@ -24,9 +24,30 @@
 
      $ head -n -5 Filename | tail -n 3
 
-2. grep
+2. Find files with find:
 
-3. sed
+   Find files in all subdirectories with the name junk in them
 
-4. awk (minimal subset)
+     $ find . -name '*junk*' -print
+   
+   Most modern Unixes don't need the -print option.
 
+   Useful when dealing with files with whitespace in their names,
+   these GNU extensions, -print0 for find and -0 for xargs,
+   use NUL as the record terminator for file names.
+
+     $ find .config/ -name '* *' -print0 | xargs -0 -- ls -d
+
+   The above command finds all files with a space in the file name.
+   Also, the -- option in GNU based commands mark the end of
+   command line option.  So above -d is associated with the
+   ls command and causes ls to print directory names, not directory
+   contents.
+
+3. grep:
+
+4. sed:
+
+5. awk (minimal subset):
+
+6: xargs and $(...)

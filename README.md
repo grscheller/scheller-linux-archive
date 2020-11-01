@@ -27,6 +27,7 @@ As subtopics mature, I will spin them off to their own repos.
   * [C Language Exeplars](grok/C/CExemplars/)
   * [C Language Syntax](grok/C/CSyntax/)
   * [Reverse Engineering with C](grok/C/CRevEngineer/)
+  * [Utilities programs written in C](grok/C/CUtils/)
 * __C++__
   * [To Infiity and Beyond](grok/C++/ToInfinityAndBeyond/)
 * __Go__
@@ -65,6 +66,10 @@ As subtopics mature, I will spin them off to their own repos.
 
 ### Comparing Computer Languages
   * [Abstract Data Types (ADT)](comp/ADT/)
+
+### Private Personal Home Page
+* [homepage.html](web/homepage.html)
+* [style.css](web/style.css)
 
 For more information on this archive, please read
 [CONTRIBUTING](CONTRIBUTING.md)

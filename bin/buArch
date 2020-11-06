@@ -1,0 +1,246 @@
+#!/usr/bin/env bash
+#
+# Backup important files to my external HD
+#
+# Usage: buArch
+#
+# shellcheck shell=bash
+
+## Backup configuration
+
+BackupLocation='/run/media/grs/BUSLINK/grsBackupArch'
+
+HomeFiles=(
+    .bashrc
+    .dashrc
+    .env_init
+    .envrc
+    .inputrc
+    .kshrc
+    .profile
+    .shrc
+)
+
+HomeDirs=(
+    bin
+    info
+    Music
+    Pictures
+    .gnupg
+    .pki
+    .ssh
+    .zoom
+)
+
+VimFile=.vim/vimrc
+
+DevelDirs=(
+    devel/local
+)
+
+ConfigDirs=(
+    .config/autostart
+    .config/dconf
+    .config/discord
+    .config/lbry
+    .config/onedrive
+    .config/zoomus.conf
+)
+
+LocalShareDirs=(
+    .local/share/keyrings
+    .local/share/lbry
+)
+
+VideoDirs=(
+    Videos/Family
+    Videos/MartialArts
+)
+
+## Run script from home directory
+cd ~ || { printf 'Error: Cannot cd to home dir\n'; exit 1; }
+
+## First, backup Evolution Mail App to filesystem before ext HD
+printf 'INFO: Archiving Evolution\n'
+
+EvolutionBackupUtil=/usr/lib/evolution/evolution-backup
+EvolutionBackupFile=~/info/EvolutionBackup/evolution_backup.tar.gz
+
+if [[ ! -x $EvolutionBackupUtil ]]; then
+    printf 'WARNING: Evolution backup utility, %s,\n' $EvolutionBackupUtil
+    printf '         either not found or not executable.\n'
+elif [[ ! -d ${EvolutionBackupFile%/*} ]]; then
+    if mkdir -p "${EvolutionBackupFile%/*}" 
+    then
+        $EvolutionBackupUtil --backup "$EvolutionBackupFile" ||
+            printf 'WARNING: Evolution backup failed\n'
+    else
+        printf 'WARNING: Cannot create %s' "${EvolutionBackupFile%/*}"
+        printf ' directory\n'
+    fi
+else
+    $EvolutionBackupUtil --backup "$EvolutionBackupFile" ||
+        printf 'WARNING: Evolution backup failed\n'
+fi
+
+## Prepare backup location on external HD
+printf '\nINFO: Preparing external HD for backup\n'
+
+# Make sure backup location available
+if [[ ! -d $BackupLocation ]]
+then
+    printf 'Error: backup location, %s, not found\n' "$BackupLocation"
+    exit 1
+fi
+
+# Make sure ,vim is setup on external HD
+if [[ ! -d $BackupLocation/.vim ]]
+then
+    mkdir "$BackupLocation/.vim" || {
+            printf 'Error: failed creating %s\n' "$BackupLocation/.vim"
+            exit 1
+    }
+fi
+
+# Make sure devel is setup on external HD
+if [[ ! -d $BackupLocation/devel ]]
+then
+    mkdir "$BackupLocation/devel" || {
+            printf 'Error: failed creating %s\n' "$BackupLocation/devel"
+            exit 1
+    }
+fi
+
+# Make sure .config is setup on external HD
+if [[ ! -d $BackupLocation/.config ]]
+then
+    mkdir "$BackupLocation/.config" || {
+            printf 'Error: failed creating %s\n' "$BackupLocation/.config"
+            exit 1
+    }
+fi
+
+# Make sure .local/share is setup on external HD
+if [[ ! -d $BackupLocation/.local/share ]]
+then
+    mkdir -p "$BackupLocation/.local/share" || {
+            printf 'Error: failed creating %s\n' "$BackupLocation/.local/share" 
+            exit 1
+    }
+fi
+
+# Make sure Videos is setup on external HD
+if [[ ! -d $BackupLocation/Videos ]]
+then
+    mkdir "$BackupLocation/Videos" || {
+            printf 'Error: failed creating %s\n' "$BackupLocation/Videos"
+            exit 1
+    }
+fi
+
+## Backup to External HD
+printf 'INFO: Now backup to external HD\n'
+
+# Backup $HomeFiles
+printf 'INFO: Selectively backing up environment configuration files\n'
+/usr/bin/rsync -ai --no-perms --delete \
+    "${HomeFiles[@]}" \
+    "$BackupLocation" || {
+        RSYNC_FAILURE=$?
+        printf 'ERROR: rsync failure with error %s\n' "$RSYNC_FAILURE"
+        printf 'ERROR: Failed backing up %s\n' "${HomeFiles[@]}"
+        printf 'WARNING: Not backed up %s\n' "${HomeDirs[@]}"
+        printf 'WARNING: Not backed up %s\n' "${VimFile}"
+        printf 'WARNING: Not backed up %s\n' "${DevelDirs[@]}"
+        printf 'WARNING: Not backed up %s\n' "${ConfigDirs[@]}"
+        printf 'WARNING: Not backed up %s\n' "${LocalShareDirs[@]}"
+        printf 'WARNING: Not backed up %s\n' "${VideoDirs[@]}"
+        exit 1
+}
+
+
+# Backup $HomeDirs
+printf 'INFO: Backing up %s\n' "${HomeDirs[*]}"
+/usr/bin/rsync -ai --no-perms --delete \
+    "${HomeDirs[@]}" \
+    "$BackupLocation" || {
+        RSYNC_FAILURE=$?
+        printf 'ERROR: rsync failure with error %s\n' "$RSYNC_FAILURE"
+        printf 'ERROR: Failed backing up %s\n' "${HomeDirs[@]}"
+        printf 'WARNING: Not backed up %s\n' "${VimFile}"
+        printf 'WARNING: Not backed up %s\n' "${DevelDirs[@]}"
+        printf 'WARNING: Not backed up %s\n' "${ConfigDirs[@]}"
+        printf 'WARNING: Not backed up %s\n' "${LocalShareDirs[@]}"
+        printf 'WARNING: Not backed up %s\n' "${VideoDirs[@]}"
+        exit 1
+}
+
+# Backup $VimFile
+printf 'INFO: Backing up ~/.vim\n'
+/usr/bin/rsync -ai --no-perms --delete \
+    "${VimFile}" \
+    "$BackupLocation/.vim" || {
+        RSYNC_FAILURE=$?
+        printf 'ERROR: rsync failure with error %s\n' "$RSYNC_FAILURE"
+        printf 'ERROR: Failed backing up %s\n' "${VimFile}"
+        printf 'WARNING: Not backed up %s\n' "${DevelDirs[@]}"
+        printf 'WARNING: Not backed up %s\n' "${ConfigDirs[@]}"
+        printf 'WARNING: Not backed up %s\n' "${LocalShareDirs[@]}"
+        printf 'WARNING: Not backed up %s\n' "${VideoDirs[@]}"
+        exit 1
+}
+
+# Backup $DevelDirs
+printf 'INFO: Selectively backing up ~/devel\n'
+/usr/bin/rsync -ai --no-perms --delete \
+    "${DevelDirs[@]}" \
+    "$BackupLocation/devel" || {
+        RSYNC_FAILURE=$?
+        printf 'ERROR: rsync failure with error %s\n' "$RSYNC_FAILURE"
+        printf 'ERROR: Failed backing up %s\n' "${DevelDirs[@]}"
+        printf 'WARNING: Not backed up %s\n' "${ConfigDirs[@]}"
+        printf 'WARNING: Not backed up %s\n' "${LocalShareDirs[@]}"
+        printf 'WARNING: Not backed up %s\n' "${VideoDirs[@]}"
+        exit 1
+}
+
+# Backup $ConfigDirs
+printf 'INFO: Selectively backing up ~/.config\n'
+/usr/bin/rsync -ai --no-perms --delete \
+    "${ConfigDirs[@]}" \
+    "$BackupLocation/.config" || {
+        RSYNC_FAILURE=$?
+        printf 'ERROR: rsync failure with error %s\n' "$RSYNC_FAILURE"
+        printf 'ERROR: Failed backing up %s\n' "${ConfigDirs[@]}"
+        printf 'WARNING: Not backed up %s\n' "${LocalShareDirs[@]}"
+        printf 'WARNING: Not backed up %s\n' "${VideoDirs[@]}"
+        exit 1
+}
+
+# Backup $LocalShareDirs
+printf 'INFO: Selectively backing up ~/.local/share\n'
+/usr/bin/rsync -ai --no-perms --delete --exclude=blobfiles \
+    "${LocalShareDirs[@]}" \
+    "$BackupLocation/.local/share" \
+  || {
+        RSYNC_FAILURE=$?
+        printf 'ERROR: rsync failure with error %s\n' "$RSYNC_FAILURE"
+        printf 'ERROR: Failed backing up %s\n' "${LocalShareDirs[@]}"
+        printf 'WARNING: Not backed up %s\n' "${VideoDirs[@]}"
+        exit 1
+     }
+
+# Backup $VideoDirs
+printf 'INFO: Selectively backing up ~/Videos\n'
+/usr/bin/rsync -ai --no-perms --delete \
+    "${VideoDirs[@]}" \
+    "$BackupLocation/Videos" \
+  || {
+        RSYNC_FAILURE=$?
+        printf 'ERROR: rsync failure with error %s\n' "$RSYNC_FAILURE"
+        printf 'ERROR: Failed backing up %s\n' "${VideoDirs[@]}"
+        exit 1
+     }
+
+printf 'INFO: Backup to Ext HD Successful\n'
+exit 0

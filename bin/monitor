@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+[[ -d ~/monitor ]] || mkdir ~/monitor || {
+    printf 'monitor: Error - Faild to create ~/monitor dirctory\n'
+    exit 1
+} 
+
+cd ~/monitor || {
+    printf 'monitor: Error - Faild to cd to ~/monitor dirctory\n'
+    exit 1
+} 
+
+true > hold2
+
+((cnt=1))
+while true
+do
+    who > hold1
+    if diff hold1 hold2 >/dev/null 2>&1
+    then
+        :
+    else
+        cp hold1 change_$((cnt))
+        cp hold1 hold2
+        printf '%d\n' $((cnt))
+        (( cnt++ ))
+    fi
+    sleep 60
+done

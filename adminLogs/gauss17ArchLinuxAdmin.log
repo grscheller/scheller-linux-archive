@@ -1260,7 +1260,7 @@ Note: On 2019-03-30 decided to look into the possibility of
 
     Pacman: xorg-xhost
 
-  This AUR is more for headless servers running many instancesi
+  This AUR is more for headless servers running many instances
   of rtorrent.  Also, the use case of tmux and screens - where
   you are running rtorrent in a terminal on a server and attach
   the terminal to various X-servers.

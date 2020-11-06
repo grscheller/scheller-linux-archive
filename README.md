@@ -67,8 +67,8 @@ As subtopics mature, I will spin them off to their own repos.
 ### Comparing Computer Languages
   * [Abstract Data Types (ADT)](comp/ADT/)
 
-### Miscellanious ~/bin Shell and Other Scripts
-  * [~/bin Scripts](bin)
+### Miscellanious Shell and Other Scripts
+  * [Scripts for ~/bin](bin)
 
 ### Private Personal Home Page
 * [homepage.html](web/homepage.html)

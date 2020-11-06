@@ -1,0 +1,22 @@
+#!/bin/bash
+# Spin a curser around.
+#
+#   Handy to keep ssh connections alive when they terminate after
+#   only 10 minutes of inactivity.
+#
+#   Hit any key, except <space> or <enter>, to terminate.
+#
+# Usage: spin
+#
+
+unset LINE SPINNER jj
+
+SPINNER=($'\b-' $'\b\\' $'\b|' $'\b/')
+LINE=
+printf '-'
+((jj = 0)); while [[ $LINE == "" ]]
+do
+    (( jj = (++jj % 4) ))
+    read -s -r -t 1 -N 1 LINE
+    printf '%s' "${SPINNER[$jj]}"
+done

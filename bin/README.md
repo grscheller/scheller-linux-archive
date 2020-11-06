@@ -2,7 +2,7 @@
 Shell and over scripts that I put in my ~/bin directory
 
 ## Shell Scripts Installed in ~/bin
-* [buArch](buGauss17)
+* [buArch](buArch)
   * backup script for my Arch Linux laptop, gauss17
   * basically a wrapped for rsync
   * ksh script (will work as bash script)

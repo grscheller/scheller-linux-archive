@@ -1,28 +1,39 @@
 #!/usr/bin/env bash
+#
+#  Monitor who is on the system
+#
 [[ -d ~/monitor ]] || mkdir ~/monitor || {
-    printf 'monitor: Error - Faild to create ~/monitor dirctory\n'
+    printf 'monitor: Error - Failed to create ~/monitor dirctory\n'
     exit 1
 } 
-
 cd ~/monitor || {
-    printf 'monitor: Error - Faild to cd to ~/monitor dirctory\n'
+    printf 'monitor: Error - Failied to cd to ~/monitor dirctory\n'
     exit 1
 } 
+true > hold1 || {
+    printf 'monitor: Error - Failed to create or empty hold1\n'
+    exit 1
+}
+true > hold2 || {
+    printf 'monitor: Error - Failed to create or empty hold2\n'
+    exit 1
+}
+rm -f change_* || {
+    printf 'monitor: Error - Failed to remove past runs\n'
+    exit 1
+}
 
-true > hold2
+cnt=0
 
-((cnt=1))
 while true
 do
     who > hold1
-    if diff hold1 hold2 >/dev/null 2>&1
+    if ! diff hold1 hold2 >/dev/null 2>&1
     then
-        :
-    else
-        cp hold1 change_$((cnt))
+        date > change_$((cnt))
+        cat hold1 >> change_$((cnt))
         cp hold1 hold2
-        printf '%d\n' $((cnt))
-        (( cnt++ ))
+        printf '%d\n' $((cnt++))
     fi
-    sleep 60
+    sleep 20
 done

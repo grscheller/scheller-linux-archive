@@ -3,7 +3,7 @@ Shell and over scripts that I put in my ~/bin directory
 
 ## Shell Scripts Installed in ~/bin
 * [buArch](buArch)
-  * backup script for my Arch Linux laptop, gauss17
+  * backup script for my Arch Linux laptop home directory
   * basically a wrapped for rsync
   * bash script
 * [monitor](monitor)

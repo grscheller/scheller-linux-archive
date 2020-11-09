@@ -13,7 +13,6 @@ BackupLocation='/run/media/grs/BUSLINK/grsBackupArch'
 HomeFiles=(
     .bashrc
     .dashrc
-    .env_init
     .envrc
     .inputrc
     .kshrc

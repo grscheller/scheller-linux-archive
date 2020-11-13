@@ -1,0 +1,97 @@
+#!/bin/sh
+#
+# Trims off duplicate and non-existant directories
+# for colen separated lists of UNIX PATH components.
+#
+# Replace each path component with "canonicalized" version.
+#
+# This facilitates sharing the same dot configuration
+# scripts between diverse POSIX-like environments.
+# 
+# Correctly handles directories with whitespace in their
+# names, including \n and \v charavters.
+#
+# Will have trouble with directories with : characters
+# contained in their names.  Also linked directories
+# and effectively linked directories like /bin and
+# /usr/bin in MSYS2.
+#
+# Usages: pathtrim /first/path/component:/second/path/coponent:.
+#         PATH="$(pathtrim)"
+#
+#   Written by Geoffrey Scheller
+#   See: https://github.com/grscheller/shell-environment-config
+#
+if [ $# -eq 0 ]
+then
+    Paths="$PATH"
+else
+    Paths="$1"
+fi
+
+## Standarize the $PATH list:
+#  - remove redundant / and :
+#  - remove trailing /'s on directory names
+#  - replace /./ -> / 
+#  - escape tabs, spaces, and parentheses
+#
+sedScript="s!/+!/!g
+           s!:+!:!g
+           s!([^:])/:!\1:!g
+           s!/\./!/!g
+           s!:\./!:!g
+           s! !\\ !g
+           s!	!\\	!g
+           s!\(!\\(!g
+           s!\)!\\)!g
+           s!^:!!"
+Paths=$(printf %s "$Paths" | sed -E -e "$sedScript")
+
+## Simulate arrays to store actual and relative paths,
+#  drop non-existant absolute paths and duplicates.
+cnt=0
+IFS=':'
+for Path in $Paths
+do
+    # Check if path component exists and is a dirctory
+    # for absolute path components.
+    AddPath=yes; nn=0; NewPath=
+    case "$Path" in
+        /*) if [ -d "$Path" ]
+            then
+                NewPath="$(readlink -e "$Path")"
+            else
+                AddPath=no
+            fi
+            ;;
+        *)  NewPath="$Path"
+            ;;
+    esac
+
+    # Check if path component has been found before
+    if [ -n "$NewPath" ]
+    then
+        while [ $nn -lt $cnt ]
+        do
+            nn=$((nn + 1))
+            eval [ \$NewPath = \$Path_$nn ] && AddPath=no && break
+        done
+    fi
+
+    # Add path component to ones already found
+    if [ $AddPath = yes ]
+    then
+        cnt=$((cnt + 1))
+        eval Path_$cnt=\"\$NewPath\"
+    fi
+done
+
+## Construct new path string and send to stdout
+Paths= ; nn=0
+while [ $nn -lt $cnt ]
+do
+    nn=$((nn + 1))
+    eval Paths=\$Paths\$Path_$nn:
+done
+printf '%s\n' "${Paths%:}"
+

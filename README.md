@@ -70,6 +70,9 @@ As subtopics mature, I will spin them off to their own repos.
 ### Miscellanious Shell and Other Scripts
   * [Scripts for ~/bin](bin)
 
+### Personal Shell Configurations
+  * [Personnal UNIX/POSIX Shell Configuration](env)
+
 ### Private Personal Home Page
 * [homepage.html](web/homepage.html)
 * [style.css](web/style.css)

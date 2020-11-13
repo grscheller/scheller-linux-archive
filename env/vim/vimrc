@@ -1,0 +1,151 @@
+" ~/.vim/vimrc
+"
+"   The commands in the file are
+"   run as if in vim command mode.
+"
+"   First /etc/vimrc is sourced, which should first source
+"   your distribution's vim-package related configuration
+"   files and then your system admins "helpful" system-wide
+"   configurations.  Then this file is sourced.
+"
+"   Warning: If neither ~/.vimrc nor ~/.vim/vimrc exist,
+"   vim will source a "defaults.vim" file (unless the SAs
+"   put "let skip_defaults_vim=1" in /etc/vimrc).  This can
+"   very well overide behavior in /etc/vimrc!  Not knowing
+"   about the existence of this mechanism can be very
+"   confusing to new and intermediate vim users.  Simply
+"   creating an empty ~/.vimrc file can radically change
+"   vim behavior and the user has no clue how to recover
+"   previous desirable features.
+
+" Setup the Vundle plugin manager
+"
+" Initially you will need to bootstrap the Vundle infrastructure
+" by manually cloning it into the right place:
+"
+"   $ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+"
+" and then from within vim run
+"
+"   :PluginInstall
+"
+set nocompatible    " be iMproved, required by Vundle
+filetype off        " required by Vundle
+
+" Set the runtime path to include Vundle
+set rtp+=~/.vim/bundle/Vundle.vim
+
+" Initialize Vundle
+call vundle#begin()
+
+" GitHub plugins for Vundle to manage:
+"
+"   Let Vundle manage Vundle, required by Vundle
+Plugin 'VundleVim/Vundle.vim'
+"
+"   Extend */# functionality while in visual mode
+Plugin 'nelstrom/vim-visual-star-search'
+"
+"   Surrond text objects with matching (). {}. '', etc
+Plugin 'tpope/vim-surround'
+"
+"   Indent text objects; defines 2 new text objects
+"   based on indentation levels, i and I
+Plugin 'michaeljsmith/vim-indent-object'
+"
+"   Visualizes undo history; switch between undo branches
+Plugin 'mbbill/undotree'
+"
+"   Shows what is in registers
+"   extends " and @ in normal mode and <CTRL-R> in insert mode
+Plugin 'junegunn/vim-peekaboo'
+"
+"   Provide syntax checking for a variety of languages
+Plugin 'vim-syntastic/syntastic'
+"
+"   Provide Rust file detection, syntax highlighting,
+"   formatting, syntastic integration, and more
+Plugin 'rust-lang/rust.vim'
+
+call vundle#end()
+filetype plugin indent on   " required by Vundle
+" End setup for the Vundle plugin manager
+
+" Configure new user settings for Syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 0
+
+" Force all files ending in .md, besides just README.md,
+" to be intepreted as MarkDown and not Modula-2
+autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+
+" Set default encoding
+"
+" Use utf-8
+set encoding=utf-8
+set fileencoding=utf-8
+
+" Set the default language to US English for spell checking
+set spelllang=en_us
+"
+" To turn on spellcheck         :set spell
+" To turn it off spellchecking  :set nospell
+
+" Set default tabstops and replace tabs with spaces
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set expandtab
+
+" Configure vim to use mouse in normal mode only
+set mouse=n
+"
+" See `:help mouse-using' to configure the mouse
+"
+" When enabled, use <shift>-clicks to send mouse
+" events to the terminal emulator instead of vim
+"
+" To enable full mouse support from within vim,
+"   :set mouse=a
+
+set history=500   " Number lines of command history to keep
+set scrolloff=3   " Keep cursor away from edge of window
+set backspace=indent,eol,start  " More powerful backspacing
+
+" Make tab completion in command mode more efficient
+set wildmenu
+set wildmode=longest:full,full
+
+" Open new Vim windows below/right of active window
+set splitbelow
+set splitright
+
+" Turn on and configure syntaxic color highlighting
+syntax on
+" To turn off colors, use ":syntax off"
+"
+" Set the default color scheme
+"colorscheme elflord
+"
+" To select a different color scheme while in vim,
+" tab through
+"
+"   :colorscheme blue
+"
+" first to get the command, then to get the color scheme
+"
+" Example of a color scheme that does not come with Vim,
+"
+"   From https://github.com/tomasr/molokai, put the
+"   colorscheme file here: ~/.vim/color/molokai.vim
+"
+"   Customizations come before :colorscheme command
+"
+" let g:molokai_original = 1
+" colorscheme molokai

@@ -1,0 +1,214 @@
+#!/bin/sh
+# shellcheck shell=sh
+#
+# Installs various Shell environment .dot files,
+# as well as other config files, into the $HOME directory.
+#
+# Usage:
+#    0. Fork repo and customize .dot_files into your own versions
+#    1. Run from cloned shell-environment-config directory
+#    2. The file names used in the repo help vim plugin Syntastic
+#       use ShellCheck correctly when editing.  The files get
+#       installed with their proper names.
+#    3. Optionally install vim and/or nvim configuration files
+#
+
+DOT_FILES='
+   bashrc.bash
+   dashrc.dash
+   envrc.sh
+   inputrc
+   kshrc.ksh
+   profile.sh
+   shrc.sh
+'
+
+RM_FILES='
+   .bash_profile
+'
+
+BIN_SCRIPTS='
+   digpath.bash
+   digpath.sh
+   pathtrim
+'
+
+## Backs up and optionally removes files
+backup_file () {
+
+   buFile="$1"
+   Remove="$2"
+ 
+   diff "$buFile" "${buFile}.old" >/dev/null 2>&1 ||
+       [ ! -f "$buFile" ] ||
+       cp "$buFile" "${buFile}.old" || {
+           printf '\n'
+           printf "Error: Failed to make backup copy of '%s'" "$buFile" >&2
+           if [ -z "$Remove" ]; then
+               printf '\n'
+           else
+               printf ',\n       which was slated for removal.\n' >&2
+           fi
+           return 1
+       }
+ 
+   [ -z "$Remove" ] ||
+       [ ! -f "$buFile" ] ||
+       rm "$buFile" 2>&- || {
+           printf '\n'
+           printf "Error: Failed to remove file '%s'\\n" "$buFile" >&2
+           return 1
+       }
+ 
+   return 0
+}
+
+## Installs vim or nvim config files
+install_vi_config () {
+
+   vi_name="$1"
+   vi_dir="$2"
+   vi_file_name=$3
+   vi_conf_src="$vi_name/$vi_file_name"
+   vi_conf="$vi_dir/$vi_file_name"
+
+   [ -d "$vi_dir" ] || mkdir -p "$vi_dir" || {
+        printf '\n'
+        printf "Error: Failed to create '%s' directory,\\n" "$vi_conf" >&2
+        printf "punting on installing '%s' config files\\n" "$vi_name" >&2
+        return 1
+   }
+   
+   # Backup previous version
+   backup_file "$vi_conf" || return 1
+   
+   # Install file
+   if cp "$vi_conf_src" "$vi_dir"
+   then
+        chmod u=rw,g=r,o= "$vi_conf" || {
+            printf '\n'
+            printf "Warning: Failed to set permissions on '%s' to 640\\n" "$vi_conf" >&2
+        }
+   else
+        printf "Warning: Failed to install '%s'\\n" "$vi_conf" >&2
+   fi
+ 
+   # Set aside ~/.vimrc if configuring vim
+   [ "$vi_name" != vim ] || backup_file ~/.vimrc Remove || {
+        printf '\n'
+        printf "Warning: Failed to move aside '~/.vimrc'\\n" >&2
+        printf "         This file will supercede '%s'!\\n" "$vi_conf" >&2
+   }    
+ 
+   return 0
+}  
+
+
+## Process args - determine if user wishes Vim and/or Neovim configured
+vim_flag=
+nvim_flag=
+
+while [ $# -gt 0 ]
+do
+  case "$1" in
+    -v|--vim)
+        vim_flag=1
+        ;;
+    -n|--nvim)
+        nvim_flag=1
+        ;;
+    -a|-vn|-nv|--all)
+        vim_flag=1
+        nvim_flag=1
+        ;;
+    --help|-h|-*h|h*)
+        printf '\nPurpose: Installs shell configuration files into\n' >&2
+        printf "         user's \$HOME direrectory with the correct names\\n\\n" >&2
+        printf '         Also, install .inputrc and optionally install\n' >&2
+        printf '         vim and/or nvim configuration files\n' >&2
+        printf '\nUsage: ./installHome [--vim] [--nvim] [-all]\n' >&2
+        printf '       ./installHome [-v] [-n] [-a]\n' >&2
+        printf '       ./installHome [-vn]\n' >&2
+        printf '       ./installHome [-nv]\n' >&2
+        printf '\nwhere\n' >&2
+        printf '   -v or --vim:  install  vim config file ~/.vim/vimrc\n' >&2
+        printf '   -n or --nvim: install nvim config file %s\n' "\$XDG_CONFIG_HOME/nvim/nvim.vim" >&2
+        printf '   -a or --all:  install both\n' >&2
+        printf '   -h or --help: install both\n' >&2
+        # shellcheck disable=SC2088
+        printf '\ndefault value for %s = %s\n' "\$XDG_CONFIG_HOME" '~/.config' >&2
+        exit 2
+        ;;
+    *)  printf '\n'
+        printf "Error: Invalid option '%s'\\n" "$1" >&2
+        printf "       Run './installHome -h' for help\\n" >&2 
+        exit 2
+        ;;
+  esac
+  shift
+done
+
+
+## Create $HOME directory structure if needed
+
+# Create ~/bin directory if necessary
+[ -d ~/bin ] || mkdir ~/bin || {
+    printf '\n'
+    printf 'Error: Failed to create ~/bin\n' >&2
+    exit 1
+}
+chmod u=rwx,g=rx,o= ~/bin || {
+    printf '\n'
+    printf "Warning: Failed to set permissions on '~/bin' to 750\n" >&2 
+}
+
+# Create ~/catch for the toSystem () family of shell functions
+[ -d ~/catch ] || mkdir ~/catch || {
+    printf '\n'
+    printf "Warning: Failed to create '~/catch', do so manually\\n" >&2
+}
+
+
+## Backup then remove certain files
+for File in $RM_FILES
+do
+    backup_file  ~/"$File" Remove || exit 1
+done
+
+
+## Install files
+
+# Install home directory dot-files - backup existing files
+for File in $DOT_FILES
+do
+    backup_file  ~/".${File%.*}" || exit 1
+ 
+    # Strip out syntastic info and install into $HOME
+    sed -n '4,$p' "${File}" > ~/".${File%.*}" || {
+         printf "Error: Failed while installing '~/%s'\\n" ".${File%.*}" >&2
+         exit 1
+    }
+    # Set permissions
+    chmod u=rw,g=r,o= ~/".${File%.*}" || {
+         printf 'Warning: Failed to set permissions' >&2
+         printf ' on ~/%s to 640\n' ".${File%.*}"  >&2
+    }
+done
+
+# Install ~/bin scripts
+for File in $BIN_SCRIPTS
+do
+    cp bin/"$File" ~/bin/ || printf 'Warning: Failed to install ~/bin/%s\n' "$File" >&2
+    chmod u=rwx,g=rx,o= ~/bin/"${File}" || {
+         printf 'Warning: Failed to set permissions' >&2
+         printf ' on ~/bin/%s to 750\n' "${File}" >&2
+    }
+done
+
+
+## Optionally install vim and/or nvim configuration file
+
+XDG_CONFIG_HOME="${XDG_CONFIG_HOME:=$HOME/.config}"
+[ -n "$vim_flag"  ] && install_vi_config vim ~/.vim vimrc
+[ -n "$nvim_flag" ] && install_vi_config nvim "$XDG_CONFIG_HOME/nvim" init.vim
+

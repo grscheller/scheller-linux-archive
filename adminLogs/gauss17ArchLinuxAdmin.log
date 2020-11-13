@@ -8186,5 +8186,11 @@ Note: On 2019-03-30 decided to look into the possibility of
     $ sudo pacman -Syu
 
   I am amazed that at the time I originally installed Arch
-  Linux that I did not realize that I pointed the UEFI firmware
+  Linux that I did not realize I pointed the UEFI firmware
   to systemd-boot instead of the Linux Kernel directly.
+
+2020-11-10:
+  Thought I try out Neovim.
+
+    $ sudo pacman -S neovim neovim python-pynvim
+

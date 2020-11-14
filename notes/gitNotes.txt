@@ -51,28 +51,39 @@ I. Getting started and some configuration.
     
     3. To customize editor:
     
-         git config --global core.editor vim
+         git config --global core.editor nvim
 
-    4. Set default merge behavior to diff3:
-
-         git config --global merge.conflictstyle diff3
-    
-    5. With CentOS 6.8 Linux on our internal network, setting
- 
-         git config --global http.postBuffer 5242880000
-
-       Helps with big pushes. (Something to do with the
-                               Curl URL library on that OS).
-
-    6. To list the settings set so far:
+    4. To list the settings set so far:
     
          git config --list
     
        for a specific setting:
     
          git config user.name
+
+    5. To see where Git is finding config info
+
+         git config --list --show-origin
+         file:/home/grs/.config/git/config       user.name=grscheller
+         file:/home/grs/.config/git/config       user.email=geoffrey@scheller.com
+         file:/home/grs/.config/git/config       core.editor=nvim
+         file:/home/grs/.config/git/config       pull.ff=only
+         file:/home/grs/.gitconfig       user.name=joeblow
+         file:/home/grs/.gitconfig       user.email=geoffrey@scheller.com
+         file:/home/grs/.gitconfig       core.editor=vim
+         file:/home/grs/.gitconfig       pull.ff=only
+         file:.git/config        core.repositoryformatversion=0
+         file:.git/config        core.filemode=true
+         file:.git/config        core.bare=false
+         file:.git/config        core.logallrefupdates=true
+         file:.git/config        remote.origin.url=git@github.com:grscheller/fpinscala
+         file:.git/config        remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
+         file:.git/config        branch.master.remote=origin
+         file:.git/config        branch.master.merge=refs/heads/master
+
+       Later info overrides earlier info
     
-    7. Three (equivalent) ways to get help:
+    6. Three (equivalent) ways to get help:
     
          git help <verb>
          git <verb> --help

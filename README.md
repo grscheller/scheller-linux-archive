@@ -1,12 +1,15 @@
 # Geoffrey's Archive
+
 I use this repo to maintain my less mature personal software
 development projects.  As such, this repo has many loose threads.
 As subtopics mature, I will spin them off to their own repos.
 
-### Linux/OpenBSD/POSIX System Administration Logs
+## Linux/OpenBSD/POSIX System Administration Logs
+
 * [System Admin Logs](adminLogs)
 
-### Linux/POSIX Notes
+## Linux/POSIX Notes
+
 * [GIT Notes](notes/gitNotes.txt)
 * [Gnome 3 Configuration](notes/gnome3Conf.md)
 * [POSIX/Unix Commands](notes/unixCommands.txt)
@@ -22,7 +25,8 @@ As subtopics mature, I will spin them off to their own repos.
 * [MSYS2 Notes](notes/msys2Notes.txt)
 * [Windows 10 Powershell Configuration](notes/win10PowershellConf/)
 
-### Grokking Computer Languages
+## Grokking Computer Languages
+
 * __C__
   * [C Language Exeplars](grok/C/CExemplars/)
   * [C Language Syntax](grok/C/CSyntax/)
@@ -64,16 +68,20 @@ As subtopics mature, I will spin them off to their own repos.
   * [Low Level X11 (XLIB/XCB) Programming](grok/Graphics/XWindows)
   * [Cairo 2D Vector Graphics](grok/Graphics/Cairo)
 
-### Comparing Computer Languages
-  * [Abstract Data Types (ADT)](comp/ADT/)
+## Comparing Computer Languages
 
-### Miscellanious Shell and Other Scripts
-  * [Scripts for ~/bin](bin)
+* [Abstract Data Types (ADT)](comp/ADT/)
 
-### Personal Shell Configurations
-  * [Personnal UNIX/POSIX Shell Configuration](env)
+## Miscellanious Shell and Other Scripts
 
-### Private Personal Home Page
+* [Scripts for ~/bin](bin)
+
+## Personal Shell Configurations
+
+* [Personnal UNIX/POSIX Shell Configuration](env)
+
+## Private Personal Home Page
+
 * [homepage.html](web/homepage.html)
 * [style.css](web/style.css)
 

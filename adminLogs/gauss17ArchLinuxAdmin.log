@@ -8194,3 +8194,7 @@ Note: On 2019-03-30 decided to look into the possibility of
 
     $ sudo pacman -S neovim neovim python-pynvim
 
+2929-11-13:
+  Changed location of user wide git config files for grs login
+
+    $ mv ~/.gitconfig -> ~/.config/git/config

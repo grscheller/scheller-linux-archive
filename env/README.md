@@ -1,5 +1,5 @@
 ## Personnal UNIX/POSIX Shell Configuration
-This project contains the infrastucture I use to
+This project contains the infrastructure I use to
 maintain and install my personnal UNIX based shell environment
 on the computers I use.
 

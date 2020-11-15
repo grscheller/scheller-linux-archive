@@ -522,10 +522,6 @@ VIII. Git branch:
        structure and files resembling the ones from the current
        branch.
 
-       Unfortunately, the olde CentOS 6.7 version of git, 
-       git version 1.7.1, does not support the --orphan option
-       with checkout.
-
     5. Delete a branch (safe, git will prevent you if you
        have unmerged changes)
 

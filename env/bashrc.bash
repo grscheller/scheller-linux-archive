@@ -478,28 +478,9 @@ alias gauss17='sshToSystem ${GAUSS17}'
 alias toGauss17='toSystem ${GAUSS17}'
 alias fromGauss17='fromSystem ${GAUSS17}'
 
-alias maxwell4='sshToSystem ${MAXWELL4}'
-alias toMaxwell4='toSystem ${MAXWELL4}'
-alias fromMaxwell4='fromSystem ${MAXWELL4}'
-
 alias euler7='sshToSystem ${EULER7}'
 alias toEuler7='toSystem ${EULER7}'
 alias fromEuler7='fromSystem ${EULER7}'
-
-## Make sure other shells have their correct environments
-alias dash='ENV=~/.dashrc dash'
-alias sh='ENV=~/.shrc sh'
-if digpath -q ksh
-then
-    alias ksh='ENV=~/.kshrc ksh'
-    if digpath -q mksh
-    then
-        alias mksh='ENV=~/.kshrc mksh'
-    fi
-elif digpath -q mksh
-then
-    alias ksh='ENV=~/.kshrc mksh'
-fi
 
 ## Bash completion for stack (Haskell)
 if digpath -q stack
@@ -512,3 +493,9 @@ if [[ -d ~/opt/anaconda3 ]]
 then
     source ~/opt/anaconda3/etc/profile.d/conda.sh
 fi
+
+## Make sure other shells have their correct environments
+alias dash='ENV=~/.dashrc dash'
+alias sh='ENV=~/.shrc sh'
+alias ksh='ENV=~/.kshrc ksh'
+

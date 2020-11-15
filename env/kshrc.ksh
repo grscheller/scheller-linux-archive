@@ -214,16 +214,6 @@ function archJDK
    fi
 }
 
-## SSH related functions, variables and aliases
-#
-#   Restart SSH key-agent and add your private
-#   key, which is located here: ~/.ssh/id_rsa
-#
-alias addkey='eval $(ssh-agent) && ssh-add'
-
-# Make sure git asks for passwords on the command line
-unset SSH_ASKPASS
-
 ## Aliases
 
 # Remove any inherited misconfigurations
@@ -249,12 +239,66 @@ alias bc='bc -q'
 alias digpath='$HOME/bin/digpath.bash'
 # alias digpath='$HOME/bin/digpath.sh'
 
+## SSH related functions, variables and aliases
+
+# Restart SSH key-agent and add your private
+# key, which is located here: ~/.ssh/id_rsa
+alias addkey='eval $(ssh-agent) && ssh-add'
+
+# Make sure git asks for passwords on the command line
+unset SSH_ASKPASS
+
+# SSH to another system
+function sshToSystem
+{
+   local system=$1
+   local port=$2
+   local user=$3
+
+   ssh -p "${port}" "${user}@${system}"
+}
+
+# Push files to another system
+function toSystem
+{
+   local system=$1
+   local port=$2
+   local user=$3
+   shift 3
+
+   scp -P "${port}" -r "$@" "${user}@${system}:catch"
+}
+
+# Pull files to another system
+function fromSystem
+{
+   local system=$1
+   local port=$2
+   local user=$3
+   shift 3
+
+   local each
+   for each in "$@"
+   do
+       scp -P "${port}" -r "${user}@${system}:${each}" .
+   done
+}
+
+# Aliases for above functions
+alias voltron='sshToSystem ${VOLTRON}'
+alias toVoltron='toSystem ${VOLTRON}'
+alias fromVoltron='fromSystem ${VOLTRON}'
+
+alias gauss17='sshToSystem ${GAUSS17}'
+alias toGauss17='toSystem ${GAUSS17}'
+alias fromGauss17='fromSystem ${GAUSS17}'
+
+alias euler7='sshToSystem ${EULER7}'
+alias toEuler7='toSystem ${EULER7}'
+alias fromEuler7='fromSystem ${EULER7}'
+
 ## Make sure other shells have their correct environments
 alias dash='ENV=~/.dashrc dash'
 alias sh='ENV=~/.shrc sh'
 alias bash='ENV= bash'
-if digpath -q mksh
-then
-    alias mksh='ENV=~/.kshrc mksh'
-fi
 

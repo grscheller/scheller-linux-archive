@@ -59,7 +59,7 @@ PATH=$PATH:/data/data/com.termux/files/usr/bin/applets
 PATH=$PATH:~/bin
 
 # Put a relative bin directory at end of PATH, this is for
-# projects where my user takes up residence in the project's
+# projects where the user takes up residence in the project's
 # root directory.
 PATH=$PATH:bin 
 
@@ -82,8 +82,7 @@ PATH=/c/Program\ Files\ \(x86\)/Common\ Files/Oracle/Java/javapath:"$PATH"
 #
 #                  Host-Name            port  login
 export    VOLTRON='rvsllschellerg2        22  schelleg'
-export    GAUSS17='gauss17             31502  grs'
-export   MAXWELL4='maxwell4            29801  geoffrey'
+export    GAUSS17='192.168.1.22        31502  grs'
 export     EULER7='euler7                 22  grs'
 
 ## Setup ENV Evironment variable if not already set

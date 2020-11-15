@@ -8,7 +8,8 @@
 # or less, POSIX complient systems.
 #
 #   Written by Geoffrey Scheller
-#   See: https://github.com/grscheller/shell-environment-config
+#   See: https://github.com/grscheller/scheller-environment-config/env
+#        https://github.com/grscheller/shell-environment-config
 #
 
 ## If not interactive, don't do anything.
@@ -52,35 +53,24 @@ HISTFILESIZE=5000
 ## Make sure an initial shell environment is well defined
 #
 #    Shells in terminal windows not necessarily
-#    descendant from a login shell.
+#    descendant from login shells.
 #
 export ENV_INIT_LVL=${ENV_INIT_LVL:=0}
 ((ENV_INIT_LVL < 1)) && source ~/.envrc
 
 ## Setup up prompt
 
-relative_pwd () {
-   if [[ ${PWD:0:${#HOME}} == "$HOME" ]]
-   then
-       printf '%s' "~${PWD:${#HOME}}"
-   else
-       printf '%s' "$PWD"
-   fi
-}
-
 # Adjust Hostname
 #  Swap cattle names with pet names
+#
 #  On Windows:
-#     indicate if Cygwin, MSYS2, MINGW64 or MINGW32 environment
-#     use native NTFS symlinks (need to turn on developer mode)
+#   - indicate if Cygwin, MSYS2, MINGW64 or MINGW32 environment
+#   - use native NTFS symlinks (need to turn on developer mode)
+#
 HOST=$(hostname); HOST=${HOST%%.*}
 case $HOST in
-  rvsllschellerg2) HOST=voltron ;;  # swap cattle name with pet name
-  *) if [[ $(uname) == CYGWIN* ]]; then
-         HOST=CYGWIN
-         export CYGWIN=winsymlinks:nativestrict
-         set -o igncr  # for Anaconda3 Python conda.sh
-     elif [[ $(uname) == MSYS* ]]; then
+  rvsllschellerg2) HOST=voltron ;;
+  *) if [[ $(uname) == MSYS* ]]; then
          HOST=MSYS2
          export MSYS=winsymlinks:nativestrict
      elif [[ $(uname) == MINGW64* ]]; then
@@ -89,6 +79,10 @@ case $HOST in
      elif [[ $(uname) == MINGW32* ]]; then
          HOST=MINGW32
          export MSYS=winsymlinks:nativestrict
+     elif [[ $(uname) == CYGWIN* ]]; then
+         HOST=CYGWIN
+         export CYGWIN=winsymlinks:nativestrict
+         set -o igncr  # for Anaconda3 Python conda.sh
      fi
      ;;
 esac
@@ -96,21 +90,22 @@ esac
 # Terminal window title prompt string
 case $TERM in
   xterm*|rxvt*|urxvt*|kterm*|gnome*)
-    TERM_TITLE=$'\e]0;'"$(id -un)@${HOST}"$'\007'
+    TERM_TITLE=$'\e]0;'"$(id -un)@\${HOST}"$'\007'
     ;;
   screen)
-    TERM_TITLE=$'\e_'"$(id -un)@${HOST}"$'\e\\'
+    TERM_TITLE=$'\e_'"$(id -un)@\${HOST}"$'\e\\'
     ;;
   *)
     TERM_TITLE=''
     ;;
 esac
 
-# Setup 3 line primary promptt
-PS1="${TERM_TITLE}"$'\n['"$(id -un)@${HOST}"$': $(relative_pwd)]\n$ '
+# Setup 3 line primary prompt and prompt command
+PS1='\n[\u@${HOST}: \w]\n$ '
 PS2='> '
 PS3='#? '
 PS4='++ '
+PROMPT_COMMAND="$PROMPT_COMMAND;printf '%s' \"$TERM_TITLE\""
 
 ## Set default behaviors
 set -o vi        # vi editing mode

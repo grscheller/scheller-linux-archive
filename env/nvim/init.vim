@@ -1,13 +1,11 @@
-" ~/.config/nvim/init.vim
+" Neovim configuration file
 "
-"   The commands in this file are called "vim script"
-"   and are run as if in vim command mode.
+" ~/.config/nvim/init.vim
 "
 
 " Setup the Plug plugin manager
 "
-" Initial bootstrap by manually
-" installing it into the right place:
+" Bootstrap manually by installing it into the right place:
 "
 "   $ curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
 "     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
@@ -15,6 +13,15 @@
 " and then from within nvim run
 "
 "   :PlugInstall
+"
+" Plug Commands:
+"   :PlugInstall [name ...] [#threads]  Install plugins
+"   :PlugUpdate [name ...] [#threads]   Install or update plugins
+"   :PlugClean[!]                       Remove unlisted plugins
+"   :PlugUpgrade                        Upgrade Plug itself
+"   :PlugStatus                         Check the status of plugins
+"   :PlugDiff                           Examine changes from the previous update and the pending changes
+"   :PlugSnapshot[!] [output path]      Generate script for restoring the current snapshot of the plugins
 "
 call plug#begin('~/.local/share/nvim/plugged')
 " Provide syntax checking for a variety of languages
@@ -40,7 +47,7 @@ Plug 'junegunn/vim-peekaboo'
 Plug 'tpope/vim-speeddating'
 call plug#end()
 
-" Configure new user settings for Syntastic
+" Configure user settings for Syntastic
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -54,22 +61,11 @@ let g:syntastic_check_on_wq = 0
 " to be intepreted as MarkDown and not Modula-2
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 
-" Set default encoding - Use utf-8
-set encoding=utf-8
-set fileencoding=utf-8
-
-" Set the default language to US English for spell checking
-set spelllang=en_us
-
 " Set default tabstops and replace tabs with spaces
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
 set expandtab
-
-" Configure vim to use mouse in normal mode only
-set mouse=n
-"set mouse=a
 
 set history=5000  " Number lines of command history to keep
 set scrolloff=3   " Keep cursor away from edge of window
@@ -79,7 +75,26 @@ set backspace=indent,eol,start  " More powerful backspacing
 set wildmenu
 set wildmode=longest:full,full
 
-" Open new Vim windows below/right of active window
+" Open new windows below/right of active window
 set splitbelow
 set splitright
+
+" Set the default language to US English for spell checking
+set spelllang=en_us
+
+" Set default encoding
+set encoding=utf-8
+set fileencoding=utf-8
+
+set mouse=n  " Enable mouse for normal mode only
+set nowrap        " Don't wrap lines
+set sidescroll=1  " Horizontally scroll nicely
+
+" Define <Leader> as <space> <- may be bad for insert mode?
+let mapleader = " "
+
+nnoremap <leader>h :echo('hello world')<return>
+
+" Clear search highlighting with \\
+nnoremap \\ :noh<return>
 

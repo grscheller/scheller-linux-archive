@@ -411,6 +411,7 @@ alias l.='ls -dA .*'
 
 alias pst="ps axjf | sed -e '/^ PPID.*$/d' -e's/.*:...//'"
 alias bc='bc -q'
+alias nv=nvim
 
 # Website scrapping
 #   Pull down a subset of a website

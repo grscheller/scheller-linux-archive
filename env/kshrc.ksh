@@ -235,6 +235,7 @@ alias l.='ls -dA .*'
 
 alias pst="ps axjf | sed -e '/^ PPID.*$/d' -e's/.*:...//'"
 alias bc='bc -q'
+alias nv=nvim
 
 alias digpath='$HOME/bin/digpath.bash'
 # alias digpath='$HOME/bin/digpath.sh'

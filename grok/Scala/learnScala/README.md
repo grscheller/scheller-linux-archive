@@ -1,24 +1,33 @@
-## Basic Scala Language Constructs:
+# Basic Scala Language Constructs
+
 * Explore Scala language and build constructions
 * Documenting factoids about the Scala Language
 * Illustrate a hierarchical SBT Scala Build
 
-### 1. Hierarchical SBT build.
+## 1. Hierarchical SBT build
+
 To compile all projects,
+
 ```
    $ sbt compile
 ```
+
 compile just one project,
+
 ```
    $ sbt splat/compile
 ```
+
 run one project,
+
 ```
    $ sbt splat/run
 ```
+
 make sure you launch sbt from the root grokScala directory.
 
-### 2. Multiple packages in single build: [multiPackage](multiPackage/)
+## 2. Multiple packages in single build: [multiPackage](multiPackage/)
+
 The above multiple projects (my term) in the hierarchical build compile
 scala packages which are independent of each other in the sense that
 dependencies between them must be configured like other local external
@@ -26,11 +35,13 @@ packages.  The multiPackage project shows how to compile multiple packages
 in a way that allows SBT to "out-of-the-box" handle package dependencies
 among them.
 
-### 3. Scala's "splat" equivalents: [Splat.scala](splat/Splat.scala)
+## 3. Scala's "splat" equivalents: [Splat.scala](splat/Splat.scala)
+
 Languages like Python and Ruby have a syntactic sugar to pass an
 array or tuple into a fixed or variable-arity function.
 
 In Python:
+
 ```
    >>> def f(m,n,p):
    ...   return m*n + p
@@ -41,6 +52,7 @@ In Python:
    >>> f(*x)
    10
 ```
+
 The code in the splat object in splat.scala explores
 similar constructs in scala.
 
@@ -49,34 +61,44 @@ functions.  Also to "splat" tuples into fixed-arity functions.  Other
 combinations seem to me more naturally handled by unpacking and repacking.
 
 To "splat" a variable length datastructure into a variadic function:
+
 ```
    val a1 = bar(xs: _*)
 ```
+
 To "splat" a tuple into a fixed-arity function:
+
 ```
    val a2 = foo _ tupled (42, 3.0, "Fred")
 ```
+
 To "splat" a tuple into a curried function:
+
 ```
    val a3 = Function.uncurried(fooC _) tupled (42, 3.0, "fred")
 ```
 
-To compile outside the sbt build, 
+To compile outside the sbt build,
+
 ```
    $ cd splat
    $ scalac Splat.scala
 ```
+
 To run outside sbt build,,
+
 ```
-   $ scala grokScala.splat.Splat  
+   $ scala grokScala.splat.Splat
 ```
 
-### 4. Scala code blocks: [codeblocks](codeblocks/)
+## 4. Scala code blocks: [codeblocks](codeblocks/)
+
 Scala code blocks are interesting closures.  They can contain state
 but are not first class objects.  This project is to explore to what
 extend code blocks behave like functions.
 
 I found something I thought peculiar while in the scala REPL:
+
 ```
     scala> val dog = {
          |   println("This is run just once.")
@@ -86,7 +108,7 @@ I found something I thought peculiar while in the scala REPL:
          | }
     This is run just once.
     dog: Int => Unit = <function1>
-    
+
     scala> dog(2)
     fido is 7
 
@@ -97,6 +119,7 @@ I found something I thought peculiar while in the scala REPL:
     fido is 22
     hold: Unit = ()
 ```
+
 If you put a single lambda in the middle of a code block, my expectation
 was that the lambda would be ignored and I'd get back just `()` as the
 value of `dog`, which comes from the last println function call in
@@ -117,18 +140,19 @@ you are returning a "first class object" from the thunk.  Thus, `dog` is
 not the "codeblock" but just the returned lambda.
 
 If the execution of the codeblock were expensive, a useful technique would be
-to define it as a `lazy val'. 
+to define it as a `lazy val'.
 
 Codeblocks, like any good closures, can contain state.
 
-##### Related topics:
+### Related topics
+
 * case blocks, without a match, actually define partial functions.  These
   can be extremely useful when used with collect methods.
 * Sort of related, the use of `self` as a synonym for `this` in class and
   trait definitions.  These may be more than just "Syntactic Sugar" but
   have some deeper meaning.  The use of `self` returns/references the
   class/trait itself within the class/trait.  Since classes/traits do not
-  use `=`, like a method can, their "return values" definately 
+  use `=`, like a method can, their "return values" definately
   not a λ-function, but instances of the class/trait.
 
 ```
@@ -137,26 +161,31 @@ Codeblocks, like any good closures, can contain state.
    }
 ```
 
-### 5. Sort a polymorphic ordered list: [Sort.scala](sort/Sort.scala)
+## 5. Sort a polymorphic ordered list: [Sort.scala](sort/Sort.scala)
+
 Compare this to the Haskell implementation in
 [here](../../Haskell/haskellIntroProgramming/examples/Sort.hs).
 
-### 6. Scala oop: [oop](oop/)
+## 6. Scala oop: [oop](oop/)
+
 Exploring Scala OOP features.  When an OOP model fits the problem, it is not
 bad.  I just don't like it when it handcuffs me.
 
-### 7. Parallelism with Scala: [parallelism](parallelism/)
+## 7. Parallelism with Scala: [parallelism](parallelism/)
+
 Exploring multithreading/concurrent constructs in Scala.
 
 It seems that Actors from the Scala standard library have been dropped in
 favor of akka Actors.  Also, the standard library now has a Promises
 implementation, which is very different that the one removed from Scalaz.
 
-### 8. State Monad: [grokScala.multiPackage.state](multiPackage/src/main/scala/multiPackage/state/State.scala)
+## 8. State Monad: [grokScala.multiPackage.state](multiPackage/src/main/scala/multiPackage/state/State.scala)
+
 An implementation of the State Monad I took from my version of
 the [fpinscala package](../fpinscala).
 
-### 9. Package objects: [grokScala.multiPackage.rand](multiPackage/src/main/scala/multiPackage/rand/)
+## 9. Package objects: [grokScala.multiPackage.rand](multiPackage/src/main/scala/multiPackage/rand/)
+
 In scala, types cannot be defined outside of classes/objects.  They are
 features that are part of Scala's OO system - see page 457 of Oderski's
 Programming in Scala, 3rd edition, on path dependent types.  Types are
@@ -173,7 +202,8 @@ In the `grokScala.multiPackage` package, `Rand[A]`, is a type alias for
 `state.State[RNG, A]`.  It is defined package-wide in the file
 [package.scala](multiPackage/src/main/scala/multiPackage/rand/package.scala)
 located in the
-`rand` package root directory, multiPackage/src/main/scala/multiPackage/rand/. 
+`rand` package root directory, multiPackage/src/main/scala/multiPackage/rand/.
+
 * Used to define the Rand type alias at the rand package level.
 * Using `val Rand = grokScala.multiPackage.state.State` so the compiler can
   find the companion object.
@@ -183,10 +213,12 @@ located in the
 This is my original implimentation of `fpinscala.state.rand.Rand`.
 I reimplemented it there as a case class containing a `State(RNG,A)`.
 
-### 10. Convert methods to functions: [MethodAsFunctions](methodAsFunctions/methodAsFunctions.scala)
+## 10. Convert methods to functions: [MethodAsFunctions](methodAsFunctions/methodAsFunctions.scala)
+
 Explore how a Scala instance method can be converted to a function.
 
 Consider the class in the file methodAsFunction.scala:
+
 ```
    class MethodAsFunctions {
      def m1(x: Int) = x + 30        // instance method
@@ -195,26 +227,51 @@ Consider the class in the file methodAsFunction.scala:
      val f3: (Int) => Int = m1      // function object
    }
 ```
+
 and using the Scala REPL
+
 ```
    scala> import methodAsFunctions._
    import methodAsFunctions._
-   
+
    scala> val foo = new MethodAsFunctions
    foo: methodAsFunctions.MethodAsFunctions = methodAsFunctions.MethodAsFunctions@4dd90166
-   
+
    scala> :t foo.m1 _
    Int => Int
-   
+
    scala> :t foo.f1
    Int => Int
-   
+
    scala> :t foo.f2
    Int => Int
-   
+
    scala> :t foo.f3
    Int => Int
 ```
 
-### 11. Compare Fibonacci implementations: [Package fibcompare](fib/fibcompare.scala)
+## 11. Compare Fibonacci implementations: [Package fibcompare](fib/fibcompare.scala)
+
 A simple example of package level coding.
+
+## 12. LongLines: Example taken from Programming in Scala, 4rd edition
+
+Not part of the heirarchical SBT build.  Mostly to document how to build
+from the command line with scalac.
+
+Compile to `*.class` files and run:
+
+```
+  $ scalac LongLines.scala
+  $ scala FindLongLines 45 LongLines.scala
+
+  $ rm *.class
+```
+
+Compile to Jar file and run:
+
+```
+  $ scalac LongLines.scala -d LongLines.jar
+  $ scala LongLines.jar 40 LongLines.scala
+```
+

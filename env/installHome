@@ -5,12 +5,12 @@
 # as well as other config files, into the $HOME directory.
 #
 # Usage:
-#    0. Fork repo and customize .dot_files into your own versions
 #    1. Run from cloned shell-environment-config directory
 #    2. The file names used in the repo help vim plugin Syntastic
 #       use ShellCheck correctly when editing.  The files get
 #       installed with their proper names.
-#    3. Optionally install vim and/or nvim configuration files
+#    3. Optionally install vim, nvim configuration files
+#    4. Install ~/.XResources and activate if X server is running
 #
 
 DOT_FILES='
@@ -21,6 +21,7 @@ DOT_FILES='
    kshrc.ksh
    profile.sh
    shrc.sh
+   Xresources
 '
 
 RM_FILES='
@@ -107,6 +108,7 @@ install_vi_config () {
 ## Process args - determine if user wishes Vim and/or Neovim configured
 vim_flag=
 nvim_flag=
+xreload_flag=
 
 while [ $# -gt 0 ]
 do
@@ -117,24 +119,28 @@ do
     -n|--nvim)
         nvim_flag=1
         ;;
-    -a|-vn|-nv|--all)
+    -x|--xresources)
+        xreload_flag=1
+        ;;
+    -a|--all)
         vim_flag=1
         nvim_flag=1
+        xreload_flag=1
         ;;
-    --help|-h|-*h|h*)
+    -h|-help|--help)
         printf '\nPurpose: Installs shell configuration files into\n' >&2
-        printf "         user's \$HOME direrectory with the correct names\\n\\n" >&2
-        printf '         Also, install .inputrc and optionally install\n' >&2
-        printf '         vim and/or nvim configuration files\n' >&2
-        printf '\nUsage: ./installHome [--vim] [--nvim] [-all]\n' >&2
-        printf '       ./installHome [-v] [-n] [-a]\n' >&2
-        printf '       ./installHome [-vn]\n' >&2
-        printf '       ./installHome [-nv]\n' >&2
+        printf "         user's \$HOME direrectory with the correct names.\\n\\n" >&2
+        printf '         Also, install .inputrc and .Xresources files.\n' >&2
+        printf '         Optionally install the vim and nvim\n' >&2
+        printf '         configuration files.  Optionally reload\n' >&2
+        printf '         the ~/.Xresources file.\n' >&2
+        printf '\nUsage: ./installHome [--vim] [--nvim] [--xreload] [-all]\n' >&2
+        printf '       ./installHome [-v] [-n] [-x] [-a]\n' >&2
         printf '\nwhere\n' >&2
-        printf '   -v or --vim:  install  vim config file ~/.vim/vimrc\n' >&2
-        printf '   -n or --nvim: install nvim config file %s\n' "\$XDG_CONFIG_HOME/nvim/nvim.vim" >&2
-        printf '   -a or --all:  install both\n' >&2
-        printf '   -h or --help: install both\n' >&2
+        printf '   -v or --vim  install  vim config file ~/.vim/vimrc\n' >&2
+        printf '   -n or --nvim install nvim config file %s\n' "\$XDG_CONFIG_HOME/nvim/nvim.vim" >&2
+        printf '   -a or --all  install both\n' >&2
+        printf '   -h or --help print this message\n' >&2
         # shellcheck disable=SC2088
         printf '\ndefault value for %s = %s\n' "\$XDG_CONFIG_HOME" '~/.config' >&2
         exit 2
@@ -205,10 +211,16 @@ do
     }
 done
 
-
 ## Optionally install vim and/or nvim configuration file
 
 XDG_CONFIG_HOME="${XDG_CONFIG_HOME:=$HOME/.config}"
 [ -n "$vim_flag"  ] && install_vi_config vim ~/.vim vimrc
 [ -n "$nvim_flag" ] && install_vi_config nvim "$XDG_CONFIG_HOME/nvim" init.vim
+
+## Optionally Reconfig X if ~/.Xresources changed & X running
+[ -z "$xreload_flag" ] ||
+    [ ! -x /usr/bin/xset ] || [ ! -x /usr/bin/xrdb ] ||
+    diff ~/.Xresources ~/.Xresources.old >/dev/null 2>&1 ||
+    ! xset q >/dev/null 2>&1 || xrdb -merge ~/.Xresources ||
+    printf "Warning: 'xrdb ~/.Xresources' command failed\\n" 
 

@@ -330,7 +330,7 @@ tm () {
    if [[ $HOST == @(Cygwin|MinGW|MSYS2)* ]]; then
       ( mintty & )
    elif [[ -x /usr/bin/urxvt ]]; then
-       ( /usr/bin/urxvt -bg 0 -fg 15 -cr 4 +sb >/dev/null 2>&1 & )
+       ( /usr/bin/urxvt >/dev/null 2>&1 & )
    elif [[ -x /usr/bin/gnome-terminal ]]; then
        ( /usr/bin/gnome-terminal >&- )
    elif [[ -x /usr/bin/xterm ]]; then

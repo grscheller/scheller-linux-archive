@@ -15,7 +15,6 @@
 
 DOT_FILES='
    bashrc.bash
-   dashrc.dash
    envrc.sh
    inputrc
    kshrc.ksh
@@ -26,6 +25,8 @@ DOT_FILES='
 
 RM_FILES='
    .bash_profile
+   .dashrc
+   .ashrc
 '
 
 BIN_SCRIPTS='
@@ -217,7 +218,7 @@ XDG_CONFIG_HOME="${XDG_CONFIG_HOME:=$HOME/.config}"
 [ -n "$vim_flag"  ] && install_vi_config vim ~/.vim vimrc
 [ -n "$nvim_flag" ] && install_vi_config nvim "$XDG_CONFIG_HOME/nvim" init.vim
 
-## Optionally Reconfig X if ~/.Xresources changed & X running
+## Optionally rerun xrdb if ~/.Xresources changed & X running
 [ -z "$xreload_flag" ] ||
     [ ! -x /usr/bin/xset ] || [ ! -x /usr/bin/xrdb ] ||
     diff ~/.Xresources ~/.Xresources.old >/dev/null 2>&1 ||

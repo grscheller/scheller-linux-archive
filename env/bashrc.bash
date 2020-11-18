@@ -496,7 +496,7 @@ then
 fi
 
 ## Make sure other shells have their correct environments
-alias dash='ENV=~/.dashrc dash'
-alias sh='ENV=~/.shrc sh'
 alias ksh='ENV=~/.kshrc ksh'
-
+alias sh='ENV=~/.shrc sh'
+alias ash='ENV=~/.shrc ash'
+alias dash='ENV=~/.shrc dash'

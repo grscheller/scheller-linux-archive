@@ -299,7 +299,7 @@ alias toEuler7='toSystem ${EULER7}'
 alias fromEuler7='fromSystem ${EULER7}'
 
 ## Make sure other shells have their correct environments
-alias dash='ENV=~/.dashrc dash'
-alias sh='ENV=~/.shrc sh'
 alias bash='ENV= bash'
-
+alias sh='ENV=~/.shrc sh'
+alias ash='ENV=~/.shrc ash'
+alias dash='ENV=~/.shrc dash'

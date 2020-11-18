@@ -19,31 +19,37 @@ PS1='$ '
 
 # Similar to the DOS path command
 path () {
-    if [ $# -eq 0 ]
-    then
-        PathWord="$PATH"
-    else
-        PathWord="$1"
-    fi
+   if [ $# -eq 0 ]
+   then
+       PathWord="$PATH"
+   else
+       PathWord="$1"
+   fi
 
-    # shellcheck disable=SC2086
-    ( IFS=':'; printf '%s\n' $PathWord )
+   # shellcheck disable=SC2086
+   ( IFS=':'; printf '%s\n' $PathWord )
 }
 
 alias digpath='$HOME/bin/digpath.bash'
 # alias digpath='$HOME/bin/digpath.sh'
 
-## Make sure other shells have their environments
-alias dash='ENV=~/.dashrc dash'
+## Make sure other shells have their correct environments
 alias bash='ENV= bash'
-if digpath -q ksh
-then
-    alias ksh='ENV=~/.kshrc ksh'
-    if digpath -q mksh
-    then
-        alias mksh='ENV=~/.kshrc mksh'
-    fi
-elif digpath -q mksh
-then
-    alias ksh='ENV=~/.kshrc mksh'
-fi
+alias ksh='ENV=~/.kshrc ksh'
+
+MyShell=${0#-}; MyShell=${MyShell##*/}
+case "$MyShell"X in
+  shX)
+      alias dash='ENV=~/.shrc dash'
+      alias ash='ENV=~/.shrc ash'
+      ;;
+  ashX)
+      alias sh='ENV=~/.shrc sh'
+      alias dash='ENV=~/.shrc dash'
+      ;;
+  dashX)
+      alias sh='ENV=~/.shrc sh'
+      alias ash='ENV=~/.shrc ash'
+      ;;
+esac
+unset MyShell

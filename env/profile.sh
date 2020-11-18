@@ -6,11 +6,9 @@
 #
 
 ## Configurature an initial interactive environment
-#
 [ -r ~/.envrc ] && . ~/.envrc
 
 ## If Bash, get functions and aliases
-#
 MyShell=${0#-}; MyShell=${MyShell##*/}
 case "$MyShell"X in
   bashX)
@@ -18,13 +16,13 @@ case "$MyShell"X in
           . ~/.bashrc
       fi
       ;;
-  kshX|mkshX|shX|dashX)
+  kshX|shX|ashX|dashX)
       :
       ;;
   *)
-      printf 'Warning: Unexpected shell "%s\n"' "$0"
+      printf 'Warning: Unexpected shell "%s\n"' "$0" >&2
       ;;
 esac
+unset MyShell
 
 ## Perform other tasks unique to actual login shells
-#

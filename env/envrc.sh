@@ -90,7 +90,7 @@ export    VOLTRON='rvsllschellerg2        22  schelleg'
 export    GAUSS17='192.168.1.22        31502  grs'
 export     EULER7='euler7                 22  grs'
 
-## Setup ENV Evironment variable if not already set
+## Setup ENV Evironment variable if NOT already set
 if [ -z "$ENV" ]
 then
   MyShell=${0#-}; MyShell=${MyShell##*/}
@@ -103,24 +103,25 @@ then
             export ENV=~/.kshrc
         fi
         ;;
-    mkshX)
-        if [ -r ~/.mkshrc ]; then
-            export ENV=~/.mkshrc
-        elif [ -r ~/.kshrc ]; then
-            export ENV=~/.kshrc
-        fi
-        ;;
     shX)
         if [ -r ~/.shrc ]; then
+            export ENV=~/.shrc
+        fi
+        ;;
+    ashX)
+        if [ -r ~/.ashrc ]; then
+            export ENV=~/.ashrc
+        elif [ -r ~/.shrc ]; then
             export ENV=~/.shrc
         fi
         ;;
     dashX)
         if [ -r ~/.dashrc ]; then
             export ENV=~/.dashrc
+        elif [ -r ~/.shrc ]; then
+            export ENV=~/.shrc
         fi
         ;;
     esac
 fi
-
 unset MyShell

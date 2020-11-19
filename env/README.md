@@ -57,16 +57,17 @@ get when you log in via ssh or the console.
 
 ## Shell Scripts Installed in ~/bin
 
-* [bin/digpath.bash](bin/digpath.bash)
+* [digpath.bash](bin/digpath.bash)
   * finds files on the $PATH
   * like the ksh whence builtin
   * does not stop after finding first one
   * required by various rc scripts
   * script version of digpath shell function
   * bash script (ksh compatible)
-* [bin/digpath.sh](bin/digpath.sh)
+* [digpath.sh](bin/digpath.sh)
   * POSIX complient version of above script
-* [bin/pathtrim](bin/pathtrim)
+  * does not support extended file globbing patterns
+* [pathtrim](bin/pathtrim)
   * cleans up $PATH
   * removes non-existing directories
   * removes duplicate path elements
@@ -75,6 +76,25 @@ get when you log in via ssh or the console.
     * correctly handles newlines in directory names
     * will have issues with colens in directory names
   * required by .envrc
+  * POSIX complient script
+* [buArch](bin/buArch)
+  * backup script for my Arch Linux laptop home directory
+  * basically a wrapped for rsync
+  * bash script
+* [monitor](bin/monitor)
+  * maintain a log of who is on the system
+  * bash script
+* [rt](bin/rt)
+  * launch rtorrent Bit-Torrent peer-to-peer ncurses based CLI program
+  * POSIX complient script
+* [spin](bin/spin)
+  * spin a curser around
+  * handy to keep ssh connections alive
+  * hit any key to terminate, except `<space>` or `<enter>`
+  * bash script
+* [viewJarManifest](bin/viewJarManifest)
+  * view the manifest list of a jar file
+  * usage: viewJarManifest someJarFile.jar
   * POSIX complient script
 
 ## Shell Startup Behavior Facts

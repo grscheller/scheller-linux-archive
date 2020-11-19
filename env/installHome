@@ -33,6 +33,11 @@ BIN_SCRIPTS='
    digpath.bash
    digpath.sh
    pathtrim
+   buArch
+   monitor
+   rt
+   spin
+   viewJarManifest
 '
 
 ## Backs up and optionally removes files

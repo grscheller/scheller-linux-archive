@@ -1,8 +1,19 @@
 # Geoffrey's Archive
 
-I use this repo to maintain my less mature personal software
-development projects.  As such, this repo has many loose threads.
-As subtopics mature, I will spin them off to their own repos.
+I use this repo to maintain Linux/Unix/POSIX shell and 
+development environments.  Also contains my notes which
+help me not to have to relearn so many things from scratch.
+This repo also gives me a place to hang some of myless
+mature personal software development projects.
+
+## Shell Environment Configuration
+
+* [Personnal UNIX/POSIX Shell Configuration](env/)
+
+## Private Personal Home Page
+
+* [homepage.html](web/homepage.html)
+* [style.css](web/style.css)
 
 ## Linux/OpenBSD/POSIX System Administration Logs
 
@@ -25,7 +36,7 @@ As subtopics mature, I will spin them off to their own repos.
 * [MSYS2 Notes](notes/msys2Notes.txt)
 * [Windows 10 Powershell Configuration](notes/win10PowershellConf/)
 
-## Grokking Computer Languages
+## Grokking Computer Languages - many loose threads
 
 * __C__
   * [C Language Exeplars](grok/C/CExemplars/)
@@ -75,15 +86,6 @@ As subtopics mature, I will spin them off to their own repos.
 ## Miscellanious Shell and Other Scripts
 
 * [Scripts for ~/bin](bin)
-
-## Personal Shell Configurations
-
-* [Personnal UNIX/POSIX Shell Configuration](env)
-
-## Private Personal Home Page
-
-* [homepage.html](web/homepage.html)
-* [style.css](web/style.css)
 
 For more information on this archive, please read
 [CONTRIBUTING](CONTRIBUTING.md)

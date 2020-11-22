@@ -1,6 +1,6 @@
 # Geoffrey's Archive
 
-I use this repo to maintain Linux/Unix/POSIX shell and 
+I use this repo to maintain Linux/Unix/POSIX shell and
 development environments.  Also contains my notes which
 help me not to have to relearn so many things from scratch.
 This repo also gives me a place to hang some of myless

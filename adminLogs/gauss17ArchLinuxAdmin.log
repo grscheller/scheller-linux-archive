@@ -322,7 +322,7 @@ Note: On 2019-03-30 decided to look into the possibility of
 
   The problem is that gnome-terminal and gnome-files
   both need a start up script,
-  etc/X11/xinit/xinitrc.d/50-systemd-user.sh, to spin up
+  /etc/X11/xinit/xinitrc.d/50-systemd-user.sh, to spin up
   some daemon processes for these gnome "apps" to work.
   I am not sure if this is a systemd or .xinitrc thing.
   If I were using a display manager, everything would
@@ -8194,7 +8194,20 @@ Note: On 2019-03-30 decided to look into the possibility of
 
     $ sudo pacman -S neovim neovim python-pynvim
 
-2929-11-13:
+2020-11-13:
   Changed location of user wide git config files for grs login
 
     $ mv ~/.gitconfig -> ~/.config/git/config
+
+2020-11-21:
+  Installed ctags related utilities
+
+    $ pacman -Ss ctags
+    extra/ctags 1:r20200106+ga3c87ab5-1 [installed]
+        Generates an index file of language objects found in source files
+    community/arduino-ctags 5.8_arduino11-4
+        A mix of ctags and anjuta-tags for the perfect C++ ctags
+    community/hasktags 0.71.2-103
+        Produces ctags "tags" and etags "TAGS" files for Haskell programs
+
+    $ sudo pacman -S hasktags arduino-ctags

@@ -1,6 +1,9 @@
-## Haskell Examples
+# Haskell Examples
 
-### Lazy evaluation:
+## Lazy evaluation
+
 * [Sorting a list](sort.md)
-### Monadic Ideas:
+
+## Monadic Ideas
+
 * [Monadically generic code](monadicIdeas.md)

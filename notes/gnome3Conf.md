@@ -1,11 +1,14 @@
-## Purpose: Gnome 3 configuration on Arch Linux
+# Gnome 3 configuration on Arch Linux
 
-### GNOME Version:
+## GNOME Version
+
 ```
    $ gnome-shell --version
    GNOME Shell 3.38.1
 ```
-### Settings (gnome-control-center)
+
+## Settings (gnome-control-center)
+
 * Wifi & Network(Ethernet) configurations
 * Bluetooth configurations
 * Background configuration
@@ -13,7 +16,7 @@
 * Search configuration
 * Applications
   * Can't change file associations???
-  * Manage with "Software" - AppImages??? 
+  * Manage with "Software" - AppImages???
   * Does not handle Pacman packages
 * Privacy
   * Location Services
@@ -28,18 +31,19 @@
 * Displays
 * Mouse & Touchpad
 * Keyboard Shortcuts
-  * Added <ctrl>+<alt>+T for gnome-terminal
+  * Added`<ctrl>+<alt>+T`for urxvt terminal
 * Printers
 * Removable Media
 * Color management settings for monitors and Printers
 * Region & Language
 * Accessibility (pretty useless - better handled via themes & plug-ins)
-* Users 
+* Users
 * Default Applications
 * Date & Time (use timedatectl from cmdline instead)
 * About
 
-### Tweaks (gnome-tweak)
+## Tweaks (gnome-tweak)
+
 * General -> Animations (on)
 * General -> Over-Amplification (on)
 * Appearance -> Themes -> Applications -> Adwaita-dark
@@ -56,7 +60,7 @@
 * Extensions -> Lauch new instance (on) note: makes Dash much more useful
 * Extensions -> Native Window Placement (on)
 * Extensions -> Places status indicator (on)
-* Fonts: 
+* Fonts
   * Interface & Document Text: Cantarell Regular 11
   * Monospace Text: Source Code Pro Regular 10
   * Legacy Window Titles: Cantarell Bold 11
@@ -88,12 +92,17 @@
 * Workspaces -> Dynamic Workspaces
 * Workspaces -> Display Handling -> Workspaces span displays
 
-### Configurables not available in Gnome Settings or Gnome Tweaks
-* Pass clicks to windows without raising them - to raise, super+click, or click on title bar
+## Configurables not available in Gnome Settings or Gnome Tweaks
+
+* Pass clicks to windows without raising them
+  * To raise, super+click, or click on title bar
+
 ```
    $ gsettings set org.gnome.desktop.wm.preferences raise-on-click false
 ```
-### Layout
+
+## Layout
+
 * Activities Button: LHS Top Toolbar
   * switches between normal and overview mode
   * click, mouse to upper LH corner, super-key up event
@@ -119,11 +128,12 @@
   * move windows between workspaces
   * creates/deletes workspaces as needed
 
-### Keyboard & mouse shortcuts:
+## Keyboard & mouse shortcuts
+
 * super key-up-event: switches between the desktop and overview mode
 * super+tab: switch between windows on current desktop
 * super+L: lock screen
-* super+up-arrow: maximize window with focus 
+* super+up-arrow: maximize window with focus
 * super+down-arrow: regular size window
 * super+left-arrow: tile window with focus LHS workspace
 * super+right-arrow: tile window with focus RHS workspace
@@ -137,7 +147,8 @@
 * middle-click titlebar: drop window below all other windows
 * double-click titlebar: toggle maximize window
 
-### Paradigms
+## Paradigms
+
 * No desktop icons
 * Desktop acts as a window manager
 * The Dash acts like a program manager
@@ -145,7 +156,8 @@
   * right-click to select among running instances
   * shared menu top of screen - shows application for window with focus
 
-### Gnome-Terminal
+## Gnome-Terminal
+
 * Create shortcut
   * Settings => Keyboard => Custom Shortcuts(at bottom) => +
     * Name: Terminal
@@ -157,8 +169,8 @@
     * Uncheck "Use colors from system theme"
     * Palette: Linux console
     * Default color
-        * Text: White (lower right most)
-        * Background: Black (upper left most)
+      * Text: White (lower right most)
+      * Background: Black (upper left most)
       * Check Bold color: Yellow (bottom 4th from left)
       * Uncheck Cursor color
       * Check Highlight color
@@ -166,60 +178,70 @@
         * Background: Gray (upper right most)
     * Check Show bold text in bright colors
 
-### Gnome-Shell-Extensions
+## Gnome-Shell-Extensions
+
 * Arch Linux
   * Use Pacman if extension is in main Arch repos (like gpaste)
   * Turn on via Gnome-Tweak
 * Arch Linux using AUR
-  * Go to https://aur.archlinux.org/
+  * Go to [AUR](https://aur.archlinux.org/)
   * Search on gnome-shell-extension
   * Create a place to build the extension
-  ```
+
+    ```
        $ mkdir -p ~/build/AUR/gnome-extensions/
-  ```
+    ```
+
   * Example: Install gnome-shell-extension-extensions
-  ```
+
+    ```
        $ cd ~/build/AUR/gnome-extensions/
        $ git clone https://aur.archlinux.org/gnome-shell-extension-extensions-git.git
        $ cd gnome-shell-extension-extensions-git
        $ makepkg -sri
-  ```
-    * This installs Extensions for all users
-    * After re-logging in, use gnome-tweaks to activate Extensions
-    * Extensions provides a convenient way to activate/deactivate other extensions
-      * Extensions app has an option to install Gnome extentions
-        * This just takes you to the Gnome extensions page (AppImages)
-        * Does not auto install from AUR.
-    * Turn on via Gnome-Tweak
-# Download extension from [https://extensions.gnome.org/](https://extensions.gnome.org/)
-  * Extract into `~/.local/share/gnome-shell/extensions`
-  * Turn on via Gnome-Tweak
-  * Will be available only to that one user
+    ```
 
-### Freedesktop.org XDG Directory Specification
-Gnome3 follows freedesktop.org desktop specifications (Gnome3 "upstream?").  Here are
-the environment variables and their defaults used by Gnome3
+  * This installs Extensions for all users
+  * After re-logging in, use gnome-tweaks to activate Extensions
+  * Extensions provides a convenient way to activate/deactivate other extensions
+    * Extensions app has an option to install Gnome extentions
+      * This just takes you to the Gnome extensions page (AppImages)
+      * Does not auto install from AUR.
+  * Turn on via Gnome-Tweak
+
+## Download extension from [https://extensions.gnome.org/](https://extensions.gnome.org/)
+
+* Extract into `~/.local/share/gnome-shell/extensions`
+* Turn on via Gnome-Tweak
+* Will be available only to that one user
+
+## Freedesktop.org XDG Directory Specification
+
+Gnome3 follows freedesktop.org desktop specifications (Gnome3 "upstream?").
+Here are the environment variables and their defaults used by Gnome3
+
 * `$XDG_CONFIG_HOME`
-   * directory where user specific configuration files should be stored.
-   * default value: `$HOME/.config`
+  * directory where user specific configuration files should be stored.
+  * default value: `$HOME/.config`
 * `$XDG_CONFIG_DIRS`
-   * search path for configuration files
-   * searched after `$XDG_CONFIG_HOME`
-   * default value: `/etc/xdg`
+  * search path for configuration files
+  * searched after `$XDG_CONFIG_HOME`
+  * default value: `/etc/xdg`
 * `$XDG_DATA_HOME`
-   * directory where user specific data files should be stored
-   * default value: `$HOME/.local/share`
+  * directory where user specific data files should be stored
+  * default value: `$HOME/.local/share`
 * `$XDG_DATA_DIRS`
-   * search path for data files
-   * searched after `$XDG_DATA_HOME`
-   * default value: `/usr/local/share/:/usr/share/`
+  * search path for data files
+  * searched after `$XDG_DATA_HOME`
+  * default value: `/usr/local/share/:/usr/share/`
 * `$XDG_RUNTIME_DIR`
-   * directory where user-specific non-essential runtime files stored
-   * also other file objects such as sockets, named pipes, ...
-   * directory MUST be owned by the user iand MUST have file permissions 0700
-   * on Arch Linux: /run/user/<uid>
+  * directory where user-specific non-essential runtime files stored
+  * also other file objects such as sockets, named pipes, ...
+  * directory MUST be owned by the user iand MUST have file permissions 0700
+  * on Arch Linux:`/run/user/<uid>`
 
 Unfortunately, you can't just set these in your shell because the
 display manager launches your GNOME3 session before any sort of
 shell environment is involked.  You get the environment handed
+:w
 to you.

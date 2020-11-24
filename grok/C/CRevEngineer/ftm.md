@@ -1,16 +1,20 @@
-## Feature Test Macros
+# Feature Test Macros
+
 * Code [featureTestMacros.c](featureTestMacros.c) is from
   the `man -s7 feature_test_macros` manpage
 * These CPP options need to either be defined on compile line or
   defined in source files before any system #include lines.
 
 Compile and test your systems under various settings:
+
 ```
    $ make ftm
    $ make testSys
    $ make clean
 ```
+
 Example run:
+
 ```
     $ make testSys
     gcc -Wall -o ftmBasic featureTestMacros.c

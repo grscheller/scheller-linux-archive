@@ -1,7 +1,9 @@
-## Lazy evaluation - sorting a list
+# Lazy evaluation - sorting a list
+
 Source code: [Sort.hs](Sort.hs)
 
 Consider `sort [2,1,3,1]` where
+
 ```
 sort :: Ord a => [a] -> [a]
 sort = foldr insert [] where
@@ -10,13 +12,17 @@ sort = foldr insert [] where
     then x : xs
     else y : (insert x ys)
 ```
+
 and, restricted to lists, `foldr` is defined
+
 ```
 foldr :: (a -> b -> b) -> b -> [a] -> b
 foldr f z [] = z
 foldr f z (a:as) = f a (foldr f z as)
 ```
+
 I won't desugar the list.  Lets force the calculation with `head`.
+
 ```
 head $ sort [2,1,3,1]
 head (sort [2,1,3,1])

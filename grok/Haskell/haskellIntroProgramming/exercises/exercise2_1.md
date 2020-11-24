@@ -1,18 +1,24 @@
-### Exercise 2.1
-### Evaluate `sumf (sumf square) [[1,2],[3,4]]`
+# Exercise 2.1
+
+## Evaluate `sumf (sumf square) [[1,2],[3,4]]`
+
 Lets first desugar the expression.  This is done at compile time.
+
 ```
 sumf (sumf square) [[1,2],[3,4]]
 sumf (sumf square) ([1,2]):([3,4]):[]    -- Outer desugaring
 sumf (sumf square) (1:2:[]):(3:4:[]):[]  -- Inner desugaring
 ```
+
 Now, the run time evaluation below assumes that:
+
 * (+) is left associative.
 * Functions are not strict, their argument only evaluated if needed.
 * Haskell is lazy, nothing is evaluated until needed/driven.
 * All expressions are referentially transparent.
 * Calculation is single threaded.
 * Trivial steps, like `square 2 => 2 * 2 => 4`, are consolidated.
+
 ```
 sumf (sumf square) (1:2:[]):(3:4:[]):[]
 (sumf square) (1:2:[]) + sumf (sumf square) (3:4:[]):[]

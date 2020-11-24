@@ -1,12 +1,15 @@
-## Abstract Data Types (ADT)
+# Abstract Data Types (ADT)
+
 Exploring approaches to ADT in various computer languages.
 I was inspired by these blog posts by Tony Morris,
 [The Algebra of Algebraic Data Types](https://about.chatroulette.com/posts/algebraic-data-types/)
 and
 [More Algebra of Algebraic Data Types](https://about.chatroulette.com/posts/algebraic-data-types-2/).
 
-### Java
+## Java
+
 To compile, run and cleanup
+
 ```
    $ cd Java/
    $ javac ADT.java
@@ -14,8 +17,10 @@ To compile, run and cleanup
    $ rm *.class
 ```
 
-### Scala
+## Scala
+
 To compile, run and cleanup
+
 ```
    $ cd Scala/
    $ scalac ADT.scala

@@ -1,5 +1,7 @@
-## C Language Exemplars
+# C Language Exemplars
+
 Best practices for ANSI-C coding/algorithms/compilation.
-* __removeSpaces.c__: O(n) string manipulation
-* __sumit.c__: [Compiler over-optimization](sumit.md)
-* __makeMessage.c__: allocate space & create a formatted message
+
+* **removeSpaces.c**: O(n) string manipulation
+* **sumit.c**: [Compiler over-optimization](sumit.md)
+* **makeMessage.c**: allocate space & create a formatted message

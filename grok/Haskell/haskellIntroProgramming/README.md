@@ -1,4 +1,5 @@
-## "Intro" to Haskell
+# "Intro" to Haskell
+
 My attempts to work through the course exercises from and mini-projects
 inspired by the University of Chicago's introduction to programming course
 sequence.  I put "Intro" in quotes because this course would be
@@ -11,31 +12,37 @@ material.  This one, I think, actually is successful at being deeper.
 
   [1]: http://learnyouahaskell.com "Learn You A Haskell for Great Good"
 
-### CMSC course whose online Lecture notes I am following:
+## CMSC course whose online Lecture notes I am following
+
 * Honors Introduction to Programming, I
-  - Autumn Quarter, 2017
-  - Univ. of Chicago
-  - Profs. Stuart A. Kurtz & Ravi Chugh
-  - [CMSC-16100](http://cmsc-16100.cs.uchicago.edu/2017/)
+  * Autumn Quarter, 2017
+  * Univ. of Chicago
+  * Profs. Stuart A. Kurtz & Ravi Chugh
+  * [CMSC-16100](http://cmsc-16100.cs.uchicago.edu/2017/)
 
-#### Modules written following CMSC-16100
-1. Lecture I
-   * [Triangles](modules/Triangles.hs)
-2. Lecture II
-   * [ListFunctions](modules/ListFunctions.hs)
+### Modules written following CMSC-16100
 
-#### Additional Lectures for CMSC-16100
+* Lecture I
+  * [Triangles](modules/Triangles.hs)
+* Lecture II
+  * [ListFunctions](modules/ListFunctions.hs)
+
+### Additional Lectures for CMSC-16100
+
 * [Peano Arithmrtic](PeanoArithmetic/)
 
-### My notes:
+## My notes
+
 * The [Notes](notes/MyNotes.md) I took while working through the material.
 * A [Haskell Language Summary](notes/HaskellLangRefSummary.md) I found
   and converted to Markdown.
 
-### Additional play:
+## Additional play
+
 * [Examples](examples/README.md), basically a place for code snippets.
 
-### Original invitation to community on Haskell-Cafe:
+## Original invitation to community on Haskell-Cafe
+
 ```
    Message: 2
    Date: Sun, 24 Sep 2017 10:52:03 -0500
@@ -65,7 +72,7 @@ material.  This one, I think, actually is successful at being deeper.
    the only real question is "how early." We're experimenting with introducing
    types (including simple parametric types and typeclasses) in Lecture 1
    (tomorrow) this year, in what my colleague Ravi Chugh and I refer to as
-   the "types earliest" approach. 
+   the "types earliest" approach.
 
    What we're aiming for in Lecture 1 is an overview, not a deep understanding
    of Haskell's type system. Still, we *are* introducing typeclasses (albeit
@@ -85,6 +92,7 @@ material.  This one, I think, actually is successful at being deeper.
    Director of Undergraduate Studies for Computer Science
    The University of Chicago
 ```
+
 ```
    Message: 3
    Date: Sun, 24 Sep 2017 19:19:24 -0500

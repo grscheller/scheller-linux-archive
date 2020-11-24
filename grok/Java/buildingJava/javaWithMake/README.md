@@ -1,13 +1,15 @@
-## Java with Make
+# Java with Make
+
 Using make as the build tool really helped me learn the
 underlying java and jar commands used to build java
 code.  Also a good opportunity to relearn make pattern
 rules.
 
-### Targets:
+## Targets
+
 ```
    $ make
-   javac -d classes Carl.java 
+   javac -d classes Carl.java
    javac -d classes IsPrime.java
 
    $ make jar
@@ -20,19 +22,21 @@ rules.
    rm -f Carl.jar IsPrime.jar javaWithMake.jar
 
    $ make IsPrime.jar
-   javac -d classes IsPrime.java 
+   javac -d classes IsPrime.java
    jar cfe IsPrime.jar IsPrime -C classes IsPrime.class
 
    $ make jar
-   javac -d classes Carl.java 
+   javac -d classes Carl.java
    jar cfe Carl.jar Carl -C classes Carl.class
    jar cf javaWithMake.jar -C classes .
 ```
 
-### To run:
+## To run
+
 Change directory to the base directory, the one with the makefile.
 
 From class files:
+
 ```
    $ export CLASSPATH=classes
    $ java IsPrime 2 721692259 721692261
@@ -40,7 +44,9 @@ From class files:
    721692259 is prime.
    721692261 is not prime.
 ```
+
 From jar files:
+
 ```
    $ java -cp javaWithMake.jar Carl 10
    Sum of 1 to 10 is 55

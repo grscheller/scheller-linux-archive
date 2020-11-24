@@ -1,10 +1,12 @@
-## GNU Make
+# GNU Make
+
 This document is intended to be a concise reference with examples
 and advice on makefile best practices.  It is not to be considered
 a make tutorial.  For more complete documentation see the official
 [GNU Make documentation](https://www.gnu.org/software/make/).
 
-### Automtic variables
+## Automtic variables
+
 Automtic variables are set by make after a rule is matched.
 
 | Automatic Variable | Description                                         |
@@ -14,12 +16,13 @@ Automtic variables are set by make after a rule is matched.
 |        `$?`        | All prerequisites which are newer than target       |
 |        `$^`        | All prerequisites, duplicates removed               |
 |        `$+`        | All prerequisites, duplicates not removed           |
-|        `$*`        | Target with suffix removed                          | 
+|        `$*`        | Target with suffix removed                          |
 |        `$%`        | Filename element of an archive member specification |
 
 * Use of `$*` is discouraged outside of pattern rules.
 
-### Special Built-in Target Names
+## Special Built-in Target Names
+
 Names that when used as targets, change the behavior of Make.
 
 | Built-in Target       | Effect on Prereqs when targets & other side effects |
@@ -41,6 +44,7 @@ Names that when used as targets, change the behavior of Make.
 |`.POSIX`               | Run make in POSIX compliant mode                    |
 
 Notes on Built-in Targets:
+
 * `.PHONY`: an optimization and avoids conflict with real files of same name
 * `.INTERMEDIATE`: with no prerequisites has no effect
   * intermediates are automatically deleted when no longer needed
@@ -63,17 +67,19 @@ Notes on Built-in Targets:
 * `.POSIX`: no prerequisits
   * GNU Make extensions are still available
   * use POSIX behavior when it differs from GNU behavior
-  * POSIX shells get past `-e` option 
+  * POSIX shells get past `-e` option
 
 [1]: https://www.gnu.org/software/make/manual/html_node/Secondary-Expansion.html
 
-### Comments in makefiles
+## Comments in makefiles
+
 Comments begin with a #
+
 ```
     # Comment ends at end of the line
 
     # My prefered way
-    # to have a multi-line 
+    # to have a multi-line
     # comment.
 
     # Another way \
@@ -84,11 +90,14 @@ Comments begin with a #
       for a multi-line \
       comment.
 ```
-### Automating Tasks
-Make rules can automate tasks.  Only the line which begins the
-POSIX shell action, the one with the "for", needs to starts with
+
+## Automating Tasks
+
+Make rules can automate tasks.  Only lines which begins the
+POSIX shell action, the ones with the "for" and "rm", needs to starts with
 a `<tab>`.  We are just escaping the final `<new-line>'s` and writing
 a "one-liner".
+
 ```
     timeit: $(BINARIES)
     for bb in $(BINARIES);\
@@ -98,13 +107,15 @@ a "one-liner".
     done
 
     clean:
-	rm -f $(BINARIES) 
+    rm -f $(BINARIES)
 
     .PHONY: timeit clean
 ```
-Notes on automating tasks: 
+
+Notes on automating tasks:
+
 * `$$` prevents make variable expansion and passes the shell a single `$`
 * Using `./` for start of path to executable
-* Also, I don't put `.` in my `$PATH` 
+* Also, I don't put `.` in my `$PATH`
 * I use a tabstop of 4 in vim, so spaces before
   the "for" above need to be a tab.

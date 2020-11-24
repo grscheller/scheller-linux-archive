@@ -1,11 +1,13 @@
 # Contributor Covenant Code of Conduct
 
 ## The Project
+
 The project consists of the scheller-linux-archive GitHub repository, its
 associated GitHub community infrastructure, and any Wiki pages associated
 with this repo. The project maintainer is Geoffrey R. Scheller.
 
 ## Purpose of Project
+
 The primary purpose of this GitHub repo is to capture what the project's
 maintainer learns in a way that helps him stay up to speed on topics related
 to software development and system administration in Linux/Unix/Posix
@@ -20,6 +22,7 @@ off into their own projects/repositories/communities with appropriate community
 codes of conduct.
 
 ## Community Standards
+
 In the interest of fostering an open and welcoming environment, we as
 contributors and maintainers pledge to making participation in our project and
 our community a harassment-free experience for everyone, regardless of age,
@@ -46,6 +49,7 @@ Examples of unacceptable behavior by participants include:
   professional setting
 
 ## Project Maintainer responsibilities
+
 The project maintainer is responsible for clarifying the standards of
 acceptable behavior and is expected to take appropriate and fair corrective
 action in response to any instances of unacceptable behavior.
@@ -57,6 +61,7 @@ permanently any contributor for other behaviors that a reasonable person would
 deem inappropriate, threatening, offensive, or harmful.
 
 ## Scope of Community
+
 This Code of Conduct applies basically to the project maintainer and whomever
 uses the GitHub infrastructure available to GitHub users in regards to the
 scheller-linux-archive GitHub repo. Geoffrey Scheller is the only individual

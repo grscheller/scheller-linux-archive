@@ -4,7 +4,9 @@
 "
 
 " Enter the 21st Century
-set nocompatible
+if &compatible
+  set nocompatible
+endif
 syntax enable
 filetype plugin on
 
@@ -38,6 +40,7 @@ set nowrap        " Don't wrap lines
 set sidescroll=1  " Horizontally scroll nicely
 set splitbelow    " Horizontally split below
 set splitright    " Vertically split to right
+set ruler         " Show line/column info
 
 " Setup the Plug plugin manager
 "
@@ -51,13 +54,13 @@ set splitright    " Vertically split to right
 "   :PlugInstall
 "
 " Plug Commands:
-"   :PlugInstall [name ...] [#threads]  Install plugins
-"   :PlugUpdate [name ...] [#threads]   Install or update plugins
-"   :PlugClean[!]                       Remove unlisted plugins
-"   :PlugUpgrade                        Upgrade Plug itself
-"   :PlugStatus                         Check the status of plugins
-"   :PlugDiff                           Examine changes from the previous update and the pending changes
-"   :PlugSnapshot[!] [output path]      Generate script for restoring the current snapshot of the plugins
+"   :PlugInstall [name ...] [#threads] Install plugins
+"   :PlugUpdate [name ...] [#threads]  Install or update plugins
+"   :PlugClean[!]           Remove unlisted plugins
+"   :PlugUpgrade            Upgrade Plug itself
+"   :PlugStatus             Check the status of plugins
+"   :PlugDiff               Diff previous update and pending changes
+"   :PlugSnapshot[!] [path] Generate script to restore current plugin state
 "
 call plug#begin('~/.vim/plugged')
 
@@ -96,7 +99,7 @@ call plug#end()
 " Configure user settings for Syntastic
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_cursor_column = 0
 let g:syntastic_enable_balloons = 0
@@ -109,7 +112,7 @@ autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 let mapleader = "\\"
 
 " Clear search highlighting with \\
-nnoremap <leader>\ :noh<return>
+nnoremap <leader>\ :nohlsearch<return>
 
-" Toggle Synastic into and out of passive mode with \st
+" Toggle Synastic into and out of passive mode
 nnoremap <leader>st :SyntasticToggleMode<return>

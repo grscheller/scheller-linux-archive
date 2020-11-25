@@ -7,49 +7,49 @@ Haskell reference manuals, or my general observations.
 
 ## Haskell
 
-1. Haskell is a strongly-type, lazy, pure, functional language.
-    * Types are compile time entities.
-    * Values need not have the run time overhead of encoding their types.
-    * No run time dispatch overhead.
-    * No run time type incompatibilities.
-    * No run time "duck typing" crashes or unintended type conversions.
+* Haskell is a strongly-type, lazy, pure, functional language.
+  * Types are compile time entities.
+  * Values need not have the run time overhead of encoding their types.
+  * No run time dispatch overhead.
+  * No run time type incompatibilities.
+  * No run time "duck typing" crashes or unintended type conversions.
 
-2. Lazy in the sense that values are not computed unless needed/forced.
+* Lazy in the sense that values are not computed unless needed/forced.
 
-3. Pure in the sense of:
-    * Values are immutable.
-    * No statements, program with referentially transperant expressions.
-    * Functions have no side effects.
-    * Functions are first class values.
+* Pure in the sense of:
+  * Values are immutable.
+  * No statements, program with referentially transperant expressions.
+  * Functions have no side effects.
+  * Functions are first class values.
 
 ## Scoping
 
 ### Progam Structure
 
-1. Top most level a Haskell program is a set of modules.
-   * Provide way to control namespaces.
-   * Allows re-use of software in large projects.
+* Top most level a Haskell program is a set of modules.
+  * Provide way to control namespaces.
+  * Allows re-use of software in large projects.
 
-2. Top level of a module consists of a collection of declarations.
-   * Ordinary values
-   * datatypes
-   * type classes
-   * fixity information
+* Top level of a module consists of a collection of declarations.
+  * Ordinary values
+  * datatypes
+  * type classes
+  * fixity information
 
-3. Next lower level are expressions.
-   * An expression denotes a value.
-   * Expressions have static types.
-   * Heart of Haskell programming "in the small."
+* Next lower level are expressions.
+  * An expression denotes a value.
+  * Expressions have static types.
+  * Heart of Haskell programming "in the small."
 
-4. Haskell has no statements.
-   * Program execution involve evaluating expressions.
-   * Not executing statements which change data states.
-   * Expression evaluation involves λ-substitution and pattern matching.
-   * Like mathematical substitution; equational reasoning.
-   * Though they can model it, programs don't change state.
+* Haskell has no statements.
+  * Program execution involve evaluating expressions.
+  * Not executing statements which change data states.
+  * Expression evaluation involves λ-substitution and pattern matching.
+  * Like mathematical substitution; equational reasoning.
+  * Though they can model it, programs don't change state.
 
-5. Bottom level is Haskell's lexical structure.
-   * Captures concrete lexical structure of Haskell programs in text files.
+* Bottom level is Haskell's lexical structure.
+  * Captures concrete lexical structure of Haskell programs in text files.
 
 ### let vs. where
 
@@ -57,17 +57,17 @@ Haskell reference manuals, or my general observations.
 * Difference is more subtle than just whether definitions come first or last.
 * Deep within the Haskell kernel, both probably implemented as λ-expressions.
 
-1. **The `let ... in ...` expression**
-    * Part of Haskell's expression syntax.
-    * The `let` "comes before the expression," means the `let` bindings only
-      apply to the subexpression after the `in` clause.
-    * Does not "extend past guards," i.e. applies to just the subexpression,
-      not to any enclosing definitions.
+* **The `let ... in ...` expression**
+  * Part of Haskell's expression syntax.
+  * The `let` "comes before the expression," means the `let` bindings only
+    apply to the subexpression after the `in` clause.
+  * Does not "extend past guards," i.e. applies to just the subexpression,
+    not to any enclosing definitions.
 
-2. **The `where` clause of a definition**
-    * Part of Haskell's definition syntax.
-    * Comes after the definition, means applies to the entire definition.
-    * Scope extends over all guards within the definition.
+* **The `where` clause of a definition**
+  * Part of Haskell's definition syntax.
+  * Comes after the definition, means applies to the entire definition.
+  * Scope extends over all guards within the definition.
 
 ## Haskell Type System
 
@@ -79,7 +79,8 @@ Haskell reference manuals, or my general observations.
   by expressions.
 * Once assigned, a variable is immutable.  Can have different values in
   different instantiations of an expressions.
-* `=` is not an operator, it is part of the language, `(=) foo 5` does not work!
+* `=`is not an operator, it is part of the language,
+  `(=) foo 5`does not work!
 
 ### Algebraic Data Types (ADT)
 
@@ -87,59 +88,59 @@ Haskell reference manuals, or my general observations.
 * If `n` is grounded, then so is `S n`.
 * Non-grounded expreessions exist,
 
-   ```
-      data NaturalNumber = Zero | S NaturalNumber
-      infinity = S infinity
-   ```
+  ```
+     data NaturalNumber = Zero | S NaturalNumber
+     infinity = S infinity
+  ```
 
 #### Simplified versions of predefined ADTs
 
 These types are either predefined into the Prelude, or they are "cooked"
 into the runtime implementation.
 
-1. Unit type:
-    * The Unit type and Unit type constuctor.
+* Unit type:
+  * The Unit type and Unit type constuctor
 
-      ```
-         data () = () deriving (Eq, Ord, Show)
-      ```
+    ```
+       data () = () deriving (Eq, Ord, Show)
+    ```
 
-    * Can be thought as a 0-tuple, but actually an ADT.
+  * Can be thought as a 0-tuple, but actually an ADT.
 
-2. Bool type:
+* Bool type:
 
-    * Represents true and false boolean values.
+  * Represents true and false boolean values.
 
-      ```
-         Bool type:
-         data Bool
-             = False
-             | True
-             deriving (Eq, Ord, Show)
-      ```
+    ```
+       Bool type:
+       data Bool
+           = False
+           | True
+           deriving (Eq, Ord, Show)
+    ```
 
-3. Tuple type:
-    * Two-tuple type class.
+* Tuple type:
+  * Two-tuple type class.
 
-      ```
-         data (,) a b = (,) a b
-      ```
+    ```
+       data (,) a b = (,) a b
+    ```
 
-    * Slightly syntatic sugared, otherwise parser would hijack `(` and `)`.
-    * Without the syntatic sugar, we would have to define it as
+  * Slightly syntatic sugared, otherwise parser would hijack `(` and `)`.
+  * Without the syntatic sugar, we would have to define it as
 
-      ```
-         data Pair a b = Pair a b deriving (Eq, Ord, Show)
-      ```
+    ```
+       data Pair a b = Pair a b deriving (Eq, Ord, Show)
+    ```
 
-    * Sugar to use and display like as done in mathematics,
+  * Sugar to use and display like as done in mathematics,
 
-      ```
-         Prelude> (,) 2 3 == (2,3)
-         True
-         Prelude> show $ (,) 3 2
-         "(3,2)"
-      ```
+    ```
+       Prelude> (,) 2 3 == (2,3)
+       True
+       Prelude> show $ (,) 3 2
+       "(3,2)"
+    ```
 
     * Unlike Python, `,` is not an operator on its own.
     * The abstraction is that of a key-value pair.
@@ -149,25 +150,25 @@ into the runtime implementation.
          (1,42)
       ```
 
-4. List type:
-    * An example of a recursive type.
+* List type:
+  * Example of a recursive type
 
-      ```
-         infixr 5 :
-         data [] a
-             = []
-             | a : [] a
-      ```
+    ```
+       infixr 5 :
+       data [] a
+           = []
+           | a : [] a
+    ```
 
-    * Like `(,)` the list type is a member of `Eq`, `Ord`, and `Show`.
-    * The ordering is lexical, assuming that the underlying type a is ordered.
-    * Syntaxic sugar to allow
+  * Like `(,)` the list type is a member of `Eq`, `Ord`, and `Show`.
+  * The ordering is lexical, assuming that the underlying type a is ordered.
+  * Syntaxic sugar to allow
 
-      ```
-         Prelude> foo a b = [a, b, a + b]
-         Prelude> foo 1 2
-         [1,2,3]
-      ```
+    ```
+       Prelude> foo a b = [a, b, a + b]
+       Prelude> foo 1 2
+       [1,2,3]
+    ```
 
 #### Deconstructiong types
 

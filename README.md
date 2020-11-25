@@ -21,19 +21,20 @@ mature personal software development projects.
 
 ## Linux/POSIX Notes
 
-* [GIT Notes](notes/gitNotes.txt)
-* [Gnome 3 Configuration](notes/gnome3Conf.md)
-* [POSIX/Unix Commands](notes/unixCommands.txt)
 * [Arch Linux & systemd Commands](notes/archLinuxNotes.txt)
 * [Bash Notes](notes/bashNotes.txt)
+* [Functional Programing Random Ideas](notes/fpRandomIdeas.md)
+* [GIT Notes](notes/gitNotes.txt)
+* [Gnome 3 Configuration](notes/gnome3Conf.md)
 * [GNU Make Notes](notes/makeNotes.md)
-* [Software Development Tools](notes/softwareDevTools.md)
-* [Shell Utilities](notes/shellUtilities.txt)
+* [Haskell Notes](notes/Haskell_Notes)
 * [Java Development on Arch Linux](notes/archJava.txt)
 * [JavaScript Notes](notes/javaScriptNotes.txt)
-* [Unicode Cheat Sheet](notes/unicodeCheatSheet.txt)
-* [Functional Programing Random Ideas](notes/fpRandomIdeas.md)
 * [MSYS2 Notes](notes/msys2Notes.txt)
+* [POSIX/Unix Commands](notes/unixCommands.txt)
+* [Shell Utilities](notes/shellUtilities.txt)
+* [Software Development Tools](notes/softwareDevTools.md)
+* [Unicode Cheat Sheet](notes/unicodeCheatSheet.txt)
 * [Windows 10 Powershell Configuration](notes/win10PowershellConf/)
 
 ## Grokking Computer Languages - many loose threads
@@ -75,17 +76,17 @@ mature personal software development projects.
   * [Learn Scala](grok/Scala/learnScala/)
   * [Type Level Programming in Scala](grok/Scala/typeLevelProgramming/)
   * [Dotty Template](grok/Scala/sbtDottyTemplate)
-* __Computer Graphics__
-  * [Low Level X11 (XLIB/XCB) Programming](grok/Graphics/XWindows)
-  * [Cairo 2D Vector Graphics](grok/Graphics/Cairo)
 
 ## Comparing Computer Languages
 
 * [Abstract Data Types (ADT)](comp/ADT/)
 
-## Miscellanious Shell and Other Scripts
+## Computer Graphics_
 
-* [Scripts for ~/bin](bin)
+* [Low Level X11 (XLIB/XCB) Programming](grok/Graphics/XWindows)
+* [Cairo 2D Vector Graphics](grok/Graphics/Cairo)
+
+---
 
 For more information on this archive, please read
 [CONTRIBUTING](CONTRIBUTING.md)

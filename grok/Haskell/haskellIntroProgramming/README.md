@@ -31,12 +31,6 @@ material.  This one, I think, actually is successful at being deeper.
 
 * [Peano Arithmrtic](PeanoArithmetic/)
 
-## My notes
-
-* The [Notes](notes/MyNotes.md) I took while working through the material.
-* A [Haskell Language Summary](notes/HaskellLangRefSummary.md) I found
-  and converted to Markdown.
-
 ## Additional play
 
 * [Examples](examples/README.md), basically a place for code snippets.

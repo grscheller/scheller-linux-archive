@@ -8211,3 +8211,226 @@ Note: On 2019-03-30 decided to look into the possibility of
         Produces ctags "tags" and etags "TAGS" files for Haskell programs
 
     $ sudo pacman -S hasktags arduino-ctags
+
+2020-11-24:
+  Dropbox is all messed up.  I think it half "updated itself."
+  
+  I am going to remove it and follow the Arch Linux Dropbox wiki
+  guide to install it: https://wiki.archlinux.org/index.php/Dropbox
+
+    $ sudo pacman -Rsc dropbox
+
+  We want systemd (not Gnome) managing Dropbox.  Also, Dropbox
+  has a nasty feature of updating itself putting unvetted versions
+  of itself into ~/.dropbox-dist.  The systemd version spins
+  up the new version and dies, causing systemd to spin up
+  another version of the old one...
+
+    $ rm -rf ~/.dropbox-dist/ ~/.dropbox/
+    $ rm  ~/.config/autostart/dropbox.desktop
+    $ install -dm0 ~/.dropbox-dist
+    $ ls -lhd .drop*
+    d--------- 2 grs grs 4.0K Nov 24 14:17 .dropbox-dist
+
+  This should prevent it from auto updating itself.
+
+  Now install from AUR:
+
+    $ cd ~/build/AUR
+    $ git clone https://aur.archlinux.org/dropbox.git
+    $ cd dropbox
+    $ wget https://linux.dropbox.com/fedora/rpm-public-key.asc
+    $ gpg --import rpm-public-key.asc
+    $ gpg -k
+      ⋮
+    pub   rsa2048 2010-02-11 [SC]
+          1C61A2656FB57B7E4DE0F4C1FC918B335044912E
+    uid           [ unknown] Dropbox Automatic Signing Key <linux@dropbox.com>
+        $ makepkg -sri
+    $ makepkg -sri
+
+  Dropbox installed but not yet configured.  I keep a
+  dependency called gendesk because it looked interesting.
+
+    $ pacman -Qs gendesk
+    local/gendesk 1.0.6-1
+        Utility for generating desktop files
+
+  From the gendesk manpage:
+
+    gendesk - generate .desktop files based on command-line
+    arguments (or a PKGBUILD file)
+
+  Lets see where things got installed
+
+    $ pacman -Qmq | grep drop
+    dropbox
+
+    $ pacman -Qlq dropbox   <- removing non-empty directories shorten output
+    /opt/dropbox/ACKNOWLEDGEMENTS
+    /opt/dropbox/PyQt5.QtCore.cpython-37m-x86_64-linux-gnu.so
+    /opt/dropbox/PyQt5.QtDBus.cpython-37m-x86_64-linux-gnu.so
+    /opt/dropbox/PyQt5.QtGui.cpython-37m-x86_64-linux-gnu.so
+    /opt/dropbox/PyQt5.QtNetwork.cpython-37m-x86_64-linux-gnu.so
+    /opt/dropbox/PyQt5.QtPrintSupport.cpython-37m-x86_64-linux-gnu.so
+    /opt/dropbox/PyQt5.QtQml.cpython-37m-x86_64-linux-gnu.so
+    /opt/dropbox/PyQt5.QtQuick.cpython-37m-x86_64-linux-gnu.so
+    /opt/dropbox/PyQt5.QtWidgets.cpython-37m-x86_64-linux-gnu.so
+    /opt/dropbox/README
+    /opt/dropbox/VERSION
+    /opt/dropbox/_cffi_backend.cpython-37m-x86_64-linux-gnu.so
+    /opt/dropbox/_ctypes.cpython-37m-x86_64-linux-gnu.so
+    /opt/dropbox/_decimal.cpython-37m-x86_64-linux-gnu.so
+    /opt/dropbox/_yappi.cpython-37m-x86_64-linux-gnu.so
+    /opt/dropbox/allocator_metrics.cpython-37m-x86_64-linux-gnu.so
+    /opt/dropbox/apex._apex.cpython-37m-x86_64-linux-gnu.so
+    /opt/dropbox/cpuid_native.cpython-37m-x86_64-linux-gnu.so
+    /opt/dropbox/cryptography.hazmat.bindings._constant_time.cpython-37m-x86_64-linux-gnu.so
+    /opt/dropbox/cryptography.hazmat.bindings._openssl.cpython-37m-x86_64-linux-gnu.so
+    /opt/dropbox/cryptography.hazmat.bindings._padding.cpython-37m-x86_64-linux-gnu.so
+    /opt/dropbox/dropbox
+    /opt/dropbox/dropboxd
+    /opt/dropbox/fastpath.cpython-37m-x86_64-linux-gnu.so
+    /opt/dropbox/helpers/
+    /opt/dropbox/images/emblems/emblem-dropbox-app.icon
+    /opt/dropbox/images/emblems/emblem-dropbox-app.svg
+    /opt/dropbox/images/emblems/emblem-dropbox-infinite.icon
+    /opt/dropbox/images/emblems/emblem-dropbox-infinite.png
+    /opt/dropbox/images/emblems/emblem-dropbox-mixedstate.icon
+    /opt/dropbox/images/emblems/emblem-dropbox-mixedstate.png
+    /opt/dropbox/images/emblems/emblem-dropbox-selsync.icon
+    /opt/dropbox/images/emblems/emblem-dropbox-selsync.png
+    /opt/dropbox/images/emblems/emblem-dropbox-syncing.icon
+    /opt/dropbox/images/emblems/emblem-dropbox-syncing.png
+    /opt/dropbox/images/emblems/emblem-dropbox-unsyncable.icon
+    /opt/dropbox/images/emblems/emblem-dropbox-unsyncable.png
+    /opt/dropbox/images/emblems/emblem-dropbox-uptodate.icon
+    /opt/dropbox/images/emblems/emblem-dropbox-uptodate.png
+    /opt/dropbox/images/hicolor/16x16/status/dropboxstatus-blank.png
+    /opt/dropbox/images/hicolor/16x16/status/dropboxstatus-busy.png
+    /opt/dropbox/images/hicolor/16x16/status/dropboxstatus-busy2.png
+    /opt/dropbox/images/hicolor/16x16/status/dropboxstatus-idle.png
+    /opt/dropbox/images/hicolor/16x16/status/dropboxstatus-logo.png
+    /opt/dropbox/images/hicolor/16x16/status/dropboxstatus-x.png
+    /opt/dropbox/libGL.so.1
+    /opt/dropbox/libQt5Core.so.5
+    /opt/dropbox/libQt5DBus.so.5
+    /opt/dropbox/libQt5Gui.so.5
+    /opt/dropbox/libQt5Network.so.5
+    /opt/dropbox/libQt5OpenGL.so.5
+    /opt/dropbox/libQt5PrintSupport.so.5
+    /opt/dropbox/libQt5Qml.so.5
+    /opt/dropbox/libQt5Quick.so.5
+    /opt/dropbox/libQt5Sql.so.5
+    /opt/dropbox/libQt5WebKit.so.5
+    /opt/dropbox/libQt5WebKitWidgets.so.5
+    /opt/dropbox/libQt5Widgets.so.5
+    /opt/dropbox/libQt5XcbQpa.so.5
+    /opt/dropbox/libX11-xcb.so.1
+    /opt/dropbox/libatomic.so.1
+    /opt/dropbox/libdrm.so.2
+    /opt/dropbox/libdropbox_apex.so
+    /opt/dropbox/libdropbox_nucleus.so
+    /opt/dropbox/libdropbox_sqlite_ext.so
+    /opt/dropbox/libdropbox_tprt.so
+    /opt/dropbox/libffi.so.6
+    /opt/dropbox/libicudata.so.42
+    /opt/dropbox/libicui18n.so.42
+    /opt/dropbox/libicuuc.so.42
+    /opt/dropbox/libpopt.so.0
+    /opt/dropbox/linuxffi_gnu_native.cpython-37m-x86_64-linux-gnu.so
+    /opt/dropbox/linuxffi_pthread_native.cpython-37m-x86_64-linux-gnu.so
+    /opt/dropbox/linuxffi_resolv_native.cpython-37m-x86_64-linux-gnu.so
+    /opt/dropbox/linuxffi_sys_native.cpython-37m-x86_64-linux-gnu.so
+    /opt/dropbox/linuxinfinite_native.cpython-37m-x86_64-linux-gnu.so
+    /opt/dropbox/nucleus_python.cpython-37m-x86_64-linux-gnu.so
+    /opt/dropbox/plugins/
+    /opt/dropbox/plugins/platforms/
+    /opt/dropbox/plugins/platforms/libqxcb.so
+    /opt/dropbox/posixffi_libc_native.cpython-37m-x86_64-linux-gnu.so
+    /opt/dropbox/psutil._psutil_linux.cpython-37m-x86_64-linux-gnu.so
+    /opt/dropbox/psutil._psutil_posix.cpython-37m-x86_64-linux-gnu.so
+    /opt/dropbox/python-packages.zip
+    /opt/dropbox/qt.conf
+    /opt/dropbox/resources/resources_images.rcc
+    /opt/dropbox/resources/resources_qml.rcc
+    /opt/dropbox/sip.cpython-37m-x86_64-linux-gnu.so
+    /opt/dropbox/tornado.speedups.cpython-37m-x86_64-linux-gnu.so
+    /opt/dropbox/tprt.cpython-37m-x86_64-linux-gnu.so
+    /opt/dropbox/wmctrl
+    /opt/dropbox/wrapt._wrappers.cpython-37m-x86_64-linux-gnu.so
+    /usr/bin/dropbox
+    /usr/lib/systemd/system/dropbox@.service
+    /usr/lib/systemd/user/
+    /usr/lib/systemd/user/dropbox.service
+    /usr/share/applications/dropbox.desktop
+    /usr/share/licenses/dropbox/terms.txt
+    /usr/share/pixmaps/dropbox.svg
+    
+  Dropbox can be run from boot as a systemd system service
+  or from user login as a systemd user service.  Lets
+  configure it to start as a systemd user service.o
+
+    $ systemctl --user is-enabled dropbox
+    disabled
+
+    $ systemctl --user enable dropbox
+    Created symlink /home/grs/.config/systemd/user/default.target.wants/dropbox.service → /usr/lib/systemd/user/dropbox.service.
+
+  The wiki states that if you want Dropbox to use your
+  system tray, it needs to know which X display to use.
+  But, systemd seems to know my DISPLAY already,
+
+    $ systemctl --user show-environment|grep DISPLAY
+    DISPLAY=:1
+
+  Lets see if it works, if not then I will use
+
+        $ systemctl --user edit dropbox
+
+  and edit in the DISPLAY I usually use
+
+        [Service]
+        Environment=DISPLAY:1
+        
+  Lets try starting it,
+
+    $ systemctl --user start dropbox
+
+  No system tray icon, but Gnome's system tray is
+  wonky anyway.  It does bring up my default browser
+  to log in.  It does not take my password I reset
+  the other day, so I went thru the reset process
+  and resrt it to the same thing.
+
+  Nothing in ~/Dropbox yet, but it did rudely crete
+  a ~/.config/autostart/dropbox.desktop file with
+  these contents:
+
+    $ cat ~/.config/autostart/dropbox.desktop 
+    [Desktop Entry]
+    Version=1.0
+    Type=Application
+    Name=Dropbox
+    Comment=A free service that lets you bring your photos, docs, and videos anywhere and share them easily.
+    Exec=dropbox
+    Icon=dropbox
+    Terminal=false
+    StartupNotify=false
+    Categories=Network
+
+  Let's try and stop this non-sense (hope this does't
+  break things)
+
+    $ rm ~/.config/autostart/dropbox.desktop 
+    $ touch ~/.config/autostart/dropbox.desktop
+    $ chmod 000 ~/.config/autostart/dropbox.deskto
+
+  Did a reboot, dropbox running but not updating.
+
+    systemctl --user restart dropbox
+
+  Web browser launched asking mr for my dropbox
+  and password.  Now working!  Able to exchange
+  a file between my phone and gauss17.
+

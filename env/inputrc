@@ -6,9 +6,9 @@ set editing-mode vi
 
 # Change prompt if in command vs insert mode
 set show-mode-in-prompt on
-$if term=linux
-    set vi-ins-mode-string \1\e[?0c\2
-    set vi-cmd-mode-string \1\e[?8c\2
+$if term=linuxNEEDTOFIX
+    set vi-ins-mode-string \1\e[?6c\2
+    set vi-cmd-mode-string \1\e[?2c\2
 $else
     set vi-ins-mode-string \1\e[6 q\2
     set vi-cmd-mode-string \1\e[2 q\2

@@ -35,12 +35,15 @@ set expandtab
 " Misc. configurations
 set history=5000  " Number lines of command history to keep
 set mouse=n       " Enable mouse for normal mode only
-set scrolloff=3   " Keep cursor away from edge of window
 set nowrap        " Don't wrap lines
 set sidescroll=1  " Horizontally scroll nicely
+set scrolloff=3   " Keep cursor away from edge of window
 set splitbelow    " Horizontally split below
 set splitright    " Vertically split to right
 set ruler         " Show line/column info
+set laststatus=2  " Allows ahow the status line
+set hlsearch      " Highlight / search results after <ret>
+set incsearch     " Highlight / search matches as you type
 
 " Setup the Plug plugin manager
 "

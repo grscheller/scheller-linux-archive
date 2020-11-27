@@ -45,16 +45,11 @@ set laststatus=2  " Allows ahow the status line
 set hlsearch      " Highlight / search results after <ret>
 set incsearch     " Highlight / search matches as you type
 
-" Duplicate neovim cursor behavior
+" Duplicate neovim cursor behavior on xterm/urxvt family of terminals
 if &term =~ "xterm\\|rxvt"
   let &t_SI = "\<esc>[6 q"
   let &t_SR = "\<esc>[4 q"
   let &t_EI = "\<esc>[2 q"
-"elseif &term == "linux"
-"  let &t_ve = "\<esc>[?81;0;112c"
-"  let &t_SI = "\<esc>[?6c"
-"  let &t_SR = "\<esc>[?4c"
-"  let &t_EI = "\<esc>[?2c"
 endif
 
 " Setup the Plug plugin manager

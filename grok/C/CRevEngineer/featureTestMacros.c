@@ -6,7 +6,7 @@
 #include <stdlib.h>
 
 int
-main(int argc, char *argv[])
+main(void)
 {
 #ifdef _POSIX_SOURCE
     printf("_POSIX_SOURCE defined\n");

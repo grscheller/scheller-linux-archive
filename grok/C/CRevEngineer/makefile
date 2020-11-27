@@ -1,6 +1,6 @@
 CC=gcc
 #CC=clang
-CFLAGS=-Wall
+CFLAGS=-Wall -Wextra -pedantic
 FTM_BINARIES=ftmBasic \
              ftmXOpen500 ftmXOpen600 ftmXOpen700 ftmXOpen \
              ftmISOC99 ftmISOC11 \
@@ -8,11 +8,15 @@ FTM_BINARIES=ftmBasic \
              ftmPOSIX199309L ftmPOSIX199506L ftmPOSIX200112L \
              ftmPOSIX200809L ftmPOSIX202012L \
              ftmGNU
-BINARIES=endianness gnuPosixComplianceTrick korn sizesOfThings
+RAW_BINARIES=raw01
+MISC_BINARIES=endianness gnuPosixComplianceTrick korn sizesOfThings
 
 default: binaries
 
-binaries: $(BINARIES) ftm
+binaries: raw misc ftm
+
+## MISC. BINARIES
+misc: $(MISC_BINARIES)
 
 endianness: endianness.c
 	$(CC) $(CFLAGS) -o $@ $<
@@ -20,12 +24,21 @@ endianness: endianness.c
 gnuPosixComplianceTrick: gnuPosixComplianceTrick.c gnuPosixComplianceTrick.h
 	$(CC) $(CFLAGS) -o $@ $<
 
+# Add -Wall to see questionable contructs 
 korn: korn.c
-	$(CC) $(CFLAGS) -o $@ $<
+	$(CC) -o $@ $<
 
+# Add -pedantic to see questionable contructs 
 sizesOfThings: sizesOfThings.c
-	$(CC) $(CFLAGS) -o $@ $<
+	$(CC) -Wall -Wextra -o $@ $<
 
+## RAW BINARIES
+raw: $(RAW_BINARIES)
+
+raw01: raw01.c
+	$(CC) $(CFLAGS) -std=c99 -o $@ $<
+
+## FTM
 ftm: $(FTM_BINARIES)
 
 ftmBasic: featureTestMacros.c
@@ -84,4 +97,4 @@ testSys: $(FTM_BINARIES)
 	done
 
 clean:
-	rm -f $(BINARIES) $(FTM_BINARIES)
+	rm -f $(MISC_BINARIES) $(FTM_BINARIES) $(RAW_BINARIES)

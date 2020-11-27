@@ -1,9 +1,23 @@
 # C Reverse Engineering
 
-ANSI-C coding techniques for "system reverse engineering."
+C coding techniques for "system reverse engineering."
 
-* __endianness.c__: [Determine hardware "endianness"](endianess.c)
-* __featureTestMacros.c__: [Test compiler options](ftm.md)
-* __gnuPosixComplianceTrick.h__: [Defined just for POSIX compliance](gnuPosixComplianceTrick.h)
-* __korn.c__: [Obfuscated C Code](korn.c)
-* __sizeOfThings.c__: [Size in bytes of C constructs](korn.c)
+## C Feature Test Macros
+
+* **featureTestMacros.c**: [Test compiler options](ftm.md)
+
+## C Raw Terminal Techniques
+
+Build up to a program that works in raw mode.  More or less
+following [this guide][1].
+
+[1]: https://viewsourcecode.org/snaptoken/kilo/02.enteringRawMode.html
+
+* **raw01.c**: [Start in canonical "cooked" mode](raw01.c)
+
+## Misc. Techniques
+
+* **endianness.c**: [Determine hardware "endianness"](endianess.c)
+* **gnuPosixComplianceTrick.h**: [Defined just for POSIX compliance](gnuPosixComplianceTrick.h)
+* **korn.c**: [Obfuscated C Code](korn.c)
+* **sizeOfThings.c**: [Size in bytes of C constructs](sizeOfThings.c)

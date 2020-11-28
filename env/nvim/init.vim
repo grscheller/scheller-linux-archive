@@ -33,17 +33,20 @@ set softtabstop=4
 set expandtab
 
 " Misc. configurations
-set history=5000  " Number lines of command history to keep
-set mouse=n       " Enable mouse for normal mode only
-set nowrap        " Don't wrap lines
-set sidescroll=1  " Horizontally scroll nicely
-set scrolloff=3   " Keep cursor away from edge of window
-set splitbelow    " Horizontally split below
-set splitright    " Vertically split to right
-set ruler         " Show line/column info
-set laststatus=2  " Allows ahow the status line
-set hlsearch      " Highlight / search results after <ret>
-set incsearch     " Highlight / search matches as you type
+set history=5000    " Number lines of command history to keep
+set mouse=n         " Enable mouse for normal mode only
+set scrolloff=3     " Keep cursor away from top/bottom of window
+set nowrap          " Don't wrap lines
+set sidescroll=1    " Horizontally scroll nicely
+set sidescrolloff=5 " Keep cursor away from side of window
+set splitbelow      " Horizontally split below
+set splitright      " Vertically split to right
+set ruler           " Show line/column info
+set laststatus=2    " Allows ahow the status line
+set hlsearch        " Highlight / search results after <ret>
+set incsearch       " Highlight / search matches as you type
+set ignorecase      " Case insensitive search, unless
+set smartcase       " ... unless query has caps
 
 " Setup the Plug plugin manager
 "
@@ -119,3 +122,27 @@ nnoremap <leader>\ :nohlsearch<return>
 
 " Toggle Synastic into and out of passive mode
 nnoremap <leader>st :SyntasticToggleMode<return>
+
+" Reassign Q in normal mode to apply macro stored in register q
+"     note: previously Q caused EX-mode
+nnoremap Q @q
+
+" Toggle between 3 line numbering states via <leader>n
+set nonumber
+set norelativenumber
+
+function! MyLineNumberToggle()
+  if(&relativenumber == 1)
+    set nonumber
+    set norelativenumber
+  elseif(&number == 1)
+    set nonumber
+    set relativenumber
+  else
+    set number
+    set norelativenumber
+  endif
+endfunction
+
+nnoremap <leader>n :call MyLineNumberToggle()<return>
+

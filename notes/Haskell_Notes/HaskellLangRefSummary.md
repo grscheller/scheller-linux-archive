@@ -162,8 +162,8 @@
 * `:`, `[]`, and `[a,b]` list constructors are built into the
   base language (kernel???) to make more compatible
   with the LISP family of functional languages
-* With the exception of the prefix operator`-`, all other operators
-  are infix.  May need parentheses to force`-`prefix
+* With the exception of the prefix operator `-`, all other operators
+  are infix.  May need parentheses to force `-` prefix
 
   ```
      ghci> 4 - (- 3)
@@ -301,8 +301,8 @@
 
 ### Layout
 
-* In the kernel language`{ ... }`is used for
-  grouping and`;`for expression separation
+* In the kernel language `{ ... }` is used for
+  grouping and `;` for expression separation
   * Very rarely seen used in code
   * Sometimes useful in ghci one-liners.
   * Makes Haskell programs easier to be produced by other programs.
@@ -310,7 +310,7 @@
   * The `;` is used like in Pascal as a separator except
     for expressions, Haskell has no statements.
 * Layout optional, gives Haskell more of a Python feel
-  * Culture (parser too?) puts the`;`before the next
+  * Culture (parser too?) puts the `;` before the next
     statement instead of after the previous one.
   * Parser "substitutes" certain indentation with brackets and semicolens.
 * Example with layout
@@ -443,10 +443,10 @@
 
 ### Errors
 
-* Errors during expression evaluation, denoted by`⊥`(bottom), are
+* Errors during expression evaluation, denoted by `⊥` (bottom), are
   indistinguishable by a Haskell program from non-termination.
 * Since Haskell is a non-strict language (only evaluate function
-  arguments if necessary), all Haskell types include`⊥`.
+  arguments if necessary), all Haskell types include `⊥`.
 * When evaluated, errors cause immediate program termination.
 * Prelude provides two such functions
   * `error     :: String -> a`

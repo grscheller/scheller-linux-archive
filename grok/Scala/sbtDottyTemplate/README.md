@@ -6,7 +6,7 @@ begin new projects,
 ## Usage (from original boilerplate)
 
 This is a normal sbt project, you can compile code
-with `sbt compile` and run it with `sbt run`,
+with `sbt compile`, run it with `sbt run`, and
 `sbt console` will start a Dotty REPL.
 
 For more information on the sbt-dotty plugin, see the

@@ -25,23 +25,23 @@ Automtic variables are set by make after a rule is matched.
 
 Names that when used as targets, change the behavior of Make.
 
-| Built-in Target       | Effect on Prereqs when targets & other side effects |
-|:--------------------- |:--------------------------------------------------- |
-|`.PHONY`               | Not real filesystem files, just recipes for tasks   |
-|`.SUFFIXES`            | Prereqs are list of suffixes for rest of makefile   |
-|`.DEFAULT`             | Gives last resort recipe for prerequisites          |
-|`.PRECIOUS`            | Prereqs, when targets, not deleted if make killed   |
-|`.INTEMEDIATE`         | Targets of prereqs treated as intermediate files    |
-|`.SECONDARY`           | Same as .INTERMEDIATE but never automaically delete |
-|`.SECONDEXPANSION`     | Expand again after all included makefiles read in   |
-|`.DELETE_ON_ERROR`     | If recipe fails, delete target if it has changed    |
-|`.IGNORE`              | Ignore errors when executing recipes                |
-|`.LOW_RESOLUTION_TIME` | For recipes which don't preserve timestamps well    |
-|`.SILENT`              | Don't print recipe before execution                 |
-|`.EXPORT_ALL_VARIABLES`| Export variables to child processes                 |
-|`.NOTPARALLEL`         | Causes current invocation of make to serialize      |
-|`.ONESHELL`            | All tabbed recipe lines executed in one shell       |
-|`.POSIX`               | Run make in POSIX compliant mode                    |
+| Built-in Target        | Effect on Prereqs when targets & other side effects |
+|:---------------------- |:--------------------------------------------------- |
+|`.PHONY`                | Not real filesystem files, just recipes for tasks   |
+|`.SUFFIXES`             | Prereqs are list of suffixes for rest of makefile   |
+|`.DEFAULT`              | Gives last resort recipe for prerequisites          |
+|`.PRECIOUS`             | Prereqs, when targets, not deleted if make killed   |
+|`.INTEMEDIATE`          | Targets of prereqs treated as intermediate files    |
+|`.SECONDARY`            | Same as .INTERMEDIATE but never automaically delete |
+|`.SECONDEXPANSION`      | Expand again after all included makefiles read in   |
+|`.DELETE_ON_ERROR`      | If recipe fails, delete target if it has changed    |
+|`.IGNORE`               | Ignore errors when executing recipes                |
+|`.LOW_RESOLUTION_TIME`  | For recipes which don't preserve timestamps well    |
+|`.SILENT`               | Don't print recipe before execution                 |
+|`.EXPORT_ALL_VARIABLES` | Export variables to child processes                 |
+|`.NOTPARALLEL`          | Causes current invocation of make to serialize      |
+|`.ONESHELL`             | All tabbed recipe lines executed in one shell       |
+|`.POSIX`                | Run make in POSIX compliant mode                    |
 
 Notes on Built-in Targets:
 

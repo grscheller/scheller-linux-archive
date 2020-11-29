@@ -2,7 +2,7 @@
 
 * Depending how you compile it, [sumit.c](sumit.c) is an example of the compiler
   doing the calculation and the program merely printing a constant
-* How to stop this from happening by using of C language`volitile`keyword
+* How to stop this from happening by using of C language `volitile` keyword
 * Also, illustrates POSIX shell scripting techniques within a makefile
 
 Build 4 binaries from one source file, time them, and clean up:

@@ -31,7 +31,7 @@
 * Displays
 * Mouse & Touchpad
 * Keyboard Shortcuts
-  * Added`<ctrl>+<alt>+T`for urxvt terminal
+  * Added `<ctrl>+<alt>+T` for urxvt terminal
 * Printers
 * Removable Media
 * Color management settings for monitors and Printers

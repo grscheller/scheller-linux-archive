@@ -23,7 +23,7 @@ directory as my working directory.  I set
 
 so `python` and `pylint` can find these libraries and my shell can
 find the executables.  I also have a [.pylintrc](.pylintrc) file
-here so that variable names like `m`,`n`,`a`,`b` don't make `pylint`
+here so that variable names like `m`, `n`, `a`, `b` don't make `pylint`
 complain too much.  Normally these would be horrible names but,
 in the context of mathy integer functions and functional programming,
 they do make sense.

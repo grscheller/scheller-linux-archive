@@ -1222,7 +1222,7 @@ Note: On 2019-03-30 decided to look into the possibility of
   In the rc file was the line
     session = /home/geoff/.rtorrent.session
   where I decided to name a directory that enables rtorrent to
-  "remebers things" different than the default name of .session,
+  "remembers things" different than the default name of .session,
   and created it too.  Also created watch and torrent directories
   too, also configured in .rtorrent.rc.
 
@@ -8433,4 +8433,26 @@ Note: On 2019-03-30 decided to look into the possibility of
   Web browser launched asking mr for my dropbox
   and password.  Now working!  Able to exchange
   a file between my phone and gauss17.
+
+2020-11-28:
+  Get Bluetooth configured and working.
+
+  Check to see if necessary packages are
+  installed and install what is missing.
+
+    $ pacman -Ss '^(bluez|bluez-utils|blueman)$'
+    extra/bluez 5.55-1 [installed]
+        Daemons for the bluetooth protocol stack
+    extra/bluez-utils 5.55-1
+        Development and debugging utilities for the bluetooth protocol stack
+    community/blueman 2.1.3-1
+        GTK+ Bluetooth Manager
+
+    $ sudo pacman -S bluez-utils blueman
+
+
+https://www.jeremymorgan.com/tutorials/linux/how-to-bluetooth-arch-linux/
+https://wiki.archlinux.org/index.php/Bluetooth
+
+https://learnvimscriptthehardway.stevelosh.com/chapters/22.html
 

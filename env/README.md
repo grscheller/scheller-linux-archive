@@ -24,13 +24,13 @@ are the traditional tools for users to tweak their initial
 shell environments.  Login shells source these files.  Shells
 in terminal emulators are not descendant from login shells.
 
-The various`.*rc`files determine whether or not an initial shell
+The various `.*rc` files determine whether or not an initial shell
 environment was properly configured.  If not, they source
 a POSIX shell script `~/.envrc` to do an initial configuration.
 
 Another approach would be to have the terminal emulator invoke
 a login shell.  A login shell may not always be wanted for a new
-terminal window.  For example, my shell function`tm`will launch
+terminal window.  For example, my shell function `tm` will launch
 a new terminal window whose shell inherits the environment of
 the involking shell.  Just spawning a login shell will not
 necessarily give you the same "virgin" initial environment you
@@ -112,7 +112,7 @@ get when you log in via ssh or the console.
 
 ### For non-login interactive shells and non-interactive shells
 
-* Bash sources`$BASH_ENV`if it exists as a file, otherwise sources ~/.bashrc
-* POSIX shells source $ENV if it exists as a file
+* Bash sources `$BASH_ENV` if it exists as a file, otherwise sources ~/.bashrc
+* POSIX shells source `$ENV` if it exists as a file
 
 This is what these shells do.  What you do with it, is up to you.

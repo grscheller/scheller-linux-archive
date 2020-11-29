@@ -8,8 +8,7 @@
 # or less, POSIX complient systems.
 #
 #   Written by Geoffrey Scheller
-#   See: https://github.com/grscheller/scheller-environment-config/env
-#        https://github.com/grscheller/shell-environment-config
+#   See: https://github.com/grscheller/scheller-linux-archive/env
 #
 
 ## If not interactive, don't do anything.

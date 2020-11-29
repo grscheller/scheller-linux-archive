@@ -4,6 +4,9 @@
 ##
 #   ~/.profile
 #
+#   Written by Geoffrey Scheller
+#   See: https://github.com/grscheller/scheller-linux-archive/env
+#
 
 ## Configurature an initial interactive environment
 [ -r ~/.envrc ] && . ~/.envrc

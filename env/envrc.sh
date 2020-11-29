@@ -14,6 +14,9 @@
 #  emulators are not decendant from login shells.
 #  We can no longer assume that .profile ever gets sourced.
 #
+#   Written by Geoffrey Scheller
+#   See: https://github.com/grscheller/scheller-linux-archive/env
+#
 
 ## Sentinel value to mark completion ofan initial environment configuration
 export ENV_INIT_LVL=${ENV_INIT_LVL:=0}

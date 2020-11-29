@@ -4,6 +4,9 @@
 ##
 #  ~/.shrc
 #
+#   Written by Geoffrey Scheller
+#   See: https://github.com/grscheller/scheller-linux-archive/env
+#
 
 ## If not interactive, don't do anything.
 case $- in

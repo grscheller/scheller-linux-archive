@@ -8450,9 +8450,64 @@ Note: On 2019-03-30 decided to look into the possibility of
 
     $ sudo pacman -S bluez-utils blueman
 
+  Well get back to this later.  Will use the following references.
 
-https://www.jeremymorgan.com/tutorials/linux/how-to-bluetooth-arch-linux/
-https://wiki.archlinux.org/index.php/Bluetooth
+    https://www.jeremymorgan.com/tutorials/linux/how-to-bluetooth-arch-linux/
+    https://wiki.archlinux.org/index.php/Bluetooth
 
-https://learnvimscriptthehardway.stevelosh.com/chapters/22.html
+2020-12-01:
+  My backups to an external NTFS hardrive does not retain the
+  file permissions.
+
+    $ pacman -Qs ntfs
+    local/ntfs-3g 2017.3.23-5
+        NTFS filesystem driver and utilities
+
+  On 2017-06-28 I installed NTFS drivers ntfs-3g gvfs-afc
+  to get external hard drive to work. 
+
+  On 2018-07-06 got my PC's built in SD card reader to work by installing
+  the utilities for exFAT file system.
+
+    $ sudo pacman -Syu exfat-utils
+
+  From previous note:
+    Package community/exfat-utils uses the extra/fuse2 package.
+    Utilities that use fuse2 work in user space, ...
+    The filesystems which use fuse2 are: exfat-utils gvfs ntfs-3g
+
+  Something tells me I am mounting my external hard drive exfat???
+
+    $ mount | grep /dev/sdd
+    /dev/sdd1 on /run/media/grs/BUSLINK type fuseblk \
+    (rw,nosuid,nodev,relatime,user_id=0,group_id=0,  \
+    default_permissions,allow_other,blksize=4096,    \
+    uhelper=udisks2)
+
+  This is what gets automounted when I plug the drive in.
+
+  From the Arch Wiki NTFS-3G guide: https://wiki.archlinux.org/index.php/NTFS-3G
+
+    By default, ntfs-3g requires root rights to mount the
+    filesystem if it is a block device, even with the user
+    option in /etc/fstab. ... The user option in the fstab
+    is still required.
+
+    The ntfs-3g package does not have internal FUSE support.
+    Rebuild the package using ABS, or install ntfs-3g-fuse...
+
+  So, lets try uninstalling ntfs-3g and replacing it with
+  ntfs-3g-fuseAUR.
+
+    $ sudo pacman -R ntfs-3g
+    $ cd build/AUR/
+    $ git clone https://aur.archlinux.org/ntfs-3g-fuse.git
+    $ cd ntfs-3g-fuse/
+    $ makepkg -sri
+
+  Built from source code, last Git update was on
+  Thu May 25 14:48:01 2017.
+    
+  Still permissions on external HD wide open.
+
 

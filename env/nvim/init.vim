@@ -3,7 +3,7 @@
 " ~/.config/nvim/init.vim
 "
 
-" Enter the 21st Century
+"" Enter the 21st Century
 if &compatible
   set nocompatible
 endif
@@ -14,6 +14,8 @@ filetype plugin on
 set encoding=utf-8
 set fileencoding=utf-8
 set spelllang=en_us
+
+"" Personnal preferences
 
 " Allow :find and gf to use recursive sub-folders
 set path+=**
@@ -33,7 +35,7 @@ set softtabstop=4
 set expandtab
 
 " Misc. configurations
-set history=5000    " Number lines of command history to keep
+set history=10000   " Number lines of command history to keep
 set mouse=n         " Enable mouse for normal mode only
 set scrolloff=3     " Keep cursor away from top/bottom of window
 set nowrap          " Don't wrap lines
@@ -42,11 +44,13 @@ set sidescrolloff=5 " Keep cursor away from side of window
 set splitbelow      " Horizontally split below
 set splitright      " Vertically split to right
 set ruler           " Show line/column info
-set laststatus=2    " Allows ahow the status line
-set hlsearch        " Highlight / search results after <ret>
+set laststatus=2    " Allows show the status line
+set hlsearch        " Highlight / search results after <return>
 set incsearch       " Highlight / search matches as you type
 set ignorecase      " Case insensitive search, unless
 set smartcase       " ... unless query has caps
+
+"" Setup plugins
 
 " Setup the Plug plugin manager
 "
@@ -94,10 +98,11 @@ Plug 'michaeljsmith/vim-indent-object'
 Plug 'mbbill/undotree'
 
 " Shows what is in registers
-" extends " and @ in normal mode and <CTRL-R> in insert mode
+" extends " and @ in normal mode and <ctrl-r> in insert mode
 Plug 'junegunn/vim-peekaboo'
 
-" Extend <ctrl>-A <ctrl>-X to work with dates and not just numbers
+" Extend <ctrl-a> and <ctrl-x> to work
+" with dates and not just numbers.
 Plug 'tpope/vim-speeddating'
 
 call plug#end()
@@ -114,11 +119,14 @@ let g:syntastic_enable_balloons = 0
 " to be intepreted as MarkDown and not Modula-2
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 
-" Define <Leader> explicitly as \
-let mapleader = "\\"
+"" Set up key mappings
+
+" Define <Leader> explicitly as a space
+nnoremap <space> <nop>
+let mapleader = "\<space>"
 
 " Clear search highlighting with \\
-nnoremap <leader>\ :nohlsearch<return>
+nnoremap <leader><space> :nohlsearch<return>
 
 " Toggle Synastic into and out of passive mode
 nnoremap <leader>st :SyntasticToggleMode<return>

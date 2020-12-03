@@ -94,7 +94,7 @@ Plug 'nelstrom/vim-visual-star-search'
 " Surrond text objects with matching (). {}. '', etc
 Plug 'tpope/vim-surround'
 
-" Enable repeating supported plugin maps with "." 
+" Enable repeating supported plugin maps with "."
 Plug 'tpope/vim-repeat'
 
 " Indent text objects; defines 2 new text objects
@@ -132,15 +132,18 @@ autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 nnoremap <space> <nop>
 let mapleader = "\<space>"
 
-" Clear search highlighting with \\
+" Clear search highlighting
 nnoremap <leader><space> :nohlsearch<return>
 
 " Toggle Synastic into and out of passive mode
 nnoremap <leader>st :SyntasticToggleMode<return>
 
 " Reassign Q in normal mode to apply macro stored in register q
-"     note: in vi and neovim, Q causes EX-mode
+" note: in vi and neovim, Q causes EX-mode
 nnoremap Q @q
+
+" Get rid of all trailing spaces for entire buffer
+nnoremap <leader>w :%s/ \+$//<return>
 
 " Toggle between 3 line numbering states via <leader>n
 set nonumber

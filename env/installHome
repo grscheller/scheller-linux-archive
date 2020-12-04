@@ -30,11 +30,12 @@ RM_FILES='
 '
 
 BIN_SCRIPTS='
+   bootstrapPlug
+   buArch
    digpath.bash
    digpath.sh
-   pathtrim
-   buArch
    monitor
+   pathtrim
    rt
    spin
    viewJarManifest
@@ -130,7 +131,7 @@ do
         ;;
     -a|--all)
         vim_flag=1
-        nvim_flag=1
+        vim_flag=1
         xreload_flag=1
         ;;
     -h|-help|--help)
@@ -145,13 +146,13 @@ do
         printf '\nwhere\n' >&2
         printf '   -v or --vim  install  vim config file ~/.vim/vimrc\n' >&2
         printf '   -n or --nvim install nvim config file %s\n' "\$XDG_CONFIG_HOME/nvim/nvim.vim" >&2
-        printf '   -a or --all  install both\n' >&2
+        printf '   -a or --all  install all 3 extras\n' >&2
         printf '   -h or --help print this message\n' >&2
         # shellcheck disable=SC2088
         printf '\ndefault value for %s = %s\n' "\$XDG_CONFIG_HOME" '~/.config' >&2
         exit 2
         ;;
-    *)  printf '\n'
+    *)  printf '\n' >&2
         printf "Error: Invalid option '%s'\\n" "$1" >&2
         printf "       Run './installHome -h' for help\\n" >&2 
         exit 2

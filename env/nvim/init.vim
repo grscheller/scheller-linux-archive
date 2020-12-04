@@ -49,6 +49,8 @@ set hlsearch        " Highlight / search results after <return>
 set incsearch       " Highlight / search matches as you type
 set ignorecase      " Case insensitive search, unless
 set smartcase       " ... unless query has caps
+set nrformats=bin,hex,octal " bases used for <ctrl-a> & <ctrl-x>,
+set nrformats+=alpha        " also single letters too
 
 "" Setup plugins
 
@@ -132,7 +134,7 @@ nnoremap <leader><space> :nohlsearch<return>
 nnoremap <leader>st :SyntasticToggleMode<return>
 
 " Reassign Q in normal mode to apply macro stored in register q
-" note: previously Q caused EX-mode
+" note: default behavior of Q causes EX-mode
 nnoremap Q @q
 
 " Get rid of all trailing spaces for entire buffer

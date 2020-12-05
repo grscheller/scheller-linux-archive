@@ -37,14 +37,14 @@ Purpose: To track what I did to configure to configure Termux
     Linux localhost 3.18.71-perf+ #1 SMP PREEMPT
     Fri Aug 14 16:22:30 KST 2020 armv71 Android
 
-2020-13-04:
+2020-12-04:
   Today I installed a 32GB SD card.  To get Termux to be
   able to access it, I proformed the following from the
   command line:
 
     $ termux-setup-storage
 
-  It hardlinks here -> ~/storage
+  It put links here -> ~/storage
 
     dcim -> /storage/emulated/0/DCIM
     downloads -> /storage/emulated/0/Download
@@ -60,9 +60,17 @@ Purpose: To track what I did to configure to configure Termux
     16397 /data/data/com.termux/files/home/storage/pictures/
     16397 /storage/emulated/0/Pictures/
 
-  Some of the intervening directories
-  my Termux user does not have full
-  permissions for them.
+  Some of the intervening directories my Termux user does not
+  have full permissions for them.
 
     $ ls -ld /storage/emulated/
     drwx--x--x 4 root everybody 4096 Dec 31 2017 /storage/emulated/
+
+  Happly, I was able to move my homepage.html and its style sheet
+  to where Firefox 84,0,0-beta 2 could find them.
+
+    file:///storage/emulated/0/Pictures/homepage.html
+
+  Had to bookmark location, seems that this version of Firefox
+  has no concept of a Home Page.  Pictures/ is a good location,
+  will probably never put pictures there.

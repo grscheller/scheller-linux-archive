@@ -44,5 +44,25 @@ Purpose: To track what I did to configure to configure Termux
 
     $ termux-setup-storage
 
-  It created a bunch of symlinks here -> ~/storage
+  It hardlinks here -> ~/storage
 
+    dcim -> /storage/emulated/0/DCIM
+    downloads -> /storage/emulated/0/Download
+    external-1 -> /storage/10A9-B539/Android/data /com.termux/files
+    movies -> /storage/emulated/0/Movies
+    music -> /storage/emulated/0/Music
+    pictures -> /storage/emulated/0/Pictures
+    shared -> /storage/emulated/0
+
+  These are hardlinks
+
+    $ ls -id /storage/emulated/0/Pictures/ ~/storage/pictures/
+    16397 /data/data/com.termux/files/home/storage/pictures/
+    16397 /storage/emulated/0/Pictures/
+
+  Some of the intervening directories
+  my Termux user does not have full
+  permissions for them.
+
+    $ ls -ld /storage/emulated/
+    drwx--x--x 4 root everybody 4096 Dec 31 2017 /storage/emulated/

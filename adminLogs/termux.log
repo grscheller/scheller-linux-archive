@@ -1,0 +1,48 @@
+Purpose: To track what I did to configure to configure Termux
+         on my Andriod Cell Phome:
+
+  I had Termux installed for a while.  I have no
+  desire to "root" the phone.  Androids cordons off
+  Termux on the internal memmory, I can't share files
+  between Termux and the other Apps.  I want to point
+  the Firefox browser app at my file based homepage I
+  clone from GitHub.
+
+  I installed DropBox, but I have the same problem.
+  DropBox won't share files with the other Apps.
+
+  I got a 32G SD card for the phone.  Lets see if
+  I can get Firefox and Termux to both used the same
+  memory on the card.
+
+2020-12-04:
+  I have an LG Phoenix 4 Android cell phone which
+  I have previously installed Termux on it.
+
+  What Abdroid says the phone is:
+
+    Settings ->
+       System ->
+          About phone ->
+             Software info ->
+                Android version:  8.1.0
+                Kernel version:   3.18.71
+                Software Version: X210AMPM20t
+             Hardware info ->
+                LM-X210APM
+
+  What Termx thinks the phone is:
+
+    $ uname -a
+    Linux localhost 3.18.71-perf+ #1 SMP PREEMPT
+    Fri Aug 14 16:22:30 KST 2020 armv71 Android
+
+2020-13-04:
+  Today I installed a 32GB SD card.  To get Termux to be
+  able to access it, I proformed the following from the
+  command line:
+
+    $ termux-setup-storage
+
+  It created a bunch of symlinks here -> ~/storage
+

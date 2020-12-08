@@ -8450,7 +8450,7 @@ Note: On 2019-03-30 decided to look into the possibility of
 
     $ sudo pacman -S bluez-utils blueman
 
-  Well get back to this later.  Will use the following references.
+  I'll get back to this later.  Will use the following references.
 
     https://www.jeremymorgan.com/tutorials/linux/how-to-bluetooth-arch-linux/
     https://wiki.archlinux.org/index.php/Bluetooth
@@ -8510,4 +8510,43 @@ Note: On 2019-03-30 decided to look into the possibility of
     
   Still permissions on external HD wide open.
 
+2020-12-06:
+  Back to getting Bluetooth working.
+
+    $ lsmod | grep btusb
+    btusb                  65536  0
+    btrtl                  24576  1 btusb
+    btbcm                  16384  1 btusb
+    btintel                28672  1 btusb
+    bluetooth             679936  5 btrtl,btintel,btbcm,btusb
+
+  So bluetooth kernel driver is in place.
+
+  Enable and start the service,
+
+    $ sudo systemctl enable bluetooth.service
+    $ sudo systemctl start bluetooth.service
+
+  Its on, but 
+
+    Rt Top Dropdown -> Bluetooth On -> Bluetooth settings
+
+  Shows three "unkinowns" and a "circle of futility"
+
+  Have not put myself in the lp group yet:
+
+    $ id grs
+    uid=1003(grs) gid=1003(grs) groups=1003(grs),10(wheel)
+
+    usermod -aG group1,group2,group3 geoff
+    $ sudo usermod -aG lp grs
+
+    $ id grs
+    uid=1003(grs) gid=1003(grs) groups=1003(grs),7(lp),10(wheel)
+
+  Lets try a reboot.
+
+    Paired my phone with gauss17!  Now try and figure out
+    how to use Bluetooth.  Started IHeart radio on phone,
+    music came out on my computer headphones.
 

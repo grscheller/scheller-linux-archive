@@ -14,11 +14,15 @@ ExcludeDirs=(
     devel
     Videos
     OneDrive
-    .sane
     .cache
+    .config/chromium
+    .config/discord/blob_storage
     .config/evolution
+    .config/google-chrome
     .local/share/evolution
     .local/share/gvfs-metadata
+    .local/share/lbry/lbrynet/blobfiles
+    .sane
 )
 
 ExcludeFiles=(
@@ -67,28 +71,28 @@ fi
 
 printf 'INFO: Now backup to external HD\n' >&2
 
-printf -- '--exclude=%s/\n' "${ExcludeDirs[@]}" | {
-   mapfile -t ExcludeDirFlags
-   printf -- '--exclude=%s\n' "${ExcludeFiles[@]}" | {
-      mapfile -t ExcludeFileFlags
-      /usr/bin/rsync -avxP --delete \
-        "${ExcludeDirFlags[@]}" \
-        "${ExcludeFileFlags[@]}" \
-        "${HOME}" \
-        "$BackupLocation/" || {
-           RSYNC_FAILURE=$?
-           printf 'ERROR: rsync failure with error %s\n' "$RSYNC_FAILURE" >&2
-           printf 'ERROR: Failed backing up Home directory\n' >&2
-           exit 1
-        }
-   }
-}
-
-if (( $? == 0 ))
+if printf -- '--exclude=%s/\n' "${ExcludeDirs[@]}" | {
+     mapfile -t ExcludeDirFlags
+     printf -- '--exclude=%s\n' "${ExcludeFiles[@]}" | {
+        mapfile -t ExcludeFileFlags
+        /usr/bin/rsync -avxP --delete \
+          "${ExcludeDirFlags[@]}" \
+          "${ExcludeFileFlags[@]}" \
+          "${HOME}" \
+          "$BackupLocation/" || {
+             RSYNC_FAILURE=$?
+             printf 'ERROR: rsync failure with error %s\n' "$RSYNC_FAILURE" >&2
+             printf 'ERROR: Failed backing up Home directory\n' >&2
+             exit 1
+          }
+     }
+  }
 then
+    # Success
     printf 'INFO: Backup to external HD successful!\n' >&2
     exit 0
 else
+    # Failure
     printf 'WARNING: Problems with backup to external HD!\n' >&2
     exit 1
 fi

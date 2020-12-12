@@ -482,9 +482,16 @@ alias euler7='sshToSystem ${EULER7}'
 alias toEuler7='toSystem ${EULER7}'
 alias fromEuler7='fromSystem ${EULER7}'
 
-## Bash completion for stack (Haskell)
+## Configure Haskell
+
+# Suppress pedantic warnings, and whatever else
+# may get in the way of quickly syntax-checking
+# and evaluating an expression.
+ghci() { command ghci -v0 -Wno-all "$@"; }
+
 if digpath -q stack
 then
+    # Bash completion for stack (Haskell)
     eval "$(stack --bash-completion-script stack)"
 fi
 

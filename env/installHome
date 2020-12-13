@@ -131,7 +131,7 @@ do
         ;;
     -a|--all)
         vim_flag=1
-        vim_flag=1
+        nvim_flag=1
         xreload_flag=1
         ;;
     -h|-help|--help)
@@ -218,13 +218,16 @@ do
     }
 done
 
+
 ## Optionally install vim and/or nvim configuration file
 
 XDG_CONFIG_HOME="${XDG_CONFIG_HOME:=$HOME/.config}"
 [ -n "$vim_flag"  ] && install_vi_config vim ~/.vim vimrc
 [ -n "$nvim_flag" ] && install_vi_config nvim "$XDG_CONFIG_HOME/nvim" init.vim
 
+
 ## Optionally rerun xrdb if ~/.Xresources changed & X running
+
 [ -z "$xreload_flag" ] ||
     [ ! -x /usr/bin/xset ] || [ ! -x /usr/bin/xrdb ] ||
     diff ~/.Xresources ~/.Xresources.old >/dev/null 2>&1 ||

@@ -2,8 +2,8 @@ package comp.adt
 
 // Example of product types
 
-/* This one essentially the same as a Tuple3.  It
- * has 8 values if A = B = C = Boolean
+/* This one essentially the same as a Tuple3.
+ * It has 8 values if A = B = C = Boolean
  */
 case class Eight[A,B,C](a: A, b: B, c: C)
 

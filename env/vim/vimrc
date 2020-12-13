@@ -17,6 +17,9 @@ set spelllang=en_us
 
 "" Personnal preferences
 
+" Setup color scheme
+colorscheme ron
+
 " Allow :find and gf to use recursive sub-folders
 set path+=**
 set hidden

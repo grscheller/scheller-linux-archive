@@ -17,6 +17,9 @@ set spelllang=en_us
 
 "" Personnal preferences
 
+" Setup color scheme
+colorscheme murphy
+
 " Allow :find and gf to use recursive sub-folders
 set path+=**
 set hidden
@@ -26,6 +29,7 @@ set backspace=indent,eol,start
 
 " Make tab completion in command mode more efficient
 set wildmenu
+:q
 set wildmode=longest:full,full
 
 " Set default tabstops and replace tabs with spaces

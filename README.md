@@ -76,6 +76,7 @@ mature personal software development projects.
   * [Learn Scala](grok/Scala/learnScala/)
   * [Type Level Programming in Scala](grok/Scala/typeLevelProgramming/)
   * [Dotty Template](grok/Scala/sbtDottyTemplate)
+  * [Testing Out Li Haoyi's os-lib library](grok/Scala/osLib)
 
 ## Comparing Computer Languages
 

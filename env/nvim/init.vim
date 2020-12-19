@@ -7,8 +7,12 @@
 if &compatible
   set nocompatible
 endif
+filetype plugin indent on
 syntax enable
-filetype plugin on
+
+" Force all files ending in .md, besides just README.md,
+" to be intepreted as MarkDown and not Modula-2
+autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 
 " Set default encoding and localizations
 set encoding=utf-8
@@ -18,7 +22,7 @@ set spelllang=en_us
 "" Personnal preferences
 
 " Setup color scheme
-colorscheme murphy
+colorscheme ron
 
 " Allow :find and gf to use recursive sub-folders
 set path+=**
@@ -27,9 +31,8 @@ set hidden
 " More powerful backspacing
 set backspace=indent,eol,start
 
-" Make tab completion in command mode more efficient
+" Make tab completion in command mode more useful
 set wildmenu
-:q
 set wildmode=longest:full,full
 
 " Set default tabstops and replace tabs with spaces
@@ -51,21 +54,25 @@ set ruler           " Show line/column info
 set laststatus=2    " Allows show the status line
 set hlsearch        " Highlight / search results after <return>
 set incsearch       " Highlight / search matches as you type
-set ignorecase      " Case insensitive search, unless
+set ignorecase      " Case insensitive search,
 set smartcase       " ... unless query has caps
 set nrformats=bin,hex,octal " bases used for <ctrl-a> & <ctrl-x>,
-set nrformats+=alpha        " also single letters too
+set nrformats+=alpha        " ... also single letters too
+set showcmd  " Show partial normal mode commands in lower right corner
+
+"" Add optional plugins bundled with nvim
+packadd! matchit    " Add additional matching functionality to %
 
 "" Setup plugins
 
 " Setup the Plug plugin manager
 "
-" Bootstrap manually by installing it into the right place:
+" Bootstrap manually by installing plug.vim into the right place:
 "
 "   $ curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
 "     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
 "
-" and then from within nvim run
+" and then from command mode run
 "
 "   :PlugInstall
 "
@@ -93,6 +100,10 @@ Plug 'nelstrom/vim-visual-star-search'
 " Surrond text objects with matching (). {}. '', etc
 Plug 'tpope/vim-surround'
 
+" Extend <ctrl-a> and <ctrl-x> to work
+" with dates and not just numbers.
+Plug 'tpope/vim-speeddating'
+
 " Enable repeating supported plugin maps with "."
 Plug 'tpope/vim-repeat'
 
@@ -100,16 +111,9 @@ Plug 'tpope/vim-repeat'
 " based on indentation levels, i and I
 Plug 'michaeljsmith/vim-indent-object'
 
-" Visualizes undo history; switch between undo branches
-Plug 'mbbill/undotree'
-
 " Shows what is in registers
 " extends " and @ in normal mode and <ctrl-r> in insert mode
 Plug 'junegunn/vim-peekaboo'
-
-" Extend <ctrl-a> and <ctrl-x> to work
-" with dates and not just numbers.
-Plug 'tpope/vim-speeddating'
 
 call plug#end()
 
@@ -121,11 +125,7 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_cursor_column = 0
 let g:syntastic_enable_balloons = 0
 
-" Force all files ending in .md, besides just README.md,
-" to be intepreted as MarkDown and not Modula-2
-autocmd BufNewFile,BufReadPost *.md set filetype=markdown
-
-"" Set up key mappings
+"" Setup key mappings
 
 " Define <Leader> explicitly as a space
 nnoremap <space> <nop>
@@ -136,10 +136,6 @@ nnoremap <leader><space> :nohlsearch<return>
 
 " Toggle Synastic into and out of passive mode
 nnoremap <leader>st :SyntasticToggleMode<return>
-
-" Reassign Q in normal mode to apply macro stored in register q
-" note: default behavior of Q causes EX-mode
-nnoremap Q @q
 
 " Get rid of all trailing spaces for entire buffer
 nnoremap <leader>w :%s/ \+$//<return>

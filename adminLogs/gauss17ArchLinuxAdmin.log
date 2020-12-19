@@ -8466,8 +8466,8 @@ Note: On 2019-03-30 decided to look into the possibility of
   On 2017-06-28 I installed NTFS drivers ntfs-3g gvfs-afc
   to get external hard drive to work. 
 
-  On 2018-07-06 got my PC's built in SD card reader to work by installing
-  the utilities for exFAT file system.
+  On 2018-07-06 got my PC's built in SD card reader to work by
+  installing the utilities for exFAT file system.
 
     $ sudo pacman -Syu exfat-utils
 
@@ -8486,7 +8486,9 @@ Note: On 2019-03-30 decided to look into the possibility of
 
   This is what gets automounted when I plug the drive in.
 
-  From the Arch Wiki NTFS-3G guide: https://wiki.archlinux.org/index.php/NTFS-3G
+  From the Arch Wiki NTFS-3G guide:
+
+    https://wiki.archlinux.org/index.php/NTFS-3G
 
     By default, ntfs-3g requires root rights to mount the
     filesystem if it is a block device, even with the user

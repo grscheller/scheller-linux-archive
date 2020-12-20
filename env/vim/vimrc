@@ -43,7 +43,7 @@ set expandtab
 
 " Misc. configurations
 set history=10000   " Number lines of command history to keep
-set mouse=n         " Enable mouse for normal mode only
+set mouse=a         " Enable mouse for all modes
 set scrolloff=3     " Keep cursor away from top/bottom of window
 set nowrap          " Don't wrap lines
 set sidescroll=1    " Horizontally scroll nicely
@@ -52,19 +52,19 @@ set splitbelow      " Horizontally split below
 set splitright      " Vertically split to right
 set ruler           " Show line/column info
 set laststatus=2    " Allows show the status line
-set hlsearch        " Highlight / search results after <return>
+set hlsearch        " Highlight / search results after <CR>
 set incsearch       " Highlight / search matches as you type
 set ignorecase      " Case insensitive search,
 set smartcase       " ... unless query has caps
-set nrformats=bin,hex,octal " bases used for <ctrl-a> & <ctrl-x>,
+set nrformats=bin,hex,octal " bases used for <C-a> & <C-x>,
 set nrformats+=alpha        " ... also single letters too
 set showcmd  " Show partial normal mode commands in lower right corner
 
 " Duplicate neovim cursor behavior on xterm/urxvt family of terminals
 if &term =~ "xterm\\|rxvt"
-  let &t_SI = "\<esc>[6 q"
-  let &t_SR = "\<esc>[4 q"
-  let &t_EI = "\<esc>[2 q"
+  let &t_SI = "\<Esc>[6 q"
+  let &t_SR = "\<Esc>[4 q"
+  let &t_EI = "\<Esc>[2 q"
 endif
 
 "" Add optional plugins bundled with nvim
@@ -107,7 +107,7 @@ Plug 'nelstrom/vim-visual-star-search'
 " Surrond text objects with matching (). {}. '', etc
 Plug 'tpope/vim-surround'
 
-" Extend <ctrl-a> and <ctrl-x> to work
+" Extend <C-a> and <C-x> to work
 " with dates and not just numbers.
 Plug 'tpope/vim-speeddating'
 
@@ -119,7 +119,7 @@ Plug 'tpope/vim-repeat'
 Plug 'michaeljsmith/vim-indent-object'
 
 " Shows what is in registers
-" extends " and @ in normal mode and <ctrl-r> in insert mode
+" extends " and @ in normal mode and <C-r> in insert mode
 Plug 'junegunn/vim-peekaboo'
 
 call plug#end()
@@ -135,19 +135,19 @@ let g:syntastic_enable_balloons = 0
 "" Setup key mappings
 
 " Define <Leader> explicitly as a space
-nnoremap <space> <nop>
-let mapleader = "\<space>"
+nnoremap <Space> <Nop>
+let mapleader = "\<Space>"
 
 " Clear search highlighting
-nnoremap <leader><space> :nohlsearch<return>
+nnoremap <Leader><Space> :nohlsearch<CR>
 
 " Toggle Synastic into and out of passive mode
-nnoremap <leader>st :SyntasticToggleMode<return>
+nnoremap <Leader>st :SyntasticToggleMode<CR>
 
 " Get rid of all trailing spaces for entire buffer
-nnoremap <leader>w :%s/ \+$//<return>
+nnoremap <Leader>w :%s/ \+$//<CR>
 
-" Toggle between 3 line numbering states via <leader>n
+" Toggle between 3 line numbering states via <Leader>n
 set nonumber
 set norelativenumber
 
@@ -164,5 +164,4 @@ function! MyLineNumberToggle()
   endif
 endfunction
 
-nnoremap <leader>n :call MyLineNumberToggle()<return>
-
+nnoremap <Leader>n :call MyLineNumberToggle()<CR>

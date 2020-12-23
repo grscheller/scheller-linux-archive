@@ -33,8 +33,8 @@ path () {
    ( IFS=':'; printf '%s\n' $PathWord )
 }
 
-alias digpath='$HOME/bin/digpath.bash'
-# alias digpath='$HOME/bin/digpath.sh'
+alias digpath='$HOME/.local/bin/digpath.bash'
+# alias digpath='$HOME/.local/bin/digpath.sh'
 
 ## Make sure other shells have their correct environments
 alias bash='ENV= bash'

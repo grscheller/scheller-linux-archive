@@ -31,7 +31,8 @@
 * Displays
 * Mouse & Touchpad
 * Keyboard Shortcuts
-  * Added `<ctrl>+<alt>+T` for urxvt terminal
+  * Added `<ctrl>+<alt>+T` for gnome-terminal
+  * Added `<super>+W` raise window if covered, otherwise lower it
 * Printers
 * Removable Media
 * Color management settings for monitors and Printers

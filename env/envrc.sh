@@ -22,11 +22,11 @@
 export ENV_INIT_LVL=${ENV_INIT_LVL:=0}
 ENV_INIT_LVL=$(( ENV_INIT_LVL + 1 ))
 
-if ~/bin/digpath.sh -q nvim 
+if ~/.local/bin/digpath.sh -q nvim 
 then
     export EDITOR=nvim
     export VISUAL=nvim
-elif ~/bin/digpath.sh -q vim 
+elif ~/.local/bin/digpath.sh -q vim 
 then
     export EDITOR=vim
     export VISUAL=vim
@@ -58,8 +58,8 @@ PATH="$PATH":/c/ProgramData/chocolatey/bin
 # For Termux environment on my Android cell phone
 PATH="$PATH":/data/data/com.termux/files/usr/bin/applets
 
-# Put home bin directory near end
-PATH="$PATH":~/bin
+# If there is a ~/bin directory, put near end
+PATH="$PATH":$HOME/bin
 
 # Put a relative bin directory at end of PATH, this is for
 # projects where the user takes up residence in the project's
@@ -84,7 +84,7 @@ PATH=/c/Program\ Files\ \(x86\)/sbt/bin:"$PATH"
 PATH=/c/Program\ Files\ \(x86\)/Common\ Files/Oracle/Java/javapath:"$PATH"
 
 # Clean up PATH - remove duplicate and non-existent path entries
-[ -x ~/bin/pathtrim ] && PATH=$(~/bin/pathtrim)
+[ -x ~/.local/bin/pathtrim ] && PATH=$(~/.local/bin/pathtrim)
 
 ## Information for ssh configuration
 #

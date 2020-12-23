@@ -4,6 +4,9 @@
 #
 # Usage: buArch
 #
+# Written by Geoffrey Scheller
+# See: https://github.com/grscheller/scheller-linux-archive/env
+#
 # shellcheck shell=bash
 
 ## Backup configuration

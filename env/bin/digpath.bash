@@ -17,7 +17,7 @@
 #          2 if help option or an invalid option given
 #
 #   Written by Geoffrey Scheller
-#   See: https://github.com/grscheller/shell-environment-config
+#   See: https://github.com/grscheller/scheller-linux-archive/env
 #
 
 usage () {

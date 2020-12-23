@@ -236,8 +236,8 @@ alias pst="ps axjf | sed -e '/^ PPID.*$/d' -e's/.*:...//'"
 alias bc='bc -q'
 alias nv=nvim
 
-alias digpath='$HOME/bin/digpath.bash'
-# alias digpath='$HOME/bin/digpath.sh'
+alias digpath='$HOME/.local/bin/digpath.bash'
+# alias digpath='$HOME/.local/bin/digpath.sh'
 
 ## SSH related functions, variables and aliases
 

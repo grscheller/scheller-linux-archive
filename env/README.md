@@ -55,7 +55,7 @@ get when you log in via ssh or the console.
   * allows emacs style forward & reverse shell history searches via arrow keys
   * still allows `<esc>/` text history searches
 
-## Shell Scripts Installed in ~/bin
+## Shell Scripts Installed in ~/.local/bin
 
 * [digpath.bash](bin/digpath.bash)
   * finds files on the $PATH

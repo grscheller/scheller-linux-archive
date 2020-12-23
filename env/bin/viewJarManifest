@@ -2,6 +2,9 @@
 #
 # Usage: viewJarManifest someJarFile.jar
 #
+# Written by Geoffrey Scheller
+# See: https://github.com/grscheller/scheller-linux-archive/env
+#
 
 if [ $# -eq 1 ]
 then

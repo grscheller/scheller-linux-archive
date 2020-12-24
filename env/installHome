@@ -165,7 +165,7 @@ done
 ## Create $HOME directory structure if needed
 
 # Create ~/.local/bin directory if necessary
-[ -d ~/.local/bin ] || mkdir ~/.local/bin || {
+[ -d ~/.local/bin ] || mkdir -p ~/.local/bin || {
    printf '\n'
    printf 'Error: Failed to create ~/.local/bin\n' >&2
    exit 1

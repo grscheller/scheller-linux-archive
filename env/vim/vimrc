@@ -147,6 +147,12 @@ nnoremap <Leader>st :SyntasticToggleMode<CR>
 " Get rid of all trailing spaces for entire buffer
 nnoremap <Leader>w :%s/ \+$//<CR>
 
+" Navigating in insert mode without using arrow keys
+inoremap <C-h> <C-o>h
+inoremap <C-j> <C-o>j
+inoremap <C-k> <C-o>k
+inoremap <C-l> <C-o>l
+
 " Toggle between 3 line numbering states via <Leader>n
 set nonumber
 set norelativenumber

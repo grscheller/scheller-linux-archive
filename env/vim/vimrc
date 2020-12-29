@@ -148,10 +148,10 @@ nnoremap <Leader>st :SyntasticToggleMode<CR>
 nnoremap <Leader>w :%s/ \+$//<CR>
 
 " Navigating in insert mode without using arrow keys
-inoremap <C-h> <C-o>h
-inoremap <C-j> <C-o>j
-inoremap <C-k> <C-o>k
-inoremap <C-l> <C-o>l
+inoremap <C-h> <Left>
+inoremap <C-j> <Down>
+inoremap <C-k> <Up>
+inoremap <C-l> <Right>
 
 " Toggle between 3 line numbering states via <Leader>n
 set nonumber

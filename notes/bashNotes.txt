@@ -16,7 +16,7 @@ Bourne Shell that are in Bash for backward compatibility.  When
 Bash scripting,these features should be avoided as indicated
 later in the notes.
 
-C Shell was revolutionary in its day.  It provides for enhanced 
+C Shell was revolutionary in its day.  It provides for enhanced
 interactive user operability.  Its syntax was modeled after the
 C programming language which made it easier for C programmers
 to learn.  Unfortunately, it has an inconsistent grammer and its
@@ -33,257 +33,262 @@ To get the most out of these notes, one needs to be already
 functional with Bash.  For a good introductory tutorial,
 I suggest "The Linux Command Line" by William Shotts.
 
-1. Globbing:
+01. Globbing:
 
-   Bash will "wildcard match" filenames in the directory
-   structure.  This is not to be confused with regular
-   expression pattern matching, which is used by commands
-   like grep and sed or programming languages like
-   Python and Perl.
+    Bash will "wildcard match" filenames in the directory
+    structure.  This is not to be confused with regular
+    expression pattern matching, which is used by commands
+    like grep and sed or programming languages like
+    Python and Perl.
 
-        * match 0 or more characters
-        ? match any character
-       [] match any one character between the brackets
+         * match 0 or more characters
+         ? match any character
+        [] match any one character between the brackets
 
-2. Extended globbing:
+02. Extended globbing:
 
-   I usually turn on extended shell pattern matching.
+    I usually turn on extended shell pattern matching.
 
-     $ shopt -s extglob
+      $ shopt -s extglob
 
-   When turned on, to
-   you can additionally use,
-       ?() zero or one occurances of pattern
-       *() zero or more occurances of pattern
-       +() one or more occurances of pattern
-       @() one occurance of pattern
-       !() anything except the pattern
+    When turned on, to
+    you can additionally use,
+        ?() zero or one occurances of pattern
+        *() zero or more occurances of pattern
+        +() one or more occurances of pattern
+        @() one occurance of pattern
+        !() anything except the pattern
 
-   case $1 in
-       a*           ) foo;;   # match anything starting with a
-       b?           ) bar;;   # match 2 characters first being b
-       c[de]        ) baz;;   # match cd or ce
-       me?(e)t      ) qux;;   # match met or meet
-       @(a|e|i|o|u) ) quux;;  # match one vowel
-   esac
+    case $1 in
+        a*           ) foo;;   # match anything starting with a
+        b?           ) bar;;   # match 2 characters first being b
+        c[de]        ) baz;;   # match cd or ce
+        me?(e)t      ) qux;;   # match met or meet
+        @(a|e|i|o|u) ) quux;;  # match one vowel
+    esac
 
-   Note: Names like foo, bar, baz, and values like 42 are
-         examples of what are called "metasyntactic variables."
-         They are just meaningless place holders when illustrating
-         syntax.  In the above they can represent Linux commands
-         or shell functions.  Can also be multiple statements
-         separated by newlines or semicolens.
+    Note: Names like foo, bar, baz, and values like 42 are
+          examples of what are called "metasyntactic variables."
+          They are just meaningless place holders when illustrating
+          syntax.  In the above they can represent Linux commands
+          or shell functions.  Can also be multiple statements
+          separated by newlines or semicolens.
 
-   Note: Case statements end with a "esac", case spelled
-         backwards.  If statements end similarly with an "fi".
-         This comes from the original Bourne shell where it
-         was borrowed from Algol.
+    Note: Case statements end with a "esac", case spelled
+          backwards.  If statements end similarly with an "fi".
+          This comes from the original Bourne shell where it
+          was borrowed from Algol.
 
-3. In Bash version 4 and later, case in addition to ;; has
-   ;& and ;;&
+03. In Bash version 4 and later, case in addition to ;; has
+    ;& and ;;&
 
-       ;&   Fall through without testing next case,
-            like in C without break.
-       ;;&  Means don't terminate, continue testing.
+        ;&   Fall through without testing next case,
+             like in C without break.
+        ;;&  Means don't terminate, continue testing.
 
-          case $greating in
-              hello*)
-                echo "begins with hello"
-                ;&
-              @(h|H)ello*)
-                echo "a friendly greating"
-                echo "this is good"
-                ;;&
-              *\!)
-                echo "ends in an exclaimation"
-                ;;
-              *.)
-                echo "ends in a period"
-                ;;
-           esac
-                
-5. Redirection tricks:
+           case $greating in
+               hello*)
+                 echo "begins with hello"
+                 ;&
+               @(h|H)ello*)
+                 echo "a friendly greating"
+                 echo "this is good"
+                 ;;&
+               *\!)
+                 echo "ends in an exclaimation"
+                 ;;
+               *.)
+                 echo "ends in a period"
+                 ;;
+            esac
 
-   Read from commands or pipes as if they were files.
-     $ cat <(echo -e "Hello,\nEveryone" | sed 's/^E.*/there/') <(echo 'World!')
-     Hello,
-     there
-     World!
+05. Redirection tricks:
 
-        Implemented via /dev/fd
-          $ echo <(echo hi)
-          /dev/fd/63
+    Read from commands or pipes as if they were files.
+      $ cat <(echo -e "Hello,\nEveryone" | sed 's/^E.*/there/') <(echo 'World!')
+      Hello,
+      there
+      World!
 
-   Read or write to commands or pipes as if they are files:
-     $ cp <(echo -n 'Hello World')  >(cat <(echo -n 'So, ') - <(echo '.'))
-     So, Hello World.
+         Implemented via /dev/fd
+           $ echo <(echo hi)
+           /dev/fd/63
 
-   To redirect the output of a command  to a file
-     $ cmd > /path/to/file
-   This is shorthand for
-     $ cmd 1> /path/to/file
-   To append instead of overwriting
-     $ cmd >> /peth/to/file
+    Read or write to commands or pipes as if they are files:
+      $ cp <(echo -n 'Hello World')  >(cat <(echo -n 'So, ') - <(echo '.'))
+      So, Hello World.
 
-   To throw away output
-     $ cmd > /dev/null
-   To throw away error messages
-     $ cmd 2> /dev/null
-   Throw away both
-     $ cmd > /dev/null 2>&1
-     $ cmd &> /dev/null          # Added in Bash 4
+    To redirect the output of a command  to a file
+      $ cmd > /path/to/file
+    This is shorthand for
+      $ cmd 1> /path/to/file
+    To append instead of overwriting
+      $ cmd >> /peth/to/file
 
-   This throws cmd output away and sends error
-   output to stdout (common mistake for above - but
-   useful if this is what you want to do)
-     cmd 2>&1 > /dev/null
+    To throw away output
+      $ cmd > /dev/null
+    To throw away error messages
+      $ cmd 2> /dev/null
+    Throw away both
+      $ cmd > /dev/null 2>&1
+      $ cmd &> /dev/null          # Added in Bash 4
 
-   Redirect stderr and stdout to stdin of piped command
-     cmd1 |& cmd2
+    This throws cmd output away and sends error
+    output to stdout (common mistake for above - but
+    useful if this is what you want to do)
+      cmd 2>&1 > /dev/null
 
-   Send only stderr down a pile:
-     cmd1 2>&1 >/dev/null | cmd2
-   Swap stderr and stdout:
-     cmd1 3>&2 2>&1 >&3 | cmd2
+    Redirect stderr and stdout to stdin of piped command
+      cmd1 |& cmd2
 
-   You can even redirect stdin
-     $ echo foobar > junk; cat - 0<junk
-     foobar
+    Send only stderr down a pile:
+      cmd1 2>&1 >/dev/null | cmd2
+    Swap stderr and stdout:
+      cmd1 3>&2 2>&1 >&3 | cmd2
 
-   Users should use file descriptors < 10 in scripts to avoid
-   clashing with ones used by the shell.  Bash starts with
-   file descriptor 63 and works its way down.  File descriptors 
-   0, 1, 2 are predefined:
+    You can even redirect stdin
+      $ echo foobar > junk; cat - 0<junk
+      foobar
 
-     stdin  = /dev/fd/0
-     stdout = /dev/fd/1
-     stderr = /dev/fd/2
+    Users should use file descriptors < 10 in scripts to avoid
+    clashing with ones used by the shell.  Bash starts with
+    file descriptor 63 and works its way down.  File descriptors
+    0, 1, 2 are predefined:
 
-   Can also append with stderr
-     cmd 2>> file_with_error_messages
-   Can append both
-     cmd &>> file
-   which is the same as
-     cmd >> file 2>&1
+      stdin  = /dev/fd/0
+      stdout = /dev/fd/1
+      stderr = /dev/fd/2
 
-   Less commonly known is that you can close file descriptures,
-   for example, this closes stderr:
+    Can also append with stderr
+      cmd 2>> file_with_error_messages
+    Can append both
+      cmd &>> file
+    which is the same as
+      cmd >> file 2>&1
 
-     $ cmd 2>&-
+    Less commonly known is that you can close file descriptures,
+    for example, this closes stderr:
 
-   This is NOT the same as
+      $ cmd 2>&-
 
-     $ cmd 2>/dev/null
+    This is NOT the same as
 
-   Alot of times the former and latter seem to accomplish
-   the same thing, they gag error messages.  In the latter,
-   we are depending that cmd is smart enough to know what
-   to do in case it encounters closed file descriptor
-   (as in C language file descriptor).  This can be used
-   for efficiency, but depends on knowledge of the internal
-   workings of commands.  Sometimes cmd complains:
+      $ cmd 2>/dev/null
 
-     $ printf "Hello World\nGood bye for now\n" | tee junk1
-     Hello World
-     Good bye for now
-     $ printf "Hello World\nGood bye for now\n" | tee junk2 >&-
-     tee: 'standard output': Bad file descriptor
-     $ cat junk2
-     Hello World
-     Good bye for now
+    A lot of times the former and latter seem to accomplish
+    the same thing, they gag error messages.  In the latter,
+    we are depending that cmd is smart enough to know what
+    to do in case it encounters closed file descriptor
+    (as in C language file descriptor).  This can be used
+    for efficiency, but depends on knowledge of the internal
+    workings of commands.  Sometimes cmd complains:
 
-   Actually, this is POSIX Shell compliant.
+      $ printf 'Hello World\nGood bye for now\n' | tee junk1
+      Hello World
+      Good bye for now
+      $ printf 'Hello World\nGood bye for now\n' | tee junk2 >&-
+      tee: 'standard output': Bad file descriptor
+      $ cat junk2
+      Hello World
+      Good bye for now
 
-6. Array variables:
+    Actually, &- is POSIX Shell compliant.
 
-   In bash, all variables are array variables.
+06. Array variables:
 
-      $ foo=bar
-      $ echo ${foo[0]}
-      bar
+    In bash, all variables are array variables.
 
-      $ gang=(fred daphney thelma)
-      $ gang+=(shaggie scooby)
-      $ echo ${gang[2]} ${gang[3]}
-      thelma shaggie
-      $ echo $gang
-      fred
+       $ foo=bar
+       $ echo ${foo[0]}
+       bar
 
-   Same as
+       $ gang=(fred daphney thelma)
+       $ gang+=(shaggie scooby)
+       $ echo ${gang[2]} ${gang[3]}
+       thelma shaggie
+       $ echo $gang
+       fred
 
-      $ echo ${gang[0]}
-      fred
+    Same as
 
-   Can take contiguous slices of arrays:
+       $ echo ${gang[0]}
+       fred
 
-      $ echo ${gang[@]:1:3}
-      daphney thelma shaggie
+    Can take contiguous slices of arrays:
 
-      $ echo ${gang[@]:2:2}
-      thelma shaggie
+       $ echo ${gang[@]:1:3}
+       daphney thelma shaggie
 
-   Add another character:
+       $ echo ${gang[@]:2:2}
+       thelma shaggie
 
-      $ gang+=("scrappy    doo")
+    How many are there in the gang?
 
-   When quoted:
+       $ echo ${#gang[@]}
+       5
 
-      $ for jj in "${gang[@]}"
-      > do
-      >    echo $jj
-      > done
-      fred
-      daphney
-      thelma
-      shaggie
-      scooby
-      scrappy doo
+    Add another character:
 
-      $ for jj in "${gang[*]}"
-      > do
-      >   echo $jj
-      > done
-      fred daphney thelma shaggie scooby scrappy doo
+       $ gang+=("scrappy    doo")
 
-   Instead of shell variable redirection, you get the indices:
+    When quoted:
 
-      $ echo ${!gang[@]}
-      0 1 2 3 4 5
+       $ for jj in "${gang[@]}"
+       > do
+       >    echo $jj
+       > done
+       fred
+       daphney
+       thelma
+       shaggie
+       scooby
+       scrappy doo
 
-7. Speaking of redirection, 
+       $ for jj in "${gang[*]}"
+       > do
+       >   echo $jj
+       > done
+       fred daphney thelma shaggie scooby scrappy doo
 
-      $ foo=bar
-      $ bar=baz
-      $ echo ${foo}
-      bar
-      $ echo ${!foo}
-      baz
+    Instead of shell variable redirection, you get the indices:
 
-8. Default values for shell variables:
+       $ echo ${!gang[@]}
+       0 1 2 3 4 5
 
-   Use := within the {} to specify a default value for a
-   shell variable, if it is unset or the empty string.
+07. Speaking of redirection,
 
-      $ PIE="Apple Pie"
-      $ FavoritePie=${PIE:="Cherry Pie"}
-      $ FavoriteCake=${CAKE:="Chocolotte Cake"}
-      $ echo $FavoritePie
-      Apple Pie
-      $ echo $FavoriteCake 
-      Chocolotte Cake
+       $ foo=bar
+       $ bar=baz
+       $ echo ${foo}
+       bar
+       $ echo ${!foo}
+       baz
 
-9. Comments begin with a # and can occur anywhere on a line:
+08. Default values for shell variables:
 
-      # This is a comment
-      Foo="foo"  # This is a comment too.
-      Bar="bar"
-      # Silly to type comments at the shell prompt, but comments
-      # help the reader of a shell script know what is going on.
-      echo ${Foo}${Bar}  # This will print "foobar"
-                         # without the quotes.
-                         # It will work without the brackets,i
-                         # but I think they make the command
-                         # more readable.
+    Use := within the {} to specify a default value for a
+    shell variable, if it is unset or the empty string.
+
+       $ PIE="Apple Pie"
+       $ FavoritePie=${PIE:="Cherry Pie"}
+       $ FavoriteCake=${CAKE:="Chocolotte Cake"}
+       $ echo $FavoritePie
+       Apple Pie
+       $ echo $FavoriteCake
+       Chocolotte Cake
+
+09. Comments begin with a # and can occur anywhere on a line:
+
+       # This is a comment
+       Foo="foo"  # This is a comment too.
+       Bar="bar"
+       # Silly to type comments at the shell prompt, but comments
+       # help the reader of a shell script know what is going on.
+       echo ${Foo}${Bar}  # This will print "foobar"
+                          # without the quotes.
+                          # It will work without the brackets,i
+                          # but I think they make the command
+                          # more readable.
 
 10. Shell variables verses environment variables.
 
@@ -354,16 +359,16 @@ I suggest "The Linux Command Line" by William Shotts.
        # treating Bash like a macro language.
        $ cap2=cap; snd2=snd
        $ dollar='$'
-       $ eval "(cap=picard; snd=riker   
-           echo $cap and $snd    
+       $ eval "(cap=picard; snd=riker
+           echo $cap and $snd
            echo ${dollar}$cap2 and ${dollar}$snd2)"
        kirk and spock
        picard and riker
 
 11. Big and little nibbles:
 
-    Let 
-   
+    Let
+
       $ aString="Hello big wide world"
 
     Little nibbles are conservative, they delete the
@@ -375,7 +380,7 @@ I suggest "The Linux Command Line" by William Shotts.
       Hello big wide
 
     Big nibbles are greedy, deleting largest possible pattern.
-      
+
       $ echo ${aString##* }
       world
       $ echo ${aString%% *}
@@ -383,7 +388,7 @@ I suggest "The Linux Command Line" by William Shotts.
 
 12. Prefer using [[ ... ]] over [ ... ].
 
-    In standard Bourn shell `[' was an actual program called test.  
+    In standard Bourn shell `[' was an actual program called test.
     They are located here: /usr/bin/[
                            /use/bin/test
 
@@ -421,13 +426,13 @@ I suggest "The Linux Command Line" by William Shotts.
 
    Unfortunately, utilities like make and X-Windows start-up
    scripts use POSIX shell, you still need to be able to deal
-   with [ ... ].  
+   with [ ... ].
 
    Unlike  [ ... ], [[ ... ]] turns off "file globbing" and
    "field splitting."
 
 13. [[ ... ]] is a "command" on its own and not part of
-    the `if' command syntax.  
+    the `if' command syntax.
 
       $ if ls foo >&- 2>&-
       > then
@@ -435,7 +440,7 @@ I suggest "The Linux Command Line" by William Shotts.
       > elif ls bar >/dev/null 2>&1
       > then
       >     echo "File bar, but not foo, is there"
-      > else 
+      > else
       >     echo "Neither file, foo nor bar, is there."
       > fi
       Neither file, foo nor bar, is there.
@@ -446,7 +451,7 @@ I suggest "The Linux Command Line" by William Shotts.
       > elif [[ -e bar ]]
       > then
       >   echo "File bar, but not foo, is there"
-      > else 
+      > else
       >   echo "Neither file, foo nor bar, is there."
       > fi
       Neither file, foo nor bar, is there.
@@ -468,8 +473,8 @@ I suggest "The Linux Command Line" by William Shotts.
        do
            echo $jj
            let jj=$jj+1
-       done 
- 
+       done
+
     And absolutely never this (Bourne shell):
 
       jj=39; while [ $jj -lt 42 ]
@@ -510,7 +515,7 @@ I suggest "The Linux Command Line" by William Shotts.
       $ otherUsers=$(ps -ef | egrep -v "($(whoami)|root|USER)" | sed 's/ .*//' | sort | uniq)
       $ echo $otherUsers
       dbus polkitd postfix rtkit systemd+ UID
- 
+
 16. Comparisons via [[ ... ]] and the non-stictness of && and ||.
 
     Strings and numerics use different sets of operators:
@@ -609,7 +614,7 @@ I suggest "The Linux Command Line" by William Shotts.
           shell scripts.
 
 18. Like & or |&, && and || cannot be used within single
-    square brackets.  Foe "and" and "or" comparisons:
+    square brackets.  For "and" and "or" comparisons:
 
       # Traditional way
       $ [ 4 -eq 2 -a 5 -gt 3 ] || echo False
@@ -722,7 +727,7 @@ I suggest "The Linux Command Line" by William Shotts.
       Quit? [y|Y]: g
       Quit? [y|Y]: n
       Quit? [y|Y]: y
-      $ 
+      $
 
 21. Shell functions:
 
@@ -764,8 +769,8 @@ I suggest "The Linux Command Line" by William Shotts.
    To type out the definition to one,
 
      $ declare -f ev
-     ev () 
-     { 
+     ev ()
+     {
          ( /usr/bin/evince "$@" &> /dev/null & )
      }
 
@@ -799,7 +804,7 @@ I suggest "The Linux Command Line" by William Shotts.
 
       $ unalias ls 2>&-  # Undo any evil done in startup scripts.
       $ alias la='ls -a'   # Show .files.
-      $ alias l.='ls -dA .* --color=auto'   # Show just .files, with color.   
+      $ alias l.='ls -dA .* --color=auto'   # Show just .files, with color.
       $ alias vi=vim   # Overcome years of muscle memory.
       $ alias gvim='gvim -c "colorscheme desert"'
 
@@ -819,19 +824,166 @@ I suggest "The Linux Command Line" by William Shotts.
 
       shopt -s expand_aliases   # Probably a bad idea
 
+23. Example here document.
 
-23. Editting differences between vim and bash in vi mode:
+      #!/bin/bash
 
-    Use 
+      name=Foofoo
+
+      cat <<DOC1
+      hello World
+      $name rules!
+      DOC1
+
+      cat >&2 <<-DOC2
+        death to all who
+        oppose the $name!
+      DOC2
+
+    Method of using text from the shell script itself as input.
+    Good for scripting the mailx command in a shell script.
+
+    The <<- variant ignores initial tabs for a "more nature"
+    indentation.
+
+24. Bash output to stdout/stderr
+
+  In shell scripts and functions, I prefer printf over echo
+  for sending text to stdout/stderr.  The printf builtin gives
+  you more control and is more consistent across different
+  shells than echo.  It is modeled after printf from C.
+
+  I still use echo at the command line.  I also use echo
+  when debugging shell scripts/functions.  Makes it easier
+  to find the debug lines to remove later.
+  
+  The first argument to printf is a format string.  Best practice
+  is to let the printf builtin do the intepolation and not use
+  " ... " interpolation.  Especially true if user input is involved.
+
+    $ printf '%s:%3d%7.4f\n' answers 42 3.14159
+    answers: 42 3.1416
+
+    $ echo 'foo\nbar'
+    foo\nbar
+    $ echo -e 'foo\nbar'
+    foo
+    bar
+    $ echo -en 'foo\nbar'
+    foo
+    bar$ 
+
+25. Bash Input from stdin
+
+  Read one line at a time:
+
+    $ echo '11 12 13
+            21 22 23
+            31 32 33' | while read first second third
+        do
+            printf 'first as string: %s\n' "$first"
+            printf 'second as decimal int: %d\n' "$second"
+            printf 'third as floating point number %4.1f\n' "$third"
+        done
+    first as string: 11
+    second as decimal int: 12
+    third as floating point number 13.0
+    first as string: 21
+    second as decimal int: 22
+    third as floating point number 23.0
+    first as string: 31
+    second as decimal int: 32
+    third as floating point number 33.0
+
+  Read one line at a time into an array:
+
+    $ echo '11 12 13
+            21 22 23 24 25
+            31 32' | while read -a elem
+        do
+            for element in "${elem[@]}"
+            do
+              printf '%s ' "$element"
+            done
+            printf '\n'
+        done
+    11 12 13 
+    21 22 23 24 25 
+    31 32
+
+  Read all lines into an array:
+
+    $ echo '11 12 13 
+            21 22 23
+            31 32 33' | {
+      readarray -t lines
+      echo "${lines[2]}" | { read zeroth rest
+         printf 'The zeroth item of the second row is '
+         printf '%s.\n' $zeroth
+      }
+    }
+    The zeroth item of the second row is 31.
+
+  Note: mapfile is another name for readarray.  The -t option
+        for readarray trims off the trailing newline.
+
+  Note: There are a lot of additional options read and readarray
+        can take.  See the SHELL BUILTIN COMMANDS section of the
+        bash manpage for details.
+
+  Note: The default hehavior of read is to to use \ as an escape
+        character.  Use option -r to prevent this and intepret \
+        literally.
+
+          $ printf 'hello \
+          world\n' | while read -r a b c
+                     do
+                        printf 'a = "%s"\nb = "%s"\nc = "%s"\n' "$a" "$b" "$c"
+                     done
+          a = "hello"
+          b = "\"
+          c = ""
+          a = "world"
+          b = ""
+          c = ""
+
+          $ printf 'hello \
+          world\n' | while read a b c
+                     do
+                        printf 'a = "%s"\nb = "%s"\nc = "%s"\n' "$a" "$b" "$c"
+                     done
+          a = "hello"
+          b = "world"
+          c = ""
+
+  Note: Unlike Ksh, the last command of a pipeline is not interpreted in
+        the context of the current shell.  Hence the use of compound
+        commands in some of the above examples.
+
+          $ BAR=foo; printf 'bar' | read BAR
+          $ echo $BAR
+          foo
+
+        To make bash have the ksh behavior, use the lastpipe shopt.
+
+          $ set +m
+          $ shopt -s lastpipe
+          $ BAR=foo; printf 'bar' | read BAR
+          $ echo $BAR
+          bar
+
+        I had to turn job control off for the lastpipe shopt to work
+        in a terminal.  No need for "set +m" in a script.
+
+26. Editing differences between vi and bash in vi mode:
+
+    You can use
 
       $ set -o vi
 
     to switch from the default emacs bash cmdline editing mode.
 
-    You can edit a command with vim by <esc>v , this in
-    particularly useful in editting multiline commands.
-
-    Some differences from vim while in cmdline editing mode are:
+    Some differences from vi while in "normal mode" are:
 
       <cntl-k>      delete from cursor to end of line
       <cntl-u>      delete from before cursor beginning of line
@@ -861,22 +1013,54 @@ I suggest "The Linux Command Line" by William Shotts.
           output and <ctrl-u> to start it again.  Use "stty ixon"
           to turn flow control back on.
 
-23. Example here document.
+    You can edit the command line with your favorite
+    editor via "<Esc>v".  Bash attempts to invoke shell
+    variables $VISUAL, $EDITOR, and emacs as the editor,
+    in that order.  This id particularly useful when
+    editing multi-line commands.
 
-      #!/bin/bash
-      
-      name=Foofoo
-      
-      cat <<DOC1
-      hello World
-      $name rules!
-      DOC1
-      
-      cat >&2 <<DOC2
-      death to all who
-      oppose the $name!
-      DOC2
+27. Configuring Bash.
 
-    Method of using text in the shell script itself
-    as stdin.  Good for generating boiler plate for
-    mailx command.
+    Bash, like any good GNU application, honors the 
+    ~/.inputrc file.  See the READLINE section of the Bash manpage.
+
+    Here is what I use in mine to customize Bash:
+
+      # Include system inputrc
+      $include /etc/inputrc
+      
+      # Use vi editing mode instead of default emacs editing mode
+      set editing-mode vi
+      
+      # Change prompt if in command vs insert mode
+      set show-mode-in-prompt on
+      
+      $if term=linux
+          set vi-ins-mode-string \1\e[?0c\2
+          set vi-cmd-mode-string \1\e[?8c\2
+      $else
+          set vi-ins-mode-string \1\e[6 q\2
+          set vi-cmd-mode-string \1\e[2 q\2
+      $endif
+      
+      # Append a "/" to tab completed symlinks
+      set mark-symlinked-directories on
+      
+      # Do not cut and paste from websites,
+      # but if you do this provides some
+      # protection from nefarious strings.
+      set enable-bracketed-paste on
+      
+      # History search based on what you have typed so far
+      $if mode=vi
+      set keymap vi-command
+      # these are for vi-command mode
+      "\e[A": history-search-backward
+      "\e[B": history-search-forward
+      j: history-search-forward
+      k: history-search-backward
+      set keymap vi-insert
+      # these are for vi-insert mode
+      "\e[A": history-search-backward
+      "\e[B": history-search-forward
+      $endif

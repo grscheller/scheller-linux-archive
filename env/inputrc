@@ -1,14 +1,19 @@
 #
 #     No syntastic plugin header needing to be stripped
 #
+
+# Include system inputrc
+$include /etc/inputrc
+
 # Use vi editing mode instead of default emacs editing mode
 set editing-mode vi
 
 # Change prompt if in command vs insert mode
 set show-mode-in-prompt on
-$if term=linuxNEEDTOFIX
-    set vi-ins-mode-string \1\e[?6c\2
-    set vi-cmd-mode-string \1\e[?2c\2
+
+$if term=linux
+    set vi-ins-mode-string \1\e[?0c\2
+    set vi-cmd-mode-string \1\e[?8c\2
 $else
     set vi-ins-mode-string \1\e[6 q\2
     set vi-cmd-mode-string \1\e[2 q\2
@@ -22,12 +27,14 @@ set mark-symlinked-directories on
 # protection from nefarious strings.
 set enable-bracketed-paste on
 
-# History search using what you typed
+# History search based on what you have typed so far
 $if mode=vi
 set keymap vi-command
 # these are for vi-command mode
 "\e[A": history-search-backward
 "\e[B": history-search-forward
+j: history-search-forward
+k: history-search-backward
 set keymap vi-insert
 # these are for vi-insert mode
 "\e[A": history-search-backward

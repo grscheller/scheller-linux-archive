@@ -107,7 +107,6 @@ PS4='++ '
 PROMPT_COMMAND="$PROMPT_COMMAND;printf '%s' \"$TERM_TITLE\""
 
 ## Set default behaviors
-set -o vi        # vi editing mode
 set -o pipefail  # Return right most nonzero error, otherwise 0.
 HISTSIZE=5000
 HISTCONTROL="ignoredups"

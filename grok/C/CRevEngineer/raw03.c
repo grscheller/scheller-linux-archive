@@ -29,14 +29,6 @@ int main()
 /* This program will accept input until the user
  * presses either ^C or ^D or types the character 'q'.
  *
- * Input after 'q' but before <enter> gets fed into
- * shell, but
- * 
- *   echo 'abcqxyz' | ./raw03 
- *
- * the 'xyz' does not.  The echo command may receive
- * a signal before it prints them out?
- *
  * Terminal is left with echo off.  Use the /usr/bin/reset
  * command to rest the terminal.
  */

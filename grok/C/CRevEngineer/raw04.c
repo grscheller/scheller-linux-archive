@@ -1,7 +1,8 @@
 /*
  * raw04.c
  *
- * Disable raw mode at exit.
+ * Turn off canonical mode.  Reset terminal
+ * on program exit.
  *
  */
 
@@ -22,7 +23,7 @@ void enableRawMode()
     atexit(disableRawMode);
 
     struct termios raw = orig_termios;
-    raw.c_lflag &= ~(ECHO);
+    raw.c_lflag &= ~(ECHO | ICANON);
     tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
 }
 
@@ -36,11 +37,12 @@ int main()
 }
 
 /* This program will accept input until the user presses
- * either ^C or ^D or types the character 'q'.
+ * either '^C' or '^D' or types the character 'q'.
  *
- * The second argument to tcsetattr specifies when to apply
- * changes to the terminal.  TCSAFLUSH causes the changes
- * to occurs after all output has been written to stdout.
+ * Before ICANON was added to the c_lflag, the second
+ * argument to tcsetattr specifies when to apply changes
+ * to the terminal.  TCSAFLUSH causes the changes to
+ * occurs after all output has been written to stdout.
  * All input that has been received but not read will be
  * discarded before the change is made.
  *
@@ -50,4 +52,7 @@ int main()
  *
  * See:  man -s3 termios
  *
+ * After ICANON was added to the c_lflag mask, application
+ * ends as soon as user presses 'q'.  '^C' still works, but
+ * '^D' stopped working.
  */

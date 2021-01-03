@@ -23,6 +23,7 @@ mature personal software development projects.
 
 * [Arch Linux & systemd Commands](notes/archLinuxNotes.txt)
 * [Bash Notes](notes/bashNotes.txt)
+* [C Notes](notes/C_notes.txt)
 * [Functional Programing Random Ideas](notes/fpRandomIdeas.md)
 * [GIT Notes](notes/gitNotes.txt)
 * [Gnome 3 Configuration](notes/gnome3Conf.md)

@@ -41,5 +41,5 @@ int main(int argc, char *argv[]) {
  *   8. hw + 2 is an example of pointer arithmatic.  Note that the
  *      compiler still hides the details of the actual memory layout
  *      from the programmer.
- *   9. The return statemenat as a language builtin.
+ *   9. The return statement as a language builtin.
  */

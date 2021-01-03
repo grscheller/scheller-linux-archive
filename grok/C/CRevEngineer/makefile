@@ -1,6 +1,8 @@
 CC=gcc
 #CC=clang
 CFLAGS=-Wall -Wextra -pedantic
+
+RAW_BINARIES=raw01 raw02 raw03 raw04 raw05
 FTM_BINARIES=ftmBasic \
              ftmXOpen500 ftmXOpen600 ftmXOpen700 ftmXOpen \
              ftmISOC99 ftmISOC11 \
@@ -8,47 +10,18 @@ FTM_BINARIES=ftmBasic \
              ftmPOSIX199309L ftmPOSIX199506L ftmPOSIX200112L \
              ftmPOSIX200809L ftmPOSIX202012L \
              ftmGNU
-RAW_BINARIES=raw01 raw02 raw03 raw04
 MISC_BINARIES=endianness gnuPosixComplianceTrick korn sizesOfThings
 
 default: binaries
 
 binaries: raw misc ftm
 
+# Default pattern rules (geared to raw)
+%: %.c
+	$(CC) $(CFLAGS) -std=c99 -o $@ $<
 
-## MISC. BINARIES
-misc: $(MISC_BINARIES)
-
-endianness: endianness.c
-	$(CC) $(CFLAGS) -o $@ $<
-
-gnuPosixComplianceTrick: gnuPosixComplianceTrick.c gnuPosixComplianceTrick.h
-	$(CC) $(CFLAGS) -o $@ $<
-
-# Add -Wall to see questionable contructs 
-korn: korn.c
-	$(CC) -o $@ $<
-
-# Add -pedantic to see questionable contructs 
-sizesOfThings: sizesOfThings.c
-	$(CC) -Wall -Wextra -o $@ $<
-
-
-## RAW BINARIES
+## RAW BINARIES - use above pattern rules
 raw: $(RAW_BINARIES)
-
-raw01: raw01.c
-	$(CC) $(CFLAGS) -std=c99 -o $@ $<
-
-raw02: raw02.c
-	$(CC) $(CFLAGS) -std=c99 -o $@ $<
-
-raw03: raw03.c
-	$(CC) $(CFLAGS) -std=c99 -o $@ $<
-
-raw04: raw04.c
-	$(CC) $(CFLAGS) -std=c99 -o $@ $<
-
 
 ## FTM
 ftm: $(FTM_BINARIES)
@@ -107,6 +80,23 @@ testSys: $(FTM_BINARIES)
 	    echo -ne "\n$$bb:\n";\
 	    ./$$bb;\
 	done
+
+## MISC. BINARIES
+misc: $(MISC_BINARIES)
+
+endianness: endianness.c
+	$(CC) $(CFLAGS) -o $@ $<
+
+gnuPosixComplianceTrick: gnuPosixComplianceTrick.c gnuPosixComplianceTrick.h
+	$(CC) $(CFLAGS) -o $@ $<
+
+# Add -Wall to see questionable contructs 
+korn: korn.c
+	$(CC) -o $@ $<
+
+# Add -pedantic to see questionable contructs 
+sizesOfThings: sizesOfThings.c
+	$(CC) -Wall -Wextra -o $@ $<
 
 clean:
 	rm -f $(MISC_BINARIES) $(FTM_BINARIES) $(RAW_BINARIES)

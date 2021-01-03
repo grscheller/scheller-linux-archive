@@ -8,12 +8,13 @@ FTM_BINARIES=ftmBasic \
              ftmPOSIX199309L ftmPOSIX199506L ftmPOSIX200112L \
              ftmPOSIX200809L ftmPOSIX202012L \
              ftmGNU
-RAW_BINARIES=raw01
+RAW_BINARIES=raw01 raw02 raw03 raw04
 MISC_BINARIES=endianness gnuPosixComplianceTrick korn sizesOfThings
 
 default: binaries
 
 binaries: raw misc ftm
+
 
 ## MISC. BINARIES
 misc: $(MISC_BINARIES)
@@ -32,11 +33,22 @@ korn: korn.c
 sizesOfThings: sizesOfThings.c
 	$(CC) -Wall -Wextra -o $@ $<
 
+
 ## RAW BINARIES
 raw: $(RAW_BINARIES)
 
 raw01: raw01.c
 	$(CC) $(CFLAGS) -std=c99 -o $@ $<
+
+raw02: raw02.c
+	$(CC) $(CFLAGS) -std=c99 -o $@ $<
+
+raw03: raw03.c
+	$(CC) $(CFLAGS) -std=c99 -o $@ $<
+
+raw04: raw04.c
+	$(CC) $(CFLAGS) -std=c99 -o $@ $<
+
 
 ## FTM
 ftm: $(FTM_BINARIES)

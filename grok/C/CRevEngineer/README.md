@@ -16,7 +16,8 @@ following [this guide][1].
 * **raw01.c**: [Start in canonical "cooked" mode](raw01.c)
 * **raw02.c**: [Quit when 'q' is read from input](raw02.c)
 * **raw03.c**: [Turn off terminal echoing](raw03.c)
-* **raw04.c**: [Return terminal to "cooked" mode at exit](raw04.c)
+* **raw04.c**: [Return terminal to canonical mode at exit](raw04.c)
+* **raw05.c**: [Print numerical value & character](raw05.c)
 
 ## Misc. Techniques
 

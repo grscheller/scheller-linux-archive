@@ -33,7 +33,10 @@ Example run:
     gcc -Wall -D_POSIX_C_SOURCE=200809L -o ftmPOSIX200809L featureTestMacros.c
     gcc -Wall -D_POSIX_C_SOURCE=202012L -o ftmPOSIX202012L featureTestMacros.c
     gcc -Wall -D_GNU_SOURCE -o ftmGNU featureTestMacros.c
-    for bb in ftmBasic ftmXOpen500 ftmXOpen600 ftmXOpen700 ftmXOpen ftmISOC99 ftmISOC11 ftmPOSIX ftmPOSIX1 ftmPOSIX2 ftmPOSIX199309L ftmPOSIX199506L ftmPOSIX200112L ftmPOSIX200809L ftmPOSIX202012L ftmGNU;\
+    for bb in ftmBasic ftmXOpen500 ftmXOpen600 ftmXOpen700 ftmXOpen \
+              ftmISOC99 ftmISOC11 ftmPOSIX ftmPOSIX1 ftmPOSIX2 \
+              ftmPOSIX199309L ftmPOSIX199506L ftmPOSIX200112L \
+              ftmPOSIX200809L ftmPOSIX202012L ftmGNU;\
     do\
         echo -ne "\n$bb:\n";\
         ./$bb;\

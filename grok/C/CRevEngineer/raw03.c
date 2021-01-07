@@ -30,5 +30,5 @@ int main()
  * presses either ^C or ^D or types the character 'q'.
  *
  * Terminal is left with echo off.  Use the /usr/bin/reset
- * command to rest the terminal.
+ * command to reset the terminal.
  */

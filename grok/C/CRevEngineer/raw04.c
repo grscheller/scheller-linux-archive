@@ -37,9 +37,10 @@ int main()
 }
 
 /* This program will accept input until the user presses
- * either '^C' or '^D' or types the character 'q'.
+ * either '^C' or user types the character 'q', but
+ * '^D' stopped working.
  *
- * Before ICANON was added to the c_lflag, the second
+ * Before ICANON was masked out of the c_lflag, the second
  * argument to tcsetattr specifies when to apply changes
  * to the terminal.  TCSAFLUSH causes the changes to
  * occurs after all output has been written to stdout.
@@ -50,9 +51,10 @@ int main()
  * of TCSAFLUSH in the tcsetattr function in disableRawMode
  * callback registered via the stddef atexit function.
  *
- * See:  man -s3 termios
+ * Program ends as soon as user presses 'q' because
+ * ICANON was added back to the c_lflag mask by the 
+ * atexit() stdlib system call after return 0.
  *
- * After ICANON was added to the c_lflag mask, application
- * ends as soon as user presses 'q'.  '^C' still works, but
- * '^D' stopped working.
+ * See:  man -s3 termios
+ * 
  */

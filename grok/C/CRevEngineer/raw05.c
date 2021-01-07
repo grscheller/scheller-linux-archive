@@ -58,7 +58,7 @@ int main()
  * stdio.h for printf()
  * ctype.h for iscntrl()
  *
- * Changed loop so program will print value for 'q'
- * Deviate from webpage by printing octal numeric values.
- *
+ * Changed loop so program will print value for 'q'.
+ * Deviating from example being followed by printing
+ * octal numeric values.
  */

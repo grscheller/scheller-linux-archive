@@ -2,7 +2,8 @@ CC=gcc
 #CC=clang
 CFLAGS=-Wall -Wextra -pedantic
 
-RAW_BINARIES=raw01 raw02 raw03 raw04 raw05
+RAW_BINARIES=raw01 raw02 raw03 raw04 raw05 \
+			 raw06
 FTM_BINARIES=ftmBasic \
              ftmXOpen500 ftmXOpen600 ftmXOpen700 ftmXOpen \
              ftmISOC99 ftmISOC11 \

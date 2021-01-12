@@ -19,6 +19,7 @@ following [this guide][1].
 * **raw04.c**: [Return terminal to canonical mode at exit](raw04.c)
 * **raw05.c**: [Print numerical value & character](raw05.c)
 * **raw06.c**: [Turn off CTRL C & Z and S & Q](raw06.c)
+* **raw07.c**: [Added marker folds for neovim](raw06.c)
 
 ## Misc. Techniques
 

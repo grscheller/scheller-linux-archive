@@ -8676,3 +8676,150 @@ Note: On 2019-03-30 decided to look into the possibility of
     drwxr-x--- 2 grs grs 4096 Dec 27 17:34 grs/
 
   Success!  Now update buArch backup script.
+
+2021-01-24:
+  PipeWire is coming to Arch Linux.
+
+  PipeWire is a Pulseaudio (Consumer Sound) and Jack (Pro Sound) replacement.
+  It is leaking in already:
+
+    $ pacman -Qs pipewire
+    local/alsa-card-profiles 1:0.3.20-1
+        ALSA card profiles shared by PipeWire
+    local/gst-plugin-pipewire 1:0.3.20-1
+        Multimedia graph framework - pipewire plugin
+    local/libpipewire02 0.2.7-1
+        User space API to deal with multimedia pipelines (0.2)
+    local/pipewire 1:0.3.20-1
+        Server and user space API to deal with multimedia pipelines
+
+  Lets see whats made it to the main repo:
+
+    $ pacman -Ss pipewire
+    extra/alsa-card-profiles 1:0.3.20-1 [installed]
+        ALSA card profiles shared by PipeWire
+    extra/gst-plugin-pipewire 1:0.3.20-1 [installed]
+        Multimedia graph framework - pipewire plugin
+    extra/libpipewire02 0.2.7-1 [installed]
+        User space API to deal with multimedia pipelines (0.2)
+    extra/pipewire 1:0.3.20-1 [installed]
+        Server and user space API to deal with multimedia pipelines
+    extra/pipewire-alsa 1:0.3.20-1
+        ALSA Configuration for PipeWire
+    extra/pipewire-docs 1:0.3.20-1
+        Server and user space API to deal with multimedia pipelines (documentation)
+    extra/pipewire-jack 1:0.3.20-1
+        Server and user space API to deal with multimedia pipelines (JACK support)
+    extra/pipewire-pulse 1:0.3.20-1
+        Server and user space API to deal with multimedia pipelines (PulseAudio
+        replacement)
+    community/wireplumber 0.3.0-1
+        Session / policy manager implementation for PipeWire
+
+  Lets install, but not configure yet, the rest of the pieces:
+
+    $ sudo pacman -Syu   # reboot since new kernel came in
+    $ sudo pacman -Syu pipewire-alsa pipewire-docs pipewire-jack pipewire-pulse wireplumber
+    :: Synchronizing package databases...
+     core is up to date
+     extra is up to date
+     community is up to date
+    :: Starting full system upgrade...
+    resolving dependencies...
+    looking for conflicting packages...
+    :: pipewire-pulse and pulseaudio are in conflict. Remove pulseaudio? [y/N] y
+    :: pipewire-pulse and pulseaudio-bluetooth are in conflict. Remove pulseaudio-bluetooth? [y/N] y
+    error: failed to prepare transaction (could not satisfy dependencies)
+    :: removing pulseaudio breaks dependency 'pulseaudio=14.2-2' required by pulseaudio-jack     
+
+  OK, looks like I will have to rip out pulseaudio at the same time.
+
+    $ sudo pacman -R pulseaudio-jack
+    checking dependencies...
+    :: pulseaudio optionally requires pulseaudio-jack: Jack support
+    
+    Packages (1) pulseaudio-jack-14.2-2
+    
+    Total Removed Size:  0.07 MiB
+    
+    :: Do you want to remove these packages? [Y/n] Y
+    :: Processing package changes...
+    (1/1) removing pulseaudio-jack                     [######################] 100%
+    :: Running post-transaction hooks...
+    (1/1) Arming ConditionNeedsUpdate...
+
+    $ sudo pacman -Syu pipewire-alsa pipewire-docs pipewire-jack pipewire-pulse wireplumber
+    :: Synchronizing package databases...
+     core is up to date
+     extra is up to date
+     community is up to date
+    :: Starting full system upgrade...
+    resolving dependencies...
+    looking for conflicting packages...
+    :: pipewire-pulse and pulseaudio are in conflict. Remove pulseaudio? [y/N] y
+    :: pipewire-pulse and pulseaudio-bluetooth are in conflict. Remove pulseaudio-bluetooth? [y/N] y
+    
+    Packages (7) pulseaudio-14.2-2 [removal]  pulseaudio-bluetooth-14.2-2 [removal]  pipewire-alsa-1:0.3.20-1  pipewire-docs-1:0.3.20-1
+                 pipewire-jack-1:0.3.20-1  pipewire-pulse-1:0.3.20-1  wireplumber-0.3.0-1
+    
+    Total Download Size:   22.34 MiB
+    Total Installed Size:  32.19 MiB
+    Net Upgrade Size:      25.79 MiB
+    
+    :: Proceed with installation? [Y/n] 
+    :: Retrieving packages...
+     pipewire-alsa-1:0.3.20-1-x86_64                        3.8 KiB  0.00   B/s 00:00 [###############################################] 100%
+     pipewire-docs-1:0.3.20-1-x86_64                       21.9 MiB  3.46 MiB/s 00:06 [###############################################] 100%
+     pipewire-jack-1:0.3.20-1-x86_64                       93.1 KiB  4.55 MiB/s 00:00 [###############################################] 100%
+     pipewire-pulse-1:0.3.20-1-x86_64                       3.9 KiB  0.00   B/s 00:00 [###############################################] 100%
+     wireplumber-0.3.0-1-x86_64                           332.3 KiB  4.06 MiB/s 00:00 [###############################################] 100%
+    (5/5) checking keys in keyring                                                    [###############################################] 100%
+    (5/5) checking package integrity                                                  [###############################################] 100%
+    (5/5) loading package files                                                       [###############################################] 100%
+    (5/5) checking for file conflicts                                                 [###############################################] 100%
+    (7/7) checking available disk space                                               [###############################################] 100%
+    :: Processing package changes...
+    (1/2) removing pulseaudio-bluetooth                                               [###############################################] 100%
+    Removed /etc/systemd/user/sockets.target.wants/pulseaudio.socket.
+    (2/2) removing pulseaudio                                                         [###############################################] 100%
+    (1/5) installing pipewire-alsa                                                    [###############################################] 100%
+    (2/5) installing pipewire-docs                                                    [###############################################] 100%
+    (3/5) installing pipewire-jack                                                    [###############################################] 100%
+    (4/5) installing pipewire-pulse                                                   [###############################################] 100%
+    Created symlink /etc/systemd/user/sockets.target.wants/pipewire-pulse.socket → /usr/lib/systemd/user/pipewire-pulse.socket.
+    (5/5) installing wireplumber                                                      [###############################################] 100%
+    :: Running post-transaction hooks...
+    (1/3) Reloading device manager configuration...
+    (2/3) Arming ConditionNeedsUpdate...
+    (3/3) Compiling GSettings XML schema files...
+
+  One final step for the grs user:
+
+    $ rm -rf ~/.config/pulse/
+
+  Now reboot.
+
+    $ ls .config/pulse/
+    cookie
+
+  Let's make noise
+
+    $ vlc Music/Bonamassa/13\ Redemption.mp3
+
+  Silence... Lets go into gnome-settings.  System sound turned all
+  the way down.  Turn it up!
+
+  I have Redemption!  Beautiful sound!  On the reboot had the impression
+  that system rebooted faster.
+
+  Lets try Bluetooth headphones.  A little fumbling to get pairing.
+  Had to manually go into gnome-settings Sound to switch to headphones.
+
+  The Tribit XFree Tune headphones defaulted to the
+  High Fidelity Platback (A2DP Sink) configuration.  Changing it to the
+  Headset Audio (HSP/HFP) configuration resulted in just crackly noises
+  on the headphones.
+
+  Sound works well with Firefox.  Transitioned nicely bwtween headphones
+  and built in audio when I turned headphones off and back on.
+

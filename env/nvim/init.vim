@@ -1,7 +1,7 @@
 " Neovim configuration file
 "
 " ~/.config/nvim/init.vim
-hhh"
+"
 
 "" Enter the 21st Century
 
@@ -38,7 +38,6 @@ set backspace=indent,eol,start
 " https://jdhao.github.io/2019/11/03/vim_custom_statusline/
 " :help statusline
 " :help status-line
-
 
 " Configure the Wild Menu
 " Make tab completion in command mode more useful

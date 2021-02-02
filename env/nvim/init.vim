@@ -4,6 +4,8 @@
 "
 
 "" Enter the 21st Century
+
+" Don't try to be a POSIX compliant vi replacement
 if &compatible
   set nocompatible
 endif
@@ -24,13 +26,21 @@ set spelllang=en_us
 " Setup color scheme
 colorscheme ron
 
-" Allow :find and gf to use recursive sub-folders
-set path+=**
+" Allow gf and :find to use recursive sub-folders
+" and find files in the working directory
+set path+=.,**
 set hidden
 
 " More powerful backspacing
 set backspace=indent,eol,start
 
+" TODO: Set the statusline
+" https://jdhao.github.io/2019/11/03/vim_custom_statusline/
+" :help statusline
+" :help status-line
+
+
+" Configure the Wild Menu
 " Make tab completion in command mode more useful
 set wildmenu
 set wildmode=longest:full,full
@@ -51,7 +61,7 @@ set sidescrolloff=5 " Keep cursor away from side of window
 set splitbelow      " Horizontally split below
 set splitright      " Vertically split to right
 set ruler           " Show line/column info
-set laststatus=2    " Allows show the status line
+set laststatus=2    " Always show the status line
 set hlsearch        " Highlight / search results after <CR>
 set incsearch       " Highlight / search matches as you type
 set ignorecase      " Case insensitive search,
@@ -70,7 +80,7 @@ packadd! matchit    " Add additional matching functionality to %
 " Bootstrap manually by installing plug.vim into the right place:
 "
 "   $ curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
-"     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+"     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 "
 " and then from command mode run
 "
@@ -140,11 +150,23 @@ nnoremap <Leader>st :SyntasticToggleMode<CR>
 " Get rid of all trailing spaces for entire buffer
 nnoremap <Leader>w :%s/ \+$//<CR>
 
-" Navigating in insert mode without using arrow keys
+" Navigating in insert mode using CTRL-hjkl
 inoremap <C-h> <Left>
 inoremap <C-j> <Down>
 inoremap <C-k> <Up>
 inoremap <C-l> <Right>
+
+" Navigate windows in normal mode using CTRL-hjkl
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" Resize windows in normal mode using ALT-hjkl
+nnoremap <M-h> :vert resize -2<CR>
+nnoremap <M-j> :resize -2<CR>
+nnoremap <M-k> :resize +2<CR>
+nnoremap <M-l> :vert resize +2<CR>
 
 " Toggle between 3 line numbering states via <Leader>n
 set nonumber

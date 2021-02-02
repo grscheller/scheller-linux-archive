@@ -141,13 +141,14 @@ do
         printf '         Optionally install the vim and nvim\n' >&2
         printf '         configuration files.  Optionally reload\n' >&2
         printf '         the ~/.Xresources file.\n' >&2
-        printf '\nUsage: ./installHome [--vim] [--nvim] [--xreload] [-all]\n' >&2
+        printf '\nUsage: ./installHome [--vim] [--nvim] [--xreload] [--all]\n' >&2
         printf '       ./installHome [-v] [-n] [-x] [-a]\n' >&2
         printf '\nwhere\n' >&2
-        printf '   -v or --vim  install  vim config file ~/.vim/vimrc\n' >&2
-        printf '   -n or --nvim install nvim config file %s\n' "\$XDG_CONFIG_HOME/nvim/nvim.vim" >&2
-        printf '   -a or --all  install all 3 extras\n' >&2
-        printf '   -h or --help print this message\n' >&2
+        printf '   -v or --vim      install  vim config file to ~/.vim/vimrc\n' >&2
+        printf '   -n or --nvim     install nvim config file to %s\n' "\$XDG_CONFIG_HOME/nvim/nvim.vim" >&2
+        printf '   -x or --xreload  reload ~/.xresources\n' >&2
+        printf '   -a or --all      install everything and relaod ~/.Xresources\n' >&2
+        printf '   -h or --help     print this message\n' >&2
         # shellcheck disable=SC2088
         printf '\ndefault value for %s = %s\n' "\$XDG_CONFIG_HOME" '~/.config' >&2
         exit 2

@@ -1,7 +1,7 @@
 " Neovim configuration file
 "
 " ~/.config/nvim/init.vim
-"
+hhh"
 
 "" Enter the 21st Century
 
@@ -150,23 +150,23 @@ nnoremap <Leader>st :SyntasticToggleMode<CR>
 " Get rid of all trailing spaces for entire buffer
 nnoremap <Leader>w :%s/ \+$//<CR>
 
-" Navigating in insert mode using CTRL-hjkl
-inoremap <C-h> <Left>
-inoremap <C-j> <Down>
-inoremap <C-k> <Up>
-inoremap <C-l> <Right>
+" Navigating in insert mode using ALT-hjkl
+inoremap <M-h> <Left>
+inoremap <M-j> <Down>
+inoremap <M-k> <Up>
+inoremap <M-l> <Right>
 
-" Navigate windows in normal mode using CTRL-hjkl
+" Navigate between windows in normal mode using CTRL-hjkl
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
 " Resize windows in normal mode using ALT-hjkl
-nnoremap <M-h> :vert resize -2<CR>
-nnoremap <M-j> :resize -2<CR>
-nnoremap <M-k> :resize +2<CR>
-nnoremap <M-l> :vert resize +2<CR>
+nnoremap <M-h> 2<C-w><
+nnoremap <M-j> 2<C-w>-
+nnoremap <M-k> 2<C-w>+
+nnoremap <M-l> 2<C-w>>
 
 " Toggle between 3 line numbering states via <Leader>n
 set nonumber

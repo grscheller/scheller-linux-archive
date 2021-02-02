@@ -77,12 +77,6 @@ nnoremap <Leader><Space> :nohlsearch<CR>
 " Get rid of all trailing spaces for entire buffer
 nnoremap <Leader>w :%s/ \+$//<CR>
 
-" Navigating in insert mode using CTRL-hjkl
-inoremap <C-h> <Left>
-inoremap <C-j> <Down>
-inoremap <C-k> <Up>
-inoremap <C-l> <Right>
-
 " Navigate between windows in normal mode using CTRL-hjkl
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j

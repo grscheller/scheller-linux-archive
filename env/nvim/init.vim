@@ -3,25 +3,14 @@
 " ~/.config/nvim/init.vim
 "
 
-"" Enter the 21st Century
-
-" Don't try to be a POSIX compliant vi replacement
-if &compatible
-  set nocompatible
-endif
+" Not sure if these two are necessary
+filetype off
 filetype plugin indent on
-syntax enable
-
-" Force all files ending in .md, besides just README.md,
-" to be intepreted as MarkDown and not Modula-2
-autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 
 " Set default encoding and localizations
 set encoding=utf-8
 set fileencoding=utf-8
 set spelllang=en_us
-
-"" Personnal preferences
 
 " Setup color scheme
 colorscheme ron
@@ -31,24 +20,19 @@ colorscheme ron
 set path+=.,**
 set hidden
 
-" More powerful backspacing
-set backspace=indent,eol,start
-
-" TODO: Set the statusline
-" https://jdhao.github.io/2019/11/03/vim_custom_statusline/
-" :help statusline
-" :help status-line
-
-" Configure the Wild Menu
-" Make tab completion in command mode more useful
-set wildmenu
-set wildmode=longest:full,full
-
 " Set default tabstops and replace tabs with spaces
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
 set expandtab
+
+" More powerful backspacing
+set backspace=indent,eol,start
+
+" Configure the Wild Menu
+" Make tab completion in command mode more useful
+set wildmenu
+set wildmode=longest:full,full
 
 " Misc. configurations
 set history=10000   " Number lines of command history to keep
@@ -57,17 +41,15 @@ set scrolloff=3     " Keep cursor away from top/bottom of window
 set nowrap          " Don't wrap lines
 set sidescroll=1    " Horizontally scroll nicely
 set sidescrolloff=5 " Keep cursor away from side of window
-set splitbelow      " Horizontally split below
+set splitbelow      " Horizontal split below
 set splitright      " Vertically split to right
-set ruler           " Show line/column info
-set laststatus=2    " Always show the status line
 set hlsearch        " Highlight / search results after <CR>
 set incsearch       " Highlight / search matches as you type
 set ignorecase      " Case insensitive search,
 set smartcase       " ... unless query has caps
 set nrformats=bin,hex,octal " bases used for <C-a> & <C-x>,
 set nrformats+=alpha        " ... also single letters too
-set showcmd  " Show partial normal mode commands in lower right corner
+set showcmd         " Show partial normal mode commands in lower right corner
 
 "" Add optional plugins bundled with nvim
 packadd! matchit    " Add additional matching functionality to %
@@ -96,12 +78,9 @@ packadd! matchit    " Add additional matching functionality to %
 "
 call plug#begin('~/.local/share/nvim/plugged')
 
-" Provide syntax checking for a variety of languages
-Plug 'vim-syntastic/syntastic'
-
-" Provide Rust file detection, syntax highlighting,
-" formatting, syntastic integration, and more
-Plug 'rust-lang/rust.vim'
+" Using vim-airline to configure the statusline
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 " Extend */# functionality while in visual mode
 Plug 'nelstrom/vim-visual-star-search'
@@ -124,6 +103,17 @@ Plug 'michaeljsmith/vim-indent-object'
 " extends " and @ in normal mode and <C-r> in insert mode
 Plug 'junegunn/vim-peekaboo'
 
+" Provide syntax checking for a variety of languages
+Plug 'vim-syntastic/syntastic'
+
+" Provide Rust file detection, syntax highlighting,
+" formatting, syntastic integration, and more
+Plug 'rust-lang/rust.vim'
+
+" Provide VimL lint checking via vimlint (below) and vint (pacman)
+Plug 'ynkdir/vim-vimlparser'
+Plug 'syngan/vim-vimlint'
+
 call plug#end()
 
 " Configure user settings for Syntastic
@@ -131,14 +121,13 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
-let g:syntastic_cursor_column = 0
-let g:syntastic_enable_balloons = 0
+let g:syntastic_vim_checkers = ['vint', 'vimlint']
 
 "" Setup key mappings
 
 " Define <Leader> explicitly as a space
 nnoremap <Space> <Nop>
-let mapleader = "\<Space>"
+let g:mapleader = "\<Space>"
 
 " Clear search highlighting
 nnoremap <Leader><Space> :nohlsearch<CR>
@@ -166,6 +155,9 @@ nnoremap <M-h> 2<C-w><
 nnoremap <M-j> 2<C-w>-
 nnoremap <M-k> 2<C-w>+
 nnoremap <M-l> 2<C-w>>
+
+" Lost <C-l> to clear & redraw screen in normal mode
+nnoremap <Leader>l :mode<CR>
 
 " Toggle between 3 line numbering states via <Leader>n
 set nonumber

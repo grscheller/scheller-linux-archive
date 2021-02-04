@@ -8913,3 +8913,16 @@ Note: On 2019-03-30 decided to look into the possibility of
         Foomatic - PPDs from printer manufacturers
 
   These are from the Linux Foundation's OpenPrinting workgroup.
+
+2021-02-03:
+  Regarding accessing the Kyocera printer, at this point I am
+  thrashing without knowing how to to it correctly.  The printer
+  is probably horribly misconfigured anyway.  So I have decided
+  to punt until I know printer is configured properly.
+
+2021-02-03:
+  Google announced it was going to remove remove certain features
+  from Chromium and requiring Google Chrome for them.  I am happy
+  with Firefox and using it exclusively.
+
+    $ sudo pacman -R chromium

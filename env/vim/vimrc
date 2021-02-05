@@ -3,29 +3,29 @@
 " ~/.vim/vimrc
 "
 
-"" Enter the 21st Century
+""" Preliminaries
 
-" Don't try to be a POSIX compliant vi replacement
-if &compatible
-  set nocompatible
-endif
+"" Not sure if these two are necessary
+filetype off
 filetype plugin indent on
 syntax enable
 
-" Set default encoding and localizations
+"" Set default encoding and localizations
 set encoding=utf-8
 set fileencoding=utf-8
 set spelllang=en_us
 
-"" Personnal preferences
+"" Allow gf and :find to use recursive sub-folders
+"  and find files in the working directory
+set path+=.,**
+set hidden
+
+""" Personnal preferences
+
+"" Miscellaneous configurations
 
 " Setup color scheme
 colorscheme ron
-
-" Allow gf and :find to use recursive sub-folders
-" and find files in the working directory
-set path+=.,**
-set hidden
 
 " More powerful backspacing
 set backspace=indent,eol,start
@@ -41,7 +41,14 @@ set shiftwidth=4
 set softtabstop=4
 set expandtab
 
-" Misc. configurations
+" Duplicate neovim cursor behavior on xterm/urxvt family of terminals
+if &term =~# "xterm\\|rxvt"
+  let &t_SI = "\<Esc>[6 q"
+  let &t_SR = "\<Esc>[4 q"
+  let &t_EI = "\<Esc>[2 q"
+endif
+
+" Other configurations
 set history=10000   " Number lines of command history to keep
 set mouse=a         " Enable mouse for all modes
 set scrolloff=3     " Keep cursor away from top/bottom of window
@@ -50,26 +57,19 @@ set sidescroll=1    " Horizontally scroll nicely
 set sidescrolloff=5 " Keep cursor away from side of window
 set splitbelow      " Horizontally split below
 set splitright      " Vertically split to right
-set ruler           " Show line/column info
-set laststatus=2    " Always show the status line
 set hlsearch        " Highlight / search results after <CR>
 set incsearch       " Highlight / search matches as you type
 set ignorecase      " Case insensitive search,
 set smartcase       " ... unless query has caps
-set showcmd  " Show partial normal mode commands in lower right corner
-
-" Duplicate neovim cursor behavior on xterm/urxvt family of terminals
-if &term =~ "xterm\\|rxvt"
-  let &t_SI = "\<Esc>[6 q"
-  let &t_SR = "\<Esc>[4 q"
-  let &t_EI = "\<Esc>[2 q"
-endif
+set showcmd         " Show partial normal mode commands in lower right corner
+set ruler           " Show line/column info
+set laststatus=2    " Always show the status line
 
 "" Setup key mappings
 
 " Define <Leader> explicitly as a space
 nnoremap <Space> <Nop>
-let mapleader = "\<Space>"
+let g:mapleader = "\<Space>"
 
 " Clear search highlighting
 nnoremap <Leader><Space> :nohlsearch<CR>
@@ -82,6 +82,9 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+
+" Lost <C-l> to clear & redraw screen in normal mode
+nnoremap <Leader>l :mode<CR>
 
 " Toggle between 3 line numbering states via <Leader>n
 set nonumber

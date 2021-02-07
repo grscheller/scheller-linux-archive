@@ -1,16 +1,18 @@
 #!/bin/sh
 # shellcheck shell=sh
 #
-# Installs various Shell environment .dot files,
+# Installs various Shell environment .dotfiles,
 # as well as other config files, into the $HOME directory.
 #
 # Usage:
-#    1. Run from cloned shell-environment-config directory
-#    2. The file names used in the repo help vim plugin Syntastic
+#    1. Run from cloned scheller-linux-archive/dotfiles directory
+#    2. The file names used in the repo help neovim plugin Syntastic
 #       use ShellCheck correctly when editing.  The files get
 #       installed with their proper names.
-#    3. Optionally install vim, nvim configuration files
+#    3. Optionally install neovim and vim configuration files
 #    4. Install ~/.XResources and activate if X server is running
+#    5. Installs utility scripts, some used by dotfiles, into ~/.local/bin
+#    6. Run ./installDotfiles --help for options
 #
 
 DOT_FILES='
@@ -71,7 +73,7 @@ backup_file () {
    return 0
 }
 
-## Installs vim or nvim config files
+## Installs neovim and/or vim config files
 install_vi_config () {
 
    vi_name="$1"

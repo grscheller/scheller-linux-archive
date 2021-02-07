@@ -8,7 +8,7 @@ mature personal software development projects.
 
 ## Shell Environment Configuration
 
-* [Personnal UNIX/POSIX Shell Configuration](env/)
+* [LINUX/UNIX/POSIX Dotfiles](dotfiles/)
 
 ## Private Personal Home Page
 

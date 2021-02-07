@@ -140,7 +140,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
-" Extend */# functionality while in visual mode
+" Extend * and # functionality while in visual mode
 Plug 'nelstrom/vim-visual-star-search'
 
 " Surrond text objects with matching (). {}. '', etc

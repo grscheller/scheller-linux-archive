@@ -1,20 +1,20 @@
-# UNIX/POSIX Shell Configuration
+# LINUX/UNIX/POSIX "Dotfiles"
 
 This project contains the infrastructure I use to
-maintain and install my UNIX based shell environments
+track and install my POSIX based shell environments
 on the computers I use.  The same configuration files are
-designed to be shared across multiple computers. Installs
-into `$HOME` from cloned repository directory.
+designed to be shared across multiple computers and operating
+systems. Installs into `$HOME` from cloned repository directory.
 
 ## Features and Design Choices
 
-* Use `env/` directory as template to customize your own version
+* Use `dotfiles/` directory as template to customize your own version
 * Clone and install on the computers you use
 * Will work on most, more or less, POSIX compliant systems
 * Same POSIX `.profile` used by all shells
 * Re-initialize any shell by sourcing .profile
 * Designed for maximum portability
-* Not designed for maximum security for some specific Shell/OS
+* Not designed for maximum security on some specific Shell or OS
 
 ### Initial Shell Configuration
 
@@ -40,6 +40,7 @@ get when you log in via ssh or the console.
 
 * [installHome](installHome) installation script
   * installs everything into $HOME
+  * run `./installDotfiles --help` to see options
   * script backups existing configuration files with .old extension
   * installs config files with correct names
     * `profile.sh` -> `~/.profile`
@@ -48,9 +49,10 @@ get when you log in via ssh or the console.
 * All shells share the same POSIX compliant .profile
 * Optional Vim & Neovim configurations installed
   * Syntastic plug-in and shellcheck helpful in maintaining these files
-  * installs into `~/.vim` for vim
   * installs into `$XDG_CONFIG_HOME/nvim` for neovim
+  * installs into `~/.vim` for vim
 * Readline library configuration
+  * `~/.inputrc`
   * vi editing mode
   * allows emacs style forward & reverse shell history searches via arrow keys
   * still allows `<esc>/` text history searches
@@ -115,4 +117,4 @@ get when you log in via ssh or the console.
 * Bash sources `$BASH_ENV` if it exists as a file, otherwise sources ~/.bashrc
 * POSIX shells source `$ENV` if it exists as a file
 
-This is what these shells do.  What you do with it, is up to you.
+This is what shells do.  What you do with it, is up to you.

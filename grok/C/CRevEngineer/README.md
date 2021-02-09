@@ -24,7 +24,7 @@ following [this guide][1].
 
 ## Misc. Techniques
 
-* **endianness.c**: [Determine hardware "endianness"](endianess.c)
+* **endianness.c**: [Determine hardware "endianness"](endianness.c)
 * **gnuPosixComplianceTrick.h**: [Defined just for POSIX compliance](gnuPosixComplianceTrick.h)
 * **korn.c**: [Obfuscated C Code](korn.c)
-* **sizeOfThings.c**: [Size in bytes of C constructs](sizeOfThings.c)
+* **sizeOfThings.c**: [Size in bytes of C constructs](sizesOfThings.c)

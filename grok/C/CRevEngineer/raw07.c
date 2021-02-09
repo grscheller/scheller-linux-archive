@@ -2,7 +2,7 @@
 /* Program raw07
  *
  * This program will accept input until the user
- * presses either '^C' or types the character 'q'.
+ * types the character 'q'.
  *
  * It displays the ascii numeric value of each byte it reads
  * and if the character is not a control character, it prints
@@ -62,7 +62,7 @@ int main()
  *
  * Introducing folding - otherwise no change from raw06.c
  *
- * Using merge folding, to turn on use
+ * Using Vim merge folding, to turn on use
  *
  *   :set foldmethod=marker
  *

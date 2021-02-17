@@ -5,34 +5,36 @@
 
 """ Preliminaries
 
-"" Not sure if these two are necessary
-filetype off
-filetype plugin indent on
+"" Remove Vim misfeatures and vulnerabilities
+set nomodeline
 
-"" Set default encoding and localizations
-set encoding=utf-8
-set fileencoding=utf-8
-set spelllang=en_us
+"" Improve Vi, not Clone Vi
 
-"" Allow gf and :find to use recursive sub-folders
-"  and find files in the working directory
-set path+=.,**
-set hidden
-
-""" Personnal preferences
-
-"" Miscellaneous configurations
-
-" Setup color scheme
-colorscheme ron
-
-" More powerful backspacing
+" More powerful backspacing in insert mode
 set backspace=indent,eol,start
 
-" Configure the Wild Menu
 " Make tab completion in command mode more useful
 set wildmenu
 set wildmode=longest:full,full
+
+" Allow gf and :find to use recursive sub-folders
+" and find files in the working directory
+set path+=.,**
+set hidden
+
+"" Set default encoding and localizations
+"  Warning: Linux/Unix/UTF-8 oriented
+set encoding=utf-8
+set fileencoding=utf-8
+set spelllang=en_us
+set fileformats=unix,mac,dos
+
+""" Personnal preferences
+
+"" Configure features and behaviors
+
+" Setup color scheme
+colorscheme ron
 
 " Set default tabstops and replace tabs with spaces
 set tabstop=4
@@ -43,7 +45,7 @@ set expandtab
 " Other configurations
 set history=10000   " Number lines of command history to keep
 set mouse=a         " Enable mouse for all modes
-set scrolloff=3     " Keep cursor away from top/bottom of window
+set scrolloff=2     " Keep cursor away from top/bottom of window
 set nowrap          " Don't wrap lines
 set sidescroll=1    " Horizontally scroll nicely
 set sidescrolloff=5 " Keep cursor away from side of window
@@ -53,9 +55,9 @@ set hlsearch        " Highlight / search results after <CR>
 set incsearch       " Highlight / search matches as you type
 set ignorecase      " Case insensitive search,
 set smartcase       " ... unless query has caps
+set showcmd         " Show partial normal mode commands in lower right corner
 set nrformats=bin,hex,octal " bases used for <C-a> & <C-x>,
 set nrformats+=alpha        " ... also single letters too
-set showcmd         " Show partial normal mode commands in lower right corner
 
 "" Setup key mappings
 
@@ -66,8 +68,14 @@ let g:mapleader = "\<Space>"
 " Clear search highlighting
 nnoremap <Leader><Space> :nohlsearch<CR>
 
-" Get rid of all trailing spaces for entire buffer
-nnoremap <Leader>w :%s/ \+$//<CR>
+" Get rid of all trailing whitespace for entire buffer
+nnoremap <Leader>w :%s/\s\+$//<CR>
+
+" Toggle spell checking
+nnoremap <Leader>sp :set invspell<CR>
+
+" Reduce keystrokes from :dig to entering digraph
+nnoremap <expr> <Leader>k ":dig<CR>a\<C-k>"
 
 " Navigating in insert mode using ALT-hjkl
 inoremap <M-h> <Left>
@@ -95,16 +103,16 @@ set nonumber
 set norelativenumber
 
 function! MyLineNumberToggle()
-  if(&relativenumber == 1)
-    set nonumber
-    set norelativenumber
-  elseif(&number == 1)
-    set nonumber
-    set relativenumber
-  else
-    set number
-    set norelativenumber
-  endif
+    if(&relativenumber == 1)
+        set nonumber
+        set norelativenumber
+    elseif(&number == 1)
+        set nonumber
+        set relativenumber
+    else
+        set number
+        set norelativenumber
+    endif
 endfunction
 
 nnoremap <Leader>n :call MyLineNumberToggle()<CR>

@@ -59,7 +59,7 @@ int main(void)
  *     low level as one might suspect, They have to consistently
  *     fiddle the bits in adjacent bytes when proforming "shifts.".
  *     We lie to beginners when we say computers work with
- *     base 2, unless you are working with real low level imbedded
+ *     base 2, unless you are working with real low level embedded
  *     device drivers, computers really use base 256, all the
  *     possible states of an 8-bit word.
  *  9. Most network protocols, at least the higher level ones

@@ -3,7 +3,7 @@
 #include <limits.h>
 
 int
-main(int argc,char **argv)
+main(int argc, char **argv)
 {
   char rlpath[PATH_MAX];
   if (argc==2)

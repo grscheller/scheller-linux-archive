@@ -1,23 +1,8 @@
 # Geoffrey's Archive
 
-I use this repo to maintain Linux/Unix/POSIX shell and
-development environments.  Also contains my notes which
+This repo contains notes and software projects which
 help me not to have to relearn so many things from scratch.
-This repo also gives me a place to hang some of myless
-mature personal software development projects.
-
-## Shell Environment Configuration
-
-* [LINUX/UNIX/POSIX Dotfiles](dotfiles/)
-
-## Private Personal Home Page
-
-* [homepage.html](web/homepage.html)
-* [style.css](web/style.css)
-
-## Linux/OpenBSD/POSIX System Administration Logs
-
-* [System Admin Logs](adminLogs)
+By its very nature, it contains many loose threads.
 
 ## Linux/POSIX Notes
 
@@ -37,6 +22,15 @@ mature personal software development projects.
 * [Software Development Tools](notes/softwareDevTools.md)
 * [Unicode Cheat Sheet](notes/unicodeCheatSheet.txt)
 * [Windows 10 Powershell Configuration](notes/win10PowershellConf/)
+
+## System Administration Logs
+
+* [System Admin Logs](adminLogs)
+
+## Private Personal Home Page
+
+* [homepage.html](web/homepage.html)
+* [style.css](web/style.css)
 
 ## Grokking Computer Languages - many loose threads
 
@@ -83,7 +77,7 @@ mature personal software development projects.
 
 * [Abstract Data Types (ADT)](comp/ADT/)
 
-## Computer Graphics_
+## Computer Graphics
 
 * [Low Level X11 (XLIB/XCB) Programming](grok/Graphics/XWindows)
 * [Cairo 2D Vector Graphics](grok/Graphics/Cairo)

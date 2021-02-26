@@ -13,8 +13,9 @@ interactive ideas from C Shell.
 
 The original Bourne Shell was flawed.  There are features of the
 Bourne Shell that are in Bash for backward compatibility.  When
-Bash scripting,these features should be avoided as indicated
-later in the notes.
+Bash scripting, these features should be avoided as indicated
+later in the notes.  When POSIX shell scripting, Bash specific
+features should be avoided.
 
 C Shell was revolutionary in its day.  It provides for enhanced
 interactive user operability.  Its syntax was modeled after the
@@ -286,7 +287,7 @@ I suggest "The Linux Command Line" by William Shotts.
        # help the reader of a shell script know what is going on.
        echo ${Foo}${Bar}  # This will print "foobar"
                           # without the quotes.
-                          # It will work without the brackets,i
+                          # It will work without the brackets,
                           # but I think they make the command
                           # more readable.
 
@@ -856,7 +857,7 @@ I suggest "The Linux Command Line" by William Shotts.
   I still use echo at the command line.  I also use echo
   when debugging shell scripts/functions.  Makes it easier
   to find the debug lines to remove later.
-  
+
   The first argument to printf is a format string.  Best practice
   is to let the printf builtin do the intepolation and not use
   " ... " interpolation.  Especially true if user input is involved.
@@ -871,7 +872,7 @@ I suggest "The Linux Command Line" by William Shotts.
     bar
     $ echo -en 'foo\nbar'
     foo
-    bar$ 
+    bar$
 
 25. Bash Input from stdin
 
@@ -907,13 +908,13 @@ I suggest "The Linux Command Line" by William Shotts.
             done
             printf '\n'
         done
-    11 12 13 
-    21 22 23 24 25 
+    11 12 13
+    21 22 23 24 25
     31 32
 
   Read all lines into an array:
 
-    $ echo '11 12 13 
+    $ echo '11 12 13
             21 22 23
             31 32 33' | {
       readarray -t lines
@@ -1021,20 +1022,20 @@ I suggest "The Linux Command Line" by William Shotts.
 
 27. Configuring Bash.
 
-    Bash, like any good GNU application, honors the 
+    Bash, like any good GNU application, honors the
     ~/.inputrc file.  See the READLINE section of the Bash manpage.
 
     Here is what I use in mine to customize Bash:
 
       # Include system inputrc
       $include /etc/inputrc
-      
+
       # Use vi editing mode instead of default emacs editing mode
       set editing-mode vi
-      
+
       # Change prompt if in command vs insert mode
       set show-mode-in-prompt on
-      
+
       $if term=linux
           set vi-ins-mode-string \1\e[?0c\2
           set vi-cmd-mode-string \1\e[?8c\2
@@ -1042,15 +1043,15 @@ I suggest "The Linux Command Line" by William Shotts.
           set vi-ins-mode-string \1\e[6 q\2
           set vi-cmd-mode-string \1\e[2 q\2
       $endif
-      
+
       # Append a "/" to tab completed symlinks
       set mark-symlinked-directories on
-      
+
       # Do not cut and paste from websites,
       # but if you do this provides some
       # protection from nefarious strings.
       set enable-bracketed-paste on
-      
+
       # History search based on what you have typed so far
       $if mode=vi
       set keymap vi-command

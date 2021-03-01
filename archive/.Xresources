@@ -1,0 +1,78 @@
+!
+!
+!
+!
+!  ~/.Xresources - for RXVT-Unicode Terminal
+!
+!  Do not use preprocessor directives or C/C++
+!  style comments.  Seems that many Display Managers,
+!  like gdm, run xrdb with the -nocpp flag.
+
+! do not scroll with output
+URxvt*scrollTtyOutput: false
+
+! scroll in relation to buffer (with mouse scroll or Shift+Page Up)
+URxvt*scrollWithBuffer: true
+
+! scroll back to the bottom on keypress
+URxvt*scrollTtyKeypress: true
+
+! disable the scrollback buffer for the secondary screen
+! this helps pagers and vim do the scrolling themselves
+URxvt.secondaryScreen: 1
+URxvt.secondaryScroll: 0
+
+! Disable printing the terminal contents when pressing PrintScreen.
+URxvt.print-pipe: "cat > /dev/null"
+
+! Disable scroll bar
+URxvt.scrollBar: false
+
+! Reduce font spacing by 1 pixel
+URxvt.letterSpace: -1
+
+! Fonts
+URxvt.font:     xft:bitstream vera sans mono:size=12:antialias=true
+URxvt.boldFont: xft:bitstream vera sans mono:bold:size=12:antialias=true
+URxvt.italicFont: xft:bitstream vera sans mono:italic:size=12:antialias=true:autohint=true
+URxvt.boldItalicFont: xft:bitstream vera sans mono:bold:italic:size=12:antialias=true:autohint=true
+
+! Set up colors
+! black
+URxvt.color0:  #000000
+! red
+URxvt.color1:  #B40000
+! green
+URxvt.color2:  #00AA00
+! yellow
+URxvt.color3:  #AAAA00
+! blue
+URxvt.color4:  #5555AA
+! magenta
+URxvt.color5:  #AA00AA
+! cyan
+URxvt.color6:  #00AAAA
+! white
+URxvt.color7:  #AAAAAA
+! "bright" black
+URxvt.color8:  #555555
+! bright red
+URxvt.color9:  #FF0000
+! bright green
+URxvt.color10: #00FF00
+! bright yellow
+URxvt.color11: #FFFF00
+! bright blue
+URxvt.color12: #6464FF
+! bright magenta
+URxvt.color13: #FF00FF
+! bright cyan
+URxvt.color14: #00FFFF
+! bright white
+URxvt.color15: #FFFFFF
+
+URxvt.background: 0
+URxvt.foreground: 15
+URxvt.cursorColor: 12
+URxvt.colorBD: 3
+URxvt.colorIT: 2

@@ -3,9 +3,11 @@ Purpose: Document useful commands and factoids most of
 
 Journal Control:
   For scanning journalctl output, some useful options,
-    journalctl -f   # follows like tail -f
-    journalctl -x   # augment log lines with explanation texts
-    journalctl -b   # since last boot
+    journalctl -f    # follows like tail -f
+    journalctl -x    # augment log lines with explanation texts
+    journalctl -b    # since last boot
+    journalctl -b -1 # previous boot
+    journalctl -b 20 # 20th boot
 
   System maintenance,
     journalctl -p 3 -xb   # Look for high priority errors since last boot.

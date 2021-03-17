@@ -1167,3 +1167,9 @@ XV. Debug options:
 
        fixed the problem for big pushes.
 
+XVI. Using Neovim as GIT Pager:
+
+  You need to turn color off in GIT and let nvim do colorization.
+
+    $ git config --global color.pager no
+    $ git config --global core.pager "nvim -R"

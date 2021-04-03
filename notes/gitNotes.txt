@@ -1106,11 +1106,11 @@ XIV. GIT revision history tools:
     4. The range A...B means every commit reachable by A or B
        but not both.
 
-       with git log   it will show you those commits and it makes
+       with git log   it will show you those commits it makes
                       when used with divergent branches.
 
        with git diff  it is syntactic sugar for
-                       git diff $(git merge-base A B) B
+                      git diff $(git merge-base A B) B
 
        with git show  will jush show commit info for each
                       single commit in that range.
@@ -1134,42 +1134,40 @@ XIV. GIT revision history tools:
 
        Then search for equivalent of "d71adde" in a git log.
 
-XV. Debug options:
-
-    1. To turn on debug logging (assuming Linux/Cygwin Bash shell)
-
-         export GIT_TRACE_PACKET=1
-         export GIT_TRACE=1
-         export GIT_CURL_VERSION=1
-
-       before doing git commands.
-
-    2. On CentOS 6.8 Linux we have encountered RPC errors while attempting
-       large GIT pushes from our internal network.
-
-         $ git push origin master
-         Password:
-         Counting objects: 2525, done.
-         Delta compression using up to 8 threads.
-         Compressing objects: 100% (2514/2514), done.
-         error: RPC failed; result=56, HTTP code = 0
-         Writing objects: 100% (2524/2524), 332.86 MiB | 19.80 MiB/s, done.
-         Total 2524 (delta 679), reused 8 (delta 0)
-
-       This does not happen when GIT pushing from a high bandwidth
-       public internet hot-spot.  Also doesn't happen for more modest
-       GIT pushes from our internal network.
-
-       Turns out that the problem is with the Curl URL library and
-       changing the following setting
-
-         git config http.postBuffer 5242880000
-
-       fixed the problem for big pushes.
-
-XVI. Using Neovim as GIT Pager:
+XV. Using Neovim as GIT Pager:
 
   You need to turn color off in GIT and let nvim do colorization.
 
     $ git config --global color.pager no
     $ git config --global core.pager "nvim -R"
+
+XV1. GIT Stash:
+
+  Store away current state of working directory and the index
+  and goes back to a clean working directory:
+
+    $ git stash push
+
+      or just
+
+    $ git stash
+
+  Drop the last stash entry from the list of stash entries:
+
+    $ git drop
+
+  Pop changes back into working directory, perhaps on a subsequent
+  commit:
+
+    $ git stash pop
+
+  This may fail due to conflicts due to changes being applied
+  at the commit that was HEAD at the time of the stash.  Resolve
+  the conflict and use git drop.
+
+  Remove all stash entries:
+
+    $ git stash clear
+
+  Note, entries will be subject to pruning, so there may be no way
+  to recover these changes.

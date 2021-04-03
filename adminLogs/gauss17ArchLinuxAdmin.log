@@ -9103,7 +9103,7 @@ Note: On 2019-03-30 decided to look into the possibility of
 2021-03-04:
   More decluttering,
 
-  Lets see system behavior without power management 
+  Lets see system behavior without power management
 
     $ sudo pacman -Rsc acpid acpi
 
@@ -9115,8 +9115,8 @@ Note: On 2019-03-30 decided to look into the possibility of
 
     $ sudo pacman -Rsc rxvt-unicode rxvt-unicode-terminfo
 
-      Don't wish to have to maintain a ~/.Xresources file
-      just for one program.
+  Don't wish to have to maintain a ~/.Xresources file
+  just for one program.
 
   Remove orphaned packages,
 
@@ -9158,5 +9158,5 @@ Note: On 2019-03-30 decided to look into the possibility of
     sdl2_ttf 2.0.15-2
     tinycdb 0.78-5
     xorg-font-utils 7.6-6
-    
+
     $ sudo pacman -R $(pacman -Qdt|cut -d ' ' -f1)

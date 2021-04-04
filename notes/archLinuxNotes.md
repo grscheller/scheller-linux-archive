@@ -1,4 +1,4 @@
-# Arch Linux Motes
+# Arch Linux Notes
 
 The purpose of these notes is to document useful commands and factoids
 most of which can be done without root or sudo access.
@@ -32,44 +32,44 @@ System maintenance,
 
 System maintenance, add and remove software.
 
-* `sudo pacman -Syu` *(upgrade software on system)*
-  * `-y, --refresh` *(download fresh package list)*
-  * `-u, --sysupgrade` *(upgrade all packages that are out of date)*
-* `sudo pacman -Syuw` *(download packages without installing)*
-* `sudo pacman -Syu <pkg>` *(upgrade system and install package)*
-* `sudo pacman -S <pkg>` *(install package based on current package list)*
-* `sudo -Rsc <pkg>` *(uninstall package, dependencies, & dependent packages)*
+* `sudo pacman -Syu` (*upgrade software on system*)
+  * `-y, --refresh` (*download fresh package list*)
+  * `-u, --sysupgrade` (*upgrade all packages that are out of date*)
+* `sudo pacman -Syuw` (*download packages without installing*)
+* `sudo pacman -Syu <pkg>` (*upgrade system and install package*)
+* `sudo pacman -S <pkg>` (*install package based on current package list*)
+* `sudo -Rsc <pkg>` (*uninstall package, dependencies, & dependent packages*)
   * `-s, --recursive`
   * `-c, --cascade`
-* `sudo -Rsu <pkg1> <pkg2>` *(Remove targets and uneeded dependencies)*
+* `sudo -Rsu <pkg1> <pkg2>` (*Remove targets and uneeded dependencies*)
   * `-u, --uneeded`
-* `sudo -R <pkg>` *(just uninstall the package)*
-* `sudo -Rs <pkg>` *(uninstall package & dependencies)*
-  * `sudo pacman -Rs $(pacman -Qdtq)` *(Uninstall unneeded packages)*
-  * `sudo pacman -Rns $(pacman -Qdtq)` *(Same as above, don't create .pacsave files)*
+* `sudo -R <pkg>` (*just uninstall the package*)
+* `sudo -Rs <pkg>` (*uninstall package & dependencies*)
+  * `sudo pacman -Rs $(pacman -Qdtq)` (*Uninstall unneeded packages*)
+  * `sudo pacman -Rns $(pacman -Qdtq)` (*Same as above, don't create .pacsave files*)
 
 Search for packages, groups and descriptions,
 
-* `pacman -Qs <regex>` *(search against local package database)*
-* `pacman -Ss <regex>` *(search against synced remote package database)*
+* `pacman -Qs <regex>` (*search against local package database*)
+* `pacman -Ss <regex>` (*search against synced remote package database*)
 
 Get information on packages,
 
-* `pacman -Qi <pkg>` *(use local package database)*
-* `pacman -Qii <pkg>` *(also include denendency and required by info)*
-* `pacman -Si <pkg>` *(use synced (remote) package database)*
-* `pacman -Sii <pkg>` *(also include denendency and required by info)*
-* `pacman -Qlq <pkg>` *list files associated with a package, use local database)*
-* `pacman -Flq <pkg>` *(list files associated with a package, use synced databases)*
+* `pacman -Qi <pkg>` (*use local package database*)
+* `pacman -Qii <pkg>` (*also include denendency and required by info*)
+* `pacman -Si <pkg>` (*use synced (remote) package database*)
+* `pacman -Sii <pkg>` (*also include denendency and required by info*)
+* `pacman -Qlq <pkg>` *list files associated with a package, use local database*)
+* `pacman -Flq <pkg>` (*list files associated with a package, use synced databases*)
 
 Get package group information,
 
 * `pacman -Qg`
 * `pacman -Sg`
-* `pacman -Qg <grp>` *(list packages in group, use local database)*
-* `pacman -Sg <grp>` *(list packages in group, use synced database)*
-* `pacman -Qg | cut -f1 -d\  | uniq | sort` *(list names of groups in local database)*
-* `pacman -Sg | cut -f1 -d\  | uniq | sort` *(list names of groups in synced database)*`
+* `pacman -Qg <grp>` (*list packages in group, use local database*)
+* `pacman -Sg <grp>` (*list packages in group, use synced database*)
+* `pacman -Qg | cut -f1 -d\  | uniq | sort` (*list names of groups in local database*)
+* `pacman -Sg | cut -f1 -d\  | uniq | sort` (*list names of groups in synced database*)`
 
 Find the package which owns a particular installed file,
 
@@ -78,19 +78,19 @@ Find the package which owns a particular installed file,
 
 Query local package DB,
 
-* `pacman -Q` *(list all installed packages)*
-* `pacman -Qe` *(list all explicitly installed packages)*
-* `pacman -Qet` *(  not reqired by other packages)*
-* `pacman -Qdt` *(list unneeded, orphaned packages)*
-  * `-d, --deps` *(packages installed as dependencies)*
-  * `-t, --unrequired` *(packages not required nor optionally required)*
-  * `-q, --quiet` *(omit version numbers, useful in scripts)*
-* `pacman -Qmq` *(list all foreign, usually AUR, packages)*
-* `pacman -Qnq` *(list all packages from the standard repos)*
-* `pactree <pkg>` *(Packages package depends on, -c for colorization)*
-* `pactree -r <pkg>` *(Packages depending on the package)*
-* `pactree -u <pkg>` *(list packages package depends on, only once)*
-* `pactree -ru <pkg>` *(list packages depending on package, only once)*
+* `pacman -Q` (*list all installed packages*)
+* `pacman -Qe` (*list all explicitly installed packages*)
+* `pacman -Qet` (*  not reqired by other packages*)
+* `pacman -Qdt` (*list unneeded, orphaned packages*)
+  * `-d, --deps` (*packages installed as dependencies*)
+  * `-t, --unrequired` (*packages not required nor optionally required*)
+  * `-q, --quiet` (*omit version numbers, useful in scripts*)
+* `pacman -Qmq` (*list all foreign, usually AUR, packages*)
+* `pacman -Qnq` (*list all packages from the standard repos*)
+* `pactree <pkg>` (*Packages package depends on, -c for colorization*)
+* `pactree -r <pkg>` (*Packages depending on the package*)
+* `pactree -u <pkg>` (*list packages package depends on, only once*)
+* `pactree -ru <pkg>` (*list packages depending on package, only once*)
 
 Locations of config and log files
 
@@ -332,8 +332,8 @@ What types of partitians do you have?
    1      1049kB  80.0GB  80.0GB  ext4         primary
 ```
 
-  Note that df -T and mount command report fuseblk instead of the
-  underlying NTFS filesystem.  FUSE (Filesystem in USEr space)
+  Note that df -T and mount command report fuseblk instead of
+  underlying NTFS filesystems.  FUSE (Filesystem in USEr space)
   filesystem can in principle access filesystems unknown to
   the Linux Kernel.  (FUSE has long since been folded into the
   Linux Kernel)

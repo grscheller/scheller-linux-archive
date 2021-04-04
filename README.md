@@ -6,7 +6,7 @@ By its very nature, it contains many loose threads.
 
 ## Linux/POSIX Notes
 
-* [Arch Linux & systemd Commands](notes/archLinuxNotes.txt)
+* [Arch Linux & systemd Commands](notes/archLinuxNotes.md)
 * [Bash Notes](notes/bashNotes.txt)
 * [C Notes](notes/C_notes.txt)
 * [Functional Programing Random Ideas](notes/fpRandomIdeas.md)

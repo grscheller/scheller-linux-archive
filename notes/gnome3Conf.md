@@ -4,7 +4,7 @@
 
 ```
    $ gnome-shell --version
-   GNOME Shell 3.38.1
+   GNOME Shell 3.38.4
 ```
 
 ## Settings (gnome-control-center)
@@ -16,7 +16,7 @@
 * Search configuration
 * Applications
   * Can't change file associations???
-  * Manage with "Software" - AppImages???
+  * Manage with "Software" - Flatpaks and Snaps
   * Does not handle Pacman packages
 * Privacy
   * Location Services
@@ -129,7 +129,7 @@
   * move windows between workspaces
   * creates/deletes workspaces as needed
 
-## Keyboard & mouse shortcuts
+## Keyboard & mouse shortcuts (as I've configured)
 
 * super key-up-event: switches between the desktop and overview mode
 * super+tab: switch between windows on current desktop
@@ -142,8 +142,10 @@
 * super+click: raise window without passing click to window
 * super+shift+page-up: move window with focus up one workspace
 * super+shift+page-down: move window with focus down one workspace
+* ctrl+shift+alt+r toggle screen recording (store in ~/Videos)
 * ctrl+alt+up-arrow: move up one workspace
 * ctrl+alt+down-arrow: move up one workspace
+* super-click: raise window
 * click titlebar: raise window
 * middle-click titlebar: drop window below all other windows
 * double-click titlebar: toggle maximize window
@@ -153,9 +155,14 @@
 * No desktop icons
 * Desktop acts as a window manager
 * The Dash acts like a program manager
-  * make sure "launch new instance" turned on
-  * right-click to select among running instances
+  * right-click to
+    * select among running instances
+    * launch new window
+    * maybe also launch new instance
   * shared menu top of screen - shows application for window with focus
+  * no longer possible to configure to "launch new instance"
+    * as of 3.38.4
+    * making work like MacOS is a misfeature
 
 ## Gnome-Terminal
 
@@ -238,11 +245,8 @@ Here are the environment variables and their defaults used by Gnome3
 * `$XDG_RUNTIME_DIR`
   * directory where user-specific non-essential runtime files stored
   * also other file objects such as sockets, named pipes, ...
-  * directory MUST be owned by the user iand MUST have file permissions 0700
+  * directory MUST be owned by the user and MUST have file permissions 0700
   * on Arch Linux:`/run/user/<uid>`
 
-Unfortunately, you can't just set these in your shell because the
-display manager launches your GNOME3 session before any sort of
-shell environment is involked.  You get the environment handed
-:w
-to you.
+As of Gnome-shell 3.38.4, I have noticed that GNOME3 does non-interactively
+source ~/.profile profile.

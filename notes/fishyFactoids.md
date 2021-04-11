@@ -2,7 +2,7 @@
 
 The Fish Shell is in the Ksh/Bash post Bourne Shell family of shells.
 Fish came out around 2005 and does what some of the other shells
-should have been done, thrown off the shackles of Bourn Shell
+should have done back then, thrown off the shackles of Bourn Shell
 backwards compatibility.  As a result, Fish is not POSIX compatible.
 
 ## Input Pipeline As If Typed
@@ -79,5 +79,40 @@ Read is useful when reading lines of data
    a =
 ```
 
-Avoid showdowing outer scope variables with an an inner scope
-read.  I found it can be a bit screwy.
+Avoid shadowing outer scope variables with an an inner scope
+read.  Not only is it bad programming practice, I found it can
+cause Fish to behave a bit screwy.  If you really want to do this,
+
+```
+   $ set -g aa AA
+
+   $ begin
+         set -l aa
+         read aa
+         echo $aa
+     end
+   read> DDD
+   DDD
+
+   $ echo $aa
+   AA
+```
+
+Fish is a bit more flexible with whitespace than other shell.  Note
+that the shell variable xx has not been set before the while loop.
+
+```
+   $ echo 'aa
+     bb
+     cc' |
+         while read xx
+             echo $xx
+         end
+     aa
+     bb
+     cc
+     
+     /home/grs
+     $ set -S xx
+     $xx: set in global scope, unexported, with 0 elements
+```

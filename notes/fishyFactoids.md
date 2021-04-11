@@ -81,7 +81,10 @@ Read is useful when reading lines of data
 
 Avoid shadowing outer scope variables with an an inner scope
 read.  Not only is it bad programming practice, I found it can
-cause Fish to behave a bit screwy.  If you really want to do this,
+cause Fish to behave a bit screwy.  Note that the variale aa does
+not retain any of its while loop values.  This would be true even
+if it was set in global or universal scope.  If you really want
+to do this,
 
 ```
    $ set -g aa AA
@@ -111,7 +114,7 @@ that the shell variable xx has not been set before the while loop.
      aa
      bb
      cc
-     
+
      /home/grs
      $ set -S xx
      $xx: set in global scope, unexported, with 0 elements

@@ -87,8 +87,8 @@ Query local package DB,
   * `-q, --quiet` (*omit version numbers, useful in scripts*)
 * `pacman -Qmq` (*list all foreign, usually AUR, packages*)
 * `pacman -Qnq` (*list all packages from the standard repos*)
-* `pactree <pkg>` (*Packages package depends on, -c for colorization*)
-* `pactree -r <pkg>` (*Packages depending on the package*)
+* `pactree <pkg>` (*packages package depends on, -c for colorization*)
+* `pactree -r <pkg>` (*packages depending on the package*)
 * `pactree -u <pkg>` (*list packages package depends on, only once*)
 * `pactree -ru <pkg>` (*list packages depending on package, only once*)
 

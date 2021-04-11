@@ -8,6 +8,7 @@ By its very nature, it contains many loose threads.
 
 * [Arch Linux & systemd Commands](notes/archLinuxNotes.md)
 * [Bash Notes](notes/bashNotes.txt)
+* [Fish Shell Factoids](notes/fishyFactoids.md)
 * [C Notes](notes/C_notes.txt)
 * [Functional Programing Random Ideas](notes/fpRandomIdeas.md)
 * [GIT Notes](notes/gitNotes.txt)

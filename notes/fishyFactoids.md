@@ -5,7 +5,7 @@ Fish came out around 2005 and does what some of the other shells
 should have done back then, thrown off the shackles of Bourn Shell
 backwards compatibility.  As a result, Fish is not POSIX compatible.
 
-## Input Pipeline As If Typed
+## Input pipeline as if typed
 
 These are equivalent,
 
@@ -18,6 +18,39 @@ These are equivalent,
    $ echo hello $(echo boobar fuzzbaz|sed 's/bar/bus/') world
    hello boobus fuzzbaz world
 ```
+
+## Read pipeline as if from a File
+
+These are equivalenr
+
+```
+   [fish]
+   $ diff (printf 'a b\nc d e\nx y\n'|psub) (printf 'a b\nc f e\nx y\n'|psub)
+   2c2
+   < c d e
+   ---
+   > c f e
+
+   [bash]
+   $ diff <(printf 'a b\nc d e\nx y\n') <(printf 'a b\nc f e\nx y\n')
+   2c2
+   < c d e
+   ---
+   > c f e
+```
+
+psub takes the following options:
+
+| Option      | Long Option       | Description                                       |
+|:-----------:|:----------------- |:------------------------------------------------- |
+| `-f`        | `--file`          | use regular file, allows seeking, but is slower   |
+| `-F`        | `--fifo`          | use fifo, faster but buffering problems can occur |
+| `-s SUFFIX` | `--suffix=SUFFIX` | append SUFFIX like .c onto backing file or fifo   |
+
+While bash uses the /dev/fd/ device files, psub is a fish function that returns
+the name of a file or fifo it creates and later cleans up.  Using an actual file
+is the default.  Fifos on Linux have a 64KiB capacity, which can be a problem
+for nonblocking writing.
 
 ## Sourcing from a Pipeline
 
@@ -43,6 +76,22 @@ from another system,
 
 This assumes your login shell is fish on the other system and
 ssh is configured correctly.
+
+Unlike other shells, sourced files can take arguments like shell scripts,
+
+```
+   $ echo 'set foo hello
+     echo $foo $argv[2]
+     ' | source - goat world frog
+   hello world
+
+   $ echo 'set foo hello
+     echo $foo $argv[2]
+     ' > junk
+
+   $ source junk earth mars saturn
+   hello mars
+```
 
 ## Read Trick since Pipelines Don't Use Subshells
 
@@ -119,3 +168,10 @@ that the shell variable xx has not been set before the while loop.
      $ set -S xx
      $xx: set in global scope, unexported, with 0 elements
 ```
+
+## Argument Parsing
+
+  Todo: see type psub
+            man argparse
+            man fish_opt
+

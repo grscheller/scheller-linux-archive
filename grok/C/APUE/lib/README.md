@@ -1,0 +1,1 @@
+# APUE library installation directory

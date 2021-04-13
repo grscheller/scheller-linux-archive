@@ -1,0 +1,40 @@
+## Feature Test Macro symbols
+
+# Feature Test Macros - see man 7 feature_test_macros
+__STRICT_ANSI__	n	# Implicitly defined when involking with
+                 	# either "gcc -std=c99" or "gcc -ansi".
+_POSIX_SOURCE	n	# Depricated, same as POSIX_C_SOURCE=1
+_POSIX_C_SOURCE	l	# Selects version of IEEE 1003.1 to follow,
+                 	# available versions are:
+                 	#   if >= 1L use IEEE Std 1003.1-1990
+                 	#   if >= 2L use IEEE Std 1003.1-1992
+                 	#   if >= 199309L use IEEE Std 1003.1b-1993
+                 	#   if >= 199506L use IEEE Std 1003.1c-1995
+                 	#   if >= 200112L use IEEE Std 1003.1-2001
+                 	#   if >= 200809L use IEEE Std 1003.1-2008
+                 	#   if >= 201703L use IEEE Std 1003.1-2017
+_XOPEN_SOURCE	d	# XPG (X/Open Portability Guide) formally the
+                 	# SUS (Single UNIX Specification)
+                 	#   if >= 1 use SUSv1
+                 	#   if >= 500 use SUSv2
+                 	#   if >= 600 use SUSv3
+                 	#   if >= 700 use SUSv4
+_XOPEN_SOURCE_EXTENDED	n	# Depricated
+_ISOC99_SOURCE	n	# Use "cc -std=c99" instead
+_ISOC11_SOURCE	n	# Use "cc -std=c11" instead
+_LARGEFILE_SOURCE	n	# Depricated
+_LARGEFILE64_SOURCE	n	# Depricated
+_FILE_OFFSET_BITS	d	# Either 32 or 64, no effect on 64-bit systems.
+_BSD_SOURCE	n	# Depricated, prefer BSD defs under certain circumstnaces.
+_SVID_SOURCE	n	# Depricated, prefer System V defs under certain circumstnaces.
+_DEFAULT_SOURCE	n	# Without defining other individual macros or invoking the
+                 	# compiler in one of its "standard" modes has no effect.
+_ATFILE_SOURCE	n	# Implecitly defined if _POSIX_C_SOURCE >= 200809L.
+_GNU_SOURCE	n	# Implicitly define other macros based on version of glibc,
+            	# everything except the kitchen sink.
+_REENTRANT	n	# depricated/obsolete.
+_THREAD_SAFE	n	# Depricated/obsolete (synonym of above).
+_FORTIFY_SOURCE	d	# Lightweight checks performed to detect some buffer
+                	# overflow errors, need "gcc -O1" and above,
+                	# If 1, shouldn't change behavior of conforming programs.
+                	# If 2, more checking but some conforming programs may fail.

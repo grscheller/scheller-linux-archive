@@ -36,6 +36,7 @@ By its very nature, it contains many loose threads.
 ## Grokking Computer Languages - many loose threads
 
 * __C__
+  * [Advanced Programming in the UNIX Environment](grok/C/APUE/)
   * [C Language Exeplars](grok/C/CExemplars/)
   * [C Language Syntax](grok/C/CSyntax/)
   * [Reverse Engineering with C](grok/C/CRevEngineer/)
@@ -68,6 +69,7 @@ By its very nature, it contains many loose threads.
 * __Rust__
   * [Learn Rust as General Purpose Language](grok/Rust/learnRust/)
 * __Scala2__
+  * [Functional Programming in Scala](grok/Scala2/fpinscala/)
   * [Functional Programming for Mortals](grok/Scala2/fpForMortals/)
   * [Learn Scala](grok/Scala2/learnScala/)
   * [Type Level Programming in Scala](grok/Scala2/typeLevelProgramming/)

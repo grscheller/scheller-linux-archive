@@ -153,7 +153,7 @@ sources user's ~/.profile with /etc/gdm/Xsession using /bin/sh.
   * Window Action Key -> Super
   * Window Focus -> Focus on Hover (on)
   * Raise Windows When Focused (off)
-* Workspaces 
+* Workspaces
   * Dynamic Workspaces
   * Display Handling -> Workspaces span displays
 
@@ -172,6 +172,7 @@ sources user's ~/.profile with /etc/gdm/Xsession using /bin/sh.
 ## Gnome-Shell-Extensions
 
 ### Arch Linux
+
 Install a default set of extenstions managed by Arch,
 
 ```
@@ -188,37 +189,38 @@ Install a default set of extenstions managed by Arch,
     * Enable the gnome-shell extention (on)
     * Sync daemon state with the extension's one (on)
     * Save history (on)
-  * Extensions -> Lauch new instance (on)
-    * note: makes Dash much more useful
   * Extensions -> Native Window Placement (on)
   * Extensions -> Places status indicator (on)
+  * Extensions -> Launch new instance (on)
+    * note: makes the Dash much more useful
 
 ### Arch Linux using AUR
-  * Go to [AUR](https://aur.archlinux.org/)
-  * Search on gnome-shell-extension
-  * Create a place to build the extension
 
-    ```
-       $ mkdir -p ~/build/AUR/gnome-extensions/
-    ```
+* Go to [AUR](https://aur.archlinux.org/)
+* Search on gnome-shell-extension
+* Create a place to build the extension
 
-  * Example: Install gnome-shell-extension-extensions
+  ```
+     $ mkdir -p ~/build/AUR/gnome-extensions/
+  ```
 
-    ```
-       $ cd ~/build/AUR/gnome-extensions/
-       $ git clone https://aur.archlinux.org/gnome-shell-extension-extensions-git.git
-       $ cd gnome-shell-extension-extensions-git
-       $ makepkg -sri
-    ```
+* Example: Install gnome-shell-extension-extensions
 
-  * This installs Extensions for all users
-  * After re-logging in, use Gnome-Extentions to activate Extensions
-  * Extensions provides a convenient way to activate/deactivate other extensions
-    * Extensions app has an option to install Gnome extentions
-      * This just takes you to the Gnome extensions page (AppImages)
-      * Does not auto install from AUR.
-  * Turn on via Gnome-Tweak
-  * I actually don't use this one
+  ```
+     $ cd ~/build/AUR/gnome-extensions/
+     $ git clone https://aur.archlinux.org/gnome-shell-extension-extensions-git.git
+     $ cd gnome-shell-extension-extensions-git
+     $ makepkg -sri
+  ```
+
+* This installs Extensions for all users
+* After re-logging in, use Gnome-Extentions to activate Extensions
+* Extensions provides a convenient way to activate/deactivate other extensions
+  * Extensions app has an option to install Gnome extentions
+    * This just takes you to the Gnome extensions page (AppImages)
+    * Does not auto install from AUR.
+* Turn on via Gnome-Tweak
+* I actually don't use this one
 
 ### Download extension from [https://extensions.gnome.org/](https://extensions.gnome.org/)
 

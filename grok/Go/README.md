@@ -27,12 +27,11 @@ Compile and then run:
    Hello, World!
 ```
 
-### boom
+### bomb
 
 Countdown program to an explosion
-[boom.go](babysteps/boom.go).
+[bomb.go](babysteps/bomb.go).
 
 Illustrate the use of a "select" statement.  Similar in syntax to a
-"switch" statement, but choosing cases all referring to communication
-channels.  Select statements let goroutines wait on multiple
-communication operations.
+"switch" statement, but the cases refer to communication channels.
+Select statements let goroutines wait on multiple communication channels.

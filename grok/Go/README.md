@@ -9,17 +9,8 @@
 
 ### hello
 
-Traditional "Hello World" program in file
+Traditional "Hello World" program
 [hello.go](babysteps/hello.go).
-
-```
-   package main
-
-   import "fmt"
-
-   func main() {
-       fmt.Println("Hello, World!")
-  ```
 
 Run as an interpreter:
 
@@ -35,3 +26,13 @@ Compile and then run:
    $ ./hello
    Hello, World!
 ```
+
+### boom
+
+Countdown program to an explosion
+[boom.go](babysteps/boom.go).
+
+Illustrate the use of a "select" statement.  Similar in syntax to a
+"switch" statement, but choosing cases all referring to communication
+channels.  Select statements let goroutines wait on multiple
+communication operations.

@@ -24,9 +24,58 @@ run one project,
    $ sbt splat/run
 ```
 
-make sure you launch sbt from the root grokScala directory.
+make sure you launch sbt from the root learnScala directory.
 
-## 2. Multiple packages in single build: [multiPackage](multiPackage/)
+## 2. Builing code with scalac and sbt: [longLines](longLines/)
+
+Example taken from Programming in Scala, 4rd edition.  Mostly to document
+how to build from the command line with scalac and sbt.
+
+Compile to `*.class` files and run without SBT,
+
+```
+  $ cd longLines
+
+  $ scalac LongLines.scala
+  $ scala FindLongLines 45 LongLines.scala
+
+  $ rm *.class
+```
+
+Compile to Jar file and run without SBT,
+
+```
+  $ scalac LongLines.scala -d longLines.jar
+  $ scala longLines.jar 40 ../README.md
+
+  $ rm LongLines.jar
+```
+
+To run as part of the hierarchical build,
+
+```
+  $ cd ..
+
+  $ sbt
+  sbt:learnScala> longLines/run 73 README.md
+  sbt:learnScala> exit
+  [info] shutting down sbt server
+
+```
+
+To run hierarchical build with sbt from commandline,
+
+```
+  $ sbt "longLines/run 73 README.md"
+```
+
+To run what was built with hierarchical SBT build from commandline,
+
+```
+  $ scala longLines/target/scala-2.13/longlines_2.13-0.1-SNAPSHOT.jar 73 README.md
+```
+
+## 3. Multiple packages in single build: [multiPackage](multiPackage/)
 
 The above multiple projects (my term) in the hierarchical build compile
 scala packages which are independent of each other in the sense that
@@ -35,7 +84,7 @@ packages.  The multiPackage project shows how to compile multiple packages
 in a way that allows SBT to "out-of-the-box" handle package dependencies
 among them.
 
-## 3. Scala's "splat" equivalents: [Splat.scala](splat/Splat.scala)
+## 4. Scala's "splat" equivalents: [Splat.scala](splat/Splat.scala)
 
 Languages like Python and Ruby have a syntactic sugar to pass an
 array or tuple into a fixed or variable-arity function.
@@ -91,7 +140,7 @@ To run outside sbt build,,
    $ scala grokScala.splat.Splat
 ```
 
-## 4. Scala code blocks: [codeblocks](codeblocks/)
+## 5. Scala code blocks: [codeblocks](codeblocks/)
 
 Scala code blocks are interesting closures.  They can contain state
 but are not first class objects.  This project is to explore to what
@@ -152,8 +201,8 @@ Codeblocks, like any good closures, can contain state.
   trait definitions.  These may be more than just "Syntactic Sugar" but
   have some deeper meaning.  The use of `self` returns/references the
   class/trait itself within the class/trait.  Since classes/traits do not
-  use `=`, like a method can, their "return values" definately
-  not a λ-function, but instances of the class/trait.
+  use `=`, like methods do, their "return values" definately are
+  not λ-functions, but instances of the class/trait.
 
 ```
    trait Foo[+A] { self =>
@@ -161,17 +210,17 @@ Codeblocks, like any good closures, can contain state.
    }
 ```
 
-## 5. Sort a polymorphic ordered list: [Sort.scala](sort/Sort.scala)
+## 6. Sort a polymorphic ordered list: [Sort.scala](sort/Sort.scala)
 
 Compare this to the Haskell implementation in
 [here](../../Haskell/haskellIntroProgramming/examples/Sort.hs).
 
-## 6. Scala oop: [oop](oop/)
+## 7. Scala oop: [oop](oop/)
 
 Exploring Scala OOP features.  When an OOP model fits the problem, it is not
 bad.  I just don't like it when it handcuffs me.
 
-## 7. Parallelism with Scala: [parallelism](parallelism/)
+## 8. Parallelism with Scala: [parallelism](parallelism/)
 
 Exploring multithreading/concurrent constructs in Scala.
 
@@ -179,12 +228,12 @@ It seems that Actors from the Scala standard library have been dropped in
 favor of akka Actors.  Also, the standard library now has a Promises
 implementation, which is very different that the one removed from Scalaz.
 
-## 8. State Monad: [grokScala.multiPackage.state](multiPackage/src/main/scala/multiPackage/state/State.scala)
+## 9. State Monad: [grokScala.multiPackage.state](multiPackage/src/main/scala/multiPackage/state/State.scala)
 
 An implementation of the State Monad I took from my version of
 the [fpinscala package](../fpinscala).
 
-## 9. Package objects: [grokScala.multiPackage.rand](multiPackage/src/main/scala/multiPackage/rand/)
+## 10. Package objects: [grokScala.multiPackage.rand](multiPackage/src/main/scala/multiPackage/rand/)
 
 In scala, types cannot be defined outside of classes/objects.  They are
 features that are part of Scala's OO system - see page 457 of Oderski's
@@ -213,7 +262,7 @@ located in the
 This is my original implimentation of `fpinscala.state.rand.Rand`.
 I reimplemented it there as a case class containing a `State(RNG,A)`.
 
-## 10. Convert methods to functions: [MethodAsFunctions](methodAsFunctions/methodAsFunctions.scala)
+## 11. Convert methods to functions: [MethodAsFunctions](methodAsFunctions/methodAsFunctions.scala)
 
 Explore how a Scala instance method can be converted to a function.
 
@@ -250,28 +299,7 @@ and using the Scala REPL
    Int => Int
 ```
 
-## 11. Compare Fibonacci implementations: [Package fibcompare](fib/fibcompare.scala)
+## 12. Compare Fibonacci implementations: [Package fibcompare](fib/fibcompare.scala)
 
 A simple example of package level coding.
-
-## 12. LongLines: Example taken from Programming in Scala, 4rd edition
-
-Not part of the heirarchical SBT build.  Mostly to document how to build
-from the command line with scalac.
-
-Compile to `*.class` files and run:
-
-```
-  $ scalac LongLines.scala
-  $ scala FindLongLines 45 LongLines.scala
-
-  $ rm *.class
-```
-
-Compile to Jar file and run:
-
-```
-  $ scalac LongLines.scala -d LongLines.jar
-  $ scala LongLines.jar 40 LongLines.scala
-```
 

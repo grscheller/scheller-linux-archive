@@ -37,7 +37,7 @@ Compile to `*.class` files and run without SBT,
   $ cd longLines
 
   $ scalac LongLines.scala
-  $ scala FindLongLines 45 LongLines.scala
+  $ scala FindLongLines 45 ../README.md
 
   $ rm *.class
 ```
@@ -303,3 +303,6 @@ and using the Scala REPL
 
 A simple example of package level coding.
 
+## 13. Three meanings of implicit: [Package grokScala.implicits](implicits/implicits.scala)
+
+Implicit conversions and parameters

@@ -9,6 +9,7 @@ lazy val root = (project in file("."))
   .aggregate(
        codeblocks
      , fib
+     , implicits
      , longLines
      , methodAsFunctions
      , multiPackage
@@ -27,6 +28,10 @@ lazy val codeblocks = (project in file("codeblocks"))
 lazy val fib = (project in file("fib"))
   .settings(commonSettings: _*)
   .settings(name := "fib")
+
+lazy val implicits = (project in file("implicits"))
+  .settings(commonSettings: _*)
+  .settings(name := "implicits")
 
 lazy val longLines = (project in file("longLines"))
   .settings(commonSettings: _*)

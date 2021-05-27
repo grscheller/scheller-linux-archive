@@ -21,14 +21,14 @@ case class IntWrapper(ii: Int) {
   def tripleMe = ii*3
 }
 
-class PreferedName(name: String) {
-  def getName = name
-}
-
 object Main {
 
   import MyImplicitConversions._  // could be used to determine which
                                   // implicit conversions to make visible
+
+  class PreferedName(name: String) {
+    def getName = name
+  }
 
   def sayHello(implicit preferedName: PreferedName) = {
     val nameStr = preferedName.getName
@@ -41,14 +41,14 @@ object Main {
                          // from being a type mismatch error
     print("foo = "); println(foo)
     print("bar = "); println(bar)
-    print("4.tripleMe = "); println(4.tripleMe)  // add a method to Int
+    print("4.tripleMe = "); println(4.tripleMe)      // add a method to Int
     print("foo.tripleMe = "); println(foo.doubleMe)  // add a method to Double
     print("bar x 10 = "); println(bar x 10)
 
-    val geoffrey: PreferedName = new PreferedName("Geoffrey")
-    // sayHello   // Doesn't find geoffrey???
-    sayHello(new PreferedName("Beowulf"))
-    sayHello(geoffrey)
+    implicit val geoffrey: PreferedName = new PreferedName("Geoffrey")
+    val beowulf: PreferedName = new PreferedName("Beowulf")
+    sayHello
+    sayHello(beowulf)
   }
 
 }

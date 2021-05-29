@@ -71,12 +71,10 @@ By its very nature, it contains many loose threads.
 * __Scala2__
   * [Functional Programming in Scala](grok/Scala2/fpinscala/)
   * [Functional Programming for Mortals](grok/Scala2/fpForMortals/)
-  * [Learn Scala](grok/Scala2/learnScala/)
+  * [Learn Scala2](grok/Scala2/learnScala/)
   * [Type Level Programming in Scala](grok/Scala2/typeLevelProgramming/)
   * [Dotty Template](grok/Scala2/sbtDottyTemplate)
   * [Testing Out Li Haoyi's os-lib library](grok/Scala2/osLib)
-* __Scala3__
-  * [Following 5th Edition of Odersky's Book](grok/Scala3/scala-3-play)
 
 ## Comparing Computer Languages
 

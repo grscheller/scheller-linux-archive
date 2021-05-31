@@ -68,12 +68,13 @@ By its very nature, it contains many loose threads.
   * [PyTorch based Deep learning](grok/Python/pyTorch/)
 * __Rust__
   * [Learn Rust as General Purpose Language](grok/Rust/learnRust/)
+* __Scala3__
+  * [Scala 3 REPL via SDT](grok/Scala3/scala-console/)
 * __Scala2__
   * [Functional Programming in Scala](grok/Scala2/fpinscala/)
   * [Functional Programming for Mortals](grok/Scala2/fpForMortals/)
   * [Learn Scala2](grok/Scala2/learnScala/)
   * [Type Level Programming in Scala](grok/Scala2/typeLevelProgramming/)
-  * [Dotty Template](grok/Scala2/sbtDottyTemplate)
   * [Testing Out Li Haoyi's os-lib library](grok/Scala2/osLib)
 
 ## Comparing Computer Languages

@@ -124,8 +124,13 @@ Arch's Scala version
    val res1: String = version 2.13.5-20210527-235018-unknown
 ```
 
-and a match without curly brackets is a syntax error.
+and a `match` without curly brackets is a syntax error.
 
-Sadly, not only do we not have a real Scala 3, but we have to
-deal with opaque SBT magic.  At least I can play with Scala 3
-syntax and the REPL has much more useful syntastic coloring.
+The reason for the wrong version string is that Scala 3.0.0 reuses
+the 2.13.15 standard libraries where this string is defined.
+
+In Scala 3.0.0 `dotty.tools.dotc.config.Properties.versionString`
+will return "version 3.0.0".
+
+Sadly, we still have to deal with opaque SBT magic.  I never told SBT
+to update itself.

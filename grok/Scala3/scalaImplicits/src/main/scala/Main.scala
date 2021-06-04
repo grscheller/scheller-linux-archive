@@ -1,15 +1,20 @@
-package grokScala.implicits
-// Package showing syntax how to use implicit conversions in Scala 2.
+package scalaImplicits
+// Package showing syntax how to use implicit conversions in Scala 3.
 //
-//   See grok/Scala3/scalaImplicits for a Scala 3
+//   See grok/Scala2/learnScala/implicits for a Scala 2
+//   version using the overloaded explicit key word.  For
+//   backward compatibility, that version would still compile
+//   in Scala 3, but would be deprecated.
 //
+//   The implicit class Times still needs to be ported over
+//   to Scala 3 syntax.
 
-import scala.language.implicitConversions  // compiler warning told me to import this
+import scala.language.implicitConversions
 
-object MyImplicitConversions {
-  implicit def doubleToInt(x: Double): Int = x.toInt
-  implicit def IntToIntWrapper(jj: Int): IntWrapper = IntWrapper(jj)
-  implicit def DoubleToIntWrapper(jj: Double): IntWrapper = IntWrapper(doubleToInt(jj))
+object MyGivens {
+  given doubleToInt: Conversion[Double, Int] = _.toInt
+  given intToIntWrapper: Conversion[Int, IntWrapper] = IntWrapper(_)
+  given doubleToIntWrapper: Conversion[Double, IntWrapper] = (x: Double) =>IntWrapper(x.toInt)
 
   // implicit classes must have a single argument constructor,
   // cannot be a case class, and must be located within another
@@ -26,8 +31,10 @@ case class IntWrapper(ii: Int) {
 
 object Main {
 
-  import MyImplicitConversions._  // Could be used to determine which implicit
-                                  // conversions to explicitly make visible.
+  import scalaImplicits.MyGivens.doubleToInt
+  import scalaImplicits.MyGivens.intToIntWrapper
+  import scalaImplicits.MyGivens.doubleToIntWrapper
+  import scalaImplicits.MyGivens.Times
 
   class PreferedName(name: String) {
     def getName = name
@@ -39,6 +46,7 @@ object Main {
   }
 
   def main(args: Array[String]) = {
+
     val foo: Double = 42.314159
     val bar: Int = foo   // implicit conversion prevents this
                          // from being a type mismatch error
@@ -48,10 +56,10 @@ object Main {
     print("foo.doubleMe = "); println(foo.doubleMe)  // add a method to Double
     print("bar x 10 = "); println(bar x 10)
 
-    implicit val geoffrey: PreferedName = new PreferedName("Geoffrey")
+    given geoffrey: PreferedName = new PreferedName("Geoffrey")
     val beowulf: PreferedName = new PreferedName("Beowulf")
     sayHello
-    sayHello(beowulf)
+    sayHello(using beowulf)
   }
 
 }

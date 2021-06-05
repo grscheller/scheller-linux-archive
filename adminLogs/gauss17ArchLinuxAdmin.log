@@ -9160,3 +9160,34 @@ Note: On 2019-03-30 decided to look into the possibility of
     xorg-font-utils 7.6-6
 
     $ sudo pacman -R $(pacman -Qdt|cut -d ' ' -f1)
+
+2021-06-05:
+  Getting tired of system suspending when laptop lid is closed.
+  My computer is not an appliance.  Currrently there is a Gnome
+  tweak whichturns off this misfeature, but I want it to hold
+  more generally.
+
+  Edit `/etc/systemd/logind.conf` uncomment and change these
+  two lines to
+
+    HandleLidSwitch=ignore
+    HandleLidSwitchExternalPower=ignore
+
+  Reboot.
+
+  Seems to have accomplished what I wanted.
+
+2021-06-05:
+  Still have the problem that my extrnal monitor chops of the last 3
+  lines of the linux-console.  As a workaround, at least while using
+  fish, I hit <ctrl-L> a lot.  Needs to be fixed, makes using nvim
+  more difficult.  Think it is defaulting to the number of lines on
+  the laptop's screen.
+
+  As a better work around, I created a fish function that executes
+  the following command
+
+    test $TERM = linux; and stty rows 44 columns 169
+
+  This will fix the particular virtual console even for subsequent
+  logins.

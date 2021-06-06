@@ -1,7 +1,7 @@
 import org.junit.Test
 import org.junit.Assert.*
 import scalaImplicits.*
-import scalaImplicits.MyGivens.given
+import scalaImplicits.ConversionsAndExtensions.*
 
 class Test1:
   @Test def t1(): Unit =

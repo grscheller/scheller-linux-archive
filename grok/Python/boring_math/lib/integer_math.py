@@ -1,6 +1,7 @@
-"""Library of functions of an integer pure math nature.
+""" integer_math
 
-Note: Type checking the responsibility of the calling function.
+    Library of functions of an integer pure math nature.
+
 """
 
 __author__ = "Geoffrey Scheller"
@@ -14,7 +15,8 @@ __all__ = ['gcd', 'lcm', 'primes',
            'fibonacci', 'fibonacci_list', 'fibonacci_tuple',
            'fibonacci_mult', 'fibonacci_mult_list', 'fibonacci_mult_tuple']
 
-## Number Theory mathematical Functions.
+
+# Number Theory mathematical Functions.
 
 def gcd(fst, snd):
     """Uses Euclidean algorithm to compute the gcd of two integers.
@@ -83,7 +85,7 @@ def primes(start=2, end_before=100):
     return iter(_prime_list(start, end_before))
 
 
-## Pythagorean Triples related mathematical functions.
+# Pythagorean Triples related mathematical functions.
 
 def pythag3(a_max=3, all_max=None):
     """This iterator finds all primative pythagorean triples
@@ -105,21 +107,25 @@ def pythag3(a_max=3, all_max=None):
 
     # Calculate limits for given values of a_max & all_max
     if all_max is None:
-        # Tor a given value of a, no more
-        # triples beyond this value of b
-        b_max = lambda a: (a**2 - 1)//2
+
+        def b_max(a):             # For a given value of a, no more
+            return (a**2 - 1)//2  # triples beyond this value of b
+
     else:
         if all_max < 5:
             all_max = 4
-        # Cap triples to those with sides no bigger than all_max
         if all_max < a_max + 2:
             a_max = all_max - 2
-        b_max = lambda a: min((a**2 - 1)//2, int((all_max**2 - a**2)**0.5))
+
+        # Cap triples to those with sides no bigger than all_max
+        def b_max(a):
+            return min((a**2 - 1)//2, int((all_max**2 - a**2)**0.5))
+
     c_max = int((a_max**2 + b_max(a_max)**2)**(0.5))
 
     # Hypothrnuse perfect square lookup dictionary
     # Note: hypotenuse always odd for Pythagorean triples
-    squares = {h*h:h for h in range(5, c_max + 1, 2)}
+    squares = {h*h: h for h in range(5, c_max + 1, 2)}
 
     # Calculate Pythagorean triples
     for side_a in range(3, a_max + 1):
@@ -159,7 +165,7 @@ def ackermann(m_arg=0, n_arg=0):
     return acker[0]
 
 
-## Fibonacci related mathematical functions.
+# Fibonacci related mathematical functions.
 
 def _fibonacci(fib0, fib1):
     """Returns an iterator to a Fibonacci sequence whose

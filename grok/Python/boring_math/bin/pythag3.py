@@ -18,6 +18,7 @@ __author__ = "Geoffrey Scheller"
 import sys
 from integer_math import pythag3
 
+
 def main():
     """Main entry point for pythag3.py"""
 
@@ -34,6 +35,7 @@ def main():
     # Print out Pythagean Triples
     for triple in pythag3_iter:
         print(triple)
+
 
 if __name__ == "__main__":
     main()

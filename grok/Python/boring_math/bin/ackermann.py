@@ -15,6 +15,7 @@ __author__ = "Geoffrey Scheller"
 import sys
 from integer_math import ackermann
 
+
 def main():
     """Main entry point for ackerman.py"""
 
@@ -37,6 +38,7 @@ def main():
 
     # Compute value
     print(ackermann(m_arg, n_arg))
+
 
 if __name__ == "__main__":
     main()

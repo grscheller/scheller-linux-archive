@@ -1,7 +1,7 @@
-"""Poor man's version of itertools
+""" Module: func_tools
 
-   Due to the side effectful nature of iterators, little
-   attempt to "purify" functions taking them as aguments.
+    Poor man's version of itertools
+
 """
 
 __author__ = "Geoffrey Scheller"
@@ -9,6 +9,7 @@ __author__ = "Geoffrey Scheller"
 import sys
 
 __all__ = ['drop', 'take', 'drop_while', 'take_while']
+
 
 def drop(num, iterator):
     """Drop the first n elements on an iterator"""

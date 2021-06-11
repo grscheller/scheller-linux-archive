@@ -70,6 +70,7 @@ By its very nature, it contains many loose threads.
   * [Learn Rust as General Purpose Language](grok/Rust/learnRust/)
 * __Scala3__
   * [Scala 3 REPL via SDT](grok/Scala3/scala-console/)
+  * [Keywords given and extension](grok/Scala3/scalaImplicits/)
 * __Scala2__
   * [Functional Programming in Scala](grok/Scala2/fpinscala/)
   * [Functional Programming for Mortals](grok/Scala2/fpForMortals/)

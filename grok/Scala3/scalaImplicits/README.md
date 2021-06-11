@@ -1,21 +1,14 @@
-# sbt project compiled with Scala 3
+# Keywords given and extension in Scala 3
 
-Todo: Update this file from boilerplate from `$ sbt new scala/scala3.g8` command
+The keywords `given` and `extension` replace the overloaded
+keyword `implicit` from Scala 2.  The implicit keyword still
+works as it did in Scala 2, but is deprecated and at some
+point will be removed.
 
-## Usage
+This project, scalaImplicits, impletements a
+[Main.scala](src/main/scala/Main.scala) executable which is a
+rewrite of the Scala 2 program
+[implicits.scala](../../Scala2/learnScala/implicits/implicits.scala)
+from grok/Scala2/learnScala project.
 
-This is a normal sbt project. You can compile code with `sbt compile`,
-run it with `sbt run`, and `sbt console` will start a Scala 3 REPL.
-
-For more information on the sbt-dotty plugin, see the
-[scala3-example-project](https://github.com/scala/scala3-example-project/blob/main/README.md).
-
-## Things to look into
-
-### Metals
-
-### Metals Neovim
-
-[metals vim](https://scalameta.org/metals/docs/editors/vim.html)
-
-### Neomake
+This project also implements simple junit tests.

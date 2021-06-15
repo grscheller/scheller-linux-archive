@@ -1,6 +1,6 @@
-CC=cc
+#CC=cc
 #CC=gcc
-#CC=clang
+CC=clang
 CFLAGS=-Wall
 UTILS=realpath
 XUTILS=jigglemouse
@@ -14,6 +14,9 @@ jigglemouse: jigglemouse.c
 
 realpath: realpath.c
 	$(CC) $(CFLAGS) -o $@ $<
+
+install: binaries
+	mv $(UTILS) $(XUTILS) ~/.local/bin
 
 clean:
 	rm -f $(UTILS) $(XUTILS)

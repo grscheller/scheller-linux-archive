@@ -71,7 +71,7 @@ main(int argc, char *argv[])
 
     while(timeout >= 0) {
         /* Find current mouse position and error out if unsucessful */
-        bool mouse_found;
+        bool mouse_found = false;
         for (ii = 0; ii < number_of_screens; ii++) {
             mouse_found = XQueryPointer(display,
                           root_windows[ii],

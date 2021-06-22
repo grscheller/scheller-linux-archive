@@ -37,10 +37,9 @@ object Main {
   }
 
   def sayHello(implicit preferedName: PreferedName) =
-    val nameStr = preferedName.getName
-    println(s"Hello, $nameStr")
+    println(s"Hello, ${preferedName.getName}")
 
-  def main(args: Array[String]) =
+  def main(args: Array[String]) = {
     val foo: Double = 42.314159
     val bar: Int = foo   // implicit conversion prevents this
                          // from being a type mismatch error
@@ -54,5 +53,6 @@ object Main {
     val beowulf: PreferedName = new PreferedName("Beowulf")
     sayHello
     sayHello(using beowulf)
+  }
 
 }

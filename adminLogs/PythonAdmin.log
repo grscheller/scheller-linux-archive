@@ -75,7 +75,7 @@ Purpose: For tracking Python infrastructure installed locally as
 
       environment location: /home/geoff/opt/anaconda3/envs/play
 
-      added / updated specs: 
+      added / updated specs:
         - anaconda
         - python=3.6.4
 
@@ -88,29 +88,29 @@ Purpose: For tracking Python infrastructure installed locally as
 
     The following NEW packages will be INSTALLED:
 
-        anaconda:        custom-py36hbbc8b67_0   
-        ca-certificates: 2017.08.26-h1d4fec5_0   
+        anaconda:        custom-py36hbbc8b67_0
+        ca-certificates: 2017.08.26-h1d4fec5_0
         certifi:         2017.11.5-py36hf29ccca_0
-        libedit:         3.1-heed3624_0          
-        libffi:          3.2.1-hd88cf55_4        
-        libgcc-ng:       7.2.0-h7cc24e2_2        
-        libstdcxx-ng:    7.2.0-h7a57d05_2        
-        ncurses:         6.0-h9df7e31_2          
-        openssl:         1.0.2n-hb7f436b_0       
-        pip:             9.0.1-py36h6c6f9ce_4    
-        python:          3.6.4-hc3d631a_1        
-        readline:        7.0-ha6073c6_4          
-        setuptools:      38.4.0-py36_0           
-        sqlite:          3.21.0-h1bed415_0       
-        tk:              8.6.7-hc745277_3        
-        wheel:           0.30.0-py36hfd4bba0_1   
-        xz:              5.2.3-h55aa19d_2        
-        zlib:            1.2.11-ha838bed_2       
-    
+        libedit:         3.1-heed3624_0
+        libffi:          3.2.1-hd88cf55_4
+        libgcc-ng:       7.2.0-h7cc24e2_2
+        libstdcxx-ng:    7.2.0-h7a57d05_2
+        ncurses:         6.0-h9df7e31_2
+        openssl:         1.0.2n-hb7f436b_0
+        pip:             9.0.1-py36h6c6f9ce_4
+        python:          3.6.4-hc3d631a_1
+        readline:        7.0-ha6073c6_4
+        setuptools:      38.4.0-py36_0
+        sqlite:          3.21.0-h1bed415_0
+        tk:              8.6.7-hc745277_3
+        wheel:           0.30.0-py36hfd4bba0_1
+        xz:              5.2.3-h55aa19d_2
+        zlib:            1.2.11-ha838bed_2
+
     Proceed ([y]/n)?y
 
     Downloading and Extracting Packages
-    sqlite 3.21.0: ############################################### | 100% 
+    sqlite 3.21.0: ############################################### | 100%
     Preparing transaction: done
     Verifying transaction: done
     Executing transaction: done
@@ -139,7 +139,7 @@ Purpose: For tracking Python infrastructure installed locally as
     sh-4.4$ whence python
     /usr/bin/python
     sh-4.4$ exit
-    $ 
+    $
 
   In my opinion, each shell should have its own very cleanly written
   version.  Then a "lowest common denominator" activation script can
@@ -176,7 +176,7 @@ Purpose: For tracking Python infrastructure installed locally as
     alias play='sh -c ". ~/opt/anaconda3/bin/activate play; bash"'
 
   Don't need to mess with the deactivate script, just ^D out
-  of the bash shell.  Also, conda does not like to be called from 
+  of the bash shell.  Also, conda does not like to be called from
   an activated anaconda environment.
 
 2018-02-05: (Arch)
@@ -186,7 +186,7 @@ Purpose: For tracking Python infrastructure installed locally as
     $ conda update -n play --all
 
   Noted that my "play" environment's python is getting downgraded
-  from 3.6.4 to 3.6.3.  
+  from 3.6.4 to 3.6.3.
 
   Installing "everything but the kitchen sink" seems to be a
   bad idea.  Stuff gets downgraded to meet dependencies.  Use
@@ -357,7 +357,7 @@ Purpose: For tracking Python infrastructure installed locally as
 
     $ conda --version
     conda 4.5.12
-   
+
     $ conda update conda
     ...
 
@@ -372,7 +372,7 @@ Purpose: For tracking Python infrastructure installed locally as
     # conda environments:
     #
     base                  *  /home/geoff/opt/anaconda3
-    ml1                      /home/geoff/opt/anaconda3/envs/ml1 
+    ml1                      /home/geoff/opt/anaconda3/envs/ml1
 
     $ conda activate
     (base)$ python --version
@@ -413,7 +413,7 @@ Purpose: For tracking Python infrastructure installed locally as
         print("\nCUDA is available.\n")
     else:
         print("\nCUDA is not available.\n")
-    
+
 2019-02-27: (CentOS7)
   Installing non-CUDA version on CentOS 7:
 
@@ -483,9 +483,9 @@ Purpose: For tracking Python infrastructure installed locally as
     Proceed ([y]/n)? y
 
     Downloading and Extracting Packages
-    pytorch-cpu-1.0.1    | 26.8 MB   | ##################################### | 100% 
-    openssl-1.1.1b       | 4.0 MB    | ##################################### | 100% 
-    torchvision-cpu-0.2. | 37 KB     | ##################################### | 100% 
+    pytorch-cpu-1.0.1    | 26.8 MB   | ##################################### | 100%
+    openssl-1.1.1b       | 4.0 MB    | ##################################### | 100%
+    torchvision-cpu-0.2. | 37 KB     | ##################################### | 100%
     Preparing transaction: done
     Verifying transaction: done
     Executing transaction: done
@@ -582,15 +582,15 @@ Purpose: For tracking Python infrastructure installed locally as
     Proceed ([y]/n)? y
 
     Downloading and Extracting Packages
-    pytorch-1.0.1        | 375.4 MB  | ##################################### | 100% 
-    pip-19.0.3           | 1.8 MB    | ##################################### | 100% 
-    mkl_fft-1.0.10       | 169 KB    | ##################################### | 100% 
-    cudatoolkit-10.0.130 | 380.0 MB  | ##################################### | 100% 
-    setuptools-40.8.0    | 643 KB    | ##################################### | 100% 
-    openssl-1.1.1b       | 4.0 MB    | ##################################### | 100% 
-    cffi-1.12.1          | 220 KB    | ##################################### | 100% 
-    wheel-0.33.1         | 39 KB     | ##################################### | 100% 
-    torchvision-0.2.1    | 37 KB     | ##################################### | 100% 
+    pytorch-1.0.1        | 375.4 MB  | ##################################### | 100%
+    pip-19.0.3           | 1.8 MB    | ##################################### | 100%
+    mkl_fft-1.0.10       | 169 KB    | ##################################### | 100%
+    cudatoolkit-10.0.130 | 380.0 MB  | ##################################### | 100%
+    setuptools-40.8.0    | 643 KB    | ##################################### | 100%
+    openssl-1.1.1b       | 4.0 MB    | ##################################### | 100%
+    cffi-1.12.1          | 220 KB    | ##################################### | 100%
+    wheel-0.33.1         | 39 KB     | ##################################### | 100%
+    torchvision-0.2.1    | 37 KB     | ##################################### | 100%
     Preparing transaction: done
     Verifying transaction: done
     Executing transaction: done
@@ -614,18 +614,18 @@ Purpose: For tracking Python infrastructure installed locally as
     $ conda create --name pytorch -c pytorch pytorch torchvision
     Collecting package metadata: ...working... done
     Solving environment: ...working... done
-    
+
     ## Package Plan ##
-    
+
       environment location: C:\Users\scotch\opt\Anaconda3\envs\pytorch
-    
+
       added / updated specs:
         - pytorch
         - torchvision
-    
-    
+
+
     The following packages will be downloaded:
-    
+
         package                    |            build
         ---------------------------|-----------------
         ca-certificates-2019.1.23  |                0         158 KB
@@ -647,9 +647,9 @@ Purpose: For tracking Python infrastructure installed locally as
         wheel-0.33.1               |           py37_0          57 KB
         ------------------------------------------------------------
                                                Total:       868.5 MB
-    
+
     The following NEW packages will be INSTALLED:
-    
+
       blas               pkgs/main/win-64::blas-1.0-mkl
       ca-certificates    pkgs/main/win-64::ca-certificates-2019.1.23-0
       certifi            pkgs/main/win-64::certifi-2019.3.9-py37_0
@@ -686,11 +686,11 @@ Purpose: For tracking Python infrastructure installed locally as
       xz                 pkgs/main/win-64::xz-5.2.4-h2fa13f4_4
       zlib               pkgs/main/win-64::zlib-1.2.11-h62dcd97_3
       zstd               pkgs/main/win-64::zstd-1.3.7-h508b16e_0
-    
-    
+
+
       Proceed ([y]/n)?
-    
-    
+
+
       Downloading and Extracting Packages
       cffi-1.12.2          | 224 KB    | ########## | 100%
       numpy-1.16.2         | 49 KB     | ########## | 100%
@@ -712,50 +712,50 @@ Purpose: For tracking Python infrastructure installed locally as
       Preparing transaction: ...working... done
       Verifying transaction: ...working... done
       Executing transaction: ...working... done
-    
+
           environment location: /home/geoff/opt/anaconda3/envs/pytorch
-    
+
         The following packages will be downloaded:
-    
+
             package                    |          `     build
             ---------------------------|---------------------
             cudnn-7.3.1                |           cuda10.0_0   385.1 MB
             pytorch-1.0.1              |cuda100py37he554f03_0   344.6 MB
             ------------------------------------------------------------
-    
+
         The following NEW packages will be INSTALLED:
-    
+
           cudnn              pkgs/main/linux-64::cudnn-7.3.1-cuda10.0_0
-    
+
         The following packages will be SUPERSEDED by a higher-priority channel:
-    
+
           pytorch            pytorch::pytorch-1.0.1-py3.7_cuda10.0~ --> pkgs/main::pytorch-1.0.1-cuda100py37he554f03_0
-    
+
         Proceed ([y]/n)? y
-    
+
         Downloading and Extracting Packages(base) C:\Users\scotch>conda update conda
         Solving environment: done
-    
+
         ## Package Plan ##
-    
+
         environment location: C:\Users\scotch\Anaconda3
-    
+
           added / updated specs:
             - conda
-    
+
         The following packages will be downloaded:
-    
+
             package                    |            build
             ---------------------------|-----------------
             conda-4.6.7                |           py37_0         1.7 MB
-    
+
         The following packages will be UPDATED:
-    
+
             conda: 4.5.12-py37_0 --> 4.6.7-py37_0
-    
+
         Proceed ([y]/n)?
         ...
-    
+
   Seems to have installed cudnn-7.3.source /cygdrive/c/Users/scotch/Anaconda3/etc/profile.d/conda.sh1
   but is this consistent with line #167 above?
 
@@ -795,11 +795,11 @@ Purpose: For tracking Python infrastructure installed locally as
       pytorch            pkgs/main::pytorch-1.0.1-cuda100py37h~ --> pytorch::pytorch-1.0.1-py3.7_cuda10.0.130_cudnn7.4.2_2
       torchvision                                    0.2.1-py_2 --> 0.2.2-py_2
 
-    Proceed ([y]/n)? 
+    Proceed ([y]/n)?
 
     Downloading and Extracting Packasource /cygdrive/c/Users/scotch/Anaconda3/etc/profile.d/conda.shges
-    torchvision-0.2.2    | 44 KB     | ############################################################ | 100% 
-    tqdm-4.31.1          | 47 KB     | ############################################################ | 100% 
+    torchvision-0.2.2    | 44 KB     | ############################################################ | 100%
+    tqdm-4.31.1          | 47 KB     | ############################################################ | 100%
     Preparing transaction: done
     Verifying transaction: done
     Executing transaction: done
@@ -963,7 +963,7 @@ Anaconda3/etc/profile.d/conda.sh
     CUDA is not available
 
   Got rid of the "numpy.ufunc size changed, may indicate binary incompatibility"
-  error, but still not finding CUDA.  
+  error, but still not finding CUDA.
 
   Do I need to "turn CUDA on" somehow?cuda.is_available
 
@@ -976,7 +976,7 @@ Anaconda3/etc/profile.d/conda.sh
   Installed, required reboot.
 
   Now, reinstalling NVIDIA CUDA Toolkit.  Much happier now.
-  Also, installed 
+  Also, installed
 
     Nsight for Visual Studio 2017
     Nsight Monitor and HUD Launcher
@@ -987,12 +987,12 @@ Anaconda3/etc/profile.d/conda.sh
 
 2019-03-05: (Windows 10)
   Time for a complete redo, riping out all Anaconda, Visual Studeo, NVIDIA software
-  I installed.  
+  I installed.
 
 2019-03-11: (Windows 10)
   1. Install MS Visual Studio Community Edition (to make NVIDIA CUDA Toolkit happy).
      Downloaded from here: https://visualstudio.microsoft.com/vs/community/
-     Installed here: C:\MicrosoftVisualStudio 
+     Installed here: C:\MicrosoftVisualStudio
   2. Install NVIDIA CUDA Toolkit.
      Downloaded from here: https://developer.nvidia.com/cuda-toolkit
      Installed here: https://developer.nvidia.com/cuda-toolkit
@@ -1017,18 +1017,18 @@ Anaconda3/etc/profile.d/conda.sh
        $ conda create --name pytorch -c pytorch pytorch torchvision
        Collecting package metadata: ...working... done
        Solving environment: ...working... done
-       
+
        ## Package Plan ##
-       
+
          environment location: C:\Users\scotch\opt\Anaconda3\envs\pytorch
-       
+
          added / updated specs:
            - pytorch
            - torchvision
-       
-       
+
+
        The following packages will be downloaded:
-        
+
            package                    |            build
            ---------------------------|-----------------
            ca-certificates-2019.1.23  |                0         158 KB
@@ -1050,9 +1050,9 @@ Anaconda3/etc/profile.d/conda.sh
            wheel-0.33.1               |           py37_0          57 KB
            ------------------------------------------------------------
                                                   Total:       868.5 MB
-       
+
        The following NEW packages will be INSTALLED:
-       
+
          blas               pkgs/main/win-64::blas-1.0-mkl
          ca-certificates    pkgs/main/win-64::ca-certificates-2019.1.23-0
          certifi            pkgs/main/win-64::certifi-2019.3.9-py37_0
@@ -1089,11 +1089,11 @@ Anaconda3/etc/profile.d/conda.sh
          xz                 pkgs/main/win-64::xz-5.2.4-h2fa13f4_4
          zlib               pkgs/main/win-64::zlib-1.2.11-h62dcd97_3
          zstd               pkgs/main/win-64::zstd-1.3.7-h508b16e_0
-       
-       
+
+
        Proceed ([y]/n)?
-       
-       
+
+
        Downloading and Extracting Packages
        cffi-1.12.2          | 224 KB    | ########## | 100%
        numpy-1.16.2         | 49 KB     | ########## | 100%
@@ -1131,11 +1131,11 @@ Anaconda3/etc/profile.d/conda.sh
        #!/usr/bin/env python
 
        import torch
-       
+
        x = torch.rand(5,3)
        print("Randon 5 by 3 \"tensor\":")
        print(x)
-       
+
        if torch.cuda.is_available():
            print("\nCUDA is available.\n")
        else:
@@ -1151,7 +1151,7 @@ Anaconda3/etc/profile.d/conda.sh
                [0.8091, 0.6456, 0.6076],
                [0.8394, 0.0957, 0.9298],
                [0.1447, 0.5412, 0.1124]])
-       
+
        CUDA is not available.
 
   5. Lets try Anaconda Prompt
@@ -1161,16 +1161,16 @@ Anaconda3/etc/profile.d/conda.sh
        (pytorch) C:\Users\scotch\devel\scheller-linux-archive\grok\Python\pyTorch>dir
         Volume in drive C is OS
         Volume Serial Number is A803-D35C
-       
+
         Directory of C:\Users\scotch\devel\scheller-linux-archive\grok\Python\pyTorch
-       
+
        03/04/2019  08:03 PM    <DIR>          .
        03/04/2019  08:03 PM    <DIR>          ..
        03/04/2019  07:05 PM               585 README.md
        03/04/2019  07:05 PM               228 verify.py
                       2 File(s)            813 bytes
                       2 Dir(s)  398,295,711,744 bytes free
-       
+
        (pytorch) C:\Users\scotch\devel\scheller-linux-archive\grok\Python\pyTorch>python verify.py
        Randon 5 by 3 "tensor":
        tensor([[0.4535, 0.0118, 0.8118],
@@ -1178,7 +1178,7 @@ Anaconda3/etc/profile.d/conda.sh
                [0.0693, 0.8892, 0.1866],
                [0.9721, 0.6533, 0.3262],
                [0.3573, 0.9339, 0.7639]])
-       
+
        CUDA is not available
 
      Don't know what is wrong.
@@ -1197,7 +1197,7 @@ Anaconda3/etc/profile.d/conda.sh
     required for this device. A recent hardware or software change
     might have installed a file that is signed incorrectly or damaged,
     or that might be malicious software from an unknown source. (Code 52)
- 
+
   I think this means that Windows is blacklisting the NVIDIA drivers.  Try
   turning secure boot off in whatever UEFI thingy that replaced the BIOS.
 
@@ -1211,7 +1211,7 @@ Anaconda3/etc/profile.d/conda.sh
             [0.6438, 0.6318, 0.6975],
             [0.6580, 0.9080, 0.4931],
             [0.8850, 0.8149, 0.7688]])
-    
+
     CUDA is available.
 
   Success!!!!
@@ -1221,5 +1221,5 @@ Anaconda3/etc/profile.d/conda.sh
     $ set -o ignlf
 
   in ~/.bashrc.  Since, in my Cygwin environment,
-  ~/opt -> /cygdrive/c/Users/scoth/opt and
+  ~/opt -> /cygdrive/c/Users/scotch/opt and
   ~/opt/anaconda3/etc/profile.d/conda.sh contains LF characters.

@@ -2853,7 +2853,7 @@ Note: Qn 2017-06-20 rebuilt system from scratch starting
   Configure /etc/hosts (with tabs):
 
     127.0.0.1   localhost.localdomaini  localhost
-	::          localhost.localdomain   localhost
+    ::          localhost.localdomain   localhost
     127.0.1.1   gauss17.localdomain     gauss17
 
     [[ See postfix configuration on 2017-06-30, changed
@@ -6382,12 +6382,12 @@ Note: Qn 2017-06-20 rebuilt system from scratch starting
 
     $ lspci -k | grep -A 2 -E "(VGA|3D)"
     00:02.0 VGA compatible controller: Intel Corporation HD Graphics 530 (rev 06)
-    	Subsystem: Acer Incorporated [ALI] HD Graphics 530
-    	Kernel driver in use: i915
+        Subsystem: Acer Incorporated [ALI] HD Graphics 530
+        Kernel driver in use: i915
     --
     01:00.0 3D controller: NVIDIA Corporation GM108M [GeForce 940M] (rev a2)
-    	Subsystem: Acer Incorporated [ALI] GM108M [GeForce 940M]
-    	Kernel driver in use: nvidia
+        Subsystem: Acer Incorporated [ALI] GM108M [GeForce 940M]
+        Kernel driver in use: nvidia
 
     $ loginctl
     SESSION  UID USER  SEAT  TTY
@@ -8625,8 +8625,8 @@ Note: Qn 2017-06-20 rebuilt system from scratch starting
     Creating filesystem with 19537408 4k blocks and 4890624 inodes
     Filesystem UUID: 60844d50-85ac-42fd-b848-2591be3c7fd0
     Superblock backups stored on blocks:
-    	32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632, 2654208,
-    	4096000, 7962624, 11239424
+        32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632, 2654208,
+        4096000, 7962624, 11239424
 
     Allocating group tables: done
     Writing inode tables: done
@@ -9173,7 +9173,7 @@ Note: Qn 2017-06-20 rebuilt system from scratch starting
   Seems to have accomplished what I wanted.
 
 2021-06-05:
-  Still have the problem that my extrnal monitor chops of the last 3
+  Still have the problem that my external monitor chops off the last 3
   lines of the linux-console.  As a workaround, at least while using
   fish, I hit <ctrl-L> a lot.  Needs to be fixed, makes using nvim
   more difficult.  Think it is defaulting to the number of lines on
@@ -9204,3 +9204,37 @@ Note: Qn 2017-06-20 rebuilt system from scratch starting
     $ makepkg -sri
 
   Been doing this for the last month or so.
+
+2021-06-21:
+  Moving toward Scala Metals for Scala Development.  Going 0.5.0+
+  via the nvim-metals plugin.
+
+    1. Temporarily deactivate Neomake from init.vim, so I have
+       some idea what is doing what.
+
+    2. First updated to latest version of neovim via AUR.
+       Nvim Version 0.5.0-dev+1429-gb585f723b.
+
+    3. Installed Coursier via AUR.  Coursier is an dependency
+       resolver/fetcher à la Maven/Ivy for Scala.  Note, like
+       scalac, sbt will download its own version of coursier
+       for its own use,  The one in /usr/bin will be used by
+       nvim-metals itself to download Metals.
+
+    4. In init.vim,
+
+         set shortmess-=F
+         set shortmess+=c
+
+       The first so that autocommands that deal with filetypes
+       don't prohibit messages from being shown.  The second to
+       avoid showing extra messages when using completion
+
+    5. Following example from the the Scalameta GitHub site,
+       https://github.com/scalameta/nvim-metals/discussions/39
+       to configure keybindings in init.vim.
+
+    6. May want to install neovim/nvim-lspconfig later for
+       languages other than Scala. (maybe remove Neomake?)
+       Other plugins to consider mfussenegger/nvim-lint, a
+       linter and mfussenegger/nvim-dap, a debugger.

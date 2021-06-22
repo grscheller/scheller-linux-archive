@@ -311,18 +311,6 @@ Purpose: For tracking Haskell infrastructure installed locally as
     base 4.9.0.0
     junkTest3 0.1.0.0
 
-2017-02-01:
-  Installed networking components.
-
-    Pacman: python2-iwscan python2-wpactrl
-
-  Noticed following warnings in /var/log/wicd/wicd.log - 
-
-    2017/01/21 19:50:13 :: WARNING: python-iwscan not found, falling back to using iwlist scan.
-    2017/01/21 19:50:13 :: WARNING: python-wpactrl not found, falling back to using wpa_cli.
-
-  At several wifi hotspots, not all, I've had to configure static IP addresses.
-
 2018-02-07:
   Time to figure out the Arch Haskell infarstucture.
 
@@ -353,11 +341,11 @@ Purpose: For tracking Haskell infrastructure installed locally as
   use stack better.
 
 2018-02-07:
-  First step is to uninstall the Haskell static libraries.  When I did 
+  First step is to uninstall the Haskell static libraries.  When I did
   this (see ArchLinux_AdminLog.txt), it also uninstalled ghc!
 
   What I build locally to run on Arch, I'll use cabal-install with sandboxes
-  and dynamic linking.  I'll use stack when I want a statically linked 
+  and dynamic linking.  I'll use stack when I want a statically linked
   executable I can distribute, or share a build.
 
   Lets see how much of the Haskell Platform I have left:

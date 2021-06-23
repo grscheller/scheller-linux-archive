@@ -10,27 +10,29 @@ package scalaImplicits
 // Todo: The sayHello method still needs to be updated to Scala 3
 
 import scala.language.implicitConversions
-
-object ConversionsAndExtensions {
-  given doubleToInt: Conversion[Double, Int] = _.toInt
-  given intToIntWrapper: Conversion[Int, IntWrapper] = IntWrapper(_)
-  given doubleToIntWrapper: Conversion[Double, IntWrapper] = (x: Double) => IntWrapper(x.toInt)
-
-  extension (first: Int)
-    def x(second: Int) = IntWrapper(first * second)
-}
+import scala.language.postfixOps
 
 case class IntWrapper(ii: Int) {
   def doubleMe = ii*2
   def tripleMe = ii*3
 }
 
+object IntWrapper {
+  given doubleToInt: Conversion[Double, Int] = _.toInt
+  given intToIntWrapper: Conversion[Int, IntWrapper] = IntWrapper(_)
+  given doubleToIntWrapper: Conversion[Double, IntWrapper] = (x: Double) => IntWrapper(x.toInt)
+
+  extension (first: Int) {
+    def x(second: Int) = IntWrapper(first * second)
+  }
+}
+
 object Main {
 
-  import scalaImplicits.ConversionsAndExtensions.doubleToInt
-  import scalaImplicits.ConversionsAndExtensions.intToIntWrapper
-  import scalaImplicits.ConversionsAndExtensions.doubleToIntWrapper
-  import scalaImplicits.ConversionsAndExtensions.x
+  import IntWrapper.doubleToInt
+  import IntWrapper.intToIntWrapper
+  import IntWrapper.doubleToIntWrapper
+  import IntWrapper.x
 
   class PreferedName(name: String) {
     def getName = name
@@ -54,5 +56,4 @@ object Main {
     sayHello
     sayHello(using beowulf)
   }
-
 }

@@ -16,7 +16,7 @@ scalacOptions += "-deprecation"
 scalacOptions += "-feature"
 scalacOptions += "-Xsource:3"
 
-// Tell scaladoc to include info on implicits and 
+// Tell scaladoc to include info on implicits and
 // to group class members based on their semantic relationship.
 scalacOptions in (Compile,doc) ++= Seq("-groups", "-implicits")
 

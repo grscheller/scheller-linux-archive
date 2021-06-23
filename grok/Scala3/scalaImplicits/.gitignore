@@ -1,6 +1,5 @@
+.bloop
 .bsp
 .metals
-**/*.class
-**/*.jar
 **/target/
 **/project/

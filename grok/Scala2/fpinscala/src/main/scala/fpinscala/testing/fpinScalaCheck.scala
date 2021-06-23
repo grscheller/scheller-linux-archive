@@ -18,13 +18,13 @@ import Prop._
  *
  *  The && and || combinators combine "tests" of properties
  *  and should not be thought of as combining "predicates."
- *  They pass the same RNG to the run methods of both Props. 
+ *  They pass the same RNG to the run methods of both Props.
  *  If both Props are constructed from the same underlying
  *  Gen or SGen, they will generate the same test cases for both.
  *
  *  For && both Props must succeed for each test case.
  *  For || one or another must succeed for each test case.
- *  
+ *
  */
 case class Prop(run: (MaxSize, TestCount, RNG) => Result) {
 
@@ -121,7 +121,7 @@ object Prop {
     forAll(
       n => n match {
         case n if n == 0  => f(0)
-        case n => { 
+        case n => {
             val m = math.pow(2, n - 1).toInt
             Gen.choose(m, 2*m).flatMap(f)
           }
@@ -158,8 +158,8 @@ object Prop {
       case Falsified(fL, oeL, n) => {
           println(s"! Falsified after ${n} successful testcases.")
           for ((f,oe) <- fL zip oeL) {
-            println(s"! Failed case:") 
-            println(s"!   ${f}") 
+            println(s"! Failed case:")
+            println(s"!   ${f}")
             oe map { e =>
               println(s"! generated exception:")
               println(s"!   ${e}")
@@ -209,9 +209,9 @@ case class Gen[+A](sample: Rand[A]) {
     }
 
   def indexedSeqOfN(size: Int): Gen[IndexedSeq[A]] = indexedSeqOfN(unit(size))
-  
+
   def indexedSeqOf: SGen[IndexedSeq[A]] = SGen { n => indexedSeqOfN(n) }
-  
+
   def indexedSeqOf1: SGen[IndexedSeq[A]] =
     SGen { n => indexedSeqOfN(n.max(1)) }
 

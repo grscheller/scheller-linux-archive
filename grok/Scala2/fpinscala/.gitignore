@@ -1,2 +1,5 @@
-target/
-project/build.properties
+.bloop
+.bsp
+.metals
+**/target/
+**/project/

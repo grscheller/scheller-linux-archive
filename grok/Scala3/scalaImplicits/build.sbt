@@ -9,6 +9,8 @@ lazy val root = project
 
     , scalacOptions += "-deprecation"
     , scalacOptions += "-feature"
+    , scalacOptions += "-explain"
+    , scalacOptions += "-explain-types"
 
     , libraryDependencies += "com.novocode" % "junit-interface" % "0.11" % "test"
   )

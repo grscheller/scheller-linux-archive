@@ -17,34 +17,34 @@ import java.util.concurrent.ExecutorService
 import annotation.tailrec
 
 /** Processes messages of type A, one at a time. Messages are submitted
- *  to the actor with the ! method. Processing is typically performed
- *  asynchronously, this is controlled by the provided strategy.
- *
- *  Memory consistency guarantee:
- *    When each message is processed by the handler, any memory that it
- *    mutates is guaranteed to be visible by the handler when it processes
- *    the next message, even if the strategy runs the invocations of the
- *    handler on separate threads. This is achieved because the Actor reads
- *    a volatile memory location before entering its event loop, and writes
- *    to the same location before suspending.
- *
- *  Implementation based on non-intrusive MPSC node-based queue,
- *  by Dmitriy Vyukov
- *
- *  See scalaz.concurrent.Promise for a use case.
- *
- * @param handler  The message handler
- * @param onError  Exception handler, called when handler throws an exception
- * @param strategy Execution strategy
- * @tparam A       The type of messages accepted by this actor.
- */
-final
-class Actor[A](strategy: Strategy)
-              ( handler: A => Unit
-              , onError: Throwable => Unit) {
+  *  to the actor with the ! method. Processing is typically performed
+  *  asynchronously, this is controlled by the provided strategy.
+  *
+  *  Memory consistency guarantee:
+  *    When each message is processed by the handler, any memory that it
+  *    mutates is guaranteed to be visible by the handler when it processes
+  *    the next message, even if the strategy runs the invocations of the
+  *    handler on separate threads. This is achieved because the Actor reads
+  *    a volatile memory location before entering its event loop, and writes
+  *    to the same location before suspending.
+  *
+  *  Implementation based on non-intrusive MPSC node-based queue,
+  *  by Dmitriy Vyukov
+  *
+  *  See scalaz.concurrent.Promise for a use case.
+  *
+  * @param handler  The message handler
+  * @param onError  Exception handler, called when handler throws an exception
+  * @param strategy Execution strategy
+  * @tparam A       The type of messages accepted by this actor.
+  */
+final class Actor[A](strategy: Strategy)(
+    handler: A => Unit,
+    onError: Throwable => Unit
+) {
 
   private class Node[A](var a: A = null.asInstanceOf[A])
-                            extends AtomicReference[Node[A]]
+      extends AtomicReference[Node[A]]
 
   private val tail = new AtomicReference(new Node[A]())
   private val suspended = new AtomicInteger(1)
@@ -88,9 +88,9 @@ class Actor[A](strategy: Strategy)
     val n = t.get()
     if (n ne null) {
       try {
-          handler(n.a)
+        handler(n.a)
       } catch {
-          case ex: Throwable => onError(ex)
+        case ex: Throwable => onError(ex)
       }
       if (i > 0) batchHandle(n, i - 1) else n
     } else t
@@ -100,19 +100,18 @@ class Actor[A](strategy: Strategy)
 object Actor {
 
   /** Create an `Actor` backed by the given `ExecutorService`. */
-  def apply[A]( es: ExecutorService )
-              ( handler: A => Unit
-              , onError: Throwable => Unit ): Actor[A] =
+  def apply[A](
+      es: ExecutorService
+  )(handler: A => Unit, onError: Throwable => Unit): Actor[A] =
     new Actor(Strategy.fromExecutorService(es))(handler, onError)
 }
 
 /** Provides a function for evaluating expressions, possibly asynchronously.
- * 
- *  The apply function should typically begin evaluating its argument
- *  immediately. The returned thunk can be used to block until the
- *  resulting A is available.
- *
- */
+  *
+  *  The apply function should typically begin evaluating its argument
+  *  immediately. The returned thunk can be used to block until the
+  *  resulting A is available.
+  */
 trait Strategy {
   def apply[A](a: => A): () => A
 }
@@ -128,8 +127,8 @@ object Strategy {
   }
 
   /** A Strategy which begins executing its argument
-   *  immediately in the calling thread.
-   */
+    *  immediately in the calling thread.
+    */
   def sequential: Strategy = new Strategy {
     def apply[A](a: => A): () => A = {
       val r = a

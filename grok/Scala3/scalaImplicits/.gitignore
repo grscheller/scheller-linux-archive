@@ -1,5 +1,6 @@
-.bloop
-.bsp
-.metals
+.bloop/
+.bsp/
+.metals/
+.scalafmt.conf
 **/target/
 **/project/

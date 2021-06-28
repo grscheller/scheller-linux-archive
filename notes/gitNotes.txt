@@ -1141,7 +1141,7 @@ XV. Using Neovim as GIT Pager:
     $ git config --global color.pager no
     $ git config --global core.pager "nvim -R"
 
-XV1. GIT Stash:
+XVI. GIT Stash:
 
   Store away current state of working directory and the index
   and goes back to a clean working directory:
@@ -1171,3 +1171,46 @@ XV1. GIT Stash:
 
   Note, entries will be subject to pruning, so there may be no way
   to recover these changes.
+
+XVII. GitHub Forking:
+
+  A GitHub project does almost what you want to do.
+
+  Go to the repo in question via the GitHub and fork the repository:
+
+    https://github.com/folke/tokyonight.nvim
+
+  Now, clone your version of the repo
+
+    $ cd ~/devel
+    $ git clone https://github.com/grscheller/tokyonight.nvim
+
+  Update something and push changes back to your fork
+
+    $ nvim README.md
+    $ git add .
+    $ git commit
+    $ git push
+
+  Let my fork know about the upstream repo (git name "upstream")
+
+    $ git remote add upstream https://github.com/folke/tokyonight.nvim
+
+  Let's see what we have
+
+    $ git remote -v
+    origin	https://github.com/grscheller/tokyonight.nvim (fetch)
+    origin	https://github.com/grscheller/tokyonight.nvim (push)
+    upstream	https://github.com/folke/tokyonight.nvim (fetch)
+    upstream	https://github.com/folke/tokyonight.nvim (push)
+
+    $ git branch --all
+    * main
+      remotes/origin/HEAD -> origin/main
+      remotes/origin/main
+      remotes/upstream/main
+
+  Merge in upstream changes
+
+    $ git merge upstream/main
+    Already up to date.

@@ -18,13 +18,13 @@ case class IntWrapper(ii: Int) {
 }
 
 object IntWrapper {
-  given doubleToInt: Conversion[Double, Int] = _.toInt
+  given doubleToInt: Conversion[Double, Int] with
+    def apply(d:Double): Int = d.toInt
   given intToIntWrapper: Conversion[Int, IntWrapper] = IntWrapper(_)
   given doubleToIntWrapper: Conversion[Double, IntWrapper] = (x: Double) => IntWrapper(x.toInt)
 
-  extension (first: Int) {
+  extension (first: Int)
     def x(second: Int) = IntWrapper(first * second)
-  }
 }
 
 object Main {

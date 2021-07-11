@@ -10,7 +10,6 @@ package scalaImplicits
 // Todo: The sayHello method still needs to be updated to Scala 3
 
 import scala.language.implicitConversions
-import scala.language.postfixOps
 
 case class IntWrapper(ii: Int) {
   def doubleMe = ii*2

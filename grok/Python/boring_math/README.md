@@ -13,7 +13,7 @@
 
 ## Notes
 
-When developing this code, I usually use the root`boring_math`
+When developing this code, I usually use the root `boring_math`
 directory as my working directory.  I set
 
 ```

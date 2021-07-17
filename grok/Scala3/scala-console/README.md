@@ -14,7 +14,7 @@ Verify Java and SBT versions
    sbt script version: 1.5.0
 ```
 
-Idiotically this the second command created project/ and target/
+Idiotically the second command created project/ and target/
 directories.  Deleted these.
 
 ## Download boilerplate "hello world" project

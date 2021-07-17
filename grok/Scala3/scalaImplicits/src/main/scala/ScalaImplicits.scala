@@ -1,22 +1,19 @@
 package scalaImplicits
-// Package showing syntax how to use implicit conversions in Scala 3.
+// Package showing how to use Scala 3 syntax for implicit conversions
 //
 //   See grok/Scala2/learnScala/implicits for the Scala 2
-//   version I translated this from.  That version using the
+//   version I translated this from.  That version uses the
 //   the overly overloaded explicit key word.  For backward
 //   compatibility, that version would still compile in Scala 3,
 //   but would be deprecated.
-//
-// Todo: The sayHello method still needs to be updated to Scala 3
 
 import scala.language.implicitConversions
 
-case class IntWrapper(ii: Int) {
+case class IntWrapper(ii: Int):
   def doubleMe = ii*2
   def tripleMe = ii*3
-}
 
-object IntWrapper {
+object IntWrapper:
   given doubleToInt: Conversion[Double, Int] with
     def apply(d:Double): Int = d.toInt
   given intToIntWrapper: Conversion[Int, IntWrapper] = IntWrapper(_)
@@ -24,23 +21,21 @@ object IntWrapper {
 
   extension (first: Int)
     def x(second: Int) = IntWrapper(first * second)
-}
 
-object Main {
+object ScalaImplicts:
 
   import IntWrapper.doubleToInt
   import IntWrapper.intToIntWrapper
   import IntWrapper.doubleToIntWrapper
   import IntWrapper.x
 
-  class PreferedName(name: String) {
+  class PreferedName(name: String):
     def getName = name
-  }
 
-  def sayHello(implicit preferedName: PreferedName) =
+  def sayHello(using preferedName: PreferedName) =
     println(s"Hello, ${preferedName.getName}")
 
-  def main(args: Array[String]) = {
+  def run() =
     val foo: Double = 42.314159
     val bar: Int = foo   // implicit conversion prevents this
                          // from being a type mismatch error
@@ -54,5 +49,6 @@ object Main {
     val beowulf: PreferedName = new PreferedName("Beowulf")
     sayHello
     sayHello(using beowulf)
-  }
-}
+
+@main def start() =
+  ScalaImplicts.run()

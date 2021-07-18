@@ -6,22 +6,22 @@ Implementing a Stream (Lazy List) data structure while working
 through the exercises in  "Functional Programming in Scala"
 by Paul Chiusana and Runar Bjarnason.
 
-## Trait [fpinscala.laziness.Stream](Stream.scala#L4-L310)
+## Trait [fpinscala.laziness.Stream](Stream.scala#L3-L307)
 
 * implement a lazy list, or stream, using a trait and case classes
 
-## Case Object [Empty](Stream.scala#L311)
+## Case Object [Empty](Stream.scala#L308)
 
 * represents the unique empty stream
 * subtype to all other Streams
 * together with Cons, an example of an Algebraic Data Type (ADT)
 
-## Case Class [Cons](Stream.scala#L312)
+## Case Class [Cons](Stream.scala#L309)
 
 * represents a contravarient stream of type A
 * together with Empty, an example of an Algebraic Data Type (ADT)
 
-## Object [Stream](Stream.scala#L314-L420)
+## Object [Stream](Stream.scala#L311-L415)
 
 * companion object to the Stream trait
 * contains "smart" constructors

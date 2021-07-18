@@ -6,21 +6,27 @@ Implementing Option and Either error handling data structures while
 working through the exercises in "Functional Programming in Scala"
 by Paul Chiusana and Runar Bjarnason.
 
-## Trait [fpinscala.errorhandling.Option](Option.scala#L3-L79)
+## Trait [fpinscala.errorhandling.Option](Option.scala#L3-L78)
 
 * datatype indicating a successful value or failure
 
 ## Program [OptionTest](exerciseCode/OptionTest.scala)
 
-* program that parses to exercise fpinscala.errorhandling.Option
+* program to exercise `fpinscala.errorhandling.Option`
 
-## Trait [fpinscala.errorhandling.Either](Either.scala#L3-L66)
+## Trait [fpinscala.errorhandling.Either](Either.scala#L3-L63)
 
 * datatype containing a value of either one of two possible types
+* used to implement the `Left` and `Right` case classes
+
+## Companion Object [fpinscala.errorhandling.Either](Either.scala#L65-L93)
+
+* companion object to the `Either` trait
+* contains utility functions
 
 ## Program [EitherTest](exerciseCode/EitherTest.scala)
 
-* program that parses to exercise fpinscala.errorhandling.Either
+* program that parses to exercise `fpinscala.errorhandling.Either`
 
 ## Program [scalaErrorhandling](exerciseCode/scalaErrorhandling.scala)
 

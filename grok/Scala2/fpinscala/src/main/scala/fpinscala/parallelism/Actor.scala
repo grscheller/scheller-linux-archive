@@ -17,8 +17,8 @@ import java.util.concurrent.ExecutorService
 import annotation.tailrec
 
 /** Processes messages of type A, one at a time. Messages are submitted
-  *  to the actor with the ! method. Processing is typically performed
-  *  asynchronously, this is controlled by the provided strategy.
+  * to the actor with the ! method. Processing is typically performed
+  * asynchronously, this is controlled by the provided strategy.
   *
   *  Memory consistency guarantee:
   *    When each message is processed by the handler, any memory that it
@@ -28,10 +28,10 @@ import annotation.tailrec
   *    a volatile memory location before entering its event loop, and writes
   *    to the same location before suspending.
   *
-  *  Implementation based on non-intrusive MPSC node-based queue,
-  *  by Dmitriy Vyukov
+  * Implementation based on non-intrusive MPSC node-based queue,
+  * by Dmitriy Vyukov
   *
-  *  See scalaz.concurrent.Promise for a use case.
+  * See scalaz.concurrent.Promise for a use case.
   *
   * @param handler  The message handler
   * @param onError  Exception handler, called when handler throws an exception
@@ -108,9 +108,9 @@ object Actor {
 
 /** Provides a function for evaluating expressions, possibly asynchronously.
   *
-  *  The apply function should typically begin evaluating its argument
-  *  immediately. The returned thunk can be used to block until the
-  *  resulting A is available.
+  * The apply function should typically begin evaluating its argument
+  * immediately. The returned thunk can be used to block until the
+  * resulting A is available.
   */
 trait Strategy {
   def apply[A](a: => A): () => A
@@ -127,7 +127,7 @@ object Strategy {
   }
 
   /** A Strategy which begins executing its argument
-    *  immediately in the calling thread.
+    * immediately in the calling thread.
     */
   def sequential: Strategy = new Strategy {
     def apply[A](a: => A): () => A = {

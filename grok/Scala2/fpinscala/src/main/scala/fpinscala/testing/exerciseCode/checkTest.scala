@@ -1,13 +1,12 @@
 /** Package to test the fpinscala.testing package
- *
- *  Test the Prop.check companion object method
- *  in the fpinscala.testing package.
- *
- */
+  *
+  *  Test the Prop.check companion object method
+  *  in the fpinscala.testing package.
+  */
 package fpinscala.chap08.testing
 
-import fpinscala.testing.{Gen,SGen,Prop}
-import fpinscala.state.rand.{Rand,RNG,LCG}
+import fpinscala.testing.{Gen, SGen, Prop}
+import fpinscala.state.rand.{Rand, RNG, LCG}
 
 object checkTest {
 
@@ -75,8 +74,8 @@ object checkTest {
 
     // Provable Contrived property - change to an exhaustive test later
     val check100DieRolls: Prop = check {
-      Gen.sampleStream(dieRoll)(rng0) take 100 forAll {
-        die => die >= 1 && die <= 6
+      Gen.sampleStream(dieRoll)(rng0) take 100 forAll { die =>
+        die >= 1 && die <= 6
       }
     }
 
@@ -109,7 +108,5 @@ object checkTest {
     run(check100DieRolls, 10, 2000)
 
     println()
-
   }
-
 }

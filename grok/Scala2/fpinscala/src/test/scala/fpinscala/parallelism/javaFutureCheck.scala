@@ -2,11 +2,11 @@ package fpinscala.chap07.test.parallelism.javaFutures
 
 import java.util.concurrent.{ExecutorService => ES}
 import java.util.concurrent.Executors
-import fpinscala.parallelism.javaFutures.{Par,ParProp}
+import fpinscala.parallelism.javaFutures.{Par, ParProp}
 import Par._
 
-import fpinscala.testing.{Gen,SGen,Prop}
-import fpinscala.state.rand.{Rand,RNG,LCG}
+import fpinscala.testing.{Gen, SGen, Prop}
+import fpinscala.state.rand.{Rand, RNG, LCG}
 
 object javaFutureCheck {
 
@@ -18,7 +18,7 @@ object javaFutureCheck {
     val es1 = Executors.newFixedThreadPool(4)
 
     val parLawSimple = Prop.check {
-      val p1 = Par.unit(1) map {_ + 1}
+      val p1 = Par.unit(1) map { _ + 1 }
       val p2 = Par.unit(2)
       p1.run(es1) == p2.run(es1)
     }
@@ -31,8 +31,7 @@ object javaFutureCheck {
       p1.map2(p2) { _ == _ }
 
     val parLawHandLifted = Prop.check {
-      parEqual( Par.unit(1) map { _ + 1 }
-              , Par.unit(2) ) run es1
+      parEqual(Par.unit(1) map { _ + 1 }, Par.unit(2)) run es1
     }
 
     Prop.run(parLawHandLifted)
@@ -41,8 +40,7 @@ object javaFutureCheck {
     println("\nRepeat again after updating Par companion object.")
 
     val parLawLifted = Prop.check {
-      Par.equal( Par.unit(1) map { _ + 1 }
-               , Par.unit(2) ) run es1
+      Par.equal(Par.unit(1) map { _ + 1 }, Par.unit(2)) run es1
     }
 
     Prop.run(parLawLifted)
@@ -53,7 +51,7 @@ object javaFutureCheck {
     val maxThreadNum = 8
     val threadPools: IndexedSeq[ES] =
       Range(0, maxThreadNum + 1) map { ii =>
-        if ( ii != 0 )
+        if (ii != 0)
           Executors.newFixedThreadPool(ii)
         else
           Executors.newCachedThreadPool
@@ -67,10 +65,10 @@ object javaFutureCheck {
     )
 
     // Test a true and a falsifiable proposition.
-    val fooTrue  = ParProp.forAllPar( Gen.choose(10,20)
-                                    , esPool )(Par.asyncF(_ < 42))
-    val fooFalse = ParProp.forAllPar( Gen.choose(1,43)
-                                    , esPool )(Par.asyncF(_ < 42))
+    val fooTrue =
+      ParProp.forAllPar(Gen.choose(10, 20), esPool)(Par.asyncF(_ < 42))
+    val fooFalse =
+      ParProp.forAllPar(Gen.choose(1, 43), esPool)(Par.asyncF(_ < 42))
 
     // Run the tests.
     println("\n\nTest ParProp.forAllPar with something true.")

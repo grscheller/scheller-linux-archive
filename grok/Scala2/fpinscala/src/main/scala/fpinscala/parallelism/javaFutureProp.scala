@@ -15,7 +15,7 @@ import Gen.**
  *  Object containing methods for use with the testing package
  *  fpiscala.testing for testing functionality specific to the
  *  fpinscala.parallelism package.
- *  
+ *
  *  @note Implemented as a name space for an additional Prop "method."
  *  @note Saves the overhead of full-blown inheriting from Prop.
  *

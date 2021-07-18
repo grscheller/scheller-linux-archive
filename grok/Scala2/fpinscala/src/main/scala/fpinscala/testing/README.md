@@ -10,26 +10,26 @@ the creation of test cases while working through the exercises in
 
 * package used for property based testing
 
-## Case Class Prop [fpinscala.testing.Prop](fpinScalaCheck.scala#L17-L59)
+## Case Class Prop [fpinscala.testing.Prop](fpinScalaCheck.scala#L16-L60)
 
 * represents some property we wish to test
 
-## Companion Object [fpinscala.testing.Prop](fpinScalaCheck.scala#L61-L173)
+## Companion Object [fpinscala.testing.Prop](fpinScalaCheck.scala#L62-L178)
 
 * used as a namespace for Prop related type aliases
 
-## Case Class [fpinscala.testing.Gen](fpinScalaCheck.scala#L175-L225)
+## Case Class [fpinscala.testing.Gen](fpinScalaCheck.scala#L180-L230)
 
 * represents a generator of test cases
 * wraps a fpinscala Rand[A] which wraps a State[RNG,A]
 
-## Companion Object [fpinscala.testing.Gen](fpinScalaCheck.scala#L227-L270)
+## Companion Object [fpinscala.testing.Gen](fpinScalaCheck.scala#L232-L275)
 
 * utility functions for Gen case class
 * contains implicit defs for Gen case class
 * contains object `**` for matching tuples within Gen pattern matches
 
-## Case Class [fpinscala.testing.SGen](fpinScalaCheck.scala#L272-L292)
+## Case Class [fpinscala.testing.SGen](fpinScalaCheck.scala#L277-L296)
 
 * generate Gens of given sizes
 * a Gen can be converted to an SGen via an implicit def or its unsized method

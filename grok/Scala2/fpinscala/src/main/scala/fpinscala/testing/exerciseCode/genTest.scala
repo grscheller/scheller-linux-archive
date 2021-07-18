@@ -1,13 +1,12 @@
 /** Package to test the fpinscala.testing package
- *
- *  Preliminary testing of the of the Gen case class
- *  in the fpinscala.testing package.
- *
- */
+  *
+  *  Preliminary testing of the of the Gen case class
+  *  in the fpinscala.testing package.
+  */
 package fpinscala.chap08.testing
 
-import fpinscala.testing.{Gen,Prop}
-import fpinscala.state.rand.{Rand,RNG,LCG}
+import fpinscala.testing.{Gen, Prop}
+import fpinscala.state.rand.{Rand, RNG, LCG}
 import scala.util.{Try, Success, Failure}
 import scala.collection.mutable
 
@@ -43,7 +42,7 @@ object genTest {
     // Generate 3 to 5 random pairs of Int - using listOfN
     println("\n3 to 5 random pairs of Ints from 20 to 30 using listOfN:")
 
-    def genPair1[A](g: Gen[A]): Gen[(A,A)] =
+    def genPair1[A](g: Gen[A]): Gen[(A, A)] =
       g listOfN Gen.unit(2) map { l => (l(0), l(1)) }
 
     for (pairInt <- genPair1(gen20to30) listOfN Gen.choose(3, 6) sample rng1) {
@@ -53,7 +52,7 @@ object genTest {
     // Generate 3 to 5 random pairs of Int - using map2
     println("\n3 to 5 random pairs of Ints from 20 to 30 using map2:")
 
-    def genPair2[A](g: Gen[A]): Gen[(A,A)] = g.map2(g)((_, _)) 
+    def genPair2[A](g: Gen[A]): Gen[(A, A)] = g.map2(g)((_, _))
 
     for (pairInt <- genPair2(gen20to30) listOfN Gen.choose(3, 6) sample rng1) {
       println(pairInt)
@@ -61,15 +60,15 @@ object genTest {
 
     // Test unit
     println("\nGenerate a slow 42 ten time:")
-    val genFortyTwo = Gen.unit({Thread.sleep(500); 42})
+    val genFortyTwo = Gen.unit({ Thread.sleep(500); 42 })
     for (ii <- genFortyTwo.listOfN(Gen.unit(10)) sample rng1) {
       println(ii)
     }
 
     // Gen[Option[A]] from Gen[A]
     def genMin(count: Int)(g: Gen[Int]): Gen[Option[Int]] =
-      g listOfN Gen.unit(count) map {
-        (l: List[Int]) => Try(l.min).toOption
+      g listOfN Gen.unit(count) map { (l: List[Int]) =>
+        Try(l.min).toOption
       }
 
     println("\nGenerate Gen[Option[Int]] from a Gen[Int]:")
@@ -83,8 +82,8 @@ object genTest {
     // Gen[A] from Gen[Option[A]]
     val some10: Option[Int] = Some(10)
     val noInt: Option[Int] = None
-    val genInt10 = Gen.unit(some10) 
-    val genIntNone = Gen.unit(noInt) 
+    val genInt10 = Gen.unit(some10)
+    val genIntNone = Gen.unit(noInt)
 
     println("\nGenerate Gen[Int] from a Gen[Option[Int]]:")
     for (rng <- Seq(rng1, rng2, rng3)) {
@@ -95,21 +94,25 @@ object genTest {
     }
 
     // Generate some random strings
-    
+
     val genLowerCase = Gen.choose(97, 123) map (_.toChar)
-    val genUpperCase = Gen.choose(65,  90) map (_.toChar)
-    val genDigit     = Gen.choose(48,  58) map (_.toChar)
+    val genUpperCase = Gen.choose(65, 90) map (_.toChar)
+    val genDigit = Gen.choose(48, 58) map (_.toChar)
 
-    val genRandomChar = 
-      Gen(Rand.joint3(26.0/53.0, 26.0/53.0)( genLowerCase.sample
-                                           , genUpperCase.sample
-                                           , genDigit.sample ))
+    val genRandomChar =
+      Gen(
+        Rand.joint3(26.0 / 53.0, 26.0 / 53.0)(
+          genLowerCase.sample,
+          genUpperCase.sample,
+          genDigit.sample
+        )
+      )
 
-    def genStringN(n: Int): Gen[String] = 
+    def genStringN(n: Int): Gen[String] =
       genRandomChar listOfN Gen.unit(n) map { _.mkString }
 
     val gen10RandomStrLt30: Gen[List[String]] =
-      Gen.choose(0, 31) flatMap (genStringN _) listOfN Gen.unit(10) 
+      Gen.choose(0, 31) flatMap (genStringN _) listOfN Gen.unit(10)
 
     println("\nGenerate 10 random strings of random lengths < 30:")
     for (str <- gen10RandomStrLt30 sample rng1) println(str)
@@ -117,8 +120,8 @@ object genTest {
     // Test Gen.indexedSeqOfN class method
     type DiceRoll = Gen[Int]
     val dieRoll: DiceRoll = Gen.choose(1, 7)
-    val rollFiveDice: DiceRoll = 
-      dieRoll indexedSeqOfN Gen.unit(5) map {_.sum}
+    val rollFiveDice: DiceRoll =
+      dieRoll indexedSeqOfN Gen.unit(5) map { _.sum }
     val rollFiveDiceTenToTwentyTimes =
       rollFiveDice indexedSeqOfN Gen.choose(10, 21)
 
@@ -138,7 +141,7 @@ object genTest {
       freqFiveDiceRolls(throw5) += 1
     }
     println(s"\nFrequency of 5 dice rolls, ${numTrials} samples:")
-    for (ii <- 5 to 30) 
+    for (ii <- 5 to 30)
       if (ii < 10)
         println(s" ${ii} -> ${freqFiveDiceRolls(ii)}")
       else
@@ -153,7 +156,7 @@ object genTest {
     // Test Prop.forAll method
 
     println("\n\nTest a true and a false Prop:")
-    val twoDiceTrueProp  = Prop.forAll(twoDiceRoll)(ii => ii > 1 && ii < 13)
+    val twoDiceTrueProp = Prop.forAll(twoDiceRoll)(ii => ii > 1 && ii < 13)
     val twoDiceFalseProp = Prop.forAll(twoDiceRoll)(ii => ii > 2 && ii < 12)
 
     println("\n\nRepeat using underlying run method:")
@@ -172,8 +175,8 @@ object genTest {
     println(twoDiceFalseProp.run(100, 100, rng3))
 
     println("\n\nCombine true and false Procs with && and ||:")
-    val twoDiceTrueProp1  = Prop.forAll(twoDiceRoll)(_ > 1)
-    val twoDiceTrueProp2  = Prop.forAll(twoDiceRoll)(_ < 13)
+    val twoDiceTrueProp1 = Prop.forAll(twoDiceRoll)(_ > 1)
+    val twoDiceTrueProp2 = Prop.forAll(twoDiceRoll)(_ < 13)
     val twoDiceFalseProp1 = Prop.forAll(twoDiceRoll)(_ > 2)
     val twoDiceFalseProp2 = Prop.forAll(twoDiceRoll)(_ < 12)
 
@@ -239,8 +242,8 @@ object genTest {
     println(propFalseOrFalse.run(10, 100, rng3))
 
     println("\n\nTest a Prop which throws an exception:")
-    val exceptionalProp = Prop.forAll(twoDiceRoll) {
-      ii => 1/(ii - 6) < 2
+    val exceptionalProp = Prop.forAll(twoDiceRoll) { ii =>
+      1 / (ii - 6) < 2
     }
 
     println("\nexceptionalProp.run(10, 100, rng1) = ")
@@ -251,8 +254,8 @@ object genTest {
     println(exceptionalProp.run(100, 100, rng1))
 
     println("\n\nTest a failable Prop which could throw an exception:")
-    val failableExceptionalProp = Prop.forAll(twoDiceRoll) {
-      ii => 1/(ii - 6) < 1
+    val failableExceptionalProp = Prop.forAll(twoDiceRoll) { ii =>
+      1 / (ii - 6) < 1
     }
 
     println("\nProp.run(failableExceptionalProp, 10, 100, rng1):")
@@ -270,11 +273,11 @@ object genTest {
 
     println("\n\nCombining a failable Prop with an exceptional Prop:")
     val propTrueOrExceptional = twoDiceTrueProp1 || exceptionalProp
-    val propExceptionalOrTrue = exceptionalProp || twoDiceTrueProp1 
+    val propExceptionalOrTrue = exceptionalProp || twoDiceTrueProp1
     val propTrueAndExceptional = twoDiceTrueProp1 && exceptionalProp
-    val propExceptionalAndTrue = exceptionalProp && twoDiceTrueProp1 
+    val propExceptionalAndTrue = exceptionalProp && twoDiceTrueProp1
     val propFalseOrExceptional = twoDiceFalseProp1 || exceptionalProp
-    val propExceptionalOrFalse = exceptionalProp || twoDiceFalseProp1 
+    val propExceptionalOrFalse = exceptionalProp || twoDiceFalseProp1
 
     println("\nProp.run(propTrueOrExceptional, 10, 50, rng2):")
     Prop.run(propTrueOrExceptional, 100, 5, rng2)

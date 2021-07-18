@@ -3,8 +3,8 @@ package fpinscala.chap05.laziness
 import scala.collection.immutable.LazyList.{cons, from}
 
 /** Repeat first half of InfiniteStreamTest but use
- *  LazyList class from Scala Collections.
- */
+  *  LazyList class from Scala Collections.
+  */
 object scalaInfiniteStreamTest {
 
   // Infinite data structure - infinite LazyList of 42's
@@ -19,9 +19,9 @@ object scalaInfiniteStreamTest {
   def constant[A](a: A): LazyList[A] = cons(a, constant(a))
 
   /** Create an infinite stream of the Fibonaccii numbers
-   *
-   *    Make them Longs, so they are more useful.
-   */
+    *
+    *    Make them Longs, so they are more useful.
+    */
   def fibs: LazyList[Long] = fibStream(0L, 1L)
 
   def fibStream(f0: Long, f1: Long): LazyList[Long] =
@@ -40,7 +40,7 @@ object scalaInfiniteStreamTest {
          "forward reference extends over
           definition of value ones"
        Fails for both scala-2.12.0-M4 and scala-2.11.7.
-    */
+     */
     // val ones: LazyList[Int] = cons(1, ones)
     // print("ones.drop(42).take(10).headOption = ")
     // println(ones.drop(42).take(10).headOption)
@@ -58,10 +58,10 @@ object scalaInfiniteStreamTest {
 
     /*
        This works if we use a lazy val.
-    */
+     */
     def six: Int = {
-       lazy val ones: LazyList[Int] = cons(1, ones)
-       ones.take(6).foldRight(0)(_ + _)
+      lazy val ones: LazyList[Int] = cons(1, ones)
+      ones.take(6).foldRight(0)(_ + _)
     }
     println("six = " + six)
 
@@ -88,7 +88,7 @@ object scalaInfiniteStreamTest {
     for (nn <- oneTo1000) sumAccm += nn
     println("\nSum 1 to 1000 is " + sumAccm)
     println("Sum 1 to 1000 is " + oneTo1000.foldRight(0)(_ + _))
-    
+
     // Test Fibonaccii Stream
     println("\nPrint the first 100 Fibonaccii numbers:")
     for (fib <- fibs.take(100)) println(fib)

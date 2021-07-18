@@ -71,7 +71,7 @@ object TreeTest {
     print("Tree.maximum1(itree9) = "); println(Tree.maximum1(itree9))
     print("Tree.maximum1(itree11) = "); println(Tree.maximum1(itree11))
     print("Tree.maximum1(itree21) = "); println(Tree.maximum1(itree21))
- 
+
     println("\nTest Tree.maximum:")
     print("Tree.maximum(ileaf5) = "); println(Tree.maximum(ileaf5))
     print("Tree.maximum(itree3) = "); println(Tree.maximum(itree3))
@@ -79,7 +79,7 @@ object TreeTest {
     print("Tree.maximum(itree9) = "); println(Tree.maximum(itree9))
     print("Tree.maximum(itree11) = "); println(Tree.maximum(itree11))
     print("Tree.maximum(itree21) = "); println(Tree.maximum(itree21))
- 
+
     // See how it displays
     print("\nitree9 = "); println(itree9)
 

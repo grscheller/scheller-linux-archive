@@ -17,13 +17,13 @@ From chapter 6.
 * linear Congruence Generator implementation for RNG
 * uses the same algoritm as java.util.Random and glibc
 
-## Case Class [Rand](Rand.scala#L5-L32)
+## Case Class [Rand](Rand.scala#L5-L31)
 
 * random variable as in probability theory
 * not a "function" which produces a different "random" value whenever called
 * the`RNG`Class generates values from the underlying probability space
 
-## Companion Object [Rand](Rand.scala#L34-L272)
+## Companion Object [Rand](Rand.scala#L33-L289)
 
 * contains utility functions for the Rand case class
 * contains various probability distributions

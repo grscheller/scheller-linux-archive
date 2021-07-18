@@ -24,7 +24,7 @@ object Tree {
 
   // Exercise 3.26
   /** Returns the maximum element in a Tree[Int] */
-  def maximum1(tree: Tree[Int]): Int = 
+  def maximum1(tree: Tree[Int]): Int =
     tree match {
       case Branch(left,right) => maximum1(left) max maximum1(right)
       case Leaf(ii) => ii
@@ -52,7 +52,7 @@ object Tree {
   def fold[A,B](tree: Tree[A])(f: A => B)(g: (B,B) => B): B =
     tree match {
       case Branch(left,right) => g(fold(left)(f)(g), fold(right)(f)(g))
-      case Leaf(a) => f(a) 
+      case Leaf(a) => f(a)
     }
 
   /** Return size of a Tree: leaves + branches */
@@ -64,9 +64,9 @@ object Tree {
     fold(tree)(_ => 1)(_ + _)
 
   /** Returns the maximum element in a Tree[Int] */
-  def maximum(tree: Tree[Int]): Int = 
+  def maximum(tree: Tree[Int]): Int =
     fold(tree)(ii => ii)(_ max _)
- 
+
   /** Returns the maximum path length from the root
    *  to any Leaf in the tree
    */

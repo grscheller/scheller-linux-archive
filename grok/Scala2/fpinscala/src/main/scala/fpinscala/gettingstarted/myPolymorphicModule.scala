@@ -60,7 +60,7 @@ object MyPolymorphicModule {
     println(formatResult("absolute value of", -42, abs))
     println(formatResult("factorial of", 11, factorial))
     println(formatResult("fibonacci element", 42, fibonacci))
-    
+
     // lambda expressions!
     //   not quite as polymorphic as they could be?
     val isInt5 = (x: Int) => x == 5
@@ -78,12 +78,12 @@ object MyPolymorphicModule {
 
     if (isSorted(foo, (x: Int, y: Int) => x*x < y*y))
       println("foo is sqr sorted.")
-    else 
+    else
       println("foo is not sqr sorted.")
 
     if (isSorted(bar, (x: Double, y: Double) => x*x < y*y))
       println("bar is sqr sorted.")
-    else 
+    else
       println("bar is not sqr sorted.")
 
   }

@@ -11,7 +11,7 @@ Programming in Scala" by Paul Chiusana and Runar Bjarnason.
 
 * singleton object defined in the file myModules.scala
 
-## Program [myModuleRefactored](myModules.scala#L42-L81)
+## Program [myModuleRefactored](myModules.scala#L42-L79)
 
 * extended version of myModule
 * also defined in myModules.scala

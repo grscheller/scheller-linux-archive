@@ -5,7 +5,7 @@ package fpinscala.chap02.gettingstarted
    Longer Multi-line comment
 
    Using the MyModule "singular" object as
-   a mamespace.  
+   a mamespace.
 
 */
 /** Documentation comment for MyModule */
@@ -14,7 +14,7 @@ object myModule {
   // Note that "if ... else ..." is a an expression
   //   and returns a value, Int in this case, but
   //   could be (): Unit as main does.
-  // Body of this function is a single expression. 
+  // Body of this function is a single expression.
   def abs(n: Int): Int =
     if (n < 0) -n
     else n
@@ -31,7 +31,7 @@ object myModule {
     msg.format(x, abs(x))
   }
 
-  // This method is not "pure" because it 
+  // This method is not "pure" because it
   //   has a side effect - it changes the state of
   //   my videomonitor.
   def main(args: Array[String]): Unit =
@@ -39,9 +39,7 @@ object myModule {
 
 }
 
-/*
-   Refactored version of MyModule.
-*/
+/* Refactored version of MyModule */
 object myModuleRefactored {
 
   import myModule._

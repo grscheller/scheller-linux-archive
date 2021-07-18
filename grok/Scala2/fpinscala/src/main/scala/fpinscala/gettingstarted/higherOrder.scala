@@ -18,7 +18,7 @@ object higherOrder {
 
   def poly(x: Double, y: Double) = 3*x*x*y - x*y + 4*x*y*y - 7
   def zz(z: Double) = 1 + 0.5*z + 0.25*z*z
-  
+
   def main(args: Array[String]) = {
     println("poly(%f, %f) = %f".format(3.0, 2.0, poly(3, 2)))
     println("poly(%f, %f) = %f".format(2.0, 3.0, poly(2, 3)))

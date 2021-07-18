@@ -2,13 +2,13 @@ package fpinscala.chap07.test.parallelism
 
 import java.util.concurrent.{ExecutorService => ES}
 import java.util.concurrent.Executors
-import fpinscala.parallelism.{Par,ParProp}
+import fpinscala.parallelism.{Par, ParProp}
 import Par._
 
-import fpinscala.testing.{Gen,SGen,Prop}
-import fpinscala.state.rand.{Rand,RNG,LCG}
+import fpinscala.testing.{Gen, SGen, Prop}
+import fpinscala.state.rand.{Rand, RNG, LCG}
 
-object parallelismParProp{
+object parallelismParProp {
 
   def main(args: Array[String]): Unit = {
 
@@ -16,7 +16,7 @@ object parallelismParProp{
     val maxThreadNum = 8
     val threadPools: IndexedSeq[ES] =
       Range(0, maxThreadNum + 1) map { ii =>
-        if ( ii != 0 )
+        if (ii != 0)
           Executors.newFixedThreadPool(ii)
         else
           Executors.newCachedThreadPool
@@ -31,16 +31,16 @@ object parallelismParProp{
 
     def nap(n: Int): Double = {
       Thread.sleep(n)
-      n/1000.0
+      n / 1000.0
     }
 
-    def sumSleepsLT(t: Double)(as: List[Int]): Par[Boolean] = 
+    def sumSleepsLT(t: Double)(as: List[Int]): Par[Boolean] =
       Par.parMap(as)(nap) map { _.sum } map { _ < t }
 
-    val listOf1SGen = Gen.choose(1,11).listOf1
+    val listOf1SGen = Gen.choose(1, 11).listOf1
 
     def parallelSleep(sleepTime: Double) =
-      ParProp.forAllPar(listOf1SGen , esPool)(sumSleepsLT(sleepTime)(_))
+      ParProp.forAllPar(listOf1SGen, esPool)(sumSleepsLT(sleepTime)(_))
 
     // Run some tests.
     println("\nTest ParProp.forAllPar with an SGen - should usually succeed:")

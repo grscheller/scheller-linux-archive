@@ -35,29 +35,57 @@ Run code:
 
 ```
     $ sbt run
-    $ sbt test:run
+    $ sbt test/run
 ```
 
-My usual work flow is "continuous compile":
+My usual work flow is "continuous compile,"
 
 ```
     $ sbt
-    > ~; compile; test:compile
-    [success] Total time: 0 s, completed Oct 17, 2016 2:31:19 PM
-    [success] Total time: 0 s, completed Oct 17, 2016 2:31:19 PM
+    [info] welcome to sbt 1.5.4 (Oracle Corporation Java 11.0.11)
+    [info] loading settings for project fpinscala-build-build from metals.sbt ...
+    [info] loading project definition from /home/grs/devel/scheller-linux-archive/grok/Scala2/fpinscala/project/project
+    [info] loading settings for project fpinscala-build from metals.sbt ...
+    [info] loading project definition from /home/grs/devel/scheller-linux-archive/grok/Scala2/fpinscala/project
+    [success] Generated .bloop/fpinscala-build.json
+    [success] Total time: 0 s, completed Jul 17, 2021, 6:13:59 PM
+    [info] loading settings for project root from build.sbt ...
+    [info] set current project to fpinscala (in build file:/home/grs/devel/scheller-linux-archive/grok/Scala2/fpinscala/)
+    [info] sbt server started at local:///home/grs/.sbt/1.0/server/c7bf9eed92a4e47cd0cb/sock
+    [info] started sbt server
+    sbt:fpinscala>
+    sbt:fpinscala> ~; compile; Test / compile
+    [success] Total time: 0 s, completed Jul 17, 2021, 6:02:51 PM
+    [success] Total time: 0 s, completed Jul 17, 2021, 6:02:52 PM
+    [info] 1. Monitoring source files for root/compile; root/Test / compile...
+    [info]    Press <enter>  to interrupt or '?' for more options.
+       .
+       .
+       .
+    [info] Received input event: CancelWatch.
+    sbt:fpinscala> run
+       .
+       .
+       .
+    sbt:fpinscala> Test / run
+       .
+       .
+       .
+    sbt:fpinscala> ~; compile; test:compile
     1. Waiting for source changes... (press enter to interrupt)
        .
        .
        .
-    > run
-    > test:run
-    > ~; compile; test:compile
-    1. Waiting for source changes... (press enter to interrupt)
+    [info] Received input event: CancelWatch.
+    sbt:fpinscala> run
        .
        .
        .
-    > run
+    sbt:fpinscala> ~; compile; Test / compile
+       .
+       .
+       .
 ```
 
-repeat, while I edit files, use Unix commands like grep and
+Repeat, while I edit files, use Unix commands like grep and
 find, and perform GIT commands in other terminal windows.

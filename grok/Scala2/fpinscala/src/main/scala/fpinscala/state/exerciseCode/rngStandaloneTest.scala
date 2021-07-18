@@ -19,16 +19,16 @@ object rngStandaloneTest {
     print("RNG.nonNegativeInt1(rng42) = ")
     println(RNG.nonNegativeInt1(rng42))
 
-    // Imperitively generate 10 random doubles d, 0.0 <= d < 1.0,
+    // Imperatively generate 10 random doubles d, 0.0 <= d < 1.0,
     println("\nImperitively print ten random doubles in [0,1):")
 
     var rngVar: RNG = rng42
     var kk = 0
     while (kk < 10) {
       kk = kk + 1
-      val pair = RNG.double(rngVar)  // Tuple unpacking awkward,
-      val ranD = pair._1             // scala doesn't seem to like
-      rngVar = pair._2               // to unpack into existing vars.
+      val pair = RNG.double(rngVar) // Tuple unpacking awkward,
+      val ranD = pair._1            // scala doesn't seem to like
+      rngVar = pair._2              // to unpack into existing vars.
       println(ranD)
     }
 
@@ -36,7 +36,8 @@ object rngStandaloneTest {
     println("\nFunctionally print ten random doubles in [0,1):")
 
     val getNextRanPair = (x: (Double, RNG)) => RNG.double(x._2)
-    val rngS = LazyList.iterate(RNG.double(rng42))(getNextRanPair) map (_._1) take 10
+    val rngS =
+      LazyList.iterate(RNG.double(rng42))(getNextRanPair) map (_._1) take 10
     for (ranDouble <- rngS) println(ranDouble)
 
     // Test intDouble and doubleInt
@@ -45,29 +46,29 @@ object rngStandaloneTest {
     print("RNG.doubleInt(rng42) = "); println(RNG.doubleInt(rng42))
 
     // Test double3
-    val ( firstTuple, rngFT) = RNG.double3(rng42)
+    val (firstTuple, rngFT) = RNG.double3(rng42)
     val (secondTuple, rngST) = RNG.double3(rngFT)
-    val ( thirdTuple,   _  ) = RNG.double3(rngST)
+    val (thirdTuple, _) = RNG.double3(rngST)
     println("\nPrint 3 double 3-tuples:")
     println(firstTuple); println(secondTuple); println(thirdTuple)
 
     // Test ints1
     println("\nTest ints1:")
-    val (  twoList1, rng11) = RNG.ints1(2)(rng42)
+    val (twoList1, rng11) = RNG.ints1(2)(rng42)
     val (emptyList1, rng12) = RNG.ints1(0)(rng11)
-    val (  sixList1,  _  ) = RNG.ints1(6)(rng12)
+    val (sixList1, _) = RNG.ints1(6)(rng12)
     print("\ntwoList1 = "); println(twoList1)
     print("emptyList1 = "); println(emptyList1)
-    print("sixList1 = ");   println(sixList1)
+    print("sixList1 = "); println(sixList1)
 
     // Test ints
     println("\nTest ints:")
-    val (  twoList, rng1) = RNG.ints(2)(rng42)
+    val (twoList, rng1) = RNG.ints(2)(rng42)
     val (emptyList, rng2) = RNG.ints(0)(rng1)
-    val (  sixList,  _  ) = RNG.ints(6)(rng2)
+    val (sixList, _) = RNG.ints(6)(rng2)
     print("\ntwoList = "); println(twoList)
     print("emptyList = "); println(emptyList)
-    print("sixList = ");   println(sixList)
+    print("sixList = "); println(sixList)
 
     // Test nonNegativeEven
     println("\nTest nonNegativeEven:")
@@ -106,21 +107,21 @@ object rngStandaloneTest {
     val diceRolls10 = List.fill(10)(twoDiceRoll)
 
     val rollSomeRecur10 = RNG.sequenceRecursion(diceRolls10)
-    val rollSomeFR10    = RNG.sequenceFR(diceRolls10)
+    val rollSomeFR10 = RNG.sequenceFR(diceRolls10)
     val rollSomeFLRev10 = RNG.sequenceFLRev(diceRolls10)
-    val rollSomeFL10    = RNG.sequenceFL(diceRolls10)
+    val rollSomeFL10 = RNG.sequenceFL(diceRolls10)
     val rollSomeRevFL10 = RNG.sequenceRevFL(diceRolls10)
 
     val (rolledDiceRecur10, _) = rollSomeRecur10(rngD)
-    val (rolledDiceFR10, _)    = rollSomeFR10(rngD)
+    val (rolledDiceFR10, _) = rollSomeFR10(rngD)
     val (rolledDiceFLRev10, _) = rollSomeFLRev10(rngD)
-    val (rolledDiceFL10, _)    = rollSomeFL10(rngD)
+    val (rolledDiceFL10, _) = rollSomeFL10(rngD)
     val (rolledDiceRevFL10, _) = rollSomeRevFL10(rngD)
 
     print("rolledSomeRecur10 = "); println(rolledDiceRecur10)
-    print("rolledSomeFR10 = ");    println(rolledDiceFR10)
+    print("rolledSomeFR10 = "); println(rolledDiceFR10)
     print("rolledSomeFLRev10 = "); println(rolledDiceFLRev10)
-    print("rolledSomeFL10 = ");    println(rolledDiceFL10)
+    print("rolledSomeFL10 = "); println(rolledDiceFL10)
     print("rolledSomeRevFL10 = "); println(rolledDiceRevFL10)
 
     // Test how stack-safe RNG.sequence implementations are
@@ -130,45 +131,45 @@ object rngStandaloneTest {
     var diceRolls = List.fill(numRolls)(twoDiceRoll)
     val (rolledDiceRecur, _) = RNG.sequenceRecursion(diceRolls)(rng42)
     print("Average of " + numRolls + " two dice rolls(Recur) is ")
-    println(rolledDiceRecur.sum.toDouble/numRolls)
+    println(rolledDiceRecur.sum.toDouble / numRolls)
 
     numRolls = 2500
     diceRolls = List.fill(numRolls)(twoDiceRoll)
     val (rolledDiceFR, _) = RNG.sequenceFR(diceRolls)(rng42)
     print("Average of " + numRolls + " two dice rolls(FR)    is ")
-    println(rolledDiceFR.sum.toDouble/numRolls)
+    println(rolledDiceFR.sum.toDouble / numRolls)
 
     numRolls = 2500
     diceRolls = List.fill(numRolls)(twoDiceRoll)
     val (rolledDiceFLRev, _) = RNG.sequenceFLRev(diceRolls)(rng42)
     print("Average of " + numRolls + " two dice rolls(FLRev) is ")
-    println(rolledDiceFLRev.sum.toDouble/numRolls)
+    println(rolledDiceFLRev.sum.toDouble / numRolls)
 
     numRolls = 2500
     diceRolls = List.fill(numRolls)(twoDiceRoll)
     val (rolledDiceFL, _) = RNG.sequenceFL(diceRolls)(rng42)
     print("Average of " + numRolls + " two dice rolls(FL)    is ")
-    println(rolledDiceFL.sum.toDouble/numRolls)
+    println(rolledDiceFL.sum.toDouble / numRolls)
 
     numRolls = 3700
     diceRolls = List.fill(numRolls)(twoDiceRoll)
     val (rolledDiceRevFL, _) = RNG.sequenceRevFL(diceRolls)(rng42)
     print("Average of " + numRolls + " two dice rolls(RevFL) is ")
-    println(rolledDiceRevFL.sum.toDouble/numRolls)
+    println(rolledDiceRevFL.sum.toDouble / numRolls)
 
     // I need to straighten this out, the difference
     // between RNG.sequenceFL and RNG.sequenceFLRev.
     // What is confusimg me is the above list are all
     // the "same" random action (twoDiceRoll: Rand).
     println("\nCreate a random non-homogenous random sequence -")
-    val powOfTen: List[Double] = List(1,10,100,1000,10000)
+    val powOfTen: List[Double] = List(1, 10, 100, 1000, 10000)
     val scaledRandomDoubles: List[Rand[Double]] =
       powOfTen.map(ii => RNG.map(RNG.double)(_ * ii))
 
     val scaledRandomSequenceRecur = RNG.sequenceFR(scaledRandomDoubles)
-    val scaledRandomSequenceFR    = RNG.sequenceFR(scaledRandomDoubles)
+    val scaledRandomSequenceFR = RNG.sequenceFR(scaledRandomDoubles)
     val scaledRandomSequenceFLRev = RNG.sequenceFLRev(scaledRandomDoubles)
-    val scaledRandomSequenceFL    = RNG.sequenceFL(scaledRandomDoubles)
+    val scaledRandomSequenceFL = RNG.sequenceFL(scaledRandomDoubles)
     val scaledRandomSequenceRevFL = RNG.sequenceRevFL(scaledRandomDoubles)
 
     val (resultRecur, _) = scaledRandomSequenceRecur(rng666)
@@ -218,37 +219,41 @@ object rngStandaloneTest {
     // Test nonNegativeLessThan implementations
 
     println("\n\nTest nonNegativeLessThan implementations")
-    def foo(num: Int, lt: Int): Rand[List[Int]] = 
+    def foo(num: Int, lt: Int): Rand[List[Int]] =
       RNG.sequence(List.fill(num)(RNG.nonNegativeLessThanManual(lt)))
 
-    def bar(num: Int, lt: Int): Rand[List[Int]] = 
+    def bar(num: Int, lt: Int): Rand[List[Int]] =
       RNG.sequence(List.fill(num)(RNG.nonNegativeLessThanNonUniform(lt)))
 
-    def baz(num: Int, lt: Int): Rand[List[Int]] = 
+    def baz(num: Int, lt: Int): Rand[List[Int]] =
       RNG.sequence(List.fill(num)(RNG.nonNegativeLessThan(lt)))
 
     print("\n100 random non-neg Ints less than 10")
     println(" (using nonNegativeLessThanManual):")
-    for (ii <- foo(100, 10)(rng42)._1) {print(ii); print(" ")}
+    for (ii <- foo(100, 10)(rng42)._1) { print(ii); print(" ") }
 
     print("\n100 random non-neg Ints less than 10")
     println(" (using nonNegativeLessThanNonUniform):")
-    for (ii <- bar(100, 10)(rng42)._1) {print(ii); print(" ")}
+    for (ii <- bar(100, 10)(rng42)._1) { print(ii); print(" ") }
 
     print("\n100 random non-neg Ints less than 10")
     println(" (using nonNegativeLessThan):")
-    for (ii <- baz(100, 10)(rng42)._1) {print(ii); print(" ")}
+    for (ii <- baz(100, 10)(rng42)._1) { print(ii); print(" ") }
 
     print("\n\nCompare nonNegativeLessThanNonUniform ")
     println("vs nonNegativeLessThanManual:")
     val midRoad = 200000000
-    for (intPair <- foo(100, midRoad)(LCG(3))._1.zip(bar(100, midRoad)(LCG(3))._1)) {
+    for (
+      intPair <- foo(100, midRoad)(LCG(3))._1.zip(bar(100, midRoad)(LCG(3))._1)
+    ) {
       println(intPair)
     }
 
     print("\n\nCompare nonNegativeLessThanManual ")
     println("vs nonNegativeLessThan:")
-    for (intPair <- foo(15, midRoad)(rng42)._1.zip(baz(15, midRoad)(rng42)._1)) {
+    for (
+      intPair <- foo(15, midRoad)(rng42)._1.zip(baz(15, midRoad)(rng42)._1)
+    ) {
       println(intPair)
     }
 
@@ -286,7 +291,7 @@ object rngStandaloneTest {
 //  I get error messages like:
 //
 //    value flatMap is not a member of
-//    fpinscala.rngStandalone.RNG.Rand[Int] 
+//    fpinscala.rngStandalone.RNG.Rand[Int]
 //
 //  which is just a type alias for function type RNG => (Int, RNG).
 //
@@ -306,10 +311,10 @@ object rngStandaloneTest {
     println("\nMake some length/value bounded List[Int]:\n")
 
     /** Return a random action that will
-     *  product a List of length less than lt
-     *  and whose values are bounded by the
-     *  List's length.
-     */
+      *  product a List of length less than lt
+      *  and whose values are bounded by the
+      *  List's length.
+      */
     def makeRandList(lt: Int): Rand[List[Int]] =
       RNG.flatMap(RNG.nonNegativeLessThan(lt)) { n =>
         RNG.flatMap(RNG.nonNegativeLessThan(n)) { d =>

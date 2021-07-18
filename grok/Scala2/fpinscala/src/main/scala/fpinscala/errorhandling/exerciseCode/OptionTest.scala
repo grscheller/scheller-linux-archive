@@ -25,31 +25,31 @@ object OptionStats {
 
   // Much nicer
   /** Computes the variance of a dataset of Doubles */
-  def variance(xs: Seq[Double]): Option[Double] = 
+  def variance(xs: Seq[Double]): Option[Double] =
     mean(xs).flatMap(m => mean(xs.map(x => math.pow((x - m), 2))))
 
 }
 
 object OptionParse {
 
-  /** 
+  /**
    *  Take a list of strings and return an Option of a List
    *  of Doubles if all can be converted.
-   */  
+   */
   def parseDoubles1(ss: List[String]): Option[List[Double]] =
     sequence(ss map (s => Try(s.toDouble)))
 
-  /** 
+  /**
    *  Take a list of strings and return an Option of a List
    *  of Doubles if all can be converted.
-   */  
+   */
   def parseDoubles(ss: List[String]): Option[List[Double]] =
     traverse(ss)(s => Try(s.toDouble))
 
-  /** 
+  /**
    *  Take a list of strings and return an Option of a List
    *  of Ints if all can be converted.
-   */  
+   */
   def parseInts(ss: List[String]): Option[List[Int]] =
     traverse(ss)(s => Try(s.toInt))
 
@@ -91,7 +91,7 @@ object OptionTest {
     print(", "); print(arg2); print(") = ")
     println(result)
   }
-      
+
   /** Test package */
   def main(args: Array[String]): Unit = {
 
@@ -128,7 +128,7 @@ object OptionTest {
 
     val fun1 = (x: Int) => x + 1
 
-    val fun1_failable = (x: Int) => 
+    val fun1_failable = (x: Int) =>
       if (x == 42) throw new Exception("fail!")
       else x + 1
 
@@ -140,7 +140,7 @@ object OptionTest {
     val bar3 = Some(3.0)
     val barN: Option[Double] = None
 
-    // First run naked 
+    // First run naked
     println("\nTest unlifted functions in try block:\n")
     try {
         evalP2(5, 3.0, fun2, "fun2")
@@ -150,7 +150,7 @@ object OptionTest {
         case e: Exception =>  println("An exception was caught, boohoohoo.\n")
     }
 
-    // Next, test Try 
+    // Next, test Try
     println("Convert from exceptions to Options via Try:\n")
     evalP0(Try(fun1_failable(5)), "Try(fun1_failable(5))")
     evalP0(Try(fun1_failable(42)), "Try(fun1_failable(42))")
@@ -172,7 +172,7 @@ object OptionTest {
 
     println("\nTest partially applied map2:\n")
 
-    val fn = (m: Int, n: Int) => 
+    val fn = (m: Int, n: Int) =>
       if (m < 7) m
       else n
 
@@ -273,12 +273,12 @@ object OptionTest {
     evalP1(strDouble, parseDoubles, "parseDoubles")
     evalP1(strDoubt, parseDoubles, "parseDoubles")
     evalP1(strInts, parseDoubles, "parseDoubles")
- 
+
     println("\nTest parseInts based on transverse:\n")
     evalP1(strInts, parseInts, "parseInts")
     evalP1(strIntsNotAll, parseInts, "parseInts")
     evalP1(strDouble, parseInts, "parseInts")
- 
+
     // Test flatten and compare the two flatmaps
 
     println("\nTest flatten:\n")

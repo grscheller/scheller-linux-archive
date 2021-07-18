@@ -79,7 +79,7 @@ object List {
    *  @note Unchecked match used to gag compiler warning.
    *  @note Sensitive to stackoverflow.
    */
-  def init[A](l: List[A]): List[A] = 
+  def init[A](l: List[A]): List[A] =
     (l: @unchecked) match {
       case Cons(h1, Cons(h2, Nil)) => Cons(h1, Nil)
       case Cons(h1, Cons(h2, rest)) => Cons(h1, Cons(h2, init(rest)))
@@ -87,10 +87,10 @@ object List {
     }
 
   /** Product of a list of doubles */
-  def productL1(xs: List[Double]) = foldLeft(xs, 1.0)(_ * _) 
+  def productL1(xs: List[Double]) = foldLeft(xs, 1.0)(_ * _)
 
   /** Product of a list of doubles */
-  def productR1(xs: List[Double]) = foldRightUnsafe(xs, 1.0)(_ * _) 
+  def productR1(xs: List[Double]) = foldRightUnsafe(xs, 1.0)(_ * _)
 
   // Exercise 3.7
   /** Right fold with short circuit logic
@@ -135,7 +135,7 @@ object List {
   // Exercise 3.10 - Implement tail recursive foldLeft
   /** Tail recursive foldLeft - stack safe */
   def foldLeft[A, B](as: List[A], z: B)(f: (B, A) => B): B = {
-    def acc(lt: B, rt: List[A]): B = 
+    def acc(lt: B, rt: List[A]): B =
       rt match {
         case Nil => lt
         case Cons(x, xs) => acc(f(lt, x), xs)
@@ -146,7 +146,7 @@ object List {
 
   /** Tail recursive foldLeft - with Short Circuit */
   def foldLeftSC[A, B](as: List[A], zero: A, one: B)(f: (B, A) => B): B = {
-    def acc(lt: B, rt: List[A]): B = 
+    def acc(lt: B, rt: List[A]): B =
       rt match {
         case Nil => lt
         case Cons(x, xs) if x == zero => f(one, zero)
@@ -168,7 +168,7 @@ object List {
 
   // Exercise 3.13 - Implement foldRight with foldLefts
   /** Tail recursive foldRight - stack safe */
-  def foldRight[A, B](as: List[A], z: B)(f: (A, B) => B): B = 
+  def foldRight[A, B](as: List[A], z: B)(f: (A, B) => B): B =
     foldLeft(foldLeft(as, Nil: List[A])((as, a) => Cons(a, as)), z)((b, a) => f(a, b))
 
   // Exercise 3.14 - Implement append via either foldsLeft or foldRight
@@ -178,31 +178,31 @@ object List {
 
   // Exercise 3.15 - Implement flatten linearly in length of the list
   /** Flatten a List of Lists */
-  def flatten[A](ass: List[List[A]]): List[A] = 
+  def flatten[A](ass: List[List[A]]): List[A] =
     foldRight(ass, Nil: List[A])(append)
 
   // Exercise 3.16
   /** Transform a List[Int] by incrementing each element by 1 */
-  def bump1(l: List[Int]): List[Int] = 
+  def bump1(l: List[Int]): List[Int] =
     foldRight(l, Nil: List[Int])((a, as) => Cons(a + 1, as))
 
   // Exercise 3.17
   /** Transform a List[Double] to a List[String] */
-  def doublesToStrings(l: List[Double]): List[String] = 
+  def doublesToStrings(l: List[Double]): List[String] =
     foldRight(l, Nil: List[String])((d, ds) => Cons(d.toString, ds))
 
   // Exercise 3.18
   /** Modify each element of a list while maintaining
-   *  while maintaining the structure of the List 
+   *  while maintaining the structure of the List
    */
-  def map[A, B](l: List[A])(f: A => B): List[B] = 
+  def map[A, B](l: List[A])(f: A => B): List[B] =
     foldRight(l, Nil: List[B])((a, bs) => Cons(f(a), bs))
 
   // Exercise 3.19
   /** Filter elements from a list based on a predicate */
   def filter[A](l: List[A])(f: A => Boolean): List[A] =
     foldRight(l, Nil: List[A])(
-      (a, as) => 
+      (a, as) =>
         if (f(a))
           Cons(a, as)
         else
@@ -218,7 +218,7 @@ object List {
   /** Reimplimention of filter using flatMap */
   def filter2[A](as: List[A])(f: A => Boolean): List[A] =
     flatMap(as)(
-      a => 
+      a =>
         if (f(a))
           List(a)
         else
@@ -238,7 +238,7 @@ object List {
   // Exercise 3.23
   /**
    *  Implements standard zipWith function
-   *  
+   *
    *  @note Not stack safe
    */
   def zipWith[A,B,C](as: List[A], bs: List[B])(f: (A,B) => C): List[C] =
@@ -250,9 +250,9 @@ object List {
     }
 
   /*
-   *  Implements standard zipWith function 
+   *  Implements standard zipWith function
    *
-   *  Todo: when I know how to make things lazy 
+   *  Todo: when I know how to make things lazy
    */
   //def zipWith[A,B,C](as: List[A], bs: List[B])(f: (A,B) => C): List[C] =
   //  foldLeft(as, Nil: List[C])
@@ -261,13 +261,13 @@ object List {
   /** Determine if a List contains another List as a subsequence */
   def hasSubsequence[A](sup: List[A], sub: List[A]): Boolean = {
 
-    def hasHead(h: A, l: List[A]): Boolean = 
+    def hasHead(h: A, l: List[A]): Boolean =
       l match {
         case Cons(h2, rest) if h == h2 => true
         case _ => false
       }
 
-    def sameInit(l1: List[A], l2: List[A]): Boolean  = 
+    def sameInit(l1: List[A], l2: List[A]): Boolean  =
       foldLeftSC(zipWith(l1, l2)(_ == _), false, true)(_ && _)
 
     def foundIt(l: List[A]): Boolean =

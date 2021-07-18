@@ -4,7 +4,7 @@ The fpinscala.parallelism package is the non-blocking, Actor based concurency
 API that the book "Functional Programming in Scala" gently leads you to develop.
 My version includes error handling.
 
-## Trait [parallelism.Par[+A]](parallelism.scala#L30-L186)
+## Trait [parallelism.Par[+A]](parallelism.scala#L27-L173)
 
 * used to define future parallel computations and run them
 * the `Par.run` method is the only way for client code to extract a value
@@ -12,11 +12,11 @@ My version includes error handling.
 * use case is for client code to apply the blocking run method as last step
 * run method not intended to be used internally within the package
 
-## Companon Object [parallelism.Par](parallelism.scala#L188-L377)
+## Companon Object [parallelism.Par](parallelism.scala#L176-L356)
 
 * utility methods for the `parallelism.Par[A]` trait
 
-## Private Abstract Trait [parallelism.ParFuture[+A]](parallelism.scala#L15-L28)
+## Private Abstract Trait [parallelism.ParFuture[+A]](parallelism.scala#L14-L25)
 
 * nonblocking "Future" which registers a callback for a parallel calculation
 * has no get method, doesn't actually return anything at all
@@ -24,7 +24,7 @@ My version includes error handling.
 * not a Java Future, hence I changed name from book to avoid confusion
 * use of the term "Future" maybe in line with various libraries
 
-## Final Class [Actor[A]](Actor.scala#L19-L101)
+## Final Class [Actor[A]](Actor.scala#L19-L98)
 
 * processes messages of type A, one at a time
 * messages are submitted to the actor with the `!` method
@@ -37,15 +37,15 @@ the invocations of the handler on separate threads.  This is achieved
 because the Actor reads a volatile memory location before entering its
 event loop, and writes to the same location before suspending.
 
-## Companion Object [Actor](Actor.scala#L103-L110)
+## Companion Object [Actor](Actor.scala#L100-L107)
 
 * provides factory method to produce an actor from an ExecutorService
 
-## trait [Strategy](Actor.scala#L112-L121)
+## trait [Strategy](Actor.scala#L109-L117)
 
 * when eventually instantiated, provides how to actually obtain a value
 
-## Compaion Object [Strategy](Actor.scala#L123-L142)
+## Compaion Object [Strategy](Actor.scala#L119-L138)
 
 * provides two strategies
 * first one using an java.util.concurrent.ExecutorService
@@ -53,7 +53,7 @@ event loop, and writes to the same location before suspending.
 * second one generates value in the existing thread
   * strategy.sequential(): Strategy
 
-## Singleton object [ParProp](ParProp.scala#L13-L30)
+## Singleton object [ParProp](ParProp.scala#L12-L39)
 
 * for use with fpinscala.testing package
 

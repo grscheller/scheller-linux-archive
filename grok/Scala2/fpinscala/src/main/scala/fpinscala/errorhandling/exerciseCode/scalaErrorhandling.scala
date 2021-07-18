@@ -19,19 +19,19 @@ object Parsing {
    */
   def traverse[A,B](as: List[A])(f: A => Option[B]): Option[List[B]] =
     as.foldRight(Some(Nil): Option[List[B]])(
-      (a, bsO) => 
+      (a, bsO) =>
         for {
           bs <- bsO
           b <- f(a)
         } yield b :: bs
     )
 
-  /** 
+  /**
    *  Parse a list of Doubles.
    *
    *  Take a list of strings and return an Option of a List
    *  of Doubles if all can be converted.
-   */  
+   */
   def parseDoubles(ss: List[String]): Option[List[Double]] =
     traverse(ss)(s => Try(s.toDouble).toOption)
 
@@ -70,7 +70,7 @@ object scalaErrorhandling{
     print(", "); print(arg2); print(") = ")
     println(result)
   }
-      
+
   /** Computes the mean of a dataset of Doubles */
   def mean(xs: Seq[Double]): Option[Double] =
     if (xs.isEmpty) None

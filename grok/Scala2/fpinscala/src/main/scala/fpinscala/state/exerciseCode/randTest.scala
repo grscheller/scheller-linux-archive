@@ -1,18 +1,17 @@
-/** Package to test the fpinscala.rand package and 
- *  indirectly fpinscala.state
- *
- *  Deliberately not importing fpinscala.state
- *  since I feel it is an implementation detail
- *  of the fpinscala.state.rand package.
- *
- *  Since I changed the nature of Rand from an
- *  "is a state action" to a "has a state action",
- *  I am dropping the lower level state run tests.
- *
- */
+/** Package to test the fpinscala.rand package and
+  *  indirectly fpinscala.state
+  *
+  *  Deliberately not importing fpinscala.state
+  *  since I feel it is an implementation detail
+  *  of the fpinscala.state.rand package.
+  *
+  *  Since I changed the nature of Rand from an
+  *  "is a state action" to a "has a state action",
+  *  I am dropping the lower level state run tests.
+  */
 package fpinscala.chap06.state.rand
 
-import fpinscala.state.rand.{Rand,RNG,LCG}
+import fpinscala.state.rand.{Rand, RNG, LCG}
 
 object randTest {
 
@@ -52,7 +51,7 @@ object randTest {
     println("\nTest stack-safety of Rand.sequence:")
     def averageTwoDiceRoll(numRolls: Int): Rand[Double] = {
       val diceRolls = Rand.sequence(List.fill(numRolls)(twoDiceRoll))
-      diceRolls map { _.sum.toDouble/numRolls }
+      diceRolls map { _.sum.toDouble / numRolls }
     }
 
     print("averageTwoDiceRoll(10)(rng42) = ")
@@ -79,7 +78,7 @@ object randTest {
     println(averageTwoDiceRoll(50000)(rng666))
     print("averageTwoDiceRoll(50000)(rng777) = ")
     println(averageTwoDiceRoll(50000)(rng777))
-    
+
     // Look at ints.
     println("\nLook at ints:")
 
@@ -95,15 +94,15 @@ object randTest {
     print("\n10 Ints: ")
     Rand.ints(10)(rng666).foreach(x => print(s"$x "))
     print("\n10 Ints: ")
-    Rand.ints(10)(rng666) foreach {
-      x => print(s"$x ")
+    Rand.ints(10)(rng666) foreach { x =>
+      print(s"$x ")
     }
 
     // Test Rand.nonNegIntLessThan
     print("\n\nTest Rand.nonNegIntLessThan and ")
     println("Rand.sequence:")
 
-    def baz(num: Int, lt: Int): Rand[List[Int]] = 
+    def baz(num: Int, lt: Int): Rand[List[Int]] =
       Rand.sequence(List.fill(num)(Rand.nonNegIntLessThan(lt)))
 
     print("100 random non-neg Ints less than 10")
@@ -112,7 +111,7 @@ object randTest {
 
     print("\n\n50 random non-neg Ints less than 200000000")
     println(" (using Rand.nonNegIntLessThan) -")
-    for (ii <- baz(50, 200000000)(rng42)) {println(ii)}
+    for (ii <- baz(50, 200000000)(rng42)) { println(ii) }
 
     // Test map and map2
     println("\nTest Rand.sequence by throwing dice:")
@@ -127,16 +126,16 @@ object randTest {
     println("\nTest Rand for comprehensions:")
 
     /** Return a random action that will
-     *  product a List of length less than lt
-     *  and whose values are bounded by a 
-     *  random int less than the List's length.
-     *
-     *  This function is a bit contrived.
-     */
+      *  product a List of length less than lt
+      *  and whose values are bounded by a
+      *  random int less than the List's length.
+      *
+      *  This function is a bit contrived.
+      */
     def makeRandList1(lt: Int): Rand[List[Int]] = for {
-      n   <- Rand.nonNegIntLessThan(lt)
-      d   <- Rand.nonNegIntLessThan(n)
-      ns  <- Rand.ints(n)
+      n <- Rand.nonNegIntLessThan(lt)
+      d <- Rand.nonNegIntLessThan(n)
+      ns <- Rand.ints(n)
     } yield ns map { _.abs % (d + 1) }
 
     // Repeat without the for comprehension

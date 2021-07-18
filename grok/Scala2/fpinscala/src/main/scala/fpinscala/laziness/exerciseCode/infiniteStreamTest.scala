@@ -3,7 +3,6 @@ package fpinscala.chap05.laziness
 import fpinscala.laziness._
 import fpinscala.laziness.Stream._
 
-
 object infiniteStreamTest {
 
   // Infinite data structure - infinite Stream of 42's
@@ -11,7 +10,7 @@ object infiniteStreamTest {
 
   /*
      Like in main method, this does not work here.
-  */
+   */
   // def six: Int = {
   //   val ones: Stream[Int] = cons(1, ones)
   //   ones.take(6).foldRight(0)(_ + _)
@@ -19,7 +18,7 @@ object infiniteStreamTest {
 
   /*
      This works, modeled after constant method.
-  */
+   */
   def six: Int = {
     lazy val ones: Stream[Int] = Cons(() => 1, () => ones)
     ones.take(6).foldRight(0)(_ + _)
@@ -43,25 +42,25 @@ object infiniteStreamTest {
   }
 
   // Using unfold method for constant
-  def constantU[A](a: A): Stream[A] = 
+  def constantU[A](a: A): Stream[A] =
     unfold(a)((a0: A) => Some((a0, a0)))
 
   // Using unfold method for constant - Book version
-  def constantU_Book[A](a: A): Stream[A] = 
+  def constantU_Book[A](a: A): Stream[A] =
     unfold(a)(_ => Some((a, a)))
 
   // Using unfold method for constant - Testing Syntax
-  def constantU_Book_version2[A](a: A): Stream[A] = 
-    unfold(a) {case _ => Some((a, a))}
+  def constantU_Book_version2[A](a: A): Stream[A] =
+    unfold(a) { case _ => Some((a, a)) }
 
   // Using unfold method for constant - Testing Syntax
-  def constantU_Book_version3[A](a: A): Stream[A] = 
+  def constantU_Book_version3[A](a: A): Stream[A] =
     unfold(a) { _ => Some((a, a)) }
 
   /** Create an infinite stream of the Fibonaccii numbers
-   *
-   *    Make them Longs, so they are more useful.
-   */
+    *
+    *    Make them Longs, so they are more useful.
+    */
   def fibs: Stream[Long] = fibStream(0L, 1L)
 
   def fibStream(f0: Long, f1: Long): Stream[Long] =
@@ -83,7 +82,7 @@ object infiniteStreamTest {
   def fibs_unfold: Stream[Long] =
     unfold((0L, 1L)) {
       case (f1, f2) if f1 >= 0 => Some((f1, (f2, f1 + f2)))
-      case _ => None
+      case _                   => None
     }
 
   def main(args: Array[String]): Unit = {
@@ -101,14 +100,14 @@ object infiniteStreamTest {
        Fails for both scala-2.12.0-M4 and scala-2.11.7.
        Also, fails this way when adjusted to use
        scala.collection.immutable.Stream.
-    */
+     */
     // val ones: Stream[Int] = Stream.cons(1, ones)
     // print("ones.drop(42).take(10).headOption = ")
     // println(ones.drop(42).take(10).headOption)
 
     /*
        This also does not work here.
-    */
+     */
     // def five(): Int = {
     //   val ones: Stream[Int] = Stream.cons(1, ones)
     //   ones.take(5).foldRight(0)(_ + _)
@@ -117,7 +116,7 @@ object infiniteStreamTest {
 
     /*
        But does work using lazy vals.
-    */
+     */
     def five: Int = {
       lazy val ones: Stream[Int] = Cons(() => 1, () => ones)
       ones.take(5).foldRight(0)(_ + _)
@@ -192,10 +191,10 @@ object infiniteStreamTest {
     val mySin = for {
       ii <- countDown100
       if ii < 51
-      x = math.Pi*ii/100.0
+      x = math.Pi * ii / 100.0
     } yield (x, math.sin(x))
     for ((x, y) <- mySin) printf("sin(%f) = %f\n", x, y)
-    
+
     // Test Fibonaccii Stream
     println("\nPrint the first 100 Fibonaccii numbers:")
     for (fib <- fibs.take(100)) println(fib)
@@ -243,21 +242,25 @@ object infiniteStreamTest {
 
     print("range(42,1042).find(x => x % 131 == 0 && ")
     print("x % 17 == 0 && x % 19 == 0) = ")
-    println(range(42, 1042) find (x => x % 131 == 0 && 
-      x % 17 == 0 && x % 19 == 0))
+    println(
+      range(42, 1042) find (x =>
+        x % 131 == 0 &&
+          x % 17 == 0 && x % 19 == 0
+      )
+    )
 
     // Test zipWith and zipAll
     println("\nTest zipWith method:")
-    val func = (x: Int, y: Int) => x + 2*y
+    val func = (x: Int, y: Int) => x + 2 * y
 
     print("range(0,100,10).zipWith(range(1,6))(func).toList = ")
-    println(range(0,100,10).zipWith(range(1,6))(func).toList)
+    println(range(0, 100, 10).zipWith(range(1, 6))(func).toList)
 
     print("empty[Int].zipWith(range(1,6))(func).toList = ")
-    println(empty[Int].zipWith(range(1,6))(func).toList)
+    println(empty[Int].zipWith(range(1, 6))(func).toList)
 
     print("range(0,100,10).zipWith(empty[Int])(func).toList = ")
-    println(range(0,100,10).zipWith(empty[Int])(func).toList)
+    println(range(0, 100, 10).zipWith(empty[Int])(func).toList)
 
     print("empty[Int].zipWith(empty[Int])(func).toList = ")
     println(empty[Int].zipWith(empty[Int])(func).toList)
@@ -265,7 +268,7 @@ object infiniteStreamTest {
     println("\nTest zipAll method:")
 
     print("(range(0,100,10) zipAll range(1,6)).toList = ")
-    println((range(0,100,10) zipAll range(1,6)).toList)
+    println((range(0, 100, 10) zipAll range(1, 6)).toList)
 
     println()
 

@@ -133,7 +133,7 @@ object StreamTest{
     val badPlan = bad1To10.dropWhile(_ < 3).takeWhile1(_ < 8)
     println("\nFinished making badPlan")
 
-    // If I imported the Traversable trait, 
+    // If I imported the Traversable trait,
     // below println will force an evaluation.
     print("\nbadPlan = "); println(badPlan)
 
@@ -325,7 +325,7 @@ object StreamTest{
     println("\nCompare flatMap1 and flatMap with some evaluated data:\n")
 
     val numStrings = Stream("4", "0", "1", "bob", "2", "3")
-    
+
     def numStringToCharStream(s: String): Stream[Char] = {
       val sAsInt =
         try {
@@ -391,7 +391,7 @@ object StreamTest{
     println("\nTest variance of #:::, :::#, and flatMaps:\n")
 
     abstract class Fruit { print("<yum>") }
-    class Apple extends Fruit { print("<crisp>") }  // purposely not case class to 
+    class Apple extends Fruit { print("<crisp>") }  // purposely not case class to
     class Orange extends Fruit { print("<juicy>") } // test how well matching works
     class Pear extends Fruit { print("<eve's real favorite>") }
     class Kiwi extends Fruit { print("<exotic>") }
@@ -445,7 +445,7 @@ object StreamTest{
                        , new Kiwi )
     print("\nfruit4.toList = "); println(fruit4.toList)
 
-    def printFruitStreamVersions(fruits: Stream[Fruit]) = 
+    def printFruitStreamVersions(fruits: Stream[Fruit]) =
       for (fruit <- fruits) {
         fruit match {
           case _: Apple     => println("An apple")
@@ -453,7 +453,7 @@ object StreamTest{
           case _: Pear      => println("A pear")
           case _: Pineapple => println("A pineapple")
           case _: Fruit     => println("A fruit")
-          case _            => println("Something else") 
+          case _            => println("Something else")
         }
       }
 

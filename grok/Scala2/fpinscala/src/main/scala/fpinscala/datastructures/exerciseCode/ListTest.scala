@@ -203,7 +203,7 @@ object ListTest {
     print(" = ")
     println(List.append(doo12345, doo12045))
     println()
-    
+
     // Test flatten
     val ll = List(List(4,5,6), List(3,2), List(), List(10,11,12,13))
     print("List.flatten(")
@@ -245,7 +245,7 @@ object ListTest {
     print(")((x: Int) => math.exp(x) - 5.0) = ")
     println(List.map(foo1234)((x: Int) => math.exp(x) - 5.0))
     println()
-    
+
     // Test filter: filter out odd values
     print("List.filter(")
     print(foo1234)
@@ -276,7 +276,7 @@ object ListTest {
     for (c <- 41000 to 40000 by -1) cc = Cons(c, cc)
     val a1 = List.drop(aa, 10000)
     val a2 = a1
-    
+
     print("List.filter(a1)(_ < 20) = ")
     println(List.filter(a1)(_ < 20))
 

@@ -23,7 +23,7 @@ very similar to the scalaz monad transformer.
 
 * abstracting out the State Monad from what was done in rngStandalone.scala
 
-## Companion Object [fpinscala.state.State](State.scala#L52-L132)
+## Companion Object [fpinscala.state.State](State.scala#L52-L127)
 
 * abstracting out the State Monad from what was done in rngStandalone.scala
 

@@ -1,13 +1,12 @@
 /** Package to test the fpinscala.testing package
- *
- *  Preliminary testing of the of the SGen case class
- *  in the fpinscala.testing package.
- *
- */
+  *
+  *  Preliminary testing of the of the SGen case class
+  *  in the fpinscala.testing package.
+  */
 package fpinscala.chap08.testing
 
-import fpinscala.testing.{Gen,SGen,Prop}
-import fpinscala.state.rand.{Rand,RNG,LCG}
+import fpinscala.testing.{Gen, SGen, Prop}
+import fpinscala.state.rand.{Rand, RNG, LCG}
 
 import Prop._
 
@@ -37,7 +36,7 @@ object sgenTest {
 
     println("\nThrow 2 dice to decide how many times to throw 1:")
     val roll2toRoll1 = rollSome flatMap { ns => dieRoll.listOf(ns.min) }
-    for (nn <- Seq(1,2,3,4,5,10,20,35,50,100)) {
+    for (nn <- Seq(1, 2, 3, 4, 5, 10, 20, 35, 50, 100)) {
       println(s"Least of ${nn} double rolls:")
       println(roll2toRoll1(nn) sample rng1)
       println(roll2toRoll1(nn) sample rng2)
@@ -52,20 +51,18 @@ object sgenTest {
     val smallIntList = Gen.choose(-10, 11).listOf1
 
     // A property that should obviously be true (for nonempty lists)
-    val maxProp = forAll(smallIntList) {
-      ns => 
-        val max = ns.max
-        !ns.exists(_ > max)
+    val maxProp = forAll(smallIntList) { ns =>
+      val max = ns.max
+      !ns.exists(_ > max)
     }
 
     println("Test a true property:\n")
     run(maxProp)
 
     // A test that will fail for the case of a list containing -10 and 10.
-    val falseProp = forAll(smallIntList) {
-      ns => 
-        val min = ns.min
-        !ns.exists(_ > min + 19)
+    val falseProp = forAll(smallIntList) { ns =>
+      val min = ns.min
+      !ns.exists(_ > min + 19)
     }
 
     print("\nTest a property that occasionally fails,")
@@ -84,13 +81,13 @@ object sgenTest {
     val largeIntList = Gen.choose(-10000, 10001).listOf1
 
     // A property that fails rarely
-    val seldomFailProp1 = forAll(largeIntList) {
-      ns => !ns.exists(_ == 42)
+    val seldomFailProp1 = forAll(largeIntList) { ns =>
+      !ns.exists(_ == 42)
     }
 
     // A property that fails rarely
-    val seldomFailProp2 = forAllPow2Banded(largeIntList) {
-      ns => !ns.exists(_ == 42)
+    val seldomFailProp2 = forAllPow2Banded(largeIntList) { ns =>
+      !ns.exists(_ == 42)
     }
 
     println("\nTest a property that seldom fails with Prop.forAll,")
@@ -104,5 +101,4 @@ object sgenTest {
     println()
 
   }
-
 }

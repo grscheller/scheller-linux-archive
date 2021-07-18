@@ -6,16 +6,15 @@ import fpinscala.errorhandling.Either._
 object EitherStats {
 
   /** Computes the mean of a dataset of Doubles */
-  def mean(xs: Seq[Double]): Either[String,Double] =
+  def mean(xs: Seq[Double]): Either[String, Double] =
     if (xs.isEmpty) Left("mean of empty list!")
-    else Right(xs.sum/xs.size)
+    else Right(xs.sum / xs.size)
 
   // Actually clearer to me than the equivalent
   // for comprehension,
   /** Computes the variance of a dataset of Doubles */
-  def variance(xs: Seq[Double]): Either[String,Double] = 
-    mean(xs) flatMap (m =>
-    mean(xs map (x => math.pow((x - m), 2))))
+  def variance(xs: Seq[Double]): Either[String, Double] =
+    mean(xs) flatMap (m => mean(xs map (x => math.pow((x - m), 2))))
 
   // Translate outer chain above to a for comprehension.
   //
@@ -26,59 +25,57 @@ object EitherStats {
   //         can "repack" its value.
   //
   /** Computes the variance of a dataset of Doubles */
-  def variance1(xs: Seq[Double]): Either[String,Double] =
+  def variance1(xs: Seq[Double]): Either[String, Double] =
     for {
       m <- mean(xs)
       v <- mean(xs map (x => math.pow((x - m), 2)))
     } yield v
 
   // Direct litteral translation back to functional notation.
-  // Done so that I can better understand why I found 
+  // Done so that I can better understand why I found
   // translating into for/yield notation so difficult.
-  //` 
+  //`
   //   Note: The identity function at end could be a useful
   //         pattern when translating a monadic chain into
   //         a for comprehension when the last bind in
   //         the chain is a flatmap.
   //
   /** Computes the variance of a dataset of Doubles */
-  def variance2(xs: Seq[Double]): Either[String,Double] =
+  def variance2(xs: Seq[Double]): Either[String, Double] =
     mean(xs) flatMap (m =>
-    mean(xs map (x => math.pow((x - m), 2))) map (v => v))
+      mean(xs map (x => math.pow((x - m), 2))) map (v => v)
+    )
 
   // Version using pattern matching
   /** Computes the variance of a dataset of Doubles */
-  def variance3(xs: Seq[Double]): Either[String,Double] =
+  def variance3(xs: Seq[Double]): Either[String, Double] =
     mean(xs) match {
       case Right(m) =>
         mean(xs.map((x: Double) => math.pow((x - m), 2)))
       case a =>
-        a 
+        a
     }
 
 }
 
 object EitherParse {
 
-  /** 
-   *  Take a list of strings and return a Right(List[Double])
-   *  of Doubles if all can be converted, Left[Exception] otherwise.
-   */
-  def parseDoubles1(ss: List[String]): Either[Exception,List[Double]] =
+  /**  Take a list of strings and return a Right(List[Double])
+    *  of Doubles if all can be converted, Left[Exception] otherwise.
+    */
+  def parseDoubles1(ss: List[String]): Either[Exception, List[Double]] =
     sequence(ss map (s => Try(s.toDouble)))
 
-  /** 
-   *  Take a list of strings and return a Right(List[Double])
-   *  of Doubles if all can be converted, Left[Exception] otherwise.
-   */  
-  def parseDoubles(ss: List[String]): Either[Exception,List[Double]] =
+  /**  Take a list of strings and return a Right(List[Double])
+    *  of Doubles if all can be converted, Left[Exception] otherwise.
+    */
+  def parseDoubles(ss: List[String]): Either[Exception, List[Double]] =
     traverse(ss)(s => Try(s.toDouble))
 
-  /** 
-   *  Take a list of strings and return a Right(List[Int])
-   *  of Ints if all can be converted, Left[Exception] otherwise.
-   */  
-  def parseInts(ss: List[String]): Either[Exception,List[Int]] =
+  /**  Take a list of strings and return a Right(List[Int])
+    *  of Ints if all can be converted, Left[Exception] otherwise.
+    */
+  def parseInts(ss: List[String]): Either[Exception, List[Int]] =
     traverse(ss)(s => Try(s.toInt))
 
 }
@@ -108,37 +105,38 @@ object EitherTest {
   import EitherParse._
 
   // Define some utility functions
-  /**
-   * Evaluate and nicely print expresion - let any
-   * exceptions happen before anything printed.
-   */
+  /** Evaluate and nicely print expresion - let any
+    * exceptions happen before anything printed.
+    */
   def evalP0[A](expr: => A, fname: String): Unit = {
-    val result = expr  // Let any exceptions happen before anything printed.
+    val result = expr // Let any exceptions happen before anything printed.
     print(fname ++ " = "); println(result)
   }
 
-  /**
-   * Evaluate and nicely print function of one argument - let any
-   * exceptions happen before anything printed.
-   */
-  def evalP1[A,B](arg: => A, f: A => B, fname: String): Unit = {
+  /** Evaluate and nicely print function of one argument - let any
+    * exceptions happen before anything printed.
+    */
+  def evalP1[A, B](arg: => A, f: A => B, fname: String): Unit = {
     val result = f(arg)
     print(fname); print("("); print(arg); print(") = ")
     println(result)
   }
 
-  /**
-   * Evaluate and nicely print function of two arguments - let any
-   * exceptions happen before anything printed.
-   */
-  def evalP2[A,B,C](arg1: => A, arg2: => B, f: (A,B) => C,
-                                            fname: String): Unit = {
+  /** Evaluate and nicely print function of two arguments - let any
+    * exceptions happen before anything printed.
+    */
+  def evalP2[A, B, C](
+      arg1: => A,
+      arg2: => B,
+      f: (A, B) => C,
+      fname: String
+  ): Unit = {
     val result = f(arg1, arg2)
     print(fname); print("("); print(arg1)
     print(", "); print(arg2); print(") = ")
     println(result)
   }
-      
+
   /** Test package */
   def main(args: Array[String]): Unit = {
 
@@ -185,29 +183,29 @@ object EitherTest {
 
     val fun1 = (x: Int) => x + 1
 
-    val fun1_failable = (x: Int) => 
+    val fun1_failable = (x: Int) =>
       if (x == 42) throw new Exception("fail!")
       else x + 1
 
-    val baz5: Either[String,Int] = Right(5)
-    val baz8: Either[String,Int] = Right(8)
-    val baz10: Either[String,Int] = Right(10)
-    val bazN: Either[String,Int] = Left("bazN was used")
+    val baz5: Either[String, Int] = Right(5)
+    val baz8: Either[String, Int] = Right(8)
+    val baz10: Either[String, Int] = Right(10)
+    val bazN: Either[String, Int] = Left("bazN was used")
 
-    val bar3: Either[String,Double] = Right(3.0)
-    val barN: Either[String,Double] = Left("barN was used")
+    val bar3: Either[String, Double] = Right(3.0)
+    val barN: Either[String, Double] = Left("barN was used")
 
-    // First run naked 
+    // First run naked
     println("\nTest unwrapped functions in try block:\n")
     try {
-        evalP2(5, 3.0, fun2, "fun2")
-        evalP2(5, 3.0, fun2_failable, "fun2_failable")
-        evalP2(10, 3.0, fun2_failable, "fun2_failable")
+      evalP2(5, 3.0, fun2, "fun2")
+      evalP2(5, 3.0, fun2_failable, "fun2_failable")
+      evalP2(10, 3.0, fun2_failable, "fun2_failable")
     } catch {
-        case e: Exception =>  println("An exception was caught, boohoohoo.\n")
+      case e: Exception => println("An exception was caught, boohoohoo.\n")
     }
 
-    // Next, test Try 
+    // Next, test Try
     println("Convert from exceptions to Eithers via Try:\n")
     evalP0(Try(fun1_failable(5)), "Try(fun1_failable(5))")
     evalP0(Try(fun1_failable(42)), "Try(fun1_failable(42))")
@@ -222,7 +220,7 @@ object EitherTest {
     evalP0(bazN.map2(barN)(fun2), "bazN.map2(barN)(fun2)")
 
     println("\nTest map2 partially applied:\n")
-    val fn = (m: Int, n: Int) => 
+    val fn = (m: Int, n: Int) =>
       if (m < 7) m
       else n
 
@@ -231,7 +229,7 @@ object EitherTest {
     val either58 = baz5.map2(baz8)(_: (Int, Int) => Int)
     val either85 = baz8.map2(baz5)(_: (Int, Int) => Int)
     val eitherN8 = bazN.map2(baz8)(_: (Int, Int) => Int)
-	val eitherN5 = bazN.map2(baz5)(_: (Int, Int) => Int)
+    val eitherN5 = bazN.map2(baz5)(_: (Int, Int) => Int)
     val either5N = baz5.map2(bazN)(_: (Int, Int) => Int)
     val either8N = baz8.map2(bazN)(_: (Int, Int) => Int)
     val eitherNN = bazN.map2(bazN)(_: (Int, Int) => Int)
@@ -257,15 +255,13 @@ object EitherTest {
     println("\nTest sequence and other methods based on traverse:\n")
 
     // Test data
-    val rtNums: List[Either[String,Int]] = List(Right(1), Right(2),
-                                                Right(3), Right(4),
-                                                Right(5))
-    val ltMiss: List[Either[String,Int]] = List(Right(1), Left("Two"),
-                                                Right(3), Left("Four"),
-                                                Right(5))
+    val rtNums: List[Either[String, Int]] =
+      List(Right(1), Right(2), Right(3), Right(4), Right(5))
+    val ltMiss: List[Either[String, Int]] =
+      List(Right(1), Left("Two"), Right(3), Left("Four"), Right(5))
 
-    evalP1(rtNums, sequence(_: List[Either[String,Int]]), "sequence")
-    evalP1(ltMiss, sequence(_: List[Either[String,Int]]), "sequence")
+    evalP1(rtNums, sequence(_: List[Either[String, Int]]), "sequence")
+    evalP1(ltMiss, sequence(_: List[Either[String, Int]]), "sequence")
 
     // Test parseDoubles1
     println("\nTest parseDouble1 which uses sequence:\n")
@@ -283,7 +279,7 @@ object EitherTest {
     evalP1(strDouble, parseDoubles, "parseDoubles")
     evalP1(strDoubt, parseDoubles, "parseDoubles")
     evalP1(strInts, parseDoubles, "parseDoubles")
- 
+
     evalP1(strInts, parseInts, "parseInts")
     evalP1(strIntsNotAll, parseInts, "parseInts")
     evalP1(strDouble, parseInts, "parseInts")

@@ -11,7 +11,8 @@ object foldLeftTest {
   def main(args: Array[String]): Unit = {
 
     // foldRight vs foldLeft communitive function
-    print("\noneTo100 = "); println(oneTo100.toList)
+    print("\noneTo100 = ")
+    println(oneTo100.toList)
 
     print("\noneTo100.foldRight(0)(_ + _) = ")
     println(oneTo100.foldRight(0)(_ + _))

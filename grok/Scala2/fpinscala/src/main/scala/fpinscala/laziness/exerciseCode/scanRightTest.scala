@@ -15,7 +15,8 @@ object scanRightTest {
 
   def main(args: Array[String]): Unit = {
 
-    print("\nfiveToOne.toList = "); println(fiveToOne.toList)
+    print("\nfiveToOne.toList = ")
+    println(fiveToOne.toList)
 
     // Test scanRight commutivite vs anticommunitive function
     println("\nTest scanRight with communitive & anticommunitive function:")

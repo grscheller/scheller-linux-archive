@@ -105,19 +105,15 @@ def pythag3(a_max=3, all_max=None):
     if a_max < 3:
         a_max = 2
 
-    # Calculate limits for given values of a_max & all_max
-    if all_max is None:
+    def b_max(a):             # For a given value of a, no more
+        return (a**2 - 1)//2  # triples beyond this value of b
 
-        def b_max(a):             # For a given value of a, no more
-            return (a**2 - 1)//2  # triples beyond this value of b
-
-    else:
+    # Cap triples to those with sides no bigger than all_max
+    if not all_max is None:
         if all_max < 5:
             all_max = 4
         if all_max < a_max + 2:
             a_max = all_max - 2
-
-        # Cap triples to those with sides no bigger than all_max
         def b_max(a):
             return min((a**2 - 1)//2, int((all_max**2 - a**2)**0.5))
 

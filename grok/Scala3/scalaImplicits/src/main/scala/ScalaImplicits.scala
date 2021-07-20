@@ -45,8 +45,8 @@ object ScalaImplicts:
     print("foo.doubleMe = "); println(foo.doubleMe)  // add a method to Double
     print("bar x 10 = "); println(bar x 10)
 
-    given geoffrey: PreferedName = new PreferedName("Geoffrey")
-    val beowulf: PreferedName = new PreferedName("Beowulf")
+    given geoffrey: PreferedName = PreferedName("Geoffrey")
+    val beowulf: PreferedName = PreferedName("Beowulf")
     sayHello
     sayHello(using beowulf)
 

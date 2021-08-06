@@ -32,7 +32,7 @@ SYSTEM_CFLAGS := $(LINUX_CFLAGS)
 # SYSTEM_CFLAGS := $(CYGWIN_CFLAGS)
 
 # C compiler configuration
-CC = gcc
+CC = clang
 CPPFLAGS = 
 CFLAGS = $(CPPFLAGS) $(SYSTEM_CFLAGS) -Wall -I$(INCLUDE)
 LDFLAGS = -L$(LIBDIR) -lapue

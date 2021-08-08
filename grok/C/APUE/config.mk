@@ -3,7 +3,7 @@
 # This is NOT a recursive Make build.  The build is
 # done from the root APUE directory.
 
-# APUE project defaults and directory stucture 
+# APUE project defaults and directory stucture
 LIBDIR = lib
 INCLUDE = include
 BIN = bin
@@ -32,8 +32,8 @@ SYSTEM_CFLAGS := $(LINUX_CFLAGS)
 # SYSTEM_CFLAGS := $(CYGWIN_CFLAGS)
 
 # C compiler configuration
-CC = gcc
-CPPFLAGS = 
+CC = clang
+CPPFLAGS =
 CFLAGS = $(CPPFLAGS) $(SYSTEM_CFLAGS) -Wall -I$(INCLUDE)
 LDFLAGS = -L$(LIBDIR) -lapue
 
@@ -41,7 +41,7 @@ ifeq ($(SYSTEM_CFLAGS),$(CYGWIN_CFLAGS))
     EXT := .exe
 else
     EXT :=
-endif	
+endif
 
 # Other UNIX utilities
 AR = ar

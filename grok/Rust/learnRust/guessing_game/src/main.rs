@@ -44,7 +44,7 @@ fn main() {
         // is based, is actually an enumeration.  Methods are added to
         // the enumeration via some sort of mechanism which uses the
         // impl keyword.  Enumerations seem to fill the roles of case
-        // classes in Scala and ADTs in Haskell. 
+        // classes in Scala and ADTs in Haskell.
         //
         // Second line is a method on io::Result, If an Err, the expect
         // method will terminate the program and prints to stderr the
@@ -69,7 +69,7 @@ fn main() {
         println!("You guessed: {}", guess);
 
         // Like a Haskell case statement or the Scala match operator.
-        // 
+        //
         // The "arms" are comma separated, no semicolons, dangling
         // commas on last arm OK.
         match guess.cmp(&secret_number) {
@@ -78,7 +78,7 @@ fn main() {
             Ordering::Equal   => {
                 println!("You win!");
                 break
-            } 
+            }
         }
     }
 }

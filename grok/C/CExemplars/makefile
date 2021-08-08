@@ -1,5 +1,5 @@
-CC=gcc
-#CC=clang
+#CC=gcc
+CC=clang
 CFLAGS=-Wall
 SUMIT_BINARIES=sumItBasic sumItO2 sumItV sumItVO2
 BINARIES=removeSpaces makeMessage

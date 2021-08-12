@@ -1,4 +1,4 @@
-CXX := g++
+CXX := clang++
 BINARIES := crtp
 
 binaries: $(BINARIES)

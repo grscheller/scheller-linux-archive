@@ -1,4 +1,4 @@
-# Geoffrey's Archive
+# Geoffrey Scheller's Archive
 
 This repo contains notes and software projects which
 help me not to have to relearn so many things from scratch.
@@ -86,12 +86,3 @@ By its very nature, it contains many loose threads.
 
 * [Low Level X11 (XLIB/XCB) Programming](grok/Graphics/XWindows)
 * [Cairo 2D Vector Graphics](grok/Graphics/Cairo)
-
----
-
-For more information on this archive, please read
-[CONTRIBUTING](CONTRIBUTING.md)
-and
-[Code of Conduct](CODE_OF_CONDUCT.md).
-
--Geoffrey Scheller

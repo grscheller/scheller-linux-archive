@@ -3,6 +3,8 @@
 #  Powershell will start in your "home" directory, which is
 #  usually C:\Users\your_user_name, the one above Documents.
 #
+#  This file hopelessly out of date cica. 2021.
+#
 
 ## Modify the Path environmental variable
 "Virgin Path: " + $env:Path

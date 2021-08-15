@@ -2,7 +2,7 @@ Notes on using OpenJDK on Arch Linux:
 
 1. Switch Java environments via the archlinux-java bash script.
 
-     archlinux-java <COMMAND>
+     sudo archlinux-java <COMMAND>
 
      COMMAND:
         status  List installed Java environments and enabled one
@@ -10,6 +10,9 @@ Notes on using OpenJDK on Arch Linux:
         set     <JAVA_ENV> Force <JAVA_ENV> as default
         unset   Unset current default Java environment
         fix     Fix an invalid/broken default Java environment configuration
+
+   As a less "heavy handed" alternative use my archJDK fish or bash 
+   shell function.
 
 2. As of 2020-05-21:
 

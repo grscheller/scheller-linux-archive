@@ -9,4 +9,4 @@ vector graphics based drawing.
 
 * Simple C Language Vector Graphics program
 * Creates a Hello World message in HelloCairo.svg
-
+  * Can be displaced in a web browser

@@ -61,6 +61,7 @@ By its very nature, it contains many loose threads.
   * [Node Install](grok/JavaScript/node-install/)
 * __Python__
   * [Geoffrey's Boring Math Libraries with examples](grok/Python/boring_math/)
+  * [Packaging Python Code](grok/Python/packaging_tutorial)
   * [Calling C Code from Python](grok/Python/C_call/)
   * [TensorFlow based Deep learning](grok/Python/tensorflow/)
   * [PyTorch based Deep learning](grok/Python/pyTorch/)

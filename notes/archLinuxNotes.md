@@ -48,6 +48,12 @@ System maintenance, add and remove software.
   * `sudo pacman -Rs $(pacman -Qdtq)` (*Uninstall unneeded packages*)
   * `sudo pacman -Rns $(pacman -Qdtq)` (*Same as above, don't create .pacsave files*)
 
+Free up diskspace in 
+
+* `du -sh /var/cache/pacman/pkg` (*check disk space used by Pacman cache*)
+* `sudo pacman -Sc` (*remove cached packages not currently installed*)
+* `sudo pacman -Scc` (*remove all cached packages, as a last resort*)
+
 Search for packages, groups and descriptions,
 
 * `pacman -Qs <regex>` (*search against local package database*)

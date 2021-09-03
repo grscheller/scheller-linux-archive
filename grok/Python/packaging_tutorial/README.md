@@ -1,14 +1,23 @@
 # Packaging Python Projects
 
-Following
+I started out following
 [this tutorial](https://packaging.python.org/tutorials/packaging-projects/)
-from `packaging.python.org`.
+from PyPA's `packaging.python.org` website.  Unfortunately, this tutorial
+is out of date.  Using setuptools directly seems deprecated.  Pipenv seems
+to be the replacement.
 
-To keep things simple, not necessarily easy, I will manually
-manage a Python Virtual Environment for this project. I think
-in the long term my daily driver will be Pipenv.
+From [PyPI's Pipenv](https://pypi.org/project/pipenv/) website,
+Pipenv "automatically creates and manages a virtualenv for your projects,
+as well as adds/removes packages from your Pipfile as you install/uninstall
+packages. It also generates the ever-important Pipfile.lock, which is used
+to produce deterministic builds."
 
-## Directory Structure
+[PyPA's Pipenv](https://pipenv.pypa.io/en/latest/) website claims
+"Pipenv is a production-ready tool that aims to bring the best of all
+packaging worlds to the Python world. It harnesses Pipfile, pip, and
+virtualenv into one single command."
+
+## Directory Structure (needs updating)
 
 ```
    packaging_tutorial/
@@ -26,7 +35,7 @@ in the long term my daily driver will be Pipenv.
    |-- tests/
 ```
 
-## Create pyproject.toml
+## Create pyproject.toml (needs updating)
 
 The [pyproject.toml](pyproject.toml) configuration file tells tools
 like pip and build what is required to build this project.
@@ -38,7 +47,7 @@ like pip and build what is required to build this project.
   * `setuptools.build_meta` in this case
   * Other possible build objects include `poetry` and `flit`
 
-## Configurating Metadata
+## Configurating Metadata (needs updating)
 
 Two types of mata data:
 

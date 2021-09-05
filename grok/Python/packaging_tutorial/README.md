@@ -17,44 +17,53 @@ to produce deterministic builds."
 packaging worlds to the Python world. It harnesses Pipfile, pip, and
 virtualenv into one single command."
 
-## Directory Structure (needs updating)
+Therefore, I am replacing the above PyPA tutorial with a
+[Pipenv Guide](https://realpython.com/pipenv-guide/) by Alexander VanTol
+from the [Real Python](https://realpython.com/) website.
+
+## Installing Pipenv
+
+### Arch Linux
+
+On Arch, the system Python is up to date.
 
 ```
-   packaging_tutorial/
-   |
-   |-- LICENSE
-   |-- pyproject.toml
-   |-- README.md
-   |-- setup.cfg
-   |-- src/
-   |   |
-   |   |-- example_package/
-   |       |-- __init__.py
-   |       |-- example.py
-   |
-   |-- tests/
+   $ sudo pacman -S python-pipenv
 ```
 
-## Create pyproject.toml (needs updating)
+Similarly for other relatively up to date Linux distributions, use
+the corresponding package management tool.
 
-The [pyproject.toml](pyproject.toml) configuration file tells tools
-like pip and build what is required to build this project.
+### MacOS (Darwin on iMac)
 
-* `build-system.requires` lists packages needed to _build_ the project
-  * These include `setuptools` and `wheel`
-  * These tools not needed when package is _installed_
-* `build-system.build-backend` is Python object used to perform the build
-  * `setuptools.build_meta` in this case
-  * Other possible build objects include `poetry` and `flit`
+The system Python on MacOS is a joke.  I installed the Anaconda Python
+[Individual Edition](https://www.anaconda.com/products/individual)
+distribution.
 
-## Configurating Metadata (needs updating)
+```
+   Todo:
+```
 
-Two types of mata data:
+### Poor man's install
 
-* Static metadata - configured via `setup.cfg`
-  * prefered way
-  * guaranteed to be the same every time
-* Dynamic metadata - configured via `setup.py`
-  * use only when absolutely necessary
-  * needed for extension modules or extensions to setuptools
-  * run as Python code
+As a last resort, use [Pipx](https://pypi.org/project/pipx/) to
+install Pipenv into your home directory.  Especially if you are
+an unempowered, non-admin privileged user with no ability to update the
+system Python.
+
+```
+   pip install --user pipx
+   pipx install pipenv
+```
+
+I have not personally tested this.
+
+## Pipenv Introduction
+
+Pipenv replaces Pip in your development workflow.  It replaces
+setuptools `requirements.txt` with file `Pipfile` and introduces
+file `Pipfile.lock` to enable deterministic builds.
+
+Pipenv uses pip and virtualenv under the hood and provides a single
+command line interface for their functionality.
+

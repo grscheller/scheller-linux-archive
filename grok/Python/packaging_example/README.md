@@ -2,7 +2,7 @@
 
 I started out following
 [this tutorial](https://packaging.python.org/tutorials/packaging-projects/)
-from PyPA's `packaging.python.org` website.  Unfortunately, this tutorial
+from PyPA's `packaging.python.org` website.  Unfortunately, the tutorial
 is out of date.  Using setuptools directly seems deprecated.  Pipenv seems
 to be the replacement.
 
@@ -17,7 +17,7 @@ to produce deterministic builds."
 packaging worlds to the Python world. It harnesses Pipfile, pip, and
 virtualenv into one single command."
 
-Therefore, I am replacing the above PyPA tutorial with a
+Therefore, I am replacing the above PyPA tutorial with the
 [Pipenv Guide](https://realpython.com/pipenv-guide/) by Alexander VanTol
 from the [Real Python](https://realpython.com/) website.
 
@@ -25,7 +25,8 @@ from the [Real Python](https://realpython.com/) website.
 
 ### Arch Linux
 
-On Arch, the system Python is up to date.
+On Arch, the system Python is probably kept more up to date than anything
+I would manual manage.
 
 ```
    $ sudo pacman -S python-pipenv
@@ -48,8 +49,7 @@ distribution.
 
 As a last resort, use [Pipx](https://pypi.org/project/pipx/) to
 install Pipenv into your home directory.  Especially if you are
-an unempowered, non-admin privileged user with no ability to update the
-system Python.
+an unempowered user with admin privileges.
 
 ```
    pip install --user pipx
@@ -60,10 +60,11 @@ I have not personally tested this.
 
 ## Pipenv Introduction
 
-Pipenv replaces Pip in your development workflow.  It replaces
-setuptools `requirements.txt` with file `Pipfile` and introduces
-file `Pipfile.lock` to enable deterministic builds.
+Pipenv replaces Pip in your development workflow.  The
+`requirements.txt` file from Setuptools is replaced with
+the `Pipfile` file.  The file `Pipfile.lock` is used to
+enable deterministic builds.
 
-Pipenv uses pip and virtualenv under the hood and provides a single
-command line interface for their functionality.
+Pipenv uses pip and virtualenv under the hood and provides
+a single command line interface for their functionality.
 

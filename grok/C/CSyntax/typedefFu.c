@@ -27,6 +27,7 @@ main(void)
     myint i = 7;
     myint j = 13;
     myint k = 42;
+    myint ww = mult_a_sum(i, j ,k);
 
     // more complicated example
     //   An array of 3 pointers to integers
@@ -42,6 +43,7 @@ main(void)
     // forward reference with typedefs
     printf("%d*(%d + %d) = %d\n", k, i, j, mult(k, add(i,j)));
     printf("%d*(%d + %d) = %d\n", i, j, k, mult_a_sum(i,j,k));
+    printf("ww = %d\n", ww);
 
     return 0;
 }

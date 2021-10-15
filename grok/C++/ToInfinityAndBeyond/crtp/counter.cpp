@@ -50,6 +50,11 @@ class Robot : public counter<Robot>
 
 };
 
+class Goat : public counter<Goat>
+{
+
+};
+
 void callWalter()
 {
     Dog walter;
@@ -65,6 +70,8 @@ int main()
     Dog fido;
     Dog flash;
     Robot robbie;
+    Goat nanny;
+    Goat billy;
 
     cout << "Number of Robots created: " << robbie.getCreated() << endl;
     cout << "Number of Robots alive: "   << robbie.getAlive()   << endl;
@@ -75,6 +82,9 @@ int main()
 
     cout << "Number of Dogs created: " << fido.getCreated() << endl;
     cout << "Number of Dogs alive: "   << flash.getAlive()  << endl;
+
+    cout << "Nanny say there were " << nanny.getCreated() << " goats created." << endl;
+    cout << "Billy say there are "  << billy.getAlive() << " goats alive." << endl;
 
     return 0;
 }

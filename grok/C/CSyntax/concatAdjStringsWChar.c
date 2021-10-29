@@ -26,5 +26,17 @@ int main(void)
     wprintf(L"print lambda via universal character name: \u03bb\n");
     wprintf(L"print lambda via unicode in source code: λ\n");
 
+    /*
+     *  Can't mix calls of wide/non-wide characters versions
+     *  of printf/wprintf family of functions.  Calling printf
+     *  below would fail.  Which versons are based on the
+     *  first call made by the program.  The program sets
+     *  up the iostreams first call.
+     */
+    int i = 21;
+    if (i >= 10) {
+        wprintf(L"\nThe ultimate answer is %d\n", i);
+    }
+
     return 0;
 }

@@ -3,8 +3,6 @@
 #include <stddef.h>
 #include <locale.h>
 
-#define SD_NOTICE  "<5>"
-
 int main(void)
 {
     setlocale(LC_CTYPE, "en_US.utf8"); /* Matches my locale.          */
@@ -35,7 +33,7 @@ int main(void)
      */
     int i = 21;
     if (i >= 10) {
-        wprintf(L"\nThe ultimate answer is %d\n", i);
+        wprintf(L"\nThe ultimate answer is %d\n", 2*i);
     }
 
     return 0;

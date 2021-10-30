@@ -1,6 +1,6 @@
-CC=cc
+#CC=cc
 #CC=gcc
-##CC=clang
+CC=clang
 CFLAGS=-Wall
 BINARIES=concatAdjStrings concatAdjStringsWChar hw typedefFu
 

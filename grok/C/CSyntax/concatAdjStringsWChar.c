@@ -19,7 +19,11 @@ int main(void)
         L"\u2200\u2205\u2605";
 
     int n = fwprintf(stdout, L"%ls", unicode);
-    wprintf(L"\n%d characters printed\n\n", n);
+    if (n < 0) {
+        wprintf(L"\nSomething went wrong!\n\n");
+    } else {
+        wprintf(L"\n%d characters printed\n\n", n);
+    }
 
     wprintf(L"print lambda via universal character name: \u03bb\n");
     wprintf(L"print lambda via unicode in source code: λ\n");
@@ -35,6 +39,25 @@ int main(void)
      */
     if (i >= 10) {
         wprintf(L"\nThe ultimate answer is %d\n", 2*i);
+    }
+
+    if (i < 100) {
+        wprintf(L"\nhello %ls \n", L"\u03ba\u03bb\u03bc\u03bd");
+        if (n < 0) {
+            wprintf(L"\nSomething went wrong!\n\n");
+        } else {
+            wprintf(L"\n%d characters printed\n\n", n);
+        }
+    }
+
+    wchar_t *stuff = L"\u03ba\u03bb\u03bc\u03bd";
+    if (i < 100) {
+        wprintf(L"\nhello %ls \n", stuff);
+        if (n < 0) {
+            wprintf(L"\nSomething went wrong!\n\n");
+        } else {
+            wprintf(L"\n%d characters printed\n\n", n);
+        }
     }
 
     return 0;

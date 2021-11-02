@@ -33,30 +33,46 @@ int main(void)
     /*
      *  Can't mix calls of wide/non-wide characters versions
      *  of printf/wprintf family of functions.  Calling printf
-     *  below would fail.  Which versons are based on the
-     *  first call made by the program.  The program sets
-     *  up the iostreams first call.
+     *  below will fail at run time.  Which versons work are
+     *  based on the first call made by the program.  The
+     *  program sets up the iostreams on first call.
      */
-    if (i >= 10) {
-        wprintf(L"\nThe ultimate answer is %d\n", 2*i);
-    }
-
-    if (i < 100) {
-        wprintf(L"\nhello %ls \n", L"\u03ba\u03bb\u03bc\u03bd");
+    if (i > 10) {
+        wprintf(L"\n>>>");
+        n = printf("\nThe ultimate answer is %d\n\n", 2*i);
+        wprintf(L"<<<\n");
         if (n < 0) {
-            wprintf(L"\nSomething went wrong!\n\n");
-        } else {
-            wprintf(L"\n%d characters printed\n\n", n);
+            wprintf(L"TrŲth is unknowable\n");
         }
     }
 
-    wchar_t *stuff = L"\u03ba\u03bb\u03bc\u03bd";
-    if (i < 100) {
-        wprintf(L"\nhello %ls \n", stuff);
+    if (i >= 10) {
+        wprintf(L"\n>>>");
+        n = wprintf(L"The ultimate answer is %d", 2*i);
+        wprintf(L"<<<\n");
         if (n < 0) {
-            wprintf(L"\nSomething went wrong!\n\n");
+            wprintf(L"TrŲth is unknowable\n");
+        }
+    }
+
+    wprintf(L"\n");
+
+    if (i < 100) {
+        n = wprintf(L"hello %ls\n", L"\u03ba\u03bb\u03bc\u03bd");
+        if (n < 0) {
+            wprintf(L"Something went wrong!\n");
         } else {
-            wprintf(L"\n%d characters printed\n\n", n);
+            wprintf(L"%d wide characters printed, including a new-line\n", n);
+        }
+    }
+
+    wchar_t *stuff = L"\u03b4\u03b5" L"\u03b6\u03b7\u03b8";
+    if (i < 100) {
+        n = wprintf(L"hello %ls\n", stuff);
+        if (n < 0) {
+            wprintf(L"Something went wrong!\n");
+        } else {
+            wprintf(L"%d wide characters printed, including a new-line\n", n);
         }
     }
 

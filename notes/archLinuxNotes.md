@@ -75,7 +75,7 @@ Get package group information,
 * `pacman -Qg <grp>` (*list packages in group, use local database*)
 * `pacman -Sg <grp>` (*list packages in group, use synced database*)
 * `pacman -Qg | cut -f1 -d\  | uniq | sort` (*list names of groups in local database*)
-* `pacman -Sg | cut -f1 -d\  | uniq | sort` (*list names of groups in synced database*)`
+* `pacman -Sg | cut -f1 -d\  | uniq | sort` (*list names of groups in synced database*)
 
 Find the package which owns a particular installed file,
 
@@ -203,6 +203,19 @@ Other ways,
    IdleSinceHint=1580659420065201
    IdleSinceHintMonotonic=56180458994
    Linger=no
+```
+
+To definitively show whether you are running under Wayland or Xorg,
+
+```
+    $ loginctl
+    SESSION  UID USER SEAT  TTY
+          3 1003 grs  seat0 tty2
+
+    1 sessions listed.
+
+    $ loginctl show-session 3 -p Type
+    Type=x11
 ```
 
 ## DNSUTILS replacements

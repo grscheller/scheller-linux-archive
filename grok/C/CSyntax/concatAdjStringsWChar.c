@@ -5,8 +5,7 @@
 
 int main(void)
 {
-    setlocale(LC_CTYPE, "en_US.utf8"); /* Matches my locale.          */
- /* setlocale(LC_CTYPE, "");              Also works, more portable?  */
+    setlocale(LC_CTYPE, "");
 
     wchar_t *unicode =
         L"\u0060abc"
@@ -39,7 +38,7 @@ int main(void)
      */
     if (i > 10) {
         wprintf(L"\n>>>");
-        n = printf("\nThe ultimate answer is %d\n\n", 2*i);
+        n = printf("The ultimate answer is %d", 2*i);
         wprintf(L"<<<\n");
         if (n < 0) {
             wprintf(L"TrŲth is unknowable\n");
@@ -53,6 +52,7 @@ int main(void)
         if (n < 0) {
             wprintf(L"TrŲth is unknowable\n");
         }
+        wprintf(L"Ain't it the TrŲth!\n");
     }
 
     wprintf(L"\n");
@@ -62,7 +62,7 @@ int main(void)
         if (n < 0) {
             wprintf(L"Something went wrong!\n");
         } else {
-            wprintf(L"%d wide characters printed, including a new-line\n", n);
+            wprintf(L"%d wide characters printed, including a newline\n", n);
         }
     }
 
@@ -72,7 +72,7 @@ int main(void)
         if (n < 0) {
             wprintf(L"Something went wrong!\n");
         } else {
-            wprintf(L"%d wide characters printed, including a new-line\n", n);
+            wprintf(L"%d wide characters printed, including a newline\n", n);
         }
     }
 

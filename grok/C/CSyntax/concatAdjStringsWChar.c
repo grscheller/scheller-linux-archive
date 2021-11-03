@@ -30,11 +30,11 @@ int main(void)
     int i = 20;
     i = i + 1;
     /*
-     *  Can't mix calls of wide/non-wide characters versions
-     *  of printf/wprintf family of functions.  Calling printf
-     *  below will fail at run time.  Which versons work are
-     *  based on the first call made by the program.  The
-     *  program sets up the iostreams on first call.
+     *  Darwin seems to tolerates calls to mix wide/non-wide characters
+     *  versions of printf/wprintf family of functions.  Calling printf
+     *  below fails on Linux at run time.  Which versions will work are
+     *  determined by the first call made by the program.  In Linux,
+     *  the program sets up the iostream on first call.
      */
     if (i > 10) {
         wprintf(L"\n>>>");

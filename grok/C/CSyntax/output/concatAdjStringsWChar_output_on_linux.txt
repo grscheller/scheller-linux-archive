@@ -8,8 +8,9 @@ print lambda via unicode in source code: λ
 TrŲth is unknowable
 
 >>>The ultimate answer is 42<<<
+Ain't it the TrŲth!
 
 hello κλμν
-11 wide characters printed, including a new-line
+11 wide characters printed, including a newline
 hello δεζηθ
-12 wide characters printed, including a new-line
+12 wide characters printed, including a newline

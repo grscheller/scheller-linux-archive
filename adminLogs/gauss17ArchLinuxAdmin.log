@@ -1,7 +1,7 @@
 Purpose: To indicate what was done to create gauss17 and
          the rational behind it.
 
-Note: Qn 2017-06-20 rebuilt system from scratch starting
+Note: On 2017-06-20 rebuilt system from scratch starting
       after swapping out the DVD with a SSD.
 
       Originally ran into issues getting an NVidia Optimus
@@ -9288,3 +9288,43 @@ Note: Qn 2017-06-20 rebuilt system from scratch starting
     root         879     877  0 Oct30 tty2     00:23:01 /usr/lib/Xorg vt2 -displayfd 3 -auth /run/user/1003/gdm/Xauthority -nolisten tcp -background none -noreset -keeptty -novtswitch -verbose 3
 
   Damn that NVIDIA card!
+
+2021-11-07:
+
+  The way GDM and Gnome are configured may or may not be an
+  attribute of the system history.  I have not done a fresh
+  Arch install since 2017-06-20.  But reconfig GPG, emails
+  clients, ssh, plugins, new login also has risks.
+
+  I'll try uninstalling and reinstalling GNOME 3 and GDM and
+  see what that does.
+
+    $ sudo pacman -Rsc gdm gnome-shell gnome-extra
+
+  reboot and login into console
+
+    $ sudo pacman -Syu gnome-shell-extensions gnome-shell gdm
+    
+  reboot, nothing changed.
+
+  Note that gdm is no longer giving me a choice between x11
+  or Wayland login.  Now gives me a choice between Gnome
+  and Gnome Classic desktops.  That is a change from a few
+  months ago.
+
+  Gpaste now gone from toolbar, but still installed
+
+    $ pacman -Ss gpaste
+    extra/gpaste 3.40.2-1 [installed]
+        Clipboard management system
+
+  Also, gnome-tweaks not installed
+
+    $ pacman -Ss gnome-tweaks
+    extra/gnome-tweaks 40.0-1 (gnome-extra)
+        Graphical interface for advanced GNOME 3 settings (Tweak Tool)
+
+    $ sudo pacman -Syu gnome-extra
+
+  Gpaste tray icon now enabled, had to launch the Gnome Extensions
+  App and turn on "master" slider on top bar.

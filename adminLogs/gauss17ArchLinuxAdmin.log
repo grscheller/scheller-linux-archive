@@ -1,5 +1,8 @@
 Purpose: To indicate what was done to create gauss17 and
-         the rational behind it.
+         the rational behind it.  Named after Karl Gauss
+         showing it was possible to construct a regular 17
+         sided regular polygon with only straightedge and
+         compass.
 
 Note: Qn 2017-06-20 rebuilt system from scratch starting
       after swapping out the DVD with a SSD.
@@ -10,9 +13,9 @@ Note: Qn 2017-06-20 rebuilt system from scratch starting
       much fuss.
 
 2016-07-04:
-  Installed ArchLinux on Acer E-14 Laptop (E5-491G-70PX).
+  Installed Arch Linux on a Acer E-14 Laptop (E5-491G-70PX).
   Created a UEFI/GPT x86-64 system with a 4 core i7 Intel
-  Processor (6700HQ).  Laptop has a 2 channel NVIDEA
+  Processor (6700HQ).  Laptop has a 2 channel NVIDIA-Optimus
   GEFORCE 940M graphics chipset 2GB Memory.
     Pacman: base, base-devel
       (during install)

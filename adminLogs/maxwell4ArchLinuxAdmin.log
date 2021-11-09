@@ -1,0 +1,29 @@
+Purpose: To indicate what was done to create maxwell4 and the
+         rational behind it.  Named after Maxwell's Equations.
+
+2021-11-07:
+  Created bootable USB memory stick on gauss17.
+    ...
+
+2021-11-08:
+  Installed Arch Linux on a Dell Inspiron 15 7000 2-in-1.
+    - 4 core i7-10510U CPU 1.8 GHz
+    - 16 GB memory
+    - Realtek Audio
+    - UEFI system
+    - NVIDIA GeForce MX250 graphics
+    
+  The Nvidia chipset is several years old.  It designed as
+  standalone but can function in a Optimus mode.  It does
+  not support Wayland, so I am stuck with XOrg.
+
+  System is for work.  Currently has Window 10 installed.
+  Was able to get into the UEFI firmware via pressing F12
+  at boot (without the fn key).
+
+  Turned off secureboot.  Also turned off some features
+  which helped improve vurtual machine usage.  Could
+  not figure out how to change the boot order to boot
+  from USB memory stick by default, but with bootable
+  USB memory stick in place, could boot to it via the
+  UEFI firmware.

@@ -3,7 +3,15 @@ Purpose: To indicate what was done to create maxwell4 and the
 
 2021-11-07:
   Created bootable USB memory stick on gauss17.
-    ...
+
+    $ sudo dd bs=4M if=archlinux-2021.11.01-x86_64.iso of=/dev/sdd
+    
+  Used
+
+    $ df -h
+    $ lsblk
+
+  to reverse engineer thumb drive name.
 
 2021-11-08:
   Installed Arch Linux on a Dell Inspiron 15 7591 2-in-1.

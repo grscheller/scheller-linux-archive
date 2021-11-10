@@ -68,46 +68,46 @@ Purpose: To indicate what was done to create maxwell4 and the
   various virtual consoles.
 
   Lets try another guided install:
-  
+
     # python -m archinstall
-  
+
   About the 4th question, installation is asking me about the
   disk to install to,
-  
+
     0: /dev/loop0 (('673.7M', '/eun/archiso/bootmnt/arch/x86_64/airootfs', None))
     1: /dev/md126 (('0B, None, None))
     2: /dev/md127 (('0B, None, None))
     3: /dev/nvme0n1 (('476.9G', '/dev/nvne0n1', None))
     4: /dev/nvme1n1 (('27.3G', '/dev/nvne1n1', None))
     5: /dev/sda (('29.3G', /dev/sda', 'ARCH202111'))
-  
+
   Well, last night I went for /dev/sda because it "looked familiar"
   and I was hoping things would "just work".  I think this
   "quick and dirty" install of Arch using the Arch guided install
   has become a learning experience!
-  
+
   Clearly most of the memory is on /dev/nvme0n1, whatever it is.
-  
+
   I think I should abort the install until I educate myself a
   little bit more.
-  
+
   The 'ARCH202111' above may be an artifact from last night's
   install attempt above.  At this point the system still will
   boot into Win-10 if I don't hit F12 on boot.
-  
+
     # systemctl poweroff
-  
+
   Let's see what Win-10 says about its disk, booting into Win-10.
-  
+
     Display Manager:
       Disk drives
         Intel Optane+477GBSSD
         SanDisk Cruzer Blade USB Device
-  
+
   The USB device shows up when I put my bootable thumb drive in,
   or check "show hidden devices".  The SSD seems to be presenting itself
   as a single standalone device.
-  
+
   A quick Duck-Duck-Go search shows that this is the naming convention
   for disks connected thru an NVM Express port, as opposed to a SATA
   port.
@@ -117,9 +117,9 @@ Purpose: To indicate what was done to create maxwell4 and the
   The /dev/md126 and /dev/md127 are associated with Raid devices.
   Need to check that the SSD in the UEFI is set to AHCI and
   not RAID.
-  
+
 2021-11-09:
-  Seems Arch Wiki has a page on the Inspiron 7590 (The 7591 is a
+  Seems Arch Wiki has a page on the Inspiron 7590, the 7591 is a
   7590 with an aluminum case.  Looks like the laptop has built-in
   hardware RAID capability.  Needs to be turned off so Linux can see
   underlying drives.  Will break Windows 10.  Was set to RAID,
@@ -128,8 +128,10 @@ Purpose: To indicate what was done to create maxwell4 and the
   Also, turned off Windows Boot Manager in UEFI.
 
   Saved UEFI settings, exited and aborted boot (looks like it
-  was going to hang).  Upon entering UEFI firmware again, only choice
-  of rebooting is with the usb memory stick.  Lets do it.
+  was going to hang anyway).  Upon entering UEFI firmware again,
+  only choice of rebooting is with the usb memory stick.
+
+  Lets do it.
 
   Now it is not seeing any hard drives.
 
@@ -137,7 +139,7 @@ Purpose: To indicate what was done to create maxwell4 and the
     1: /dev/sda (('29.3G', /dev/sda', 'ARCH202111'))
 
   Lets shutdown and return to the UEFI firmware again.
-  
+
   The Windows Boot Manager totally gone.  Was going to turn its back on,
   but not there.  So, loaded Factory Defaults, now I Have
 
@@ -160,7 +162,7 @@ Purpose: To indicate what was done to create maxwell4 and the
   Thunderbolt Security: NO SECURITY
 
   Now boots off the USB stick without having to hit F12.
-  
+
   Now run guided install,
 
     # python -m archinstall
@@ -181,7 +183,7 @@ Purpose: To indicate what was done to create maxwell4 and the
 
   Using ext4 file system (installer offered btrfs as first choice).
   No encryption, in case I have to break in myself.
-  Systemd bootloader, System name: maxwell4, Disabled root account.  
+  Systemd bootloader, System name: maxwell4, Disabled root account.
 
   Desktop configuration, gnome, nvidia drivers.
 
@@ -196,11 +198,18 @@ Purpose: To indicate what was done to create maxwell4 and the
 
     archinstall.lib.exceptions.DiskError: Could not format  \
       /dev/nvme0n1p1 with ext4 because /dev/nvme0n1p1 is    \
-      apparently in use ny the system: will not make a file \
+      apparently in use by the system: will not make a file \
       system here.
 
-  At least I think I am getting closer.  But why do the
-  partition twice and put the UEFI? vfat partition where
-  it did.  I would think something like /dev/nvme0n1p0 or
-  /dev/nvme0n1p1?
+  At least I think I am getting closer.  But why does it
+  do the partitioning twice and put the vfat boot partition
+  where it did?  I would think something like /dev/nvme0n1p1,
+  not /dev/nvme0n1?
+
+2021-11-10:
+  Probably will have to finish this as a manual install.  Should
+  check to see if partian table survived so that I know what
+  were going to be the defaults.  If it was overwritten via the
+  vfat partitioning, I could check out the archinstall python
+  script.
 

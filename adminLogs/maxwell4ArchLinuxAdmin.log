@@ -6,13 +6,14 @@ Purpose: To indicate what was done to create maxwell4 and the
     ...
 
 2021-11-08:
-  Installed Arch Linux on a Dell Inspiron 15 7000 2-in-1.
+  Installed Arch Linux on a Dell Inspiron 15 7591 2-in-1.
     - 4 core i7-10510U CPU 1.8 GHz
     - 16 GB memory
     - Realtek Audio
     - UEFI system
-    - NVIDIA GeForce MX250 graphics
-    
+    - Intel(R) UHD Graphics
+    - NVIDIA GeForce MX250 Graphics
+
   The Nvidia chipset is several years old.  It designed as
   standalone but can function in a Optimus mode.  It does
   not support Wayland, so I am stuck with XOrg.
@@ -27,3 +28,179 @@ Purpose: To indicate what was done to create maxwell4 and the
   from USB memory stick by default, but with bootable
   USB memory stick in place, could boot to it via the
   UEFI firmware.
+
+  Now launch guided install,
+
+    # python -m archinstall
+
+  No go unless I connect to a network.  Will go home and
+  use Ethernet cable.
+
+2021-10-09:
+  What!?!? This computer has no Ethernet Jack.  Have to
+  get network working from cmdline.
+
+    # iwctl device list
+
+  Wifi <device> = wlan0
+
+    # iwctl station <device> scan
+    # iwctl station <device> get-networks
+
+  Got list of SSID's
+
+    # iwctl station <device> connect <SSID>
+
+  Prompted me for my passcode, and I had network access.
+
+    # python -m archinstall
+
+  Went with the defaults, but installation failed when it
+  tried to write partition table to /dev/sda.  There were
+  other disk-like "devices" I was not sure about.  Is Win-10
+  doing something funky?  Sorry for being sketchy here, I am
+  going from memory.
+
+2021-11-09:
+  Attached to work wifi network.  Able to ping 1.1.1.1.
+
+  At the console, Alt+Rt-Arrow & Alt+Lt-Arrow jump you between
+  various virtual consoles.
+
+  Lets try another guided install:
+  
+    # python -m archinstall
+  
+  About the 4th question, installation is asking me about the
+  disk to install to,
+  
+    0: /dev/loop0 (('673.7M', '/eun/archiso/bootmnt/arch/x86_64/airootfs', None))
+    1: /dev/md126 (('0B, None, None))
+    2: /dev/md127 (('0B, None, None))
+    3: /dev/nvme0n1 (('476.9G', '/dev/nvne0n1', None))
+    4: /dev/nvme1n1 (('27.3G', '/dev/nvne1n1', None))
+    5: /dev/sda (('29.3G', /dev/sda', 'ARCH202111'))
+  
+  Well, last night I went for /dev/sda because it "looked familiar"
+  and I was hoping things would "just work".  I think this
+  "quick and dirty" install of Arch using the Arch guided install
+  has become a learning experience!
+  
+  Clearly most of the memory is on /dev/nvme0n1, whatever it is.
+  
+  I think I should abort the install until I educate myself a
+  little bit more.
+  
+  The 'ARCH202111' above may be an artifact from last night's
+  install attempt above.  At this point the system still will
+  boot into Win-10 if I don't hit F12 on boot.
+  
+    # systemctl poweroff
+  
+  Let's see what Win-10 says about its disk, booting into Win-10.
+  
+    Display Manager:
+      Disk drives
+        Intel Optane+477GBSSD
+        SanDisk Cruzer Blade USB Device
+  
+  The USB device shows up when I put my bootable thumb drive in,
+  or check "show hidden devices".  The SSD seems to be presenting itself
+  as a single standalone device.
+  
+  A quick Duck-Duck-Go search shows that this is the naming convention
+  for disks connected thru an NVM Express port, as opposed to a SATA
+  port.
+
+  Also, /dev/sda is the name given to the memory stick.
+
+  The /dev/md126 and /dev/md127 are associated with Raid devices.
+  Need to check that the SSD in the UEFI is set to AHCI and
+  not RAID.
+  
+2021-11-09:
+  Seems Arch Wiki has a page on the Inspiron 7590 (The 7591 is a
+  7590 with an aluminum case.  Looks like the laptop has built-in
+  hardware RAID capability.  Needs to be turned off so Linux can see
+  underlying drives.  Will break Windows 10.  Was set to RAID,
+  changed to ACHI.
+
+  Also, turned off Windows Boot Manager in UEFI.
+
+  Saved UEFI settings, exited and aborted boot (looks like it
+  was going to hang).  Upon entering UEFI firmware again, only choice
+  of rebooting is with the usb memory stick.  Lets do it.
+
+  Now it is not seeing any hard drives.
+
+    0: /dev/loop0 (('673.7M', '/eun/archiso/bootmnt/arch/x86_64/airootfs', None))
+    1: /dev/sda (('29.3G', /dev/sda', 'ARCH202111'))
+
+  Lets shutdown and return to the UEFI firmware again.
+  
+  The Windows Boot Manager totally gone.  Was going to turn its back on,
+  but not there.  So, loaded Factory Defaults, now I Have
+
+    UEFI H10 HBRPEKNX0202A NVMe INTEL 512GB
+
+  as a boot choice.  Boot order is USB memory stick and then
+  hard drive.
+
+  Selected both on board storage drivers
+
+    SATA-0
+    M.2 PCIe SDD-0/SATA-2
+
+  SATA Operation: AHCI
+  SMART Reporting: off
+  Enable Audio: ON
+  Enable Thunderbolt: ON
+  Enable Thunderbolt Boot Support: OFF
+  Enable Thunderbolt Preboot Modules: OFF
+  Thunderbolt Security: NO SECURITY
+
+  Now boots off the USB stick without having to hit F12.
+  
+  Now run guided install,
+
+    # python -m archinstall
+
+  I am getting the same 5 choices originally above, this
+  time choosing /dev/nvme0n1 (476.9G).  There is also a
+  /dev/nvme1n1 (27.3G).  The Win-10 GUI tools were hiding
+  second one from me.  Could use it for /var and swap latter?
+  Might contain Windows restore stuff, who knows.
+
+  Seems to be vfat, install guide offered to
+
+    0: abort
+    1: Format entire drive and set up basic partian scheme
+    2: Keep existing partian layout and select which ones to use where
+
+  I chose 1,
+
+  Using ext4 file system (installer offered btrfs as first choice).
+  No encryption, in case I have to break in myself.
+  Systemd bootloader, System name: maxwell4, Disabled root account.  
+
+  Desktop configuration, gnome, nvidia drivers.
+
+  Kernel: linux, Pipeowire, Network Manager
+
+  Go for it:
+
+    Adding partition to BlockDevice(/dev/nvme0n1)
+    Adding partition to BlockDevice(/dev/nvme0n1)
+    Formatting /dev/nvme0n1 -> vfat
+    Formatting /dev/nvme0n1p1 -> ext4
+
+    archinstall.lib.exceptions.DiskError: Could not format  \
+      /dev/nvme0n1p1 with ext4 because /dev/nvme0n1p1 is    \
+      apparently in use ny the system: will not make a file \
+      system here.
+
+  At least I think I am getting closer.  But why do the
+  partition twice and put the UEFI? vfat partition where
+  it did.  I would think something like /dev/nvme0n1p0 or
+  /dev/nvme0n1p1?
+

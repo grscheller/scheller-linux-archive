@@ -221,3 +221,69 @@ Purpose: To indicate what was done to create maxwell4 and the
   vfat partitioning, I could check out the archinstall python
   script.
 
+2021-11-10:
+  Booted off the USB thumb drive.
+
+  Nice to have tooks that don't lie to you,
+
+    # fdisk -l
+    Disk /dev/nvme0n1: 476.94GiB ...
+    Disk Model: H10 HBRPEKNX0202A NVEe INTEL 512GB
+    ...
+    Disklabel type: gpt
+    ...
+    Device            Start         End  Sectors    Size  Type
+    /dev/nvme0n1p1     2048     1050623  1048576    512M  EFI System
+    /dev/nvme0n1p2  1050624  1000214527  1048576  476.4G  Linux filesystem
+
+    Disk /dev/nvme1n1: 27.25 GiB ...
+    Disk Model: H10 HBRPEKNX0202AO NVEe INTEL 32GB
+    ...
+    Disklabel type: dos
+    ...
+    Device         Boot      Start         End     Sectors    Size  Id  Type
+    /dev/nvme1n1p1      2021161000  4042322159  2021161000  963.8G  78  unknown
+    /dev/nvme1n1p2      2021161000  4042322159  2021161000  963.8G  78  unknown
+    /dev/nvme1n1p3      4294932600  8589899894  4294967295      2T  78  unknown
+    /dev/nvme1n1p4      8589899895  5035196669   740229375    353G  ff  BBT
+
+    Disk /dev/sda: 29.25 GiB ...
+    ...
+    Disklabel type: dos
+    ...
+    Device    Boot   Start      End  Sectors  Size  Id  Type
+    /dev/sda1 *         64  1556479  1556416  760M   0
+    /dev/sda2      1556480  1732607   176128   86M  ef  EFI (FAT-12/16/32)
+
+    Disk /dev/loop0: 673.65 MiB ...
+
+  Clearly loop0 is the RAM disk used by Linux booted off the thumb drive.
+
+  Disk sda is part of the installaton media, not worth reverse engineering.
+
+  Disk nvme0n1 is what the archinstall script left after failing.
+
+  Disk nvme1n1 is what Win-10 left me.  The sizes seemed completely
+  wrong, maybe misconfiguration left over from it being part of some
+  sort of RAID device?  I'll give Win-10 a pass on this one.
+
+  Lets see what lsblk says,
+
+    # lsblk
+    Name         MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
+    loop0          7:0    0 673.7M  1 loop /run/archiso/airootfs
+    sda            8:0    1  29.3G  0 disk
+      sda1         8:1    1   760M  0 part /run/archiso/bootmnt
+      sda2         8:2    1    86M  0 part
+    nvme0n1      259:0    0 476.9G  0 disk
+      nvme0n1p1  259:1    0   512M  0 part
+      nvme0n1p2  259:2    0 476.4G  0 part
+    nvme1n1      259:3    0  27.3G  0 disk
+      md127        9:127  0     0B  0 md
+
+  Type md means some sort of RAID device.
+
+2021-11-10:
+  At this point I think I should work through the Arch Wiki Installation
+  Guide.  During this I'll repartition nvme1n1 (nvme0n1 too?) to something
+  useful, like ext4 and swap partitions.

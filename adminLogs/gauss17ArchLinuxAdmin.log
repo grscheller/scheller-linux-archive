@@ -9329,5 +9329,5 @@ Note: On 2017-06-20 rebuilt system from scratch starting
 
     $ sudo pacman -Syu gnome-extra
 
-  Gpaste tray icon now enabled, had to launch the Gnome Extensions
-  App and turn on "master" slider on top bar.
+  Gpaste tray icon now enabled, had to launch the Gnome
+  Extensions App and turn on "master" slider on top bar.

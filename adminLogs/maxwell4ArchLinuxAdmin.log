@@ -5,7 +5,7 @@ Purpose: To indicate what was done to create maxwell4 and the
   Created bootable USB memory stick on gauss17.
 
     $ sudo dd bs=4M if=archlinux-2021.11.01-x86_64.iso of=/dev/sdd
-    
+
   Used
 
     $ df -h
@@ -22,8 +22,8 @@ Purpose: To indicate what was done to create maxwell4 and the
     - Intel(R) UHD Graphics
     - NVIDIA GeForce MX250 Graphics
 
-  The Nvidia chipset is several years old.  It designed as
-  standalone but can function in a Optimus mode.  It does
+  The Nvidia chipset is several years old.  It is designed
+  as standalone but can function in an Optimus mode.  It does
   not support Wayland, so I am stuck with XOrg.
 
   System is for work.  Currently has Window 10 installed.
@@ -31,13 +31,13 @@ Purpose: To indicate what was done to create maxwell4 and the
   at boot (without the fn key).
 
   Turned off secureboot.  Also turned off some features
-  which helped improve vurtual machine usage.  Could
+  which helped improve virtual machine usage.  Could
   not figure out how to change the boot order to boot
   from USB memory stick by default, but with bootable
   USB memory stick in place, could boot to it via the
   UEFI firmware.
 
-  Now launch guided install,
+  Now launch guided install.
 
     # python -m archinstall
 
@@ -46,7 +46,7 @@ Purpose: To indicate what was done to create maxwell4 and the
 
 2021-10-09:
   What!?!? This computer has no Ethernet Jack.  Have to
-  get network working from cmdline.
+  get network working from the comand line.
 
     # iwctl device list
 
@@ -60,6 +60,11 @@ Purpose: To indicate what was done to create maxwell4 and the
     # iwctl station <device> connect <SSID>
 
   Prompted me for my passcode, and I had network access.
+  Also, could have used
+
+    # iwctl --passphrase <pw-for-ssid> station <device> connect <SSID>
+
+  Cross our fingers.
 
     # python -m archinstall
 
@@ -72,7 +77,7 @@ Purpose: To indicate what was done to create maxwell4 and the
 2021-11-09:
   Attached to work wifi network.  Able to ping 1.1.1.1.
 
-  At the console, Alt+Rt-Arrow & Alt+Lt-Arrow jump you between
+  At the console, Alt+RtArrow & Alt+LtArrow jump you between
   various virtual consoles.
 
   Lets try another guided install:
@@ -92,9 +97,10 @@ Purpose: To indicate what was done to create maxwell4 and the
   Well, last night I went for /dev/sda because it "looked familiar"
   and I was hoping things would "just work".  I think this
   "quick and dirty" install of Arch using the Arch guided install
-  has become a learning experience!
+  was misguided, but has evolved into a learning experience!
+  (Pun not intended.)
 
-  Clearly most of the memory is on /dev/nvme0n1, whatever it is.
+  Clearly most of the memory is on /dev/nvme0n1, whatever that is.
 
   I think I should abort the install until I educate myself a
   little bit more.
@@ -137,7 +143,7 @@ Purpose: To indicate what was done to create maxwell4 and the
 
   Saved UEFI settings, exited and aborted boot (looks like it
   was going to hang anyway).  Upon entering UEFI firmware again,
-  only choice of rebooting is with the usb memory stick.
+  only choice of rebooting is with the USB memory stick.
 
   Lets do it.
 
@@ -177,7 +183,7 @@ Purpose: To indicate what was done to create maxwell4 and the
 
   I am getting the same 5 choices originally above, this
   time choosing /dev/nvme0n1 (476.9G).  There is also a
-  /dev/nvme1n1 (27.3G).  The Win-10 GUI tools were hiding
+  /dev/nvme1n1 (27.3G).  The Win-10 GUI tools were hiding this
   second one from me.  Could use it for /var and swap latter?
   Might contain Windows restore stuff, who knows.
 
@@ -195,7 +201,7 @@ Purpose: To indicate what was done to create maxwell4 and the
 
   Desktop configuration, gnome, nvidia drivers.
 
-  Kernel: linux, Pipeowire, Network Manager
+  Kernel: linux, Pipewire, Network Manager
 
   Go for it:
 
@@ -216,7 +222,7 @@ Purpose: To indicate what was done to create maxwell4 and the
 
 2021-11-10:
   Probably will have to finish this as a manual install.  Should
-  check to see if partian table survived so that I know what
+  check to see if partition table survived so that I know what
   were going to be the defaults.  If it was overwritten via the
   vfat partitioning, I could check out the archinstall python
   script.
@@ -224,7 +230,7 @@ Purpose: To indicate what was done to create maxwell4 and the
 2021-11-10:
   Booted off the USB thumb drive.
 
-  Nice to have tooks that don't lie to you,
+  Nice to have tools that don't lie to you, hear that Redmond?
 
     # fdisk -l
     Disk /dev/nvme0n1: 476.94GiB ...
@@ -287,3 +293,462 @@ Purpose: To indicate what was done to create maxwell4 and the
   At this point I think I should work through the Arch Wiki Installation
   Guide.  During this I'll repartition nvme1n1 (nvme0n1 too?) to something
   useful, like ext4 and swap partitions.
+
+2021-11-11:
+  Following the Arch Installation Guide, found here
+
+    https://wiki.archlinux.org/title/installation_guide
+
+  Connecting to my apartment wifi network.
+
+    # ping 1.1.1.1
+    # ip link
+    # ping archlinux.org
+
+  all indicate network is up and DNS configured.
+
+  Confirmed booted into UEFI mode by
+
+    # ls /sys/firmware/efi/efivars/
+
+  not failing.
+
+  Note that the installation media has
+
+    systemd-networkd
+    systemd-resolved
+    iwd
+    ModemManager
+
+  preconfigured.  This will not be the case for the installed system.
+
+  Ensure system clock accurate.
+
+    # timedatectl set-ntp true
+
+  To determine disk layout, use either
+
+    # fdisk -l
+    # lsblk
+
+  These return same info as stated previously.
+
+  Let's just repartition everything from scratch.
+  My gauss17ArchLinuxAdmin.log notes and the Arch Wiki
+  Parted page have come in handy here:
+
+    # parted --list
+
+  Shows what I already know, first redo /dev/nvme0n1.
+
+    # parted /dev/nvme0n1
+    (parted) mklabel gpt
+    (parted) mkpart "EFI system partition" fat32 1MiB 513MiB
+    (parted) set 1 esp on
+    (parted) mkpart "swap partition" linux-swap 513MiB 16.5GiB
+    (parted) mkpart "root partition" linux-swap 16.5GiB 100%
+    (parted) print
+    Model: H10 HBRPEKNX0202A 512 GiB (nvme)
+    Disk /dev/nvme0n1: 512GB
+    Sector size (logical/physical): 512B/512B
+    Partian Table: gpt
+    Disk Flags:
+
+    Number  Start   End    Size  File system     Name                 Flags
+     1      1049kB  538MB  537MB fat32           EFI system partition boot, esp
+     2      538MB   17.7GB 17.2GB linux-swap(v1) swap partition
+     3      26.3GB  512GB  486GB  ext4           root partition
+
+  Hmmm..., some wasted space between swap and root, I hope parted
+  knows what it is doing.
+
+  Lets format /dev/nvme1n1 as our home partition
+
+    # parted /dev/nvme1n1
+    (parted) mklabel gpt
+    (parted) mkpart "home partition" ext4 1MiB 100%
+    (parted) print
+    Model: H10 HBRPEKNX0202AO 32 GiB (nvme)
+    Disk /dev/nvme1n1: 29.3GB
+    Sector size (logical/physical): 512B/512B
+    Partian Table: gpt
+    Disk Flags:
+
+    Number  Start   End    Size   File system  Name           Flags
+     1      1049kB  29.3GB 29.3GB ext4         root partition
+
+  Hmmm..., maybe something evil is hiding at the end of this disk???
+
+  Let us boldly stumble ahead, and format this space
+
+    # mkfs.fat -F 32 /dev/nvme0n1p1
+    mkfs.fat 4.2 (2021-01-31)
+
+    # mkswap /dev/nvme0n1p2
+    Setting up swapspace version 1, size 16 GiB (17178816512 bytes)
+    no label, UUID=...
+
+  Let's check this out,
+
+    17178816512B/(1024*1024*1024B/GiB) = 15.999019622802734GiB
+
+  Continue,
+
+    # mkfs.ext4 /dev/nvme0n1p3
+    ...
+
+    # mkfs.ext4 /dev/nvme1n1p1
+    /dev/nvme1n1p1 is apparently in use by the system: will not make a filesystem here!
+
+  Hmmm..., I thought evil was a foot!  Probably the same thing that killed
+  the guided install.
+
+    # lsblk 
+    Name         MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
+    loop0          7:0    0 673.7M  1 loop /run/archiso/airootfs
+    sda            8:0    1  29.3G  0 disk
+      sda1         8:1    1   760M  0 part /run/archiso/bootmnt
+      sda2         8:2    1    86M  0 part
+    nvme0n1      259:0    0 476.9G  0 disk
+      nvme0n1p1  259:1    0   512M  0 part
+      nvme0n1p2  259:2    0    16G  0 part
+      nvme0n1p3  259:4    0 452.4G  0 part
+    nvme1n1      259:3    0  27.3G  0 disk
+      md127        9:127  0     0B  0 md
+      nvme0n1p1  259:5    0  27.2G  0 part
+
+  What the hell is this md127 RAID thing doing here?  Maybe an artifact
+  from when I first booted the installation media.  Let's see if it goes
+  away on a reboot since I blew away the partition table on that drive.
+
+    # systemctl poweroff
+
+  Booted from USB thumbdrive again,
+
+    # lsblk 
+    Name         MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
+    loop0          7:0    0 673.7M  1 loop /run/archiso/airootfs
+    sda            8:0    1  29.3G  0 disk
+      sda1         8:1    1   760M  0 part /run/archiso/bootmnt
+      sda2         8:2    1    86M  0 part
+    nvme0n1      259:0    0 476.9G  0 disk
+      nvme0n1p1  259:1    0   512M  0 part
+      nvme0n1p2  259:2    0    16G  0 part
+      nvme0n1p3  259:3    0 452.4G  0 part
+    nvme1n1      259:4    0  27.3G  0 disk
+      nvme0n1p1  259:5    0  27.2G  0 part
+
+  I am happy!!!!
+
+  To continue the manual install, I will need to repeat a few
+  things.  Also will set up system time better.
+
+2021-11-12:
+
+  Continue from yesterday, same boot
+
+    # timedatectl set-timezone US/Mountain
+
+  Now maxwell4 and gauss17 synced to the second, before even running
+  the next command.  They were 10 minutes apart on a previous boot.
+
+    # timedatectl set-ntp true
+
+  Finish making filesystems from yesterday
+
+    # mkfs.ext4 /dev/nvme1n1p1
+
+  Now mount the file systems of target system under /mnt,
+
+    # mount /dev/nvme0n1p3 /mnt
+    # mkdir /mnt/home
+    # mount /dev/nvme1n1p1 /mnt/home
+    # mkdir /mnt/boot
+    # mount /dev/nvme0n1p1 /mnt/boot
+    # swapon /dev/nvme0n1p2
+
+  Use reflector to create pacman mirrorlist
+
+    # cp -- etc/pacman.d/mirrorlist{,-orig}
+    # reflector --country 'US,Canada,' --protocol https --latest 20 > /etc/pacman.d/mirrorlist
+
+  Note: There is a systemd reflcetor service which
+        can be turned on in the target system,
+        see https://wiki.archlinux.org/title/Reflector
+
+  Install essential packages to target system with pacstrap
+
+    # pacstrap /mnt base linux linux-firmware
+
+  Generate an fstab, do sanity check with vim
+
+    # genfstab -U /mnt >> /mnt/etc/fstab
+
+  Change root into the new system
+
+    # arch-chroot /mnt
+
+  Set the time zone and generate /etc/adjtime
+
+    # ln -sf /usr/share/zoneinfo/US/Mountain /etc/localtime
+    # hwclock --systohc
+
+  Opps, no editor,
+
+    # pacman -Syu
+    # pacman -Syu neovim
+
+  Edit /etc/locale.gen and uncommented en_US.UTF-8 UTF-8
+
+    # locale-gen
+
+  Create /etc/locale.conf with contents
+
+    LANG=en_US.UTF-8
+
+  Create /etc/hostname with contents
+
+    maxwell4
+
+  Set new root password.
+
+    # passwd
+
+  Need to research what network management software I will need.
+  In the mean time, install iwd so I have at least iwctl.
+
+    # pacman -Syu iwd
+
+  I should have systemd-networkd and systemd-resolved as part
+  of Systemd.  Something tells me to install ModemManager too.
+  I will be prepared if the telecoms defeat the cable companies.
+
+    # pacman -Syu modemmanager
+
+  Installation guide now tells me to ensure a "Linux-capable boot loader"
+  is installed.  Go to the Arch systemd-boot Wiki page.
+
+  Do a manual install of the boot loader.
+
+     # bootctl --boot-path=/boot install
+
+   To later update, use
+
+     # bootctl update
+
+  Will put in a pacman hook in later to automate this.  Pacman
+  itself only installs the installer.
+
+  Reboot into new system.  
+
+    # <Ctrl-d>
+    # systemctl poweroff
+
+  Remove thumbdrive and boot.
+
+  Only choice the Linux boot menu is giving me is to load the
+  Intel firmware interface.  Misconfigured systemd-boot???
+
+  Tried unchecking Linux Boot Manager and go straight to HD,
+  same behavior.
+
+  Tried checking only Linux Boot Manager, same behavior.
+
+2021-11-13:
+  Not quite sure how to proceed.  Probably a misconfigured
+  systemd-boot.  Don't want to ask on some forum until I
+  understand the problem better.
+
+  I will compare maxwell4 with gauss17.  But first, Lets
+  take a look at the options the Dell firmware give me.
+
+  Hitting F10 on boot actually takes me to something Dell branded
+  called "One-Time Boot Settings."  Seems to play a role similar
+  to the systemd boot menu.  Exiting out takes me to systemd boot
+  menu where my only choice is the Dell branded "BIOS Setup."
+  The "One-Time Boot Settings" gives me not only several choices
+  of UEFI Boot Devices,
+
+    - Linux Boot Modem Manager              (hard drive icon)
+    - UEFI H10 HB...                        (hard drive icon)
+      NVMe INTEL 512GB
+      ...
+    - UEFI SanDisk Cruzer Blade             (USB icon)
+      4C...22
+    - UEFI SanDisk Cruzer Blade             (USB icon)
+      4C...22 2
+
+  but also 5 other "Pre-Boot Tasks"
+
+    - BIOS SETUP 
+    - DIAGNOSTICS
+    - BIOS UPDATE
+    - SupportAssist OS Recovery
+    - Device configuration
+
+  and
+
+    - EXIT
+
+  Ran "BIOS SETUP" gives the same menu systemd-boot menu gives me.
+
+  Ran "DIAGNOSTICS" all tests (including memory tests) passed
+
+    - System BIOS 1.9.1
+    - Service Tag ...
+    - Version     BD 2.55
+    - Touch       Enabled
+
+  Ran "BIOS UPDATE" only choice was to flash from a file.
+
+  Ran "SupportAssist OS Recovery" requires an Ethernet connection
+  to the Internet.  At least when I retire, my coworkers can 
+  downgrade to Win-10 if they want.
+
+  Ran "Device Configuration" and got a non-Dell branded menu
+  called "TPV EFI Device Manager" with followng choices
+
+    - Opal                   (Manage Opal disks)
+    - Driver Health Manager  (List all the Driver Health Instances to Manage)
+    - RAM Disk Configuration (Press <Enter> to add/remove RAM disks)
+
+  Just a guess but I think this last one is what came with the
+  mother board.
+
+
+  Now getting back to comparing maxwell4 with gauss17 systemd-boot
+  cnfigurations.  Booting off the thumbdrive via F10 and mounting
+  what I need.
+
+    # mount /dev/nvme0n1p3 /mnt
+    # mount /dev/nvme1n1p1 /mnt/home
+    # mount /dev/nvme0n1p1 /mnt/boot
+
+    (gauss17)$ cd /boot/
+    (maxwll4)# cd /mnt/boot
+
+  On both I see the kernals and initramfs as expected.
+  Both have EFI/ and loader/ directories.
+  But, maxwell4 also has an empty directory c9e6185baf6e41c8ba0592db7febef67/
+  Let's blow this empty directory away.
+  Also, only gauss17 has intel-ucode.img, as expected.
+
+    (gauss17)$ ls -al EFI
+    total 16
+    drwxr-xr-x 4 root root 4096 Jun 25  2017 .
+    drwxr-xr-x 4 root root 4096 Dec 31  1969 ..
+    drwxr-xr-x 2 root root 4096 Jun 25  2017 BOOT
+    drwxr-xr-x 2 root root 4096 Jun 25  2017 systemd
+
+    (maxwell4)# ls -al EFI
+    total 20
+    drwxr-xr-x 5 root root 4096 Nov 12 09:16 .
+    drwxr-xr-x 4 root root 4096 Dec 31 09:16 1969 ..
+    drwxr-xr-x 2 root root 4096 Jun 25 09:16 BOOT
+    drwxr-xr-x 2 root root 4096 Jun 25 09:16 Linux
+    drwxr-xr-x 2 root root 4096 Jun 25 09:16 systemd
+
+    (gauss17)$ ls -p EFI
+    BOOT/  systemd/
+
+    (maxwell4)# ls -p EFI
+    BOOT/  Linux/  systemd/
+
+  On maxwell4, EFI/Linux is empty, let's blow it away.
+
+    (maxwell4)# rmdir EFI/Linux
+
+  Look at loader/loader.conf
+
+    (gauss17)$ cat loader/loader.conf
+    default arch
+    timeout 5
+    editor 0
+    #default 03ab3a86a6b046d1bb4b74b0d52e0e5c-*
+
+    (maxwell4)# cat loader/loader.conf
+    #timeout 3
+    #console-mode Keep
+    default c9e6185baf6e41c8ba0592db7febef67-*
+
+  Let's change this on maxwell4, note that arch.conf and arch-lts.conf
+  are text files live in /boot/loader/entries/ on gauss17.  
+
+  On maxwell4, /mnt/boot/loader/entries/ is empty.  Let's first
+  fix loader/loader.conf then worry about loader/entries.
+
+  On maxwell4, loader/loader.conf now reads
+
+    default arch
+    timeout 5
+    #console-mode keep
+    #default c9e6185baf6e41c8ba0592db7febef67-*
+
+  On gauss17,
+
+    (gauss17)$ cat loader/entries/arch.conf
+    title Arch Linux
+    linux /vmlinuz-linux
+    initrd /intel-ucode.img
+    initrd /initramfs-linux.img
+    options root=PARTUUID=d6793ae6-1f23-4895-942a-6714e7a06de6 rw
+
+  On maxwell4, I made this (updated below)
+
+    title Arch Linux
+    linux /vmlinuz-linux
+    initrd /initramfs-linux.img
+    options root=PARTUUID=9cea2554-0db5-4b83-9b05-bd74f47a9bc9 rw
+
+  Where I got the PARTUUID from fdisl -l for nvme1n1p1.  Check if
+  this stays the same in the chrooted environment.
+
+    # arch-chroot /mnt
+
+  Yes it does.  Let's give a reboot a try.
+
+  Gave me a choice to boot into Arch Linux, got a Kernel panic
+
+    Kernel panic - not syncing: VFS: Unable to mount root fs on unkown-block(0.0)
+
+  Booting off USB drive again.
+
+  I'm an idiot, I mounted /home (nvme1n1p1) instead of / (nvme0n1p3)
+  as the root directory!
+
+    # mount /dev/nvme0n1p3 /mnt
+    # mount /dev/nvme0n1p1 /mnt/boot
+
+  Wait a second, "fdisk -l" only gives a "Disk identifier" for
+  the entire hard drive.  "parted -l" does not list any sort
+  of identifiers.
+
+    # ls -l /dev/disk/by-uuid/
+
+  shows that the sym-link
+
+    2ae1a6dd-841a-4aac-be17-474113239a12 -> ../../nvme0n1p3
+
+  I made this change.
+
+    (maxwell4)$ cat loader/entries/arch.conf
+    title Arch Linux
+    linux /vmlinuz-linux
+    initrd /initramfs-linux.img
+    options root=PARTUUID=2ae1a6dd-841a-4aac-be17-474113239a12 rw
+
+  Also, I don't see boot/intel-ucode.img anywhere, nor did I 
+  configured it into boot/loader/entries/arch.conf.  Might want
+  to remove the linux-firmware package before trying to boot
+  into the system.
+
+  Attach to wifi via iwctl and
+
+    # arch-chroot
+    # pacman -R linux-firmware
+    # <Ctrl-d>
+    # systemctl poweroff
+
+  Remove thumbdrive and reboot.
+
+  Kernel panic - unable to mount root directory again.

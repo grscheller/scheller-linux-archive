@@ -9307,7 +9307,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   reboot and login into console
 
     $ sudo pacman -Syu gnome-shell-extensions gnome-shell gdm
-    
+
   reboot, nothing changed.
 
   Note that gdm is no longer giving me a choice between x11
@@ -9331,3 +9331,22 @@ Note: On 2017-06-20 rebuilt system from scratch starting
 
   Gpaste tray icon now enabled, had to launch the Gnome
   Extensions App and turn on "master" slider on top bar.
+
+2021-11-11:
+
+  While in the process of installing Arch on a work computer, I find
+  out that networkmanager package functionality is replaced via the
+  iwd package.  The iNet wireless daemon (iwd) is a wireless daemon
+  for Linux written by Intel.  Goal of this project is to Optimize
+  resource utilization by not depending on external libraries but
+  instead leverage features provided by the Linux Kernel instead.
+
+    $ pacman -Ss iwd
+    community/iwd 1.19-2
+        Internet Wireless Daemon
+
+  Actually iwd is a backend corresponding to wpa_supplicant,
+  while netctl is a frontend like Network Manager.
+
+  I may want to revisit this for gauss17.  A good starting point
+  might be: https://wiki.archlinux.org/title/Network_configuration

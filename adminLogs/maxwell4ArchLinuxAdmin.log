@@ -1,6 +1,15 @@
 Purpose: To indicate what was done to create maxwell4 and the
          rational behind it.  Named after Maxwell's Equations.
 
+Note: Initially I did a lot of thrashing around, jump to
+      2021-11-13 for a fairly straight forward manual build.
+
+      I tried using the Arch Install Python script but
+      ran into a lot of trouble due to not doing my homework
+      on the Dell system I was installing to.  My first
+      manual install attempt did not go very well, probably
+      I screwed up the partition table.
+
 2021-11-07:
   Created bootable USB memory stick on gauss17.
 
@@ -46,7 +55,7 @@ Purpose: To indicate what was done to create maxwell4 and the
 
 2021-10-09:
   What!?!? This computer has no Ethernet Jack.  Have to
-  get network working from the comand line.
+  get network working from the command line.
 
     # iwctl device list
 
@@ -752,3 +761,167 @@ Purpose: To indicate what was done to create maxwell4 and the
   Remove thumbdrive and reboot.
 
   Kernel panic - unable to mount root directory again.
+
+2021-11-13:
+
+  At this point, instead of trying to fixed what I muffed up, let's
+  just start from scratch:
+
+  Booted from the USB thumbdrive and established a network
+  connection to my apartment wifi.
+
+    # timedatectl set-timezone America/Denver
+    # timedatectl set-ntp true
+    # parted /dev/nvme0n1
+    (parted) mklabel gpt
+    (parted) mkpart efi fat32 1MiB 513MiB
+    (parted) set 1 esp on
+    (parted) mkpart "linux swap" linux-swap 513MiB 16.6GiB
+
+  Let's see what we have so far
+
+    (parted) print
+    Number  Start   End    Size   File system     Name       Flags
+     1      1049kB  538MB  537MB  fat32           efi        boot, esp
+     2      538MB   17.8GB 17.3GB linux-swap(v1)  linux swap
+
+    (parted) mkpart root ext4 17.8GiB 100%
+    (parted) print
+    Number  Start   End     Size    File system     Name        Flags
+     1      1049kB  538MB   537MB   fat32           efi         boot, esp
+     2      538MB   17.8GB  17.3GB  linux-swap(v1)  linux swap  swap
+     3      17.8GB  512GB   494GB   ext4            root
+
+    (parted) quit
+
+    # parted /dev/nvme1n1
+    (parted) mklabel gpt
+    (parted) mkpart home ext4 0% 100%
+    (parted) print
+    Number  Start   End     Size    File system     Name        Flags
+     1      1049kB  29.3GB  29.3GB  ext4            home
+
+    (parted) quit
+
+  I already see some differences, continuing
+
+  Make /boot
+    # mkfs.fat -F 32 /dev/nvme0n1p1
+    mkfs.fat 4.2 (2021-01-31)
+
+  Make swap space
+    # mkswap /dev/nvme0n1p2
+    mkswap: /dev/nvme0n1p2: warning: wiping old swap signature
+    Setting up swapspace version 1, size = 16.1 GiB (17286189056 bytes)
+    no label, UUID=6cbe1c44-57d2-4f51-88d4-784c914a98ae
+
+  Make /
+    # mkfs.ext4 /dev/nvme0n1p3
+
+  Make /home
+    # mkfs.ext4 /dev/nvme1n1p1
+
+  Now let's hang the filesystems.
+
+    # mount /dev/nvme0n1p3 /mnt
+    # mkdir /mnt/home
+    # mount /dev/nvme1n1p1 /mnt/home
+    # mkdir /mnt/boot
+    # mount /dev/nvme0n1p1 /mnt/boot
+    # swapon /dev/nvme0n1p2
+
+  Use reflector to create pacman mirrorlist
+
+    # cp -- /etc/pacman.d/mirrorlist{,-orig}
+    # reflector --country 'US,Canada,' --protocol https --latest 20 > /etc/pacman.d/mirrorlist
+
+  Install essential packages.
+
+    # pacstrap /mnt base linux linux-firmware iwd modemmanager neovim
+
+  Generate an fstab file.
+
+    # genfstab -U /mnt > /mnt/etc/fstab
+
+  Let's drive the zombie
+
+    # arch-chroot /mnt
+    # ln -sf /usr/share/zoneinfo/America/Denver /etc/localtime
+    # hwclock --systohc
+
+  Created /etc/locale.conf with the contents
+
+    LANG=en_US.UTF-8
+
+  Created /etc/hostname with the contents
+
+    maxwell4
+  
+  Set root password
+
+    # passwd
+
+  Note: the Pacman linux-firmware package is not the intel-ucode package.
+
+    # pacman -Syu
+    # pacman -Syu intel-ucode
+    # ls /boot
+    initramfs-linux-fallback.img  initramfs-linux.img  intel-ucode.img  vmlinuz-linux
+
+  Install the systemd boot loader.
+
+    # bootctl --esp-path=/boot/ install
+
+  Edited /boot/loader/loader.conf - see loader.conf(5)
+
+    timeout 5
+    default arch
+    random-seed-mode always
+    #random-seed-mode with-system-token
+    console-mode auto
+    #console-mode keep
+    
+  The commented out lines are the defaults.
+
+  Created /boot/loader/entries/arch.conf
+  from /usr/share/systemd/bootctl/arch.conf
+
+    title   Arch Linux
+    linux   /vmlinuz-linux
+    initd   /intel-ucode.img
+    initd   /initramfs-linux.img
+    options root=PARTUUID=3038000f-4be8-4960-a020-74227b73b7d0 rootfstype=ext4 add-efi-memmap
+
+  I got the partition uuid from /etc/fstab.
+
+  Try a reboot.  Got a Arch Linux choice.  Could not find that find the
+  above root device.  Dropped me into an emergency shell.
+
+  The above root UUID was wrong, fixed it (had -9020- instad of -ao2o-)
+  Still could not find it.
+
+  Try this for arch.conf instead:
+
+    title   Arch Linux
+    linux   /vmlinuz-linux
+    initd   /intel-ucode.img
+    initd   /initramfs-linux.img
+    options root=/dev/nvme0n1p3 rootfstype=ext4 add-efi-memmap
+
+  Got a prompt!!!!
+
+    maxwell4 login:
+
+  Also got some error messages on the console:
+
+    sof-audio-pci-intel-cn  error: sof firmware file is missing, you might need to
+    sof-audio-pci-intel-cn         download it from https://github.com/thesofproject/sof-bin/
+    sof-audio-pci-intel-cn  error: failed to load DP firmware -2
+    sof-audio-pci-intel-cn  error: sof_probe_work failed err: -2
+    Bluetooth: hci0: command 0xfc01 tx timeout
+    Bluetooth: hci0: FW download error recovery failed (-110)
+
+  Logged in as root.  Started the network with iwctl.  Only got a link-local
+  IPV6 address which begins with 4e8.
+
+  Well, it boots and has some sort of network access.  A good start.

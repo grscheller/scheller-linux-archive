@@ -28,6 +28,36 @@ System maintenance,
 
 * `systemctl --failed`
 
+List active systemd services,
+
+* `systemctl list-units --type=service`
+* `systemctl --type=service`            (*actually the default*)
+
+List running systemd services,
+
+* `systemctl list-units --type=service --state=running`
+
+List loaded systemd services (including inactive ones),
+
+* `systemctl list-units --all --type=service`
+
+List all inactive systemd services
+
+* `systemctl list-units --all --type=service --state=inactive`
+
+List all installed systemd services (even if not loaded),
+
+* `systemctl list-units-files --type=service`
+
+List all systemd services that run at each boot,
+
+* `systemctl list-units-files --type=service --state=enabled`
+
+Display status of a particular systemd sercive,
+
+* `systemctl status <service_name>`
+* `systemctl status NetworkManager.service`
+
 ## Pacman
 
 System maintenance, add and remove software.

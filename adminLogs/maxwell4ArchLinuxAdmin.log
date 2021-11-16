@@ -1089,3 +1089,15 @@ Note: Initially I did a lot of thrashing around, jump to
   because I want nvim to do the coloring,
 
   Next lines will be done from maxwell4.
+  This line added on maxwell4.
+
+  Cloned my 3 GitHub reposes via
+       
+    $ mkdir devel; cd devel  
+    $ git clone git@github.com:grscheller/scheller-linux-archive
+    $ git clone git@github.com:grscheller/dotfiles
+    $ git clone git@github.com:grscheller/neovim-notes
+    $ cd scheller-linux-archive
+
+  and made these changes.
+ 

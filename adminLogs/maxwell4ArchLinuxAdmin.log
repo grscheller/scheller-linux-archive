@@ -1058,4 +1058,34 @@ Note: Initially I did a lot of thrashing around, jump to
   Also disabled password verification with ssh.  Need to
   configure ~/.ssh/authorized_keys to authenticate.
 
+2021-11-16:
+  Keeping root's .bashrc simple.
 
+    set -o vi
+    export EDITOR=nvim
+    export PAGER="nvim -R"
+
+  On initial "su -" .bashrc is not being sourced, but
+  is sourced for just "su"???  Same for "su --login"?
+
+  Found out way, root has no ~/.bash_profile, lets give
+  it the standard one,
+
+    [[ -f ~/.bashrc ]] && source ~/.bashrc
+
+  Now things behave like good'ol System-V!
+
+2021-11-16:
+  Lets set up GIT for grs user.
+
+    $ git config --global user.name grscheller
+    $ git config --global user.email geoffrey@scheller.com
+    $ git config --global core.editor nvim
+    $ git config --global core.pager "nvim -R"
+    $ git config --global pull.rebase false
+    $ git config --global color.pager no
+
+  No, I am not going old school monochrome.  Last one is no
+  because I want nvim to do the coloring,
+
+  Next lines will be done from maxwell4.

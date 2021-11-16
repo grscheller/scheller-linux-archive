@@ -1099,5 +1099,53 @@ Note: Initially I did a lot of thrashing around, jump to
     $ git clone git@github.com:grscheller/neovim-notes
     $ cd scheller-linux-archive
 
-  and made these changes.
+  and made above changes.
  
+2021-11-16:
+  Still need to do
+
+  1. Fix the udev iwctl race condition
+  2. Properly configure systemd-networkd
+  3. Properly configure systemd-resolved
+
+  but first want to install my user enviroment.
+
+    $ cd ~/devel/dotfiles
+    $ ./installDotfiles
+
+  Logged out and back in as grs.  At first surprised I fell right into
+  my configured bash environment.  Then realized that I don't have
+  fish installed.  I'll stay with bash until later tonight.
+
+  Now make nvim happy.  
+
+    $ bsPaq
+    Cloning into  '/home/grs/.local/share/nvim/site/pack/paqs/start/paq-nvim'...
+    ...
+    $ nvim
+    :paqSync
+    :q
+    $ nvim
+    Error detected while processing /home/grs/.config/nvim/init.lua:
+    No C compiler found! "cc", "gcc", "clang", "cl", "zig" are not executable.
+    :q
+    $ digpath cc gcc clang cl zig
+
+    $
+
+  We need to fix this.
+
+    # pacman -Syu gcc clang
+
+  Running ":checkhealth" from within nvim found more things to add.
+
+    # pacman -Syu ripgrep fd
+    # pacman -Syu nodejs npm npm-check-updates
+
+  Brought in python-3.9.7-2
+
+    # pacman -Syu pyright rust rust-analyzer
+    # pacman -Syu xsel
+    $ npm install neovim                # did not work
+    # npm install -g neovim
+    # pacman -Syu ruby rubygems

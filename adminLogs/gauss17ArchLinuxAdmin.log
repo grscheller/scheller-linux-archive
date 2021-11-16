@@ -400,6 +400,9 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     Able to configure passwordless ssh logins between
     gauss17 and my work CentOS 6 workstation rygar.
 
+    Note: On 2000-11-15 when configuring sshd for maxwell4,
+          I discover that sshd.socket no longer supported.
+
 2016-07-11:
   Preparing to configure the Wireless networking.
 
@@ -9293,7 +9296,6 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   Damn that NVIDIA card!
 
 2021-11-07:
-
   The way GDM and Gnome are configured may or may not be an
   attribute of the system history.  I have not done a fresh
   Arch install since 2017-06-20.  But reconfig GPG, emails
@@ -9333,7 +9335,6 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   Extensions App and turn on "master" slider on top bar.
 
 2021-11-11:
-
   While in the process of installing Arch on a work computer, I find
   out that networkmanager package functionality is replaced via the
   iwd package.  The iNet wireless daemon (iwd) is a wireless daemon
@@ -9350,3 +9351,17 @@ Note: On 2017-06-20 rebuilt system from scratch starting
 
   I may want to revisit this for gauss17.  A good starting point
   might be: https://wiki.archlinux.org/title/Network_configuration
+
+2021-11-15:
+  Disable CAC reader service.
+
+    $ sudo systemctl disable pcscd.service
+
+2021-11-16:
+  Systemd on Arch no longer supports sshd.socket.  Sort of
+  grandfathered into it.  I last configured it on 2018-04-23.
+
+    $ systemctl disable sshd.socket
+    $ systemctl enable sshd.service
+    $ systemctl reboot
+

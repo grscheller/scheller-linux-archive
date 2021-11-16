@@ -1008,9 +1008,54 @@ Note: Initially I did a lot of thrashing around, jump to
        |--perl-mailtools
           |--git
 
+  Probably for perl regular expressions.
+
 2021-11-15:
   I noticed that the wifi interface is being reported as wlan0
   by "ip addr" (see above) and not some sort of unique name.
   This may be due to a known race condition due to iwd being
   so fast.  See https://insanity.industries/post/racefree-iwd/
   for details.
+
+2021-11-15:
+  Things I want to accomplish:
+
+  1. Fix the race condition mentioned above
+  2. Properly configure systemd-networkd
+  3. Properly configure systemd-resolved
+  4. Install and configure OpenSSH
+
+  The Arch Wiki has excellent articles on the last three.
+
+  First thing install OpenSSH.  Note that apartment wifi
+  came up without me doing anything.
+
+    # pacman -Syu openssh
+
+  Edited /etc/ssh/sshd_config similar to gauss17, but for Now
+  permitting password logins.  Moved ssh port from 22 to a
+  high port, different from one used on gauss17.  Not
+  allowing root ssh logins.
+
+  Need to create a user if I want to use ssh.
+
+    # useradd -d /home/grs -c Geoffrey -G wheel -m grs
+    # passwd grs
+
+  Edited ~/.ssh/config on gauss17 with maxwell4 info.
+
+  Enable the ssh service.
+
+    # systemctl enable sshd.service
+
+  Note that sshd.socket is no longer an option.
+
+2021-11-16:
+  Set up passwordless ssh between gauss17 and maxwell4.
+  See notes/unixCommands.txt in this repo for details
+  how to do this.
+
+  Also disabled password verification with ssh.  Need to
+  configure ~/.ssh/authorized_keys to authenticate.
+
+

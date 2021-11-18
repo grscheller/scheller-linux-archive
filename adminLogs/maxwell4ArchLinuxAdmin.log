@@ -1165,3 +1165,11 @@ Note: Initially I did a lot of thrashing around, jump to
   3. Properly configure systemd-networkd
   4. Properly configure systemd-resolved
 
+  Installed the sudo package.
+
+    # pacman -Syu sudo
+
+  Used the visudo command to edit /etc/sudoers.  Enabled non-root users
+  in the wheel group to use sudo without a password.  Tested with grs 
+  login successfully.
+

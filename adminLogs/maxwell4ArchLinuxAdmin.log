@@ -1149,3 +1149,19 @@ Note: Initially I did a lot of thrashing around, jump to
     $ npm install neovim                # did not work
     # npm install -g neovim
     # pacman -Syu ruby rubygems
+
+2021-11-17:
+  Increaced number of parallel pacman downloads to 5.  Uncommented the line
+
+    #ParallelDownloads = 5
+
+  from /etc/pacman.conf
+
+2021-11-17:
+  Things to do,
+
+  1. Install sudo
+  2. Fix the udev iwctl race condition
+  3. Properly configure systemd-networkd
+  4. Properly configure systemd-resolved
+

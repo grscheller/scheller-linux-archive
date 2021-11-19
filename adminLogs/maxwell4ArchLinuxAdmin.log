@@ -1144,7 +1144,7 @@ Note: Initially I did a lot of thrashing around, jump to
 
   Brought in python-3.9.7-2
 
-    # pacman -Syu pyright rust rust-analyzer
+    # pacman -Syu pyright rust rust-analyzer    # see 2021-11-19 second entry
     # pacman -Syu xsel
     $ npm install neovim                # did not work
     # npm install -g neovim
@@ -1161,9 +1161,10 @@ Note: Initially I did a lot of thrashing around, jump to
   Things to do,
 
   1. Install sudo
-  2. Fix the udev iwctl race condition
-  3. Properly configure systemd-networkd
-  4. Properly configure systemd-resolved
+  2. Install fish shell
+  3. Fix the udev iwctl race condition
+  4. Properly configure systemd-networkd
+  5. Properly configure systemd-resolved
 
   Installed the sudo package.
 
@@ -1172,4 +1173,92 @@ Note: Initially I did a lot of thrashing around, jump to
   Used the visudo command to edit /etc/sudoers.  Enabled non-root users
   in the wheel group to use sudo without a password.  Tested with grs 
   login successfully.
+
+2021-11-18:
+  Installed fish shell.
+
+    $ sudo pacman -Syu fish
+
+  Opps, no hostname command.
+
+    (gauss17)$ pacman -Qo /usr/bin/hostname
+    /usr/bin/hostname is owned by inetutils 2.2-1
+    
+    (gauss17)$ pacman -Flq inetutils
+    etc/
+    etc/pam.d/
+    etc/pam.d/rlogin
+    etc/pam.d/rsh
+    etc/xinetd.d/
+    etc/xinetd.d/rlogin
+    etc/xinetd.d/rsh
+    etc/xinetd.d/talk
+    etc/xinetd.d/telnet
+    usr/
+    usr/bin/
+    usr/bin/dnsdomainname
+    usr/bin/ftp
+    usr/bin/ftpd
+    usr/bin/hostname
+    usr/bin/rcp
+    usr/bin/rlogin
+    usr/bin/rlogind
+    usr/bin/rsh
+    usr/bin/rshd
+    usr/bin/talk
+    usr/bin/talkd
+    usr/bin/telnet
+    usr/bin/telnetd
+    usr/lib/
+    usr/lib/systemd/
+    usr/lib/systemd/system/
+    usr/lib/systemd/system/ftpd.service
+    usr/lib/systemd/system/rlogin.socket
+    usr/lib/systemd/system/rlogin@.service
+    usr/lib/systemd/system/rsh.socket
+    usr/lib/systemd/system/rsh@.service
+    usr/lib/systemd/system/talk.service
+    usr/lib/systemd/system/talk.socket
+    usr/lib/systemd/system/telnet.socket
+    usr/lib/systemd/system/telnet@.service
+    usr/share/
+    usr/share/info/
+    usr/share/info/inetutils.info.gz
+    usr/share/man/
+    usr/share/man/man1/
+    usr/share/man/man1/dnsdomainname.1.gz
+    usr/share/man/man1/ftp.1.gz
+    usr/share/man/man1/hostname.1.gz
+    usr/share/man/man1/rcp.1.gz
+    usr/share/man/man1/rlogin.1.gz
+    usr/share/man/man1/rsh.1.gz
+    usr/share/man/man1/talk.1.gz
+    usr/share/man/man1/telnet.1.gz
+    usr/share/man/man8/
+    usr/share/man/man8/ftpd.8.gz
+    usr/share/man/man8/rlogind.8.gz
+    usr/share/man/man8/rshd.8.gz
+    usr/share/man/man8/talkd.8.gz
+    usr/share/man/man8/telnetd.8.gz
+
+  Well, in 2021 hostname is the only one of these commands I would ever use.
+  I would use OpenSSH equivalents or internet chat clients.
+
+2021-11-19:
+  In my dotfiles repo, I replaced the use of hostname with 'hostnamectl hostname'.
+  For any non-systemd systems, I created a ~/bin/hostnamectl script which ignores
+  its arguments and calls hostname.  Note that ~/bin is very late in my $PATH.
+
+2021-11-19:
+  Removed rust package and replaced it with rustup package.
+
+    $ sudo pacman -Rsc rustc
+    $ sudo pacman -Syu rustup rust-analyzer
+
+2021-11-19:
+  Changed user grs default shell to fish and installed man-db.
+
+    $ sudo pacman -Syu man-db
+    $ sudo usermod -s /usr/bin/fish grs
+
 

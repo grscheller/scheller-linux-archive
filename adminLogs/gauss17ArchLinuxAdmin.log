@@ -9185,7 +9185,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   more difficult.  Think it is defaulting to the number of lines on
   the laptop's screen.
 
-  As a better work around, I created a fish function that executes
+  As a better work around, I created a fish function, rc, that executes
   the following command
 
     test $TERM = linux; and stty rows 44 columns 169
@@ -9365,3 +9365,11 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     $ systemctl enable sshd.service
     $ systemctl reboot
 
+2021-11-19:
+  Uninstalled inetutils package.  I would use OpenSSH equivalents for
+  most of the commands and services.  Also 'hostnamectl hostname' for
+  hostname.
+
+    $ sudo pacman -Rsc inetutils
+
+  The inetutils package was the only one removed.

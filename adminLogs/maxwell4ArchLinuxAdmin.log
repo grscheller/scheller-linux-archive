@@ -1247,7 +1247,7 @@ Note: Initially I did a lot of thrashing around, jump to
 2021-11-19:
   In my dotfiles repo, I replaced the use of hostname with 'hostnamectl hostname'.
   For any non-systemd systems, I created a ~/bin/hostnamectl script which ignores
-  its arguments and calls hostname.  Note that ~/bin is very late in my $PATH.
+  its arguments and calls /bin/hostname.  Note that ~/bin is very late in my $PATH.
 
 2021-11-19:
   Removed rust package and replaced it with rustup package.
@@ -1261,4 +1261,17 @@ Note: Initially I did a lot of thrashing around, jump to
     $ sudo pacman -Syu man-db
     $ sudo usermod -s /usr/bin/fish grs
 
+2021-11-19:
+  Things to do, least I forget
 
+  1. Install and configure Java
+  2. Install Pipewire
+  3. Fix the udev iwctl race condition
+  4. Properly configure systemd-networkd
+  5. Properly configure systemd-resolved
+
+  Installing JDK and Java should be straight forward,
+  archJDK configured into fish.
+
+    $ sudo pacman -Syu jdk-openjdk jdk11-openjdk jdk8-openjdk jdk7-openjdk
+    $ sudo pacman -Syu openjdk-doc openjdk11-doc openjdk8-doc openjdk7-doc

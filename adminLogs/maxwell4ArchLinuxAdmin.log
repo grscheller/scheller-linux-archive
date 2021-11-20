@@ -709,8 +709,8 @@ Note: Initially I did a lot of thrashing around, jump to
     initrd /initramfs-linux.img
     options root=PARTUUID=9cea2554-0db5-4b83-9b05-bd74f47a9bc9 rw
 
-  Where I got the PARTUUID from fdisl -l for nvme1n1p1.  Check if
-  this stays the same in the chrooted environment.
+  Where I got the PARTUUID from fdisl -l for nvme1n1p1.  # 2021-11-20: mistake!!!
+  Check if this stays the same in the chrooted environment.
 
     # arch-chroot /mnt
 
@@ -894,8 +894,8 @@ Note: Initially I did a lot of thrashing around, jump to
 
   I got the partition uuid from /etc/fstab.
 
-  Try a reboot.  Got a Arch Linux choice.  Could not find that find the
-  above root device.  Dropped me into an emergency shell.
+  Try a reboot.  Got a Arch Linux choice.  Could not find the above root device.
+  Dropped me into an emergency shell.
 
   The above root UUID was wrong, fixed it (had -9020- instad of -ao2o-)
   Still could not find it.
@@ -1275,3 +1275,30 @@ Note: Initially I did a lot of thrashing around, jump to
 
     $ sudo pacman -Syu jdk-openjdk jdk11-openjdk jdk8-openjdk jdk7-openjdk
     $ sudo pacman -Syu openjdk-doc openjdk11-doc openjdk8-doc openjdk7-doc
+
+2021-11-20:
+  WiFi routers keep giving maxwell4 consecutive IP addresses.  Let's fix this.
+
+  Edited /etc/iwd/main.conf containing and commented out last line.
+
+    [General]
+    # uncomment for setting the wifi interface name yourself
+    # see https://iwd.wiki.kernel.org/interface_lifecycle
+    #UseDefaultInterface=true
+    
+    # enable builtin DHCP-client within iwd for wifi
+    EnableNetworkConfiguration=true
+    
+    # randomizes mac-address every time iwd starts or the hardware is initially detected
+    #AddressRandomization=once
+
+  Check IP: 192.168.1.12
+  Reboot.
+  Check IP: 192.168.1.7
+  Reboot.
+  Check IP: 192.168.1.7
+
+  When I travel, I might want to turn this random MAC address feature back on again.
+
+2021-11-20:
+

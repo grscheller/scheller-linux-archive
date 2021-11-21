@@ -9373,3 +9373,40 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     $ sudo pacman -Rsc inetutils
 
   The inetutils package was the only one removed.
+
+2021-11-20:
+  I thought I got rid of Pulse Audio, but it is still
+  installed.
+
+    $ sudo pacman -S pipewire-pulse
+    resolving dependencies...
+    looking for conflicting packages...
+    :: pipewire-pulse and pulseaudio are in conflict. Remove pulseaudio? [y/N] N
+
+  Let's go for it.
+
+    $ sudo pacman -Syu pipewire-pulse
+    :: Synchronizing package databases...
+     core is up to date
+     extra is up to date
+     community is up to date
+    :: Starting full system upgrade...
+    resolving dependencies...
+    looking for conflicting packages...
+    :: pipewire-pulse and pulseaudio are in conflict. Remove pulseaudio? [y/N] y
+    :: pipewire-pulse and pulseaudio-bluetooth are in conflict. Remove pulseaudio-bluetooth? [y/N] y
+    
+    Packages (3) pulseaudio-15.0-1 [removal]
+                 pulseaudio-bluetooth-15.0-1 [removal]  pipewire-pulse-1:0.3.40-1
+    ...
+
+  Reboot.
+
+  Something different about the system tray, but sound and volume
+  control works.  According to the Arch Bluetooth headset wiki,
+  pipewire-pulse is a drop in replacement for pulseaudio and
+  pulseaudio-bluetooth.
+
+  From that wiki page I learned the commandline utility to control
+  bluetooth is called bluetoothctl and is part of the bluez-utils
+  package.  Its commands are similar to those of iwctl.

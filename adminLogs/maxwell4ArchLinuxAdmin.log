@@ -412,7 +412,7 @@ Note: Initially I did a lot of thrashing around, jump to
   Hmmm..., I thought evil was a foot!  Probably the same thing that killed
   the guided install.
 
-    # lsblk 
+    # lsblk
     Name         MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
     loop0          7:0    0 673.7M  1 loop /run/archiso/airootfs
     sda            8:0    1  29.3G  0 disk
@@ -434,7 +434,7 @@ Note: Initially I did a lot of thrashing around, jump to
 
   Booted from USB thumbdrive again,
 
-    # lsblk 
+    # lsblk
     Name         MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
     loop0          7:0    0 673.7M  1 loop /run/archiso/airootfs
     sda            8:0    1  29.3G  0 disk
@@ -548,7 +548,7 @@ Note: Initially I did a lot of thrashing around, jump to
   Will put in a pacman hook in later to automate this.  Pacman
   itself only installs the installer.
 
-  Reboot into new system.  
+  Reboot into new system.
 
     # <Ctrl-d>
     # systemctl poweroff
@@ -589,7 +589,7 @@ Note: Initially I did a lot of thrashing around, jump to
 
   but also 5 other "Pre-Boot Tasks"
 
-    - BIOS SETUP 
+    - BIOS SETUP
     - DIAGNOSTICS
     - BIOS UPDATE
     - SupportAssist OS Recovery
@@ -611,7 +611,7 @@ Note: Initially I did a lot of thrashing around, jump to
   Ran "BIOS UPDATE" only choice was to flash from a file.
 
   Ran "SupportAssist OS Recovery" requires an Ethernet connection
-  to the Internet.  At least when I retire, my coworkers can 
+  to the Internet.  At least when I retire, my coworkers can
   downgrade to Win-10 if they want.
 
   Ran "Device Configuration" and got a non-Dell branded menu
@@ -681,7 +681,7 @@ Note: Initially I did a lot of thrashing around, jump to
     default c9e6185baf6e41c8ba0592db7febef67-*
 
   Let's change this on maxwell4, note that arch.conf and arch-lts.conf
-  are text files live in /boot/loader/entries/ on gauss17.  
+  are text files live in /boot/loader/entries/ on gauss17.
 
   On maxwell4, /mnt/boot/loader/entries/ is empty.  Let's first
   fix loader/loader.conf then worry about loader/entries.
@@ -746,7 +746,7 @@ Note: Initially I did a lot of thrashing around, jump to
     initrd /initramfs-linux.img
     options root=PARTUUID=2ae1a6dd-841a-4aac-be17-474113239a12 rw
 
-  Also, I don't see boot/intel-ucode.img anywhere, nor did I 
+  Also, I don't see boot/intel-ucode.img anywhere, nor did I
   configured it into boot/loader/entries/arch.conf.  Might want
   to remove the linux-firmware package before trying to boot
   into the system.
@@ -856,7 +856,7 @@ Note: Initially I did a lot of thrashing around, jump to
   Created /etc/hostname with the contents
 
     maxwell4
-  
+
   Set root password
 
     # passwd
@@ -880,7 +880,7 @@ Note: Initially I did a lot of thrashing around, jump to
     #random-seed-mode with-system-token
     console-mode auto
     #console-mode keep
-    
+
   The commented out lines are the defaults.
 
   Created /boot/loader/entries/arch.conf
@@ -939,10 +939,10 @@ Note: Initially I did a lot of thrashing around, jump to
     # uncomment for setting the wifi interface name yourself
     # see https://iwd.wiki.kernel.org/interface_lifecycle
     #UseDefaultInterface=true
-    
+
     # enable builtin DHCP-client within iwd for wifi
     EnableNetworkConfiguration=true
-    
+
     # randomizes mac-address every time iwd starts or the hardware is initially detected
     AddressRandomization=once
 
@@ -960,7 +960,7 @@ Note: Initially I did a lot of thrashing around, jump to
     link/ether 86:b9:39:71:da:e4 brd ff:ff:ff:ff:ff:ff
     inet 192.168.1.8/24 scope global noprefixroute wlan0
        valid_lft forever preferred_lft forever
-  
+
 2021-11-15:
   Need to set up DNS on maxwell4 so pacman will work.
   Lets compare to gauss17.
@@ -1092,15 +1092,15 @@ Note: Initially I did a lot of thrashing around, jump to
   This line added on maxwell4.
 
   Cloned my 3 GitHub reposes via
-       
-    $ mkdir devel; cd devel  
+
+    $ mkdir devel; cd devel
     $ git clone git@github.com:grscheller/scheller-linux-archive
     $ git clone git@github.com:grscheller/dotfiles
     $ git clone git@github.com:grscheller/neovim-notes
     $ cd scheller-linux-archive
 
   and made above changes.
- 
+
 2021-11-16:
   Still need to do
 
@@ -1117,7 +1117,7 @@ Note: Initially I did a lot of thrashing around, jump to
   my configured bash environment.  Then realized that I don't have
   fish installed.  I'll stay with bash until later tonight.
 
-  Now make nvim happy.  
+  Now make nvim happy.
 
     $ bsPaq
     Cloning into  '/home/grs/.local/share/nvim/site/pack/paqs/start/paq-nvim'...
@@ -1171,7 +1171,7 @@ Note: Initially I did a lot of thrashing around, jump to
     # pacman -Syu sudo
 
   Used the visudo command to edit /etc/sudoers.  Enabled non-root users
-  in the wheel group to use sudo without a password.  Tested with grs 
+  in the wheel group to use sudo without a password.  Tested with grs
   login successfully.
 
 2021-11-18:
@@ -1183,7 +1183,7 @@ Note: Initially I did a lot of thrashing around, jump to
 
     (gauss17)$ pacman -Qo /usr/bin/hostname
     /usr/bin/hostname is owned by inetutils 2.2-1
-    
+
     (gauss17)$ pacman -Flq inetutils
     etc/
     etc/pam.d/
@@ -1285,10 +1285,10 @@ Note: Initially I did a lot of thrashing around, jump to
     # uncomment for setting the wifi interface name yourself
     # see https://iwd.wiki.kernel.org/interface_lifecycle
     #UseDefaultInterface=true
-    
+
     # enable builtin DHCP-client within iwd for wifi
     EnableNetworkConfiguration=true
-    
+
     # randomizes mac-address every time iwd starts or the hardware is initially detected
     #AddressRandomization=once
 
@@ -1346,7 +1346,7 @@ Note: Initially I did a lot of thrashing around, jump to
     :: Starting full system upgrade...
     resolving dependencies...
     looking for conflicting packages...
-    
+
     Packages (27) alsa-card-profiles-1:0.3.40-1  alsa-lib-1.2.5.1-3
                   alsa-topology-conf-1.2.5.1-1  alsa-ucm-conf-1.2.5.1-1
                   bluez-libs-5.62-1  flac-1.3.3-3  libasyncns-0.8+3+g68cd5af-3
@@ -1358,12 +1358,146 @@ Note: Initially I did a lot of thrashing around, jump to
                   pipewire-docs-1:0.3.40-1  pipewire-jack-1:0.3.40-1
                   pipewire-pulse-1:0.3.40-1  wireplumber-0.4.5-2
                   wireplumber-docs-0.4.5-2
-    
+
     Total Download Size:   10.74 MiB
     Total Installed Size:  49.00 MiB
-    
+
     :: Proceed with installation? [Y/n]
     ...
 
   Reboot.
+
+  Lets see if I can get sound out.  See if it just works,
+
+    $ sudo pacman -Syu vorbis-tools
+    $ scp gauss17:Music/PopRock/Yes/Roundabout.ogg .
+    $ ogg123 Roundabout.ogg 2>&1
+
+    Audio Device:   Advanced Linux Sound Architecture (ALSA) output
+
+         Playing: Roundabout.ogg
+         Ogg Vorbis stream: 2 channel, 44100 Hz
+         Title: Roundabout
+         Artist: Yes
+         Genre: Rock
+         Date: 1972
+     ALSA lib confmisc.c:855:(parse_card) cannot find card '0'
+     ALSA lib conf.c:5111:(_snd_config_evaluate) function snd_func_card_inum returned error: No such file or directory
+     ALSA lib confmisc.c:422:(snd_func_concat) error evaluating strings
+     ALSA lib conf.c:5111:(_snd_config_evaluate) function snd_func_concat returned error: No such file or directory
+     ALSA lib confmisc.c:1334:(snd_func_refer) error evaluating name
+     ALSA lib conf.c:5111:(_snd_config_evaluate) function snd_func_refer returned error: No such file or directory
+     ALSA lib conf.c:5599:(snd_config_expand) Evaluate error: No such file or directory
+     ALSA lib pcm.c:2660:(snd_pcm_open_noupdate) Unknown PCM default
+         ERROR: Cannot open device alsa.
+
+  Last command was done from the console, not an ssh terminal session.
+ 
+  I think I might know where the problem might lay.  Near the end
+  of 2021-11-13 I notes error messages on the console at boots
+  involving sof-audio-pci-intel-cn firmware missing.  Before I go
+  down that rabbit hole, lets try something simpler.
+
+    $ sudo pacman -Syu pipewire-alsa
+
+  Reboot
+
+    $ ogg123 Roundabout.ogg 2>&1
+
+  Application freezes after 0.17 sec.  Have to use 'kill -9'
+  to end it, 'kill -15' does not work.  No sound heard.
+
+2021-11-20:
+  Time to go down the audio driver rabbit hole.  Starting with
+  a Duck-Duck-Go search: Arch Linux sof-audio-pci-intel-cn
+  I am directed to the the Advanced Linux Sound Architecture wiki
+  page.  (Probably where I should have started.)
+
+  First install alsa-utils package.
+
+    $ sudo pacman -Syu alsa-utils
+    $ sudo pacman -Syu alsa-plugins
+    $ sudo pacman -Syu tree
+
+    $ alsa-info.sh
+    ...
+    !!Loaded ALSA modules
+    !!-------------------
+
+
+
+    !!Sound Servers on this system
+    !!----------------------------
+
+    PipeWire:
+          Installed - Yes (/usr/bin/pipewire)
+          Running - Yes
+
+    No sound servers found.
+
+
+    !!Soundcards recognised by ALSA
+    !!-----------------------------
+
+    --- no soundcards ---
+
+
+    !!PCI Soundcards installed in the system
+    !!--------------------------------------
+
+    00:1f.3 Multimedia audio controller [0401]: Intel Corporation Comet Lake PCH-LP cAVS [8086:02c8]
+    	Subsystem: Dell Device [1028:0950]
+    ...
+
+  From the wiki, sof-firmware and alsa-ucm-conf are required by
+  newer laptops.  Not sure if alsa-firmware package also required.
+
+    $ sudo pacman -Syu sof-firmware alsa-ucm-conf alsa-firmware
+
+  Let's do a reboot.
+
+  From the console as a regular user,
+
+    $ ogg123 Roundabout.ogg
+
+  Application seems to be working from the console, but no sound.
+  Probably just need to unmute.
     
+    $ amixer sset Master unmute
+    Simple mixer control 'Master',0
+      Capabilities: pvolume pswitch pswitch-joined
+      Playback channels: Front Left - Front Right
+      Limits: Playback 0 - 65536
+      Mono:
+      Front Left: Playback 26213 [40%] [on]
+      Front Right: Playback 26213 [40%] [on]
+    
+    $ amixer sset Speaker unmute
+    amixer: Unable to find simple control 'Speaker',0
+    
+    $ amixer sset Headphone unmute
+    amixer: Unable to find simple control 'Headphone',0
+
+    $ ogg123 Roundabout.ogg
+
+    Audio Device:   Advanced Linux Sound Architecture (ALSA) output
+    
+    Playing: Roundabout.ogg
+    Ogg Vorbis stream: 2 channel, 44100 Hz
+    Title: Roundabout
+    Artist: Yes
+    Genre: Rock
+    Date: 1972
+    Time: 00:27.94 [08:03.72] of 08:31.67  (202.2 kbps)  Output Buffer  77.8%
+
+  It works!  Really nice sound from such small speakers.
+  Works from both the console and an ssh termnal session.
+
+2021-11-21:
+  Things to do,
+
+    1. Fix the udev iwctl race condition.
+    2. Properly configure systemd-networkd.
+    3. Properly configure systemd-resolved.
+    4. Get Bluetooth working from console.
+    5. Install desktop environment, probably gnome.

@@ -1301,4 +1301,69 @@ Note: Initially I did a lot of thrashing around, jump to
   When I travel, I might want to turn this random MAC address feature back on again.
 
 2021-11-20:
+  Lets install Pipewire.
 
+  Currently on gauss17, pipewire-wise I have installed
+
+    gst-plugin-pipewire  (gnome shell dependency)
+    libpipewire02  (weston compositor dependency)
+    pipewire
+    pipewire-alsa  (ALSA configuration, gnome-shell dependency)
+    pipewire-docs
+    pipewire-jack  (JACK support)
+    pipewire-media-session  (pipewire-jack, pipewire-alsa dependency)
+
+  The last one seems to be an orphaned package.  I think it has been
+  replaced by something called wireplumber.
+
+    (gauss17)$ sudo pacman -S wireplumber
+    resolving dependencies...
+    looking for conflicting packages...
+    :: wireplumber and pipewire-media-session are in conflict. \
+       Remove pipewire-media-session? [y/N]
+
+    (gauss17)$ $ pactree -r pipewire-jack
+    pipewire-jack
+
+  I don't see pipewire-pulse?
+
+    (gauss)$ sudo pacman -S pipewire-pulse
+    resolving dependencies...
+    looking for conflicting packages...
+    :: pipewire-pulse and pulseaudio are in conflict. \
+       Remove pulseaudio? [y/N]
+
+  Opps, still running pulseaudio over on gauss17.
+
+  Going for a minimalist install
+
+    $ sudo pacman -Syu wireplumber wireplumber-docs pipewire-docs \
+                   pipewire-jack pipewire-pulse
+    :: Synchronizing package databases...
+     core is up to date
+     extra is up to date
+     community is up to date
+    :: Starting full system upgrade...
+    resolving dependencies...
+    looking for conflicting packages...
+    
+    Packages (27) alsa-card-profiles-1:0.3.40-1  alsa-lib-1.2.5.1-3
+                  alsa-topology-conf-1.2.5.1-1  alsa-ucm-conf-1.2.5.1-1
+                  bluez-libs-5.62-1  flac-1.3.3-3  libasyncns-0.8+3+g68cd5af-3
+                  libfdk-aac-2.0.2-1  libfreeaptx-0.1.1-1  libldac-2.0.2.3-1
+                  libogg-1.3.5-1  libpulse-15.0-1  libsndfile-1.0.31-1
+                  libvorbis-1.3.7-2  lua-5.4.3-1  opus-1.3.1-2
+                  pipewire-1:0.3.40-1  rtkit-0.13-1  sbc-1.5-2  speex-1.2.0-3
+                  speexdsp-1.2.0-2  webrtc-audio-processing-0.3.1-3
+                  pipewire-docs-1:0.3.40-1  pipewire-jack-1:0.3.40-1
+                  pipewire-pulse-1:0.3.40-1  wireplumber-0.4.5-2
+                  wireplumber-docs-0.4.5-2
+    
+    Total Download Size:   10.74 MiB
+    Total Installed Size:  49.00 MiB
+    
+    :: Proceed with installation? [Y/n]
+    ...
+
+  Reboot.
+    

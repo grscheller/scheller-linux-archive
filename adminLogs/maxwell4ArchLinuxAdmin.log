@@ -314,7 +314,7 @@ Note: Initially I did a lot of thrashing around, jump to
     # ip link
     # ping archlinux.org
 
-  all indicate network is up and DNS configured.
+  All indicate network is up and DNS configured.
 
   Confirmed booted into UEFI mode by
 
@@ -1392,7 +1392,7 @@ Note: Initially I did a lot of thrashing around, jump to
          ERROR: Cannot open device alsa.
 
   Last command was done from the console, not an ssh terminal session.
- 
+
   I think I might know where the problem might lay.  Near the end
   of 2021-11-13 I notes error messages on the console at boots
   involving sof-audio-pci-intel-cn firmware missing.  Before I go
@@ -1462,7 +1462,7 @@ Note: Initially I did a lot of thrashing around, jump to
 
   Application seems to be working from the console, but no sound.
   Probably just need to unmute.
-    
+
     $ amixer sset Master unmute
     Simple mixer control 'Master',0
       Capabilities: pvolume pswitch pswitch-joined
@@ -1471,17 +1471,17 @@ Note: Initially I did a lot of thrashing around, jump to
       Mono:
       Front Left: Playback 26213 [40%] [on]
       Front Right: Playback 26213 [40%] [on]
-    
+
     $ amixer sset Speaker unmute
     amixer: Unable to find simple control 'Speaker',0
-    
+
     $ amixer sset Headphone unmute
     amixer: Unable to find simple control 'Headphone',0
 
     $ ogg123 Roundabout.ogg
 
     Audio Device:   Advanced Linux Sound Architecture (ALSA) output
-    
+
     Playing: Roundabout.ogg
     Ogg Vorbis stream: 2 channel, 44100 Hz
     Title: Roundabout
@@ -1501,3 +1501,117 @@ Note: Initially I did a lot of thrashing around, jump to
     3. Properly configure systemd-resolved.
     4. Get Bluetooth working from console.
     5. Install desktop environment, probably gnome.
+
+  Lets fix this race condition.  According to the website
+  https://insanity.industries/post/racefree-iwd, iwd is so
+  fast that it can bring up the wireless network before the
+  udev dynanic device management daemon, systemd-udevd.services,
+  can rename the network device to a more meaningful name than
+  wlan0.  This network renaming can only happen when the network
+  interface is down.  The alternative to iwd, wpa_supplicant,
+  is much slower due to relying on many external libraries.
+  The only things iwd typically relies on are kernel resources
+  and the runtime C library.  See https://iwd.wiki.kernel.org.
+
+  Currently,
+
+    $ ip addr
+    1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+        link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+        inet 127.0.0.1/8 scope host lo
+           valid_lft forever preferred_lft forever
+        inet6 ::1/128 scope host
+           valid_lft forever preferred_lft forever
+    3: wlan0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+        link/ether 08:71:90:c3:bb:8a brd ff:ff:ff:ff:ff:ff
+        inet 192.168.1.7/24 scope global noprefixroute wlan0
+           valid_lft forever preferred_lft forever
+
+      Now, to figure out the name udev would have named interface
+
+    # station wlan0 disconnect
+    # systemctl reboot
+
+  Well, interface name still wlan0.
+
+  Seems the problem was already fixed, From the  Arch wiki,
+  https://wiki.archlinux.org/title/Iwd, since version 1.0,
+  iwd disables predictable renaming of wireless device.  It
+  installs a systemd network link configuration file to keep
+  the original kernel name
+
+    $ cat /usr/lib/systemd/network/80-iwd.link
+    [Match]
+    Type=wlan
+
+    [Link]
+    NamePolicy=keep kernel
+
+  Note that
+
+    # pacman -Qo /etc/iwd/main.conf
+    error: No package owns /etc/iwd/main.conf
+    # ls -l /etc/iwd/main.conf
+    -rw-r--r-- 1 root root 443 Nov 20 02:43 /etc/iwd/main.conf
+
+  I forgot, I created this file.
+
+  Nothing to fix.
+
+2021-11-22:
+  Things todo,
+
+    1. Properly configure systemd-networkd.
+    2. Properly configure systemd-resolved.
+    3. Get Bluetooth working from console.
+    4. Install desktop environment, probably gnome.
+
+  Will tackle #1 and #2 based on Arch wiki systemd-networkd
+  and systemd-resolved pages.
+
+  But first, for something I stumbled upon,
+
+    $ systemctl --user --all --type=service
+      UNIT                           LOAD      ACTIVE   SUB  DESCRIPTION
+      dbus.service                   loaded    inactive dead D-Bus User Message Bus
+      dirmngr.service                loaded    inactive dead GnuPG network certificate management daemon
+      gpg-agent.service              loaded    inactive dead GnuPG cryptographic agent and passphrase cache
+      p11-kit-server.service         loaded    inactive dead p11-kit server
+    ● pipewire-media-session.service not-found inactive dead pipewire-media-session.service
+      pipewire-pulse.service         loaded    inactive dead PipeWire PulseAudio
+      pipewire.service               loaded    inactive dead PipeWire Multimedia Service
+    ● pulseaudio.service             not-found inactive dead pulseaudio.service
+      wireplumber.service            loaded    inactive dead Multimedia Service Session Manager
+
+  Not sure if these "not-found" services are errors or not.  I can't
+  disable them.
+
+    $ systemctl --user disable pulseaudio.service
+    Failed to disable unit: Unit file pulseaudio.service does not exist.
+
+  They are things I removed via pacman.  I'll assume this is normal since
+  without the --all I see disabled things like "syslog.service" and
+  "display-manager.service".  On gauss17 I see "system76-power.service".
+
+    $ systemctl --user disable syslog.service
+    Failed to disable unit: Unit file syslog.service does not exist.
+
+  Which never was installed.  I guess systemd (Arch?) is configuring
+  everything but the kitchen sink.  Also, on maxwell4
+
+    $ networkctl
+    WARNING: systemd-networkd is not running, output will be incomplete.
+
+    IDX LINK  TYPE     OPERATIONAL SETUP
+      1 lo    loopback n/a         unmanaged
+      3 wlan0 wlan     n/a         unmanaged
+
+    2 links listed.
+
+  Similarly on gauss17.
+
+  Taking a break.  Don't want to rush this install by just
+  throwing Gnome on and "fixing things."  I am learning
+  too much.
+
+2021-11-22:

@@ -1446,7 +1446,7 @@ Note: Initially I did a lot of thrashing around, jump to
     !!--------------------------------------
 
     00:1f.3 Multimedia audio controller [0401]: Intel Corporation Comet Lake PCH-LP cAVS [8086:02c8]
-    	Subsystem: Dell Device [1028:0950]
+            Subsystem: Dell Device [1028:0950]
     ...
 
   From the wiki, sof-firmware and alsa-ucm-conf are required by
@@ -1615,3 +1615,43 @@ Note: Initially I did a lot of thrashing around, jump to
   too much.
 
 2021-11-22:
+  Install CLI configuration utility for wireless devices
+
+    $ pacman -Syu iw
+
+  Very powerful tool.
+
+    $ iw help     # for documentation
+
+    $ iw devices
+    phy#0
+            Unnamed/non-netdev interface
+                    wdev 0x3
+                    addr 08:71:90:c3:bb:8b
+                    type P2P-device
+                    txpower 0.00 dBm
+            Interface wlan0
+                    ifindex 3
+                    wdev 0x2
+                    addr 08:71:90:c3:bb:8a
+                    ssid CC-Platform One
+                    type managed
+                    channel 56 (5280 MHz), width: 80 MHz, center1: 5290 MHz
+                    txpower 21.00 dBm
+                    multicast TXQ:
+                            qsz-byt  qsz-pkt  flows    drops    marks    overlmt  hashcol  tx-bytes       tx-packets
+                            0        0        0        0        0        0        0        0              0
+
+    $ iw dev wlan0 link
+    Connected to 6a:3a:0e:54:4c:4e (on wlan0)
+            SSID: CC-Platform One
+            freq: 5280
+            RX: 529929 bytes (9285 packets)
+            TX: 472991 bytes (1095 packets)
+            signal: -61 dBm
+            rx bitrate: 720.6 MBit/s 80MHz HE-MCS 7 HE-NSS 2 HE-GI 0 HE-DCM 0
+            tx bitrate: 1134.2 MBit/s 80MHz HE-MCS 11 HE-NSS 2 HE-GI 1 HE-DCM 0
+    
+            bss flags:        short-slot-time
+            dtim period:      1
+            beacon int:       100

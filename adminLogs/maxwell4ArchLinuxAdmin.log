@@ -1763,10 +1763,7 @@ Note: Initially I did a lot of thrashing around, jump to
 
   Success!!!
 
-
-
-
-2021-11-23 (Todo after above):
+2021-11-23:
   I have a slight localization problem.
 
     $ man ln
@@ -1774,3 +1771,71 @@ Note: Initially I did a lot of thrashing around, jump to
 
     $ env | grep -E '(LANG|LC_)'
     LANG=en_US.UTF-8
+
+    $ locale
+    locale: Cannot set LC_CTYPE to default locale: No such file or directory
+    locale: Cannot set LC_MESSAGES to default locale: No such file or directory
+    locale: Cannot set LC_ALL to default locale: No such file or directory
+    LANG=en_US.UTF-8
+    LC_CTYPE="en_US.UTF-8"
+    LC_NUMERIC="en_US.UTF-8"
+    LC_TIME="en_US.UTF-8"
+    LC_COLLATE="en_US.UTF-8"
+    LC_MONETARY="en_US.UTF-8"
+    LC_MESSAGES="en_US.UTF-8"
+    LC_PAPER="en_US.UTF-8"
+    LC_NAME="en_US.UTF-8"
+    LC_ADDRESS="en_US.UTF-8"
+    LC_TELEPHONE="en_US.UTF-8"
+    LC_MEASUREMENT="en_US.UTF-8"
+    LC_IDENTIFICATION="en_US.UTF-8"
+    LC_ALL=
+
+    $ sudo localectl list-locales
+    <nothing>
+
+    # cat /etc/locale.conf
+    LANG=en_US.UTF-8
+
+  Nothing uncommented in /etc/locale.gen, uncommenting the line
+
+    #en_US.UTF-8 UTF-8
+
+  Now generate the locale.
+
+    # locale-gen
+    Generating locales...
+      en_US.UTF-8... done
+
+    # man ln
+    #
+
+    $ locale
+    LANG=en_US.UTF-8
+    LC_CTYPE="en_US.UTF-8"
+    LC_NUMERIC="en_US.UTF-8"
+    LC_TIME="en_US.UTF-8"
+    LC_COLLATE="en_US.UTF-8"
+    LC_MONETARY="en_US.UTF-8"
+    LC_MESSAGES="en_US.UTF-8"
+    LC_PAPER="en_US.UTF-8"
+    LC_NAME="en_US.UTF-8"
+    LC_ADDRESS="en_US.UTF-8"
+    LC_TELEPHONE="en_US.UTF-8"
+    LC_MEASUREMENT="en_US.UTF-8"
+    LC_IDENTIFICATION="en_US.UTF-8"
+    LC_ALL=
+
+  I think this fixed the problem.
+
+2021-11-23:
+  Things todo,
+
+    1. Get Bluetooth working from console
+    2. Install gnome
+
+  I need this system for work and I got Python & Rust stuff
+  to learn.  I know Gnome and maybe later I will see if I can
+  get another desktop to work on gauss17.
+
+  A dry run of pacman does not drag in NetworkManager.

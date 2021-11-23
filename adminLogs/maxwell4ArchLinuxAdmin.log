@@ -1651,7 +1651,126 @@ Note: Initially I did a lot of thrashing around, jump to
             signal: -61 dBm
             rx bitrate: 720.6 MBit/s 80MHz HE-MCS 7 HE-NSS 2 HE-GI 0 HE-DCM 0
             tx bitrate: 1134.2 MBit/s 80MHz HE-MCS 11 HE-NSS 2 HE-GI 1 HE-DCM 0
-    
+
             bss flags:        short-slot-time
             dtim period:      1
             beacon int:       100
+
+2021-11-23:
+  Things todo,
+
+    1. Properly configure systemd-networkd & systemd-resolved.
+    2. Get Bluetooth working from console.
+    3. Install desktop environment, probably not gnome.
+
+  I want to go with systemd-networkd and don't want to have to fight
+  with gnome packages regarding NetworkManager.  Also want to go
+  with a more minimal desktop environment anyway.
+
+  The systemd-networkd is a powerful tool capable of maintaining
+  complicated networks.  I just need it to configure it to work with
+  the wifi networks, perhaps random ones, I have to deal with.
+
+  The systemd-networkd Arch wiki says to make sure that it is
+  the only network management service running.  Does iwd.service
+  count as a "network management service?"  From the idw Arch
+  wiki: iwd can work in standalone mode or in combination with
+        comprehensive network managers like ConnMan, systemd-networkd
+        and NetworkManager
+
+  Now, consider /etc/iwd/main.conf I created on 2021-11-14.
+
+    $ pacman -Qo /etc/iwd/
+    error: No package owns /etc/iwd/main.conf
+
+  Based on the Arch iwd wiki, I changed it to
+
+    [General]
+    # uncomment for setting the wifi interface name yourself
+    # see https://iwd.wiki.kernel.org/interface_lifecycle
+    #UseDefaultInterface=true
+
+    # enable builtin DHCP-client within iwd for wifi
+    EnableNetworkConfiguration=true
+
+    # randomize mac-address every time iwd starts or the hardware is initially detected
+    #AddressRandomization=once
+
+    [Network]
+    EnableIPv6=true
+    NameResolvingService=systemd
+
+  Commented out my /etc/resolv.conf hack
+
+    # Resolver configuration file.
+    # See resolv.conf(5) for details.
+    # Edited by grscheller
+    # nameserver 1.1.1.1
+
+  Well, the following from the Arch systemd-resolved wiki actually
+  blows the above file away.
+
+    $ sudo ln -sf /run/systemd/resolve/stub-resolve.conf /etc/resolv.conf
+
+  I am going to use are the systemd-networkd and systemd-resolved
+  services and the resolvconf command from the systemd-resolvconf
+  package.
+
+  The first two come with systemd
+
+    $ pacman -Flq systemd | grep -E '(resolved|networkd)\.conf'
+    etc/systemd/networkd.conf
+    etc/systemd/resolved.conf
+    usr/share/man/man5/networkd.conf.5.gz
+    usr/share/man/man5/networkd.conf.d.5.gz
+    usr/share/man/man5/resolved.conf.5.gz
+    usr/share/man/man5/resolved.conf.d.5.gz
+    
+  and the third one has its own package
+
+    $ pacman -Ss systemd-resolvconf
+    core/systemd-resolvconf 249.7-1
+        systemd resolvconf replacement (for use with systemd-resolved)
+    
+  which I need to install.  Opps, have to bring /etc/resolv.conf back
+  temporarily for pacman to work.
+
+    $ sudo rm /etc/resolve.conf
+    # echo nameserver 1.1.1.1 > /etc/resolv.conf
+    # pacman -Syu systemd-resolvconf
+    # ln -sf /run/systemd/resolve/stub-resolve.conf /etc/resolv.conf
+
+  Now enable the services.
+
+    # systemctl enable systemd-networkd
+    # systemctl enable systemd-resolved
+
+  Reboot.
+
+    $ ip address show
+    1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+        link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+        inet 127.0.0.1/8 scope host lo
+           valid_lft forever preferred_lft forever
+        inet6 ::1/128 scope host 
+           valid_lft forever preferred_lft forever
+    3: wlan0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+        link/ether 08:71:90:c3:bb:8a brd ff:ff:ff:ff:ff:ff
+        inet 10.100.45.248/24 scope global noprefixroute wlan0
+           valid_lft forever preferred_lft forever
+        inet6 fe80::a71:90ff:fec3:bb8a/64 scope link 
+           valid_lft forever preferred_lft forever
+
+  Success!!!
+
+
+
+
+2021-11-23 (Todo after above):
+  I have a slight localization problem.
+
+    $ man ln
+    man: can't set the locale; make sure $LC_* and $LANG are correct
+
+    $ env | grep -E '(LANG|LC_)'
+    LANG=en_US.UTF-8

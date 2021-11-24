@@ -1916,3 +1916,22 @@ Note: Initially I did a lot of thrashing around, jump to
   appropriate function key or switch.  If soft blocked, use the
   rfkill command.
 
+2021-11-24:
+  Will install Bnome today.  Following the Gnome Arch Linux Wiki.
+
+    $ sudo pacman -Syu gnome gnome-extra
+
+  Choose all packages in package groups, second one includes gnome-tweaks.
+  Other choices during installation:
+
+    noto-fonts-emoji  (default)
+    noto-fonts (2nd choice, default was gnu-free-fonts)
+    
+  633 packages, 590 MiB, nothing with the work Wayland in it.
+  
+  Enable Gnome Display Manager GDM.
+
+    $ sudo systemctl enable gdm.service
+
+  Reboot.
+

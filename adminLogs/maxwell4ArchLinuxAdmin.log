@@ -1725,13 +1725,13 @@ Note: Initially I did a lot of thrashing around, jump to
     usr/share/man/man5/networkd.conf.d.5.gz
     usr/share/man/man5/resolved.conf.5.gz
     usr/share/man/man5/resolved.conf.d.5.gz
-    
+
   and the third one has its own package
 
     $ pacman -Ss systemd-resolvconf
     core/systemd-resolvconf 249.7-1
         systemd resolvconf replacement (for use with systemd-resolved)
-    
+
   which I need to install.  Opps, have to bring /etc/resolv.conf back
   temporarily for pacman to work.
 
@@ -1752,13 +1752,13 @@ Note: Initially I did a lot of thrashing around, jump to
         link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
         inet 127.0.0.1/8 scope host lo
            valid_lft forever preferred_lft forever
-        inet6 ::1/128 scope host 
+        inet6 ::1/128 scope host
            valid_lft forever preferred_lft forever
     3: wlan0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
         link/ether 08:71:90:c3:bb:8a brd ff:ff:ff:ff:ff:ff
         inet 10.100.45.248/24 scope global noprefixroute wlan0
            valid_lft forever preferred_lft forever
-        inet6 fe80::a71:90ff:fec3:bb8a/64 scope link 
+        inet6 fe80::a71:90ff:fec3:bb8a/64 scope link
            valid_lft forever preferred_lft forever
 
   Success!!!
@@ -1850,7 +1850,7 @@ Note: Initially I did a lot of thrashing around, jump to
     btintel                45056  1 btusb
     bluetooth             749568  5 btrtl,btintel,btbcm,btusb
 
-  Kernal divers are in place.  Get software.  
+  Kernal divers are in place.  Get software.
 
     $ sudo pacman -Syu bluez bluez-utils
 
@@ -1917,7 +1917,7 @@ Note: Initially I did a lot of thrashing around, jump to
   rfkill command.
 
 2021-11-24:
-  Will install Bnome today.  Following the Gnome Arch Linux Wiki.
+  Will install Gnome today.  Following the Gnome Arch Linux Wiki.
 
     $ sudo pacman -Syu gnome gnome-extra
 
@@ -1926,12 +1926,71 @@ Note: Initially I did a lot of thrashing around, jump to
 
     noto-fonts-emoji  (default)
     noto-fonts (2nd choice, default was gnu-free-fonts)
-    
+
   633 packages, 590 MiB, nothing with the work Wayland in it.
-  
+
   Enable Gnome Display Manager GDM.
 
     $ sudo systemctl enable gdm.service
 
   Reboot.
+
+  Logged into Gnome session fine.  Gnome version 41.1.
+
+  Switched to dark theme in settings.  Launched Gnome Tweaks.
+
+  Set Fonts:
+    Interface Text         Noto Sans Medium
+    Document Text          Noto Sans Regular
+    Monospace Text         Noto Sans Mono Regular
+    Legacy Window Titles   Noto Sans Bold
+
+  I can live with this font in Gnome Terminal.  Well, in Neovim
+  the Tokyo Night theme is gorgeous.  In Fish, just OK.  Does
+  not matter, I should have Alacritty installed before the end
+  of the day.
+
+  According to Settings, the graphics chip set I am running off of
+  is the Mesa Intel UHD Graphics (CML GT2).  Since it is a work
+  computer, maybe I will just not mess with the Nvidia chip set.
+
+    $ lsmod | egrep -i '(nvidia|nouveau)'
+    nouveau              2768896  0
+    mxm_wmi                16384  1 nouveau
+    drm_ttm_helper         16384  1 nouveau
+    ttm                    86016  3 drm_ttm_helper,i915,nouveau
+    wmi                    45056  8 dell_wmi_sysman,intel_wmi_thunderbolt,dell_wmi,wmi_bmof,dell_smbios,dell_wmi_descriptor,mxm_wmi,nouveau
+    video                  57344  4 dell_wmi,dell_laptop,i915,nouveau
+
+  Well, at least I am not "tainting" my kernel.
+
+    $ ls /dev/dri
+    by-path  card0  card1  renderD128  renderD129
+
+  The kernel sees both video cards, only using the nouveau drivers.
+
+  Touch screen display works flawlessly.  So does my USB dongle
+  mouse.
+
+2021-11-24:
+  Getting Wayland to work. GDM is giving me Wayland and XOrg
+  choices but I think only XOrg version ever runs.  Lets check.
+
+  Reboot and choose just Gnome.
+
+    $ echo $WAYLAND_DISPLAY
+    wayland-0
+
+    $ echo $XDG_SESSION_TYPE
+    wayland
+
+    $ ps -ef | grep -i wayland | grep -v grep
+    grs          871     847  0 13:34 tty2     00:00:00 \
+        /usr/lib/gdm-wayland-session /usr/bin/gnome-session
+    grs         1694     943  0 13:42 ?        00:00:00         \
+        /usr/bin/Xwayland :0 -rootless -noreset -accessx        \
+        -core -auth /run/user/1000/.mutter-Xwaylandauth.WX38C1  \
+        -listenfd 4 -listenfd 5 -displayfd 6 -initfd 7
+
+  Yes! We are running Wayland!
 

@@ -1839,3 +1839,80 @@ Note: Initially I did a lot of thrashing around, jump to
   get another desktop to work on gauss17.
 
   A dry run of pacman does not drag in NetworkManager.
+
+2021-11-24:
+  Get bluetooth working.  Following the Bluetooth Arch Wiki.
+
+    $ lsmod|grep btusb
+    btusb                  65536  0
+    btrtl                  28672  1 btusb
+    btbcm                  24576  1 btusb
+    btintel                45056  1 btusb
+    bluetooth             749568  5 btrtl,btintel,btbcm,btusb
+
+  Kernal divers are in place.  Get software.  
+
+    $ sudo pacman -Syu bluez bluez-utils
+
+  Enable and start the service.
+
+    $ sudo systemctl enable bluetooth.services
+    $ sudo systemctl start bluetooth.service
+
+  Docs are man:bluetoothd(8)
+
+  For sharing an internet connection via bluetooth tethering,
+  user needs to be a member of the lp group.  Otherwise user
+  does not need to be a member of this group.
+
+  CLI is called bluetoothctl.  To list possible commands
+
+    $ bluetoothctl --help
+
+  for interactive sessions
+
+    $ bluetoothctl
+    [bluetooth]# help
+
+  To pair a device (from Arch wiki):
+
+   -1. List bluetooth conrollers:            list
+    0. Select or change default controller:  select <MAC-Adress>
+    1. Turn power on:                        power on
+    2. List previously paired device:        devices
+    3. Scan for devices (discovery mode):    scan on
+    4. Turn scan off:                        scan off
+    5. Turn default agent on:                agent on
+    6. Pair device:                          pair AC:XX:XX:XX:XX:AE
+    7. Trust device:                         trust AC:XX:XX:XX:XX:AE
+
+  Something overly aggressive in my apartment complex
+  is competing for my bluetooth headset.  Had to do it
+  from the computer side
+
+    8. Make controller pairable:             pairable on
+    9. Make controller unpairable:           pairable off
+
+  Was able to pair with my Tribit XFree Tune headset.  A little
+  distortion at times, but definately OK for Zoom meetings.
+
+  On reboot, had to use bluetoothctl to turn power on, but
+  after that maxwell4 connected without my intervention.
+
+  Gnome bluetooth tools:
+
+    gnome-bluetooth:          provides back end
+    gnome-shell:              provides status monitor
+    gnome-control-center:     configuration front end GUI
+    nautilus-bluetooth(AUR):  Adds "Send via Bluetooth" to right-click menu
+
+  Other GUI frontends:
+    Bluedevil for KDE
+    Blueberry for Linux Mint
+    Blueman is a full featured Bluetooth manager
+    ObexFTP is a tool for transfering files to/from OBEX enabled devices
+
+  Note: Bluetooth or WiFi may be blocked.  If hard blocked, use
+  appropriate function key or switch.  If soft blocked, use the
+  rfkill command.
+

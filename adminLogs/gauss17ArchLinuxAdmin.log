@@ -9410,3 +9410,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   From that wiki page I learned the commandline utility to control
   bluetooth is called bluetoothctl and is part of the bluez-utils
   package.  Its commands are similar to those of iwctl.
+
+2021-11-23:
+  I will be workng wit Python more, so I installed the Python IDE Spyder.
+  Brought in python-lsp-server & python-lsp-jsonrpc.

@@ -1994,3 +1994,45 @@ Note: Initially I did a lot of thrashing around, jump to
 
   Yes! We are running Wayland!
 
+2021-11-25:
+  Installed alacritty.
+
+    sudo pacman -Syu alactritty
+
+  Also, used gnome-settings to configure "Super+T" to launch
+  alacritty.
+
+  Able to launch from fish or bash via each's tm shell function,
+  but failing the above keyboard shortcut.
+
+  Alacritty also not playing nice with the Dash.
+
+  Figured it out. Due to iMac at work having fish installed
+  via a symlink in /usr/local/bin/fish, I have to configure 
+  alacritty in ~/.config/alacritty/alacritty.yml to look for
+  fish there.  Therefore on Arch I have to do
+
+    # ln -s /usr/bin/fish /usr/local/bin
+    # ls -l /usr/local/bin
+    lrwxrwxrwx 1 root root 13 Nov 25 00:52 fish -> /usr/bin/fish
+
+  With this symlink, everything works fine.  I also Used
+  Extensions to enable a Gnome extenstion which changes the Dash
+  to open a new instance when an icon is clicked.  90% of the
+  time that is what I want.
+
+2021-11-25:
+  Installed the gpaste package which includes a gpaste
+  Gnome Shell Extension.
+
+    $ pacman -Syu gpaste
+
+  Had to reboot system before the Extensions App saw the
+  GPaste@gnome-shell-extensions.gnome.org extension allowing
+  me to turn it on.  
+
+  For whatever it is worth, there is a gnome-extensions CLI
+  tool with similar functionality to the Extension App.
+
+  This extension is very similar to the XFCE Clipman clipboard
+  manager.

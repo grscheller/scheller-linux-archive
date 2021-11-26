@@ -169,6 +169,16 @@ sources user's ~/.profile with /etc/gdm/Xsession using /bin/sh.
    $ gsettings set org.gnome.desktop.wm.preferences raise-on-click false
 ```
 
+* Get and change screen lock delaytime
+
+```
+   $ gsettings get org.gnome.desktop.session idle-delay
+   uint32 300
+   $ gsettings set org.gnome.desktop.session idle-delay 3600
+   $ gsettings get org.gnome.desktop.session idle-delay
+   uint32 3600
+```
+
 ## Gnome-Shell-Extensions
 
 ### Arch Linux

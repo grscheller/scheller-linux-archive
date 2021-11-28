@@ -2008,7 +2008,7 @@ Note: Initially I did a lot of thrashing around, jump to
   Alacritty also not playing nice with the Dash.
 
   Figured it out. Due to iMac at work having fish installed
-  via a symlink in /usr/local/bin/fish, I have to configure 
+  via a symlink /usr/local/bin/fish, I have to configure
   alacritty in ~/.config/alacritty/alacritty.yml to look for
   fish there.  Therefore on Arch I have to do
 
@@ -2016,8 +2016,8 @@ Note: Initially I did a lot of thrashing around, jump to
     # ls -l /usr/local/bin
     lrwxrwxrwx 1 root root 13 Nov 25 00:52 fish -> /usr/bin/fish
 
-  With this symlink, everything works fine.  I also Used
-  Extensions to enable a Gnome extenstion which changes the Dash
+  With this symlink, everything works fine.  I also used an
+  Extension to enable a Gnome extenstion which changes the Dash
   to open a new instance when an icon is clicked.  90% of the
   time that is what I want.
 
@@ -2029,10 +2029,67 @@ Note: Initially I did a lot of thrashing around, jump to
 
   Had to reboot system before the Extensions App saw the
   GPaste@gnome-shell-extensions.gnome.org extension allowing
-  me to turn it on.  
+  me to turn it on.
 
   For whatever it is worth, there is a gnome-extensions CLI
   tool with similar functionality to the Extension App.
 
   This extension is very similar to the XFCE Clipman clipboard
   manager.
+
+2021-11-27:
+  maxwell4 has been putting itself in low power state.  When
+  awakened,
+
+    $ getent hosts www.github.com
+    ^C⏎
+
+    $ sudo systemctl restart systemd-networkd
+
+    $ getent hosts www.github.com
+    140.82.113.4    github.com
+
+  While investigaing this, stumbled on how I could do
+  proper hibernation.  From Arch wiki Power Management
+  and mkinitcpio pages.
+
+  Add "resume" to the following line in /etc/mkinitcpio.conf.
+
+    HOOKS=(base udev autodetect modconf block resume filesystems keyboard fsck)
+
+  Added "resume=/dev/nvme0n1p2" to options line in /boot/loader/entries/arch.conf
+
+    title   Arch Linux
+    linux   /vmlinuz-linux
+    initrd  /intel-ucode.img
+    initrd  /initramfs-linux.img
+    #options root=PARTUUID=3038000f-4be8-4960-a020-74227b73b7d0 rootfstype=ext4 add_efi_memmap
+    options root=/dev/nvme0n1p3 rootfstype=ext4 add_efi_memmap resume=/dev/nvme0n1p2
+
+  Finally
+
+    $ sudo mkinitcpio -P
+
+  Reboot.
+
+  Both
+
+    $ systemctl suspend
+    $ systemctl hibernate
+
+  work.  With both I still need to restart systemd-networkd.service.
+  Actually, this might be desirable.  The networking environment may
+  change radically on a hybernate.  I'll create a fish abbr to restart
+  this service in my dotfiles repo.
+
+  This is the first time with Linux that I got the hibernate feature
+  to work.
+
+  For my user's Gnome session, I turned off automatic suspend when
+  plugged in.  Screen blank after 10 minutes.  When on battery,
+  suspends after 20 minutes of "desktop user inactivity."  Power
+  button will hibernate the system.  Changed Power Mode from
+  Balanaced to Performance.
+
+  This means if I want to use this laptop like a server, or an
+  ssh login host, I'll need to have a Gnome session going.

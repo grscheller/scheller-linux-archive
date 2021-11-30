@@ -2016,10 +2016,10 @@ Note: Initially I did a lot of thrashing around, jump to
     # ls -l /usr/local/bin
     lrwxrwxrwx 1 root root 13 Nov 25 00:52 fish -> /usr/bin/fish
 
-  With this symlink, everything works fine.  I also used an
-  Extension to enable a Gnome extenstion which changes the Dash
-  to open a new instance when an icon is clicked.  90% of the
-  time that is what I want.
+  With this symlink, everything works fine.  I also used the
+  "Launch new instance" extension to modify Gnome Dash behavior
+  to open a new instance when an icon is left clicked.  90% of
+  the time that is what I want.
 
 2021-11-25:
   Installed the gpaste package which includes a gpaste
@@ -2086,15 +2086,14 @@ Note: Initially I did a lot of thrashing around, jump to
   to work.
 
   For my user's Gnome session, I turned off automatic suspend when
-  plugged in.  Screen blank after 10 minutes.  When on battery,
-  suspends after 20 minutes of "desktop user inactivity."  Power
-  button will hibernate the system.  Changed Power Mode from
-  Balanaced to Performance.
+  plugged in.  Screen blank never.  When on battery, suspends after
+  20 minutes of "desktop user inactivity."  Power button will hibernate
+  the system.  Changed Power Mode from Balanaced to Performance.
 
   This means if I want to use this laptop like a server, or an
   ssh login host, I'll need to have a Gnome session going.
 
-  There should be a less "Gnome centic" to do this?`
+  There should be a less "Gnome-centic" way to do this?
 
 2021-11-29:
   Time to do some configuration for work.
@@ -2176,5 +2175,20 @@ Note: Initially I did a lot of thrashing around, jump to
     $ sudo pacman -Syu qt5-webengine
 
   Reboot.  Network a mess, can't seem to fix.
-
   Reboot.  Network works, Zoom works.
+
+2021-11-29:
+  From GNOME website,
+
+    https://gitlab.gnome.org/GNOME/gnome-shell/-/issues/3419
+
+  the GNOME developers have no intention of enabling the networks
+  tray icon to use anything other than Network Manager any time
+  soon, "unless we expect it to replace NetworkManager eventually,
+  we are not going to add support."  
+
+  Currently I use iwctl to connect to a wireless network.  once
+  this is done, systemd-networkd.service is able to reconnect
+  over reboots even after location changes.  When system suspends
+  or hibernates, this service needs restarting.
+

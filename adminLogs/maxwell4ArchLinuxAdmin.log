@@ -1327,7 +1327,7 @@ Note: Initially I did a lot of thrashing around, jump to
 
   I don't see pipewire-pulse?
 
-    (gauss)$ sudo pacman -S pipewire-pulse
+    (gauss17)$ sudo pacman -S pipewire-pulse
     resolving dependencies...
     looking for conflicting packages...
     :: pipewire-pulse and pulseaudio are in conflict. \
@@ -1534,7 +1534,7 @@ Note: Initially I did a lot of thrashing around, jump to
 
   Well, interface name still wlan0.
 
-  Seems the problem was already fixed, From the  Arch wiki,
+  Seems the problem was already fixed, from the  Arch wiki,
   https://wiki.archlinux.org/title/Iwd, since version 1.0,
   iwd disables predictable renaming of wireless device.  It
   installs a systemd network link configuration file to keep
@@ -2182,13 +2182,55 @@ Note: Initially I did a lot of thrashing around, jump to
 
     https://gitlab.gnome.org/GNOME/gnome-shell/-/issues/3419
 
-  the GNOME developers have no intention of enabling the networks
-  tray icon to use anything other than Network Manager any time
-  soon, "unless we expect it to replace NetworkManager eventually,
-  we are not going to add support."  
+  the GNOME developers have no intention of enabling the network tray
+  icon to use anything other than Network Manager soon, "unless we
+  expect it to replace NetworkManager eventually, we are not going
+  to add support."  
 
-  Currently I use iwctl to connect to a wireless network.  once
-  this is done, systemd-networkd.service is able to reconnect
-  over reboots even after location changes.  When system suspends
-  or hibernates, this service needs restarting.
+  Currently I use iwctl to connect to a wireless network.  Once
+  this is done, systemd-networkd.service is able to reconfigure
+  the system over reboots even after location changes.  When system
+  suspends or hibernates, this service needs restarting.
 
+2021-11-29:
+  Noticed while doing a :checkhealth for Neovim,
+
+    ## Checking language server protocol configuration
+      - ERROR: html: The given command \
+        "vscode-html-language-server" is not executable.
+
+  Let's install this language server and two other
+  related ones.
+
+    $ sudo pacman -Syu vscode-{html,css,json}-languageserver
+  
+  Got installed by a slightly different names.
+
+    $ digpath 'vscode*'
+    /usr/bin/vscode-css-languageserver
+    /usr/bin/vscode-html-languageserver
+    /usr/bin/vscode-json-languageserver
+
+    $ for mm in vscode-{css,html,json}-language
+          sudo ln -s /usr/bin/{$mm}server /usr/local/bin/$mm-server
+      end
+
+    $ ll /usr/local/bin
+    total 0
+    lrwxrwxrwx 1 root root 13 Nov 25 00:52 fish -> /usr/bin/fish
+    lrwxrwxrwx 1 root root 34 Nov 29 20:07 vscode-css-language-server -> /usr/bin/vscode-css-languageserver
+    lrwxrwxrwx 1 root root 35 Nov 29 20:07 vscode-html-language-server -> /usr/bin/vscode-html-languageserver
+    lrwxrwxrwx 1 root root 35 Nov 29 20:07 vscode-json-language-server -> /usr/bin/vscode-json-languageserver
+
+  Might as well fix nvim's python provider problem too.
+
+    $ sudo pacman -Syu python-pynvim
+
+  The only remaining Neovim :checkhealth errors are for
+  Python-2 and Perl.  Still getting a neovim-ruby-host warning
+  which I will take care of along with installing markdown language server.
+
+    $ gem install neovim
+    $ gem install mdl
+
+  Had to install GNU make for first build to succeed.

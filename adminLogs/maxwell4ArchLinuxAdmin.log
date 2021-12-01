@@ -2234,3 +2234,28 @@ Note: Initially I did a lot of thrashing around, jump to
     $ gem install mdl
 
   Had to install GNU make for first build to succeed.
+
+2021-12-01:
+  Tried to use Scala Metals in nvim.  Need Coursier.  In the AUR.
+
+    $ cd ~/build/
+    $ git clone https://aur.archlinux.org/coursier.git
+    $ cd coursier
+    $ makepkg -sri
+    $ digpath coursier
+    /usr/bin/coursier
+
+  Now nvim finds coursier.  From within nvim,
+
+    [nvim-metals] Welcome to nvim-metals!
+    [nvim-metals] It looks like you don't have Metals installed yet.
+    [nvim-metals]
+    [nvim-metals] You can do this using `:MetalsInstall`.
+    [nvim-metals]
+    [nvim-metals] If you need to set a specific version, you can use `g:metals_server_version`.
+    Press ENTER or type command to continue
+    :MetalsInstall
+    [nvim-metals] Metals installed! Start/Restart the server, and have fun coding Scala!
+
+  I getting a little rusty with Scala and Metals, but Neovim seems to
+  work well as a Scala IDE.

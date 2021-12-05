@@ -1,0 +1,257 @@
+Purpose: To rebuild from scratch maxwell4 after
+         it crashed.  Named after Leonard Euler's
+         solution to the Königsberg Bridge Problem.
+
+2021-12-04:
+  Installing Arch Linux on a Dell Inspiron 15 7591 2-in-1
+    - 4 core i7-10510U CPU 1.8 GHz
+    - 16 GB memory
+    - Realtek Audio
+    - UEFI system
+    - Intel(R) UHD Graphics
+    - NVIDIA GeForce MX250 Graphics
+
+  Downloaded latest ISO image on gauss17 from
+
+    https://archlinux.org/download/
+
+  should have 
+
+    MD5:  c8beaaea6dd5986d36dd532d1df4dc26
+    SHA1: e303b93788220dbe8e0ba1804c90beebe432cf63
+
+  With Firefox browser, I downloaded from the link
+  
+    https://mirror.rackspace.com/archlinux/iso/2021.12.01/
+    
+  the files
+
+    archlinux-2021.12.01-x86_64.iso
+    archlinux-2021.12.01-x86_64.iso.sig
+
+  Test validity,
+
+    $ pacman-key -v archlinux-2021.12.01-x86_64.iso.sig archlinux-2021.12.01-x86_64.iso
+    ==> Checking archlinux-2021.12.01-x86_64.iso.sig... (detached)
+    gpg: Signature made Wed 01 Dec 2021 07:45:16 AM MST
+    gpg:                using RSA key 4AA4767BBC9C4B1D18AE28B77F2D434B9741E8AC
+    gpg:                issuer "pierre@archlinux.de"
+    gpg: Note: trustdb not writable
+    gpg: Good signature from "Pierre Schmitz <pierre@archlinux.de>" [full]
+
+  Compare checksums from https://archlinux.org/download/
+
+    $ md5sum archlinux-2021.12.01-x86_64.iso
+    c8beaaea6dd5986d36dd532d1df4dc26  archlinux-2021.12.01-x86_64.iso
+
+    $ sha1sum  archlinux-2021.12.01-x86_64.iso
+    e303b93788220dbe8e0ba1804c90beebe432cf63  archlinux-2021.12.01-x86_64.iso
+
+  Got valid and the correct files.  Due diligence done!
+
+  Put a previous thumbdrive in, last month's arch iso got "automounted"
+  so un-mount it
+
+    $ sudo umount /run/media/grs/ARCH_202111
+
+  Image thumbdrive.
+
+    $ sudo dd bs=4M if=archlinux-2021.12.01-x86_64.iso of=/dev/sdd
+    212+1 records in
+    212+1 records out
+    891629568 bytes (892 MB, 850 MiB) copied, 175.509 s, 5.1 MB/s
+
+    $ ls -l archlinux-2021.12.01-x86_64.iso
+    -rw-r--r-- 1 grs grs 891629568 Dec  4 15:25 archlinux-2021.12.01-x86_64.iso
+
+  Remove and reinsert thumbdrive.
+
+    $ df -h
+    Filesystem  Size  Used Aval Use% Mounted on
+    ...
+    /dev/sdd1   776M  776M    0 100% /run/media/grs/60...
+
+  Boot what is left of maxwell4 from the thumbdrive.
+  Hit <F12> on this to Dell "One-Time Boot Setting" and
+  boot from "UEFI TOSHIBA" (with USB icon):
+
+  Now at the archiso root prompt.
+
+2021-12-04:
+  The lsblk command is still showing all the nvme
+  drives I created for maxwell4.  I ran fsck against
+
+    /dev/nvme0n1p3 (/ for maxwell4)
+    /dev/nvme1n1p1 (/home for maxwell4)
+    /dev/nvme0n1p1 (/boot for maxwell4)
+
+  For the last one it said only minor difference
+  between primary & backup block (I forget exact
+  terminology) and offered to swap in backup for
+  primary.  I did so and wrote changes.
+
+  Still broken when I tried to reboot.
+
+2021-12-04:
+  Back at the archiso root prompt.
+
+    # iwctl device list
+
+  One wireless device, wlan0 in station mode.
+
+    # iwctl station wlan0 scan
+    # iwctl station wlan0 get-networks
+    # iwctl --passphrase <pass phrase> station wlan0 connect <SSID>
+
+  Able to ping 1.1.1.1 and archlinux.org.  The getent command unable
+  to resolve DNS for IPv4.  Don't worry about this for now.
+
+  Next step, sync with time servers
+
+    # timedatectl set-ntp true
+
+  Look at what is already there
+
+    # lsblk
+    Name         MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
+    loop0          7:0    0 701.3M  1 loop /run/archiso/airootfs
+    sda            8:0    1  14.9G  0 disk
+      sda1         8:1    1   776M  0 part /run/archiso/bootmnt
+      sda2         8:2    1    74M  0 part
+    nvme0n1      259:0    0 476.9G  0 disk
+      nvme0n1p1  259:1    0   512M  0 part
+      nvme0n1p2  259:2    0  16.1G  0 part
+      nvme0n1p3  259:3    0 450.3G  0 part
+    nvme1n1      259:4    0  27.3G  0 disk
+      nvme0n1p1  259:5    0  27.2G  0 part
+
+  Good, no RAID things are there.  I'll keep the partitions,
+  but will redo the file systems.
+
+  Intended disk layout:
+  
+    /dev/nvme0n1p1    /boot  (fat32)
+    /dev/nvme0n1p2    swap
+    /dev/nvme0n1p3    /      (ext4)
+    /dev/nvme1n1p1    /home  (ext4)
+
+  Do I try and fix what I got or reinstall from scratch?
+  Reinstall...
+
+    # mkfs.fat -F 32 /dev/nvme0n1p1
+    # mkfs.ext4 /dev/nvme0n1p3
+    # mkfs.ext4 /dev/nvme1n1p1
+
+    # mount /dev/nvme0n1p3 /mnt
+    # mkdir /mnt/home
+    # mount /dev/nvme1n1p1 /mnt/home
+    # mkdir /mnt/boot
+    # mount /dev/nvme0n1p1 /mnt/boot
+    # mkswap /dev/nvme0n1p2
+    # swapon /dev/nvme0n1p2
+
+  Note: When I did the mkswap, I Got
+
+    warning: wiping old swsuspend signature.
+
+  I had just configured maxwell4 to suspend/hibernate
+  and had confirmed I could trigger such.  Maybe things
+  didn't work out when system tried on its own?  I had
+  left the system unattended for a while.  I had it
+  unplugged for a while, but I think it went south a
+  while after plugging it back in.
+
+  This time I won't set up suspend/hibernate features.
+
+  Went to use reflector, but found that the reflector
+  service was run and configured /etc/pacman.d/mirrorlist.
+  The reflector service and timer are currently inactive.
+  The service is enabled (runs on boot) but the timer
+  is disabled.  (That is for the OS running on the ISO).
+  
+  Install essential packages to target system,
+
+    # pacstrap /mnt base linux linux-firmware
+
+  Note (From Arch wiki install guide):
+    - linux can be substituted for another kernel package
+    - linux omitted entirely if installed into a container
+    - linux-firmware can be omitted if installed into either
+      a container or virtual machine
+
+  Configure /etc/fstab
+
+    # genfstab -U /mnt >> /mnt/etc/fstab
+ 
+  Chroot into the target system.
+
+    # arch-chroot /mnt
+
+  Configure time zone.
+
+    # ln -sf /usr/share/zoneinfo/America/Denver /etc/localtime
+    # hwclock --systohc
+
+  No editor, install nvim.
+
+    # pacman -Syu neovim
+
+  Localization, uncommented en_US.UTF-8 UTF-8 in
+  /etc/locale.gen
+
+    # locale-gen
+
+  Create /etc/locale.conf with contents
+
+    LANG=en_US.UTF-8
+
+  Give target system a hostname, create /etc/hostname
+  with contents
+
+    euler7
+
+  Need to install some networking related packages,
+
+    # pacman -Syu iwd systemd-resolvconf modemmanager
+    # ln -sf /run/systemd/resolve/stub-resolve.conf /etc/resolve.conf
+    ln: '/run/systemd/resolve/stub-resolve.conf' and '/etc/resolv.conf' are the same file
+    
+  Opps, something has changed from last month.
+
+    # ls -i /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
+    2617 /etc/resolve.conf  2617 /run/systemd/resolve/stub-resolv.conf
+
+  Hard linked!
+
+    # systemctl is-enabled systemd-resolved
+    disabled
+    # systemctl enable systemd-resolved
+
+  I will use the systemd boot loader
+
+    # bootctl install
+    Created "/boot/EFI"
+    Created "/boot/EFI/systemd"
+    Created "/boot/EFI/BOOT"
+    Created "/boot/loader"
+    Created "/boot/loader/entries"
+    Created "/boot/EFI/Linux"
+    Copied "/usr/lib/systemd/boot/efi/systemd-bootx64.efi" \
+              to "/boot/EFI/systemd/systemd-bootx64.efi".
+    Copied "/usr/lib/systemd/boot/efi/systemd-bootx64.efi" \
+              to "/boot/EFI/BOOT/BOOTX64.EFI".
+    Created "/boot/987dc5a567e54739920b683cb519cf9f".
+    Random seed file /boot/loader/random-seed successfully written (512 bytes).
+    Created EFI boot entry "Linux Boot Manager".
+
+  Lets see if what we currently have even boots.  It created
+  a loader.conf and no entries/*.conf.  My guess it will give
+  me a boot menu with no choices except for the firmware.
+
+    # ^D
+    # systemctl poweroff
+
+  It did exactly what I predicted!  Instead of just parroting
+  what I did for gauss17 and the limited example given
+  in Systemd-boot ArchWiki, I will read through the 
+  loader.conf(5) man page first.

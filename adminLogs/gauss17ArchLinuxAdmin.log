@@ -2472,7 +2472,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
    Perform upgrade
 
      # pacman -Su
-     # sudo pacman -Syu
+     # pacman -Syu
 
 04-02-2017:
   Today, after "sudo pacman -Syu", I had

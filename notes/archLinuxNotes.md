@@ -134,12 +134,28 @@ Locations of config and log files
 * Pacman configuration: /etc/pacman.conf
 * Pacman mirrors: /etc/pacman.d/mirrorlist
 
+Avoid doing unintentional "partial" upgrades with
+
+* pacman -Sy *package*
+* pacman -Sy; pacman -S *package*
+* pacman -Syuw
+
+Unless you have a good reason, always upgrade
+with `pacman -Syu` before installing a package.
+
+Also note, a failed install can also leave your
+system in a partially updated state.
+
 ## Building via AUR
 
-1. acquire tarball or clone via GIT
-1. untar or clone in directory you want to build in, I use ~/build/AUR/ for these
-1. verify that the PKGBUILD and accompanying files are not malicious or untrustworthy
-1. run command: makepkg -sri
+1. Acquire tarball or clone via GIT
+1. Untar or clone in directory you want to build in, I use ~/build/AUR/ for these
+1. Verify that the PKGBUILD and accompanying files are not malicious or untrustworthy
+1. Run command: makepkg -sri
+
+Note that it may be necessary to upgrade/rebuild locally
+installed packages when their library dependencies receive
+a *soname* bump.
 
 ## Memory management
 

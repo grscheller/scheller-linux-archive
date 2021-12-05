@@ -293,7 +293,8 @@ Note: Initially I did a lot of thrashing around, jump to
     nvme0n1      259:0    0 476.9G  0 disk
       nvme0n1p1  259:1    0   512M  0 part
       nvme0n1p2  259:2    0 476.4G  0 part
-    nvme1n1      259:3    0  27.3G  0 disk
+    nvme1n1      259:3    0  27.3G  0 disk$ ls -l archlinux-2021.12.01-x86_64.iso
+-rw-r--r-- 1 grs grs 891629568 Dec  4 15:25 archlinux-2021.12.01-x86_64.iso
       md127        9:127  0     0B  0 md
 
   Type md means some sort of RAID device.
@@ -2234,3 +2235,23 @@ Note: Initially I did a lot of thrashing around, jump to
     $ gem install mdl
 
   Had to install GNU make for first build to succeed.
+
+2021-12-04:
+
+  System crashed.  Will not boot.
+
+  Earlier this week, while up and logged in, maxwell4
+  made a loud beap.  Whn I got around to check, its was
+  sitting at a bios prompt complaining it could not
+  find an OS to boot.
+
+  Not sure if I should try and fix or just start over.
+
+2021-12-04:
+
+  maxwell4 RIP...
+
+  I am doing a fresh install of Arch but renaming the
+  system euler7.  I suspect something went wrong with
+  a system suspend or hibernation.  Not sure, see
+  adminLogs/euler7ArchLinuxAdmin.log for details.

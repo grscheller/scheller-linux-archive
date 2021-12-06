@@ -382,3 +382,8 @@ Purpose: To rebuild from scratch maxwell4 after
 
   Added euler7 ssh key to GitHub account.  Removed maxwell4 key.
 
+2021-12-06:
+  It is not a Unix unless it has a C compiler installed.
+
+    # pacman -Syu base-devel
+    # pacman -Syu clang

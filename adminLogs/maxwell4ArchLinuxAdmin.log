@@ -1069,7 +1069,7 @@ Note: Initially I did a lot of thrashing around, jump to
   On initial "su -" .bashrc is not being sourced, but
   is sourced for just "su"???  Same for "su --login"?
 
-  Found out way, root has no ~/.bash_profile, lets give
+  Found out why, root has no ~/.bash_profile, lets give
   it the standard one,
 
     [[ -f ~/.bashrc ]] && source ~/.bashrc

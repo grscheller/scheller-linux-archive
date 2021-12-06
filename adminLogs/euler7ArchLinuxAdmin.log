@@ -210,6 +210,10 @@ Purpose: To rebuild from scratch maxwell4 after
 
     euler7
 
+  Give root a password
+
+    # passwd
+
   Need to install some networking related packages,
 
     # pacman -Syu iwd systemd-resolvconf modemmanager
@@ -255,3 +259,126 @@ Purpose: To rebuild from scratch maxwell4 after
   what I did for gauss17 and the limited example given
   in Systemd-boot ArchWiki, I will read through the 
   loader.conf(5) man page first.
+
+2021-12-05:
+  Configure systemd boot loader via the examples
+  from /usr/share/systemd/bootctl.  Note that as before
+  with maxwell4, I had to go with the Unix device name.
+
+  I think this is due to some sort of udev race condition.
+
+  Modified /boot/loader/loader.conf
+
+    default arch
+    timeout 5
+    console-mode auto
+    editor false
+
+  Created /boot/loader/entries/arch.conf
+
+    title Arch Linux
+    linux /vmlinuz-linux
+    initrd /initrsmfs-linux.img
+    options root=/dev/nvme0n1p3 rootfstype=ext4 add-efi-memmap
+
+  Will need to install Intel firmware package later.
+
+  Powerdown, reboot.  Does not mater if thumbdrive stays
+  in since you would need to hit <F12> to be able to boot
+  from it.
+
+2021-12-05:
+  Sucessfully booted euler7 and logged in as root.
+
+  Need to connect to wifi so I can use pacman.  See
+  if systemd-resolved is running.
+
+    # systemctl status systemd-resolved
+  
+  Yes it is.  But a symlink or funky hard link not there
+
+    # ls -li /etc/resolv.conf 
+    14417959 -rw-r--r-- 1 root root 65 Nov 11 02:14 /etc/resolv.conf
+
+    # ls -li /run/systemd/resolve/stub-resolv.conf
+    736 -rw-r--r-- 1 sysemd-resolve sysemd-resolve 920 Dec  5 16:13 /run/systemd/resolve/stub-resolv.conf
+
+  Create link
+
+    # ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
+
+  Check wireless.
+
+    # ip addr
+    ...
+    2: wlan0: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
+        link/either ...
+
+  Bring it up.
+
+  ...
+
+  A lot of network thrashing .... will update log on this
+  later when I can do so from euler7 directly.
+
+2021-12-05:
+
+  I have DNS for IPv6 working but not for IPv4.  Pacman works.
+
+  Turning on Systemd's NTP service.
+
+    # timedatectl set-ntp true
+
+  Install GIT, fish, man
+
+    # pacman -Syu git
+    # pacman -Syu fish
+    # pacman -Syu man-pages man-db
+
+  Create regular user
+
+    # useradd -d /home/grs -c Geoffrey -G wheel -s /usr/bin/fish -m grs
+    # passwd grs
+
+  Let's give root's bash environment a little love.
+
+  For root's .bashrc:
+
+    set -o vi
+    export EDITOR=nvim
+    export PAGER='nvim -R'
+    export MANPAGER='nvim +Man!'
+
+  For root's .bash_profile:
+
+    [[ -f ~/.bashrc ]] && source ~/.bashrc
+
+  Set up user grs global git environment.
+
+    $ git config --global user.name grscheller
+    $ git config --global user.email geoffrey@scheller.com
+    $ git config --global core.editor nvim
+    $ git config --global core.pager "nvim -R"
+    $ git config --global pull.rebase false
+    $ git config --global color.pager no
+
+  Last one "no" because I want neovim to do the coloring.
+
+  Install OpenSSH.
+
+    # pacman -Syu OpenSSH
+
+  Updated /etc/ssh/sshd_config for no root logins,
+  port 22 and passwd authentication for now.
+
+  Successfully ssh to euler7.
+
+    ~> mkdir .ssh
+    ~> chmod 700 .ssh
+    
+  Generated ssh keys for euler7.  Removed maxwell4 keys from
+  ~/.ssh/authorized_keys and add euler7 keys.  Sync'ed
+  versions between euler7 and gauss17.
+
+  Added euler7 ssh key to GitHub account.  Removed maxwell4 key.
+

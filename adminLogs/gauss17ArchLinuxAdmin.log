@@ -9412,5 +9412,17 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   package.  Its commands are similar to those of iwctl.
 
 2021-11-23:
-  I will be workng wit Python more, so I installed the Python IDE Spyder.
-  Brought in python-lsp-server & python-lsp-jsonrpc.
+  I will be working with Python more, so I installed the Python
+  IDE Spyder. Brought in python-lsp-server & python-lsp-jsonrpc.
+
+2021-12-07:
+  Tightened up policy in /etc/sudoers.
+
+   - started from /etc/sudoers.pacnew
+   - allow members of wheel to execute commands as root w/o pw
+   - set secure_path="/usr/local/bin:/usr/bin"
+   - did NOT reset $HOME to user's home directory
+   - did NOT configure to use users X GUI environment
+
+  Basically I am not letting user GUI tools to run as root and
+  making it harder for user to be fooled by a Trojan horse.

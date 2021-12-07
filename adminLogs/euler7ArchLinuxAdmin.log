@@ -519,3 +519,25 @@ Purpose: To rebuild from scratch maxwell4 after
 
     $ pacman -Qo /usr/bin/resolvectl
     /usr/bin/resolvectl is owned by systemd 249.7-2
+
+2021-12-07:
+  Used visudo to edit /etc/sudoers as root.
+  
+   - allow members of wheel to execute commands as root w/o pw
+   - set secure_path="/usr/local/bin:/usr/bin"
+   - did NOT reset $HOME to user's home directory
+   - did NOT configure to use users X GUI environment
+
+  Basically I am not letting user GUI tools to run as root and
+  making it harder for user to be fooled by a Trojan horse.
+
+  Also, certain environment variables like $EDITOR now will
+  not get picked up, so a few more things will actually
+  have to be done as root.  Another work around
+
+    $ sudo EDITOR=nvim systemctl edit --full sshd.service
+
+2021-12-07:
+  Editted /etc/ssh/sshd_configuration, moved to a high port.
+
+    $ sudo systemctl restart sshd.service

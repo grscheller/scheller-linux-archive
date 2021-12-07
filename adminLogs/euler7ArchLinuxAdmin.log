@@ -538,6 +538,43 @@ Purpose: To rebuild from scratch maxwell4 after
     $ sudo EDITOR=nvim systemctl edit --full sshd.service
 
 2021-12-07:
-  Editted /etc/ssh/sshd_configuration, moved to a high port.
+  Edited /etc/ssh/sshd_configuration, moved sshd to a high port.
 
     $ sudo systemctl restart sshd.service
+
+2021-12-07:
+  Decided to install Sway as my desktop.
+
+   - Wayland version of i3
+   - Minimal
+   - Geared to "power users"
+   - More time to learn due to Christmas holidays coming up
+
+  First continue setting up infrastructure.  
+
+2021=12=07:
+  Install intel-ucode package.
+
+    $ sudo pacman -Syu intel-ucode
+
+  Updated /boot/loader/entries/arch.conf with third line.
+
+    title Arch Linux
+    linux /vmlinuz-linux
+    initrd /intel-ucode.img
+    initrd /initramfs-linux.img
+    options root=/dev/nvme0n1p3 rootfstype=ext4 add-efi-memmap
+
+  Reboot.
+
+    $ journalctl -b -1|head -3
+    -- Journal begins at Sun 2021-12-05 15:42:35 MST, ends at Tue 2021-12-07 16:44:05 MST. --
+    Dec 07 12:30:44 euler7 kernel: Linux version 5.15.6-arch2-1 (linux@archlinux) (gcc (GCC) 11.1.0, GNU ld (GNU Binutils) 2.36.1) #1 SMP PREEMPT Thu, 02 Dec 2021 15:47:09 +0000
+    Dec 07 12:30:44 euler7 kernel: Command line: initrd=\initramfs-linux.img root=/dev/nvme0n1p3 rootfstype=ext4 add-efi-memmap
+
+    $ journalctl -b|head -4
+    -- Journal begins at Sun 2021-12-05 15:42:35 MST, ends at Tue 2021-12-07 16:45:19 MST. --
+    Dec 07 16:34:10 euler7 kernel: microcode: microcode updated early to revision 0xea, date = 2021-01-05
+    Dec 07 16:34:10 euler7 kernel: Linux version 5.15.6-arch2-1 (linux@archlinux) (gcc (GCC) 11.1.0, GNU ld (GNU Binutils) 2.36.1) #1 SMP PREEMPT Thu, 02 Dec 2021 15:47:09 +0000
+    Dec 07 16:34:10 euler7 kernel: Command line: initrd=\intel-ucode.img initrd=\initramfs-linux.img root=/dev/nvme0n1p3 rootfstype=ext4 add-efi-memmap
+

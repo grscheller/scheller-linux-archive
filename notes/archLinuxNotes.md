@@ -95,7 +95,7 @@ Get information on packages,
 * `pacman -Qii <pkg>` (*also include denendency and required by info*)
 * `pacman -Si <pkg>` (*use synced (remote) package database*)
 * `pacman -Sii <pkg>` (*also include denendency and required by info*)
-* `pacman -Qlq <pkg>` *list files associated with a package, use local database*)
+* `pacman -Qlq <pkg>` (*list files associated with a package, use local database*)
 * `pacman -Flq <pkg>` (*list files associated with a package, use synced databases*)
 
 Get package group information,

@@ -383,7 +383,139 @@ Purpose: To rebuild from scratch maxwell4 after
   Added euler7 ssh key to GitHub account.  Removed maxwell4 key.
 
 2021-12-06:
-  It is not a Unix unless it has a C compiler installed.
+  It is not Unix until it has a C compiler installed.
 
     # pacman -Syu base-devel
     # pacman -Syu clang
+
+2021-12-06:
+
+  I got networking and name resolution "working" but not optimally.
+  
+  Created /etc/iwd/main.conf with the following contents:
+
+    # Created by Geoffrey Scheller
+    # From multiple web postings
+    #
+    # See https://iwd.wiki.kernel.org/interface_lifecycle
+    #     https://insanity.industries/post/simple-networking
+    #
+    # We want idw to take full control of the underlying phy device
+    
+    [General]
+    # Enable builtin DHCP-client within iwd for wifi
+    EnableNetworkConfiguration=true
+    
+    # Radomize mac-address when iwd starts or hardware detected
+    #AddressRandomization=once
+    
+    [Network]
+    #EnableIPv6=true
+    #EnableIPv4=true
+    
+    # For pure systemd-resolved choose
+    #NameResolvingService=systemd
+    
+    # For systemd-resolved+systemd-resolvconf or openresolv
+    NameResolvingService=resolvconf
+
+  From the command
+
+    # systemctl --type=service --state=running
+
+  the following network support services are running.
+
+    iwd.service                Wireless service
+    systend-networkd.service   Network Configuration
+    systend-resolved.service   Network Name Resolution
+
+  At this point, I was resolving IPv6 names reliably but IPv4
+  names were only occasionally being resolved.  So I "kicked"
+  the networkd service
+
+    # systemctl restart systemd-networkd
+
+  while following the system logs with "journelctl -f".
+
+  From 
+
+    # journelctl -b -1
+
+  this is what I saw in real time on my apartment wifi network.
+
+ 1  :57 systemd[1]: systemd-networkd.service: Deactivated successfully.
+ 2  :57 systemd[1]: Stopped Network Configuration.
+ 3  :57 systemd[1]: Starting Network Configuration...
+ 4  :57 systemd-networkd[1207]: /etc/systemd/networkd.conf:27: Unknown key name 'UseDomains' in section 'DHCPv4', ignoring.
+ 5  :57 systemd-networkd[1207]: /etc/systemd/networkd.conf:34: Unknown section 'IPv6AcceptRA'. Ignoring.
+ 6  :57 systemd-networkd[1207]: wlan0: Link UP
+ 7  :57 systemd-networkd[1207]: wlan0: Gained carrier
+ 8  :57 systemd-networkd[1207]: lo: Link UP
+ 9  :57 systemd-networkd[1207]: lo: Gained carrier
+10  :57 systemd-networkd[1207]: Enumeration completed
+11  :57 systemd[1]: Started Network Configuration.
+12  :57 systemd-networkd[1207]: wlan0: Connected WiFi access point: singlewhip650 (9c:c9:eb:54:5f:77)
+...
+15  :28 systemd-resolved[347]: Switching to fallback DNS server 1.1.1.1#cloudflare-dns.com.
+
+  Lines 4 & 5 are are a misguided attempt on my part to fix the IPv4
+  problem.  I'll remove these from networkd.conf.  At the time
+  I thought IPv4 was not resolving at all.
+
+  Lines 6 to 12 show that systemd-networkd is driving the wlan0 file
+  level interface.  My guess is that iwd controls the underlying phy
+  kernel device.
+
+  Line 15 shows all may not be well and we are falling over to the
+  first fallback DNS server.
+
+  On the last boot at work I did not have this problem
+
+    $ journalctl -b | grep systemd-networkd | fields 5 6 7 8
+    ...
+    systemd-networkd[301]: lo: Link UP
+    systemd-networkd[301]: lo: Gained carrier
+    systemd-networkd[301]: Enumeration completed
+    systemd-networkd[301]: wlan0: Link UP
+    systemd-networkd[301]: wlan0: Connected WiFi
+    systemd-networkd[301]: wlan0: Gained carrier
+
+2021-12-06:
+  I found a new toy.
+
+    $ ls -l /usr/bin/resolv*
+    lrwxrwxrwx 1 root root     10 Nov 29 06:42 /usr/bin/resolvconf -> resolvectl
+    -rwxr-xr-x 1 root root 129088 Nov 29 06:42 /usr/bin/resolvectl
+
+    $ resolvectl status
+    Global
+               Protocols: +LLMNR +mDNS -DNSOverTLS DNSSEC=no/unsupported
+        resolv.conf mode: stub
+    Fallback DNS Servers: 1.1.1.1#cloudflare-dns.com 9.9.9.10#dns.quad9.net 8.8.8.8#dns.google
+                          2606:4700:4700::1111#cloudflare-dns.com 2620:fe::10#dns.quad9.net
+                          2001:4860:4860::8888#dns.google
+    
+    Link 3 (wlan0)
+        Current Scopes: DNS LLMNR/IPv4
+             Protocols: +DefaultRoute +LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported
+    Current DNS Server: 1.1.1.1
+           DNS Servers: 1.1.1.1 1.1.0.0
+
+
+    $ resolvectl query github.com
+    github.com: 140.82.112.3                       -- link: wlan0
+    
+    -- Information acquired via protocol DNS in 19.7ms.
+    -- Data is authenticated: no; Data was acquired via local or encrypted transport: no
+    -- Data from: network
+    
+    $ resolvectl query gitlab.com
+    gitlab.com: 172.65.251.78                      -- link: wlan0
+                2606:4700:90:0:f22e:fbec:5bed:a9b9 -- link: wlan0
+    
+    -- Information acquired via protocol DNS in 19.6ms.
+    -- Data is authenticated: no; Data was acquired via local or encrypted transport: no
+    -- Data from: network
+
+    $ pacman -Qo /usr/bin/resolvectl
+    /usr/bin/resolvectl is owned by systemd 249.7-2

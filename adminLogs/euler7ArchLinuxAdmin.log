@@ -736,4 +736,36 @@ Purpose: To rebuild from scratch maxwell4 after
   
   Let's reboot and see if we can get a Sway session going.
 
+2021-12-08:
 
+  Lets configure Sway with the default configuration.
+
+    $ cd ~/.config
+    $ mkdir sway
+    $ cp /etc/sway/config sway/
+
+  Some useful commands to know before launching the first time.
+
+   - Reload Sway:    Super+Shift+c
+   - Exit Sway:      Super+Shift+e
+   - Open Terminal:  Super+Return
+   - Open Program:   Super+d
+
+  Launch Sway.
+
+    $ sway
+
+  Got a desktop, first two keybindingd worked.  Second two did not.
+
+  I know why alarcritty fails, it is my MacOS hack for it in alacritty.yml.
+
+    # ls -s /usr/bin/fish /usr/local/bin/fish
+    $ sway
+
+  Alacritty works!  Also, sway is mouse focused!
+
+  Super+d does not work, but I am going to swap out the program launcher
+  anyway.  
+
+  Super+e swaps the placement of two alacritty windows from left by right
+  to top over bottom respectively, and back.

@@ -578,3 +578,44 @@ Purpose: To rebuild from scratch maxwell4 after
     Dec 07 16:34:10 euler7 kernel: Linux version 5.15.6-arch2-1 (linux@archlinux) (gcc (GCC) 11.1.0, GNU ld (GNU Binutils) 2.36.1) #1 SMP PREEMPT Thu, 02 Dec 2021 15:47:09 +0000
     Dec 07 16:34:10 euler7 kernel: Command line: initrd=\intel-ucode.img initrd=\initramfs-linux.img root=/dev/nvme0n1p3 rootfstype=ext4 add-efi-memmap
 
+2021-12-07:
+  Install pipewire and wireplumber, based on what I did on 2021-11-20 for maxwell4.
+
+    sudo pacman -Syu wireplumber pipewire-pulse pipewire-jack wireplumber-doc \
+                     pipewire-docs pipewire-alsa vorbis-tools alsa-utils \
+                     alsa-plugins tree sof-firmware alsa-ucm-conf alsa-firmware
+
+  Reboot
+  
+    $ amixer sset Master unmute
+    $ cd ~/Music/PopRock/The\ Beau\ Bremmels/
+    $ ogg123 'Laugh Laugh.ogg'
+    
+  Sound works.
+
+2021-12-07:
+  Get Bluetooth working, following via ArchWiki.
+  First check if kernel drivers are installed.
+
+    $ lsmod|grep btusb
+    btusb                  65536  0
+    btrtl                  28672  1 btusb
+    btbcm                  24576  1 btusb
+    btintel                45056  1 btusb
+    bluetooth             749568  5 btrtl,btintel,btbcm,btusb    
+
+  Install service and get user software.
+
+    $ sudo pacman -Syu bluez bluez-utils
+
+  Enable and start service
+
+    $ sudo systemctl enable bluetooth.service
+    $ sudo systemctl start bluetooth.service
+
+  
+  For help,
+
+    $ bluetoothctl help
+    $ man -s8 bluetoothd
+

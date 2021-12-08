@@ -1395,7 +1395,7 @@ Note: Initially I did a lot of thrashing around, jump to
   Last command was done from the console, not an ssh terminal session.
 
   I think I might know where the problem might lay.  Near the end
-  of 2021-11-13 I notes error messages on the console at boots
+  of 2021-11-13 I noted error messages on the console after booting
   involving sof-audio-pci-intel-cn firmware missing.  Before I go
   down that rabbit hole, lets try something simpler.
 

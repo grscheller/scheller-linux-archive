@@ -78,6 +78,7 @@ Purpose: To rebuild from scratch maxwell4 after
   Now at the archiso root prompt.
 
 2021-12-04:
+
   The lsblk command is still showing all the nvme
   drives I created for maxwell4.  I ran fsck against
 
@@ -93,6 +94,7 @@ Purpose: To rebuild from scratch maxwell4 after
   Still broken when I tried to reboot.
 
 2021-12-04:
+
   Back at the archiso root prompt.
 
     # iwctl device list
@@ -261,6 +263,7 @@ Purpose: To rebuild from scratch maxwell4 after
   loader.conf(5) man page first.
 
 2021-12-05:
+
   Configure systemd boot loader via the examples
   from /usr/share/systemd/bootctl.  Note that as before
   with maxwell4, I had to go with the Unix device name.
@@ -288,6 +291,7 @@ Purpose: To rebuild from scratch maxwell4 after
   from it.
 
 2021-12-05:
+
   Sucessfully booted euler7 and logged in as root.
 
   Need to connect to wifi so I can use pacman.  See
@@ -383,6 +387,7 @@ Purpose: To rebuild from scratch maxwell4 after
   Added euler7 ssh key to GitHub account.  Removed maxwell4 key.
 
 2021-12-06:
+
   It is not Unix until it has a C compiler installed.
 
     # pacman -Syu base-devel
@@ -481,6 +486,7 @@ Purpose: To rebuild from scratch maxwell4 after
     systemd-networkd[301]: wlan0: Gained carrier
 
 2021-12-06:
+
   I found a new toy.
 
     $ ls -l /usr/bin/resolv*
@@ -521,6 +527,7 @@ Purpose: To rebuild from scratch maxwell4 after
     /usr/bin/resolvectl is owned by systemd 249.7-2
 
 2021-12-07:
+
   Used visudo to edit /etc/sudoers as root.
   
    - allow members of wheel to execute commands as root w/o pw
@@ -538,11 +545,13 @@ Purpose: To rebuild from scratch maxwell4 after
     $ sudo EDITOR=nvim systemctl edit --full sshd.service
 
 2021-12-07:
+
   Edited /etc/ssh/sshd_configuration, moved sshd to a high port.
 
     $ sudo systemctl restart sshd.service
 
 2021-12-07:
+
   Decided to install Sway as my desktop.
 
    - Wayland version of i3
@@ -553,6 +562,7 @@ Purpose: To rebuild from scratch maxwell4 after
   First continue setting up infrastructure.  
 
 2021=12=07:
+
   Install intel-ucode package.
 
     $ sudo pacman -Syu intel-ucode
@@ -579,6 +589,7 @@ Purpose: To rebuild from scratch maxwell4 after
     Dec 07 16:34:10 euler7 kernel: Command line: initrd=\intel-ucode.img initrd=\initramfs-linux.img root=/dev/nvme0n1p3 rootfstype=ext4 add-efi-memmap
 
 2021-12-07:
+
   Install pipewire and wireplumber, based on what I did on 2021-11-20 for maxwell4.
 
     sudo pacman -Syu wireplumber pipewire-pulse pipewire-jack wireplumber-doc \
@@ -594,6 +605,7 @@ Purpose: To rebuild from scratch maxwell4 after
   Sound works.
 
 2021-12-07:
+
   Get Bluetooth working, following via ArchWiki.
   First check if kernel drivers are installed.
 
@@ -618,4 +630,110 @@ Purpose: To rebuild from scratch maxwell4 after
 
     $ bluetoothctl help
     $ man -s8 bluetoothd
+
+2021-12-08:
+
+  Today I will install Sway.  By default, Sway does not use a display manager.
+
+  Got an idea of what I want to do from the Sway ArchWiki page and
+  this Youtube video: https://www.youtube.com/watch?v=hRIGYUWQfYU
+
+  I will be following this guide: https://www.fosskers.ca/en/blog/wayland
+  more or less.
+
+    $ sudo pacman -Syu \
+          sway alacritty waybar wofi \
+          xorg-xwayland xorg-xlsclients qt5-wayland glfw-wayland
+    :: Synchronizing package databases...
+     core is up to date
+     extra is up to date
+     community is up to date
+    :: Starting full system upgrade...
+    resolving dependencies...
+    :: There are 8 providers available for ttf-font:
+    :: Repository extra
+       1) gnu-free-fonts  2) noto-fonts  3) ttf-bitstream-vera  4) ttf-croscore  5) ttf-dejavu
+    :: Repository community
+       6) ttf-droid  7) ttf-ibm-plex  8) ttf-liberation
+    
+    Enter a number (default=1): ^C
+    Interrupt signal received
+
+2021-12-08:
+
+  Aside: Fonts
+
+  I am not a great font connoisseur.  I want
+
+   - good Unicode coverage
+   - minimal bloat, simple to configure
+   - not ugly
+   - learn better how to handle fonts in code
+
+  The ArchWiki font configuration page has good info I will draw upon.
+
+  The freedesktop.org's Fontconfig library is what most modern GUI
+  and printer applications use to quickly find needed fonts.  The local
+  per user configuration file is 
+
+    ~/.config/fontconfig/fonts.conf
+
+  and globally set via
+
+    /etc/fonts/local.conf
+
+  Older X applications use two different font systems
+
+   - the older X Logical Font Description (XLFD)
+     - originally designed for bitmap fonts
+     - scalable fonts added later
+     - does not support anti-aliasing & sub-pixel rasterization
+   - the newer X FreeType (Xft)
+     - uses FreeType & Fontconfig libraries
+     - more suitable when smooth font appearance desired
+
+  Example of an application using XLFD names:
+
+    $ xterm -fn -misc-fixed-medium-r-semicondensed--13-120-75-75-c-60-iso8859-1 &
+    $ xterm -fn "-*-fixed-medium-r-s*--13-120-*-*-*-*-iso8859-1" &
+
+  The above is what I used to refer to as "magical Unix incantations."
+
+  Any case, I need to choose some fonts.  The default choice is
+  GNU Unifont but I hear good things about Noto fonts.  Both
+  have good Unicode coverage and open licenses.  Both allow for
+  embedding in commercial software.  The GNU may be bitmap fonts,
+  they were developed along side XFree86 and XOrg.  Not was
+  commissioned by Google in the 2010's and are more modern.
+
+  Lets go with the Noto fonts.
+
+2021-12-08:
+
+  Back to installing Sway.
+
+    $ sudo pacman -Syu \
+          sway alacritty waybar wofi \
+          xorg-xwayland xorg-xlsclients qt5-wayland glfw-wayland \
+          noto-fonts
+    :: Synchronizing package databases...
+     core                    137.4 KiB   528 KiB/s 00:00 [############################] 100%
+     extra                  1565.4 KiB  9.38 MiB/s 00:00 [############################] 100%
+     community                 5.8 MiB  26.9 MiB/s 00:00 [############################] 100%
+    :: Starting full system upgrade...
+    resolving dependencies...
+    :: There are 2 providers available for opengl-driver:
+    :: Repository extra
+       1) mesa  2) nvidia-utils
+    
+    Enter a number (default=1): 1
+    looking for conflicting packages...
+    ...
+
+  I chose the mesa package.  Did not what to risk dragging in the proprietary
+  NVIDIA drivers.  Pretty sure the older hybrid, non-GBM NVIDIA GeForce MX250
+  Graphics card will never be able to support Wayland.
+  
+  Let's reboot and see if we can get a Sway session going.
+
 

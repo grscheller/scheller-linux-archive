@@ -4,7 +4,7 @@ BINARIES := crtp
 binaries: $(BINARIES)
 
 crtp: counter.cpp
-	$(CXX) -Wall -std=gnu++11 $< -o $@
+	$(CXX) -Wall -std=gnu++20 $< -o $@
 
 clean:
 	rm -f $(BINARIES)

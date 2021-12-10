@@ -34,7 +34,10 @@ public:
   void speak() { cout << "Bark, Bark" << endl; }
 };
 
-class Robot : public counter<Robot> {};
+class Robot : public counter<Robot> {
+public:
+  void speak() { cout << "Danger Will Robinson! Danger!" << endl; }
+};
 
 class Goat : public counter<Goat> {};
 
@@ -51,10 +54,14 @@ int main() {
   Dog fido;
   Dog flash;
   Robot robbie;
+  Robot robot;
   Goat nanny;
   Goat billy;
 
-  cout << "Number of Robots created: " << robbie.getCreated() << endl;
+  cout << "The robot says: ";
+  robot.speak();
+
+  cout << "Number of Robots created: " << robot.getCreated() << endl;
   cout << "Number of Robots alive: " << robbie.getAlive() << endl;
   cout << "Number of Dogs created: " << flash.getCreated() << endl;
   cout << "Number of Dogs alive: " << fido.getAlive() << endl;
@@ -70,6 +77,11 @@ int main() {
 
   cout << "Fido speaks!" << endl;
   fido.speak();
+
+  cout << "Creating gort from robbie" << endl;
+  Robot gort = robbie;
+  cout << "Gort say, number Robots created: " << gort.getCreated() << endl;
+  cout << "Robbie says, number of Robots alive: " << robbie.getAlive() << endl;
 
   return 0;
 }

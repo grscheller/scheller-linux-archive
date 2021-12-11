@@ -596,6 +596,8 @@ Purpose: To rebuild from scratch maxwell4 after
                      pipewire-docs pipewire-alsa vorbis-tools alsa-utils \
                      alsa-plugins tree sof-firmware alsa-ucm-conf alsa-firmware
 
+                     2021-12-10: should add jack2 to list?
+
   Reboot
   
     $ amixer sset Master unmute
@@ -703,7 +705,7 @@ Purpose: To rebuild from scratch maxwell4 after
   GNU Unifont but I hear good things about Noto fonts.  Both
   have good Unicode coverage and open licenses.  Both allow for
   embedding in commercial software.  The GNU may be bitmap fonts,
-  they were developed along side XFree86 and XOrg.  Not was
+  they were developed along side XFree86 and XOrg.  Noto was
   commissioned by Google in the 2010's and are more modern.
 
   Lets go with the Noto fonts.
@@ -764,8 +766,18 @@ Purpose: To rebuild from scratch maxwell4 after
 
   Alacritty works!  Also, sway is mouse focused!
 
-  Super+d does not work, but I am going to swap out the program launcher
-  anyway.  
+  Super+d does not work, but I am going to swap out the program
+  launcher anyway.  
 
-  Super+e swaps the placement of two alacritty windows from left by right
-  to top over bottom respectively, and back.
+  Super+e swaps the placement of two alacritty windows from
+  left by right to top over bottom respectively, and back.
+
+2021-12-10:
+  Installing firefox so that I can continue primping euler7 without
+  having to run over to another computer to research stuff.
+
+    $ sudo pacman -Syu firefox
+
+  Note that this brings in the jack2 package.  At least Pacman
+  thinks this is compatible with pirewire-jack and wireplumber.
+

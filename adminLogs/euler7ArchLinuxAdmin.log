@@ -669,8 +669,8 @@ Purpose: To rebuild from scratch maxwell4 after
 
    - good Unicode coverage
    - minimal bloat, simple to configure
-   - not ugly
-   - learn better how to handle fonts in code
+   - not glaringly ugly
+   - to learn better how to handle fonts in code
 
   The ArchWiki font configuration page has good info I will draw upon.
 
@@ -773,6 +773,7 @@ Purpose: To rebuild from scratch maxwell4 after
   left by right to top over bottom respectively, and back.
 
 2021-12-10:
+
   Installing firefox so that I can continue primping euler7 without
   having to run over to another computer to research stuff.
 
@@ -781,3 +782,47 @@ Purpose: To rebuild from scratch maxwell4 after
   Note that this brings in the jack2 package.  At least Pacman
   thinks this is compatible with pirewire-jack and wireplumber.
 
+2021-12-12:
+
+  Continue configuring Sway via https://www.fosskers.ca/en/blog/wayland
+
+  Things I want this guide to help me accomplish:
+
+   - Configure Waybar, a topbar very similar to Polybar.
+   - Configure Wofi, a pure GTK (and thus Wayland) customizable application launcher.
+   - Firefox and/or Chromium in Wayland with working screen sharing.
+   - Most QT applications running in Wayland.  GTK should just work.
+   - Steam games set up to consider Wayland, if they can (maybe).
+
+2021-12-13:
+
+  Configure Waybar for sway.  Edit ~/.config/sway/config,
+  comment the bar section and add
+    
+    bar {
+        swaybar_command waybar
+    }
+
+  Replace program launcher dmenu with wofi.  Factoid: denu uses
+  XWayland while wofi is a GTK application, hence Wayland compatible.
+
+    #set $menu dmenu_path | dmenu | xargs swaymsg exec --
+    set $menu wofi --show=drun --lines=5 --prompt=""
+
+  The drun option above only matches and displays hits for programs
+  that have "Desktop" entries.
+  
+  Note that out of the box firefox runs under XWayland.
+
+    $ xlsclients
+    euler7  firefox
+
+  In ~/.config/fish/config.fish
+
+    set -x MOZ_ENABLE_WAYLAND 1
+
+  Logout both sway & console.
+
+    $ xlsclients
+
+  Firefox now running completely under Wayland.

@@ -826,3 +826,29 @@ Purpose: To rebuild from scratch maxwell4 after
     $ xlsclients
 
   Firefox now running completely under Wayland.
+
+2021-12-14:
+
+  Needed for firefox to screen share.
+
+   $ sudo pacman -Syu xdg-desktop-portal-wlr 
+
+  This also brought in xfg-desktop-portal and a bunch
+  of fuse (user space file system) stuff and something
+  called geoclue.
+
+    $ pacman -Ss geoclue
+    extra/geoclue 2.5.7-4 [installed]
+        Modular geoinformation service built on the D-Bus messaging system
+    community/pantheon-geoclue2-agent 1.0.5-1 (pantheon)
+        Pantheon Geoclue2 Agent
+
+  Hummm...What are doing Firefox?
+
+  Test out changes here:
+
+    https://mozilla.github.io/webrtc-landing/gum_test.html
+
+  Screen sharing seemed to work.  Have to share entire screen.
+  Sharing idividual windows is in the works, but does not work yet.
+

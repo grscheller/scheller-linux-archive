@@ -852,3 +852,13 @@ Purpose: To rebuild from scratch maxwell4 after
   Screen sharing seemed to work.  Have to share entire screen.
   Sharing idividual windows is in the works, but does not work yet.
 
+2021-12-15:
+
+  Install legacy GNOME polkit deamon for Sway.  Has no external
+  dependencies.
+
+    $ sudo pacman -Syu polkit-gnome
+
+ Added the following  line to ~/.config/sway/config
+
+   exec_always /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1

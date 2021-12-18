@@ -561,7 +561,7 @@ Purpose: To rebuild from scratch maxwell4 after
 
   First continue setting up infrastructure.  
 
-2021=12=07:
+2021-12-07:
 
   Install intel-ucode package.
 
@@ -862,3 +862,71 @@ Purpose: To rebuild from scratch maxwell4 after
  Added the following  line to ~/.config/sway/config
 
    exec_always /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+
+2021-12-16:
+
+  Fixed waybar not having its icons.
+
+    $ sudo pacman -S otf-font-awesome
+
+2021-12-17:
+
+  Neovim's "+ and "* registers don't work.
+  The first is the "system" clipboard, the second the "X11" clipboard.
+
+  Let's install the Wayland clibboard tool
+
+    $ pacman -Ss wl-clipboard
+    community/wl-clipboard 1:2.0.0-2
+        Command-line copy/paste utilities for Wayland
+    $ sudo pacman -S wl-clipboard
+
+  Without any configuration, both registers seem to work and
+  are distinct.  The xlsclient is not showing any XWayland
+  stuff when "* is used.
+
+  In nvim, :h clipboard-tool shows that order of searching for clipboard
+  tools are,
+
+    - |g:clipboard|
+    - pbcopy, pbpaste (macOS)
+    - wl-copy, wl-paste (if $WAYLAND_DISPLAY is set)
+    - xclip (if $DISPLAY is set)
+    - xsel (if $DISPLAY is set)
+    - lemonade (for SSH) https://github.com/pocke/lemonade
+    - doitclient (for SSH) http://www.chiark.greenend.org.uk/~sgtatham/doit/
+    - win32yank (Windows)
+    - termux (via termux-clipboard-set, termux-clipboard-set)
+    - tmux (if $TMUX is set)
+
+  Seems that regardless whether or not XWayland is running, I still
+  have two distinct clipboards in Wayland.  X11 style middle-mouse
+  highlighted paste is associated with the "* register and (with my
+  alcritty keybindings) alt+c & alt+v the "system" clipboard is
+  associated with the "+ register.  As before, I can also paste
+  through alacritty directly into neovim insert mode via alt-v.
+
+  After further research, freedesktop.org describes the two main
+  selections as follows:
+
+  PRIMARY
+    Used for the currently selected text, even if it is not explicitly
+    copied, and for middle-mouse-click pasting. In some cases, pasting
+    is also possible with a keyboard shortcut.
+
+  CLIPBOARD
+    Used for explicit copy/paste commands involving keyboard
+    shortcuts or menu items. Hence, it behaves like the single
+    clipboard system on Windows. Unlike PRIMARY, it can also
+    handle multiple data formats.
+
+  Qt and GTK applications follow this behavior, as do most
+  Xorg applications.
+
+  Therefore, I have not been interacting with two clipboard systems
+  but with one with backward compatible behaviors.
+
+  Arch does not seem to have a Sway oriented drop in replacement
+  for gpaste or clipman.  I don't want to unnecessarily drag in
+  too much of GNOME or XFCE, so I will forego a clipboard history
+  manager for now.

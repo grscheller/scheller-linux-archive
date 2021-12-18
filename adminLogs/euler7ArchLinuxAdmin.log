@@ -930,3 +930,28 @@ Purpose: To rebuild from scratch maxwell4 after
   for gpaste or clipman.  I don't want to unnecessarily drag in
   too much of GNOME or XFCE, so I will forego a clipboard history
   manager for now.
+
+2021-12-18:
+
+  Following this "Root Labs" video to configure Waybar for Sway
+
+    https://www.youtube.com/watch?v=oUpvtCEGrxQ
+
+  Installing Waybar default font Roboto.  Also Roboto Mono Medium.
+
+    $ sudo pacman -S ttf-roboto ttf-roboto-mono
+
+  Edited ~/.config/waybar/style.ccs lines near top from
+
+    boarder-radius: 0;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 13px;
+
+  to
+
+    boarder-radius: 4px;
+    font-family: "Roboto Mono Medium", Roboto, Arial, sans-serif;
+    font-size: 18px;
+
+  Also edited ~/.config/waybar/config
+

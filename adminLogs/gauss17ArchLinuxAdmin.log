@@ -13,6 +13,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
       much fuss.
 
 2016-07-04:
+
   Installed Arch Linux on a Acer E-14 Laptop (E5-491G-70PX).
   Created a UEFI/GPT x86-64 system with a 4 core i7 Intel
   Processor (6700HQ).  Laptop has a 2 channel NVIDIA-Optimus
@@ -60,10 +61,12 @@ Note: On 2017-06-20 rebuilt system from scratch starting
      that I gloss over above. ]]
 
 2016-07-07:
+
   Out of the blue, ethernet not configured.  Had to bring up
   DHCP manually via: dhcpcd enp3s0f1
 
 2016-07-07:
+
   Install dns utilities:
 
   Commands:
@@ -93,10 +96,12 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   not installed date.
 
 2016-07-08:
+
   Installed GIT and Python3:
     Pacman: git, python, ipython, python-nose
 
 2016-07-08:
+
   Currently using the open source drivers for the graphics
   cards as well as the integrated graphics chipset.
 
@@ -119,6 +124,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   updated.
 
 2016-07-08:
+
   Added the sudo package, used the visudo command to edit
   /etc/sudoers.  Enable members of the wheel group to use
   sudo.  Added geoff login to wheel group via
@@ -137,6 +143,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
         from wheel.
 
 2016-07-08:
+
   Starting process to install GUI environment.  Installing
   xinit, startx and a default xinitrc file.
     Pacman: xorg-xinit
@@ -214,11 +221,13 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     alias nv-on='sudo nvidia-smi -pm 1'
 
 2016-07-09:
+
   Figured out how to turn ethernet on by default:
 
     systemctl enable dhcpcd
 
 2016-07-09:
+
   Added ALSA (Advanced Linux Sound Architecture) Utilities:
     Pacman: alsa-utils
 
@@ -233,6 +242,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   both speakers and headphones work.
 
 2016-07-09:
+
   Attempting to install GNOME Desktop
     Pacman: gnome, gnome-extra gnome-tweak-tool
 
@@ -302,6 +312,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   See note on 2017-04-15 for some more NVIDIA Optimus insight.
 
 2016-07-09:
+
   Try and fix gnome-terminal problem.
 
   Lets try installing a bunch of fonts.
@@ -330,10 +341,12 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   to configure.
 
 2016-07-09:
+
   Installed firefox.
     Pacman: firefox
 
 2016-07-10:
+
   So that I have a working gui desktop environment, I will
   install XFCE.
     Pacman: xfce4 xfce4-goodies
@@ -351,6 +364,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   with gnome.
 
 2016-07-10:
+
   Installed ACPI power management
     Pacman: acpi
 
@@ -358,6 +372,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   spun up.  Need to configure it.
 
 2016-07-10:
+
   Installing vim.  Created vi alias for vim for geoff but
   not for root.
     Pacman: gvim
@@ -368,6 +383,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   way like Ubuntu and CentOS do.
 
 2016-07-10:
+
   Installed OpenSSH package.  Verified OpenSSL was
   previosly installed as a dependency.
 
@@ -404,6 +420,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
           I discover that sshd.socket no longer supported.
 
 2016-07-11:
+
   Preparing to configure the Wireless networking.
 
   First install command line utilities:
@@ -437,6 +454,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   first dmesg.
 
 2016-07-12:
+
   Removed gnome desktop.
 
     # pacman -Rsu gnome gnome-extra gnome-tweak-tool
@@ -447,11 +465,13 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   (0.03 * 63.4G = 1.9G used by Gnome)
 
 2016-07-13:
+
   Install final packages to get wireless working in XFCE.
   Following the Arch Linux wireless installation guide.
     Pacman: wicd wicd-gtk xfce4-notifyd
 
 2016-07-14:
+
   Finish configuring wicd for use with XFCE:
 
     # systemctl is-enabled wicd
@@ -494,15 +514,18 @@ Note: On 2017-06-20 rebuilt system from scratch starting
    tray.)
 
 2016-07-14:
+
   Installed SBT for scala development.  Had it drag in jre8
   as opposed jre7.
     Pacman: sbt
 
 2016-07-14:
+
   Installed a java8 development environment.
     Pacman:  jdk8-openjdk openjdk8-doc java-openjfx java-openjfx-doc
 
 2016-07-16:
+
   How to install packages from AUR (Arch User Repository),
   from the Arch_User_Repository of the Arch Linux Wiki:
 
@@ -522,6 +545,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
      are no longer needed.
 
 2016-07-16:
+
   Install google-chrome from AUR:
 
     $ git clone https://aur.archlinux.org/google-chrome.git
@@ -544,37 +568,44 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   if I wanted it installed, I said yes.
 
 2016-07-17:
+
   Installed VLC and some optional dependencies.
     Pacman: vlc qt4 libcdio
 
 2016-07-17:
+
   Installed shotwell.  For simple touch and image enhancing.
   Also a photo organizer.
     Pacman: shotwell
 
 2016-07-17:
+
   Was going to install evince, but the install was about to
   to drag in almost 1G of gnome infrastructure.  Installed
   muPDF instead.
     Pacman: mupdf
 
 2016-07-17:
+
   Installed gimp image retouching,ffmpeg composition,
   and authoring.
     Pacman: gimp
 
 2016-07-17:
+
   Installed Libre-Office with some latex support.
     Pacman: libreoffice-fresh libreoffice-extension-texmaths
             libreoffice-extension-writer2latex
 
 2016-07-17:
+
   Installed youtube-dl and some optional dependencies
   (ffmpeg already installed).
     Pacman: yt-download
     Pacman: rtmpdump atomicparsley
 
 2016-07-17:
+
   Minimal Haskell install from official repos:
     Pacman: ghc cabal-install happy alex
 
@@ -584,6 +615,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   necessary - and then only on the end user level.
 
 2016-07-17:
+
   Sound not working.
 
   Installed Pulseaudio with recomended dependency.
@@ -622,16 +654,19 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   So at this point, pulseaudio not installed.
 
 2016-07-20:
+
   Installed Gnome Keyring in preparation of getting
   removeable media to automount.  Decided to let XFCE to
   handle this instead of configuring underlying mechanisms.
     Pacman: gnome-keyring
 
 2016-07-20:
+
   Decided to go with evince as my go to PDF reader.
     Pacman: evince
 
 2016-07-20:
+
   Install Thunar Volume Manager.
 
   The gvfs package provides a VFS API to GLib applications.
@@ -645,10 +680,12 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     Pacman: thunar-volman
 
 2016-07-20:
+
   Installed bash-completion for convinence.
     Pacman: bash-completion
 
 2016-07-20:
+
   Figured out why acpid not running, I did not install it.
     Pacman: acpi acpid
 
@@ -683,10 +720,12 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     Jul 21 00:54:49 gauss17 acpid[381]: 1 client rule loaded
 
 2016-07-21:
+
   Installed etherape:
     Pacman: etherape
 
 2016-07-22:
+
   Installed claws-mail:
     Pacman: claws-mail
     Pacman: postfix
@@ -700,15 +739,18 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   from their default vaules,
 
 2016-07-22:
+
   Installed Scala compiler version 2.11.8 so that I can run
   scala outside the context of SBT.
     Pacman: scala scala-docs scala-sources
 
 2016-07-22:
+
   Installed wget utility to get web content from CLI.
     Pacman: wget
 
 2016-07-23:
+
   Noticed that XFCE infrastructure is mounting my removable
   USB HD read only.  Need to fix this.  Will try to do this
   within XFCE before managing removable media in the
@@ -732,6 +774,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   android.
 
 2016-07-24:
+
   Occationally system hangs on boot just after the message:
 
     Starting Load/Save RF Kill Switch Status...
@@ -784,10 +827,12 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   so should be stable enough.
 
 2016-07-25:
+
   Installed GIMP help files.
     Pacman: gimp-help-en
 
 2016-07-25:
+
   Getting NVIDIA Optimus to work on this laptop: NO!!!!
 
   Stay away from the beta NVIDIA drivers, sometimes they can
@@ -826,6 +871,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   card only and ignores the Intel chip set. (see 2017-04-15)
 
 2016-07-26:
+
   Here is confirmation that the Nouveau drivers are not running.
 
     $ lsmod | egrep -i '(nvidia|nouveau)'
@@ -900,12 +946,14 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   cards would have had to been configured here.
 
 2016-07-26:
+
   The line
      kernel: nvidia: module license 'NVIDIA' taints kernel
   from journalctl -b only means that the nvidia driver does not
   have a GPL or equivalent license.
 
 2016-07-28:
+
   From journalctl, there are error
   messages from gauss17 postfix/local:
 
@@ -921,11 +969,13 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   is failing.
 
 2016-07-29:
+
   Installed Vorbis-OGG related tools.
     Pacman: vorbis-tools mp32ogg pyvorbis recordmydesktop vorbisgain
     Pacman: libffado celt jack
 
 2016-07-30:
+
   To be able to manage gnome-keyring from userland, install
   seahorse.
 
@@ -935,6 +985,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     Pacman: erlang elixir erlang-docs erlang-unixodbc rebar yaws
 
 2016-07-31:
+
   Erlang can use GPU.  Also, first steps to get GPU to work
   for number crunching in general.  I was going to install what
   was needed for NVIDIA CUDA, but this proprietary package
@@ -945,6 +996,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     Pacman: libclc opencl-headers opencl-nvidia luxmark
 
 2016-08-01:
+
   Some journalctl chatter to indicate gnome-keyring failing.
     ... org.gnome.keyring.SystemPrompter[853]: (gcr-prompter:1196):
           Gtk-WARNING **: cannot open display:
@@ -971,6 +1023,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   configuration file?
 
 2016-08-03:
+
   Enabled dhcpcd on boot, since wicd might need it.
     sudo systemctl enable dhcpcd
 
@@ -980,6 +1033,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   coffee shop.
 
 2016-08-03:
+
   Made changes to PAM configuration files so that gnome-keyring
   automatically starts on xfce login.  Created the directory
     /home/geoff/info/ArchLinux/admin/Config_Files/
@@ -1013,6 +1067,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   keyring with my login password.
 
 2016-08-03:
+
   I am seeing both Intel and NVIDIA controllers
 
     $ lspci | egrep 'VGA|NVIDIA'
@@ -1057,6 +1112,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   chipsets of an OPTIMUS laptop is being used at anyone time.
 
 2016-08-03:
+
   Went ahead and installed CUDA infrastructure into /opt/cuda/.
 
     Pacman: cuda pycuda-headers python-pycuda
@@ -1065,6 +1121,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   with gcc 6.0+ right now.
 
 2016-08-03:
+
   Disabled dhcpcd on boot, since it is giving me trouble withi
   wireless connections.
 
@@ -1075,6 +1132,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   on the link level even without starting XFCE.
 
 2016-08-05:
+
   Decided to install pulseaudio.  Seems to be becoming the
   defacto standard in Linux desktop environments.
 
@@ -1145,6 +1203,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
        interface. Use 'cvlc' to use vlc without interface.
 
 2016-08-05:
+
   ogg123 stopped working.  Had to change /etc/libao.conf
 
     from:
@@ -1161,6 +1220,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   on a music file brings up vlc.  I am happy.
 
 2016-08-05:
+
   Postfix was not working because it was completely unconfigured.
 
   I configured it for local delievery only.  See the directory
@@ -1180,15 +1240,18 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   command works.
 
 2016-08-06:
+
   Configured Claws mail also snags the local mail out
   of /var/spool/mail/geoff.
 
 2016-08-11:
+
   Install Clojure.  Optional dependency rlwrap permits REPL
   to use readline library.
     Pacman: clojure rlwrap
 
 2016-08-13:
+
   Installed Lieningen Clojure development environment into
   geoff userland.  Lieningen similar to SBT, so probably
   won't use either system Clojure nor system Scala.
@@ -1208,10 +1271,12 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   type of stuff.  Maybe done via my own pacman packages?
 
 2016-08-13:
+
   Installed zip and unzip utilities.
     Pacman: zip unzip
 
 2016-08-13:
+
   Attempting to install and configure the rtorrent client.
     Pacman: rtorrent libtorrent tmux
 
@@ -1232,6 +1297,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   router is connecting me to the Internet.
 
 2016-08-14:
+
   Installed ABS (Arch Build System) to give me the ability to
   build packages locally that pacman -Syu ... install.  Similar
   in many ways to FreeBSD Ports Collection except that instead of
@@ -1240,6 +1306,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     Pacman: abs
 
 2016-08-14:
+
   Got rtorrent to work with the help of a tutorial:
 
     https://harbhag.wordpress.com/2010/06/30/tutorial-using-rtorrent-on-linux-like-a-pro/
@@ -1267,11 +1334,13 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   the terminal to various X-servers.
 
 2016-08-14:
+
   Installed a variety of DVD related software.
 
     Pacman: libdvdcss libdvdnav brasero unrar handbrake handbrake-cli
 
 2016-08-19:
+
   Installed TOR (2nd generation onion router) and ARM
   (Anonymizing Relay Monitor).
 
@@ -1307,6 +1376,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   Questions: What is role of SOCKS5 and do I need to install it?
 
 2016-08-19:
+
   All the bit torrent sites using something called magnet links.
   I want the actual .torrent files.  There is an AUR called
   "magnet2torrent", but when I tried to build it, it had a
@@ -1321,10 +1391,12 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     Pacman: libtorrent-rasterbar
 
 2016-08-19:
+
   Installed a space "shoot-em-up" game called astromenace.
     Pacman: astromenace
 
 2016-08-20:
+
   Heres how to check the mouse polling interval.  Both mice
   are USB mice.
 
@@ -1374,6 +1446,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   the polling rate via systool and modprobe.
 
 2016-08-20:
+
   Tried to install a game called aquaria from two AUR,
   aquaria-ose and aquaria-hib.  Now, aquaria-ose is an
   open source engine, built and installed no problem.
@@ -1404,6 +1477,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     Pacman: cmake
 
 2016-08-21:
+
   I am concerned that the Internet is becoming some sort of
   new corporate/government controlled mass media.  Especially
   chilling is the influence certain buiness interests are
@@ -1424,6 +1498,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   cultures.  Starting with arm.
 
 2016-08-22:
+
   Very good technical information on Tor website, with links to
   academic technical papers.
 
@@ -1453,16 +1528,19 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   6. STEM: Python controller library for Tor.
 
 2016-08-22:
+
   Configured WICD to use google's DNS 8.8.8.8 over comcast's
   DNS 75.75.75.75 on the Heritage Center's two working WIFI
   hotspots.  Not sure if I can trust Google any more than
   Comcast.  Need to research.
 
 2016-08-28:
+
   Some games and a flight simulator that were installed.
     Pacman: flightgear 0ad 0ad-data
 
 2016-08-29:
+
   Installed some Haskell Arch Linux packages.
     Pacman: haskell-gtk haskell-connection
     Pacman: haskell-comonad
@@ -1474,6 +1552,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   installed these.
 
 2016-08-30:
+
   Installed Haskell packages needed to use comonads.
     Pacman: haskell-project-template
     Pacman: haskell-haddock-api haskell-haddock-library
@@ -1484,6 +1563,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   not seem to be made into an Arch Linux pacman package.
 
 2016-09-01:
+
   Installed a modern Lisp called Racket.
 
     Pacman: racket racket-doc
@@ -1495,6 +1575,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   lot easier.
 
 2016-09-04:
+
   Seems regular search engines more useful then tor search
   engines for finding *.onion sites.
 
@@ -1502,6 +1583,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
                     if you are using DuckDuckGo.
 
 2016-09-05:
+
   Noticed that "man cabal" fails due to read error.  A few
   files in /usr/share/man/man1 have wrong permissions.  Here
   is how I found them:
@@ -1530,6 +1612,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   # chmod 644 $(ls -l | egrep -v '(\-rw\-r\-\-r\-\-|^l|^total)' | sed 's/.* //')
 
 2016-09-10:
+
   Installed non-free media decodings for gstreamer library.
     Pacman: gst-libav
 
@@ -1537,6 +1620,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   some "pacman -Qi".
 
 2016-09-11:
+
   Installed X-Screensaver.
     Pacman: xscreensaver
 
@@ -1544,6 +1628,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   Hundreds of screen savers, set up randomly.
 
 2016-09-11:
+
   Noticed that
     $ pacman -Qi mesa
     ...
@@ -1555,6 +1640,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   So I am missing some video capability.
 
 2016-09-12:
+
   Install opengl man pages and accelerated playback functions.
 
     Pacman: opengl-man-pages
@@ -1564,6 +1650,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   Mesa is an open source implementation of opengl.
 
 2016-09-12:
+
   From the Arch Linux hardware accelleration wiki:
 
     - For Intel Graphics use VA-API
@@ -1626,6 +1713,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   Something is wrong.  X seems to be functional.
 
 2016-09-13:
+
   I "guessed" I would not need the AUR firmware package
   nouveau-fm.
 
@@ -1653,6 +1741,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   So, system not even sweating.
 
 2016-09-17:
+
   Installing Perl6 via the rakudo AUR package.
 
   First install some optional dependencies:
@@ -1740,6 +1829,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   Give up until perl6 more stable on Arch.
 
 2016-09-23:
+
   Installed pypy for python3 with optional tk dependency.
     Pacman: pypy3, tk
 
@@ -1753,6 +1843,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   -the-hood like numpy.
 
 2016-09-25:
+
   Noticed that after a system shutdown with the command
 
     $ sudo shutdown -h now
@@ -1766,6 +1857,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   network to come up on reboot before anyone logs in.
 
 2016-10-13:
+
   Been lazy lately and have not kept up on this log lately.
   Going through my shell history to reconstruct what I have
   been up to.
@@ -1800,6 +1892,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     Pacman: whois
 
 2016-10-15:
+
   I may have lost some information in this file due to updating
   this file with a version of it in my scheller-linux-environment
   GitHub repo.  To avoid this confusion in the future, I created
@@ -1820,6 +1913,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   due to security reasons.
 
 2016-10-22:
+
   Installed speedtest-cli and iperf to measure internet bandwidth.
 
     Pacman: speedtest-cli iperf
@@ -1839,10 +1933,12 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   complete.  Can also run UDP tests.
 
 2016-10-24:
+
   Something wrong with XFCE gui environment.  Not working
   smoothly.
 
 2016-10-25:
+
   Over last few days I noticed XFCE GUI environment getting
   slower, terminals & browser windows failed to spin up.
 
@@ -1859,6 +1955,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   after a pacman update that brought in gtk/gtk3 stuff.
 
 2016-10-25:
+
   Try uninstalling Thunar related stuff:
 
     Pacman(Remove): thunar thunar-archive-plugin
@@ -1871,6 +1968,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   my external HD.
 
 2016-10-26:
+
   GUI-land completely unusable until I slew off hundreds of
   these Thunar deamon processes via:
 
@@ -1887,12 +1985,14 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   related gtk/thunar/xfce updates.
 
 2016-10-26:
+
   I going to research completely redoing my XFCE Desktop
   Environment.  I think I will bring in a Display Manager.
   This, I hope, will make my system more "convensional" and
   thus more close to a tested "configuration."
 
 2016-10-26:
+
   Installed lightdm display manager
 
     Pacman: lightdm lightdm-gtk-greater
@@ -1916,6 +2016,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   instance of '/usr/bin/thunar --daemon' running!
 
 2016-10-26:
+
   No wireless running.  Lets disable lightdm.
 
     $ sudo systemctl disable lightdm
@@ -1929,12 +2030,14 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   Interesting...
 
 2016-10-26:
+
   Every time a "shutdown" from within Xfce, but not "log out",
   the next time I startx, I get one more of these
   'Thunar --sm-client-id ... --daemon' running.  I am up to 11
   of these now.  I will look into Xfce startup configurations.
 
 2016-10-27:
+
   Finally fixed Xfce GUI-land problems.
 
   Revisionist history to follow (took a while to work out):
@@ -1955,6 +2058,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   hard drive mounts just fine.
 
 2016-11-16:
+
   Updated Google Chrome,
 
     $ cd ~/build/AUR/google-chrome_build/google-chrome
@@ -1962,6 +2066,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     $ makepkg -sri
 
 2016-11-19:
+
   I "Uninstalled" anaconda via
 
     $ cd ~/opt
@@ -1975,6 +2080,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   in the dust.
 
 2016-11-21:
+
   Noticed /etc/bashrc.pacnew and /etc/local.gen.pacnew files.
 
   I simply replaced /etc/bashrc with the first, the only
@@ -2004,6 +2110,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   without noting it in this log file.
 
 2016-11-25:
+
   Uninstalled flightgear because its data file too big for slow
   coffee shop internat connection making "pacman -Syu" too slow.
   Maintainers might consider breaking up data file into smaller
@@ -2016,17 +2123,20 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     Pacman: gitg
 
 2016-12-05:
+
   Uninstalled 0AD due to data files taking too long to down
   load on slow connections.
 
     Pacman(Remove): 0ad 0ad-data
 
 2016-12-17:
+
   Installed blender.
 
     Pacman: blender
 
 2016-12-17:
+
   Reset the timezone to East Coast.
 
     $ timedatectl list-timezones | grep America/Ne
@@ -2035,6 +2145,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     $ sudo timedatectl set-timezone America/New_York
 
 2016-12-17:
+
   Noticed system time about 4 minutes behind my cell
   phone's time.  Install network time deamon ntpd.
 
@@ -2051,6 +2162,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     $ sudo timedatectl set-ntp true
 
 2016-12-28:
+
   Installed the C++ Boost library header files.
 
     Pacman: boost
@@ -2062,6 +2174,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   and /usr/lib repectively.
 
 2017-01-11:
+
   Noticed that both chrome and firefox not displaying asian
   character sets correctly.  Type installing more fonts.
 
@@ -2096,6 +2209,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   in Chrome and Firefox.
 
 2017-01-19:
+
   Changed time back to Mountain time.
 
     $ sudo timedatectl set-timezone America/Denver
@@ -2104,6 +2218,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
         restarted the XFCE session.
 
 2017-01-25:
+
   Installed bc.  GNU extension to POSIX command line
   calculator/math language.
 
@@ -2115,6 +2230,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   the usual C language negative value behavior for %.
 
 2017-01-28:
+
   Installed exiftool to extract metadata from files.
 
     Pacman: perl-image-exiftool
@@ -2124,6 +2240,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   script seems to work on a large variety of file types.
 
 2017-01-28:
+
   Installed Markdown.pl perl script to render markdown
   files (like GitHub README.md files) as html.
 
@@ -2142,12 +2259,14 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   same as what GitHub does.
 
 2017-01-29:
+
   Installing Haskell Stack infrastructure and the Stack
   build tool from the Arch Linux repos
 
     Pacman: stack haskell-stack
 
 2017-02-01:
+
   Installed networking components.
 
     Pacman: python2-iwscan python2-wpactrl
@@ -2160,6 +2279,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   At several wifi hotspots, not all, I've had to configure static IP addresses.
 
 2017-02-01:
+
   Found the following orphaned packages,
 
     $ pacman -Qtdq
@@ -2198,6 +2318,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     vte-0.28.2-8
 
 2017-02-01:
+
   List all foreign (usually AUR) packages:
 
     $ pacman -Qmq
@@ -2236,6 +2357,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     I'll continue with this later.
 
 2017-02-03:
+
   Can't seem to be able to remove net-tools:
 
     $ sudo pacman -Rsu net-tools
@@ -2280,6 +2402,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   packages to be removed, there was "nothing to do".
 
 2017-02-04:
+
   Installed haveged, a daemon that generates system entropy;
 
   This speeds up critical operations in cryptographic programs
@@ -2291,6 +2414,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     $ sudo systemctl enable haveged
 
 2017-02-04:
+
   Enabled Intel microcode updates:
 
     $ cat /boot/loader/entries/arch.conf
@@ -2309,6 +2433,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   The file /boot/intel-ucode.img last updated 2016-11-15.
 
 2017-02-15:
+
   Installed strace and ltrace to track system and shared
   library calls of executables.
 
@@ -2322,6 +2447,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     Pacman: dnstracer
 
 2017-02-19:
+
   I have been using either the XFCE menus to power off/reboot
   the system or "sudo shutdown" command when not in X.  I
   looked into more "native" ways to do these things in Arch.
@@ -2530,6 +2656,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
           days to see if one comes along.
 
 2017-04-15:
+
   I have some additional insight into what is going on with the
   Nvidia 940M Optimus inabled card which came with this laptop.
 
@@ -2552,6 +2679,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   frequently take 6 hour airline flights.
 
 2017-04-18:
+
   Getting Blu-Ray to work.
 
   Following -> https://wiki.archlinux.org/index.php/Blu-ray
@@ -2579,6 +2707,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     $ vlc bluray://dev/sr1
 
 2017-04-24:
+
   Pacman failure today.
 
     $ sudo pacman -Syu
@@ -2637,6 +2766,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   Later in the day, "pacman -Syu" updated openimageio to 1.7.13-2.
 
 2017-04-24:
+
   Enabling DoD CAC reader and certificates.
   From Arch Wiki Common Access Card page.
 
@@ -2688,6 +2818,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   Unfortunately, Firefox fails to load module.  Punt for now.
 
 2017-05-20:
+
   From Arch Linux website, www.archlinux.org, it is stated that
   ca-certicates-utils need manual intervention:
 
@@ -2707,6 +2838,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   Symlink was recreated.
 
 2017-06-02:
+
   After a "sudo pacman -Syu", the SBT REPL stopped working
   correctly.  Error message indicated that sbt failed to create
   a terminal.  From /var/log/pacman.log the only thing that might
@@ -2733,6 +2865,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   [[ See second 2020-02-02 entry ]]
 
 2017-06-04:
+
   Pacman update followed by a downgrade of ncurses package,
 
     $ cd /var/cache/pacman/pkg
@@ -2749,6 +2882,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   SBT now works again.
 
 2017-06-11:
+
   Brought ncurses up-to-date.  Temporarily fixing SBT/ncurses
   problem by puting the following in my geoff login's
   ~/.bashrc file,
@@ -2757,6 +2891,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     [[ $TERM =~ $regExForXtermType ]] && TERM=xterm
 
 2017-06-20:
+
   Going to Upgrade the system by adding a Solid State Hard
   Drive and increasing memory to 16GiB.
 
@@ -2774,6 +2909,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   of booting off the DVD for such.
 
 2017-06-24:
+
   Had a small computer shop in Bethlehem PA,
 
     Super Geek Computers
@@ -2798,6 +2934,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   image of Arch Linux on it.
 
 2017-06-26:
+
   Instead of moving / to the new drive, I decided to just
   install a fresh version of Arch.  This may clear out some
   old cruft too.  The procedure follows the "readme" file
@@ -2924,6 +3061,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   [[ See first entry 2020-02-02 ]]
 
 2017-06-26:
+
   Added geoff user to system via,
 
     # useradd -d /home/geoff -c "Geoffrey Scheller" -m geoff
@@ -2940,6 +3078,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     # usermod -aG wheel geoff
 
 2017-06-26:
+
   To make sure I am mounting what I should be,
 
     $ df -h
@@ -2956,6 +3095,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     tmpfs           1.6G  8.0K  1.6G   1% /run/user/1000
 
 2017-06-26:
+
   Get ethernet working,
 
     # ip addr
@@ -3006,6 +3146,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     64 bytes from 8.8.8.8: icmp_seq=5 ttl=47 time=60.3 ms
 
 2017-06-26:
+
   Now do a system upgrade,
 
     # pacman -Syu
@@ -3029,6 +3170,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     $ sudo systemctl enable acpid
 
 2017-06-27:
+
   Get wireless working; get XFCE working -
 
   Bring in nvidia drivers,
@@ -3105,6 +3247,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   the old rfkill issue.
 
 2017-06-27:
+
   Installed firefox,
 
     $ sudo pacman -Syu firefox
@@ -3151,6 +3294,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     $ sudo pacman -Syu etherape
 
 2017-06-27:
+
   Install pulseaudio software,
 
     $ sudo pacman -Syu pulseaudio pulseaudio-alsa paprefs pavucontrol ponymix
@@ -3158,6 +3302,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   as notes above show, some extra configuration is needed.
 
 2017-06-27:
+
   Install SBT,
 
     $ sudo pacman -Syu sbt
@@ -3182,6 +3327,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   put ~/.cargo/bin on PATH.
 
 2017-06-28:
+
   Reset timezone to Mountain time,
 
     $ timedatectl list-timezones | grep Denver
@@ -3194,6 +3340,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     $ sudo timedatectl set-ntp true
 
 2017-06-28:
+
   Finish configuring pulseaudio, try running XFCE as root,
 
     $ su -
@@ -3236,6 +3383,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   Now ogg123 works from commandline outside of X as well as in X.
 
 2017-06-28:
+
   Installed NTFS drives to be able to write to ntfs file systems,
   (see 2016-07-23).
 
@@ -3244,22 +3392,26 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   Able to read/write to my external NTFS formatted hard drive.
 
 2017-06-28:
+
   Installed speedtest and iperf (see 2017-06-28 for more details).
 
     $ sudo pacman -Syu speedtest-cli iperf
 
 2017-06-28:
+
   Installed daemon that generates system entropy;
 
     $ sudo pacman -Syu haveged
     $ sudo systemctl enable haveged
 
 2017-06-28:
+
   Installing Haskell Stack build tool.
 
     $ sudo pacman -Syu stack
 
 2017-06-28:
+
   Gave root minimal .bashrc and .bash_profile
 
   /root/bash_profile:
@@ -3271,6 +3423,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
      set -o vi
 
 2017-06-29:
+
   Going back through these notes, here are topics I wish to hit,
 
     2016-07-17 libreoffice-fresh              x
@@ -3289,6 +3442,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     dropbox                                   x
 
 2017-06-29:
+
   An announcement on the Arch Linux Wiki page dated ???
   indicates that NVIDIA Optimus cards now work without extra
   configuration.
@@ -3318,6 +3472,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   level, XFCE still personalized from previous incarnation.
 
 2017-06-30:
+
   Today I updated the steps from 2017-06-26 that I took paper
   notes on.
 
@@ -3337,6 +3492,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     $ sudo pacman -Syu intel-ucode
 
 2017-06-30:
+
   To configure intel-ucode, added 3rd line to
   /boot/loader/entries/arch.conf/boot/loader/entries/arch.conf
 
@@ -3357,6 +3513,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   Thus confirming that intel microcode is being updated.
 
 2017-06-30:
+
   Configure postfix.
 
     aliases_orig(<)  aliases(>):
@@ -3399,6 +3556,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   forwarded to the geoff user.
 
 2017-07-01:
+
   Following Blu-Ray configuration from 2017-04-18.
 
     $ cd ~/.config/aacs
@@ -3409,6 +3567,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     2.8M KEYDB.cfg	2.4M KEYDB.cfg_old
 
 2017-07-01:
+
   Up to now, everything installed on the rebuilt system has
   been from the official Arch Repos.  I wish to install Dropbox
   from AUR.
@@ -3435,11 +3594,13 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     And it worked, Dropbox app in the top right system tray.
 
 2017-07-01:
+
   Install Shotwell.
 
     $sudo pacman -Syu shotwell
 
 2017-07-01:
+
   I consider the SSD hardrive and 16GiB memory upgdades complete.
 
   I only reinstalled the tools I am actually using or want
@@ -3569,6 +3730,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     dropbox
 
 2017-07-03:
+
   Something is pulling in gnome-keyring,
 
     $ pacman -Ss keyring | grep -A 1 '\[installed\]'
@@ -3607,6 +3769,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   when I send e-mail with PGP signature.
 
 2017-07-06:
+
   Install ldns package which replaces functionality of the
   deprecated former core/dnsutils package.
 
@@ -3622,6 +3785,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   are closely associated with Bind.
 
 2017-07-06:
+
   Installed rust tool chain.
 
     $ sudo pacman -Syu rustup
@@ -3649,6 +3813,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   I was not expecting to get the compiler centrally installed.
 
 2017-07-11:
+
   Reinstalled chrome since firefox could not view Netflix.
 
     $ cd ~/build/AUR/google-chrome_build/google-chrome
@@ -3662,6 +3827,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     google-chrome
 
 2017-07-13:
+
   Optimize the pacman database.
 
     $ sudo pacman-optimize
@@ -3670,6 +3836,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   that make up the pacman database.
 
 2017-07-13:
+
   Figured out how to hibernate the system.
 
     $ systemctl hybrid-sleep
@@ -3679,6 +3846,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   partian is on the slow HD.
 
 2017-07-16:
+
   Swapped in mirrorlist.pacnew and used the command
 
      $ rankmirrors -v /etc/pacman.d/mirrorlist
@@ -3686,6 +3854,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   to rank the US, Canada, and German servers.
 
 2017-07-22:
+
   Uninstalled sbt,
 
     $ sudo pacman -Rsu sbt
@@ -3699,6 +3868,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   committed to my GITHUB repo.
 
 2017-07-27:
+
   Replace Wicd with NetworkManager.
 
   NetworkManager was developed by Redhat and is the default
@@ -3784,6 +3954,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   menu.  Deactivated the Wicd applet counterpart to nm-applet.
 
 2017-07-29:
+
   Made Ethernet and WiFi mutually exclusive.  Plugging in an
   Ethernet cable causes WiFi to go into Airplane mode.
 
@@ -3825,6 +3996,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     -rwx------ 1 root root 469 Jul 29 11:02 /etc/NetworkManager/dispatcher.d/70-wifi-wired-exclusive
 
 2017-09-29:
+
   After a kernel update, system shutdown hangs waiting for two
   stopped jobs to terminate.  One is a Network Manager process,
   the other WPA Supplement.
@@ -3838,6 +4010,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   Did not help the stopped processes to terminate.
 
 2017-10-09:
+
   The system hangs or takes long time to shut down, but not
   when I am not using wireless.  At the console, getting an
   error message from a kernel thread regarding something
@@ -3849,10 +4022,12 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   I'll see if this helps or is persistent across reboots.
 
 2017-10-28:
+
   Problem from 2017-10-09 gradually went away, won't worry
   about it.
 
 2017-12-02:
+
   Replaced xscreensaver with xscreensaver-arch-logo from AUR.
 
     $ cd ~/build/AUR
@@ -3867,6 +4042,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     $ makepkg -sri
 
 2017-12-12:
+
   Today I need to print a document to a networked HP Office Jet Pro 8610
   printer.  First install, enable, and start cups,
 
@@ -3929,6 +4105,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   Printed another page from a browser.
 
 2017-12-12:
+
   Added systemadm GUI front-end for systemctl.
 
     $ sudo pacman -Syu systemd-ui
@@ -3944,6 +4121,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   Also, can launch from the Applications -> System GUI menu.
 
 2017-12-30:
+
   Added utility which can be used to control NUMA policy for
   processes or shared memory.
 
@@ -4023,6 +4201,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     $ pacman -Syu cabal-install
 
 2018-02-10:
+
   Today pacman -Syu failed.
 
     libxfont: removing fontsproto breaks dependency 'fontsproto>=2.1.3'
@@ -4053,6 +4232,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   getting a kernel upgrade and NVIDIA upgrade.  Reboot needed.
 
 2018-02-10:
+
   Glad to see Linux kernel developers are on the ball.
 
     $ journalctl -b
@@ -4069,6 +4249,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   This is way I use a "rolling distribution" like Arch.
 
 2018-02-14:
+
   Today I will attempt to install the prerequisites needed to
   allow using the Arch system Python for GPU based Tensorflow
   Deep-Learning programming with Keras. I am using the book
@@ -4203,12 +4384,14 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   format to what is already there.  Python now imports it.
 
 2018-02-25:
+
   For the Keras libraries I installed, I had to go in as
   root to fix the permissions on the Python modules.  Seems
   that "other" didn't have any permisions.  Did a "chmod o+rx"
   on directories and a "chmod o+r" on the files.
 
 2018-03-01:
+
   Orphan packages,
 
     $ pacman -Qtdq
@@ -4241,6 +4424,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     $ sudo pacman -Rsu ...
 
 2018-03-01:
+
   From vlc stderr I get:
 
     core audio output error: cannot add user audio filter "equalizer" (skipped)
@@ -4252,6 +4436,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   but still get same error.
 
 2018-03-02:
+
   Continue pulseaudio-equalizer issues from yesterday.
 
   When I run qpaeq from the pulseaudio-equalizer package,
@@ -4341,6 +4526,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   to pa?
 
 2018-03-02:
+
   According to the Arch Linux PulseAudio Wiki,
 
     https://wiki.archlinux.org/index.php/PulseAudio
@@ -4351,6 +4537,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   I'll do as recommended.
 
 2018-03-02:
+
   More pulseaudio wrangling, here is what I finally put
   into ~/.config/pulse/defaults.pa,
 
@@ -4445,6 +4632,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   Now, the equalizer is on this ALSA device!
 
 2018-03-02:
+
   Final form for pulseaudio default.pa,
 
     $ cat .config/pulse/default.pa
@@ -4464,6 +4652,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   independently adjust their volumes.
 
 2018-03-05:
+
   Noticed that Arch was not updating Rust toolchain.  Removed
   the rustup package via pacman and manually by rm -rf ~/.cargo
   directory.  Reinstalled Rust locally, see 2017-06-27 for how.
@@ -4474,6 +4663,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     rustc 1.24.1 (d3ae9a9e0 2018-02-27)
 
 2018-03-07:
+
   I been readng the XFCE Arch Wiki and as a result, I'll try some
   changes.
 
@@ -4558,6 +4748,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   the dates of crap I find in internet forums!
 
 2018-03-08:
+
   Installed java 9 jdk and jre,
 
     $ sudo pacman -Syu jdk9-openjdk jre9-openjdk openjdk9-doc
@@ -4596,6 +4787,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     $ sudo archlinux-java set java-9-openjdk
 
 2018-03-11:
+
   Enabling compiling Haskell locally statically.
 
     $ sudo pacman -Syu ghc-static haskell-ghc-paths
@@ -4644,6 +4836,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   on the system it runs on, not the system it is compiled on.
 
 2018-04-14:
+
   Installed python virtualenv tool,
 
     $ sudo pacman -Syu python-virtualenv
@@ -4652,6 +4845,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   environment mechanisms derive from this.
 
 2018-04-17:
+
   Updated Rust installation, not using Arch version.
 
     $ rustup self update
@@ -4703,6 +4897,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     :h vundle
 
 2018-04-18:
+
   Added Syntastic plugin.  Put in the Vundle section of .vimrc
 
     Plugin 'vim-syntastic/syntastic'
@@ -4735,6 +4930,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   with :w a C file.
 
 2018-04-19:
+
   Swapped in a new /etc/pacman.d/mirrorlist
 
   After uncommenting the Wordwide, Canada, German,
@@ -4746,6 +4942,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   the rest in the United States.
 
 2018-04-21:
+
   Someone was knocking on my door while gauss17 was directly
   connected directly connected to the Internet.
 
@@ -4788,7 +4985,8 @@ Note: On 2017-06-20 rebuilt system from scratch starting
 
   See 2018-04-23.
 
-2019-04-22:
+2018-04-22:
+
   Following up from yesterday, since I tightened up on sshd
   security, I am not seeing any unusual activity using
   `journalctl -u sshd -f' running all night.
@@ -4981,6 +5179,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
      not by anyone of comperable expertise as myself.
 
 2018-04-23:
+
   Forgot to enable the sshd.socket service,
 
   Configure systemd to listen for sshd trafic
@@ -4994,6 +5193,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
       # systemctl enable sshd.socket
 
 2018-05-08:
+
   Did /etc/..../*.pacnew merging.  Mostly updating comments.
 
   Factoid: systemd now maintains
@@ -5004,6 +5204,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
            subs with root's info in them.
 
 2018-05-17:
+
   Installed a vulnerability scanner,
 
     $ sudo pacman -Syu vulscan
@@ -5011,6 +5212,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   brought in nmap.
 
 2018-05-22:
+
   Decided to try out the Cinnamon Desktop environment.
 
   First, updated ~/.xinitrc:
@@ -5102,6 +5304,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   See Userland_Adminlog for adventures in configuring Cinnamon.
 
 2018-06-27:
+
   Installed East Asian fonts.  Like I did on 2017-01-11 with
   previous incarnation of gauss17.
 
@@ -5113,6 +5316,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   correctly.
 
 2018-07-06:
+
   Meeded to use my PC's built in SD card reader, so installed
   the utilities for exFAT file system.
 
@@ -5129,6 +5333,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
       ntfs-3g
 
 2018-08-18:
+
   Looked into Scala Natively.  Uses Clang.  Decided to build
   in Clang toolchain support as a first step.
 
@@ -5169,6 +5374,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
         The interactive build tool
 
 2018-09-23:
+
   Install GNOME 3 (gnome-shell)
 
     $ sudo pacman -Syu gnome gnome-extra gnome-shell-extensions
@@ -5187,12 +5393,14 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   See notes/gnome3Conf.md for how I configured Gnome 3.
 
 2018-09-25:
+
   Installed htop after discovering that top was reverted to the
   original top command:
 
     Pacman: htop
 
 2018-09-25:
+
   Installed Gnome-shell Clipboard Indicator extension from AUR.
 
     $ mkdir -p ~/build/AUR/gnome-extensions; cd ~/build/AUR/gnome-extensions
@@ -5201,6 +5409,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     $ makepkg -sri
 
 2018-10-07:
+
   Updated Rust environment installed locally in my home directory.
 
     $ rustup self update
@@ -5209,6 +5418,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     rustc 1.29.1 (b801ae664 2018-09-20)
 
 2018-10-07:
+
   Remove orphan packages.
 
     $ pacman -Qtdq
@@ -5250,6 +5460,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     $ sudo pacman -Rns $(pacman -Qtdq)
 
 2018-10-17:
+
   Boldly removed XFCE and Cinnamon.
 
     $ sudo pacman -Rsu cinnamon
@@ -5274,6 +5485,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   xfce4 and cinnamon DE's.
 
 2018-10-17:
+
   OK, startx was removed.  Have to research the alternatives.
 
     $ pacman -Ss startx
@@ -5281,6 +5493,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
         Simple alternative to startx(1) for starting an Xorg server.
 
 2018-10-18:
+
   This is what I what,
 
     $ pacman -Ss xorg-xinit
@@ -5313,6 +5526,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
      sudo systemctl (enable|disable) gdm
 
 2018-10-18:
+
   When gdm enabled and system rebooted, get the login GUI
   on <ctrl>+<alt>+F1.  When I log in, I get the "Black Screen
   of Death" on both <ctlr>+<alt>+F1 & <ctrl>+<alt>+F2.  Able
@@ -5367,6 +5581,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   to be a lot sharper.
 
 2018-10-19:
+
   Got GDM to work!
 
   Created file /etc/xprofile with the contents,
@@ -5438,6 +5653,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   commands straight.
 
 2018-10-20:
+
   Removing these two files I created on 2018-10-18
   did not affect anything,
 
@@ -5445,6 +5661,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     /usr/share/gdm/greeter/autostart/optimus.desktop
 
 2018-10-20:
+
   The purpose of the XDG Autostart directories
 
     /etc/xdg/autostart/
@@ -5463,12 +5680,14 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   Freedesktop.org standard.
 
 2018-10-20:
+
   The purpose of /usr/share/gdm/greeter/autostart/
   allows applications to run on the initialization
   of the GDM login screen on TTY1, before any users
   log in.
 
 2018-10-23:
+
   Installed 7-Zip file archiver.  High compression
   ratios.  Can add passwords to archive.
 
@@ -5477,6 +5696,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   See the 7z, 7za, 7zr man pages.
 
 2018-12-08:
+
   Command "sudo pacman -Syu" failed.  Something called zapcc
   wanted to install files owned by clang.
 
@@ -5493,6 +5713,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   installing Scala Natively, which I never followed through with.
 
 2018-12-24:
+
   Installed the traditional /usr/bin/time utility.
 
     $ sudo pacman -Syu time
@@ -5506,6 +5727,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   /usr/bin/time without the time package being installed.
 
 2019-01-24:
+
   Installed a light weight, POSIX compliant shell call Dash.
 
     $ sudo pacman -Syu dash
@@ -5520,6 +5742,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   POSIX standard.
 
 2019-02-05:
+
   Using gdm, Gnome Display Manager, my login geoff fails to
   launch GNOME desktop, the only one installed right now.
 
@@ -5592,6 +5815,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   I don't put "." on the PATH.
 
 2019-02-05:
+
   While poking around journalctl logs, I noticed:
 
     ... NetworkManager[533]: <warn>  [1549415350.5391] \
@@ -5600,6 +5824,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     This makes you trackable
 
 2019-02-07:
+
   Remove the script
     /etc/NetworkManager/dispatcher.d/70-wifi-wired-exclusive
   which I installed on 2017-07-29.  This shut the wifi-downi
@@ -5672,6 +5897,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   /etc/NetworkManager/system-connections/.
 
 2019-03-06:
+
   Noticed that man -k did not work.  Manually as root ran mandb
   and it fixed it.
 
@@ -5809,6 +6035,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     /home/geoff/.cinnamon/spices.cache/applet/rwall@typicalfoobar.png
 
 2019-03-24:
+
   Installed glxinfo as part of mesa-demos package
 
      $ glxinfo -B
@@ -5845,6 +6072,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
      $ pacman -Qlq mesa-demos | grep '/bin/'
 
 2019-03-25:
+
   Noticed typo when I created user jb home directory,
   from /etc/profile:
 
@@ -5865,6 +6093,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   the login name.
 
 2019-03-30: (Prelude)
+
   Decided to look into using the Intel graphics chipset for the
   desktop GUI while retaining the ability to use the NVIDIA card
   for OpenCL/CUDA.  Basically OpenGL on the integrated Intel
@@ -5961,6 +6190,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   I think I know the direction I want to take.
 
 2019-03-30: (Step 1: Rip out stuff)
+
   To minimize dependency issues, lets rip out some of the more
   proprietary tools I have never gotten around to using.
 
@@ -6067,6 +6297,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   Anaconda pytorch stuff still working.
 
 2019-03-30: (Step 2: attempt to run Xorg off Intel Chipset)
+
   Attrmpt to run Xorg off of the i915 Intel driver instead of
   the nvidia driver.
 
@@ -6295,6 +6526,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   Reboot, still x11.  Backing out above two changes.
 
 2019-03-31:
+
   Reinstalled xorg-xrandr pacman package.  It provides a
   cmdline interface libXrandr library.  Previously, at
   least 5 months ago, the X server did not automatically
@@ -6309,6 +6541,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   I think it is short for "mode setting driver".
 
 2019-03-31:
+
   Looked into blacklisting both nouveau and nvidia drivers
   but nouveau seem to not want to die.  Also messing
   around with mkinitcpio makes me nervous without having
@@ -6427,6 +6660,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     fb_sys_fops            16384  1 drm_kms_helper
 
 2019-04-13:
+
   Decided to better configure gauss17 for OpenPGP functionality.
 
   Initially following the following guide:
@@ -6504,6 +6738,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     [jb@gauss17 ~]$
 
 2019-04-14:
+
   Continue grokking PGP infrastructure.
 
   Until I understand the gpg command better, I am hesitant about
@@ -6532,6 +6767,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   in TOFU mode.
 
 2019-04-16:
+
   Install pacman-contrib package,
 
      $ sudo pacman -Syu pacman-contrib
@@ -6574,11 +6810,13 @@ Note: On 2017-06-20 rebuilt system from scratch starting
 
 
 2019-07-17:
+
   Removed the claws mail packages, using Evolution now.
 
      $ sudo pacman -Rsu claws-mail claws-mail-themes clawsker
 
 2019-09-10:
+
   Upgrade Google Chrome.
 
     $ cd ~/build/AUR/google-chrome_build/google-chrome
@@ -6592,6 +6830,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
         The popular and trusted web browser by Google (Stable Channel)
 
 2019-09-14:
+
   Build and install MS OneDrive.  Following instructions from here
 
     https://github.com/abraunegg/onedrive/blob/master/docs/INSTALL.md
@@ -6729,6 +6968,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   [[ See second entry 2020-02-01 ]]
 
 2020-02-01:
+
   Added another phoney user jd aka "Jane Doe".
 
     # useradd -d /home/janedoe -c "Jane Doe" -m jd
@@ -6738,6 +6978,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   Primarily to test "out of the box" Gnome3.
 
 2020-02-01:
+
   Got onedrive to synch.
 
   I think the bloody Chrome and Firefox browsers are logging
@@ -6750,6 +6991,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   I assumed that I hadn't even logged into my MS account.
 
 2020-02-02:
+
   When I reinstalled Arch back on 2017-06-26, I had to reverse
   engineer /boot/loader/loader.conf and poke around /dev to
   find the correct PARTUUID to use in loader.conf by mounting
@@ -6774,6 +7016,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   tl;dr: Hey, today's date is a palidrone!
 
 2020-02-02:
+
   On 2017-06-02 I needed to downdrade the ncurses package.
   The problem was that every time a did "sudo pacman -Syu"
   the package was upgraded.  The proper way to have stopped
@@ -6845,6 +7088,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   Why doesn't pcmciautils show up with "pacman -Sg base"???
 
 2020-02-09:
+
   Going to start backing up selective things I don't want
   to lose to an external harddrive.
 
@@ -6895,6 +7139,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
       --display=DISPLAY        X display to use
 
 2020-02-16:
+
   Root drive filling up.
 
     $ df -h
@@ -6977,6 +7222,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     $ sudo pacman -Syu
 
 2020-02-16:
+
   Never used gvim, so remove it.  Note, gvim package currently
   provides vim executable.
 
@@ -6984,6 +7230,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     $ sudo pacman -Syu vim
 
 2020-02-28:
+
   Installed Skype for Linux from AUX.
 
     $ cd ~/build/AUR/
@@ -7004,6 +7251,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   Uses my MS geoffrey@scheller.com account.
 
 2020-02-16:
+
   Installed pacutils with Pacman.
 
   Installs the following commands:
@@ -7025,16 +7273,19 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     pactrans
 
 2020-03-29:
+
   Installed pkgstats package via packman,  Sends a report to the
   Arch maintainers weekly on what packages are installed.
 
 2020-04-16:
+
   Had to take manual intervention for Pacman.
   As per Arch website.
 
     $ sudo pacman -Syu --overwrite /usr/lib\*/p11-kit-trust.so
 
 2020-05-30:
+
   After about 4 years with the geoff login, I am having Gnome3
   desktop problems.  Probably accumulated cruft.  Right now all
   my Gnome extensions are grayed out in Tweaks.  For a while I
@@ -7052,6 +7303,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   Got a lot to do to move my identity over to the new login.
 
 2020-05-30:
+
   Before proceeding with the switch, lets see if I can use the
   Gnome website: https://extensions.gnome.org/ to add my beloved
   clipboard extension.
@@ -7140,6 +7392,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   Well, shows up grayed out under Tweaks -> Extensions.
 
 2020-05-31:
+
   Lets see if this plug-in will work for the grs login.
 
   Yes, it does!  Next time I install a GNOME Extension, I
@@ -7148,6 +7401,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   Time to start moving over from geoff to grs.
 
 2020-05-31:
+
   Copied over ~/.ssh files from geoff to grs.
 
   Configured global Git files and cloned my GitHub repo
@@ -7172,6 +7426,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     $ sudo chown -R grs:grs opt/AppImages/
 
 2020-06-02:
+
   Cannot find much info on web about migrating Evolution
   email client from one login to another.  Lets try something
   rather crude:
@@ -7257,6 +7512,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     <snip>
 
 2020-06-02:
+
   Configured Gmail with evolution.  First enabled IMAP
   from Gmail settings in browser (it was not previously
   enabled - though I did use it before with Evolution.
@@ -7274,6 +7530,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
         as well as GPG options.  Haven't investigated SMIME.
 
 2020-06-02:
+
   Let's see if we can find my lost Evolution emails,
 
     $ sudo find /home -name '*ZZZ\.AAA*'
@@ -7288,6 +7545,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   I will probably just copy over select emails.
 
 2020-06-02:
+
   Removed geoff user from system.
 
     $ sudo userdel -r geoff
@@ -7301,11 +7559,13 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   Still need to configure OneDrive and Zoom.
 
 2020-06-03:
+
   Zoom worked by just moving its config file.
   Uninstalled and reinstalled MS OneDrive.  Reconnected
   to OneDrive via social media fumbleware methods.
 
 2020-06-04:
+
   On last "sudo pacman -Syu" I noticed some
   /etc/libvirt/*.conf.pacnew files.
 
@@ -7345,6 +7605,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     # rm -rf /etc/libvirt/
 
 2020-06-04:
+
   Needed to upgrade Zoom client.  Client refused to join a
   meeting until I upgraded.  Client directed me here:
 
@@ -7371,6 +7632,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   GCM stands for Galois/Counter Mode Encryption.
 
 2020-06-05:
+
   From systemctl and "journalctl -b", Postfix mail delievery
   agent is failing.  Since I don't use local Unix mail anymore,
   might as well just remove it.
@@ -7390,6 +7652,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   [[ See note from 2020-08-12 ]]
 
 2020-06-06:
+
   Need to take a decision on the direction of my Arch
   Linux laptop, gauss17.  Right now I feel that I have
   "a thing on a thing on a thing."  That is Gnome Shell,
@@ -7411,6 +7674,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   FreeBSD.  Tentative name: euler7.
 
 2020-06-07:
+
   Installing ksh package.  Arch gives me a choice between
   ksh and mksh.  The former provides ksh93.  Other AUR
   versions seem unmaintained, including an OpenBSD version.
@@ -7428,6 +7692,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   No intension of making this my login shell on Linux.
 
 2020-06-13:
+
   The start up scrips for thr grs login now support both
   bash and ksh.  Both share .profile (written in POSIX shell)
   and .kshrc (written in a commen subset of both ksh and bash).
@@ -7460,12 +7725,14 @@ Note: On 2017-06-20 rebuilt system from scratch starting
            new terminals using the old login shell.
 
 2020-07-13:
+
   Installed terraform infrastructure configuration tool.
 
     $ sudo pacman -Syu terraform
 
 
 2020-07-22:
+
   Noticed some differences regarding what is installed from
   the pacman gnome group and what is available.
 
@@ -7573,6 +7840,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   just takes you to the Gnome page, does not auto install from AUR.
 
 2020-08-01:
+
   While investigating if I should "dump PulseAudio" in favor of some
   hypothetical "systemd alternative" I heard about somewhere, I have
   realize that like systemd, Pulseaudio has become the defacto
@@ -7602,6 +7870,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   cmdline version for debugging/toubleshooting purposes only.
 
 2020-08-12:
+
   Fixed local mail issues.
 
     # pacman -Syu postfix perl-mail-sendmail
@@ -7640,6 +7909,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     .   .
 
 2020-08-12:
+
   Email sent to root is failing.
 
     $ cd /etc/postfix
@@ -7688,11 +7958,13 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   UNIX email within my home network.
 
 2020-08-20:
+
   Added Node.js ecosystem for JavaScpript development.
 
     $ sudo pacman -Syu nodejs npm npm-check-updates
 
 2020-08-31:
+
   Installed Ant Java build tool.
 
     $ pacman -Ss '^ant(-doc|$)'
@@ -7713,6 +7985,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   all installed.
 
 2020-09-01:
+
   Reinstalled Rust toolchain locally into grs home directory.
 
     $ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -7730,6 +8003,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     info: cleaning up downloads & tmp directories
 
 2020-09-02:
+
   Install Skype for Linux from AUR
 
   1. First, update things so installations don't conflate.
@@ -7759,12 +8033,14 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     /usr/bin/skypeforlinux
 
 2020-09-14:
+
   Installing prerequisits for Scala Native as per
   the scala-native.readthedocs.io website.
 
     $ sudo pacman -Syu llvm clang gc re2
 
 2020-09-24:
+
   Change default version of Java to Java 11.
 
     $ archlinux-java get
@@ -7783,6 +8059,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     OpenJDK 64-Bit Server VM (build 11.0.8+10, mixed mode)
 
 2020-09-24:
+
   Install OpenVPN, see https://wiki.archlinux.org/index.php/OpenVPN
 
     $ pacman -Ss openvpn
@@ -7798,6 +8075,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     $ sudo pacman -Syu openvpn networkmanager-openvpn
 
 2020-10-06:
+
   Support for Python 2 ended 1/1/2020.  Lets see if we
   can get rid of it.
 
@@ -7957,6 +8235,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   work.
 
 2020-10-07:
+
   Installing Python virtualenvwrapper
   see https://pypi.org/project/virtualenvwrapper/
 
@@ -7971,6 +8250,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     $ sudo pacman -Syu python-virtualenvwrapper
 
 2020-10-07:
+
   Well gnome 3.38.1 got installed
 
     $ gnome-shell --version
@@ -8008,6 +8288,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   highlighted text by pasting over it is application dependent.
 
 2020-10-27:
+
   From arch-announce Digest mailing list:
 
     nvidia is currently partially incompatible with linux 5.9, see
@@ -8067,6 +8348,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   Unfortunately, I don't know the UEFI password.
 
 2020-10-27:
+
     Need to look into resetting my UEFI firmware password.
 
     This info is from the link I got on 2017-06-24 fom the
@@ -8102,6 +8384,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     Think I will try this this weekend, in case things go south.
 
 2020-10-27:
+
   Continue getting system to boot off of LTS kernel.
 
   From the note I made on 2016-07-04:
@@ -8137,6 +8420,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   the firmware.  But first, there is something I have to do...
 
 2020-10-27:
+
   The nvidia package is only for the regular kernel.  Need to
   also install nvidia-lts.
 
@@ -8151,6 +8435,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     $ sudo pacman -S nvidia-lts
 
 2020-10-27:
+
   Lets adjust systemd-boot config files.
 
     # cd /boot/loader/entries
@@ -8191,16 +8476,19 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   to systemd-boot instead of the Linux Kernel directly.
 
 2020-11-10:
+
   Thought I try out Neovim.
 
     $ sudo pacman -S neovim neovim python-pynvim
 
 2020-11-13:
+
   Changed location of user wide git config files for grs login
 
     $ mv ~/.gitconfig -> ~/.config/git/config
 
 2020-11-21:
+
   Installed ctags related utilities
 
     $ pacman -Ss ctags
@@ -8214,6 +8502,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     $ sudo pacman -S hasktags arduino-ctags
 
 2020-11-24:
+
   Dropbox is all messed up.  I think it half "updated itself."
 
   I am going to remove it and follow the Arch Linux Dropbox wiki
@@ -8436,6 +8725,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   a file between my phone and gauss17.
 
 2020-11-28:
+
   Get Bluetooth configured and working.
 
   Check to see if necessary packages are
@@ -8457,6 +8747,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     https://wiki.archlinux.org/index.php/Bluetooth
 
 2020-12-01:
+
   My backups to an external NTFS hardrive does not retain the
   file permissions.
 
@@ -8514,6 +8805,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   Still permissions on external HD wide open.
 
 2020-12-06:
+
   Back to getting Bluetooth working.
 
     $ lsmod | grep btusb
@@ -8554,6 +8846,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     music came out on my computer headphones.
 
 2020-12-27:
+
   I need proper file permissions when I back up to my
   USB external HD.
 
@@ -8679,6 +8972,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   Success!  Now update buArch backup script.
 
 2021-01-24:
+
   PipeWire is coming to Arch Linux.
 
   PipeWire is a Pulseaudio (Consumer Sound) and Jack (Pro Sound) replacement.
@@ -8825,14 +9119,17 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   and built in audio when I turned headphones off and back on.
 
 2021-01-26:
+
   Only problems with pipewire so far is that you need to be on
   the Bluetooth headphones before lauching zoom.
 
 2021-01-26:
+
   Installed teams from AUR.  Archified version of the Debian package
   put out by Micro$oft.
 
 2021-01-28:
+
   Need to access Kyocera printer for work.  Naturally installed for
   Windows and Mac.  Maybe Cups is enough?
 
@@ -8916,12 +9213,14 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   These are from the Linux Foundation's OpenPrinting workgroup.
 
 2021-02-03:
+
   Regarding accessing the Kyocera printer, at this point I am
   thrashing without knowing how to to it correctly.  The printer
   is probably horribly misconfigured anyway.  So I have decided
   to punt until I know printer is configured properly.
 
 2021-02-03:
+
   Google announced it was going to remove remove certain features
   from Chromium and requiring Google Chrome for them.  I am happy
   with Firefox and using it exclusively.
@@ -8929,6 +9228,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     $ sudo pacman -R chromium
 
 2021-02-20:
+
   From arch-announce Digest, Vol 74, Issue 2,
 
     As linux-lts moved to the 5.10 version, all official kernels
@@ -8955,6 +9255,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   /etc/mkinitcoio.conf.
 
 2021-02-21:
+
   Today I was going to remove linux-lts 5.4.94-1, but after a
   "sudo pacman -Syu" I have now
 
@@ -9043,6 +9344,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     Wed, 17 Feb 2021 11:11:31 +0000, RO-rootFS, swap_dev 0x8, Normal VGA
 
 2021-02-21:
+
   Added wxWidgets, a C++ library for GUI development, see https://wxwidgets.org/
 
     $ sudo pacman -Syu wxgtk3
@@ -9060,6 +9362,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     Total Installed Size:  28.37 MiB
 
 2021-03-01:
+
   Install Awesome WM.
 
     $ sudo pacman -S awesome
@@ -9088,6 +9391,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   WM session down and let me log back in to Gnome.
 
 2021-03-01:
+
   Decluttering,
 
   Some GNOME decluttering,
@@ -9102,6 +9406,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
       environment for pacdiff command.
 
 2021-03-04:
+
   More decluttering,
 
   Lets see system behavior without power management
@@ -9163,6 +9468,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     $ sudo pacman -R $(pacman -Qdt|cut -d ' ' -f1)
 
 2021-06-05:
+
   Getting tired of system suspending when laptop lid is closed.
   My computer is not an appliance.  Currrently there is a Gnome
   tweak whichturns off this misfeature, but I want it to hold
@@ -9179,6 +9485,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   Seems to have accomplished what I wanted.
 
 2021-06-05:
+
   Still have the problem that my external monitor chops off the last 3
   lines of the linux-console.  As a workaround, at least while using
   fish, I hit <ctrl-L> a lot.  Needs to be fixed, makes using nvim
@@ -9194,6 +9501,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   logins.
 
 2021-06-08:
+
   Have been using the nightly build of Neovim from here
 
     https://aur.archlinux.org/neovim-nightly-bin.git
@@ -9213,6 +9521,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   this until 0.5.0 is in the official Arch repos.
 
 2021-06-21:
+
   Moving toward Scala Metals for Scala Development.  Going 0.5.0+
   via the nvim-metals plugin.
 
@@ -9247,6 +9556,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
        linter and mfussenegger/nvim-dap, a debugger.
 
 2021-08-15:
+
   Removed packages installed for Awesome WM on 2021-03-01.
 
     $ sudo pacman -Rsu nitrogen picom awesome scrot dmenu \
@@ -9267,6 +9577,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   All got removed.
 
 2021-11-02:
+
   Definitively, I am running Xorg and not wayland,
 
     $ loginctl
@@ -9296,6 +9607,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   Damn that NVIDIA card!
 
 2021-11-07:
+
   The way GDM and Gnome are configured may or may not be an
   attribute of the system history.  I have not done a fresh
   Arch install since 2017-06-20.  But reconfig GPG, emails
@@ -9335,6 +9647,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   Extensions App and turn on "master" slider on top bar.
 
 2021-11-11:
+
   While in the process of installing Arch on a work computer, I find
   out that networkmanager package functionality is replaced via the
   iwd package.  The iNet wireless daemon (iwd) is a wireless daemon
@@ -9353,11 +9666,13 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   might be: https://wiki.archlinux.org/title/Network_configuration
 
 2021-11-15:
+
   Disable CAC reader service.
 
     $ sudo systemctl disable pcscd.service
 
 2021-11-16:
+
   Systemd on Arch no longer supports sshd.socket.  Sort of
   grandfathered into it.  I last configured it on 2018-04-23.
 
@@ -9366,6 +9681,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     $ systemctl reboot
 
 2021-11-19:
+
   Uninstalled inetutils package.  I would use OpenSSH equivalents for
   most of the commands and services.  Also 'hostnamectl hostname' for
   hostname.
@@ -9375,6 +9691,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   The inetutils package was the only one removed.
 
 2021-11-20:
+
   I thought I got rid of Pulse Audio, but it is still
   installed.
 
@@ -9395,7 +9712,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     looking for conflicting packages...
     :: pipewire-pulse and pulseaudio are in conflict. Remove pulseaudio? [y/N] y
     :: pipewire-pulse and pulseaudio-bluetooth are in conflict. Remove pulseaudio-bluetooth? [y/N] y
-    
+
     Packages (3) pulseaudio-15.0-1 [removal]
                  pulseaudio-bluetooth-15.0-1 [removal]  pipewire-pulse-1:0.3.40-1
     ...
@@ -9412,10 +9729,12 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   package.  Its commands are similar to those of iwctl.
 
 2021-11-23:
+
   I will be working with Python more, so I installed the Python
   IDE Spyder. Brought in python-lsp-server & python-lsp-jsonrpc.
 
 2021-12-07:
+
   Tightened up policy in /etc/sudoers.
 
    - started from /etc/sudoers.pacnew
@@ -9426,3 +9745,123 @@ Note: On 2017-06-20 rebuilt system from scratch starting
 
   Basically I am not letting user GUI tools to run as root and
   making it harder for user to be fooled by a Trojan horse.
+
+2021-12-18:
+
+  Decided to update gauss17 along the lines of my euler7
+  Arch/Sway install.  First get rid of NetworkManager.
+
+    $ sudo pacman -Syu iwd modemmanager
+    $ sudo pacman -Rsc networkmanager libnm libnma \
+                       networkmanager-openvpn nm-connection-editor
+
+  Just taking out networkmanager is not too bad, but with the
+  other nm related stuff takes ot mutter and xorg stuff too.
+  Need to get out of GNOME before doing 2nd command.
+
+  Also, removed more gnome stuff
+
+    $ sudo pacman -Rsc gnome gnome-games
+
+  And more
+
+    $ sudo pacman -Rsc (pacman -Qsq gnome)
+
+  Let's see if we even reboot now.
+
+  Half surprised that it did.
+
+    $ systemctl is-enabled systemd-networkd
+    disabled
+    $ systemctl is-enabled systemd-resolved
+    disabled
+
+  Let's enable these these and reboot.
+
+    $ systemctl enable systemctl-networkd
+    $ systemctl enable systemctl-resolved
+    $ sudo rm /etc/resolv,con
+
+  Reboot
+
+    $ ls -li /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
+    6815760 lrwxrwxrwx 1 root            root             39 Dec 18 18:57 /etc/resolv.conf -> ../run/systemd/resolve/stub-resolv.conf
+       1214 -rw-r--r-- 1 systemd-resolve systemd-resolve 920 Dec 18 18:57 /run/systemd/resolve/stub-resolv.conf
+
+  Create /etc/iwd/main.conf file with the following contents.
+
+    # Created by Geoffrey Scheller
+    # From multiple web postings
+    #
+    # See https://iwd.wiki.kernel.org/interface_lifecycle
+    #     https://insanity.industries/post/simple-networking
+    #
+    # We want idw to take full control of the underlying phy device
+
+    [General]
+    # Enable builtin DHCP-client within iwd for wifi
+    EnableNetworkConfiguration=true
+
+    # Radomize mac-address when iwd starts or hardware detected
+    #AddressRandomization=once
+
+    [Network]
+    #EnableIPv6=true
+    #EnableIPv4=true
+
+    # For pure systemd-resolved choose
+    #NameResolvingService=systemd
+
+    # For systemd-resolved+systemd-resolvconf or openresolv
+    NameResolvingService=resolvconf
+
+  Needed to
+
+    $ sudo pacman -Syu bluez
+
+  for 
+
+    $ pacman -Qs blue
+
+  to match what is installed on euler7.
+
+2021-12-18:
+
+  Lets get rid of the LTS kernel.
+
+    $ sudo pacman -R linux-lts nvidia-lts
+
+  As root, got rid of references to arch-lts under /boot/entries.
+
+  Reboot.
+
+  Now remove NVIDIA proprietary drivers, Xorg stuff, and all the fonts
+  including the kitchen sink.
+
+    $ sudo pacman -Rsc nvidia nvidia-utils nccl
+    $ sudo pacman -Rsc (pacman -Qsq xorg)
+    $ sudo pacman -R (pacman -Qsq font)
+
+  This also cause other collateral damage, like throwing out all
+  the openjdk packages.  These can be added back as needed.
+
+    $ echo sudo pacman -Rsc haskell-ipynb python-matplotlib-inline
+    $ sudo pacman -Rsc (pacman -Qsq haskell)
+
+  Based on what I did for euler7, lets install sway
+
+    $ sudo pacman -Syu \
+          sway alacritty waybar wofi \
+          xorg-xwayland xorg-xlsclients qt5-wayland glfw-wayland \
+          noto-fonts otf-font-awesome ttf-roboto ttf-roboto-mono \
+          wl-clipboard polkit-gnome xdg-desktop-portal-wlr \
+          polkit-gnome firefox mesa
+
+  Needed to reinstall openssh.
+
+    $ sudo pacman -Syu openssh
+    $ sudo mv /etc/ssh/sshd_config{.pacsave,}
+    $ sudo systemctl restart sshd.service
+
+  All the configurations for euler7 carried over from my dotfiles
+  repo to gauss17.

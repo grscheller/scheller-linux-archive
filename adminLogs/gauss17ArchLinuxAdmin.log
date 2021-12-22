@@ -9873,4 +9873,10 @@ Note: On 2017-06-20 rebuilt system from scratch starting
 
     $ sudo pacman -Syu pavucontrol pavucontrol-qt
 
+2021-12-22:
+
+  Installed and inabled reflector service.
+
+    $ sudo pacman -Syu reflector
+    $ systemctl enable reflector.timer
 

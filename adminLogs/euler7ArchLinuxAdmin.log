@@ -955,3 +955,10 @@ Purpose: To rebuild from scratch maxwell4 after
 
   Also edited ~/.config/waybar/config
 
+2021-12-22:
+
+  Installed and inabled reflector service.
+
+    $ sudo pacman -Syu reflector
+    $ systemctl enable reflector.timer
+

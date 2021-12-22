@@ -9865,3 +9865,12 @@ Note: On 2017-06-20 rebuilt system from scratch starting
 
   All the configurations for euler7 carried over from my dotfiles
   repo to gauss17.
+
+2021-12-22:
+
+  Installed GTK and QT version for both as a volume control
+  and for GTK vs QT testing with Sway.
+
+    $ sudo pacman -Syu pavucontrol pavucontrol-qt
+
+

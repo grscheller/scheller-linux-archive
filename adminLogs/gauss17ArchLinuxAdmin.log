@@ -9880,3 +9880,11 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     $ sudo pacman -Syu reflector
     $ systemctl enable reflector.timer
 
+2021-12-27:
+
+  Updated gem neovim and mdl plugins.  See gauss17ArchLinuxAdminLogs.log
+  same date.
+
+    $ gem install neovim
+    $ gem install mdl
+

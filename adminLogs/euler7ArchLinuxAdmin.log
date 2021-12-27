@@ -957,8 +957,28 @@ Purpose: To rebuild from scratch maxwell4 after
 
 2021-12-22:
 
-  Installed and inabled reflector service.
+  Installed and enabled reflector service.
 
     $ sudo pacman -Syu reflector
     $ systemctl enable reflector.timer
+
+  Installed and enabled locate service.
+
+    $ sudo pacman -Syu mlocate
+
+  Could not figure out how to enable the updatedb.timer
+  for the locate command.  Went back later and
+
+    $ systemctl list-timers
+
+  showed not only it was configured, but successfully ran.
+
+2021-12-24:
+
+  Install and configure screen locker and idle manager
+  for Sway.
+
+    $ sudo pacman -Syu swaylock swayidle
+
+  See dotfiles repo for ~/.config/sway/config configuration.
 

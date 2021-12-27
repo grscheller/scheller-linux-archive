@@ -5887,7 +5887,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   continuously broadcasting this collection, I am continuously
   broadcasting a fingerprint!
 
-  Logged into wireless router and got network confuration
+  Logged into wireless router and got network configuration
   before reboot.
 
   Reboot.
@@ -9880,3 +9880,11 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     $ sudo pacman -Syu reflector
     $ systemctl enable reflector.timer
 
+2021-12-24:
+
+  Install and configure screen locker and idle manager
+  for Sway.
+
+    $ sudo pacman -Syu swaylock swayidle
+
+  See dotfiles repo for ~/.config/sway/config configuration.

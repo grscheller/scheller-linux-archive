@@ -9888,3 +9888,12 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     $ sudo pacman -Syu swaylock swayidle
 
   See dotfiles repo for ~/.config/sway/config configuration.
+
+2021-12-27:
+
+  Updated gem neovim and mdl plugins.  See euler7ArchLinuxAdminLogs.log
+  same date.
+
+    $ gem install neovim
+    $ gem install mdl
+

@@ -982,3 +982,18 @@ Purpose: To rebuild from scratch maxwell4 after
 
   See dotfiles repo for ~/.config/sway/config configuration.
 
+2021-12-27:
+
+  Installed ruby and rubygems for neovim and mdl plugins.
+
+    $ sudo pacman -Syu ruby rubygems
+    $ gem install neovim
+    $ gem install mdl
+
+2021-12-27:
+
+  Moved into place /etc/nsswitch.conf.pacnew
+  
+  Temporarily replces resolve.services /etc/resolv.conf symlink
+  with a file pointing to nameserver 1.1.1.1.  Comcast's nameserver
+  is not resolving github.com for euler7.  Is working for gauss17.

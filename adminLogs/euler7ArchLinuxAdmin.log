@@ -997,3 +997,10 @@ Purpose: To rebuild from scratch maxwell4 after
   Temporarily replces resolve.services /etc/resolv.conf symlink
   with a file pointing to nameserver 1.1.1.1.  Comcast's nameserver
   is not resolving github.com for euler7.  Is working for gauss17.
+
+2021-12-30:
+
+  Install node.js amd npm infrastructure for nvim.
+
+    $ sudo pacman -Syu nodejs npm npm-check-updates
+    $ sudo npm install -g neovim

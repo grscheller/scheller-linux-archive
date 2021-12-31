@@ -19,10 +19,8 @@ directly with the Sway WM.  Can be changed.
 
 * Go to workspace:           Super+[0..9]
 * Move window to workspace:  Super+Shift+[0..9]
-* Go to next workspace:      Super+Tab
-* Go to previous workspace:  Super+Shit+Tab
  
-### Workspace Layout Keybindings
+### Container Layout Keybindings
 
 * Horizontal layout:    Super+B
 * Vertical layout:      Super+V
@@ -30,7 +28,7 @@ directly with the Sway WM.  Can be changed.
 * Toggle split layout:  Super+E
 * Tabbed layout:        Super+W
  
-### Workspace Focus Keybindings
+### Container/Window Focus Keybindings
 
 * Focus on parent container:   Super+A
 * Swap focus tiling/floating:  Super+Space
@@ -38,11 +36,11 @@ directly with the Sway WM.  Can be changed.
 * Move current window focus:   Super+[Left|Right|Up|Down]
 * Move focused window:         Super+Shift+[Left|Right|Up|Down]
 
-### Window Resizing Keybindings
+### Container Resizing Keybindings
 
 * Enter resize mode:  Super+R
-* Resize windows:     [Left|Right|Up|Down]
-* Exit resize mode:   Return
+* Resize container:   [Left|Right|Up|Down]
+* Exit resize mode:   [Return|Esc]
 
 ## Factoids
 

@@ -3,7 +3,7 @@ BINARIES := crtp
 
 binaries: $(BINARIES)
 
-crtp: counter.cpp
+crtp: crtp.cpp counter.h
 	$(CXX) -Wall -std=gnu++20 $< -o $@
 
 clean:

@@ -1,33 +1,10 @@
 /*
  *  Illustrating Curiously Recurring Template Pattern
  */
+#include "counter.h"
 #include <iostream>
 
 using namespace std;
-
-template <typename T> struct counter {
-  static int objects_created;
-  static int objects_alive;
-
-  counter() {
-    ++objects_created;
-    ++objects_alive;
-  }
-
-  counter(const counter &) {
-    ++objects_created;
-    ++objects_alive;
-  }
-
-  int getCreated() { return objects_created; }
-
-  int getAlive() { return objects_alive; }
-
-protected:
-  ~counter() { --objects_alive; }
-};
-template <typename T> int counter<T>::objects_created{0};
-template <typename T> int counter<T>::objects_alive{0};
 
 class Dog : public counter<Dog> {
 public:
@@ -65,6 +42,7 @@ int main() {
   cout << "Number of Robots alive: " << robbie.getAlive() << endl;
   cout << "Number of Dogs created: " << flash.getCreated() << endl;
   cout << "Number of Dogs alive: " << fido.getAlive() << endl;
+  cout << "Number of Dogs alive: " << fido.getCreated() << endl;
 
   callWalter();
 

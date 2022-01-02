@@ -100,14 +100,14 @@ a "one-liner".
 
 ```
     timeit: $(BINARIES)
-    for bb in $(BINARIES);\
+	for bb in $(BINARIES);\
     do\
         echo -ne "\n$$bb: ";\
         time ./$$bb;\
     done
 
     clean:
-    rm -f $(BINARIES)
+	rm -f $(BINARIES)
 
     .PHONY: timeit clean
 ```

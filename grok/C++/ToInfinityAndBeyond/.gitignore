@@ -1,4 +1,5 @@
-crtp/counter
+crtp/crtp
 hw/hw
+span/spanit
 **/*.o
 **/*.exe

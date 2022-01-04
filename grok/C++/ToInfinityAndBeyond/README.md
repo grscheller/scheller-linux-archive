@@ -11,4 +11,4 @@
 
 * [__hw__](hw): Gratuitously complicated Hello World C++ program
 * [__crtp__](crtp): Curiously Recurring Template Pattern
-
+* [__span__](span): std::span for C++20

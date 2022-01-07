@@ -8971,6 +8971,10 @@ Note: On 2017-06-20 rebuilt system from scratch starting
 
   Success!  Now update buArch backup script.
 
+  Note: See 2022-01-06 for how to do this via a permanent mount point
+        and /etc/fstab.  Not quite sure if I am using an fuse file
+        system or not above.
+
 2021-01-24:
 
   PipeWire is coming to Arch Linux.

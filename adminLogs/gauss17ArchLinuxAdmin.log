@@ -8965,7 +8965,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     # cd /run/media/grs/60844d50-85ac-42fd-b848-2591be3c7fd0/
     # mkdir grs/
     # chmod 750 grs/
-    # chown grs:grs grs/
+    # chown nut grs:grs grs/
     # ls -ld grs/
     drwxr-x--- 2 grs grs 4096 Dec 27 17:34 grs/
 
@@ -9897,3 +9897,54 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     $ gem install neovim
     $ gem install mdl
 
+2022-01-06:
+
+  Need to mount USB harddrive.  Did this back on 2020-12-27.
+
+    $ sudo fdisk -l
+    .
+    .
+    .
+    Device     Start       End   Sectors  Size Type
+    /dev/sdc1   2048 156301311 156299264 74.5G Linux filesystem
+
+    $ ls -l /dev/disk/by-uuid/
+    .
+    .
+    .
+    lrwxrwxrwx 1 root root 10 Jan  6 20:19 \
+      60844d50-85ac-42fd-b848-2591be3c7fd0 -> ../../sdc1
+
+    $ sudo mkdir /buslink
+
+  and added the following lines to the end of /etc/fstab
+
+    # /dev/sdc1
+    UUID=60844d50-85ac-42fd-b848-2591be3c7fd0	/buslink	ext4      	defaults	0 2
+
+  with empty line at end.  Lets see if root can mount it.
+
+    $ sudo mount /buslink
+    $ ll /buslink/
+    total 20
+    drwx------ 2 root root 16384 Dec 27  2020 lost+found
+    drwxr-x--- 3 grs  grs   4096 Dec 27  2020 grs
+
+  need to update my buArch backup script.
+
+  Had to change defaults for /dev/sdc1 in /etc/fstab to
+
+    UUID=6084...fd0  /buslink  ext4   defauls,noauto     
+
+  System was waiting for me to plug in the Buslink USB drive
+  before finishing boot process.
+
+  To use the drive, just plug it in and type
+
+    $ sudo mount /buslink
+
+  when done, 
+
+    $ sudo umount /buslink
+
+  and unplug drive.

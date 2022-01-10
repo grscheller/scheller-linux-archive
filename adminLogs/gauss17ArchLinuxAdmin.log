@@ -9952,3 +9952,282 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     $ sudo umount /buslink
 
   and unplug drive.
+
+2022-01-09:
+
+  Got to enable Mozilla VPN service again.
+
+  Last time I used a Gnome plugin, no more Gnome Desktop so I have
+  to find another method.
+
+  Will use a systemd based management service from the AUR called
+  mozillavpn.
+
+    $ ~/build/AUR/
+    
+  Well, don't have to clone it, I already have it.  No reference to
+  it above.  I guess I am a bad boy for not documenting this.
+
+    $ cd mozillavpn/
+    $ git fetch
+    $ git status
+
+  Behind by 9 commits.
+  Untracked file mozillavpn_2.3.1-hirsute1.debian.tar.xz.
+
+    $ rm mozillavpn_2.3.1-hirsute1.debian.tar.xz
+    $ git pull
+    $ makepkg -sri
+
+  Build is compiling a lot of C++ code via g++.  I guess this is
+  what I previously installed and it had GNOME DE hooks.
+
+  Build finished, chose not to remove qt5-tools dependency.
+
+  Checking current networking:
+
+    $ ip addr
+    1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+        link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+        inet 127.0.0.1/8 scope host lo
+           valid_lft forever preferred_lft forever
+        inet6 ::1/128 scope host
+           valid_lft forever preferred_lft forever
+    2: enp3s0f1: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
+        link/ether f0:76:1c:cc:c1:05 brd ff:ff:ff:ff:ff:ff
+    4: wlan0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+        link/ether ac:e0:10:8a:3d:85 brd ff:ff:ff:ff:ff:ff
+        inet 192.168.1.5/24 scope global noprefixroute wlan0
+           valid_lft forever preferred_lft forever
+
+  Without a reboot, lets see if we can start the service.
+
+    $ sudo systemctl start mozillavpn.service
+    Failed to start mozillavpn.service: Unit mozillavpn.service not found.
+
+  Let's see what is being ignored.
+
+    $ cat .gitignore
+    /*.tar.gz
+    /*.pkg.tar.*
+    /pkg/
+    /src/
+
+    $ ls
+    mozillavpn-2.3.1-3-x86_64.pkg.tar.zst   mozillavpn_2.6.0.orig.tar.gz
+    mozillavpn_2.3.1.orig.tar.gz            pkg
+    mozillavpn-2.6.0-1-x86_64.pkg.tar.zst   PKGBUILD
+    mozillavpn_2.6.0-impish1.debian.tar.xz  src
+
+    $ rm mozillavpn-2.3.1-3-x86_64.pkg.tar.zst mozillavpn_2.3.1.orig.tar.gz
+
+  Decided to create a private repo for things I build.
+
+    $ mkdir ~/build/ArchLocalRepo
+
+  Configured Pacman to use this repo by adding these lines at end
+
+    [archlocal]
+    SigLevel = Optional TrustAll
+    Server = file:///home/grs/build/ArchLocalRepo
+
+  Add the new package to the new repo.
+
+    $ cp mozillavpn-2.6.0-1-x86_64.pkg.tar.zst ../../ArchLocalRepo/
+    $ cd ../../ArchLocalRepo/
+    $ ls -la
+    total 2604
+    drwxr-xr-x 2 grs grs    4096 Jan  9 14:30 .
+    drwxrwx--- 6 grs grs    4096 Jan  9 14:17 ..
+    -rw-r--r-- 1 grs grs 2658033 Jan  9 14:30 mozillavpn-2.6.0-1-x86_64.pkg.tar.zst
+
+    $ repo-add ./archlocal.db.tar.xz ./mozillavpn-2.6.0-1-x86_64.pkg.tar.zst
+    ==> Adding package './mozillavpn-2.6.0-1-x86_64.pkg.tar.zst'
+      -> Computing checksums...
+      -> Creating 'desc' db entry...
+      -> Creating 'files' db entry...
+    ==> Creating updated database file './archlocal.db.tar.xz'
+    
+    $ ls -la
+    total 2612
+    drwxr-xr-x 2 grs grs    4096 Jan  9 15:41 .
+    drwxrwx--- 6 grs grs    4096 Jan  9 14:17 ..
+    lrwxrwxrwx 1 grs grs      19 Jan  9 15:41 archlocal.db -> archlocal.db.tar.xz
+    -rw-r--r-- 1 grs grs     720 Jan  9 15:41 archlocal.db.tar.xz
+    lrwxrwxrwx 1 grs grs      22 Jan  9 15:41 archlocal.files -> archlocal.files.tar.xz
+    -rw-r--r-- 1 grs grs     972 Jan  9 15:41 archlocal.files.tar.xz
+    -rw-r--r-- 1 grs grs 2658033 Jan  9 15:28 mozillavpn-2.6.0-1-x86_64.pkg.tar.zst
+
+  Let's try out pacman.
+
+    $ sudo pacman -Syyu
+    :: Synchronizing package databases...
+     core                   137.4 KiB  53.1 KiB/s 00:03 [###########################] 100%
+     extra                 1563.2 KiB   417 KiB/s 00:04 [###########################] 100%
+     community                6.0 MiB  1318 KiB/s 00:05 [###########################] 100%
+     archlocal              720.0   B   939   B/s 00:01 [###########################] 100%
+    :: Starting full system upgrade...
+    resolving dependencies...
+    looking for conflicting packages...
+    
+    Packages (1) bash-5.1.016-1
+    .
+    .
+    .
+
+    $ pacman -Ss mozillavpn
+    archlocal/mozillavpn 2.6.0-1
+        A fast, secure and easy to use VPN. Built by the makers of Firefox.
+
+    $ sudo pacman -Syu mozillavpn
+    :: Synchronizing package databases...
+     core is up to date
+     extra is up to date
+     community is up to date
+     archlocal is up to date
+    :: Starting full system upgrade...
+    resolving dependencies...
+    looking for conflicting packages...
+    
+    Packages (1) mozillavpn-2.6.0-1
+    
+    Total Download Size:   2.53 MiB
+    Total Installed Size:  5.16 MiB
+    
+    :: Proceed with installation? [Y/n]
+    :: Retrieving packages...
+     mozillavpn-2.6.0-...     2.5 MiB   634 MiB/s 00:00 [###########################] 100%
+    (1/1) checking keys in keyring                      [###########################] 100%
+    (1/1) checking package integrity                    [###########################] 100%
+    (1/1) loading package files                         [###########################] 100%
+    (1/1) checking for file conflicts                   [###########################] 100%
+    (1/1) checking available disk space                 [###########################] 100%
+    :: Processing package changes...
+    (1/1) installing mozillavpn                         [###########################] 100%
+    :: Running post-transaction hooks...
+    (1/5) Reloading system manager configuration...
+    (2/5) Arming ConditionNeedsUpdate...
+    (3/5) Reloading system bus configuration...
+    (4/5) Updating icon theme caches...
+    (5/5) Updating the desktop file MIME type cache...
+
+  Seems that <PKGNAME> does not include the version number.  This
+  was note clear from the manpage.
+
+  To remove a package from the repo,
+
+    $ cd ~/build/ArchLocalRepo/
+    $ repo-remove ./archlocal.db.tar.xz <PKGNAME>
+    $ rm ./<PACKAGE-FILE-NAME>
+
+  Best practive is to remove it from the system via pacman first.
+
+2022-01-09:
+
+  Was not expecting to create my own Pacman local repo today!
+  This is something I have been intending to do for several years.
+
+  Don't want to use the Mozilla VPN all the time.  So I will not
+  enable the Systemd service, but start and stop it manually.
+  Will probably create fish abbreviations for this.
+
+  First do a reboot before messing with the VPN.
+
+  See where the Netwok stands:
+
+    $ ip addr
+    1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+        link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+        inet 127.0.0.1/8 scope host lo
+           valid_lft forever preferred_lft forever
+        inet6 ::1/128 scope host
+           valid_lft forever preferred_lft forever
+    2: enp3s0f1: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
+        link/ether f0:76:1c:cc:c1:05 brd ff:ff:ff:ff:ff:ff
+    3: wlan0: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
+        link/ether ac:e0:10:8a:3d:85 brd ff:ff:ff:ff:ff:ff
+
+
+    $ kw
+    1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+        link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+        inet 127.0.0.1/8 scope host lo
+           valid_lft forever preferred_lft forever
+        inet6 ::1/128 scope host
+           valid_lft forever preferred_lft forever
+    2: enp3s0f1: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
+        link/ether f0:76:1c:cc:c1:05 brd ff:ff:ff:ff:ff:ff
+    4: wlan0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+        link/ether ac:e0:10:8a:3d:85 brd ff:ff:ff:ff:ff:ff
+        inet 192.168.1.5/24 scope global noprefixroute wlan0
+           valid_lft forever preferred_lft forever
+
+    $ sudo systemctl start mozillavpn.service
+    $ sudo systemctl status mozillavpn.service
+
+  The last command shows the service up and running.  How does it know
+  that I am asubscriber?
+
+    $ ip addr
+    1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+        link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+        inet 127.0.0.1/8 scope host lo
+           valid_lft forever preferred_lft forever
+        inet6 ::1/128 scope host
+           valid_lft forever preferred_lft forever
+    2: enp3s0f1: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
+        link/ether f0:76:1c:cc:c1:05 brd ff:ff:ff:ff:ff:ff
+    4: wlan0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+        link/ether ac:e0:10:8a:3d:85 brd ff:ff:ff:ff:ff:ff
+        inet 192.168.1.5/24 scope global noprefixroute wlan0
+           valid_lft forever preferred_lft forever
+
+  Try running the program in /usr/bin,
+
+    $ mozillavpn
+
+  Stays in the forground, but launches the GUI.  Says I am
+  connected through London.  Picked up my user name.  Probably
+  cached it in my home directory somewhere.
+
+    $ ip addr
+    1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+        link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+        inet 127.0.0.1/8 scope host lo
+           valid_lft forever preferred_lft forever
+        inet6 ::1/128 scope host
+           valid_lft forever preferred_lft forever
+    2: enp3s0f1: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
+        link/ether f0:76:1c:cc:c1:05 brd ff:ff:ff:ff:ff:ff
+    4: wlan0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+        link/ether ac:e0:10:8a:3d:85 brd ff:ff:ff:ff:ff:ff
+        inet 192.168.1.5/24 scope global noprefixroute wlan0
+           valid_lft forever preferred_lft forever
+    5: moz0: <POINTOPOINT,NOARP,PROMISC,DEBUG,UP,LOWER_UP> mtu 1420 qdisc noqueue state UNKNOWN group default qlen 1000
+        link/none
+        inet 10.66.27.243/32 scope global moz0
+           valid_lft forever preferred_lft forever
+        inet6 fc00:bbbb:bbbb:bb01::3:1bf2/64 scope global
+           valid_lft forever preferred_lft forever
+
+  IP Chicken shows that I indeed had an IP out of GB.
+
+  Also, the MozillaVPN "app" is showing up in Sway Wofi launcher.  Should
+  have checked this before running from the command line.  Able to run
+  it fine that way.
+
+  Based on the above behavior, I will enable the Systemd service.
+
+    $ sudo systemctl enable mozillavpn.service
+
+  Able to quit out of the "app" without terminating the VPN
+  connection.  Did install /etc/xdg/autostart/MozillaVPN-startup.desktop,
+  giving GUI some command line options:
+
+    Exec=/usr/bin/mozillavpn ui -m -s
+
+  The GUI is not dragging in XWayland,
+
+    $ xlsclients
+
+  shows nothing.

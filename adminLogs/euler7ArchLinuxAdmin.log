@@ -286,7 +286,7 @@ Purpose: To rebuild from scratch maxwell4 after
 
   Will need to install Intel firmware package later.
 
-  Powerdown, reboot.  Does not mater if thumbdrive stays
+  Powerdown, reboot.  Does not matter if thumbdrive stays
   in since you would need to hit <F12> to be able to boot
   from it.
 
@@ -533,7 +533,7 @@ Purpose: To rebuild from scratch maxwell4 after
    - allow members of wheel to execute commands as root w/o pw
    - set secure_path="/usr/local/bin:/usr/bin"
    - did NOT reset $HOME to user's home directory
-   - did NOT configure to use users X GUI environment
+   - did NOT configure to use user's X GUI environment
 
   Basically I am not letting user GUI tools to run as root and
   making it harder for user to be fooled by a Trojan horse.

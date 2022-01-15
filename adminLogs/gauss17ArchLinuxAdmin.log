@@ -9980,7 +9980,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     $ makepkg -sri
 
   Build is compiling a lot of C++ code via g++.  I guess this is
-  what I previously installed and it had GNOME DE hooks.
+  what I previously installed and it had XDG DE hooks.
 
   Build finished, chose not to remove qt5-tools dependency.
 
@@ -10231,3 +10231,8 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     $ xlsclients
 
   shows nothing.
+
+2022-01-15:
+
+  As a followup for Mozilla VPN, I can easily launch the GUI
+  in Sway via Wofi.

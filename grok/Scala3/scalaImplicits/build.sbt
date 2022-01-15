@@ -3,12 +3,12 @@ lazy val root = project
   .settings(
       name := "scalaImplicits"
     , version := "0.1.1"
-    , scalaVersion := "3.0.2"
+    , scalaVersion := "3.1.0"
 
     , scalacOptions += "-deprecation"
     , scalacOptions += "-feature"
     , scalacOptions += "-explain"
     , scalacOptions += "-explain-types"
 
-    , libraryDependencies += "com.novocode" % "junit-interface" % "0.11" % "test"
+    , libraryDependencies += "com.github.sbt" % "junit-interface" % "0.13.2" % "test"
   )

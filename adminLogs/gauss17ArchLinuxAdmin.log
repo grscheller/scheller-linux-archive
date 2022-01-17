@@ -9963,10 +9963,10 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   Will use a systemd based management service from the AUR called
   mozillavpn.
 
-    $ ~/build/AUR/
+    $ cd ~/build/AUR/
     
   Well, don't have to clone it, I already have it.  No reference to
-  it above.  I guess I am a bad boy for not documenting this.
+  it above in this log.  I guess I am a bad boy for not documenting it.
 
     $ cd mozillavpn/
     $ git fetch
@@ -10025,7 +10025,8 @@ Note: On 2017-06-20 rebuilt system from scratch starting
 
     $ mkdir ~/build/ArchLocalRepo
 
-  Configured Pacman to use this repo by adding these lines at end
+  Configured Pacman to use this repo by adding these lines at
+  the end of /etc/pacman.conf
 
     [archlocal]
     SigLevel = Optional TrustAll
@@ -10236,3 +10237,96 @@ Note: On 2017-06-20 rebuilt system from scratch starting
 
   As a followup for Mozilla VPN, I can easily launch the GUI
   in Sway via Wofi.
+
+2022-01-16:
+
+  Need to come up with a mechanism to sync my local file
+  based repo, archlocal (~/build/ArchLocalRepo/) with
+  the same location on euler7.  Probably rsync based.
+
+  First some Pacman cleanup:
+
+  1. First update system
+
+       $ sudo pacman -Syu
+
+  2. Get rid of orphans
+
+       $ pacman -Qdt
+       aribb24 1.0.3-3
+       celt 0.11.3-4
+       libmusicbrainz5 5.1.0-4
+       python-dulwich 0.20.30-1
+       python-regex 2021.11.10-3
+       python2 2.7.18-5
+       qt5-tools 5.15.2+kde+r17-4
+
+       $ sudo pacman -R (pacman -Qdtq)
+
+  3. See what "foreign" packages, not associated with any sync'ed database,
+     are installed.
+
+       $ pacman -Qm
+       coursier 2.0.7-1
+       dnstracer 1.10-1
+       mp32ogg 0.11-10
+       ntfs-3g-fuse 2017.3.23-1
+       pcmciautils 018-8
+       
+     Let's get rid of all these.
+
+       $ sudo pacman -Rsc (pacman -Qmq)
+
+     Will install coursier from AUR to archlocal repo.  I no longer
+     need the others.  Might reconsider mp32ogg and its dnstracer dependency.
+
+     See makepkg(8) and pkgbuild(5) manpages.
+
+  4. Build, but not install, coursier from AUR.  Doing from scratch.
+
+       $ cd ~/build/AUR/
+
+     Remove everything except build for mozillavpn.
+
+       $ rm -rf (string split "\n" * | grep -v mozillavpn)
+
+     Clone coursier from AUR
+
+       $ git clone https://aur.archlinux.org/coursier.git
+       $ ls
+       coursier  mozillavpn
+       $ cd coursier/
+       $ ls -A
+       .git  .gitignore  .gitlab-ci.yml  PKGBUILD  README.md  .SRCINFO
+       $ ls
+       PKGBUILD  README.md
+
+     Build it
+
+       $ makepkg
+       $ ls
+       builder-2.1.0_M1  coursier-2.1.0_M1-1-any.pkg.tar.zst  \
+       pkg  PKGBUILD  README.md  src
+
+  5. Install it to my local repo archlocal: /home/grs/build/ArchLocalRepo
+
+       $ cp coursier-2.1.0_M1-1-any.pkg.tar.zst ../../ArchLocalRepo/
+       $ cd ../../ArchLocalRepo/
+       $ repo-add ./archlocal.db.tar.xz ./coursier-2.1.0_M1-1-any.pkg.tar.zst
+
+     See repo-add(8) manpage.
+
+  6. Install coursier to gauss17
+
+       $ sudo pacman -Ss coursier
+       archlocal/coursier 2.1.0_M1-1
+           Pure Scala Artifact Fetching
+
+       $ sudo pacman -Syu coursier
+
+       $ digpath coursier
+       /usr/bin/coursier
+
+       $ pacman -Ss coursier
+       archlocal/coursier 2.1.0_M1-1 [installed]
+           Pure Scala Artifact Fetching

@@ -1004,3 +1004,55 @@ Purpose: To rebuild from scratch maxwell4 after
 
     $ sudo pacman -Syu nodejs npm npm-check-updates
     $ sudo npm install -g neovim
+
+2022-01-16:
+
+  Intend to maintain a local file based repo to manage
+  AUR and locally built software.  Same as I do for
+  gauss17.  Instead of redoing creating such, I will
+  automate syncing gauss17's version with euler7's version
+  via rsync.
+
+  First some Pacman cleanup:
+
+  1. First update system
+
+       $ sudo pacman -Syu
+
+  2. Get rid of orphans
+
+       $ pacman -Qdt
+       celt 0.11.3-4
+       zita-alsa-pcmi 0.4.0-1
+       zita-resampler 1.8.0-1
+
+       $ sudo pacman -R (pacman -Qdtq)
+
+  3. See what "foreign" packages, not associated with any sync'ed database,
+     are installed.
+
+       $ pacman -Qm
+
+     No such installed.
+
+  4. Add a local repo that can be kept in sync via rsync with one on gauss17.
+     
+     First add rsync to euler7
+
+       $ sudo pacman -Syu rsync
+
+     Add the following lines to the end of /etc/pacman.conf
+
+       [archlocal]
+       SigLevel = Optional TrustAll
+       Server = file:///home/grs/build/ArchLocalRepo
+
+     then
+
+       $ mkdir -p ~/build/ArchLocalRepo
+       $ rsync -rav gauss17:build/ArchLocalRepo ~/build/
+
+     now install coursier to euler7
+
+       $ sudo pacman -Syu coursier
+       

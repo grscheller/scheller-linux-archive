@@ -103,16 +103,16 @@ All algorithms only print triples with no common factors.
 
    From running the code, we see that both <= cases happen.
 
-4. Running the code also seems to show that the hypotence `c` is
-   alwaya odd.
+4. Running the code also seems to show that the hypotenuse `c`
+   is always odd.
 
    Let's show that this is universally true:
 
    We know not both `a` and `b` even, otherwise `a, b, c` not in
    lowest terms.  If one even and the other odd, then `c` is odd.
 
-   But what about the case if `a` and `b` both odd?  That would imply `c`
-   could be even.  Concider this case,
+   But what about the case if `a` and `b` both odd?  That would
+   imply `c` could be even.  Concider this case,
 
    ```
       a^2 + b^2 = c^2

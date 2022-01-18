@@ -3,6 +3,7 @@ Purpose: To rebuild from scratch maxwell4 after
          solution to the Königsberg Bridge Problem.
 
 2021-12-04:
+
   Installing Arch Linux on a Dell Inspiron 15 7591 2-in-1
     - 4 core i7-10510U CPU 1.8 GHz
     - 16 GB memory
@@ -1056,3 +1057,22 @@ Purpose: To rebuild from scratch maxwell4 after
 
        $ sudo pacman -Syu coursier
        
+2022-01-17:
+
+  Using website https://arewewaylandyet.com, to help make choices
+  of software to install.  See also gauss17ArchLinuxAdmin.log for
+  the same date.
+
+  Need a file manager, nemo from Cinnamon Desktop (Linux Mint) is
+  the only one on the list.  I liked Cinnamon.
+
+    $ sudo pacman -Syu nemo
+    $ gsettings set org.cinnamon.desktop.default-applications.terminal exec alacritty
+
+  Decided not to install an email client on my work computer.  Will
+  use web interfaces for email instead.
+
+  For video players, clapper and mpv are on list.  Only the later
+  is in the standard Arch repos.
+
+    $ sudo pacman -Syu mpv

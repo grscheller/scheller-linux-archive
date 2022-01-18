@@ -10330,3 +10330,33 @@ Note: On 2017-06-20 rebuilt system from scratch starting
        $ pacman -Ss coursier
        archlocal/coursier 2.1.0_M1-1 [installed]
            Pure Scala Artifact Fetching
+
+2022-01-17:
+
+  Using website https://arewewaylandyet.com, to help make choices
+  of software to install.
+
+  Would like a file manager, nemo from Cinnamon Desktop (Linux Mint)
+  is the only one on the list.  I liked Cinnamon.
+
+    $ sudo pacman -Syu nemo
+    $ gsettings get org.cinnamon.desktop.default-applications.terminal exec
+    'gnome-terminal'
+    $ gsettings set org.cinnamon.desktop.default-applications.terminal exec alacritty
+    $ gsettings get org.cinnamon.desktop.default-applications.terminal exec
+    'alacritty'
+
+  Evolution just has not been working well for me lately.  The only
+  email clients on the list are Evolution and Thunderbird.
+
+    $ sudo pacman -Rsc evolution
+    $ sudo pacman -Syu thunderbird thunderbird-i18n-en-us thunderbird-dark-reader
+
+  Will need to adjust my backup script as well as configure Thunderbird
+  for Hover and Gmail.  Not sure how easy to get my GPG keys working,
+  might have to generate new ones.
+
+  For video players, clapper and mpv are on list.  Only the later
+  is in the standard Arch repos.
+
+    $ sudo pacman -Syu mpv

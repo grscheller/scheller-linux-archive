@@ -1,4 +1,4 @@
-Purpose: To indicate what was done to create gauss17 and
+
          the rational behind it.  Named after Karl Gauss
          showing it was possible to construct a regular 17
          sided regular polygon with only straightedge and
@@ -1122,7 +1122,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
 
 2016-08-03:
 
-  Disabled dhcpcd on boot, since it is giving me trouble withi
+  Disabled dhcpcd on boot, since it is giving me trouble with
   wireless connections.
 
     $ sudo systemctl disable dhcpcd
@@ -9823,7 +9823,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
 
     $ sudo pacman -Syu bluez
 
-  for 
+  for
 
     $ pacman -Qs blue
 
@@ -9938,7 +9938,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
 
   Had to change defaults for /dev/sdc1 in /etc/fstab to
 
-    UUID=6084...fd0  /buslink  ext4   defauls,noauto     
+    UUID=6084...fd0  /buslink  ext4   defauls,noauto
 
   System was waiting for me to plug in the Buslink USB drive
   before finishing boot process.
@@ -9947,7 +9947,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
 
     $ sudo mount /buslink
 
-  when done, 
+  when done,
 
     $ sudo umount /buslink
 
@@ -9964,7 +9964,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   mozillavpn.
 
     $ cd ~/build/AUR/
-    
+
   Well, don't have to clone it, I already have it.  No reference to
   it above in this log.  I guess I am a bad boy for not documenting it.
 
@@ -10048,7 +10048,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
       -> Creating 'desc' db entry...
       -> Creating 'files' db entry...
     ==> Creating updated database file './archlocal.db.tar.xz'
-    
+
     $ ls -la
     total 2612
     drwxr-xr-x 2 grs grs    4096 Jan  9 15:41 .
@@ -10070,7 +10070,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     :: Starting full system upgrade...
     resolving dependencies...
     looking for conflicting packages...
-    
+
     Packages (1) bash-5.1.016-1
     .
     .
@@ -10089,12 +10089,12 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     :: Starting full system upgrade...
     resolving dependencies...
     looking for conflicting packages...
-    
+
     Packages (1) mozillavpn-2.6.0-1
-    
+
     Total Download Size:   2.53 MiB
     Total Installed Size:  5.16 MiB
-    
+
     :: Proceed with installation? [Y/n]
     :: Retrieving packages...
      mozillavpn-2.6.0-...     2.5 MiB   634 MiB/s 00:00 [###########################] 100%
@@ -10134,7 +10134,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
 
   First do a reboot before messing with the VPN.
 
-  See where the Netwok stands:
+  See where the Network stands:
 
     $ ip addr
     1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
@@ -10150,6 +10150,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
 
 
     $ kw
+    $ ip addr
     1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
         link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
         inet 127.0.0.1/8 scope host lo
@@ -10272,7 +10273,7 @@ Note: On 2017-06-20 rebuilt system from scratch starting
        mp32ogg 0.11-10
        ntfs-3g-fuse 2017.3.23-1
        pcmciautils 018-8
-       
+
      Let's get rid of all these.
 
        $ sudo pacman -Rsc (pacman -Qmq)
@@ -10360,3 +10361,106 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   is in the standard Arch repos.
 
     $ sudo pacman -Syu mpv
+
+2022-01-22:
+
+  While doing a
+
+    $ sudo pacman -Syu
+    ...
+    looking for conflicting packages...
+    :: pipewire-jack and jack2 are in conflict (jack). Remove jack2? [y/N] y
+    ...
+
+2022-01-22:
+
+  Seems that I disabled dhcpcd way back on 2017-06-27 while configuring
+  XFCE.  Also, dhclient is installed.
+
+    $ sudo pacman -Rsc dhcpcd
+    checking dependencies...
+    :: netctl optionally requires dhcpcd: for DHCP support (or dhclient)
+    ...
+
+    $ pacman -Ss dhclient
+    extra/dhclient 4.4.2.P1-4 [installed]
+        A standalone DHCP client from the dhcp package
+
+    $ pacman -Ss dhcp
+    core/dhcpcd 9.4.1-1
+        RFC2131 compliant DHCP client daemon
+    extra/dhclient 4.4.2.P1-4 [installed]
+        A standalone DHCP client from the dhcp package
+    extra/dhcp 4.4.2.P1-4
+        A DHCP server, client, and relay agent
+
+  From researching a problem on euler7, I found information on how
+  to make glibc prefer IPv6 over IPv4 addresses.  In /etc/gai.conf
+  uncomment the lines
+
+    #label ::1/128       0
+    #label ::/0          1
+    #label 2002::/16     2
+    #label ::/96         3
+    #label ::ffff:0:0/96 4
+    #label fec0::/10     5
+    #label fc00::/7      6
+    #label 2001:0::/32   7
+
+  which I did.
+
+  Reboot.
+
+  Except for having to do a "kw" (iwctl device list; iwctl device list),
+  no network issues at my apartment.
+
+    $ systemctl is-enabled systemd-resolved
+    enabled
+
+    $ pacman -Ss systemd-resolvconf
+    core/systemd-resolvconf 250.3-1
+        systemd resolvconf replacement (for use with systemd-resolved)
+
+     pacman -Ss openresolv
+     core/openresolv 3.12.0-1 [installed]
+         resolv.conf management framework (resolvconf)
+     core/systemd-resolvconf 250.3-1
+         systemd resolvconf replacement (for use with systemd-resolved)
+
+  Let's go the Systemd route.
+
+    $ sudo pacman -Syu systemd-resolvconf
+    ...
+    :: Starting full system upgrade...
+    resolving dependencies...
+    looking for conflicting packages...
+    :: systemd-resolvconf and openresolv are in conflict. Remove openresolv? [y/N] y
+    ...
+
+  Reboot.
+
+2022-01-22:
+
+  With core/systemd-resolvconf insalled on both euler7 & gauss17,
+  both show tardy getent behavior for IPv4 hosts.  Let's try
+  core/openresolv on both systems.
+
+    $ sudo pacman -Syu openresolv
+    ...
+    : openresolv and systemd-resolvconf are in conflict. Remove systemd-resolvconf? [y/N] y
+    ...
+
+  Reboot.
+
+    $ ls -l /etc/resolv.conf
+    lrwxrwxrwx 1 root root 37 Dec 30 09:31 /etc/resolv.conf -> /run/systemd/resolve/stub-resolv.conf
+
+  Opps, /etc/resolv.conf pointing to a target which is no longer there.
+
+  The openresolv package is for keeping writers to /etc/resolv.conf from
+  not clobber each other's changes.  After reading the openresolv configuration
+  documentation, I think systemd-resolvconf is the better way forward.
+
+    $ sudo pacman -Syu systemd-resolvconf 
+
+  Reboot.

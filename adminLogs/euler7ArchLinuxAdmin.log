@@ -16,15 +16,15 @@ Purpose: To rebuild from scratch maxwell4 after
 
     https://archlinux.org/download/
 
-  should have 
+  should have
 
     MD5:  c8beaaea6dd5986d36dd532d1df4dc26
     SHA1: e303b93788220dbe8e0ba1804c90beebe432cf63
 
   With Firefox browser, I downloaded from the link
-  
+
     https://mirror.rackspace.com/archlinux/iso/2021.12.01/
-    
+
   the files
 
     archlinux-2021.12.01-x86_64.iso
@@ -132,7 +132,7 @@ Purpose: To rebuild from scratch maxwell4 after
   but will redo the file systems.
 
   Intended disk layout:
-  
+
     /dev/nvme0n1p1    /boot  (fat32)
     /dev/nvme0n1p2    swap
     /dev/nvme0n1p3    /      (ext4)
@@ -171,7 +171,7 @@ Purpose: To rebuild from scratch maxwell4 after
   The reflector service and timer are currently inactive.
   The service is enabled (runs on boot) but the timer
   is disabled.  (That is for the OS running on the ISO).
-  
+
   Install essential packages to target system,
 
     # pacstrap /mnt base linux linux-firmware
@@ -185,7 +185,7 @@ Purpose: To rebuild from scratch maxwell4 after
   Configure /etc/fstab
 
     # genfstab -U /mnt >> /mnt/etc/fstab
- 
+
   Chroot into the target system.
 
     # arch-chroot /mnt
@@ -222,7 +222,7 @@ Purpose: To rebuild from scratch maxwell4 after
     # pacman -Syu iwd systemd-resolvconf modemmanager
     # ln -sf /run/systemd/resolve/stub-resolve.conf /etc/resolve.conf
     ln: '/run/systemd/resolve/stub-resolve.conf' and '/etc/resolv.conf' are the same file
-    
+
   Opps, something has changed from last month.
 
     # ls -i /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
@@ -260,7 +260,7 @@ Purpose: To rebuild from scratch maxwell4 after
 
   It did exactly what I predicted!  Instead of just parroting
   what I did for gauss17 and the limited example given
-  in Systemd-boot ArchWiki, I will read through the 
+  in Systemd-boot ArchWiki, I will read through the
   loader.conf(5) man page first.
 
 2021-12-05:
@@ -299,10 +299,10 @@ Purpose: To rebuild from scratch maxwell4 after
   if systemd-resolved is running.
 
     # systemctl status systemd-resolved
-  
+
   Yes it is.  But a symlink or funky hard link not there
 
-    # ls -li /etc/resolv.conf 
+    # ls -li /etc/resolv.conf
     14417959 -rw-r--r-- 1 root root 65 Nov 11 02:14 /etc/resolv.conf
 
     # ls -li /run/systemd/resolve/stub-resolv.conf
@@ -380,7 +380,7 @@ Purpose: To rebuild from scratch maxwell4 after
 
     ~> mkdir .ssh
     ~> chmod 700 .ssh
-    
+
   Generated ssh keys for euler7.  Removed maxwell4 keys from
   ~/.ssh/authorized_keys and add euler7 keys.  Sync'ed
   versions between euler7 and gauss17.
@@ -397,7 +397,7 @@ Purpose: To rebuild from scratch maxwell4 after
 2021-12-06:
 
   I got networking and name resolution "working" but not optimally.
-  
+
   Created /etc/iwd/main.conf with the following contents:
 
     # Created by Geoffrey Scheller
@@ -407,21 +407,21 @@ Purpose: To rebuild from scratch maxwell4 after
     #     https://insanity.industries/post/simple-networking
     #
     # We want idw to take full control of the underlying phy device
-    
+
     [General]
     # Enable builtin DHCP-client within iwd for wifi
     EnableNetworkConfiguration=true
-    
+
     # Radomize mac-address when iwd starts or hardware detected
     #AddressRandomization=once
-    
+
     [Network]
     #EnableIPv6=true
     #EnableIPv4=true
-    
+
     # For pure systemd-resolved choose
     #NameResolvingService=systemd
-    
+
     # For systemd-resolved+systemd-resolvconf or openresolv
     NameResolvingService=resolvconf
 
@@ -443,7 +443,7 @@ Purpose: To rebuild from scratch maxwell4 after
 
   while following the system logs with "journelctl -f".
 
-  From 
+  From
 
     # journelctl -b -1
 
@@ -501,7 +501,7 @@ Purpose: To rebuild from scratch maxwell4 after
     Fallback DNS Servers: 1.1.1.1#cloudflare-dns.com 9.9.9.10#dns.quad9.net 8.8.8.8#dns.google
                           2606:4700:4700::1111#cloudflare-dns.com 2620:fe::10#dns.quad9.net
                           2001:4860:4860::8888#dns.google
-    
+
     Link 3 (wlan0)
         Current Scopes: DNS LLMNR/IPv4
              Protocols: +DefaultRoute +LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported
@@ -511,15 +511,15 @@ Purpose: To rebuild from scratch maxwell4 after
 
     $ resolvectl query github.com
     github.com: 140.82.112.3                       -- link: wlan0
-    
+
     -- Information acquired via protocol DNS in 19.7ms.
     -- Data is authenticated: no; Data was acquired via local or encrypted transport: no
     -- Data from: network
-    
+
     $ resolvectl query gitlab.com
     gitlab.com: 172.65.251.78                      -- link: wlan0
                 2606:4700:90:0:f22e:fbec:5bed:a9b9 -- link: wlan0
-    
+
     -- Information acquired via protocol DNS in 19.6ms.
     -- Data is authenticated: no; Data was acquired via local or encrypted transport: no
     -- Data from: network
@@ -530,7 +530,7 @@ Purpose: To rebuild from scratch maxwell4 after
 2021-12-07:
 
   Used visudo to edit /etc/sudoers as root.
-  
+
    - allow members of wheel to execute commands as root w/o pw
    - set secure_path="/usr/local/bin:/usr/bin"
    - did NOT reset $HOME to user's home directory
@@ -560,7 +560,7 @@ Purpose: To rebuild from scratch maxwell4 after
    - Geared to "power users"
    - More time to learn due to Christmas holidays coming up
 
-  First continue setting up infrastructure.  
+  First continue setting up infrastructure.
 
 2021-12-07:
 
@@ -600,11 +600,11 @@ Purpose: To rebuild from scratch maxwell4 after
                      2021-12-10: should add jack2 to list?
 
   Reboot
-  
+
     $ amixer sset Master unmute
     $ cd ~/Music/PopRock/The\ Beau\ Bremmels/
     $ ogg123 'Laugh Laugh.ogg'
-    
+
   Sound works.
 
 2021-12-07:
@@ -617,7 +617,7 @@ Purpose: To rebuild from scratch maxwell4 after
     btrtl                  28672  1 btusb
     btbcm                  24576  1 btusb
     btintel                45056  1 btusb
-    bluetooth             749568  5 btrtl,btintel,btbcm,btusb    
+    bluetooth             749568  5 btrtl,btintel,btbcm,btusb
 
   Install service and get user software.
 
@@ -628,7 +628,7 @@ Purpose: To rebuild from scratch maxwell4 after
     $ sudo systemctl enable bluetooth.service
     $ sudo systemctl start bluetooth.service
 
-  
+
   For help,
 
     $ bluetoothctl help
@@ -658,7 +658,7 @@ Purpose: To rebuild from scratch maxwell4 after
        1) gnu-free-fonts  2) noto-fonts  3) ttf-bitstream-vera  4) ttf-croscore  5) ttf-dejavu
     :: Repository community
        6) ttf-droid  7) ttf-ibm-plex  8) ttf-liberation
-    
+
     Enter a number (default=1): ^C
     Interrupt signal received
 
@@ -677,7 +677,7 @@ Purpose: To rebuild from scratch maxwell4 after
 
   The freedesktop.org's Fontconfig library is what most modern GUI
   and printer applications use to quickly find needed fonts.  The local
-  per user configuration file is 
+  per user configuration file is
 
     ~/.config/fontconfig/fonts.conf
 
@@ -728,7 +728,7 @@ Purpose: To rebuild from scratch maxwell4 after
     :: There are 2 providers available for opengl-driver:
     :: Repository extra
        1) mesa  2) nvidia-utils
-    
+
     Enter a number (default=1): 1
     looking for conflicting packages...
     ...
@@ -736,7 +736,7 @@ Purpose: To rebuild from scratch maxwell4 after
   I chose the mesa package.  Did not what to risk dragging in the proprietary
   NVIDIA drivers.  Pretty sure the older hybrid, non-GBM NVIDIA GeForce MX250
   Graphics card will never be able to support Wayland.
-  
+
   Let's reboot and see if we can get a Sway session going.
 
 2021-12-08:
@@ -768,7 +768,7 @@ Purpose: To rebuild from scratch maxwell4 after
   Alacritty works!  Also, sway is mouse focused!
 
   Super+d does not work, but I am going to swap out the program
-  launcher anyway.  
+  launcher anyway.
 
   Super+e swaps the placement of two alacritty windows from
   left by right to top over bottom respectively, and back.
@@ -799,7 +799,7 @@ Purpose: To rebuild from scratch maxwell4 after
 
   Configure Waybar for sway.  Edit ~/.config/sway/config,
   comment the bar section and add
-    
+
     bar {
         swaybar_command waybar
     }
@@ -812,7 +812,7 @@ Purpose: To rebuild from scratch maxwell4 after
 
   The drun option above only matches and displays hits for programs
   that have "Desktop" entries.
-  
+
   Note that out of the box firefox runs under XWayland.
 
     $ xlsclients
@@ -832,7 +832,7 @@ Purpose: To rebuild from scratch maxwell4 after
 
   Needed for firefox to screen share.
 
-   $ sudo pacman -Syu xdg-desktop-portal-wlr 
+   $ sudo pacman -Syu xdg-desktop-portal-wlr
 
   This also brought in xfg-desktop-portal and a bunch
   of fuse (user space file system) stuff and something
@@ -994,7 +994,7 @@ Purpose: To rebuild from scratch maxwell4 after
 2021-12-27:
 
   Moved into place /etc/nsswitch.conf.pacnew
-  
+
   Temporarily replces resolve.services /etc/resolv.conf symlink
   with a file pointing to nameserver 1.1.1.1.  Comcast's nameserver
   is not resolving github.com for euler7.  Is working for gauss17.
@@ -1037,7 +1037,7 @@ Purpose: To rebuild from scratch maxwell4 after
      No such installed.
 
   4. Add a local repo that can be kept in sync via rsync with one on gauss17.
-     
+
      First add rsync to euler7
 
        $ sudo pacman -Syu rsync
@@ -1056,7 +1056,7 @@ Purpose: To rebuild from scratch maxwell4 after
      now install coursier to euler7
 
        $ sudo pacman -Syu coursier
-       
+
 2022-01-17:
 
   Using website https://arewewaylandyet.com, to help make choices
@@ -1076,3 +1076,141 @@ Purpose: To rebuild from scratch maxwell4 after
   is in the standard Arch repos.
 
     $ sudo pacman -Syu mpv
+
+2022-01-22:
+
+  While doing a
+
+    $ sudo pacman -Syu
+    ...
+    looking for conflicting packages...
+    :: pipewire-jack and jack2 are in conflict (jack). Remove jack2? [y/N] y
+    ...
+
+2022-01-22:
+
+  I wish to get to the bottom of why getent is working
+  differently on euler7 than gauss17 in my apartment.
+  It is not resolving IP4 addresses and I end up having
+  to swap out the /etc/resolv.conf link on euler7.
+  Everything works correctly at work, house, and airports.
+
+    {euler7]$ pacman -Qs resolv
+    local/python-resolvelib 0.5.5-4
+        Resolve abstract dependencies into concrete ones
+    local/systemd-resolvconf 250.2-2
+        systemd resolvconf replacement (for use with systemd-resolved)
+
+    [gauss17]$ pacman -Qs resolv
+    local/openresolv 3.12.0-1
+        resolv.conf management framework (resolvconf)
+    local/python-resolvelib 0.5.5-4
+        Resolve abstract dependencies into concrete ones
+
+  Opps, thought I was using systemd-resolvconf on both.  Also,
+
+    [euler7]$ pacman -Qs dhcpcd
+
+    [gauss17]$ pacman -Qs dhcpcd
+    local/dhcpcd 9.4.1-1
+        RFC2131 compliant DHCP client daemon
+
+    [gauss17]$ systemctl is-enabled dhcpcd
+    disabled
+
+  Seams that I disabled it on gauss17 way back on 2017-06-27.  I will install
+  dhclient like is installed on gauss17.
+
+    $ sudo pacman -Syu dhclient
+
+  Reboot.   After reboot, network came up without me having to use my
+  "kw" abbr.  Actually just ssh right into euler7 after reboot.
+
+  Now,
+
+    $ getent hosts gitlab.com
+    2606:4700:90:0:f22e:fbec:5bed:a9b9 gitlab.com
+
+  and
+
+    $ getent hosts github.com
+    140.82.113.4    github.com
+
+  but the second one took a long time.  At least an improvement.
+
+    [euler7]$ ip route
+    default via 192.168.1.1 dev wlan0 proto dhcp metric 303
+    192.168.1.0/24 dev wlan0 proto dhcp scope link src 192.168.1.6
+
+    [euler7]$ ip -6 route
+    ::1 dev lo proto kernel metric 256 pref medium
+
+    [gauss17]$ ip route
+    default via 192.168.1.1 dev wlan0 proto dhcp metric 304
+    192.168.1.0/24 dev wlan0 proto dhcp scope link src 192.168.1.5
+
+    [gauss17]$ ip -6 route
+    ::1 dev lo proto kernel metric 256 pref medium
+
+  Found a version of getent which returns right away,
+
+    [euler7]$ getent ahosts github.com
+    140.82.113.3    STREAM github.com
+    140.82.113.3    DGRAM
+    140.82.113.3    RAW
+
+    [euler7]$ getent ahosts gitlab.com
+    172.65.251.78   STREAM gitlab.com
+    172.65.251.78   DGRAM
+    172.65.251.78   RAW
+
+  Read getent manpage, not sure the difference.
+
+  From researching this problem, I found information on how
+  to make glibc prefer IPv6 over IPv4 addresses.  In /etc/gai.conf
+  uncomment the lines
+
+    #label ::1/128       0
+    #label ::/0          1
+    #label 2002::/16     2
+    #label ::/96         3
+    #label ::ffff:0:0/96 4
+    #label fec0::/10     5
+    #label fc00::/7      6
+    #label 2001:0::/32   7
+
+  which I did.
+
+  Reboot.
+
+  Except for getent being a bit tardy, no network issues at
+  my apartment.
+
+    $ systemctl is-enabled systemd-resolved
+    enabled
+
+2022-01-22:
+
+  With core/systemd-resolvconf insalled on both euler7 & gauss17,
+  both show tardy getent behavior for IPv4 hosts.  Let's try
+  core/openresolv on both systems.
+
+    $ sudo pacman -Syu openresolv
+    ...
+    : openresolv and systemd-resolvconf are in conflict. Remove systemd-resolvconf? [y/N] y
+    ...
+
+  Reboot.
+
+    $ ls -l /etc/resolv.conf
+    lrwxrwxrwx 1 root root 37 Dec 30 09:31 /etc/resolv.conf -> /run/systemd/resolve/stub-resolv.conf
+
+  Opps, /etc/resolv.conf pointing to a target which is no longer there.
+
+  The openresolv package is for keeping writers to /etc/resolv.conf from
+  not clobber each other's changes.  After reading the openresolv configuration
+  documentation, I think systemd-resolvconf is the better way forward.
+
+    $ sudo pacman -Syu systemd-resolvconf 
+
+  Reboot.

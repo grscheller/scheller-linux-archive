@@ -33,6 +33,6 @@ class IntOrString {
 
 public class ADT {
     public static void main(String[] args) {
-        System.out.println("See if things even compile");
+        System.out.println("See if things will even compile.");
     }
 }

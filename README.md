@@ -56,11 +56,12 @@ By its very nature, it contains many loose threads.
     * [Java with Ant](grok/Java/buildingJava/javaWithAnt/)
   * [Java FX Examples](grok/Java/javafxExamples/)
   * [Testing JVM for Word Tearing](grok/Java/wordTearing/)
+  * [Abstract Data Types (ADT)](grok/Java/ADT/)
 * __JavaScript__
   * [Overview](grok/JavaScript/)
   * [Node Install](grok/JavaScript/node-install/)
 * __Python__
-  * [Geoffrey's Boring Math Libraries with examples](grok/Python/boring_math/)
+  * [Daddy's Boring Math Libraries with examples](grok/Python/boring_math/)
   * [Packaging Python Code](grok/Python/packaging_example/)
   * [Calling C Code from Python](grok/Python/C_call/)
   * [TensorFlow based Deep learning](grok/Python/tensorflow/)
@@ -70,6 +71,7 @@ By its very nature, it contains many loose threads.
 * __Scala3__
   * [Scala 3 REPL via SDT](grok/Scala3/scala-console/)
   * [Keywords given and extension](grok/Scala3/scalaImplicits/)
+  * [Abstract Data Types (ADT)](grok/Scala3/ADT/)
 * __Scala2__
   * [Functional Programming in Scala](grok/Scala2/fpinscala/)
   * [Functional Programming for Mortals](grok/Scala2/fpForMortals/)

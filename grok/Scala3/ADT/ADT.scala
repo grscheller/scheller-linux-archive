@@ -1,4 +1,4 @@
-package comp.adt
+package grok.adt
 
 // Example of product types
 
@@ -20,9 +20,6 @@ case class AnInt(i: Int) extends IntOrString
 case class AnString(s: String) extends IntOrString
 
 // Test the above.
-object ADT {
-
-  def main(args: Array[String]) = {
-    println("See if it compiles")
-  }
-}
+object ADT:
+  def main(args: Array[String]) =
+    println("See if it even compiles.")

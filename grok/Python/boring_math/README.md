@@ -1,4 +1,4 @@
-# Geoffrey's Boring Math Libraries
+# Daddy's Boring Math Library
 
 * Simple examples of Python modules
 * Example executables to exercise modules

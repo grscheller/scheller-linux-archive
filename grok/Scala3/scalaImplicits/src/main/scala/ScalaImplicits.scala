@@ -3,8 +3,8 @@ package scalaImplicits
 //
 //   See grok/Scala2/learnScala/implicits for the Scala 2
 //   version I translated this from.  That version uses the
-//   the overly overloaded explicit key word.  For backward
-//   compatibility, that version would still compile in Scala 3,
+//   the overly overloaded "implicit" key word.  For backward
+//   compatibility, that version would still compile in Scala 3.0,
 //   but would be deprecated.
 
 import scala.language.implicitConversions

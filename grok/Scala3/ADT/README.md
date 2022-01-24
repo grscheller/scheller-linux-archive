@@ -1,4 +1,4 @@
-# Abstract Data Types (ADT)
+# Abstract Data Types (ADT) - with Scala
 
 Exploring approaches to ADT in various computer languages.
 I was inspired by these blog posts by Tony Morris,
@@ -6,24 +6,23 @@ I was inspired by these blog posts by Tony Morris,
 and
 [More Algebra of Algebraic Data Types](https://about.chatroulette.com/posts/algebraic-data-types-2/).
 
-## Java
+## Scalac directly
 
-To compile, run and cleanup
-
-```
-   $ cd Java/
-   $ javac ADT.java
-   $ java ADT
-   $ rm *.class
-```
-
-## Scala
-
-To compile, run and cleanup
+To compile, run and cleanup from commandline
 
 ```
-   $ cd Scala/
    $ scalac ADT.scala
-   $ scala comp.adt.ADT
-   $ rm -r comp/
+   $ scala grok.adt.ADT
+   $ rm -r grok/
+```
+
+## SBT
+
+Have to use Scala Build Tool (SBT) right now since Scala 3 has
+not been added to Arch Repos yet.
+
+```
+   $ sbt
+   sbt:ADT> compile
+   sbt:ADT> run
 ```

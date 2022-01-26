@@ -10,7 +10,14 @@ page.
 
 ```
    $ sudo pacman -Syu python-psycopg2 python-django
+   $ python -m django --version
+   3.2.10
+   $ python --version
+   Python 3.10.2
 ```
+
+* django 3.2 -> python 3.6, 3.7, 3.8, 3.9, 3.10
+* django 4.0 -> python 3.8, 3.9, 3.10
 
 ## Starting a Django project
 
@@ -20,10 +27,10 @@ To start a Django project,
    $ django-admin startproject unchained
 ```
 
-I will begin by following the the 
-[official Django](https://docs.djangoproject.com/en/2.2/intro/tutorial01/)
+I will begin by following the 
+[official Django](https://docs.djangoproject.com/en/3.2/intro/tutorial01/)
 tutorial.  Once I get a skeleton running, I am not sure how I will morph
-it to take avantage of such a grat name, `unchained`.
+it to take avantage of such a great name, `unchained`.
 
 ## Notes
 

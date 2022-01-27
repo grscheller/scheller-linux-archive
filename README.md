@@ -66,6 +66,7 @@ By its very nature, it contains many loose threads.
   * [Calling C Code from Python](grok/Python/C_call/)
   * [TensorFlow based Deep learning](grok/Python/tensorflow/)
   * [PyTorch based Deep learning](grok/Python/pyTorch/)
+  * [Django Unchained](grok/Python/django/unchained/)
 * __Rust__
   * [Learn Rust as General Purpose Language](grok/Rust/learnRust/)
 * __Scala3__

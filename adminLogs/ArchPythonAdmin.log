@@ -1,0 +1,181 @@
+Notes taken while configuring Arch Linux for Python development.
+
+2022-01-27:
+
+  I really need to better grok Python virtual environments.
+
+    $ pacman -Ss virtualenv
+    extra/python-virtualenv 20.11.0-1
+        Virtual Python Environment builder
+    community/python-pipenv 2022.1.8-2
+        Sacred Marriage of Pipfile, Pip, & Virtualenv.
+    community/python-pytest-virtualenv 1.7.0-8
+        Virtualenv fixture for py.test
+    community/python-selinux 0.2.1-7
+        Pure-python selinux shim module for use in virtualenvs
+    community/python-tox 3.24.5-1
+        Python virtualenv management and testing tool
+    community/python-virtualenv-clone 0.5.7-3
+        A script for cloning a non-relocatable virtualenv.
+    community/python-virtualenvwrapper 4.8.4-6
+        Extensions to Ian Bicking's virtualenv tool
+
+  I had remembered pipenv but had fotgotten its name.  Totally
+  bootstrapping from user land, I would need the following
+
+    $ pacman -Ss pipx
+    community/python-pipx 0.16.4-2
+        Install and Run Python Applications in Isolated Environments
+
+  but since I can install pipenv with pacman into the system Python
+  environment, and I don't intend to hop between different installed
+  Python versions, I think just installing pipenv package should be
+  enough.
+
+  Here is what I got installed on Arch,
+
+    $ python --version
+    Python 3.10.2
+
+    $ pip --version
+    pip 20.3.4 from /usr/lib/python3.10/site-packages/pip (python 3.10)
+
+    $ pip3 --version
+    pip 20.3.4 from /usr/lib/python3.10/site-packages/pip (python 3.10)
+
+    $ pip3.10 --version
+    pip 20.3.4 from /usr/lib/python3.10/site-packages/pip (python 3.10)
+
+  Let's see where Python will look for user stuff,
+
+    $ python -m site --user-base
+    /home/grs/.local
+
+    $ python -m site --user-site
+    /home/grs/.local/lib/python3.10/site-packages
+
+  Installing pipenv system wide.
+
+    $ sudo pacman -Syu python-pipenv
+    ...
+    Packages (8) python-certifi-2021.10.8-3  python-filelock-3.4.0-3
+      python-importlib-metadata-4.8.1-3  python-platformdirs-2.4.1-1
+      python-virtualenv-20.11.0-1  python-virtualenv-clone-0.5.7-3
+      python-zipp-3.7.0-1  python-pipenv-2022.1.8-2
+
+  Thought it would install Python Virtualenv as a dependency.
+
+2022-01-27:
+
+  While I am at it, I might as well look into the capability of
+  installing and switching between multiple verions of Python.
+
+    $ pacman -Ss pyenv
+    community/pyenv 2.2.4-1
+        Easily switch between multiple versions of Python
+
+    $ pacman -Qlq pyenv|grep '^/usr/bin/..*'
+    /usr/bin/pyenv
+    /usr/bin/pyenv-install
+    /usr/bin/pyenv-uninstall
+    /usr/bin/python-build
+
+  These look to be Bash scripts.  Does have fish, and zsh, support.
+
+    $ pacman -Qlq pyenv|grep fish
+    /usr/share/fish/
+    /usr/share/fish/vendor_completions.d/
+    /usr/share/fish/vendor_completions.d/pyenv.fish
+
+2022-01-28:
+
+  There exists a pyenv extension called pyenv-virtualenv for working
+  with virtualenv with pyenv.  Does not seem to be a package for
+  this in the regular Arch Repos.
+
+  The Github pyenv repo
+
+    https://github.com/pyenv/pyenv-install
+
+  states "Of course, you can create virtualenv yourself, or
+  pyenv-virtualenv to automate the process."  I am choosing
+  to manage my virtual environments myself with pipenv.
+
+  Another good pyenv resource is the website
+  "Pipenv: Python Dev Workflow for Humans"
+
+    https://pipenv.pypa.io/en/latest/
+
+  I intend to establish a coherent Python environment with the
+  system pyenv and manage the individual virtual environments
+  with that Python's pipenv.
+
+2022-01-28:
+
+  Pipenv documentation resides here,
+
+    https://pipenv.pypa.io/en/latest/
+
+  on the Python Packaging Authority website.
+
+  Quoted material below is pulled verbatim from above documentation.
+
+  Pipenv "automatically creates and manages a virtualenv for your
+  projects, as well as adds/removes packages from your Pipfile as
+  you install/uninstall packages. It also generates the ever-important
+  Pipfile.lock, which is used to produce deterministic builds."
+
+  Pipfile vs. setup.py.  Hopefully, I won't have to bother grokking
+  how to use setuptools directly.
+
+    $ pacman -Ss python-setuptools\$
+    extra/python-setuptools 1:59.1.1-1 [installed]
+        Easily download, build, install, upgrade, and uninstall Python packages
+
+    $ pactree -r python-setuptools
+    python-setuptools
+    ├─python-distro
+    │ └─python-pip
+    │   └─python-pipenv
+    └─python-pip
+
+2022-01-28:
+
+  Updated my fish and bash environments for pyenv.  See my commit
+  dated Fri Jan 28 16:39:42 2022 -0700 on my dotfiles repo
+
+    https://github.com/grscheller/dotfiles
+
+  Seems to work on both Arch Linux and MacOS.  Actually I didn't remember
+  installing pyenv on my iMac and could not test how startup scripts behaved
+  when pyenv not installed.  Pyenv configured and installed on euler7.
+  Will test on gauss17 where I have not installed pyenv yet.
+
+  On euler7:
+
+    # pyenv install 3.11-dev
+    Cloning https://github.com/python/Python-3.11-dev
+    Installing to /home/grs/.pyenv/versions/3.11-dev
+
+    $ pyenv versions
+    * system (set by /home/grs/.pyenv/version)
+      3.11-dev
+
+    $ pyenv version
+    system (set by /home/grs/.pyenv/version)
+
+    $ pyenv --version
+    pyenv 2.2.4
+
+  Here is what one of the shims looks like
+
+    $ cat .pyenv/shims/pip
+    #!/usr/bin/env bash
+    set -e
+    [ -n "$PYENV_DEBUG" ] && set -x
+
+    program="${0##*/}"
+
+    export PYENV_ROOT="/home/grs/.pyenv"
+    exec "/usr/share/pyenv/libexec/pyenv" exec "$program" "$@"
+

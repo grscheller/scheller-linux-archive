@@ -494,6 +494,9 @@ Purpose: To rebuild from scratch maxwell4 after
     lrwxrwxrwx 1 root root     10 Nov 29 06:42 /usr/bin/resolvconf -> resolvectl
     -rwxr-xr-x 1 root root 129088 Nov 29 06:42 /usr/bin/resolvectl
 
+    $ pacman -Qo (digpath resolvectl)
+    /usr/bin/resolvectl is owned by systemd 250.3-1
+
     $ resolvectl status
     Global
                Protocols: +LLMNR +mDNS -DNSOverTLS DNSSEC=no/unsupported
@@ -709,7 +712,7 @@ Purpose: To rebuild from scratch maxwell4 after
   they were developed along side XFree86 and XOrg.  Noto was
   commissioned by Google in the 2010's and are more modern.
 
-  Lets go with the Noto fonts.
+  Lets go with the Noto fonts, Pacman package noto-fonts.
 
 2021-12-08:
 
@@ -1211,6 +1214,38 @@ Purpose: To rebuild from scratch maxwell4 after
   not clobber each other's changes.  After reading the openresolv configuration
   documentation, I think systemd-resolvconf is the better way forward.
 
-    $ sudo pacman -Syu systemd-resolvconf 
+    $ sudo pacman -Syu systemd-resolvconf
 
   Reboot.
+
+2022-01-27:
+  Install Libre Office.
+
+    $ sudo pacman -Syu libreoffice-fresh
+
+2022-01-27:
+
+  Notice some far east fonts not rendering well.
+
+    $ pacman -Ss noto-fonts
+    extra/noto-fonts 20201226-2 [installed]
+        Google Noto TTF fonts
+    extra/noto-fonts-cjk 20220126-1
+        Google Noto CJK fonts
+    extra/noto-fonts-emoji 20211101-1
+        Google Noto emoji fonts
+    extra/noto-fonts-extra 20201226-2
+        Google Noto TTF fonts - additional variants
+
+  Let's go for all the Noto fonts.
+
+    $ sudo pacman -Syu noto-fonts-cjk noto-fonts-emoji noto-fonts-extra
+
+2022-01-28:
+
+  Configuring euler7 to use multiple versions of Python
+  via community/pyenv package.
+
+    $ sudo pacman -Syu pyenv
+
+  see adminLogs/ArchPythonAdmin.log for details.

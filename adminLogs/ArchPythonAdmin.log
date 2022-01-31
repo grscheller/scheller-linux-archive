@@ -271,4 +271,77 @@ Notes taken while configuring Arch Linux for Python development.
       3.10.2
       3.8.12
     
+2022-01-31:
+
+  Will need to understand how to use virtualenv and how it interacts
+  with pyenv.
+
+    $ digpath pip
+    /home/grs/.pyenv/shims/pip
+    /usr/bin/pip
+
+  We find pip's shim first, which should currently point to the
+  system's pip.
+
+    $ pip --version
+    pip 20.3.4 from /usr/lib/python3.10/site-packages/pip (python 3.10)
     
+    $ /usr/bin/pip --version
+    pip 20.3.4 from /usr/lib/python3.10/site-packages/pip (python 3.10)
+
+    $ pyenv whence pip
+    3.10.2
+    3.8.12
+
+    $ pyenv which pip
+    /usr/bin/pip
+
+  Let's do the same for virtualenv, note: I have not installed the
+  pyenv-virtualenv plugin to pyenv since I want to use pipenv.
+
+    $ digpath virtualenv
+    /usr/bin/virtualenv
+
+    $ pyenv whence virtualenv
+
+    $ pyenv which virtualenv
+    /usr/bin/virtualenv
+
+  As well as for pipenv.
+
+    $ digpath pipenv
+    /usr/bin/pipenv
+
+    $ pyenv whence pipenv
+
+    $ pyenv which pipenv
+    /usr/bin/pipenv
+
+  Nobody home for pipenv and virtualenv for the pyenv locally installed
+  Python versions.  I guess I will need to install pipenv, probably the
+  only thing for which I will use pip directly. 
+
+2022-01-31:
+
+  Here are two fairly recent blog posts which describe how to use
+  Pyenv and Pipenv together:
+
+    https://www.rootstrap.com/blog/how-to-manage-your-python-projects-with-pipenv-pyenv/
+    https://hackernoon.com/reaching-python-development-nirvana-bb5692adf30c
+
+  The Pipenv site also has information on Pyenv:
+
+    https://pipenv.pypa.io/en/latest/
+    https://pipenv.pypa.io/en/latest/advanced/
+
+  This is a big change from 5 months ago when I was going in circles
+  with Pipenv, Pipfile, and setup.py.
+
+  Note to self: learn distinction between
+
+    Pipfile & Pipfile.lock vs. setup.py
+
+  The first two lock down a build while the later one puts
+  constraints on library dependencies.  The first two replace
+  the old requirements.txt mechanism.
+

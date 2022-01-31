@@ -10464,3 +10464,13 @@ Note: On 2017-06-20 rebuilt system from scratch starting
     $ sudo pacman -Syu systemd-resolvconf 
 
   Reboot.
+
+2022-01-29:
+
+  Configuring gauss17 to handle multiple versions of Python.
+
+    $ sudo pacman -Syu pyenv
+
+  Common user environment between gauss17, euler7 and sc31 already
+  setup in dotfiles repo.  See also adminLogs/ArchPythonAdmin.log
+  for details.

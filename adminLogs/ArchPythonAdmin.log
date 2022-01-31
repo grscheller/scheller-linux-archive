@@ -179,3 +179,96 @@ Notes taken while configuring Arch Linux for Python development.
     export PYENV_ROOT="/home/grs/.pyenv"
     exec "/usr/share/pyenv/libexec/pyenv" exec "$program" "$@"
 
+2022-01-29:
+
+  Installed pyenv on gauss17 also.
+
+  On euler7:
+
+    Bootstrapped pyenv config by createing empty ~/.pyenv
+    directory and relogged in.  (Arch Linux)
+
+  On sc31:
+
+    I seemed to have had already had pyenv installed via
+    brew and when I pushed my shell environment over, pyenv
+    configured itself. (MacOS)
+
+    I noticed that on iMac alot of the base directory files
+    from the Pyenv Github repo got installed in ~/.pyenv/,
+    did brew clone the Github repo?
+
+  On gauss17:
+
+    Bootstrapped pyenv via a terminal session,
+
+      $ eval pyenv init - fish | source
+
+    This did exactly the same as on euler7,
+
+       $ ls -A ~/.pyenv/*
+       /home/grs/.pyenv/shims:
+
+       /home/grs/.pyenv/versions:
+
+     No Github clutter.
+
+2022-01-29:
+
+  Why is ~/.pyenv/shims/ empty on gauss17?  Only thing different I
+  really did was installed Python 3.11-dev.
+
+  To list all versions of "things" that Pyenv can install
+
+    $ pyenv install --list
+
+  Which one do I want to install?  Hmmm...
+
+  Aside:
+
+    Since I am doing a Django project, lets go with some older
+    Python version supported by whatever verson of Django is
+    installed by Pacman.
+
+      $ pacman -Qs django
+      local/python-django 3.2.10-1
+          A high-level Python Web framework that encourages rapid
+          development and clean design
+
+    Django release schedule,
+
+    Series   Release/Date   End support       End extended support
+    2.2 LTS  2.2.26         December 2, 2019  April 2022
+    3.2 LTS  3.2.11         December 2021     April 2024
+    4.0      4.0.1          August 2022       April 2023
+    4.1      August 2022    April 2023        December 2023
+    4.2 LTS  April 2023     December 2023     April 2026
+    5.0      December 2023  August 2024       April 2025
+
+    Django 3.2 supports Python 3.6, 3.7, 3.8, 3.9, and 3.10 (as of 3.2.9)
+    Django 4.0 supports Python 3.8, 3.9, and 3.10
+
+    Also, Django website: https://www.djangoproject.com/ states
+
+        "We highly recommend and only officially
+         support the latest release of each series"
+
+    I going to see if I can build my project in three configurations
+
+      * Django 3.2 LTS using Python 3.8.12
+      * Django 4.0 using Python 3.10.2 (Update when 4.2 LTS available)
+      * System Django & Python, currently 3.2.10 and 3.10.2 respectively
+
+    The last one will "roll" with Arch Linux.
+
+  Ok, I will install Python 3.8.12 and 3.10.2 via pyenv.
+
+    $ pyenv install 3.8.12
+    $ pyenv install 3.10.2
+
+    $ pyenv versions
+    * system (set by /home/grs/.pyenv/version)
+      3.10.2
+      3.8.12
+    
+    

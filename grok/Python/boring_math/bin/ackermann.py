@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 """Compute the Ackermann function.
 
 Ackermann function is defined recursively by:

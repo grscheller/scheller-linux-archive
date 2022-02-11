@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 """Find all primative pythagorian triples up to a given level.
 
 A pythagorian triple are three integers (a,b,c) such

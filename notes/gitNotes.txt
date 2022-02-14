@@ -1172,6 +1172,12 @@ XVI. GIT Stash:
   Note, entries will be subject to pruning, so there may be no way
   to recover these changes.
 
+  Typical workflow when following a remote repo:
+
+    $ git stash
+    $ git pull
+    $ git stash pop
+
 XVII. GitHub Forking:
 
   A GitHub project does almost what you want to do.

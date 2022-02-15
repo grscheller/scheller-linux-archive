@@ -345,3 +345,89 @@ Notes taken while configuring Arch Linux for Python development.
   constraints on library dependencies.  The first two replace
   the old requirements.txt mechanism.
 
+2022-02-14:
+
+  Look into HallerPatrick/py_lsp.nvim.  Might be useful if it
+  turns out that LSP has trouble distinguishing the environment
+  of the Python running in nvim vs virtual environment of the
+  code being editted.
+
+  I would like to keep my Python virtual environments as lean
+  as possible and not have to install pynvim and pipenv into
+  every one of them.
+
+2022-02-15:
+
+  Beginning to understand that pipenv is not a pip replacement and
+  pip still has its use case.
+
+  Pipenv manages a software project with a virtual enviroment.
+  Pip manages an installed Python environment.  Pipenv will
+  use pip under the hood to manage the virtual environment.
+
+  I still use pip to manage the Python environments I install
+  with pyenv.
+
+  Here is an example workflow.  In my Neovim init.lua configs I set
+
+    vim.g.python3_host_prog = os.getenv("HOME") .. '/.pyenv/shims/python'
+
+  install a version of Python
+
+    $ pyenv install 3.9.7
+    $ pyenv global 3.9.7
+    $ PIP_REQUIRE_VIRTUALENV=false pip install pip --upgrade
+    $ PIP_REQUIRE_VIRTUALENV=false pip install pipenv
+    $ PIP_REQUIRE_VIRTUALENV=false pip install pynvim
+    $ pyenv global system
+
+  initialize a new project and associaed virtual environment
+
+    $ mkdir junk; cd junk
+    $ pyenv local 3.9.7  # pipenv will do below without this
+    $ pipenv --python 3.9.7
+    Creating a virtualenv for this project...
+    Pipfile: /home/grs/junk/Pipfile
+    Using /home/grs/.pyenv/versions/3.9.7/bin/python3.9 (3.9.7) to create virtualenv...
+    ⠸ Creating virtual environment...created virtual environment CPython3.9.7.final.0-64 in 146ms
+      creator CPython3Posix(dest=/home/grs/.local/share/virtualenvs/junk-Jrpe9XOJ, clear=False, no_vcs_ignore=False, global=False)
+      seeder FromAppData(download=False, pip=bundle, setuptools=bundle, wheel=bundle, via=copy, app_data_dir=/home/grs/.local/share/virtualenv)
+        added seed packages: pip==21.3.1, setuptools==60.1.0, wheel==0.37.1
+      activators BashActivator,CShellActivator,FishActivator,NushellActivator,PowerShellActivator,PythonActivator
+
+  and switch to it
+
+    $ pipenv shell
+    Launching subshell in virtual environment...
+     source /home/grs/.local/share/virtualenvs/junk-Jrpe9XOJ/bin/activate.fish
+    (junk)$ ls
+    Pipfile
+    (junk)$ cat Pipfile
+    [source]]
+    url = "https://pypi.org/simple"
+    verify_ssl = true
+    name = "pypi"
+    
+    [packages]
+    
+    [dev-packages]
+    
+    [requires]
+    python_version = "3.9"
+    (junk)$ python --version
+    Python 3.9.7
+
+  I beleive (need to verify) that nvim itself will still use the same
+  version of Python used in the virtual environment, but run outside it.
+
+  At least :checkhealth is OK.  Also python run against the virtual
+  environment cannot import pynvim; while run against the underlying
+  3.9.7 environment can.
+
+  To cleanup when done,
+
+    (junk)$ exit
+    $ pipenv --rm
+    Removing virtualenv (/home/grs/.local/share/virtualenvs/junk-Jrpe9XOJ)...
+    $ cd ..
+    $ rm -rf junk/

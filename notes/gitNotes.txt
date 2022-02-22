@@ -487,6 +487,8 @@ VII. Creating revisionist history via git rebase:
 
 VIII. Git branch:
 
+    Note that all branches really are just pointers to commits.
+
     1. List all available local branches:
 
          $ git branch
@@ -559,25 +561,23 @@ VIII. Git branch:
          $ git fetch -p some_remote_repo
          $ git fetch -p origin
 
-    8. Rename current branch to new name
+    8. Rename a GIT Branch
+
+         $ git branch -m oldname newname
+
+    9. Rename current branch to new name
 
          $ git branch -m myNewName
 
-    Note that all branches really are just pointers to commits.
-
-    9. Delete existing branches.
+   10. Delete an existing branch
 
        To delete local branch:
 
          $ git branch -d the_local_branch
 
-       To delete remote branch:
+   11. Delete an existing (local) remote tracking branch
 
-         $ git push origin :the_remote_branch
-
-   11. Rename a GIT Branch
-
-         $ git branch -m oldname newname
+         $ git branch -d -r origin/macos
 
    12. Figuring out what exactly your branches are
        actually tracking:

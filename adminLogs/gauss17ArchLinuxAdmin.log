@@ -10474,3 +10474,8 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   Common user environment between gauss17, euler7 and sc31 already
   setup in dotfiles repo.  See also adminLogs/ArchPythonAdmin.log
   for details.
+
+2022-03-05:
+  Removed community/arduino-ctags; extra/ctags and community/hasktags
+  were no longer installed.  Will be using LSP instead of these for
+  jumping around codebases.

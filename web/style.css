@@ -1,15 +1,15 @@
 body {
-  color: white;
-  background-color: black;
+  color: White;
+  background-color: Black;
 }
 
 a:link {
-  color: aqua;
+  color: Aqua;
   text-decoration: none;
 }
 
 a:visited {
-  color: pink;
+  color: Pink;
   text-decoration: none;
 }
 

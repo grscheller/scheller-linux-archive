@@ -2,6 +2,9 @@
  *  Illustrating Curiously Recurring Template Pattern
  */
 
+#ifndef COUNTER_H
+#define COUNTER_H
+
 template <typename T> struct counter {
   static int objects_created;
   static int objects_alive;
@@ -25,3 +28,5 @@ protected:
 };
 template <typename T> int counter<T>::objects_created{0};
 template <typename T> int counter<T>::objects_alive{0};
+
+#endif

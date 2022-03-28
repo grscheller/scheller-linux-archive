@@ -1,8 +1,8 @@
 /*
  *  Illustrating Curiously Recurring Template Pattern
  */
-#include "counter.h"
 #include <iostream>
+#include "counter.h"
 
 using namespace std;
 

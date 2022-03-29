@@ -1121,7 +1121,7 @@ Purpose: To rebuild from scratch maxwell4 after
     [gauss17]$ systemctl is-enabled dhcpcd
     disabled
 
-  Seams that I disabled it on gauss17 way back on 2017-06-27.  I will install
+  Seems that I disabled it on gauss17 way back on 2017-06-27.  I will install
   dhclient like is installed on gauss17.
 
     $ sudo pacman -Syu dhclient
@@ -1249,3 +1249,82 @@ Purpose: To rebuild from scratch maxwell4 after
     $ sudo pacman -Syu pyenv
 
   see adminLogs/ArchPythonAdmin.log for details.
+
+2022-03-29:
+
+  Got an ethernet port via USB-C "minidoc".  I think iwd uses
+  dhclient.  I'll install dhcpcd too so I have both.
+
+    $ ip addr
+    1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+        link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+        inet 127.0.0.1/8 scope host lo
+           valid_lft forever preferred_lft forever
+        inet6 ::1/128 scope host
+           valid_lft forever preferred_lft forever
+    3: wlan0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+        link/ether 08:71:90:c3:bb:8a brd ff:ff:ff:ff:ff:ff
+        inet 10.100.45.248/24 scope global noprefixroute wlan0
+           valid_lft forever preferred_lft forever
+    4: enp59s0u1u4: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
+        link/ether 00:e0:4c:68:22:1e brd ff:ff:ff:ff:ff:ff$ ip addr
+    
+  Linux sees the hardware.
+
+    $ systemctl list-unit-files --type service -all
+    UNIT FILE                                  STATE           VENDOR PRESET
+    ...
+    dhclient@.service                          disabled        disabled
+    dhcpcd.service                             disabled        disabled
+    dhcpcd@.service                            disabled        disabled
+    ...
+    iwd.service                                enabled         disabled
+    ...
+    ModemManager.service                       disabled        disabled
+    ...
+    systemd-network-generator.service          disabled        enabled
+    systemd-networkd-wait-online.service       enabled         disabled
+    systemd-networkd.service                   enabled         enabled
+    ...
+    systemd-resolved.service                   enabled         enabled
+    ...
+
+  Now I remember, iwd has its own internal dhcp client.  Network Manager
+  used dhclient.  Since I am not using Redhat's Network Manager, I'll
+  configure the more feature rich dhcpcd.
+
+  Let's turn it on and iwd off.
+
+    $ sudo systemctl enable dhcpcd
+    Created symlink /etc/systemd/system/multi-user.target.wants/dhcpcd.service → /usr/lib/systemd/system/dhcpcd.service.
+
+    $ sudo systemctl disable iwd
+    Removed /etc/systemd/system/multi-user.target.wants/iwd.service.
+
+    $ sudo systemctl stop iwd
+
+    $ ip addr
+    1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+        link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+        inet 127.0.0.1/8 scope host lo
+           valid_lft forever preferred_lft forever
+        inet6 ::1/128 scope host
+           valid_lft forever preferred_lft forever
+    4: enp59s0u1u4: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
+        link/ether 00:e0:4c:68:22:1e brd ff:ff:ff:ff:ff:ff
+
+    $ sudo systemctl start dhcpcd
+
+    $ ip addr
+    1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+        link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+        inet 127.0.0.1/8 scope host lo
+           valid_lft forever preferred_lft forever
+        inet6 ::1/128 scope host
+           valid_lft forever preferred_lft forever
+    4: enp59s0u1u4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+        link/ether 00:e0:4c:68:22:1e brd ff:ff:ff:ff:ff:ff
+        inet 10.100.51.180/22 brd 10.100.51.255 scope global dynamic noprefixroute enp59s0u1u4
+           valid_lft 86370sec preferred_lft 75570sec
+        inet6 fe80::8a9a:24c6:15db:912/64 scope link
+           valid_lft forever preferred_lft forever

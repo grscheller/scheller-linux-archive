@@ -1346,3 +1346,12 @@ Purpose: To rebuild from scratch maxwell4 after
 
     $ sudo systemctl enable systemd-homed
 
+  After reboot, now have the issue:
+
+    Started OpenSSH Daemon.
+    Server listening on 0.0.0.0 port 22555.
+    Server listening on :: port 22555.
+    pam_systemd_home(sshd:account): Not a user managed by systemd-homed: No home for user grs known
+    Accepted publickey for grs from 192.168.1.2 port 59330 ssh2: RSA SHA256: ...
+    pam_unix(sshd:session): session opened for user grs(uid=1000) by (uid=0)
+    pam_env(sshd:session): deprecated reading of user environment enabled

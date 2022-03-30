@@ -10479,3 +10479,27 @@ Note: On 2017-06-20 rebuilt system from scratch starting
   Removed community/arduino-ctags; extra/ctags and community/hasktags
   were no longer installed.  Will be using LSP instead of these for
   jumping around codebases.
+
+2022-03-29:
+  Bringing gauss17 & euler7 more in alignment.
+
+  Compairing them side-by-side with "systemctl status" and
+  "systemctl status <unit>" and looking for error messages
+  and differences.
+
+  Install dhcpcd.
+
+    $ sudo pacman -Syu dhcpcd
+    $ sudo systemctl enable dhcpcd
+    Created symlink /etc/systemd/system/multi-user.target.wants/dhcpcd.service → /usr/lib/systemd/system/dhcpcd.service.
+
+  Sshd problems:
+
+    - pam_systemd_home(sshd:account): systemd-homed is not available:
+      Unit dbus-org.freedesktop.home1.service not found.
+    - pam_env(sshd:session): deprecated reading of user environment enabled
+
+  Enable service:
+
+    $ sudo systemctl enable systemd-homed
+

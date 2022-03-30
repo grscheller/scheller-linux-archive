@@ -1328,3 +1328,21 @@ Purpose: To rebuild from scratch maxwell4 after
            valid_lft 86370sec preferred_lft 75570sec
         inet6 fe80::8a9a:24c6:15db:912/64 scope link
            valid_lft forever preferred_lft forever
+
+2022-03-29:
+  Bringing euler7 & gauss17 more in alignment.
+
+  Compairing them side-by-side with "systemctl status" and
+  "systemctl status <unit>" and looking for error messages
+  and differences.
+
+  Sshd problems:
+
+    - pam_systemd_home(sshd:account): systemd-homed is not available:
+      Unit dbus-org.freedesktop.home1.service not found.
+    - pam_env(sshd:session): deprecated reading of user environment enabled
+
+  Enable service:
+
+    $ sudo systemctl enable systemd-homed
+

@@ -19,7 +19,13 @@ or using the --help option to git
     $ git --help
     $ git clone --help
 
-Some resources I used for these notes:
+Three ways to get help are
+
+    $ git help <verb>
+    $ git <verb> --help
+    $ man git-<verb>
+
+Original resources I used for these notes:
 http://www.git-scm.com/book/en/v2   (ProGIT book)
 https://www.atlassian.com/git/tutorials/setting-up-a-repository
 https://help.github.com
@@ -29,14 +35,13 @@ Also, stackoverflow.com contains lots of good "from the trenches"
 advice on GIT best practices.  You just need to separate the wheat
 from the chaff.
 
-I. Getting started and some configuration.
+I. Getting started with some configuration.
 
     1. Three places git stores config info:
 
-       1. /etc/gitconfig       (not on my workstation)
+       1. /etc/gitconfig or /usr/local/gitconfig
        2. ~/.gitconfig or ~/.config/git/config
-       3. config file in the Git directory of whatever repository
-          you are using (that is .git/config).
+       3. config file in the .git directory of whatever repository
 
        Each one overrides the one above.
 
@@ -61,45 +66,68 @@ I. Getting started and some configuration.
 
          $ git config user.name
 
-    5. To see where Git is finding config info
+    5. Let's see where GIT finds config info on Arch Linux:
 
          $ git config --list --show-origin
-         file:/home/grs/.config/git/config       user.name=grscheller
-         file:/home/grs/.config/git/config       user.email=geoffrey@scheller.com
-         file:/home/grs/.config/git/config       core.editor=nvim
-         file:/home/grs/.config/git/config       pull.ff=only
-         file:/home/grs/.gitconfig       user.name=joeblow
+         file:/home/grs/.gitconfig       user.name=grscheller
          file:/home/grs/.gitconfig       user.email=geoffrey@scheller.com
-         file:/home/grs/.gitconfig       core.editor=vim
-         file:/home/grs/.gitconfig       pull.ff=only
+         file:/home/grs/.gitconfig       core.editor=nvim
+         file:/home/grs/.gitconfig       core.pager=nvim -R
+         file:/home/grs/.gitconfig       pull.rebase=false
+         file:/home/grs/.gitconfig       color.pager=no
          file:.git/config        core.repositoryformatversion=0
          file:.git/config        core.filemode=true
          file:.git/config        core.bare=false
          file:.git/config        core.logallrefupdates=true
-         file:.git/config        remote.origin.url=git@github.com:grscheller/fpinscala
+         file:.git/config        remote.origin.url=git@github.com:grscheller/scheller-linux-archive
          file:.git/config        remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
          file:.git/config        branch.master.remote=origin
          file:.git/config        branch.master.merge=refs/heads/master
 
-       Later info overrides earlier info
+       Let's see where GIT finds config info on MacOS (Darwin):
 
-    6. Three (equivalent) ways to get help:
+         $ git config --list --show-origin
+         file:/usr/local/etc/gitconfig	credential.helper=osxkeychain
+         file:/Users/geoffreyscheller/.gitconfig	user.name=grscheller
+         file:/Users/geoffreyscheller/.gitconfig	user.email=geoffrey@scheller.com
+         file:/Users/geoffreyscheller/.gitconfig	core.editor=nvim
+         file:/Users/geoffreyscheller/.gitconfig	core.pager=nvim -R -c 'setfiletype git'
+         file:/Users/geoffreyscheller/.gitconfig	color.pager=no
+         file:/Users/geoffreyscheller/.gitconfig	pull.rebase=false
+         file:.git/config	core.repositoryformatversion=0
+         file:.git/config	core.filemode=true
+         file:.git/config	core.bare=false
+         file:.git/config	core.logallrefupdates=true
+         file:.git/config	core.ignorecase=true
+         file:.git/config	core.precomposeunicode=true
+         file:.git/config	remote.origin.url=git@github.com:grscheller/scheller-linux-archive
+         file:.git/config	remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
+         file:.git/config	branch.master.remote=origin
+         file:.git/config	branch.master.merge=refs/heads/master
 
-         $ git help <verb>
-         $ git <verb> --help
-         $ man git-<verb>
+       Later info overrides earlier info.
 
-       Also #git or #github channels on the Freenode IRC server.
-       at http://irc.freenode.net/ (Blocked on DREN and NIPRnet).
+    6. You can use the --edit option to edit your config files in place.
 
-II. Getting a Git Repository
+       Within a GIT repo. use
+
+         $ git config --edit
+
+       To edit your global configuration, use
+
+         $ git config --global --edit
+
+       Unlike doing it from the command line, GIT will not catch errors
+       and typos immediately.
+
+II. Getting a GIT Repository
 
     1. Initializing a repository in an existing directory:
 
          $ cd /path/to/an/existing/directory
          $ git init
 
-       This creates a .git subdirectory (a Git repository skeleton).
+       This creates a .git subdirectory (a GIT repository skeleton).
 
        Add files to this repository:
 
@@ -116,7 +144,7 @@ II. Getting a Git Repository
        This is not just a checkout, it clones the entire repository
        of change control files.  (Does not clone some of the server
        side settings.)  The second version changes the name of the
-       Git repository directory from libgit2 to mylibgit.
+       GIT repository directory from libgit2 to mylibgit.
 
        Transfer protocols:
 
@@ -126,6 +154,11 @@ II. Getting a Git Repository
 
     3. Setting up a local shared repository:
 
+       A bit "old school" but I have found doing this useful when
+       one two contractors are working on the same code base but
+       don't have access to each other's GIT repos.  The only thing
+       they share are access to the same Linux based computer.
+
        Lets assume everyone is in the repos group
 
          $ umask 0007
@@ -134,7 +167,7 @@ II. Getting a Git Repository
          $ cd /share/repos
          $ git init --bare ourProject.git
 
-       This initializes an empty Git repository, but omit the working
+       This initializes an empty GIT repository, but omit the working
        directory.  Shared repositories should always be created with
        the --bare flag.  The ourProject.git directory will be a
        subdirectory.  (Equiv to a .git directory, but without the
@@ -220,7 +253,7 @@ II. Getting a Git Repository
          $ mkdir temp
          $ cd temp
          $ git clone ../Devel/SDT
-         Initialized empty Git repository in /home/schelleg/temp/SDT/.git/
+         Initialized empty GIT repository in /home/schelleg/temp/SDT/.git/
 
        Let's see what we got
 
@@ -262,6 +295,12 @@ II. Getting a Git Repository
 
        You can use --config instead of -c.
 
+    9. Go to github.com or gitlab.com and create yourself an empty
+       GIT repo for your project, using their webtools.
+
+       Many young developers conflate GIT with GitLab.  You don't
+       know GIT until you can use it without a browser or IDE.
+
 III. Lifecycle of files:
 
      Untracked         Unmodified         Modified           Staged
@@ -272,7 +311,7 @@ III. Lifecycle of files:
          |<---Remove file---|                 |                 |
          |                  |<--------------------Commit file---|
 
-IV. Git Basics:
+IV. GIT Basics:
 
     1. Checking status of files:
 
@@ -286,7 +325,7 @@ IV. Git Basics:
          $ git add directory   (all files staged recursively)
 
        Think of add as meaning "add this content to the next commit"
-       rather than "add this file to the project."  Git stages the file
+       rather than "add this file to the project."  GIT stages the file
        as it was when 'git add' command was issued.  If you modify a
        file after it was staged, you have to add it again to pick up
        the latest changes.
@@ -312,7 +351,7 @@ IV. Git Basics:
 
 V. Ignoring files:
 
-    Use a .gitignore file to make Git ignore files.
+    Use a .gitignore file to make GIT ignore files.
 
     Example:
       # ignore all .a files
@@ -396,7 +435,7 @@ VI. Moving and removing files.
          $ git mv path/to/filename new/path/to/new_filename
          $ git commit
 
-       Git will move and rename the file before the commit.  If you move
+       GIT will move and rename the file before the commit.  If you move
        a file with unstaged changes, the original version is what will get
        commited.  The changes made to the file will be an unstages change
        within the working directory.
@@ -406,7 +445,7 @@ VI. Moving and removing files.
     5. To move a bunch of files to a new directory
 
          $ mkdir new_dir
-         $ git add file1 file2 file3 
+         $ git add file1 file2 file3
          $ git mv file1 file2 file3 new_directory
          $ git commit
 
@@ -472,7 +511,7 @@ VII. Creating revisionist history via git rebase:
          # x, exec = run command (the rest of the line) using shell
          # d, drop = remove commit
 
-       In the case of a merge conflict, Git drops you back to a shell.
+       In the case of a merge conflict, GIT drops you back to a shell.
        Fix the conflict, and
 
          $ git add ...
@@ -485,7 +524,7 @@ VII. Creating revisionist history via git rebase:
        a `git merge' the upstream version into your work to make
        your HEAD pushable.
 
-VIII. Git branch:
+VIII. GIT branch:
 
     Note that all branches really are just pointers to commits.
 
@@ -594,11 +633,11 @@ VIII. Git branch:
          scheller    ../../../scheller-linux-archive/ (fetch)
          scheller    ../../../scheller-linux-archive/ (push)
 
-IX. Git checkout:
+IX. GIT checkout:
 
     The git checkout command lets you navigate between branches.
     Checking out a branch updates the files in the working directory
-    to match the version stored in that branch, and it tells Git to
+    to match the version stored in that branch, and it tells GIT to
     record all new commits on that branch. Think of it as a way to
     select which line of development you’re working on.
 
@@ -659,7 +698,7 @@ IX. Git checkout:
            master
          * scheller-master
 
-X. Git merge:
+X. GIT merge:
 
     The git merge command is used to merge another branch
     into your current branch.  If merge successful without conflicts,
@@ -795,7 +834,7 @@ XI. Syncing repositories:
        rename upstream to origin and your local repo
        bar to foo.
 
-    6. Git fetch imports commits from a remote repository, giving
+    6. GIT fetch imports commits from a remote repository, giving
        you chance to review changes before integrating them into the
        local copy of the project.
 
@@ -809,7 +848,7 @@ XI. Syncing repositories:
        use 'git branch -r' for remote branches.  Inspect these
        branches with the ususal git chechout and git log commands.
 
-    8. Git pull (bring in remote changes).  This command fetches
+    8. GIT pull (bring in remote changes).  This command fetches
        from and integrates with another repository or local branch.
        The 'git pull' command is shorthand for 'git fetch' followed
        by 'git merge FETCH_HEAD'
@@ -1068,7 +1107,7 @@ XIV. GIT revision history tools:
          $ git log --oneline
 
        To get the most out of git log, remember the
-       seven rules of a great Git commit message:
+       seven rules of a great GIT commit message:
 
          - Separate subject from body with a blank line
          - Limit the subject line to 50 characters
@@ -1161,7 +1200,10 @@ XV. Using Neovim as GIT Pager:
   You need to turn color off in GIT and let nvim do colorization.
 
     $ git config --global color.pager no
-    $ git config --global core.pager "nvim -R"
+    $ git config --global core.pager "nvim -R 'setfiletype git'"
+
+  The '-R' means read-only, setting the file type ensures neovim
+  it is working with GIT related files.
 
 XVI. GIT Stash:
 

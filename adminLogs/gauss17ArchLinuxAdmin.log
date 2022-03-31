@@ -1,16 +1,16 @@
-
+Purpose: To indicate what was done to create gauss17 and
          the rational behind it.  Named after Karl Gauss
          showing it was possible to construct a regular 17
          sided regular polygon with only straightedge and
          compass.
 
-Note: On 2017-06-20 rebuilt system from scratch starting
-      after swapping out the DVD with a SSD.
+         Note: On 2017-06-20 rebuilt system from scratch
+         starting after swapping out the DVD with a SSD.
 
-      Originally ran into issues getting an NVidia Optimus
-      graphics card working with the NVidia drivers.  On
-      the rebuild Arch handled the card and drivers without
-      much fuss.
+         Originally ran into issues getting an NVidia Optimus
+         graphics card working with the proprietary NVidia
+         drivers.  On the rebuild Arch handled the card and
+         drivers without much fuss.
 
 2016-07-04:
 

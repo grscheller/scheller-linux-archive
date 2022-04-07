@@ -1268,7 +1268,7 @@ Purpose: To rebuild from scratch maxwell4 after
            valid_lft forever preferred_lft forever
     4: enp59s0u1u4: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
         link/ether 00:e0:4c:68:22:1e brd ff:ff:ff:ff:ff:ff$ ip addr
-    
+
   Linux sees the hardware.
 
     $ systemctl list-unit-files --type service -all
@@ -1355,3 +1355,129 @@ Purpose: To rebuild from scratch maxwell4 after
     Accepted publickey for grs from 192.168.1.2 port 59330 ssh2: RSA SHA256: ...
     pam_unix(sshd:session): session opened for user grs(uid=1000) by (uid=0)
     pam_env(sshd:session): deprecated reading of user environment enabled
+
+2022-04-07:
+  Will work on systemd-homed with gauss17.
+
+2022-04-07:
+  Configuing CUPS printing on euler7.  Start off by following ArchWiki.
+
+  Install Cups:
+
+    $ sudo pacman -S cups cups-pdf
+
+  Optional dependencies for imagemagick
+    ghostscript: PS/PDF support [installed]
+    libheif: HEIF support [installed]
+    libjxl: JPEG XL support
+    libraw: DNG support [installed]
+    librsvg: SVG support [installed]
+    libwebp: WEBP support [installed]
+    libwmf: WMF support
+    libxml2: Magick Scripting Language [installed]
+    libzip: OpenRaster support
+    ocl-icd: OpenCL support
+    openexr: OpenEXR support
+    openjpeg2: JPEG2000 support [installed]
+    djvulibre: DJVU support [installed]
+    pango: Text rendering [installed]
+    imagemagick-doc: manual and API docs
+
+  Optional dependencies for cups-filters
+    ghostscript: for non-PostScript printers to print with CUPS to convert PostScript
+    to raster images [installed]
+    foomatic-db: drivers use Ghostscript to convert PostScript to a printable form
+    directly
+    foomatic-db-engine: drivers use Ghostscript to convert PostScript to a printable
+    form directly
+    foomatic-db-nonfree: drivers use Ghostscript to convert PostScript to a printable
+    form directly
+    antiword: to convert MS Word documents
+    docx2txt: to convert Microsoft OOXML text from DOCX files
+
+  Optional dependencies for cups
+    ipp-usb: allows to send HTTP requests via a USB connection on devices without
+    Ethernet or WiFi connections
+    xdg-utils: xdg .desktop file support [installed]
+    colord: for ICC color profile support
+    logrotate: for logfile rotation support [installed]
+
+  The above Pacman install also gave some helpful factoids:
+
+    To use cups-pdf, restart cups and visit the cups
+    web interface at http://localhost:631/
+
+    You can now add a "Virtual Printer (PDF Printer)"
+    and use the Postscript/Generic postscript color
+    printer driver.
+
+    Note that cups-pdf has a configuration
+    file in /etc/cups. The default location for
+    pdf output is /var/spool/cups-pdf/$username.
+
+  Let's go after some of the above missing dependencies.
+
+    $ sudo pacman -S libjxl libjxl-doc libwmf libzip \
+                     ocl-icd openexr imagemagick-doc
+
+    $ sudo pacman -S foomatic-db foomatic-db-engine \
+                     foomatic-db-nonfree antiword docx2txt\ 
+                     foomatic-db-nonfree-ppds
+
+    $ sudo pacman -S ipp-usb colord
+
+    $ sudo pacman -S gutenprint foomatic-db-gutenprint-ppds
+
+  Let's see whats up.
+
+    $ systemctl status cups.service
+    ○ cups.service - CUPS Scheduler
+       Loaded: loaded (/usr/lib/systemd/system/cups.service; disabled; vendor preset: d>
+       Active: inactive (dead)
+    TriggeredBy: ○ cups.socket
+         Docs: man:cupsd(8)
+
+    $ systemctl status cups.socket
+    ○ cups.socket - CUPS Scheduler
+       Loaded: loaded (/usr/lib/systemd/system/cups.socket; disabled; vendor preset: di>
+       Active: inactive (dead)
+     Triggers: ● cups.service
+       Listen: /run/cups/cups.sock (Stream)
+
+  I don't print much, I think the socket listener will be enough.
+
+    $ sudo systemctl enable cups.socket
+    Created symlink /etc/systemd/system/sockets.target.wants/cups.socket → /usr/lib/systemd/system/cups.socket.
+
+  How CUPS works (from ArchWiki):
+
+    1. An application sends a PDF file to CUPS when 'print' has been
+       selected.  In case the application sends another format, it is
+       converted to PDF first.
+    2. CUPS then looks at the printer's PPD file, printer description
+       file, and figures out what filters it needs to use to convert
+       the PDF file to a language that the printer understands, like
+       PJL, PCL, bitmap or native PDF.
+    3. The filter converts the PDF file to a format understood by the
+       printer.
+    4. Then it is sent to the back-end. For example, if the printer is
+       connected to a USB port, it uses the USB back-end.
+
+  Let's clean up and reboot.
+
+    $ sudo pacman -Syu
+    $ systemctl reboot
+
+  Now, how to find a network printer...
+
+  The Network section of the CUPS ArchWiki says Avahi is a
+  zeo-config multicast DNS/DNS-SD service discovery system.
+  
+  1. It is installed on euler7, but not enabled.
+  2. Seems both libcups and pipewire-pulse can use it, see
+     pactree -r avahi
+  3. Incompatible with systemd-resolved's multicast DNS
+     resolver/responder.  See resolved.conf(5) or disable
+     systemd-resolved.service entirely.
+  4. I may want to read through the ArchWiki systemd-resolved
+     and Avahi pages.

@@ -10503,3 +10503,26 @@ Purpose: To indicate what was done to create gauss17 and
 
     $ sudo systemctl enable systemd-homed
 
+2022-04-08:
+  While configuing CUPS printing on euler7, noticed I missed the
+  following in my previous hacks o get CUPS working:
+
+    $ sudo pacman -S foomatic-db-engine
+
+  Now at least gauss17 & euler7 are consistent.
+
+2022-04-08:
+  Will contine work on systemd-homed with gauss17 later after
+  I get to the bottom of systemd-resolved and avahi not playing
+  nice.  Might have something to do with mDNS configuration
+  and /etc/nsswitch.conf?
+
+  Why do they have to make this crap so confusing?  Why are
+  there not any "best practices" advice on the internet from the
+  few who actually understand this stuff?  I see posts going
+  back to 2010 from Poettering requesting this stuff gets fixed.
+
+  Did not know that Lennart Poettering was also the initial author
+  of Avahi.
+
+

@@ -1481,3 +1481,9 @@ Purpose: To rebuild from scratch maxwell4 after
      systemd-resolved.service entirely.
   4. I may want to read through the ArchWiki systemd-resolved
      and Avahi pages.
+
+2022-04-08:
+  Continue printer configuration.  Comparing with gauss17, I
+  missed this one:
+
+    $ sudo pacman -S foomatic-db-ppds

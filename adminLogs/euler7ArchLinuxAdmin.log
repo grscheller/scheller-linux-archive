@@ -1481,3 +1481,19 @@ Purpose: To rebuild from scratch maxwell4 after
      systemd-resolved.service entirely.
   4. I may want to read through the ArchWiki systemd-resolved
      and Avahi pages.
+
+2022-04-08:
+  Continue printer configuration.  Comparing with gauss17, I
+  missed this one:
+
+    $ sudo pacman -S foomatic-db-ppds
+
+2022-04-10:
+  I am in the process of going "all-in" with systemd-resoved for
+  gauss17.  Once I get it better under control there, I'll address
+  it here on euler7.
+
+  Since euler7 spends most of its time on a Apple dominated
+  network, may want to enable Avahi.  May need to either get
+  resolved and avahi peasefully coexisting, or script things
+  to be able swap between the two.

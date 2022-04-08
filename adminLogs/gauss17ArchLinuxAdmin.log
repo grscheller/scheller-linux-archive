@@ -10503,3 +10503,454 @@ Purpose: To indicate what was done to create gauss17 and
 
     $ sudo systemctl enable systemd-homed
 
+2022-04-08:
+  While configuing CUPS printing on euler7, noticed I missed the
+  following in my previous hacks o get CUPS working:
+
+    $ sudo pacman -S foomatic-db-engine
+
+  Now at least gauss17 & euler7 are consistent.
+
+2022-04-08:
+  Will contine work on systemd-homed with gauss17 later after
+  I get to the bottom of systemd-resolved and avahi not playing
+  nice.  Might have something to do with mDNS configuration
+  and /etc/nsswitch.conf?
+
+  Why do they have to make this crap so confusing?  Why are
+  there not any "best practices" advice on the internet from the
+  few who actually understand this stuff?  I see posts going
+  back to 2010 from Poettering requesting this stuff gets fixed.
+
+  Did not know that Lennart Poettering was also the initial author
+  of Avahi.
+
+2022-04-09: 
+  Regarding some problems with Coursier which I put in my archlocal
+  repo on 2022-01-16.  Neovim using Scala metals was giving me
+  inconsistent warning messages on my Brewed up MacOS and euler7.
+  On MacOS it was saying Scala 3.1 was not supported yet.  After down
+  grading to Scala 3.0, I was warned on euler7 that using Scala 3.0
+  was depricated.
+
+  The main issue is that I had not run :MetalsUpdate for 6 months on
+  MacOS.  Then something complained (nvim-metals? sbt?) that I needed
+  to upgrade my version of Coursier.  Turns out sbt 3.1.x ships with
+  coursier support out of the box.  I removed previously installed
+  version of Coursier and every thing (sbt?, nvim-metals?) worked.
+
+  On gauss17, lets remove Coursier and see what happens.
+
+    $ sudo pacman -R coursier
+
+    $ pacman -Ss .|grep -A1 '^archlocal'
+    archlocal/coursier 2.1.0_M1-1
+        Pure Scala Artifact Fetching
+    archlocal/mozillavpn 2.6.0-1 [installed]
+        A fast, secure and easy to use VPN. Built by the makers of Firefox.
+
+  Without Coursier explicitly installed, sbt and nvim-metals both
+  work like a charm.  I even tried blowing away the project directory.
+
+  What is Coursier anyway, from get-coursier web site,
+  https://get-coursier.io/docs/sbt-coursier
+
+    Under the hood, coursier is a dependency resolver/fetcher à la
+    Maven/Ivy, entirely rewritten from scratch in Scala.  It aims at
+    being fast and easy to embed in other contexts.  Its core embraces
+    functional programming principles.
+
+    It handles many features of the Maven model, and is able to fetch
+    metadata and artifacts from both Maven and Ivy repositories. It
+    handles parallel downloads out-of-the-box without resorting to
+    global locks.
+
+  Looks like its intended use case is to be embedded into other tools.
+
+2022-04-10:
+  Decided to go "all-in" with systemd-resolved on gauss17.  No Avahi.
+
+  Found out that my apartment Netgear R6080 router will not let me
+  turn it off as a DNS server.  Therefore for consumer grade crap,
+  like my cell phone or roku, I'll let Comcast decide what is best
+  via what they pushes to my Netgear router through the cable modem.
+  I'll need to bypass the router for better DNS control for my
+  workstations.
+
+  First remove OpenVPN since it is incompatible with systemd-resolved.
+
+    $ sudo pacman -R openvpn
+
+  I also reserved IPv4 addresses for gauss17 & euler7 on the router.
+
+  Under the router's Advanced Setup -> IPv6 settings, I have two main
+  choices:
+
+    ● Use DHCP Server
+    ● Auto Config
+
+  According to Netgear's website, the second one is the default while
+  for the first one they say "This method passes more information to
+  LAN devices, but some IPv6 systems might not support the DHCv6 client
+  function." <- (last updated 11/28/2016).
+
+  Hmmmm....
+
+  Something tells me the later only does local link IPv6, just a guess.
+
+  Let's go with the first one.
+
+  Shut everything down and reboot router and cable "modem."
+
+  Still systemd-resolved is not resolving certain addresses with
+  the default config:
+
+    $ ls -l /etc/resolv.conf
+    lrwxrwxrwx 1 root root 37 Apr 10 11:38 /etc/resolv.conf ->
+                                   /run/systemd/resolve/stub-resolv.conf
+    $ grep -vE '^(#|$)' /etc/resolv.conf
+    nameserver 127.0.0.53
+    options edns0 trust-ad
+    search .
+
+  until I swap syslink with /etc/resolv.conf.bak
+
+    $ grep -vE '^(#|$)' /etc/resolv.conf.bak
+    nameserver 1.1.1.1
+    options edns0 trust-ad
+    search .
+
+  after at least one successful getents hosts, I can switch the symlink
+  back and systemd-resolved works fine.  Does not have to be with one
+  of the addresses where it hangs, like github.com or www.fast.net.
+
+  Possibly related.  On reboot, without an Ethernet cable, the Wifi
+  interface is not auto configured until I do a
+
+    $ iwctl device list
+
+  which fails, but then the WiFi connection is auto configured.  This
+  is regardless whether Sway is running or not.  Maybe this is screwing
+  up systemd-resolved?  Maybe not, I see same "getent hosts" issues
+  with Ethernet sucessfully auto configured.  Never at work for either
+  WiFi or Ethernet.
+
+  Another way to "kick the box" and get the wifi to auto-config,
+
+    $ iwctl adapter list
+    No matching method found
+    Failed to retrieve IWD dbus objects, quitting...
+
+  The ArchWiki for iwd is pointing me to Network configuration page.
+  The services needing configuring for iwd are:
+
+    systemd-networkd
+
+  The ArchWiki for iwd is pointing me to Network configuration page.
+  The services needing configuring for iwd are:
+
+    systemd-networkd.service
+    systemd-resolved.service
+
+  Let's see what is running
+
+    $ systemctl status systemd-networkd.service
+    ● systemd-networkd.service - Network Configuration
+         Loaded: loaded (/usr/lib/systemd/system/systemd-networkd.service; enabled; vendor preset: enabled)
+         Active: active (running) since Sun 2022-04-10 13:00:59 MDT; 18min ago
+    TriggeredBy: ● systemd-networkd.socket
+           Docs: man:systemd-networkd.service(8)
+       Main PID: 293 (systemd-network)
+         Status: "Processing requests..."
+          Tasks: 1 (limit: 19037)
+         Memory: 3.0M
+            CPU: 46ms
+         CGroup: /system.slice/systemd-networkd.service
+                 └─293 /usr/lib/systemd/systemd-networkd
+    
+    Apr 10 13:00:59 gauss17 systemd-networkd[293]: lo: Gained carrier
+    Apr 10 13:00:59 gauss17 systemd-networkd[293]: Enumeration completed
+    Apr 10 13:00:59 gauss17 systemd[1]: Started Network Configuration.
+    Apr 10 13:01:00 gauss17 systemd-networkd[293]: eth0: Interface name change detected, renamed to enp3s0f1.
+    Apr 10 13:01:02 gauss17 systemd-networkd[293]: enp3s0f1: Link UP
+    Apr 10 13:01:05 gauss17 systemd-networkd[293]: wlan0: Link UP
+    Apr 10 13:01:47 gauss17 systemd-networkd[293]: wlan0: Link DOWN
+    Apr 10 13:01:49 gauss17 systemd-networkd[293]: wlan0: Link UP
+    Apr 10 13:01:50 gauss17 systemd-networkd[293]: wlan0: Connected WiFi access point: singlewhip650 (9c:c9:eb:54:5f:77)
+    Apr 10 13:01:50 gauss17 systemd-networkd[293]: wlan0: Gained carrier
+
+  and
+
+    $ systemctl status systemd-resolved.service
+    ● systemd-resolved.service - Network Name Resolution
+         Loaded: loaded (/usr/lib/systemd/system/systemd-resolved.service; enabled; vendor preset: enabled)
+         Active: active (running) since Sun 2022-04-10 13:01:01 MDT; 22min ago
+           Docs: man:systemd-resolved.service(8)
+                 man:org.freedesktop.resolve1(5)
+                 https://www.freedesktop.org/wiki/Software/systemd/writing-network-configuration-managers
+                 https://www.freedesktop.org/wiki/Software/systemd/writing-resolver-clients
+       Main PID: 436 (systemd-resolve)
+         Status: "Processing requests..."
+          Tasks: 1 (limit: 19037)
+         Memory: 6.1M
+            CPU: 90ms
+         CGroup: /system.slice/systemd-resolved.service
+                 └─436 /usr/lib/systemd/systemd-resolved
+    
+    Apr 10 13:01:01 gauss17 systemd[1]: Starting Network Name Resolution...
+    Apr 10 13:01:01 gauss17 systemd-resolved[436]: Positive Trust Anchors:
+    Apr 10 13:01:01 gauss17 systemd-resolved[436]: . IN DS 20326 8 2 e06d44b80b8f1d39a95c0b0d7c65d08458e880409bbc683457104237c7f8ec8d
+    Apr 10 13:01:01 gauss17 systemd-resolved[436]: Negative trust anchors: home.arpa 10.in-addr.arpa \
+            16.172.in-addr.arpa 17.172.in-addr.arpa 18.172.in-addr.arpa 19.172.in-addr.arpa 20.172.in-addr.arpa \
+            21.172.in-addr.arpa 22.172.in-addr.arpa 23.172.in-addr.arpa 24.172.in-addr.arpa 25.172.in-addr.arpa \
+            26.172.in-addr.arpa 27.172.in-addr.arpa 28.172.in-addr.arpa 29.172.in-addr.arpa 30.172.in-addr.arpa \
+            31.172.in-addr.arpa 168.192.in-addr.arpa d.f.ip6.arpa corp home internal intranet lan local private test
+    Apr 10 13:01:01 gauss17 systemd-resolved[436]: Using system hostname 'gauss17'.
+    Apr 10 13:01:01 gauss17 systemd[1]: Started Network Name Resolution.
+    Apr 10 13:01:50 gauss17 systemd-resolved[436]: Switching to fallback DNS server 1.1.1.1#cloudflare-dns.com.
+    Apr 10 13:01:50 gauss17 systemd-resolved[436]: wlan0: Bus client set DNS server list to: 192.168.1.1
+
+
+  Need a little more time sequencing
+
+    $ journalctl -b|grep -E 'systemd-(networkd|resolved)'
+    Apr 10 13:00:59 gauss17 kernel: audit: type=1130 audit(1649617259.297:7): pid=1 uid=0 auid=4294967295 \
+                ses=4294967295 msg='unit=systemd-networkd comm="systemd" exe="/usr/lib/systemd/systemd" \
+                hostname=? addr=? terminal=? res=success'
+    Apr 10 13:00:59 gauss17 audit[1]: SERVICE_START pid=1 uid=0 auid=4294967295 ses=4294967295 \
+                                      msg='unit=systemd-networkd comm="systemd" exe="/usr/lib/systemd/systemd" \
+                                      hostname=? addr=? terminal=? res=success'
+    Apr 10 13:00:59 gauss17 systemd-networkd[293]: lo: Link UP
+    Apr 10 13:00:59 gauss17 systemd-networkd[293]: lo: Gained carrier
+    Apr 10 13:00:59 gauss17 systemd-networkd[293]: Enumeration completed
+    Apr 10 13:01:00 gauss17 systemd-networkd[293]: eth0: Interface name change detected, renamed to enp3s0f1.
+    Apr 10 13:01:01 gauss17 systemd-resolved[436]: Positive Trust Anchors:
+    Apr 10 13:01:01 gauss17 systemd-resolved[436]: . IN DS 20326 8 2 e06d44b80b8f1d39a95c0b0d7c65d08458e880409bbc683457104237c7f8ec8d
+    Apr 10 13:01:01 gauss17 systemd-resolved[436]: Negative trust anchors: home.arpa 10.in-addr.arpa 16.172.in-addr.arpa ...
+    Apr 10 13:01:01 gauss17 audit[1]: SERVICE_START pid=1 uid=0 auid=4294967295 ses=4294967295 msg='unit=systemd-resolved comm="systemd" \
+                                      exe="/usr/lib/systemd/systemd" hostname=? addr=? terminal=? res=success'
+    Apr 10 13:01:01 gauss17 systemd-resolved[436]: Using system hostname 'gauss17'.
+    Apr 10 13:01:02 gauss17 systemd-networkd[293]: enp3s0f1: Link UP
+    Apr 10 13:01:05 gauss17 systemd-networkd[293]: wlan0: Link UP
+    Apr 10 13:01:47 gauss17 systemd-networkd[293]: wlan0: Link DOWN
+    Apr 10 13:01:49 gauss17 systemd-networkd[293]: wlan0: Link UP
+    Apr 10 13:01:50 gauss17 systemd-networkd[293]: wlan0: Connected WiFi access point: singlewhip650 (9c:c9:eb:54:5f:77)
+    Apr 10 13:01:50 gauss17 systemd-networkd[293]: wlan0: Gained carrier
+    Apr 10 13:01:50 gauss17 systemd-resolved[436]: Switching to fallback DNS server 1.1.1.1#cloudflare-dns.com.
+    Apr 10 13:01:50 gauss17 systemd-resolved[436]: wlan0: Bus client set DNS server list to: 192.168.1.1
+    Apr 10 13:02:59 gauss17 systemd-networkd-wait-online[342]: Timeout occurred while waiting for network connectivity.
+    Apr 10 13:02:59 gauss17 systemd[1]: systemd-networkd-wait-online.service: Main process exited, code=exited, status=1/FAILURE
+    Apr 10 13:02:59 gauss17 systemd[1]: systemd-networkd-wait-online.service: Failed with result 'exit-code'.
+    Apr 10 13:02:59 gauss17 audit[1]: SERVICE_START pid=1 uid=0 auid=4294967295 ses=4294967295 msg='unit=systemd-networkd-wait-online \
+                                      comm="systemd" exe="/usr/lib/systemd/systemd" hostname=? addr=? terminal=? res=failed'
+    Apr 10 13:02:59 gauss17 kernel: audit: type=1130 audit(1649617379.361:65): pid=1 uid=0 auid=4294967295 ses=4294967295 \
+                                    msg='unit=systemd-networkd-wait-online comm="systemd" exe="/usr/lib/systemd/systemd" \
+                                    hostname=? addr=? terminal=? res=failed'
+
+  Something is not right with systemd-networkd-wait-online.
+  Time to read through the ArchWiki and man pages.
+
+  Following first the systemd-networkd archwiki.  See what other
+  network "management" services are running.
+
+    $ systemctl --type=service
+    UNIT
+      ...
+      dhcpcd.service
+      ...
+      iwd.service
+      ...
+    ● systemd-networkd-wait-online.service
+      systemctl-networkd.service
+      ...
+      systemd-resolved.service
+
+  
+  Not listed are 
+
+    connman.service
+
+    netctl-ifplugd@interface.service
+    netctl-auto@interface.service
+
+    NetworkManager.service
+
+  which is good since this is what I thnk they are refering to
+  by "network management tools."
+
+  According to systemd-networkd CLI tool,
+
+    $ networkctl
+    IDX LINK     TYPE     OPERATIONAL SETUP
+      1 lo       loopback carrier     unmanaged
+      2 enp3s0f1 ether    no-carrier  unmanaged
+      4 wlan0    wlan     routable    unmanaged
+
+    3 links listed.
+
+  Hmmm... unmanaged
+
+  Reading more systemd-networkd ArchWiki.
+
+  Some hints are given for systemd-resolved configuration
+  I may wish to get back to.
+
+  Some info on systemd-networkd-wait-online:
+
+    One shot service with default timeout of 2 minutes which
+    waits until all services it knows about are up.
+
+    "If your system has multiple network interfaces, but
+    some are not expected to be connected all the time,
+    starting systemd-networkd-wait-online.service will
+    fail after the default timeout of 2 minutes."  This
+    is what is happenning.
+
+  Will need to "adjust" the systemd-networkd-wait-online
+  systemd "unit file" whose identity and location the ArchWiki
+  is not exactly agreeing on with either my system nor the
+  systemd sections 5 & 8 man pages.
+
+  Will return shortly to this bit of brain surgury.
+
+2022-04-10:
+  While descending down the rabbit hole above, I noticed
+  some inconsistency between gauss17 & euler7.  I believe
+  mostly due to old cruft on gauss17.
+
+    [euler7]$ ls -l /etc/systemd/system/ | fields 9 10 11 | grep -E '\->'
+    dbus-org.bluez.service -> /usr/lib/systemd/system/bluetooth.service
+    dbus-org.freedesktop.home1.service -> /usr/lib/systemd/system/systemd-homed.service
+    dbus-org.freedesktop.network1.service -> /usr/lib/systemd/system/systemd-networkd.service
+    dbus-org.freedesktop.resolve1.service -> /usr/lib/systemd/system/systemd-resolved.service
+    dbus-org.freedesktop.timesync1.service -> /usr/lib/systemd/system/systemd-timesyncd.service
+    
+    [gauss17]$ ls -l /etc/systemd/system/ | fields 9 10 11 | grep -E '\->'
+    dbus-org.bluez.service -> /usr/lib/systemd/system/bluetooth.service
+    dbus-org.freedesktop.home1.service -> /usr/lib/systemd/system/systemd-homed.service
+    dbus-org.freedesktop.network1.service -> /usr/lib/systemd/system/systemd-networkd.service
+    dbus-org.freedesktop.nm-dispatcher.service -> /usr/lib/systemd/system/NetworkManager-dispatcher.service
+    dbus-org.freedesktop.resolve1.service -> /usr/lib/systemd/system/systemd-resolved.service
+    display-manager.service -> /usr/lib/systemd/system/gdm.service
+
+  On gauss17,
+
+    # cd /etc/systemd/system/
+    # rm dbus-org.freedesktop.nm-dispatcher.servce
+    # rm display-manager.service
+    # ln -s /usr/lib/systemd/system/systemd-timesyncd.service dbus-org.freedesktop.timesync1.service
+
+  I no longer use gdm nor NetworkManager.
+
+2022-04-10:
+  Got system booted with Ethernet cable.
+
+    $ networkctl
+    IDX LINK     TYPE     OPERATIONAL SETUP
+      1 lo       loopback carrier     unmanaged
+      2 enp3s0f1 ether    routable    unmanaged
+      3 wlan0    wlan     no-carrier  unmanaged
+    
+  Forgot about wlan0 problem.  Reboot again and get all networking
+  interfaces up within two minute limit.
+
+    $ networkctl
+    3 links listed.
+    IDX LINK     TYPE      OPERATIONAL SETUP
+      1 lo       loopback  carrier     unmanaged
+      2 enp3s0f1 ether     routable    unmanaged
+      4 wlan0    wlan      routable    unmanaged
+      5 moz0     wireguard routable    unmanaged
+    
+    4 links listed.
+
+  Reading networkctl manpage, "unmanaged" means that
+  systemd-networkd does not manage te interface.
+
+  OK, enabling it is not enough???
+
+2022-04-10:
+  Why is wlan0 not coming up?
+
+    $ journalctl -b |grep -E wlan0
+    Apr 10 19:36:05 gauss17 systemd-networkd[298]: wlan0: Link UP
+    Apr 10 19:36:05 gauss17 dhcpcd[451]: wlan0: waiting for carrier
+    Apr 10 19:36:05 gauss17 dhcpcd[451]: wlan0: carrier acquired
+    Apr 10 19:36:05 gauss17 dhcpcd[451]: wlan0: IAID 10:8a:3d:85
+    Apr 10 19:36:05 gauss17 dhcpcd[451]: wlan0: adding address fe80::9ceb:ceed:6734:612c
+    Apr 10 19:36:05 gauss17 dhcpcd[451]: wlan0: carrier lost
+    Apr 10 19:36:05 gauss17 dhcpcd[451]: wlan0: deleting address fe80::9ceb:ceed:6734:612c
+
+2022-04-10:
+  Maybe I am an idiot.  Lets try disabling both iwd and dhcpcd.
+
+    $ sudo systemctl disable iwd
+    $ sudo systemctl disable dhcpcd
+
+  Reboot.
+
+    Can't get wifi until I started both.
+
+  Try disabling just iwd.  Reboot.
+
+  Could not get wifi until I did a
+
+    $ iwctl adapter list
+
+  which was enough to bring up the iwd service.
+
+2022-04-10:
+  From the Arch Installation Guide:
+
+  Note: "In the installation image, systemd-networkd, systemd-resolved,
+        iwd and ModemManager are preconfigured and enabled by default.
+        That will not be the case for the installed system."
+
+  So obviuously, systemd-networkd, systemd-resolved and iwd are all
+  compatble with each other.  
+
+  Also, the  systemd-networkd ArchWiki page talks about
+  manually configuring /etc/systemd/network files.
+
+  Aside: I thought a network manager was suppose to do this
+         for you?  Or at least do system calls behind the
+         scenes equivalent to ip commands.
+
+         Anycase, its blindly follow directions time.  I wish
+         the directions also described the work arounds being
+         used.  Sigh....  Actually my bad, I know I am dealing
+         with early adopter, not necessarily "bleeding edge",
+         software.
+
+2022-04-12:
+  First some cleanup,
+
+    $ ls -l /etc/wicd
+    total 40
+    -rw-r--r-- 1 root root   931 Jun 26  2017 dhclient.conf.template
+    -rw------- 1 root root   491 Jul 27  2017 manager-settings.conf
+    -rw------- 1 root root   418 Jul 27  2017 wired-settings.conf
+    -rw------- 1 root root 26119 Feb  7  2019 wireless-settings.conf
+
+  Since I am not using Network Manager or wpa_supplicant anymore,
+
+    $ pacman -Qo /etc/wicd
+    error: No package owns /etc/wicd
+
+    $ sudo rm -r /etc/wicd/
+
+  Also, need to update /etc/iwd/main.conf based on
+
+    https://insanity.industries/post/simple-networking/
+
+  from 2020-03-22 updating info from same blog from 2019-03-12.
+
+  I have started tracking such system changes on my dotfiles repo.
+
+  Until I get my systemd-networkd, systemd-resolved and iwd issues
+  above straighten out, I am going with a stripped down
+  /etc/iwd/main.conf, essentually
+
+    [General]
+    # Enable builtin DHCP-client within iwd for wifi
+    EnableNetworkConfiguration=true

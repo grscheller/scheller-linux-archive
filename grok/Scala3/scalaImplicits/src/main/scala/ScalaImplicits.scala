@@ -49,7 +49,6 @@ object ScalaImplicts:
     val beowulf: PreferedName = PreferedName("Beowulf")
     sayHello
     sayHello(using beowulf)
-    println(s"Hi, ${geoffrey.getName}")
 
 @main def start() =
   ScalaImplicts.run()

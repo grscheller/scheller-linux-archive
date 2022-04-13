@@ -10954,3 +10954,13 @@ Purpose: To indicate what was done to create gauss17 and
     [General]
     # Enable builtin DHCP-client within iwd for wifi
     EnableNetworkConfiguration=true
+
+2022-04-13:
+  Before descending blindly down this rabbit hole, lets see how
+  wifi & wired networking is set up on the Arch installation
+  ISO.  Downloaded ISO, verified signature, and inserted & found
+  device.
+
+    # dd bs=4M if=archlinux-2022.04.05-x86_64.iso of=/dev/sda conv=fsync oflag=direct status=progress
+
+  Now boot from ISO.

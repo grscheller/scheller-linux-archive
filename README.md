@@ -19,6 +19,7 @@ By its very nature, it contains many loose threads.
 * [POSIX/Unix Commands](notes/unixCommands.txt)
 * [Shell Utilities](notes/shellUtilities.txt)
 * [Software Development Tools](notes/softwareDevTools.md)
+* [Sway Notes](notes/swayNotes.md)
 * [Unicode Cheat Sheet](notes/unicodeCheatSheet.txt)
 * [Windows 10 Powershell Configuration](notes/win10PowershellConf/)
 

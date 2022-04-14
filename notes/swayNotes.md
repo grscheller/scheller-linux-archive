@@ -2,55 +2,67 @@
 
 ## Key Bindings
 
-By default, the Mod key is the Super key (Mod4).  It is
-the main key to communicate directly with the Sway WM.
+By default, the `Mod` key is the `Super` key (`Mod4`).
+It is the main key to communicate directly with the Sway WM.
 
 ### Workspace Navigation Keybindings
 
-* Go to workspace:          `Mod+[0..9]`
-* Move window to workspace: `Mod+Shift+[0..9]`
-* Shift focus floating/non-floating widows: `Mod+Space`
-* Show/Hide/Cycle/Focus scratchpad widows:  `Mod+-`
+| Keybinding         | Description                              |
+|:------------------ |:---------------------------------------- |
+| `Mod+[0..9]`       | Go to workspace                          |
+| `Mod+Shift+[0..9]` | Move window to workspace                 |
+| `Mod+Space`        | Shift focus floating/non-floating widows |
+| `Mod+-`            | Show/Hide/Cycle/Focus scratchpad widows  |
 
 ### Action Keybindings
 
-* Open terminal:             `Mod+Return`
-* Open program:              `Mod+d`
-* Reload sway:               `Mod+Shift+c`
-* Exit sway:                 `Mod+Shift+e`
-* Quit open window:          `Mod+Shift+q`
-* Send window to scratchpad: `Mod+Shift+-`
-* Toggle window floating/nonfloating: `Mod+Shift+Space`
+| Keybinding        | Description                        |
+|:----------------- |:---------------------------------- |
+| `Mod+Return`      | Open terminal                      |
+| `Mod+d`           | Open program                       |
+| `Mod+Shift+c`     | Reload sway                        |
+| `Mod+Shift+e`     | Exit sway                          |
+| `Mod+Shift+q`     | Quit open window                   |
+| `Mod+Shift+-`     | Send window to scratchpad          |
+| `Mod+Shift+Space` | Toggle window floating/nonfloating |
 
 ### Container Layout Keybindings
 
-* Horizontal layout (left to right):   `Mod+b`
-* Vertical layout (top to bottom):     `Mod+v`
-* Toggle horizontal/vertical layout:   `Mod+e`
-* Tabbed layout (tabbed left to rt):   `Mod+w`
-* Stacking layout (top bars stacked ): `Mod+s`
+| Keybinding | Description                        |
+|:---------- |:---------------------------------- |
+| `Mod+b`    | Horizontal layout (left to right)  |
+| `Mod+v`    | Vertical layout (top to bottom)    |
+| `Mod+e`    | Toggle horizontal/vertical layout  |
+| `Mod+w`    | Tabbed layout (tabbed left to rt)  |
+| `Mod+s`    | Stacking layout (top bars stacked) |
 
 ### Container Focus Keybindings
 
-* Focus on parent container:  `Mod+a`
-* Swap focus tiling/floating: `Mod+Space`
-* Toggle floating mode:       `Mod+Shift+Space`
-* Move current window focus:  `Mod+[Left|Right|Up|Down]`
-* Move focused window:        `Mod+Shift+[Left|Right|Up|Down]`
+| Keybinding            | Description                |
+|:--------------------- |:-------------------------- |
+| `Mod+a`               | Focus on parent container  |
+| `Mod+Space`           | Swap focus tiling/floating |
+| `Mod+Shift+Space`     | Toggle floating mode       |
+| `Mod+[h|j|k|l]`       | Move current window focus  |
+| `Mod+Shift+[h|j|k|l]` | Move focused window        |
 
 ### Container Resizing Keybindings
 
-* Enter resize mode: `Mod+r`
-  * Resize container: `[Left|Right|Up|Down]`
-  * Resize container: `[h|j|k|l]`
-  * Exit resize mode: `[Return|Esc]`
+| Keybinding             | Description       |
+|:---------------------- |:----------------- |
+| `Mod+r`                | Enter resize mode |
+| `[Left|Right|Up|Down]` | Resize container  |
+| `[h|j|k|l]`            | Resize container  |
+| `[Return|Esc]`         | Exit resize mode  |
 
 ## Alacritty terminal
 
 ### Screen clearing
 
-* Move prompt top, retain scrollback history : `Ctrl+l`
-* Clear screen & scrollback history          : `/usr/bin/clear`
+| Keybinding       | Description                                |
+|:---------------- |:------------------------------------------ |
+| `Ctrl+l`         | Move prompt top, retain scrollback history |
+| `/usr/bin/clear` | Clear screen & scrollback history          |
 
 ## Factoids
 
@@ -85,7 +97,7 @@ the main key to communicate directly with the Sway WM.
 * The scratchpad best thought of as a hidden workspace
   * containing just floating containers
   * can only display one of its container at a time
-    * show/hide/cycle containers via `Mod+-` 
+    * focus/show/hide/cycle containers via `Mod+-`
   * can float workspace windows without putting them in scratchpad
     * `Mod+Shift+Space` floats a workspace container
     * `Mod+Shift+-` moves workspace window into scratchpad

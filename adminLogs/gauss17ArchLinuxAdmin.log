@@ -10461,7 +10461,7 @@ Purpose: To indicate what was done to create gauss17 and
   not clobber each other's changes.  After reading the openresolv configuration
   documentation, I think systemd-resolvconf is the better way forward.
 
-    $ sudo pacman -Syu systemd-resolvconf 
+    $ sudo pacman -Syu systemd-resolvconf
 
   Reboot.
 
@@ -10525,7 +10525,7 @@ Purpose: To indicate what was done to create gauss17 and
   Did not know that Lennart Poettering was also the initial author
   of Avahi.
 
-2022-04-09: 
+2022-04-09:
   Regarding some problems with Coursier which I put in my archlocal
   repo on 2022-01-16.  Neovim using Scala metals was giving me
   inconsistent warning messages on my Brewed up MacOS and euler7.
@@ -10667,7 +10667,7 @@ Purpose: To indicate what was done to create gauss17 and
             CPU: 46ms
          CGroup: /system.slice/systemd-networkd.service
                  └─293 /usr/lib/systemd/systemd-networkd
-    
+
     Apr 10 13:00:59 gauss17 systemd-networkd[293]: lo: Gained carrier
     Apr 10 13:00:59 gauss17 systemd-networkd[293]: Enumeration completed
     Apr 10 13:00:59 gauss17 systemd[1]: Started Network Configuration.
@@ -10696,7 +10696,7 @@ Purpose: To indicate what was done to create gauss17 and
             CPU: 90ms
          CGroup: /system.slice/systemd-resolved.service
                  └─436 /usr/lib/systemd/systemd-resolved
-    
+
     Apr 10 13:01:01 gauss17 systemd[1]: Starting Network Name Resolution...
     Apr 10 13:01:01 gauss17 systemd-resolved[436]: Positive Trust Anchors:
     Apr 10 13:01:01 gauss17 systemd-resolved[436]: . IN DS 20326 8 2 e06d44b80b8f1d39a95c0b0d7c65d08458e880409bbc683457104237c7f8ec8d
@@ -10765,8 +10765,8 @@ Purpose: To indicate what was done to create gauss17 and
       ...
       systemd-resolved.service
 
-  
-  Not listed are 
+
+  Not listed are
 
     connman.service
 
@@ -10824,7 +10824,7 @@ Purpose: To indicate what was done to create gauss17 and
     dbus-org.freedesktop.network1.service -> /usr/lib/systemd/system/systemd-networkd.service
     dbus-org.freedesktop.resolve1.service -> /usr/lib/systemd/system/systemd-resolved.service
     dbus-org.freedesktop.timesync1.service -> /usr/lib/systemd/system/systemd-timesyncd.service
-    
+
     [gauss17]$ ls -l /etc/systemd/system/ | fields 9 10 11 | grep -E '\->'
     dbus-org.bluez.service -> /usr/lib/systemd/system/bluetooth.service
     dbus-org.freedesktop.home1.service -> /usr/lib/systemd/system/systemd-homed.service
@@ -10850,7 +10850,7 @@ Purpose: To indicate what was done to create gauss17 and
       1 lo       loopback carrier     unmanaged
       2 enp3s0f1 ether    routable    unmanaged
       3 wlan0    wlan     no-carrier  unmanaged
-    
+
   Forgot about wlan0 problem.  Reboot again and get all networking
   interfaces up within two minute limit.
 
@@ -10861,7 +10861,7 @@ Purpose: To indicate what was done to create gauss17 and
       2 enp3s0f1 ether     routable    unmanaged
       4 wlan0    wlan      routable    unmanaged
       5 moz0     wireguard routable    unmanaged
-    
+
     4 links listed.
 
   Reading networkctl manpage, "unmanaged" means that
@@ -10907,7 +10907,7 @@ Purpose: To indicate what was done to create gauss17 and
         That will not be the case for the installed system."
 
   So obviuously, systemd-networkd, systemd-resolved and iwd are all
-  compatble with each other.  
+  compatble with each other.
 
   Also, the  systemd-networkd ArchWiki page talks about
   manually configuring /etc/systemd/network files.
@@ -10988,11 +10988,11 @@ Purpose: To indicate what was done to create gauss17 and
     Fallback DNS Servers: 1.1.1.1#cloudflare-dns.com 9.9.9.9#dns.quad9.net 8.8.8.8#dns.google 2606:4700:4700::1111#cloudflare-dns.com
                           2620:fe::9#dns.quad9.net 2001:4860:4860::8888#dns.google
               DNS Domain: ~.
-    
+
     Link 2 (enp3s0f1)
     Current Scopes: none
          Protocols: -DefaultRoute +LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported
-    
+
     Link 4 (wlan0)
         Current Scopes: DNS LLMNR/IPv4
              Protocols: +DefaultRoute +LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported
@@ -11010,7 +11010,7 @@ Purpose: To indicate what was done to create gauss17 and
     Fallback DNS Servers: 1.1.1.1#cloudflare-dns.com 9.9.9.9#dns.quad9.net 8.8.8.8#dns.google 2606:4700:4700::1111#cloudflare-dns.com
                           2620:fe::9#dns.quad9.net 2001:4860:4860::8888#dns.google
               DNS Domain: ~.
-    
+
     Link 3 (wlan0)
         Current Scopes: DNS LLMNR/IPv4
              Protocols: +DefaultRoute +LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported
@@ -11084,4 +11084,80 @@ Purpose: To indicate what was done to create gauss17 and
   pointing at another local caching DNS resolver.  Currently,
   that is where it is getting its DNS information.
 
+2022-04-18:
+  Continuing from yesterday.  Now at work.
 
+  With Ethernet, both gauss17 & euler7 DNS work find.
+
+  On gauss17:
+
+    [gauss17]$ getent hosts gauss17
+    ::1             gauss17
+
+    [gauss17]$ getent hosts euler7
+    fe80::8a9a:24c6:15db:912 euler7
+
+  On euler7:
+
+    [euler7]$ getent hosts gauss17
+    fe80::f5cf:2b2c:2f55:d415 gauss17
+
+    [euler7]$ getent hosts euler7
+    fe80::8a9a:24c6:15db:912 euler7
+
+  Both gauss17 and euler7 can get each others IP
+  info from the work network without it being
+  configured into ~/.ssh/config.  On the other hand,
+  my iMac workstation is unable to pickup the
+  euler7 nor gauss17 names from the network.
+
+2022-04-18:
+  Rebooting without Ethernet cables gauss17 & euler7
+  at work.
+
+  Neither brought up wireless.  Just doing a
+    
+    $ iwctl adapter list
+
+  was enough for both systems to auto configure the
+  wireless connection.
+
+    [gauss17]$ ip addr
+    ...
+    4: wlan0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+        link/ether ac:e0:10:8a:3d:85 brd ff:ff:ff:ff:ff:ff
+        inet 10.100.45.48/24 scope global noprefixroute wlan0
+           valid_lft forever preferred_lft forever
+        inet 10.100.45.55/24 brd 10.100.45.255 scope global secondary dynamic noprefixroute wlan0
+           valid_lft 85601sec preferred_lft 74801sec
+
+    [gauss17]$ getent hosts gauss17
+    ::1             gauss17
+
+    [gauss17]$ getent hosts euler7
+
+    [euler7]$ ip addr
+    ...
+    3: wlan0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+        link/ether 08:71:90:c3:bb:8a brd ff:ff:ff:ff:ff:ff
+        inet 10.100.45.248/24 brd 10.100.45.255 scope global dynamic noprefixroute wlan0
+           valid_lft 85253sec preferred_lft 74453sec
+
+    [euler7]$ getent hosts gauss17
+    10.100.45.55    gauss17
+    10.100.45.48    gauss17
+    
+    [euler7]$ getent hosts euler7
+    ::1             euler7
+
+  OK, wireless networking is "working".  gauss17 got two IPv4
+  addresses, euler7 knew about gauss17, but not vise versa.
+  Wireless at work has always has been a bit goofy.
+
+  Also note, ssh working from euler7 to gauss17 & sc31 today.
+  Usually at work ssh over wireless does not work.
+
+  Plugging in Ethernet cables configures IPv4 & IPv6 addresses
+  for both systems.
+
+  Shutting down and going home.

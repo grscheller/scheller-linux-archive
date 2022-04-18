@@ -10505,7 +10505,7 @@ Purpose: To indicate what was done to create gauss17 and
 
 2022-04-08:
   While configuing CUPS printing on euler7, noticed I missed the
-  following in my previous hacks o get CUPS working:
+  following in my previous hacks to get CUPS working:
 
     $ sudo pacman -S foomatic-db-engine
 
@@ -10573,7 +10573,7 @@ Purpose: To indicate what was done to create gauss17 and
   Found out that my apartment Netgear R6080 router will not let me
   turn it off as a DNS server.  Therefore for consumer grade crap,
   like my cell phone or roku, I'll let Comcast decide what is best
-  via what they pushes to my Netgear router through the cable modem.
+  via what it pushes to my Netgear router through the cable modem.
   I'll need to bypass the router for better DNS control for my
   workstations.
 
@@ -10964,3 +10964,124 @@ Purpose: To indicate what was done to create gauss17 and
     # dd bs=4M if=archlinux-2022.04.05-x86_64.iso of=/dev/sda conv=fsync oflag=direct status=progress
 
   Now boot from ISO.
+
+2022-04-16:
+  Booting the ISO not as helpful as I had thought.  ISO is
+  configured to use NetworkManager.
+
+  I will not try to document all my reasoning.  I am following the
+  Arch Wiki systemd-networkd and systemd-resolved pages.  The later
+  with this link https://moss.sh/name-resolution-issue-systemd-resolved/
+  where I am getting inspiration.
+
+  Let's compare gauss17 with euler7.  Both boot off wifi and adjusted
+  so that internet & DNS work, euler7 doesn't have its USB-C Ethernet
+  port plugged in.
+
+    -------------
+    [gauss1]$ systemd-resolve --status
+    Global
+               Protocols: +LLMNR +mDNS -DNSOverTLS DNSSEC=no/unsupported
+        resolv.conf mode: stub
+      Current DNS Server: 1.1.1.1
+             DNS Servers: 1.1.1.1
+    Fallback DNS Servers: 1.1.1.1#cloudflare-dns.com 9.9.9.9#dns.quad9.net 8.8.8.8#dns.google 2606:4700:4700::1111#cloudflare-dns.com
+                          2620:fe::9#dns.quad9.net 2001:4860:4860::8888#dns.google
+              DNS Domain: ~.
+    
+    Link 2 (enp3s0f1)
+    Current Scopes: none
+         Protocols: -DefaultRoute +LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported
+    
+    Link 4 (wlan0)
+        Current Scopes: DNS LLMNR/IPv4
+             Protocols: +DefaultRoute +LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported
+    Current DNS Server: 192.168.1.1
+           DNS Servers: 192.168.1.1
+
+    -------------
+
+    [euler7]$ systemd-resolve --status
+    Global
+               Protocols: +LLMNR +mDNS -DNSOverTLS DNSSEC=no/unsupported
+        resolv.conf mode: stub
+      Current DNS Server: 1.1.1.1
+             DNS Servers: 1.1.1.1
+    Fallback DNS Servers: 1.1.1.1#cloudflare-dns.com 9.9.9.9#dns.quad9.net 8.8.8.8#dns.google 2606:4700:4700::1111#cloudflare-dns.com
+                          2620:fe::9#dns.quad9.net 2001:4860:4860::8888#dns.google
+              DNS Domain: ~.
+    
+    Link 3 (wlan0)
+        Current Scopes: DNS LLMNR/IPv4
+             Protocols: +DefaultRoute +LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported
+    Current DNS Server: 192.168.1.1
+           DNS Servers: 192.168.1.1
+    -------------
+
+  Both are using my, now getting old, router as the DNS server.  Maybe this is fixable from
+  the router?  Jumping on rouuter.
+
+    * DNS upstream router is using (confugured previously by me)
+      * 1.1.1.1  (Cloudflare)
+      * 9.9.9.9  (Quad9)
+
+    * Let's change this to provide good balance of little content filtering
+      and good malware and phishing protection.
+      * 9.9.9.9  (Quad9)
+      * 8.8.8.8  (Google)
+
+  When I try and change this on the router, I get a "pink screen" with
+  a "403 Forbidden" message.  According to Netgear community help blog,
+  this indicated a firmware issue.  I just resently upgraded the router
+  firmware to v1.0.0.52.  Reading down further, try disconnecting modem
+  cable.  Same problem.  Power cycle router & modem with modem cable
+  disconnected.  Worked!
+
+  Doesn't seem a way to have router push these instead of being a caching
+  DNS server.  Don't want to turn DNS caching off due to consumer devices
+  on network like my cell phone and Roku TV.
+
+  Configured router to no longer get the IPv6 servers from ISP.  Configured
+  these
+
+    * 2620:fe::fe           (Quad9)
+    * 2001:4860:4860::8888  (Google)
+
+  Did not have to unplug modem cable this time for settings to take
+  in the Netgear R6080 router.
+
+  Time to power cycle computers and router/modem.
+
+2022-04-17:
+  Subjectively, when the /etc/resolv.conf link is not touched, I usually
+  get a responce from getents for github.com or fast.net after a couple
+  minutes.  For a short time I sometimes get quick responses but
+  eventually it goes back to this original behavior.  As soon as I swap
+  out /etc/resolve.conf for a manually configured file configured, say
+  with cloudflare 1.1.1.1, everything seems to works normally, even
+  after swapping the symlink back.  Something is getting "properly"
+  configured.
+
+  So, let me be a good boy and robotically follow the directions from
+  the Archwiki page.
+
+  From Wiki, "systemd-resolved provides resolver services for
+  Domain Name System (DNS) (including DNSSEC and DNS over TLS),
+  Multicast DNS (mDNS) and Link-Local Multicast Name Resolution (LLMNR)."
+  All are good things.
+
+  "Software that relies on glibc's getaddrinfo(3) (or similar) will
+  work out of the box, since, by default, /etc/nsswitch.conf is
+  configured to use nss-resolve(8) if it is available."
+
+  Note to self: may need to check out /etc/nsswitch.conf.  Grepping
+  through this file, I don't see ever having messed with it.  No
+  /etc/nsswitch.conf.pacnew files.
+
+  We want systemd.resolved, with its stub resolver running out of
+  127.0.0.53, to be the only DNS resolver on the system.  Also, want
+  it to bypass the router 192.168.1.1 since it is silly to have it
+  pointing at another local caching DNS resolver.  Currently,
+  that is where it is getting its DNS information.
+
+

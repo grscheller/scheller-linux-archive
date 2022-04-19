@@ -11239,3 +11239,71 @@ Purpose: To indicate what was done to create gauss17 and
   Still have to initially kick the wifi with
 
     $ iwctl adapter list
+
+2022-04-19:
+  Brought back /etc/iwd/main
+
+    [General]
+    EnableNetworkConfiguration=true
+    
+    [Network]
+    EnableIPv6=true
+    EnableIPv4=true
+    
+    # For pure systemd-resolved choose <- new
+    NameResolvingService=systemd
+    
+    # For systemd-resolved+systemd-resolvconf or openresolv <- previously used
+    #NameResolvingService=resolvconf
+
+  Went to remove systemd-resolvconf, but
+
+    $ sudo pacman -R systemd-resolvconf
+    checking dependencies...
+    error: failed to prepare transaction (could not satisfy dependencies)
+    :: removing systemd-resolvconf breaks dependency 'openresolv' required by mozillavpn
+    :: removing systemd-resolvconf breaks dependency 'resolvconf' required by netctl
+    
+  Now, mozillavpn still does work.  My "guess" is that the line
+
+    NameResolvingService=systemd
+
+  is telling iwd what to use for the initial configuration???  Well, it
+  is the default anyway.
+
+  A little more minimalization,
+
+    $ systemctl status netctl.service
+    ○ netctl.service - (Re)store the netctl profile state
+         Loaded: loaded (/usr/lib/systemd/system/netctl.service; disabled; vendor preset:>
+         Active: inactive (dead)
+           Docs: man:netctl.special(7)
+
+    $ sudo pacman -R netctl
+    checking dependencies...
+    
+    Packages (1) netctl-1.28-1
+    
+    Total Removed Size:  0.09 MiB
+    
+    :: Do you want to remove these packages? [Y/n]
+    :: Processing package changes...
+    (1/1) removing netctl                               [###########################] 100%
+    :: Running post-transaction hooks...
+    (1/2) Reloading system manager configuration...
+    (2/2) Arming ConditionNeedsUpdate...
+    
+    $ sudo pacman -R systemd-resolvconf
+    checking dependencies...
+    error: failed to prepare transaction (could not satisfy dependencies)
+    :: removing systemd-resolvconf breaks dependency 'openresolv' required by mozillavpn
+    
+    $ sudo pacman -R openresolv
+    error: target not found: openresolv
+    
+    $ sudo pacman -Ss openresolv
+    core/openresolv 3.12.0-1
+        resolv.conf management framework (resolvconf)
+    core/systemd-resolvconf 250.4-2 [installed]
+        systemd resolvconf replacement (for use with systemd-resolved)
+

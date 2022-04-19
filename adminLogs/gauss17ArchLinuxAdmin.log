@@ -10775,7 +10775,7 @@ Purpose: To indicate what was done to create gauss17 and
 
     NetworkManager.service
 
-  which is good since this is what I thnk they are refering to
+  which is good since this is what I think they are refering to
   by "network management tools."
 
   According to systemd-networkd CLI tool,

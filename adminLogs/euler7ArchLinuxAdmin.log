@@ -1421,7 +1421,7 @@ Purpose: To rebuild from scratch maxwell4 after
                      ocl-icd openexr imagemagick-doc
 
     $ sudo pacman -S foomatic-db foomatic-db-engine \
-                     foomatic-db-nonfree antiword docx2txt\ 
+                     foomatic-db-nonfree antiword docx2txt\
                      foomatic-db-nonfree-ppds
 
     $ sudo pacman -S ipp-usb colord
@@ -1472,7 +1472,7 @@ Purpose: To rebuild from scratch maxwell4 after
 
   The Network section of the CUPS ArchWiki says Avahi is a
   zeo-config multicast DNS/DNS-SD service discovery system.
-  
+
   1. It is installed on euler7, but not enabled.
   2. Seems both libcups and pipewire-pulse can use it, see
      pactree -r avahi
@@ -1489,7 +1489,7 @@ Purpose: To rebuild from scratch maxwell4 after
     $ sudo pacman -S foomatic-db-ppds
 
 2022-04-10:
-  I am in the process of going "all-in" with systemd-resoved for
+  I am in the process of going "all-in" with systemd-resolved for
   gauss17.  Once I get it better under control there, I'll address
   it here on euler7.
 
@@ -1497,3 +1497,399 @@ Purpose: To rebuild from scratch maxwell4 after
   network, may want to enable Avahi.  May need to either get
   resolved and avahi peasefully coexisting, or script things
   to be able swap between the two.
+
+2022-04-19:
+  Repeating what I did for gauss17 for
+
+    /etc/iwd/main.conf
+    /etc/systemd/resolved.conf.d/dns_servers.conf
+
+  Had these in the root/ directory of my dotfiles repo.
+
+    $ pacman -Ss systemd-resolvconf
+    core/systemd-resolvconf 250.4-2 [installed]
+        systemd resolvconf replacement (for use with systemd-resolved)
+
+  Since I don't use moziiavpn on euler7, maybe I can remove
+  systemd-resolved package?
+
+    $ sudo pacman -R systemd-resolvconf
+    checking dependencies...
+    :: dhcpcd optionally requires openresolv: resolvconf support
+
+    Packages (1) systemd-resolvconf-250.4-2
+
+
+    :: Do you want to remove these packages? [Y/n] Y
+    :: Processing package changes...
+    (1/1) removing systemd-resolvconf                  [############] 100%
+    :: Running post-transaction hooks...
+    (1/1) Arming ConditionNeedsUpdate...
+
+    $ sudo pacman -Syu
+
+  Reboot.
+
+    $ journalctl -f -b
+    ...
+    Apr 19 12:48:03 euler7 systemd-networkd-wait-online[335]: Timeout occurred while waiting for network connectivity.
+    Apr 19 12:48:03 euler7 systemd[1]: systemd-networkd-wait-online.service: Main process exited, code=exited, status=1/FAILURE
+    Apr 19 12:48:03 euler7 systemd[1]: systemd-networkd-wait-online.service: Failed with result 'exit-code'.
+    Apr 19 12:48:03 euler7 systemd[1]: Failed to start Wait for Network to be Configured.
+    Apr 19 12:48:03 euler7 audit[1]: SERVICE_START pid=1 uid=0 auid=4294967295 ses=4294967295 msg='unit=systemd-networkd-wait-online comm="systemd" exe="/usr/lib/systemd/systemd" hostname=? addr=? terminal=? res=failed'
+    Apr 19 12:48:03 euler7 systemd[1]: Reached target Network is Online.
+    ...
+
+  This problem still needs to be addressed.  When I go home this evening, let's see
+  if we have same problem on gauss17.
+
+    $ systemctl status | head -5
+    ● euler7
+        State: degraded
+         Jobs: 0 queued
+       Failed: 1 units
+        Since: Tue 2022-04-19 12:46:03 MDT; 11min ago
+
+  Status is "starting" before the failure of the
+  systemd-networkd-wait-online.service.
+
+  Let's try rebooting ititially without Ethernet, then
+  "kick" wifi and plugin Ethernet cable into USB-C dongle.
+
+  Reboot.
+
+    $ journalctl -f -b
+    Apr 19 13:04:34 euler7 dhcpcd[382]: enp59s0u1u4: leased 10.100.51.180 for 78418 seconds
+    Apr 19 13:04:34 euler7 dhcpcd[382]: enp59s0u1u4: adding route to 10.100.48.0/22
+    Apr 19 13:04:34 euler7 dhcpcd[382]: enp59s0u1u4: adding default route via 10.100.50.1
+    Apr 19 13:04:42 euler7 dhcpcd[382]: enp59s0u1u4: no IPv6 Routers available
+    Apr 19 13:05:43 euler7 systemd-networkd-wait-online[321]: Timeout occurred while waiting for network connectivity.
+    Apr 19 13:05:43 euler7 systemd[1]: systemd-networkd-wait-online.service: Main process exited, code=exited, status=1/FAILURE
+    Apr 19 13:05:43 euler7 systemd[1]: systemd-networkd-wait-online.service: Failed with result 'exit-code'.
+    Apr 19 13:05:43 euler7 systemd[1]: Failed to start Wait for Network to be Configured.
+    Apr 19 13:05:43 euler7 audit[1]: SERVICE_START pid=1 uid=0 auid=4294967295 ses=4294967295 msg='unit=systemd-networkd-wait-online comm="systemd" exe="/usr/lib/systemd/systemd" hostname=? addr=? terminal=? res=failed'
+    Apr 19 13:05:43 euler7 systemd[1]: Reached target Network is Online.
+
+  Both external interfaces are up
+
+    $ ip addr
+    1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+        link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+        inet 127.0.0.1/8 scope host lo
+           valid_lft forever preferred_lft forever
+        inet6 ::1/128 scope host
+           valid_lft forever preferred_lft forever
+    3: enp59s0u1u4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+        link/ether 00:e0:4c:68:22:1e brd ff:ff:ff:ff:ff:ff
+        inet 10.100.51.180/22 brd 10.100.51.255 scope global dynamic noprefixroute enp59s0u1u4
+           valid_lft 78125sec preferred_lft 68322sec
+        inet6 fe80::8a9a:24c6:15db:912/64 scope link
+           valid_lft forever preferred_lft forever
+    4: wlan0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+        link/ether 08:71:90:c3:bb:8a brd ff:ff:ff:ff:ff:ff
+        inet 10.100.45.165/24 scope global noprefixroute wlan0
+           valid_lft forever preferred_lft forever
+        inet 10.100.45.248/24 brd 10.100.45.255 scope global secondary dynamic noprefixroute wlan0
+           valid_lft 86095sec preferred_lft 75295sec
+        inet6 fe80::d531:e950:9b3e:29ea/64 scope link
+           valid_lft forever preferred_lft forever
+
+  Why two IPv4 addresses on the wireless network?  Same thing happened at
+  work yesterday with gauss17.
+
+  Multiple dhcp clients running?  I know iwd has one, maybe systemd-networkd?
+  Do I need dhcpcd?  Do I need iwd dhcp client turned on?
+
+  Disabled dhcpcd, rebooted, and kicked wifi via "iwctl device list".
+
+    $ ip addr
+    1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+        link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+        inet 127.0.0.1/8 scope host lo
+           valid_lft forever preferred_lft forever
+        inet6 ::1/128 scope host
+           valid_lft forever preferred_lft forever
+    3: enp59s0u1u4: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
+        link/ether 00:e0:4c:68:22:1e brd ff:ff:ff:ff:ff:ff
+    4: wlan0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+        link/ether 08:71:90:c3:bb:8a brd ff:ff:ff:ff:ff:ff
+        inet 10.100.45.123/24 scope global noprefixroute wlan0
+           valid_lft forever preferred_lft forever
+        inet6 fe80::a71:90ff:fec3:bb8a/64 scope link
+           valid_lft forever preferred_lft forever
+
+  Next step, enable dhcpcd, and turnoff dhcp client in iwd.  Changed /etc/iwd/main.conf
+
+    [General]
+    # Enable builtin DHCP-client within iwd for wifi
+    EnableNetworkConfiguration=false
+
+  Reboot.
+
+  Getting closer.
+
+    $ journalctl -f -b
+    Apr 19 14:15:25 euler7 systemd-networkd-wait-online[332]: Timeout occurred while waiting for network connectivity.
+    Apr 19 14:15:25 euler7 systemd[1]: systemd-networkd-wait-online.service: Main process exited, code=exited, status=1/FAILURE
+    Apr 19 14:15:25 euler7 systemd[1]: systemd-networkd-wait-online.service: Failed with result 'exit-code'.
+    Apr 19 14:15:25 euler7 systemd[1]: Failed to start Wait for Network to be Configured.
+    Apr 19 14:15:25 euler7 audit[1]: SERVICE_START pid=1 uid=0 auid=4294967295 ses=4294967295 msg='unit=systemd-networkd-wait-online comm="systemd" exe="/usr/lib/systemd/systemd" hostname=? addr=? terminal=? res=failed'
+    Apr 19 14:15:25 euler7 systemd[1]: Reached target Network is Online.
+
+    $ ip addr
+    1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+        link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+        inet 127.0.0.1/8 scope host lo
+           valid_lft forever preferred_lft forever
+        inet6 ::1/128 scope host
+           valid_lft forever preferred_lft forever
+    2: wlan0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default qlen 1000
+        link/ether 08:71:90:c3:bb:8a brd ff:ff:ff:ff:ff:ff
+    3: enp59s0u1u4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+        link/ether 00:e0:4c:68:22:1e brd ff:ff:ff:ff:ff:ff
+        inet 10.100.51.180/22 brd 10.100.51.255 scope global dynamic noprefixroute enp59s0u1u4
+           valid_lft 73983sec preferred_lft 64698sec
+        inet6 fe80::8a9a:24c6:15db:912/64 scope link
+           valid_lft forever preferred_lft forever
+
+  Encouraging.  Looks like the wifi is not being restarted.  Also not configured either.
+
+    $ networkctl
+    IDX LINK        TYPE     OPERATIONAL SETUP
+      1 lo          loopback carrier     unmanaged
+      2 wlan0       wlan     no-carrier  unmanaged
+      3 enp59s0u1u4 ether    routable    unmanaged
+
+    3 links listed.
+
+  Looking at last 3 boots:
+
+    $ journalctl -b -2|grep -E wlan0
+    Apr 19 13:03:43 euler7 systemd-networkd[291]: wlan0: Link UP
+    Apr 19 13:03:43 euler7 dhcpcd[382]: wlan0: waiting for carrier
+    Apr 19 13:03:43 euler7 dhcpcd[382]: wlan0: carrier acquired
+    Apr 19 13:03:43 euler7 dhcpcd[382]: wlan0: IAID 90:c3:bb:8a
+    Apr 19 13:03:43 euler7 dhcpcd[382]: wlan0: adding address fe80::6cbb:d10:d97b:b3c
+    Apr 19 13:03:43 euler7 dhcpcd[382]: wlan0: carrier lost
+    Apr 19 13:03:43 euler7 dhcpcd[382]: wlan0: deleting address fe80::6cbb:d10:d97b:b3c
+    Apr 19 13:04:14 euler7 systemd-networkd[291]: wlan0: Link DOWN
+    Apr 19 13:04:14 euler7 dhcpcd[382]: wlan0: removing interface
+    Apr 19 13:04:14 euler7 systemd-networkd[291]: wlan0: Link UP
+    Apr 19 13:04:14 euler7 dhcpcd[382]: wlan0: waiting for carrier
+    Apr 19 13:04:16 euler7 kernel: wlan0: authenticate with 6a:3a:0e:54:4c:4e
+    Apr 19 13:04:16 euler7 kernel: wlan0: send auth to 6a:3a:0e:54:4c:4e (try 1/3)
+    Apr 19 13:04:16 euler7 kernel: wlan0: authenticated
+    Apr 19 13:04:16 euler7 kernel: wlan0: associate with 6a:3a:0e:54:4c:4e (try 1/3)
+    Apr 19 13:04:16 euler7 kernel: wlan0: RX AssocResp from 6a:3a:0e:54:4c:4e (capab=0x1511 status=0 aid=4)
+    Apr 19 13:04:16 euler7 kernel: wlan0: associated
+    Apr 19 13:04:16 euler7 systemd-networkd[291]: wlan0: Connected WiFi access point: CC-Platform One (6a:3a:0e:54:4c:4e)
+    Apr 19 13:04:16 euler7 kernel: wlan0: Limiting TX power to 27 (30 - 3) dBm as advertised by 6a:3a:0e:54:4c:4e
+    Apr 19 13:04:16 euler7 dhcpcd[382]: wlan0: carrier acquired
+    Apr 19 13:04:16 euler7 dhcpcd[382]: wlan0: connected to Access Point: CC-Platform One
+    Apr 19 13:04:16 euler7 systemd-networkd[291]: wlan0: Gained carrier
+    Apr 19 13:04:16 euler7 kernel: IPv6: ADDRCONF(NETDEV_CHANGE): wlan0: link becomes ready
+    Apr 19 13:04:16 euler7 dhcpcd[382]: wlan0: IAID 90:c3:bb:8a
+    Apr 19 13:04:16 euler7 dhcpcd[382]: wlan0: adding address fe80::d531:e950:9b3e:29ea
+    Apr 19 13:04:16 euler7 dhcpcd[382]: wlan0: soliciting an IPv6 router
+    Apr 19 13:04:17 euler7 dhcpcd[382]: wlan0: rebinding lease of 10.100.45.248
+    Apr 19 13:04:17 euler7 dhcpcd[382]: wlan0: probing address 10.100.45.248/24
+    Apr 19 13:04:17 euler7 systemd-resolved[371]: wlan0: Bus client set DNS server list to: 1.1.1.1, 1.1.0.0
+    Apr 19 13:04:17 euler7 systemd-networkd[291]: wlan0: Gained IPv6LL
+    Apr 19 13:04:22 euler7 dhcpcd[382]: wlan0: leased 10.100.45.248 for 86400 seconds
+    Apr 19 13:04:22 euler7 dhcpcd[382]: wlan0: adding route to 10.100.45.0/24
+    Apr 19 13:04:22 euler7 dhcpcd[382]: wlan0: adding default route via 10.100.45.1
+    Apr 19 13:04:29 euler7 dhcpcd[382]: wlan0: no IPv6 Routers available
+    Apr 19 13:48:10 euler7 dhcpcd[382]: wlan0: carrier lost
+    Apr 19 13:48:10 euler7 kernel: wlan0: deauthenticated from 6a:3a:0e:54:4c:4e (Reason: 2=PREV_AUTH_NOT_VALID)
+    Apr 19 13:48:10 euler7 dhcpcd[382]: wlan0: deleting address fe80::d531:e950:9b3e:29ea
+    Apr 19 13:48:10 euler7 systemd-networkd[291]: wlan0: Lost carrier
+    Apr 19 13:48:10 euler7 dhcpcd[382]: wlan0: deleting route to 10.100.45.0/24
+    Apr 19 13:48:10 euler7 dhcpcd[382]: wlan0: deleting default route via 10.100.45.1
+    Apr 19 13:48:11 euler7 kernel: wlan0: authenticate with 6a:3a:0e:2e:ce:70
+    Apr 19 13:48:11 euler7 kernel: wlan0: send auth to 6a:3a:0e:2e:ce:70 (try 1/3)
+    Apr 19 13:48:11 euler7 kernel: wlan0: authenticated
+    Apr 19 13:48:11 euler7 kernel: wlan0: associate with 6a:3a:0e:2e:ce:70 (try 1/3)
+    Apr 19 13:48:11 euler7 kernel: wlan0: RX AssocResp from 6a:3a:0e:2e:ce:70 (capab=0x1511 status=0 aid=2)
+    Apr 19 13:48:11 euler7 systemd-networkd[291]: wlan0: Connected WiFi access point: CatalystCampus-Guest (6a:3a:0e:2e:ce:70)
+    Apr 19 13:48:11 euler7 kernel: wlan0: associated
+    Apr 19 13:48:11 euler7 kernel: wlan0: Limiting TX power to 27 (30 - 3) dBm as advertised by 6a:3a:0e:2e:ce:70
+    Apr 19 13:48:14 euler7 dhcpcd[382]: wlan0: carrier lost
+    Apr 19 13:48:14 euler7 kernel: wlan0: deauthenticated from 6a:3a:0e:2e:ce:70 (Reason: 15=4WAY_HANDSHAKE_TIMEOUT)
+    Apr 19 13:48:14 euler7 kernel: wlan0: authenticate with 68:3a:1e:2e:ce:70
+    Apr 19 13:48:14 euler7 kernel: wlan0: 80 MHz not supported, disabling VHT
+    Apr 19 13:48:14 euler7 kernel: wlan0: send auth to 68:3a:1e:2e:ce:70 (try 1/3)
+    Apr 19 13:48:14 euler7 kernel: wlan0: authenticated
+    Apr 19 13:48:14 euler7 kernel: wlan0: associate with 68:3a:1e:2e:ce:70 (try 1/3)
+    Apr 19 13:48:14 euler7 kernel: wlan0: RX AssocResp from 68:3a:1e:2e:ce:70 (capab=0x1031 status=0 aid=4)
+    Apr 19 13:48:14 euler7 kernel: wlan0: associated
+    Apr 19 13:48:14 euler7 systemd-networkd[291]: wlan0: Connected WiFi access point: CatalystCampus-Guest (68:3a:1e:2e:ce:70)
+    Apr 19 13:48:14 euler7 kernel: wlan0: Limiting TX power to 30 (30 - 0) dBm as advertised by 68:3a:1e:2e:ce:70
+    Apr 19 13:48:18 euler7 dhcpcd[382]: wlan0: carrier lost
+    Apr 19 13:48:18 euler7 kernel: wlan0: deauthenticated from 68:3a:1e:2e:ce:70 (Reason: 15=4WAY_HANDSHAKE_TIMEOUT)
+    Apr 19 13:48:18 euler7 kernel: wlan0: authenticate with 68:3a:1e:2e:80:46
+    Apr 19 13:48:18 euler7 kernel: wlan0: 80 MHz not supported, disabling VHT
+    Apr 19 13:48:18 euler7 kernel: wlan0: send auth to 68:3a:1e:2e:80:46 (try 1/3)
+    Apr 19 13:48:18 euler7 kernel: wlan0: authenticated
+    Apr 19 13:48:18 euler7 kernel: wlan0: associate with 68:3a:1e:2e:80:46 (try 1/3)
+    Apr 19 13:48:18 euler7 kernel: wlan0: RX AssocResp from 68:3a:1e:2e:80:46 (capab=0x1031 status=0 aid=2)
+    Apr 19 13:48:18 euler7 systemd-networkd[291]: wlan0: Connected WiFi access point: CatalystCampus-Guest (68:3a:1e:2e:80:46)
+    Apr 19 13:48:18 euler7 kernel: wlan0: associated
+    Apr 19 13:48:18 euler7 kernel: wlan0: Limiting TX power to 30 (30 - 0) dBm as advertised by 68:3a:1e:2e:80:46
+    Apr 19 13:48:22 euler7 dhcpcd[382]: wlan0: carrier lost
+    Apr 19 13:48:22 euler7 kernel: wlan0: deauthenticated from 68:3a:1e:2e:80:46 (Reason: 15=4WAY_HANDSHAKE_TIMEOUT)
+    Apr 19 13:48:22 euler7 kernel: wlan0: authenticate with 6a:3a:0e:2e:80:46
+    Apr 19 13:48:22 euler7 kernel: wlan0: send auth to 6a:3a:0e:2e:80:46 (try 1/3)
+    Apr 19 13:48:22 euler7 kernel: wlan0: authenticated
+    Apr 19 13:48:22 euler7 kernel: wlan0: associate with 6a:3a:0e:2e:80:46 (try 1/3)
+    Apr 19 13:48:22 euler7 kernel: wlan0: RX AssocResp from 6a:3a:0e:2e:80:46 (capab=0x1511 status=0 aid=2)
+    Apr 19 13:48:22 euler7 systemd-networkd[291]: wlan0: Connected WiFi access point: CatalystCampus-Guest (6a:3a:0e:2e:80:46)
+    Apr 19 13:48:22 euler7 kernel: wlan0: associated
+    Apr 19 13:48:22 euler7 kernel: wlan0: Limiting TX power to 21 (24 - 3) dBm as advertised by 6a:3a:0e:2e:80:46
+    Apr 19 13:48:25 euler7 dhcpcd[382]: wlan0: carrier lost
+    Apr 19 13:48:25 euler7 kernel: wlan0: deauthenticated from 6a:3a:0e:2e:80:46 (Reason: 15=4WAY_HANDSHAKE_TIMEOUT)
+    Apr 19 13:48:26 euler7 kernel: wlan0: authenticate with 6a:3a:0e:54:2e:f6
+    Apr 19 13:48:26 euler7 kernel: wlan0: send auth to 6a:3a:0e:54:2e:f6 (try 1/3)
+    Apr 19 13:48:26 euler7 kernel: wlan0: authenticated
+    Apr 19 13:48:26 euler7 kernel: wlan0: associate with 6a:3a:0e:54:2e:f6 (try 1/3)
+    Apr 19 13:48:26 euler7 kernel: wlan0: RX ReassocResp from 6a:3a:0e:54:2e:f6 (capab=0x1511 status=0 aid=5)
+    Apr 19 13:48:26 euler7 systemd-networkd[291]: wlan0: Connected WiFi access point: CatalystCampus-Guest (6a:3a:0e:54:2e:f6)
+    Apr 19 13:48:26 euler7 kernel: wlan0: associated
+    Apr 19 13:48:26 euler7 kernel: wlan0: Limiting TX power to 27 (30 - 3) dBm as advertised by 6a:3a:0e:54:2e:f6
+    Apr 19 13:48:29 euler7 dhcpcd[382]: wlan0: carrier lost
+    Apr 19 13:48:29 euler7 kernel: wlan0: deauthenticated from 6a:3a:0e:54:2e:f6 (Reason: 15=4WAY_HANDSHAKE_TIMEOUT)
+    Apr 19 13:58:42 euler7 dhcpcd[382]: wlan0: removing interface
+    Apr 19 13:58:42 euler7 systemd-networkd[291]: wlan0: Link DOWN
+
+    $ journalctl -b -1|grep -E wlan0
+    Apr 19 13:59:50 euler7 systemd-networkd[301]: wlan0: Link UP
+    Apr 19 13:59:52 euler7 kernel: wlan0: authenticate with 6a:3a:0e:54:4c:4e
+    Apr 19 13:59:52 euler7 kernel: wlan0: send auth to 6a:3a:0e:54:4c:4e (try 1/3)
+    Apr 19 13:59:52 euler7 kernel: wlan0: authenticated
+    Apr 19 13:59:52 euler7 kernel: wlan0: associate with 6a:3a:0e:54:4c:4e (try 1/3)
+    Apr 19 13:59:52 euler7 kernel: wlan0: RX AssocResp from 6a:3a:0e:54:4c:4e (capab=0x1511 status=0 aid=7)
+    Apr 19 13:59:52 euler7 kernel: wlan0: associated
+    Apr 19 13:59:52 euler7 systemd-networkd[301]: wlan0: Connected WiFi access point: CC-Platform One (6a:3a:0e:54:4c:4e)
+    Apr 19 13:59:52 euler7 systemd-networkd[301]: wlan0: Gained carrier
+    Apr 19 13:59:52 euler7 kernel: IPv6: ADDRCONF(NETDEV_CHANGE): wlan0: link becomes ready
+    Apr 19 13:59:52 euler7 kernel: wlan0: Limiting TX power to 27 (30 - 3) dBm as advertised by 6a:3a:0e:54:4c:4e
+    Apr 19 13:59:53 euler7 systemd-resolved[378]: wlan0: Bus client set DNS server list to: 1.1.1.1, 1.1.0.0
+    Apr 19 13:59:53 euler7 systemd-networkd[301]: wlan0: Gained IPv6LL
+    Apr 19 14:13:09 euler7 kernel: wlan0: deauthenticating from 6a:3a:0e:54:4c:4e by local choice (Reason: 3=DEAUTH_LEAVING)
+
+    $ journalctl -b -0|grep -E wlan0
+    Apr 19 14:13:26 euler7 dhcpcd[391]: wlan0: waiting for carrier
+    Apr 19 14:13:26 euler7 dhcpcd[391]: wlan0: carrier acquired
+    Apr 19 14:13:26 euler7 systemd-networkd[301]: wlan0: Link UP
+    Apr 19 14:13:26 euler7 dhcpcd[391]: wlan0: IAID 90:c3:bb:8a
+    Apr 19 14:13:26 euler7 dhcpcd[391]: wlan0: adding address fe80::6cbb:d10:d97b:b3c
+    Apr 19 14:13:26 euler7 dhcpcd[391]: wlan0: carrier lost
+    Apr 19 14:13:26 euler7 dhcpcd[391]: wlan0: deleting address fe80::6cbb:d10:d97b:b3c
+
+  Unplug Ethernet, reboot, kick wifi, plug Ethernet back in.
+
+    $ ip addr
+    1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+        link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+        inet 127.0.0.1/8 scope host lo
+           valid_lft forever preferred_lft forever
+        inet6 ::1/128 scope host
+           valid_lft forever preferred_lft forever
+    3: enp59s0u1u4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+        link/ether 00:e0:4c:68:22:1e brd ff:ff:ff:ff:ff:ff
+        inet 10.100.51.180/22 brd 10.100.51.255 scope global dynamic noprefixroute enp59s0u1u4
+           valid_lft 72039sec preferred_lft 63029sec
+        inet6 fe80::8a9a:24c6:15db:912/64 scope link
+           valid_lft forever preferred_lft forever
+    4: wlan0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+        link/ether 08:71:90:c3:bb:8a brd ff:ff:ff:ff:ff:ff
+        inet 10.100.45.248/24 brd 10.100.45.255 scope global dynamic noprefixroute wlan0
+           valid_lft 80009sec preferred_lft 69999sec
+        inet6 fe80::d531:e950:9b3e:29ea/64 scope link
+           valid_lft forever preferred_lft forever
+
+  Everything IPv4 & IPv6 got configured once.
+
+  Seems like systemd-networkd-wait-online.service still timed out,
+
+    Apr 19 14:50:32 euler7 systemd-networkd-wait-online[333]: Timeout occurred while waiting for network connectivity.
+    Apr 19 14:50:32 euler7 systemd[1]: systemd-networkd-wait-online.service: Main process exited, code=exited, status=1/FAILURE
+    Apr 19 14:50:32 euler7 systemd[1]: systemd-networkd-wait-online.service: Failed with result 'exit-code'.
+    Apr 19 14:50:32 euler7 systemd[1]: Failed to start Wait for Network to be Configured.
+
+  while dhcpcd, systemd-networkd, and maybe the kernel too were interacting with
+  wifi and Ethernet interfaces.
+
+    Apr 19 14:49:35 euler7 dhcpcd[392]: wlan0: waiting for carrier
+    Apr 19 14:49:36 euler7 kernel: wlan0: authenticate with 6a:3a:0e:54:4c:4e
+    Apr 19 14:49:36 euler7 kernel: wlan0: send auth to 6a:3a:0e:54:4c:4e (try 1/3)
+    Apr 19 14:49:36 euler7 kernel: wlan0: authenticated
+    Apr 19 14:49:36 euler7 kernel: wlan0: associate with 6a:3a:0e:54:4c:4e (try 1/3)
+    Apr 19 14:49:36 euler7 kernel: wlan0: RX AssocResp from 6a:3a:0e:54:4c:4e (capab=0x1511 status=0 aid=1)
+    Apr 19 14:49:36 euler7 kernel: iwlwifi 0000:00:14.3: Got NSS = 8 - trimming to 2
+    Apr 19 14:49:36 euler7 kernel: wlan0: associated
+    Apr 19 14:49:36 euler7 systemd-networkd[304]: wlan0: Connected WiFi access point: CC-Platform One (6a:3a:0e:54:4c:4e)
+    Apr 19 14:49:36 euler7 kernel: wlan0: Limiting TX power to 27 (30 - 3) dBm as advertised by 6a:3a:0e:54:4c:4e
+    Apr 19 14:49:37 euler7 dhcpcd[392]: wlan0: carrier acquired
+    Apr 19 14:49:37 euler7 systemd-networkd[304]: wlan0: Gained carrier
+    Apr 19 14:49:37 euler7 dhcpcd[392]: wlan0: connected to Access Point: CC-Platform One
+    Apr 19 14:49:37 euler7 kernel: IPv6: ADDRCONF(NETDEV_CHANGE): wlan0: link becomes ready
+    Apr 19 14:49:37 euler7 dhcpcd[392]: wlan0: IAID 90:c3:bb:8a
+    Apr 19 14:49:37 euler7 dhcpcd[392]: wlan0: adding address fe80::d531:e950:9b3e:29ea
+    Apr 19 14:49:37 euler7 dhcpcd[392]: wlan0: soliciting an IPv6 router
+    Apr 19 14:49:37 euler7 dhcpcd[392]: wlan0: rebinding lease of 10.100.45.248
+    Apr 19 14:49:37 euler7 dhcpcd[392]: wlan0: probing address 10.100.45.248/24
+    Apr 19 14:49:38 euler7 systemd-networkd[304]: wlan0: Gained IPv6LL
+    Apr 19 14:49:38 euler7 systemd-timesyncd[385]: Network configuration changed, trying to establish connection.
+    Apr 19 14:49:42 euler7 dhcpcd[392]: wlan0: leased 10.100.45.248 for 80080 seconds
+    Apr 19 14:49:42 euler7 dhcpcd[392]: wlan0: adding route to 10.100.45.0/24
+    Apr 19 14:49:42 euler7 dhcpcd[392]: wlan0: adding default route via 10.100.45.1
+    Apr 19 14:49:42 euler7 systemd-timesyncd[385]: Network configuration changed, trying to establish connection.
+    Apr 19 14:49:50 euler7 dhcpcd[392]: wlan0: no IPv6 Routers available
+    Apr 19 14:50:07 euler7 kernel: IPv6: ADDRCONF(NETDEV_CHANGE): enp59s0u1u4: link becomes ready
+    Apr 19 14:50:07 euler7 kernel: r8152 4-1.4:1.0 enp59s0u1u4: carrier on
+    Apr 19 14:50:07 euler7 dhcpcd[392]: enp59s0u1u4: carrier acquired
+    Apr 19 14:50:07 euler7 systemd-networkd[304]: enp59s0u1u4: Gained carrier
+    Apr 19 14:50:07 euler7 systemd-timesyncd[385]: Network configuration changed, trying to establish connection.
+    Apr 19 14:50:07 euler7 dhcpcd[392]: enp59s0u1u4: IAID 4c:68:22:1e
+    Apr 19 14:50:07 euler7 dhcpcd[392]: enp59s0u1u4: adding address fe80::8a9a:24c6:15db:912
+    Apr 19 14:50:07 euler7 systemd-timesyncd[385]: Initial synchronization to time server 204.2.134.163:123 (2.arch.pool.ntp.org).
+    Apr 19 14:50:08 euler7 dhcpcd[392]: enp59s0u1u4: soliciting an IPv6 router
+    Apr 19 14:50:09 euler7 systemd-networkd[304]: enp59s0u1u4: Gained IPv6LL
+    Apr 19 14:50:09 euler7 dhcpcd[392]: enp59s0u1u4: rebinding lease of 10.100.51.180
+    Apr 19 14:50:09 euler7 dhcpcd[392]: enp59s0u1u4: probing address 10.100.51.180/22
+    Apr 19 14:50:13 euler7 dhcpcd[392]: enp59s0u1u4: leased 10.100.51.180 for 72078 seconds
+    Apr 19 14:50:13 euler7 dhcpcd[392]: enp59s0u1u4: adding route to 10.100.48.0/22
+    Apr 19 14:50:13 euler7 dhcpcd[392]: enp59s0u1u4: adding default route via 10.100.50.1
+    Apr 19 14:50:21 euler7 dhcpcd[392]: enp59s0u1u4: no IPv6 Routers available
+    Apr 19 14:49:37 euler7 dhcpcd[392]: wlan0: probing address 10.100.45.248/24
+    Apr 19 14:49:38 euler7 systemd-networkd[304]: wlan0: Gained IPv6LL
+    Apr 19 14:49:38 euler7 systemd-timesyncd[385]: Network configuration changed, trying to establish connection.
+    Apr 19 14:49:42 euler7 dhcpcd[392]: wlan0: leased 10.100.45.248 for 80080 seconds
+    Apr 19 14:49:42 euler7 dhcpcd[392]: wlan0: adding route to 10.100.45.0/24
+    Apr 19 14:49:42 euler7 dhcpcd[392]: wlan0: adding default route via 10.100.45.1
+    Apr 19 14:49:42 euler7 systemd-timesyncd[385]: Network configuration changed, trying to establish connection.
+    Apr 19 14:49:50 euler7 dhcpcd[392]: wlan0: no IPv6 Routers available
+    Apr 19 14:50:07 euler7 kernel: IPv6: ADDRCONF(NETDEV_CHANGE): enp59s0u1u4: link becomes ready
+    Apr 19 14:50:07 euler7 kernel: r8152 4-1.4:1.0 enp59s0u1u4: carrier on
+    Apr 19 14:50:07 euler7 dhcpcd[392]: enp59s0u1u4: carrier acquired
+    Apr 19 14:50:07 euler7 systemd-networkd[304]: enp59s0u1u4: Gained carrier
+    Apr 19 14:50:07 euler7 systemd-timesyncd[385]: Network configuration changed, trying to establish connection.
+    Apr 19 14:50:07 euler7 dhcpcd[392]: enp59s0u1u4: IAID 4c:68:22:1e
+    Apr 19 14:50:07 euler7 dhcpcd[392]: enp59s0u1u4: adding address fe80::8a9a:24c6:15db:912
+    Apr 19 14:50:07 euler7 systemd-timesyncd[385]: Initial synchronization to time server 204.2.134.163:123 (2.arch.pool.ntp.org).
+    Apr 19 14:50:08 euler7 dhcpcd[392]: enp59s0u1u4: soliciting an IPv6 router
+    Apr 19 14:50:09 euler7 systemd-networkd[304]: enp59s0u1u4: Gained IPv6LL
+    Apr 19 14:50:09 euler7 dhcpcd[392]: enp59s0u1u4: rebinding lease of 10.100.51.180
+    Apr 19 14:50:09 euler7 dhcpcd[392]: enp59s0u1u4: probing address 10.100.51.180/22
+    Apr 19 14:50:13 euler7 dhcpcd[392]: enp59s0u1u4: leased 10.100.51.180 for 72078 seconds
+    Apr 19 14:50:13 euler7 dhcpcd[392]: enp59s0u1u4: adding route to 10.100.48.0/22
+    Apr 19 14:50:13 euler7 dhcpcd[392]: enp59s0u1u4: adding default route via 10.100.50.1
+    Apr 19 14:50:21 euler7 dhcpcd[392]: enp59s0u1u4: no IPv6 Routers available
+    Apr 19 14:50:32 euler7 systemd-networkd-wait-online[333]: Timeout occurred while waiting for network connectivity.
+    Apr 19 14:50:32 euler7 systemd[1]: systemd-networkd-wait-online.service: Main process exited, code=exited, status=1/FAILURE
+    Apr 19 14:50:32 euler7 systemd[1]: systemd-networkd-wait-online.service: Failed with result 'exit-code'.
+    Apr 19 14:50:32 euler7 systemd[1]: Failed to start Wait for Network to be Configured.
+    Apr 19 14:50:32 euler7 audit[1]: SERVICE_START pid=1 uid=0 auid=4294967295 ses=4294967295 msg='unit=systemd-networkd-wait-online comm="systemd" exe="/usr/lib/systemd/system>
+    Apr 19 14:50:32 euler7 systemd[1]: Reached target Network is Online.
+
+ while the system was still configuring the interface. 

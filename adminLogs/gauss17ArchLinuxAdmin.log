@@ -11116,7 +11116,7 @@ Purpose: To indicate what was done to create gauss17 and
   at work.
 
   Neither brought up wireless.  Just doing a
-    
+
     $ iwctl adapter list
 
   was enough for both systems to auto configure the
@@ -11146,7 +11146,7 @@ Purpose: To indicate what was done to create gauss17 and
     [euler7]$ getent hosts gauss17
     10.100.45.55    gauss17
     10.100.45.48    gauss17
-    
+
     [euler7]$ getent hosts euler7
     ::1             euler7
 
@@ -11161,3 +11161,81 @@ Purpose: To indicate what was done to create gauss17 and
   for both systems.
 
   Shutting down and going home.
+
+2022-04-19:
+  Continuing working my way through the Archwiki systemd.resolved page.
+
+  Eventual goal is to get systemd.networkd & iwd to play nice and
+  have DNS work well.
+
+  Redirecting default DNS servers around local network by
+  creating: /etc/systemd/resolved.conf.d/dns_servers.conf with
+  the contents
+
+    [Resolve]
+    DNS=2620:fe::fe:9 2001:4850:4860::8888 9.9.9.9 8.8.8.8
+    Domains=~.
+
+  First use Quad9, then Google DNS.
+
+  Reboot.
+
+  Boot with wireless,
+
+    $ resolvectl query www.github.com
+    www.github.com: resolve call failed: Network is down
+
+    $ iwctl adapter list
+    No matching method found
+    Failed to retrieve IWD dbus objects, quitting...
+
+
+    $ resolvectl query www.github.com
+    www.github.com: 140.82.112.4                   -- link: wlan0
+                    (github.com)
+
+    -- Information acquired via protocol DNS in 121.2ms.
+    -- Data is authenticated: no; Data was acquired via local or encrypted transport: no
+    -- Data from: cache network
+
+    $ resolvectl query www.github.com
+    www.github.com: 140.82.114.4                   -- link: wlan0
+                    (github.com)
+
+    -- Information acquired via protocol DNS in 92.9ms.
+    -- Data is authenticated: no; Data was acquired via local or encrypted transport: no
+    -- Data from: cache
+
+    $ resolvectl query fast.net
+    fast.net: 64.80.108.108                        -- link: wlan0
+
+    -- Information acquired via protocol DNS in 110.6ms.
+    -- Data is authenticated: no; Data was acquired via local or encrypted transport: no
+    -- Data from: network
+
+  Works.  Seems to be preferring IPv4 now.
+
+    $ getent hosts dns1.fast.net
+    205.147.200.114 dns1.corp.fast.net
+
+    [gauss17: ~]
+    $ getent hosts google.com
+    2607:f8b0:4000:800::200e google.com
+
+    [gauss17: ~]
+    $ resolvectl query google.com
+    google.com: 142.251.116.100                    -- link: wlan0
+                142.251.116.139                    -- link: wlan0
+                142.251.116.113                    -- link: wlan0
+                142.251.116.101                    -- link: wlan0
+                142.251.116.138                    -- link: wlan0
+                142.251.116.102                    -- link: wlan0
+                2607:f8b0:4000:800::200e           -- link: wlan0
+
+    -- Information acquired via protocol DNS in 29.0ms.
+    -- Data is authenticated: no; Data was acquired via local or encrypted transport: no
+    -- Data from: cache network
+
+  Still have to initially kick the wifi with
+
+    $ iwctl adapter list

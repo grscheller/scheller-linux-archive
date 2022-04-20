@@ -1618,7 +1618,8 @@ Purpose: To rebuild from scratch maxwell4 after
         inet6 fe80::a71:90ff:fec3:bb8a/64 scope link
            valid_lft forever preferred_lft forever
 
-  Next step, enable dhcpcd, and turnoff dhcp client in iwd.  Changed /etc/iwd/main.conf
+  Next step, enable dhcpcd, and turnoff dhcp client in iwd.
+  In /etc/iwd/main.conf changed from true to false
 
     [General]
     # Enable builtin DHCP-client within iwd for wifi

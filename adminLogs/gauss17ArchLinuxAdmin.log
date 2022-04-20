@@ -11307,3 +11307,28 @@ Purpose: To indicate what was done to create gauss17 and
     core/systemd-resolvconf 250.4-2 [installed]
         systemd resolvconf replacement (for use with systemd-resolved)
 
+2022-04-20:
+  Repeatng what I did on euler7 yesterday.  For now, keeping the
+  systemd-resolvconf dependency due to mozillavpn.
+
+    $ sudo systemctl disable systemd-networkd.service
+
+  In /etc/iwd/main.conf changed from true to false
+
+    [General]
+    # Enable builtin DHCP-client within iwd for wifi
+    EnableNetworkConfiguration=false
+
+  Reboot.
+
+  The only thing I needed to do was
+
+    $ iwctl adapter list
+
+  I took a quick look with
+
+    $ journalctl -b
+    $ journalctl -f
+
+  and did not see any real problems.  I'll compare gauss17 & euler7
+  later today side-by-side.

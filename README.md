@@ -27,11 +27,6 @@ By its very nature, it contains many loose threads.
 
 * [System Admin Logs](adminLogs)
 
-## Private Personal Home Page
-
-* [homepage.html](web/homepage.html)
-* [style.css](web/style.css)
-
 ## Grokking Computer Languages - many loose threads
 
 * __C__

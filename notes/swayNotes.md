@@ -3,7 +3,7 @@
 ## Key Bindings
 
 By default, the `Mod` key is the `Super` key (`Mod4`).
-It is the main key to communicate directly with the Sway WM.
+It is the canonical key to communicate directly with the Sway WM.
 
 ### Workspace Navigation Keybindings
 
@@ -66,36 +66,21 @@ It is the main key to communicate directly with the Sway WM.
 
 ## Factoids
 
-### Initial Impressions
-
-* Mouse focus out of the box
-  * Creating new terminal `Super+Enter`
-    * Focus jumps to new terminal window
-    * Mouse stay where it was
-    * Mouse focus again when mouse moved out of old window
-  * I'd say sloppy mouse focus (hard to say on a tiling WM)
-    * Pleasantly surprise
-    * Did not expect this behavior on keyboard oriented WM
-  * Can resize windows with mouse
-* Windows stack horizontally out of the box
-  * `Super+e` will toggle between horizontal and vertical stacking
-* 10 dynamic workspaces
-  * Workspaces disappear if empty when you move off of them
-  * `Super+0` takes you to workspace 10
-  * Workspaces don't renumber themselves
-
-### Observations After Several Months of Use
-
 * Containers are hierarchical
   * `Mod+a` shifts focus to parent container
-  * `Mod+[hjKl]` moves container
-    * through parent container
+  * `Mod+[hjKl]` moves focus to next container in that direction
+    * thru parent container
     * into sibling containers
-    * then through parent's parent when you reach end of parent
+    * then thru parent's parent when you reach end of parent
+  * `Mod+Shift+[hjKl]` move container in that direction
+    * thru parent container
+    * into sibling containers
+    * then thru parent's parent when you reach end of parent
 * With multiple monitors
   * each monitor has separate workspaces
-  * can navigate between the displayed workspaces via Mod+[hl]
-  * not true in general for adjacent workspaces
+  * can navigate between current workspaces on adjacent displays
+    * via `Mod+[hl]`
+    * not true for adjacent workspaces on a display
 * The scratchpad best thought of as a hidden workspace
   * containing just floating containers
   * can only display one of its container at a time
@@ -106,4 +91,22 @@ It is the main key to communicate directly with the Sway WM.
   * unfloat a scrachpad container via `Mod+Shift+Space`
     * removes it from the scratchpad
     * returns it to a workspace
-* Sometimes I can go hours without realizing I forgot to turn mouse on
+* Sloppy mouse focus
+  * Creating new terminal `Mod+Enter`
+    * Focus jumps to new terminal window
+    * Mouse stay where it was
+    * Mouse focus again when mouse moved out of old window
+  * Can resize windows with mouse
+  * Sometimes I'll go hours before realizing I forgot to turn mouse on
+* 10 dynamic workspaces
+  * Workspaces disappear if empty when you move off of them
+  * Workspaces don't renumber themselves
+  * Workspace number just a name, can be changed
+    * `Mod+0` takes you to workspace 10
+* Windows initially laid out horizontally (opposite Vim convention)
+  * `Mod+e` toggle sibling containers between horizontal and vertical layout
+  * `Mod+w` tab sibling containers in parent
+  * `Mod+s` stack sibling containers in parent
+  * `Mod+v` make current container vertically laid out
+  * `Mod+b` make current container horizontally laid out
+

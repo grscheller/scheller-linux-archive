@@ -2003,3 +2003,11 @@ Purpose: To rebuild from scratch maxwell4 after
   Now unplug and replug the cable and network seemlessly shifts between the two.
 
   Lets configure gauss17 the same way and sees how it behaves in my apartment.
+
+2022-04-20:
+  Comparing gauss17 with euler7.
+
+  Reinstalling systemd resolvconf replacement (for use with systemd-resolved).
+
+    $ sudo pacman -Syu systemd-resolvconf
+

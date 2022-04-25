@@ -11332,3 +11332,23 @@ Purpose: To indicate what was done to create gauss17 and
 
   and did not see any real problems.  I'll compare gauss17 & euler7
   later today side-by-side.
+
+2022-04-20:
+  Comparing gauss17 with euler7.
+
+  Remove rpcbind pacman package I installed on 2017-12-12.
+
+    $ sudo systemctl stop rpcbind.service
+    Warning: Stopping rpcbind.service, but it can still be activated by:
+      rpcbind.socket
+
+    $ sudo pacman -R rpcbind
+
+  Wireplumber not installed!
+
+    $ sudo pacman -Syu wireplumber wireplumber-docs
+
+  Missing packages euler7 has
+  
+    $ sudo pacman -Syu alsa-firmware alsa-plugins alsa-utils
+

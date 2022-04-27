@@ -10919,7 +10919,7 @@ Purpose: To indicate what was done to create gauss17 and
          Anycase, its blindly follow directions time.  I wish
          the directions also described the work arounds being
          used.  Sigh....  Actually my bad, I know I am dealing
-         with early adopter, not necessarily "bleeding edge",
+         with early adopter, but by no means "bleeding edge,"
          software.
 
 2022-04-12:
@@ -11352,3 +11352,227 @@ Purpose: To indicate what was done to create gauss17 and
   
     $ sudo pacman -Syu alsa-firmware alsa-plugins alsa-utils
 
+2022-04-26:
+  Try and get to the bottom of wifi not being up after boot but
+
+    $ iwctl adapter list
+
+  fixing the problem.
+
+     iwd[1158]: station: Network configuration is disabled.
+     iwd[1158]: rfkill id 0 can't be matched to a wiphy
+     iwd[1158]: Wiphy: 0, Name: phy0
+     iwd[1158]:         Permanent Address: ac:e0:10:8a:3d:85
+     iwd[1158]:         2.4Ghz Band:
+     iwd[1158]:                 Bitrates (non-HT):
+     iwd[1158]:                          1.0 Mbps
+     iwd[1158]:                          2.0 Mbps
+     iwd[1158]:                          5.5 Mbps
+     iwd[1158]:                         11.0 Mbps
+     iwd[1158]:                          6.0 Mbps
+     iwd[1158]:                          9.0 Mbps
+     iwd[1158]:                         12.0 Mbps
+     iwd[1158]:                         18.0 Mbps
+     iwd[1158]:                         24.0 Mbps
+     iwd[1158]:                         36.0 Mbps
+     iwd[1158]:                         48.0 Mbps
+     iwd[1158]:                         54.0 Mbps
+     iwd[1158]:                 HT Capabilities:
+     iwd[1158]:                         HT40
+     iwd[1158]:                         Short GI for 20Mhz
+     iwd[1158]:                         Short GI for 40Mhz
+     iwd[1158]:                 HT RX MCS indexes:
+     iwd[1158]:                         0-7
+     iwd[1158]:         5Ghz Band:
+     iwd[1158]:                 Bitrates (non-HT):
+     iwd[1158]:                          6.0 Mbps
+     iwd[1158]:                          9.0 Mbps
+     iwd[1158]:                         12.0 Mbps
+     iwd[1158]:                         18.0 Mbps
+     iwd[1158]:                         24.0 Mbps
+     iwd[1158]:                         36.0 Mbps
+     iwd[1158]:                         48.0 Mbps
+     iwd[1158]:                         54.0 Mbps
+     iwd[1158]:                 HT Capabilities:
+     iwd[1158]:                         HT40
+     iwd[1158]:                         Short GI for 20Mhz
+     iwd[1158]:                         Short GI for 40Mhz
+     iwd[1158]:                 HT RX MCS indexes:
+     iwd[1158]:                         0-7
+     iwd[1158]:                 VHT Capabilities:
+     iwd[1158]:                         Short GI for 80Mhz
+     iwd[1158]:                         Max RX MCS: 0-9 for NSS: 1
+     iwd[1158]:                         Max TX MCS: 0-9 for NSS: 1
+     iwd[1158]:         Ciphers: CCMP TKIP BIP
+     iwd[1158]:         Supported iftypes: ad-hoc station ap p2p-client p2p-go p2p-device
+     dhcpcd[440]: wlan0: removing interface
+     systemd-udevd[1225]: Using default interface naming scheme 'v250'.
+     dhcpcd[440]: wlan0: waiting for carrier
+ 
+   Why is dhcpcd server removng the interface.  Searching on Internet,
+   came across an unrelated problem on a Rasberry Pi due to two dhcp
+   clients running at same time.  The name of one dhcp client rang a bell,
+   dhclient.
+
+    $ pacman -Ss '(dhclient|dhcpcd)'
+    core/dhcpcd 9.4.1-1 [installed]
+        RFC2131 compliant DHCP client daemon
+    extra/dhclient 4.4.3-1 [installed]
+        A standalone DHCP client from the dhcp package
+        
+  Let's try removing one.
+
+    $ sudo pacman -Rsc dhclient
+    checking dependencies...
+    
+    Packages (1) dhclient-4.4.3-1
+    
+    Total Removed Size:  2.91 MiB
+    ...
+
+  Reboot.
+
+  Same behavior as before.
+
+2022-04-27:
+
+  Another possibility I could try is
+
+    iwd + systemd-networkd + systemd-resolved
+
+  What I think I am currently doing is
+
+    iwd + dhcpcd + systemd-resolved
+
+  my problem is I have to manaually "kick" the wireless network
+  with an iwctl command to get a wire less connection going.
+
+    $ systemctl is-enabled systemd-networkd.service
+    disabled
+
+    $ systemctl is-enabled systemd-resolved.service
+    enabled
+
+    $ systemctl is-enabled dhcpcd.service
+    enabled
+
+    $ systemctl is-enabled iwd.service
+    disabled
+
+  What!!!! Might explain some things.
+
+    $ systemctl enable iwd
+    Created symlink /etc/systemd/system/multi-user.target.wants/iwd.service → /usr/lib/systemd/system/iwd.service.
+
+  Reboot.
+
+  Yes! Wireless came up by itself.
+
+    $ journalctl  -b | grep -Ei '(iwd|dhcpcd)'
+    Apr 27 03:30:59 gauss17 systemd[1]: Starting dhcpcd on all interfaces...
+    Apr 27 03:30:59 gauss17 dhcpcd[440]: dhcpcd-9.4.1 starting
+    Apr 27 03:30:59 gauss17 dhcpcd[445]: dev: loaded udev
+    Apr 27 03:30:59 gauss17 dhcpcd[445]: DUID 00:04:4f:52:a0:85:dd:5d:e5:11:a7:26:f0:76:1c:cc:c1:05
+    Apr 27 03:30:59 gauss17 systemd[1]: Started dhcpcd on all interfaces.
+    Apr 27 03:30:59 gauss17 audit[1]: SERVICE_START pid=1 uid=0 auid=4294967295 ses=4294967295 msg='unit=dhcpcd comm="systemd" exe="/usr/lib/systemd/systemd" hostname=? addr=? terminal=? res=success'
+    Apr 27 03:30:59 gauss17 kernel: audit: type=1130 audit(1651051859.283:25): pid=1 uid=0 auid=4294967295 ses=4294967295 msg='unit=dhcpcd comm="systemd" exe="/usr/lib/systemd/systemd" hostname=? addr=? terminal=? res=success'
+    Apr 27 03:30:59 gauss17 iwd[441]: Wireless daemon version 1.27
+    Apr 27 03:30:59 gauss17 iwd[441]: Loaded configuration from /etc/iwd/main.conf
+    Apr 27 03:30:59 gauss17 audit[1]: SERVICE_START pid=1 uid=0 auid=4294967295 ses=4294967295 msg='unit=iwd comm="systemd" exe="/usr/lib/systemd/systemd" hostname=? addr=? terminal=? res=success'
+    Apr 27 03:30:59 gauss17 iwd[441]: station: Network configuration is disabled.
+    Apr 27 03:30:59 gauss17 dhcpcd[445]: enp3s0f1: waiting for carrier
+    Apr 27 03:30:59 gauss17 dhcpcd[445]: enp3s0f1: carrier acquired
+    Apr 27 03:30:59 gauss17 iwd[441]: rfkill id 0 can't be matched to a wiphy
+    Apr 27 03:30:59 gauss17 dhcpcd[445]: enp3s0f1: IAID 1c:cc:c1:05
+    Apr 27 03:30:59 gauss17 dhcpcd[445]: enp3s0f1: adding address fe80::f5cf:2b2c:2f55:d415
+    Apr 27 03:30:59 gauss17 dhcpcd[445]: enp3s0f1: carrier lost
+    Apr 27 03:30:59 gauss17 dhcpcd[445]: enp3s0f1: deleting address fe80::f5cf:2b2c:2f55:d415
+    Apr 27 03:31:01 gauss17 iwd[441]: Wiphy: 0, Name: phy0
+    Apr 27 03:31:01 gauss17 iwd[441]:         Permanent Address: ac:e0:10:8a:3d:85
+    Apr 27 03:31:01 gauss17 iwd[441]:         2.4Ghz Band:
+    Apr 27 03:31:01 gauss17 iwd[441]:                 Bitrates (non-HT):
+    Apr 27 03:31:01 gauss17 iwd[441]:                          1.0 Mbps
+    Apr 27 03:31:01 gauss17 iwd[441]:                          2.0 Mbps
+    Apr 27 03:31:01 gauss17 iwd[441]:                          5.5 Mbps
+    Apr 27 03:31:01 gauss17 iwd[441]:                         11.0 Mbps
+    Apr 27 03:31:01 gauss17 iwd[441]:                          6.0 Mbps
+    Apr 27 03:31:01 gauss17 iwd[441]:                          9.0 Mbps
+    Apr 27 03:31:01 gauss17 iwd[441]:                         12.0 Mbps
+    Apr 27 03:31:01 gauss17 iwd[441]:                         18.0 Mbps
+    Apr 27 03:31:01 gauss17 iwd[441]:                         24.0 Mbps
+    Apr 27 03:31:01 gauss17 iwd[441]:                         36.0 Mbps
+    Apr 27 03:31:01 gauss17 iwd[441]:                         48.0 Mbps
+    Apr 27 03:31:01 gauss17 iwd[441]:                         54.0 Mbps
+    Apr 27 03:31:01 gauss17 iwd[441]:                 HT Capabilities:
+    Apr 27 03:31:01 gauss17 iwd[441]:                         HT40
+    Apr 27 03:31:01 gauss17 iwd[441]:                         Short GI for 20Mhz
+    Apr 27 03:31:01 gauss17 iwd[441]:                         Short GI for 40Mhz
+    Apr 27 03:31:01 gauss17 iwd[441]:                 HT RX MCS indexes:
+    Apr 27 03:31:01 gauss17 iwd[441]:                         0-7
+    Apr 27 03:31:01 gauss17 iwd[441]:         5Ghz Band:
+    Apr 27 03:31:01 gauss17 iwd[441]:                 Bitrates (non-HT):
+    Apr 27 03:31:01 gauss17 iwd[441]:                          6.0 Mbps
+    Apr 27 03:31:01 gauss17 iwd[441]:                          9.0 Mbps
+    Apr 27 03:31:01 gauss17 iwd[441]:                         12.0 Mbps
+    Apr 27 03:31:01 gauss17 iwd[441]:                         18.0 Mbps
+    Apr 27 03:31:01 gauss17 iwd[441]:                         24.0 Mbps
+    Apr 27 03:31:01 gauss17 iwd[441]:                         36.0 Mbps
+    Apr 27 03:31:01 gauss17 iwd[441]:                         48.0 Mbps
+    Apr 27 03:31:01 gauss17 iwd[441]:                         54.0 Mbps
+    Apr 27 03:31:01 gauss17 iwd[441]:                 HT Capabilities:
+    Apr 27 03:31:01 gauss17 iwd[441]:                         HT40
+    Apr 27 03:31:01 gauss17 iwd[441]:                         Short GI for 20Mhz
+    Apr 27 03:31:01 gauss17 iwd[441]:                         Short GI for 40Mhz
+    Apr 27 03:31:01 gauss17 iwd[441]:                 HT RX MCS indexes:
+    Apr 27 03:31:01 gauss17 iwd[441]:                         0-7
+    Apr 27 03:31:01 gauss17 iwd[441]:                 VHT Capabilities:
+    Apr 27 03:31:01 gauss17 iwd[441]:                         Short GI for 80Mhz
+    Apr 27 03:31:01 gauss17 iwd[441]:                         Max RX MCS: 0-9 for NSS: 1
+    Apr 27 03:31:01 gauss17 iwd[441]:                         Max TX MCS: 0-9 for NSS: 1
+    Apr 27 03:31:01 gauss17 iwd[441]:         Ciphers: CCMP TKIP BIP
+    Apr 27 03:31:01 gauss17 iwd[441]:         Supported iftypes: ad-hoc station ap p2p-client p2p-go p2p-device
+    Apr 27 03:31:01 gauss17 dhcpcd[445]: ps_root_dispatch: No such file or directory
+    Apr 27 03:31:01 gauss17 dhcpcd[445]: ps_root_dispatch: No such process
+    Apr 27 03:31:03 gauss17 dhcpcd[445]: wlan0: waiting for carrier
+    Apr 27 03:31:04 gauss17 iwd[441]: hardware_rekey not supported
+    Apr 27 03:31:04 gauss17 dhcpcd[445]: wlan0: carrier acquired
+    Apr 27 03:31:04 gauss17 dhcpcd[445]: wlan0: connected to Access Point: singlewhip650
+    Apr 27 03:31:05 gauss17 dhcpcd[445]: wlan0: IAID 10:8a:3d:85
+    Apr 27 03:31:05 gauss17 dhcpcd[445]: wlan0: adding address fe80::f21e:289e:37fb:2e0c
+    Apr 27 03:31:05 gauss17 dhcpcd[445]: wlan0: soliciting an IPv6 router
+    Apr 27 03:31:05 gauss17 dhcpcd[445]: wlan0: rebinding lease of 192.168.1.17
+    Apr 27 03:31:05 gauss17 dhcpcd[445]: wlan0: probing address 192.168.1.17/24
+    Apr 27 03:31:06 gauss17 dhcpcd[445]: wlan0: Router Advertisement from fe80::9ec9:ebff:fe54:5f75
+    Apr 27 03:31:06 gauss17 dhcpcd[445]: wlan0: no global addresses for default route
+    Apr 27 03:31:06 gauss17 dhcpcd[445]: wlan0: confirming prior DHCPv6 lease
+    Apr 27 03:31:07 gauss17 dhcpcd[445]: wlan0: REPLY6 received from fe80::9ec9:ebff:fe54:5f75
+    Apr 27 03:31:07 gauss17 dhcpcd[445]: wlan0: adding address 2601:281:c500:42f:1bae:7dac:b889:84ca/128
+    Apr 27 03:31:07 gauss17 dhcpcd[445]: wlan0: renew in 509, rebind in 1589, expire in 2309 seconds
+    Apr 27 03:31:07 gauss17 dhcpcd[445]: wlan0: adding default route via fe80::9ec9:ebff:fe54:5f75
+    Apr 27 03:31:10 gauss17 dhcpcd[445]: wlan0: leased 192.168.1.17 for 86400 seconds
+    Apr 27 03:31:10 gauss17 dhcpcd[445]: wlan0: adding route to 192.168.1.0/24
+    Apr 27 03:31:10 gauss17 dhcpcd[445]: wlan0: adding default route via 192.168.1.1
+
+    $ ip addr
+    1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+        link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+        inet 127.0.0.1/8 scope host lo
+           valid_lft forever preferred_lft forever
+        inet6 ::1/128 scope host
+           valid_lft forever preferred_lft forever
+    2: enp3s0f1: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc fq_codel state DOWN group default qlen 1000
+        link/ether f0:76:1c:cc:c1:05 brd ff:ff:ff:ff:ff:ff
+    4: wlan0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+        link/ether ac:e0:10:8a:3d:85 brd ff:ff:ff:ff:ff:ff
+        inet 192.168.1.17/24 brd 192.168.1.255 scope global dynamic noprefixroute wlan0
+           valid_lft 86096sec preferred_lft 75296sec
+        inet6 2601:281:c500:42f:1bae:7dac:b889:84ca/128 scope global dynamic noprefixroute
+           valid_lft 3292sec preferred_lft 3292sec
+        inet6 fe80::f21e:289e:37fb:2e0c/64 scope link
+           valid_lft forever preferred_lft forever
+
+  It would be interesting to compare above output with euler7, with iwd
+  enabled, on the IPv4 only network at work.
+
+  May need to revisit manual configurations I made in my above
+  thashings over the last month.

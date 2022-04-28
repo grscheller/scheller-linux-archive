@@ -2011,3 +2011,156 @@ Purpose: To rebuild from scratch maxwell4 after
 
     $ sudo pacman -Syu systemd-resolvconf
 
+2022-04-27:
+  As was done on gauss17, iwd enabled.
+
+    $ sudo systemctl enable iwd
+    Created symlink /etc/systemd/system/multi-user.target.wants/iwd.service → /usr/lib/systemd/system/iwd.service.
+
+  This finally fixes the wifi problem.  See gauss17ArchLinuxAdmin.log for details.
+
+2022-04-27:
+  Try and get network printer working with CUPS.
+
+  Printer is Konica Minolta bizhub C300i.  Downloaded *.ppd
+  files from manufacture's website.
+
+    $ ls
+    KOC750iopn.ppd  KOC750iUX.ppd
+
+    $ sudo cp KOC750i* /usr/share/cups/model
+
+  Now,
+
+    $ lpinfo -m|grep -i konica
+
+  shows the ppd files along with a bunch of other Konica Minolta
+  printers from foomatic package.
+
+  Printer is on 10.54.10.2/24 while euler7 is on 10.54.2.6/24.  All
+  attemps at pinging it and lpr commands are failing.  Totally
+  don't know what I am doing.
+
+  Try avahi out of desparation?
+
+2020-04-27:
+  Editted /etc/nsswitch.conf (via dotfiles) to modify line from
+
+    hosts: mymachines resolve [!UNAVAIL=return] files myhostname dns
+
+  to
+
+    hosts: mymachines mdns4_minimal [NOTFOUND=return] resolve [!UNAVAIL=return] \
+           files myhostname dns mdns4
+
+  then enable avahi
+
+    $ sudo systemctl enable avahi-daemon.service
+    Created symlink /etc/systemd/system/dbus-org.freedesktop.Avahi.service → /usr/lib/systemd/system/avahi-daemon.service.
+    Created symlink /etc/systemd/system/multi-user.target.wants/avahi-daemon.service → /usr/lib/systemd/system/avahi-daemon.service.
+    Created symlink /etc/systemd/system/sockets.target.wants/avahi-daemon.socket → /usr/lib/systemd/system/avahi-daemon.socket.
+    
+  and finally disable mDNS in systemd-resolved
+
+    $ cat resolved.conf|grep -v '^#'
+
+    [Resolve]
+    DNSSEC=allow-downgrade
+    MulticastDNS=no
+
+  I also turned on DNSSEC, but allowed it to be downgradable (I am not
+  trying to debug the Internet).
+
+  Reboot.
+
+  See https://brainxploit.com/how-to-set-up-avahi-on-arch-linux/ for
+  some examples on how to test out avahi.
+
+    $ systemctl status
+    ● euler7
+        State: running
+         Jobs: 0 queued
+       Failed: 0 units
+        Since: Wed 2022-04-27 18:26:43 MDT; 2min 45s ago
+       CGroup: /
+               ├─init.scope
+               │ └─1 /sbin/init
+               ├─system.slice
+               │ ├─avahi-daemon.service
+               │ │ ├─365 "avahi-daemon: running [euler7.local]"
+               │ │ └─375 "avahi-daemon: chroot helper"
+               │ ├─bluetooth.service
+               │ │ └─524 /usr/lib/bluetooth/bluetoothd
+               │ ├─dbus.service
+               │ │ └─366 /usr/bin/dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+               │ ├─dhcpcd.service
+               │ │ ├─370 "dhcpcd: [manager] [ip4] [ip6]"
+               │ │ ├─371 "dhcpcd: [privileged proxy]"
+               │ │ ├─372 "dhcpcd: [network proxy]"
+               │ │ ├─373 "dhcpcd: [control proxy]"
+               │ │ ├─566 "dhcpcd: [BPF ARP] wlan0 10.247.100.161"
+               │ │ └─584 "dhcpcd: [BPF ARP] enp59s0u1u4 10.54.2.6"
+               │ ├─iwd.service
+               │ │ └─368 /usr/lib/iwd/iwd
+               │ ├─polkit.service
+               │ │ └─965 /usr/lib/polkit-1/polkitd --no-debug
+               │ ├─rtkit-daemon.service
+               │ │ └─1063 /usr/lib/rtkit-daemon
+               │ ├─sshd.service
+               │ │ └─500 "sshd: /usr/bin/sshd -D [listener] 0 of 10-100 startups"
+               │ ├─systemd-homed.service
+               │ │ └─378 /usr/lib/systemd/systemd-homed
+               │ ├─systemd-hostnamed.service
+               │ │ └─1288 /usr/lib/systemd/systemd-hostnamed
+               │ ├─systemd-journald.service
+               │ │ └─252 /usr/lib/systemd/systemd-journald
+               │ ├─systemd-logind.service
+               │ │ └─374 /usr/lib/systemd/systemd-logind
+               │ ├─systemd-resolved.service
+               │ │ └─357 /usr/lib/systemd/systemd-resolved
+               │ ├─systemd-timesyncd.service
+               │ │ └─358 /usr/lib/systemd/systemd-timesyncd
+               │ ├─systemd-udevd.service
+               │ │ └─272 /usr/lib/systemd/systemd-udevd
+               │ └─systemd-userdbd.service
+               │   ├─267 /usr/lib/systemd/systemd-userdbd
+               │   ├─354 systemd-userwork
+               │   ├─355 systemd-userwork
+               │   └─356 systemd-userwork
+               └─user.slice
+
+  Let's see what services might be running,
+
+    $ avahi-browse --all --resolve --terminate
+    $
+
+  Nobody home at work.
+
+  Let's see if DNSSEC works at work.
+
+    $ resolvectl query sigok.verteiltesysteme.net
+    sigok.verteiltesysteme.net: 134.91.78.139      -- link: enp59s0u1u4
+                                2001:638:501:8efc::139 -- link: enp59s0u1u4
+
+    -- Information acquired via protocol DNS in 440.3ms.
+    -- Data is authenticated: yes; Data was acquired via local or encrypted transport: no
+    -- Data from: network
+
+    $ resolvectl query sigfail.verteiltesysteme.net
+    sigfail.verteiltesysteme.net: resolve call failed: DNSSEC validation failed: invalid
+
+    $ resolvectl query google.com
+    google.com: 2607:f8b0:4000:800::200e           -- link: enp59s0u1u4
+                216.58.193.142                     -- link: enp59s0u1u4
+
+    -- Information acquired via protocol DNS in 118.3ms.
+    -- Data is authenticated: no; Data was acquired via local or encrypted transport: no
+    -- Data from: network
+
+    $ resolvectl query gitlab.com
+    gitlab.com: 172.65.251.78                      -- link: enp59s0u1u4
+                2606:4700:90:0:f22e:fbec:5bed:a9b9 -- link: enp59s0u1u4
+
+    -- Information acquired via protocol DNS in 80.1ms.
+    -- Data is authenticated: no; Data was acquired via local or encrypted transport: no
+    -- Data from: network

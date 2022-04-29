@@ -2044,6 +2044,10 @@ Purpose: To rebuild from scratch maxwell4 after
   Try avahi out of desparation?
 
 2020-04-27:
+  Installing avahi onto euler7.
+
+    $ sudo pacman -Syu nss-mdns
+
   Editted /etc/nsswitch.conf (via dotfiles) to modify line from
 
     hosts: mymachines resolve [!UNAVAIL=return] files myhostname dns

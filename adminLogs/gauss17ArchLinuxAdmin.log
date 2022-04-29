@@ -11576,3 +11576,27 @@ Purpose: To indicate what was done to create gauss17 and
 
   May need to revisit manual configurations I made in my above
   thashings over the last month.
+
+2022-04-28:
+  Will install avahi onto gauss17 like I did for euler7.
+
+    $ sudo pacman -Syu nss-mdns
+
+  Moved dotfiles versions of these in place
+
+    /etc/nsswitch.conf
+    /etc/systemd/systemd-resolved.conf
+
+  Enable avahi
+
+    $ sudo systemctl enable avahi-daemon.service
+    Created symlink /etc/systemd/system/dbus-org.freedesktop.Avahi.service → /usr/lib/systemd/system/avahi-daemon.service.
+    Created symlink /etc/systemd/system/multi-user.target.wants/avahi-daemon.service → /usr/lib/systemd/system/avahi-daemon.service.
+    Created symlink /etc/systemd/system/sockets.target.wants/avahi-daemon.socket → /usr/lib/systemd/system/avahi-daemon.socket.
+
+  Reboot.
+
+  I am happy with the results.  At new work location, abosolutely no
+  bonjour/avahi severices advertised.  My euler7 and gauss17 systems
+  can only find each other by their host names if they are on the same
+  Ethernet hub.  

@@ -11600,3 +11600,52 @@ Purpose: To indicate what was done to create gauss17 and
   bonjour/avahi severices advertised.  My euler7 and gauss17 systems
   can only find each other by their host names if they are on the same
   Ethernet hub.  
+
+2022-05-03:
+  I don't enjoy nor do I want to invest the time in vscode anymore.
+
+    $ pactree -r code
+    code
+
+    $ sudo pacman -Rsc code
+    checking dependencies...
+
+    Packages (2) electron17-17.4.0-2  code-1.66.0-2
+
+    Total Removed Size:  267.92 MiB
+
+2022-05-03:
+  I'll never get around to configure systemd-homed.service.  Nothing
+  to hide and I risk locking myself out of my own home directory.
+
+    $ sudo systemctl stop systemd-homed.service
+    $ sudo systemctl disable systemd-homed.service
+    Removed /etc/systemd/system/multi-user.target.wants/systemd-homed.service.
+    Removed /etc/systemd/system/dbus-org.freedesktop.home1.service.
+    Removed /etc/systemd/system/sockets.target.wants/systemd-userdbd.socket.
+    Removed /etc/systemd/system/systemd-homed.service.wants/systemd-homed-activte.service.
+
+  Reboot.
+
+2022-05-03:
+  Missed some older electron stuff,
+
+    $ pacman -Qs electron
+    local/electron 18.2.0-1
+        Build cross platform desktop apps with web technologies
+    local/electron13 13.6.9-3
+        Build cross platform desktop apps with web technologies
+        
+    $ pactree -r electron
+    electron
+
+    $ pactree -r electron13
+    electron13
+
+    $ sudo pacman -Rsc electron electron13
+    checking dependencies...
+
+    Packages (5) libxslt-1.1.35-1  minizip-1:1.2.12-2  snappy-1.1.9-2  electron-18.2.0-1
+                 electron13-13.6.9-3
+
+    Total Removed Size:  354.89 MiB

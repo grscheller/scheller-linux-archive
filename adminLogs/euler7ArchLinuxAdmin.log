@@ -2168,3 +2168,19 @@ Purpose: To rebuild from scratch maxwell4 after
     -- Information acquired via protocol DNS in 80.1ms.
     -- Data is authenticated: no; Data was acquired via local or encrypted transport: no
     -- Data from: network
+
+2022-05-04:
+  Remove vscode, I have no desire to use the tool and its
+  eletron updated take forever to install.
+
+  $ sudo pacman -Rsc code electron electron13 electron17
+    checking dependencies...
+
+    Packages (4) code-1.66.0-2  electron-18.2.0-1  electron13-13.6.9-3
+                 electron17-17.4.0-2
+
+2022-05-04:
+  Disable systemd-homed.service, 
+
+    $ sudo systemctl stop systemd-homed.service
+    $ sudo systemctl disable systemd-homed.service

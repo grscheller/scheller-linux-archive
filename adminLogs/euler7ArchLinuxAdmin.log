@@ -2184,3 +2184,22 @@ Purpose: To rebuild from scratch maxwell4 after
 
     $ sudo systemctl stop systemd-homed.service
     $ sudo systemctl disable systemd-homed.service
+
+2022-05-04:
+  Reading the RTFM manpages on CUPS printing.
+
+  CUPS has a web interface: http://localhost:631
+
+  Was able to configure printer, similar to GUI printer interfaces.
+
+    $ lpr hw
+    lpr: Error - No default destination.
+
+    $ lpstat -t
+    scheduler is running
+    no system default destination
+    device for BIZHUB-C300I: ipp://10.54.10.2/ipp
+    BIZHUB-C300I accepting requests since Wed 04 May 2022 03:46:57 PM MDT
+    printer BIZHUB-C300I is idle.  enabled since Wed 04 May 2022 03:46:57 PM MDT
+
+  How to add a default printer?

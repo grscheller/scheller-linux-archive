@@ -2203,3 +2203,27 @@ Purpose: To rebuild from scratch maxwell4 after
     printer BIZHUB-C300I is idle.  enabled since Wed 04 May 2022 03:46:57 PM MDT
 
   How to add a default printer?
+
+2022-05-05:
+  Finish setting up printer.
+
+  Print to printer by name,
+
+    $ lpr -P BIZHUB-C300I hw.txt
+
+  Printing worked!
+
+  Now, set up default printer
+
+    $ lpstat -d
+    no system default destination
+
+    $ lpadmin -d BIZHUB-C300I
+
+    $ lpstat -d
+    system default destination: BIZHUB-C300I
+
+    $ lpr hw.txt
+
+  Worked!
+

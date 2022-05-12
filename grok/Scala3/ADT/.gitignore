@@ -1,6 +1,6 @@
-grok/
-project/
-target/
-.metals/
-.bsp/
 .bloop/
+.bsp/
+.metals/
+.scalafmt.conf
+**/target/
+**/project/

@@ -1,4 +1,6 @@
-.bsp
-**/*.class
-**/*.jar
+.bloop/
+.bsp/
+.metals/
+.scalafmt.conf
 **/target/
+**/project/

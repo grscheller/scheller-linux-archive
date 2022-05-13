@@ -2171,7 +2171,7 @@ Purpose: To rebuild from scratch maxwell4 after
 
 2022-05-04:
   Remove vscode, I have no desire to use the tool and its
-  eletron updated take forever to install.
+  electron updated take forever to install.
 
   $ sudo pacman -Rsc code electron electron13 electron17
     checking dependencies...

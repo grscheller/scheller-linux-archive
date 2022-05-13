@@ -175,3 +175,11 @@ that the shell variable xx has not been set before the while loop.
             man argparse
             man fish_opt
 
+## Periodically update fish completions
+
+```
+   $ fish_update_completions
+```
+
+  Todo: see man fish_update_completions
+

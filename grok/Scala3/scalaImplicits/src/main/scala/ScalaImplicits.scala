@@ -8,6 +8,7 @@ package scalaImplicits
 //   but would be deprecated.
 
 import scala.language.implicitConversions
+import scalaImplicits.ScalaImplicts.PreferedName
 
 case class IntWrapper(ii: Int):
   def doubleMe = ii * 2
@@ -51,4 +52,6 @@ object ScalaImplicts:
     sayHello(using beowulf)
 
 @main def start() =
+  given PreferedName = ScalaImplicts.PreferedName("Henry")
+  ScalaImplicts.sayHello
   ScalaImplicts.run()

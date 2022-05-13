@@ -1,14 +1,8 @@
-## Put this file in your Documents\WindowsPowerShell folder.
-#
-#  Powershell will start in your "home" directory, which is
-#  usually C:\Users\your_user_name, the one above Documents.
-#
-#  This file hopelessly out of date cica. 2021.
-#
+## Location: $HOME\WindowsPowerShell\Microsoft.PowerShell_profile.ps1
 
 ## Modify the Path environmental variable
 "Virgin Path: " + $env:Path
-$env:Path += ";$home\opt\bin"
+$env:Path += "$home\opt\bin;"
 
 ## Define some useful functions
 # Change the PowerShell prompt
@@ -17,7 +11,6 @@ function prompt {
 }
 
 # Define something that behaves more like Posix ls -a
-#    gci lies to you if file attributes are hidden
 function la {
     if ($args.count -eq 0) {
         Get-ChildItem -Force
@@ -27,7 +20,6 @@ function la {
         }
     }
 }
-
 
 # Print path in a list format (can be assigned to arrays)
 function path {
@@ -39,7 +31,7 @@ function path {
 }
 
 # Drill down through path and find files that match patterns
-function whence {
+function dp {
     $patterns = $args[0..$args.count]
     foreach ($pattern in $patterns) {
         foreach ($dir in path) {
@@ -55,31 +47,28 @@ function whence {
     }
 }
 
-# Need to easily grep thru files and directories 
-# note: I am not using the right powershell paradigms
-function pmgrep {
-    $pattern = $args[0]
-    $files = $args[1..($args.count-1)]
-    foreach ($file in $files) {
-       if (Test-Path $file) {
-           if (Test-Path $file -pathType leaf) {
-               $count = 0
-               $contents = (gc $file)
-               $contents -split "`n" | Select-String "$pattern" | ForEach-Object { 
-                   Write-Output("${file}: " + $_ + "`n")
-                   $count++
-               }
-               if ( $count -ne 0 ) {
-                   Write-Output(("_"*40) + "`n" )
-               }
-           } else {
-               $subfiles = gci $file
-               foreach ( $subfile in $subfiles ) {
-                   pmgrep $pattern "$file\$subfile"
-               }
-           }
-       }
-    }
+function to-euler7 {
+    scp -P 22555 $args[0..$args.count] grs@euler7:./catch
+}
+
+function to-gauss17 {
+    scp -P 31502 $args[0..$args.count] grs@gauss17:./catch
+}
+
+function from-euler7 {
+    scp -P 22555 "grs@euler7:./$($args[0])" .
+}
+
+function from-gauss17 {
+    scp -P 31502 "grs@gauss17:$($args[0])" .
+}
+
+function euler7 {
+    ssh -p 22555 grs@euler7
+}
+
+function gauss17 {
+    ssh -p 31502 grs@gauss17
 }
 
 ## Setup useful aliases
@@ -90,4 +79,3 @@ ni -path alias:fm -value "C:\Windows\explorer.exe"
 
 ## Show what version of PowerShell we are using
 "`nPowerShell Version = " +  $PSVersionTable.PSVersion.toString()
-

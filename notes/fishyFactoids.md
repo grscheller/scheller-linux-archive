@@ -171,11 +171,11 @@ that the shell variable xx has not been set before the while loop.
 
 ## Argument Parsing
 
-  Todo: see type psub
-            man argparse
-            man fish_opt
+Todo: see type psub, man argparse, man fish_opt
 
 ## Periodically update fish completions
+
+Update command completions based on manpages.
 
 ```
    $ fish_update_completions

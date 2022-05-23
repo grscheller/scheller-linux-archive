@@ -19,6 +19,9 @@
   To take away permissions from other:
     chmod -R o-rwx
 
+  To recursively change group owner on files:
+    chgrp [-R] files
+
   To set your shell's (bash & variants) default file creation mask
   so that both user and group have sufficient permissions, use umask:
     umask 0007
@@ -27,9 +30,34 @@
       give the same permissions to files to other members of
       the group as the owner of the file has.
 
-  To change group owner on files:
-    chgrp [-R] files
+  What is with the extra 0 in front of the umask?  Well, in the name
+  of backward compatibility, "umask 007" works just fine.
 
+    Sticky Bit:
+      If set on executable files on older UNIX systems.  Keeps text area
+      of executable in continuous swap space for faster subsequent loading.
+      Obsoleted by modern file systems.  Never implemented in Linux.
+
+      If set on directories to enable only the owners of a file or the
+      directory (or root) to be able to delete or rename the file.
+
+    SUID Bit:
+      If set on an executable file, the program runs with the file owner's
+      privileges, that is with the file owner's user id.
+
+    SGID Bit:
+      If set on an executable file, the program runs with the file's
+      group id.
+
+    The leading 0 in 0750 is for the high bits on the other 3 subgroups of 4.
+
+      4000 = SUID        <- High order bit going with the  "user" bits
+      2000 = SGID        <- High order bit going with the "group" bits
+      1000 = Sticky Bit  <- High order bit going with the "other" bits
+
+    Hardware-wise, grouping of 4 make more sense than groupings of 3.  Single
+    digit octal is only good to 3 bits.  Single digit hex could work, but things
+    were not implemented that way with chmod or umask commands.
 
 Secure Shell:
 

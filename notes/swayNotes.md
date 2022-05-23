@@ -48,12 +48,12 @@ It is the canonical key to communicate directly with the Sway WM.
 
 ### Container Resizing Keybindings
 
-| Keybinding | Description       |
-|:---------- |:----------------- |
-| `Mod+r`    | Enter resize mode |
-| `[hjkl]`   | Resize container  |
-| `[Return]` | Exit resize mode  |
-| `[Esc]`    | Exit resize mode  |
+| Keybinding | Description                           |
+|:---------- |:------------------------------------- |
+| `Mod+r`    | Enter resize mode                     |
+| `[hjkl]`   | Resize container while in resize mode |
+| `[Return]` | Exit resize mode                      |
+| `[Esc]`    | Exit resize mode                      |
 
 ## Alacritty terminal
 

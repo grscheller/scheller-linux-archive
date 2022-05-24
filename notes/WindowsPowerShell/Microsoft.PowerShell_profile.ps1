@@ -4,6 +4,25 @@
 "Virgin Path: " + $env:Path
 $env:Path += "$home\opt\bin;"
 
+## Adjust background colors
+# Set the GUI to Cyan foreground and black background
+
+$colors = $host.privatedata
+$colors.ErrorForegroundColor = "Red"
+$colors.ErrorBackgroundColor = "Black"
+$colors.WarningForegroundColor = "Yellow"
+$colors.WarningBackgroundColor = "Black"
+$colors.DebugForegroundColor = "Magenta"
+$colors.DebugBackgroundColor = "Black"
+$colors.VerboseForegroundColor = "Green"
+$colors.VerboseBackgroundColor = "Black"
+$colors.ProgressForegroundColor = "DarkYellow"
+$colors.ProgressBackgroundColor = "Black"
+
+$console = $Host.UI.RawUI
+$console.ForegroundColor = "Cyan"
+$console.BackgroundColor = "Black"
+
 ## Define some useful functions
 # Change the PowerShell prompt
 function prompt {

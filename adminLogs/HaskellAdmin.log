@@ -486,3 +486,292 @@ Purpose: For tracking Haskell infrastructure installed locally as
 
   seemed to want to build it again.
 
+2022-05-28:
+  It has been 4 years since I last updated these notes and
+  about 2 years since I did anything nontrivial with Haskell.
+
+  Since rebuilding gauss17 and creating euler7, I have not
+  installed any Haskell infrastucture.
+
+  The ArchWiki contains a very good section on the Arch
+  Linux infrastructure: https://wiki.archlinux.org/title/Haskell
+  This version seems to be a rewrite done in late 2020 to
+  early 2021.
+
+  Decided to do a native install without the static libraries.
+  Will install both Cabal and Stack as build tools, but plan
+  to use the native installed ghc compiler and only use sandboxes
+  if necessary.  If this is good enough for xmonad or pandoc, should
+  work for me.  If I need to use Haskell modules not supplied by
+  Arch, or make my own libraries I put on Hackage, I might have to
+  use sandboxes.
+
+  In the past I was confused by Cabel.  I also did not like how
+  Stack takes charge of the build environment while giving little
+  beginner accessible documentation on how to take control back.
+
+2022-05-28:
+  Today install an Arch Haskell environment on both gauss17
+  and euler7.  Lets see what might be there already.  On both,
+
+    $ pacman -Qs '(haskell|stack|cabal)'
+    local/bluez 5.64-2
+        Daemons for the bluetooth protocol stack
+    local/bluez-libs 5.64-2
+        Deprecated libraries for the bluetooth protocol stack
+    local/bluez-utils 5.64-2
+        Development and debugging utilities for the bluetooth protocol stack
+    local/boost-libs 1.78.0-2
+        Free peer-reviewed portable C++ source libraries (runtime libraries)
+    local/tpm2-tss 3.2.0-1
+        Implementation of the TCG Trusted Platform Module 2.0 Software Stack (TSS2)
+
+  Nothing system wide installed.  Now what might be installed locally
+  in /home/grs,
+
+    [gauss17]$ ls ~/.cabal ~/.stack ~/.local/bin
+    /home/grs/.cabal:
+    config  packages/
+
+    /home/grs/.local/bin:
+    digpath*  pathtrim*
+
+    /home/grs/.stack:
+    config.yaml      programs/         snapshots/
+    global-project/  setup-exe-cache/  stack.sqlite3
+    pantry/          setup-exe-src/    stack.sqlite3.pantry-write-lock
+
+    [euler7]$ ls ~/.cabal ~/.stack ~/.local/bin
+    ls: cannot access '/home/grs/.cabal': No such file or directory
+    ls: cannot access '/home/grs/.stack': No such file or directory
+    /home/grs/.local/bin:
+    digpath*  pathtrim*
+
+  So,
+
+    [gauss17]$ rm -r ~/.cabal ~/.stack
+
+  Now, on both systems install ghc, cabal, and stack.
+
+    $ sudo pacman -Syu ghc cabal-install stack
+
+  Now, update and configure Cabal,
+
+    $ cabal update
+    Config file path source is default config file.
+    Config file /home/grs/.cabal/config not found.
+    Writing default configuration to /home/grs/.cabal/config
+    Downloading the latest package list from hackage.haskell.org
+    Updated package list of hackage.haskell.org to the index-state 2022-05-28T22:44:41Z
+
+  Updating ~/.cabal/config via my dotfiles repo.
+
+    library-vanilla: False
+    shared: True
+    executable-dynamic: True
+    program-default-options
+      ghc-options: -dynamic
+
+  Now, set up Stack, note that you need to specify a resolver which is
+  compatible with the system GHC. Otherwise Stack will happily ignore
+  the --system-ghc flag and download its own copy of GHC.
+
+    $ ghc --version
+    The Glorious Glasgow Haskell Compilation System, version 9.0.2
+
+  From the Stackage website, https://www.stackage.org/, the latest
+  release for this verion of ghc is lts-19.8
+
+    $ stack setup --system-ghc --resolver 'lts-19.8'
+    Exception while reading snapshot from https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/19/8.yaml:
+    ...
+    ConnectionTimeout
+
+  Something went wrong, it did create the ~/.stack/config.yaml file.
+  Will use my dotfiles repo to manage it.
+
+2022-05-29:
+  Created the Stack config.yaml file, managed via my dotfiles repo,
+  and installed it to ~/.stack/config.yaml.
+
+  Getting the same errors,
+
+    $ stack setup --system-ghc --resolver 'lts-19.8'
+    Exception while reading snapshot from https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/19/8.yaml:
+    HttpExceptionRequest Request {
+      host                 = "raw.githubusercontent.com"
+      port                 = 443
+      secure               = True
+      requestHeaders       = [("User-Agent","Haskell pantry package")]
+      path                 = "/commercialhaskell/stackage-snapshots/master/lts/19/8.yaml"
+      queryString          = ""
+      method               = "GET"
+      proxy                = Nothing
+      rawBody              = False
+      redirectCount        = 10
+      responseTimeout      = ResponseTimeoutDefault
+      requestVersion       = HTTP/1.1
+      proxySecureMode      = ProxySecureWithConnect
+    }
+     ConnectionTimeout
+
+  I may not be making the best use of the stack tool by forcing it
+  to use the native Haskell ghc installed on Arch.  Both stack and
+  cabal-install have evolved since the info I am drawing from was
+  posted.  The hacks I am making my be 3-4 years old.
+
+  I am curious, Let's see what stack does.  The above command did
+  install a bunch of stuff into the ~/.stack/ directory.
+ 
+    $ cd ~/devel/scheller-linux-archive/grok/Haskell/pythag-triples
+    $ stack build
+    No compiler found, expected minor version match or newer  \
+    with ghc-8.6.5 (x86_64-tinfo6) (based on resolver setting \
+    in /home/grs/devel/scheller-linux-archive/grok/Haskell/pythag-triples/stack.yaml). \
+    To install the correct GHC into /home/grs/.stack/programs/x86_64-linux/,  \
+    try running "stack setup" or use the "--install-ghc" flag. To use your    \
+    system GHC installation, run "stack config set system-ghc --global true", \
+    or use the "--system-ghc" flag.
+
+  Good, I stopped it from willy-nilly installing another version of
+  ghc instead of just failing.
+
+  Updated package.yaml
+
+    dependecies:
+      - base >= 4.15 && < 5
+
+  from README.md file, past generated files were
+
+    * pythag-triples.cabal: generated by `stack init`
+    * Setup.hs: generated by `cabal init`
+    * stack.yaml.lock: generated by `stack build`
+
+  Try rebuilding these,
+
+    $ stack init --force
+    Using cabal packages:
+    - ./
+
+    Selecting the best among 21 snapshots...
+    ...
+    ConnectionTimeout
+
+  It did update python-triples.cabal, but not stack.yaml
+
+    $ rm pythag-triples.cabal Setup.hs stack.yaml.lock stack.yaml
+    $ stack init
+    ...
+    ConnectionTimeout
+
+    $ cabal init
+
+    Guessing dependencies...
+
+    Generating LICENSE...
+    Warning: unknown license type, you must put a copy in LICENSE yourself.
+    Generating CHANGELOG.md...
+    Warning: CHANGELOG.md already exists, backing up old version in CHANGELOG.md.save0
+    Generating app/Main.hs...
+    Generating pythag-triples.cabal...
+    Warning: pythag-triples.cabal already exists, backing up old version in pythag-triples.cabal.save0
+
+    Warning: no synopsis given. You should edit the .cabal file and add one.
+    You may want to edit the .cabal file and add a Description field.
+
+    $ stack build
+    ...
+    ConnectionTimeout
+    $ stack run
+    ...
+    ConnectionTimeout
+
+    $ cabal build
+    Resolving dependencies...
+    Build profile: -w ghc-9.0.2 -O1
+    In order, the following will be built (use -v for more details):
+     - pythag-triples-0.1.0.0 (exe:pythag-triples) (first run)
+    Configuring executable 'pythag-triples' for pythag-triples-0.1.0.0..
+    Preprocessing executable 'pythag-triples' for pythag-triples-0.1.0.0..
+    Building executable 'pythag-triples' for pythag-triples-0.1.0.0..
+    [1 of 1] Compiling Main             ( app/Main.hs, /home/grs/devel/scheller-linux-archive/grok/Haskell/pythag-triples/dist-newstyle/build/x86_64-linux/ghc-9.0.2/pythag-triples-0.1.0.0/x/pythag-triples/build/pythag-triples/pythag-triples-tmp/Main.o )
+    Linking /home/grs/devel/scheller-linux-archive/grok/Haskell/pythag-triples/dist-newstyle/build/x86_64-linux/ghc-9.0.2/pythag-triples-0.1.0.0/x/pythag-triples/build/pythag-triples/pythag-triples ...
+
+    $ cabal exec pythag-triples
+    Hello, Haskell!
+
+  I think it is becoming obviuous I don't know what the hell I am doing!
+
+    $ cd ..
+    $ rm -rf pythag-triples/
+    $ git checkout pythag-triples
+    Updated 13 paths from the index
+
+    $ cd pythag-triples/
+
+  Thought this would fail, just complained
+
+    $ cabal build
+    $ cabal exec pythagTriples 10
+    (3, 4, 5)
+    (5, 12, 13)
+    (15, 8, 17)
+    (7, 24, 25)
+    (21, 20, 29)
+    (9, 40, 41)
+    (35, 12, 37)
+    (11, 60, 61)
+    (45, 28, 53)
+    (33, 56, 65)
+
+    $ cabal install pythagTriples
+    cabal: Spec.hs doesn't exist
+
+    $ find . -name pythagTriples
+    ./dist-newstyle/build/x86_64-linux/ghc-9.0.2/pythag-triples-0.4.1/x/pythagTriples
+    ./dist-newstyle/build/x86_64-linux/ghc-9.0.2/pythag-triples-0.4.1/x/pythagTriples/build/pythagTriples
+    ./dist-newstyle/build/x86_64-linux/ghc-9.0.2/pythag-triples-0.4.1/x/pythagTriples/build/pythagTriples/pythagTriples
+
+    $ ldd ./dist-newstyle/build/x86_64-linux/ghc-9.0.2/pythag-triples-0.4.1/x/pythagTriples/build/pythagTriples/pythagTriples
+	linux-vdso.so.1 (0x00007ffd447f1000)
+	libHSpythag-triples-0.4.1-inplace-ghc9.0.2.so => /home/grs/devel/scheller-linux-archive/grok/Haskell/pythag-triples/dist-newstyle/build/x86_64-linux/ghc-9.0.2/pythag-triples-0.4.1/build/libHSpythag-triples-0.4.1-inplace-ghc9.0.2.so (0x00007f75b7212000)
+	libHSsplit-0.2.3.4-Gv6w6rbBDY0EqPSQ825Xh8-ghc9.0.2.so => /usr/lib/libHSsplit-0.2.3.4-Gv6w6rbBDY0EqPSQ825Xh8-ghc9.0.2.so (0x00007f75b71f1000)
+	libHSbase-4.15.1.0-ghc9.0.2.so => /usr/lib/ghc-9.0.2/base-4.15.1.0/libHSbase-4.15.1.0-ghc9.0.2.so (0x00007f75b6400000)
+	libHSghc-bignum-1.1-ghc9.0.2.so => /usr/lib/ghc-9.0.2/ghc-bignum-1.1/libHSghc-bignum-1.1-ghc9.0.2.so (0x00007f75b7184000)
+	libHSghc-prim-0.7.0-ghc9.0.2.so => /usr/lib/ghc-9.0.2/ghc-prim-0.7.0/libHSghc-prim-0.7.0-ghc9.0.2.so (0x00007f75b5e00000)
+	libHSrts_thr-ghc9.0.2.so => /usr/lib/ghc-9.0.2/rts/libHSrts_thr-ghc9.0.2.so (0x00007f75b636b000)
+	libgmp.so.10 => /usr/lib/libgmp.so.10 (0x00007f75b5d5d000)
+	libc.so.6 => /usr/lib/libc.so.6 (0x00007f75b5a00000)
+	libm.so.6 => /usr/lib/libm.so.6 (0x00007f75b5c76000)
+	libffi.so.8 => /usr/lib/libffi.so.8 (0x00007f75b7176000)
+	libnuma.so.1 => /usr/lib/libnuma.so.1 (0x00007f75b7166000)
+	librt.so.1 => /usr/lib/librt.so.1 (0x00007f75b7146000)
+	libdl.so.2 => /usr/lib/libdl.so.2 (0x00007f75b7141000)
+	libpthread.so.0 => /usr/lib/libpthread.so.0 (0x00007f75b713c000)
+	/lib64/ld-linux-x86-64.so.2 => /usr/lib64/ld-linux-x86-64.so.2 (0x00007f75b7221000)
+
+    $ cabal test
+    Build profile: -w ghc-9.0.2 -O1
+    In order, the following will be built (use -v for more details):
+     - pythag-triples-0.4.1 (test:spec) (first run)
+    Preprocessing test suite 'spec' for pythag-triples-0.4.1..
+    cabal: can't find source for Spec in
+    /home/grs/devel/scheller-linux-archive/grok/Haskell/pythag-triples/dist-newstyle/build/x86_64-linux/ghc-9.0.2/pythag-triples-0.4.1/t/spec/build/spec/spec-tmp,
+    test
+
+  STOP!!!!
+
+2022-05-29:
+  Seem to have had some moderate success with cabal, utter failure
+  with stack.
+
+  1. Stack is the wrong tool to try and do local builds on Arch.
+     I won't uninstall it, but I will not configure it until I can
+     more systematically learn it.  Probably horribly misconfigured 
+     at this point.
+  2. I think a good use case for stack is when you have to distribute
+     Haskell source code to non-Haskell users to compile.  Along with
+     the source code, you can point them to the Stack website,
+     https://docs.haskellstack.org/en/stable/README/, to get a compile
+     environment up and running on whatever OS they happen to be on.
+  3. I will be concentrating on learning cabal well.

@@ -11746,3 +11746,8 @@ Purpose: To indicate what was done to create gauss17 and
 
   Should I figure out how to add qt6-wayland as a mozillavpn dependency? 
   Not sure, optional dependency?
+
+2022-05-28:
+  Cleaned up a lot of cruft in /home/grs/.config directory.  Used
+  corresponding one on euler7 as a guide.
+

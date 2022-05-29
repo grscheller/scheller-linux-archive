@@ -2227,3 +2227,7 @@ Purpose: To rebuild from scratch maxwell4 after
 
   Worked!
 
+2022-05-28:
+  Cleaned up /home/grs/.config directory.  Used corresponding one
+  on gauss17 as a guide.
+

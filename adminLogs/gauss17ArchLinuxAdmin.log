@@ -11840,3 +11840,53 @@ Purpose: To indicate what was done to create gauss17 and
 
   6. Some :checkhealth Treesitter problems with the R parser.
      See if problem goes away in a few days after a :PackerSync.
+
+2022-05-31:
+  Installed qt6ct configuration tool.
+
+    $ sudo pacman -Syu qt6ct
+
+2022-05-31:
+
+  Here are the LSP language servers I currently manage
+  by neovim/nvim-lspconfig,
+
+      bashls ---> bash-language-server
+      clangd ---> clang
+       cssls ---> vscode-css-languageserver
+       gopls ---> gopls
+        html ---> vscode-html-languageserver
+      jsonls ---> vscode-json-languageserver
+     pyright ---> pyright
+
+  Language servers managed by other plugins,
+    rust-analyzer ---> simrat39/rust-tools
+     scala metals ---> scalameta/nvim-metals
+
+  Using the command
+
+    $ pacman -Ss '.*language.*server'
+    
+  here are some language servers from the Arch Repos I am considering
+
+    python-lsp-server
+    lua-language-server
+    typescript-language-server
+    yaml-language-server
+    haskell-language-server
+        haskell-hls-call-hierarchy-plugin
+        haskell-hls-eval-plugin
+        haskell-hls-explicit-imports-plugin
+        haskell-hls-graph
+        haskell-hls-haddock-comments-plugin
+        haskell-hls-hlint-plugin
+        haskell-hls-module-name-plugin
+        haskell-hls-plugin-api
+        haskell-hls-pragmas-plugin
+        haskell-hls-retrie-plugin
+        haskell-hls-test-utils
+
+Couple others, just to document they exist
+
+    ccls    (clangd alternative - not as actively maintained?)
+    texlab  (LSP for LaTex)

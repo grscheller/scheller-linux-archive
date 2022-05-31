@@ -2254,3 +2254,9 @@ Purpose: To rebuild from scratch maxwell4 after
 
 2022-05-31:
   Made similar Neovim repairs as I did on gauss17 on 05-30 & 05-31.
+
+2022-05-31:
+  Installed qt6ct configuration tool.
+
+    $ sudo pacman -Syu qt6ct
+

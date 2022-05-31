@@ -2231,3 +2231,26 @@ Purpose: To rebuild from scratch maxwell4 after
   Cleaned up /home/grs/.config directory.  Used corresponding one
   on gauss17 as a guide.
 
+2022-05-31:
+  Installed bind package for nslookup,
+
+    $ sudo pacman -Syu bind
+
+  Installed qt6 wayland infrastructure (to match gauss17).
+
+    $ sudo pacman -Syu qt6-wayland
+    :: Synchronizing package databases...
+     core is up to date
+     extra is up to date
+     community is up to date
+     archlocal is up to date
+    :: Starting full system upgrade...
+    resolving dependencies...
+    looking for conflicting packages...
+    
+    Packages (7) libb2-0.98.1-2  qt6-base-6.3.0-3  qt6-declarative-6.3.0-2
+                 qt6-translations-6.3.0-1  vulkan-headers-1:1.3.213-1
+                 xcb-util-cursor-0.1.3-4  qt6-wayland-6.3.0-1
+
+2022-05-31:
+  Made similar Neovim repairs as I did on gauss17 on 05-30 & 05-31.

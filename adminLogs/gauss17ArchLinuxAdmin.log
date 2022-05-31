@@ -11751,3 +11751,92 @@ Purpose: To indicate what was done to create gauss17 and
   Cleaned up a lot of cruft in /home/grs/.config directory.  Used
   corresponding one on euler7 as a guide.
 
+2022-05-30:
+  Neovim config a bit messed up on gauss17 (euler7 too).
+
+  1. Noticed nvim LSP HTML editting works on euler7, but not gauss17.
+
+     On Arch pacman installs vscode language servers in /usr/bin
+     with the wrong names.  Simlinks I installed in /usr/local/bin on
+     euler7 don't seem to be present on gauss17.
+
+       $ for mm in vscode-{css,html,json}-language
+           sudo ln -s /usr/bin/{$mm}server /usr/local/bin/$mm-server
+         end
+     
+     LSP now works on gauss17.
+
+  2. From :checkhealth on both gauss17 & euler7, I am getting
+
+       - ERROR: **node**: unsupported version `v12.22.12`. \
+         Node version must be >= 14
+
+     Let's see what is installed/available,
+
+       $ pacman -Qs 'nodejs(|-.*m)$'
+       local/nodejs-lts-erbium 12.22.12-2
+           Evented I/O for V8 javascript (LTS release: Erbium)
+       
+       $ pacman -Ss 'nodejs(|-.*m)$'
+       community/nodejs 18.2.0-1
+           Evented I/O for V8 javascript
+       community/nodejs-lts-fermium 14.19.3-1
+           Evented I/O for V8 javascript (LTS release: Fermium)
+       community/nodejs-lts-gallium 16.15.0-1
+           Evented I/O for V8 javascript (LTS release: Gallium)
+       ... 
+
+     Can't just removed the old package, too manny dependencies.
+
+       $ sudo pacman -Syu nodejs
+       ...
+       looking for conflicting packages...
+       :: nodejs and nodejs-lts-erbium are in conflict. \
+       Remove nodejs-lts-erbium? [y/N] y
+
+  3. :checkhealth warning, complaining lua rocks not available 
+     for both gauss17 & euler7
+
+       $ sudo pacman -Syu luarocks
+
+  4. :checkhealth taking forever to run, failing for the commands
+
+        - ERROR: Command timed out: gem list -ra '^neovim$'
+        - ERROR: Command timed out: npm info neovim --json
+          - ADVICE:
+            - Make sure you're connected to the internet.
+            - Are you behind a firewall or proxy?
+
+     I wondering if this could be an IPv6 issue?
+
+       $ getent hosts rubygems.org
+       2a04:4e42:400::483 rubygems.org
+       2a04:4e42:200::483 rubygems.org
+       2a04:4e42::483  rubygems.org
+       2a04:4e42:600::483 rubygems.org
+
+       $ getent hosts npmjs.com
+       2606:4700::6810:5c53 npmjs.com
+       2606:4700::6810:5d53 npmjs.com
+
+2022-05-31:
+  Continue fixing Neovim config from yesterday but from work. 
+
+  5. Above :checkhealth problem went away.  Yesterday gem and node
+     were not working from apartment.  OK at work today.
+
+       $ gem install neovim
+       Successfully installed neovim-0.9.0
+       1 gem installed
+       
+       $ gem install mdl
+       Successfully installed mdl-0.11.0
+       1 gem installed
+       
+       $ gem install kramdown
+       Fetching kramdown-2.4.0.gem
+       Successfully installed kramdown-2.4.0
+       1 gem installed
+
+  6. Some :checkhealth Treesitter problems with the R parser.
+     See if problem goes away in a few days after a :PackerSync.

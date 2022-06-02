@@ -11869,7 +11869,6 @@ Purpose: To indicate what was done to create gauss17 and
     
   here are some language servers from the Arch Repos I am considering
 
-    python-lsp-server
     lua-language-server
     typescript-language-server
     yaml-language-server
@@ -11890,3 +11889,20 @@ Couple others, just to document they exist
 
     ccls    (clangd alternative - not as actively maintained?)
     texlab  (LSP for LaTex)
+    python-lsp-server  (uses python, type support with non-open pylance) 
+
+2022-06-02:
+  Install some LSP language servers and associated plugins
+  from the Arch repos.  The plugins are for the Haskell language
+  server.
+
+    $ sudo pacman -Syu lua-language-server typescript-language-server \
+        yaml-language-server haskell-language-server \
+        haskell-hls-call-hierarchy-plugin haskell-hls-eval-plugin \
+        haskell-hls-explicit-imports-plugin haskell-hls-graph \
+        haskell-hls-haddock-comments-plugin haskell-hls-hlint-plugin \
+        haskell-hls-module-name-plugin haskell-hls-plugin-api \
+        haskell-hls-pragmas-plugin haskell-hls-retrie-plugin \
+        haskell-hls-test-utils
+
+  Updated Neovim configuration from my dotfiles repo.

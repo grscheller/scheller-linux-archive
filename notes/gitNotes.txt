@@ -1088,6 +1088,30 @@ XIII. Examining previous versions of a file:
 
        will dump it all to a file called junk.
 
+         $ git show HEAD@{2022-03-30}:./config/nvim/lua/grs/init.lua
+
+       will show the version of the file as of that date.
+
+         $ git show HEAD@{2022-03-30}:./config/nvim/lua/grs|cat
+         tree HEAD@{2022-03-30}:./config/nvim/lua/grs
+
+         Colorscheme.lua
+         Completions.lua
+         DevEnv.lua
+         Options.lua
+         Packer.lua
+         Telescope.lua
+         TextEdit.lua
+         Treesitter.lua
+         WhichKey.lua
+         init.lua
+
+       which lists the files in that directory as of that date.
+
+         $ git show HEAD@{2022-06-4}
+
+       will list the commit messages and diffs for that day.
+
 XIV. GIT revision history tools:
 
     1. To show commit comments for history

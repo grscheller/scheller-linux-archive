@@ -1074,7 +1074,7 @@ XII. Tagging:
 
 XIII. Examining previous versions of a file:
 
-    1. To view a previous version of file,
+    1. Use 'git show' to view a previous version of file,
 
          $ git show REVISION:path/to/file
 
@@ -1111,6 +1111,14 @@ XIII. Examining previous versions of a file:
          $ git show HEAD@{2022-06-4}
 
        will list the commit messages and diffs for that day.
+
+    2. Use 'git log' to view the revision history a of file,
+
+         $ git log -p --follow config/nvim/init.lua
+
+       The -p tells git to show all patch information.
+       the --follow to follow the history even in the event
+       that the file name was changed.
 
 XIV. GIT revision history tools:
 

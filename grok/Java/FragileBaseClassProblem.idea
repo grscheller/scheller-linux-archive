@@ -1,0 +1,61 @@
+Fragile Base Class Problem:
+
+Old code:
+
+class Superclass {
+    void foo() {
+        // implementation
+    }
+    void bar() {
+        // implementation
+    }
+}
+
+class Subclass extends Superclass {
+    // don't override `foo`
+    // override `bar`
+    @Override
+    void bar() {
+        // new implementation
+    }
+}
+
+
+New Code:
+
+// Replace the superclass with an interface.
+public interface IClass {
+    void foo();
+    void bar();
+}
+
+// Put any implementation in another, final class.
+final class Superclass implements IClass {
+    public void foo() {
+        // implementation for superclass
+    }
+    public void bar() {
+        // implementation for superclass
+    }
+}
+
+// Instead of `extend`ing the superclass and overriding methods,
+// use an instance of the implementation class as a helper.
+// Naturally, the subclass can also forgo the helper and
+// implement all the methods for itself.
+class Subclass implements IClass {
+    private Superclass helper = new Superclass();
+
+    // Don't override `foo`.
+    public void foo() {
+        this.helper.foo();
+    }
+
+    // Override `bar`.
+    public void bar() {
+        // Don't call helper; equivalent of an override.
+        // Or, do call helper, but the helper's methods are
+        // guaranteed to be its own rather than possibly
+        // being overridden by yours.
+    }
+}

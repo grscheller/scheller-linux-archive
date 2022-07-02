@@ -2,8 +2,8 @@ lazy val root = project
   .in(file("."))
   .settings(
       name := "scalaImplicits"
-    , version := "0.1.4"
-    , scalaVersion := "3.1.0"
+    , version := "0.1.5"
+    , scalaVersion := "3.1.2"
 
     , scalacOptions += "-deprecation"
     , scalacOptions += "-feature"

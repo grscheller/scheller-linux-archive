@@ -1,0 +1,36 @@
+body {
+  color: White;
+  background-color: Black;
+}
+
+a:link {
+  color: Aqua;
+  text-decoration: none;
+}
+
+a:visited {
+  color: Pink;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+p {
+  margin-left: 30px;
+}
+
+p.altmargin-left {
+  margin-left: 50px;
+}
+
+table {
+  width: 100%;
+}
+
+td {
+  vertical-align: top;
+  padding: 10px;
+}
+

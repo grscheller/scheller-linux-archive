@@ -27,6 +27,10 @@ By its very nature, it contains many loose threads.
 
 * [System Admin Logs](adminLogs)
 
+## Personnal Homepage - replaces browser bookmarks
+
+* [Personnal Homepage](web)
+
 ## Grokking Computer Languages - many loose threads
 
 * __C__

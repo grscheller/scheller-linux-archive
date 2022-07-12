@@ -2275,3 +2275,10 @@ Purpose: To rebuild from scratch maxwell4 after
         haskell-hls-test-utils
 
   Will need to update Neovim configuration from my dotfiles repo.
+
+2022-07-11:
+  Removed qt version of pavucontrol.
+
+    $ sudo pacman -Rsc pavucontrol-qt
+
+  The gtk version is playing nicer with sway dark mode themes.

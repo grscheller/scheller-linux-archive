@@ -11906,3 +11906,9 @@ Couple others, just to document they exist
         haskell-hls-test-utils
 
   Updated Neovim configuration from my dotfiles repo.
+
+2022-07-13:
+  Removed qt version of pavucontrol.
+
+    $ sudo pacman -Rsc pavucontrol-qt
+

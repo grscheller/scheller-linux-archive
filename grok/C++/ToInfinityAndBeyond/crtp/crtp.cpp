@@ -24,6 +24,8 @@ void callWalter() {
   cout << "Entered callWalter\n";
   cout << "Number of Dogs created: " << walter.getCreated() << endl;
   cout << "Number of Dogs alive: " << walter.getAlive() << endl;
+  cout << "Walter says: ";
+  walter.speak();
   cout << "Leaving callWalter\n";
 }
 
@@ -58,7 +60,7 @@ int main() {
 
   cout << "Creating gort from robbie" << endl;
   Robot gort = robbie;
-  cout << "Gort say, number Robots created: " << gort.getCreated() << endl;
+  cout << "Gort says, number Robots created: " << gort.getCreated() << endl;
   cout << "Robbie says, number of Robots alive: " << robbie.getAlive() << endl;
 
   return 0;

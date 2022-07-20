@@ -1,10 +1,10 @@
 body {
-  color: White;
+  color: #DDCCDD;
   background-color: Black;
 }
 
 a:link {
-  color: Aqua;
+  color: Cyan;
   text-decoration: none;
 }
 
@@ -19,10 +19,6 @@ a:hover {
 
 p {
   margin-left: 30px;
-}
-
-p.altmargin-left {
-  margin-left: 50px;
 }
 
 table {

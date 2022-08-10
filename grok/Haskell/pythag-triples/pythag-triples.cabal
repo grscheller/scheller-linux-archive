@@ -1,18 +1,18 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.33.0.
+-- This file has been generated from package.yaml by hpack version 0.34.7.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: e047e10338e59a6115d618611aa1270f9b79950759b8fdfe7a8532951f22b8c1
+-- hash: 569b9e46f117ed1733fd80ec0159b560e28d8a71bc1480d936189a4f611f1563
 
 name:           pythag-triples
-version:        0.4.1
+version:        0.4.2
 synopsis:       Pythagorean triple CLI generation program
 category:       Example
 author:         Geoffrey Scheller
 maintainer:     Geoffrey Scheller <geoffrey@scheller.com>
-copyright:      (c) 2016-2020 Geoffrey R Scheller
+copyright:      (c) 2016-2022 Geoffrey R Scheller
 license:        BSD3
 license-file:   LICENSE
 build-type:     Simple

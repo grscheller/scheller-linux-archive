@@ -2282,3 +2282,11 @@ Purpose: To rebuild from scratch maxwell4 after
     $ sudo pacman -Rsc pavucontrol-qt
 
   The gtk version is playing nicer with sway dark mode themes.
+
+2022-08-10:
+  Redoing Haskell infrastructure.  Aiming at a native Arch Haskell
+  Cabal based shared library experience.
+
+    $ sudo pacman -Rsc (pacman -Qsq 'haskell|ghc|^stack$|^cabal-install$')
+    $ sudo pacman -Syu ghc haskell-language-server cabal-install
+

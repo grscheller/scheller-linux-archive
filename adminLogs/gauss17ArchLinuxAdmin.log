@@ -11912,3 +11912,10 @@ Couple others, just to document they exist
 
     $ sudo pacman -Rsc pavucontrol-qt
 
+2022-08-11:
+  Redoing Haskell infrastructure.  Aiming at a native Arch Haskell
+  Cabal based shared library experience.
+
+    $ sudo pacman -Rsc (pacman -Qsq 'haskell|ghc|^stack$|^cabal-install$')
+    $ sudo pacman -Syu ghc haskell-language-server cabal-install
+

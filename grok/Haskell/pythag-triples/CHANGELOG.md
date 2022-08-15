@@ -12,8 +12,12 @@
 * commit 5f1115830d1965c252997c7a817f8d9ddfa9bde4
 * Neovim LSP with haskell-language-server totally misconfigured
 
-## 0.5.0 -- TODO
+## 0.5.0.0 -- 2022-08-15
 
-* rebuild using just native Arch Haskell toolchain
+* rebuild using just native Arch Haskell toolchain - dynamic linking
 * use cabal from the cabal-install Pacman package as build tool
-* dynamic linking
+
+  1. Move original code aside
+  2. Generate boilerplate: `$ cabal init`
+  3. Test boilerplate code: `$ cabal run`
+

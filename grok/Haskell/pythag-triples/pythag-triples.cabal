@@ -2,26 +2,21 @@ cabal-version:      2.4
 name:               pythag-triples
 version:            0.5.0.0
 
--- A short (one-line) description of the package.
 synopsis: Compute Pythagonean Triples
 
--- A longer description of the package.
 description:
     Just the boilerplate from a cabal init.  Will incorporate
-    previous Pythagorean Triple code into an executable on
-    the next commit.
+    previous Pythagorean Triple code into an executable soon.
 
--- A URL where users can report bugs.
 bug-reports: https://github.com/grscheller/scheller-linux-archive
 
--- The license under which the package is released.
--- license:
+license:            BSD-3-Clause
 author:             grscheller
 maintainer:         geoffrey@scheller.com
-
--- A copyright notice.
 copyright:          (c) 2016-2022 Geoffrey R Scheller
+
 -- category:
+
 extra-source-files:
     CHANGELOG.md
     LICENSE

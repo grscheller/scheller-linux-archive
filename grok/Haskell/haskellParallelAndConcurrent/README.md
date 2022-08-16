@@ -46,3 +46,6 @@ the Arch Linux haskell-ghc-paths pacman package.  If I understand the
 source code correctly, it reverse engineers the GHC build system and
 makes available locations of GHC build system components via the Haskell
 GHC.Paths module.
+
+Seems that haskell-ghc-paths Pacman package is a prerequisite of the
+haskell-language-server package.

@@ -144,6 +144,10 @@ This project was originally about me learning how to Use
 the Stack buildtool.  Pathagorean Triples was just being an
 interesting fairly self contained topic to base the project on.
 
+Stack just does not play nice with the Arch Linux Haskell build
+infrastructure.  As a result, I switched to Cabal as my build
+tool.
+
 ### Original Stack Build
 
 A package.yaml file was used to configure the build.  This allowed
@@ -172,7 +176,7 @@ On 2022-08-10 was able to rebuild project via
    $ pythagTriples 200
 ```
 
-This install the executable in ~/.local/bin/pythagTriples
+This installs the executable in `~/.local/bin/pythagTriples`.
 
 ### Problems With Original Build
 
@@ -181,5 +185,30 @@ This install the executable in ~/.local/bin/pythagTriples
 3. Neovim LSP totally confused - ghcide "failed to load packages"
 
 Decided to try and learn Cabal, again, and redo this project as
-a native Arch Build.  My approach will be to uninstall the current Arch Haskell
-infrastructure and reinstall it with just Cabal, not Stack.
+a native Arch Build.
+
+### Cabal Build
+
+I use Cabal from the Arch Linux Pacman package cabal-install.  I do not
+even install the Haskell Static Libraries.  As a result, I have modified
+`~/.cabal/config` from what `cabal update` would provide if missing.
+
+```
+    < -- library-vanilla: True
+    > library-vanilla: False
+    
+    < -- shared:
+    > shared: True
+    
+    < -- executable-dynamic: False
+    > executable-dynamic: True
+    
+    <   -- ghc-options:
+    >   ghc-options: -dynamic
+```
+
+So far, I have used only packages either provided by Arch Linux
+or built by myself.  For now, I have not felt the need to use
+Cabal sandboxes to avoid "Cabal Hell."
+
+I use `cabal install` to directly install executables into `~/.cabal/bin`.

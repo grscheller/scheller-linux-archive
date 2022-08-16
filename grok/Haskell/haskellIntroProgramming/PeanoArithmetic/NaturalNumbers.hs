@@ -67,7 +67,7 @@ instance Num NaturalNumber where
     abs = id
 
     signum Zero  = Zero
-    signum (S _) = S(Zero)
+    signum (S _) = S Zero
 
     fromInteger n
         | n > 0  = S (fromInteger (n-1))

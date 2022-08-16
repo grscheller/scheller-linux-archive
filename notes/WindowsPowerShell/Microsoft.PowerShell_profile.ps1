@@ -1,4 +1,8 @@
 ## Location: $HOME\WindowsPowerShell\Microsoft.PowerShell_profile.ps1
+#  In an admin PS window run: Set-ExecutionPolicy -ExecutionPolicy Unrestricted
+#  Powershell window properties: give black background
+#  Powershell window properties: check legacy console
+#  Powershell window properties: uncheck legacy console
 
 ## Modify the Path environmental variable
 "Virgin Path: " + $env:Path

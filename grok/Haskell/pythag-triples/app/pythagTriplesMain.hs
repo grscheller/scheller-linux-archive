@@ -23,7 +23,7 @@ printTriples = mapM_ (putStrLn . showTriple)
 -- | Standard algorithm to generate Pythagorean Triples
 pythagTriplesFast :: [Triple]
 pythagTriplesFast = [ (a, 2*m*n, c) |
-    m <- [2 ..]
+    m <- [2 .. ]
   , let nstart = m `mod` 2 + 1
   , n <- [nstart, nstart+2 .. m-1]
   , let a = m*m - n*n
@@ -41,14 +41,20 @@ pythagTriplesOrdered1 = [ (a, b, c) |
     , let c = floorSqrt csqr ]
 
 -- | Generate ordered Pythagorean Triples first by b then a
-pythagTriplesOrdered2 :: [Triple]
-pythagTriplesOrdered2 = [ (a, b, c) |
-      b <- [4 .. ]
-    , a <- [(floorSqrt $ 2*b + 1) .. b - 1]
-    , gcd b a == 1
-    , let csqr = a*a + b*b
-    , isPerfectSquare csqr
-    , let c = floorSqrt csqr ]
+pythagTriplesOrdered2 :: Int -> Int -> [Triple]
+pythagTriplesOrdered2 start stop = 
+  let n = stop
+      m = if start < 4
+            then 4
+            else start
+  in
+    [ (a, b, c) |
+      b <- [m .. n]
+      , a <- [(floorSqrt $ 2*b + 1) .. b - 1]
+      , gcd b a == 1
+      , let csqr = a*a + b*b
+      , isPerfectSquare csqr
+      , let c = floorSqrt csqr ]
 
 -- Utility functions
 
@@ -89,7 +95,7 @@ triplesOrdered1 :: Int -> [Triple]
 triplesOrdered1 num = take num pythagTriplesOrdered1
 
 triplesOrdered2 :: Int -> [Triple]
-triplesOrdered2 num = take num pythagTriplesOrdered2
+triplesOrdered2 = pythagTriplesOrdered2 4
 
 triplesFast :: Int -> [Triple]
 triplesFast num = take num pythagTriplesFast

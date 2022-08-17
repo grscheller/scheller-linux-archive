@@ -1,4 +1,4 @@
-# Revision history for pythag-triples
+# Revision history for pythag-triples x.y.z
 
 ## 0.4.0 -- 2020-04-14
 
@@ -11,6 +11,12 @@
 * got whatever was here to rebuild with Stack
 * commit 5f1115830d1965c252997c7a817f8d9ddfa9bde4
 * Neovim LSP with haskell-language-server totally misconfigured
+
+# Revision history for pythag-triples 0.x.y.z
+
+Since first digit is zero, I am ignoring it and effectively using
+3 digit versioning I am ignoring it and effectively using
+3 digit versioning.  Will go to full w.x.y.z when w >=1.
 
 ## 0.5.0.0 -- 2022-08-15
 
@@ -31,3 +37,12 @@
 
 * incorporated changes from neovim lsp haskell-language-server feedback
 * haddock changes
+
+## 0.5.2.1 -- 2022-08-17
+
+* beginning internal changes
+* `pythagTriplesOrdered2 :: Int -> Int -> [Triple]`
+* `pythagTriplesOrdered2 start stop`
+* `pythagTriples -o2 stop` prints out Triples (a, b, c) for b <= stop
+
+

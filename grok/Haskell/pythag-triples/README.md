@@ -203,6 +203,9 @@ even install the Haskell Static Libraries.  As a result, I have modified
     < -- executable-dynamic: False
     > executable-dynamic: True
     
+    < -- overwrite-policy:
+    > overwrite-policy: always
+    
     <   -- ghc-options:
     >   ghc-options: -dynamic
 ```

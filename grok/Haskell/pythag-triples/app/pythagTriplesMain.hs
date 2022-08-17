@@ -18,7 +18,7 @@ sortTriple triple =
     _                 -> triple
 
 printTriples :: [Triple] -> IO()
-printTriples triples = mapM_ putStrLn (map showTriple triples)
+printTriples = mapM_ (putStrLn . showTriple)
 
 -- | Standard algorithm to generate Pythagorean Triples
 pythagTriplesFast :: [Triple]
@@ -30,7 +30,7 @@ pythagTriplesFast = [ (a, 2*m*n, c) |
   , let c = m*m + n*n
   , gcd a c == 1 ]
 
--- | Generate ordered Pythagorean Triples lexiconically ordered
+-- | Generate ordered Pythagorean Triples first by a then b
 pythagTriplesOrdered1:: [Triple]
 pythagTriplesOrdered1 = [ (a, b, c) |
       a <- [3 .. ]
@@ -40,7 +40,7 @@ pythagTriplesOrdered1 = [ (a, b, c) |
     , isPerfectSquare csqr
     , let c = floorSqrt csqr ]
 
--- | Generate ordered Pythagorean Triples lexiconically ordered
+-- | Generate ordered Pythagorean Triples first by b then a
 pythagTriplesOrdered2 :: [Triple]
 pythagTriplesOrdered2 = [ (a, b, c) |
       b <- [4 .. ]
@@ -59,7 +59,7 @@ isPerfectSquare :: Int -> Bool
 isPerfectSquare n = let m = floorSqrt n in  n == m * m
 
 -- | Print out Pythagorean Triples with space
--- | after comma, like how Python prints tuples.
+--   after comma, like how Python prints tuples.
 showTriple :: Triple -> String
 showTriple = intercalate ", " . splitOn "," . show
 

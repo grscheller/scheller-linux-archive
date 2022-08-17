@@ -21,3 +21,13 @@
   2. Generate boilerplate: `$ cabal init`
   3. Test boilerplate code: `$ cabal run`
 
+## 0.5.1.0 -- 2022-08-16
+
+* first version where original code incorporated back into executable
+* library code and executable combinded into single executable
+* intend to separate out library at a later time
+
+## 0.5.1.1 -- 2022-08-16
+
+* incorporated changes from neovim lsp haskell-language-server feedback
+* haddock changes

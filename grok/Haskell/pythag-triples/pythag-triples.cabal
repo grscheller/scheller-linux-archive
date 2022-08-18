@@ -1,6 +1,6 @@
 cabal-version:      2.4
 name:               pythag-triples
-version:            0.5.2.2
+version:            0.5.3.0
 
 synopsis: Compute Pythagonean Triples
 

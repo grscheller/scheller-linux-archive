@@ -53,3 +53,9 @@ Since first digit is zero, I am ignoring it and effectively using
   3. seems that the gcd check was superfluous 
 
 * got rid of some helper functions
+
+## 0.5.3.0 -- 2022-08-18
+
+* `$ pythagTriples` now handles 1 or 2 nonoption arguments
+* for -o1 or -o2 you can now give both a start and end arguments
+* for -f or -fs you can give start and end "iteration level" arguments

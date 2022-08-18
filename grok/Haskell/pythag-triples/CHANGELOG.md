@@ -15,7 +15,6 @@
 # Revision history for pythag-triples 0.x.y.z
 
 Since first digit is zero, I am ignoring it and effectively using
-3 digit versioning I am ignoring it and effectively using
 3 digit versioning.  Will go to full w.x.y.z when w >=1.
 
 ## 0.5.0.0 -- 2022-08-15
@@ -43,6 +42,14 @@ Since first digit is zero, I am ignoring it and effectively using
 * beginning internal changes
 * `pythagTriplesOrdered2 :: Int -> Int -> [Triple]`
 * `pythagTriplesOrdered2 start stop`
-* `pythagTriples -o2 stop` prints out Triples (a, b, c) for b <= stop
+* `$ pythagTriples -o2 stop` prints out Triples (a, b, c) for b <= stop
 
+## 0.5.2.2 -- 2022-08-18
 
+* `$ pythagTriples [-f[s]] n` changed
+
+  1. no longer just doing a `take n` on an infinite data structure
+  2. n signifies a level interation
+  3. seems that the gcd check was superfluous 
+
+* got rid of some helper functions

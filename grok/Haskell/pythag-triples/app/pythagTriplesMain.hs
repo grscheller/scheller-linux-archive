@@ -1,13 +1,13 @@
 module Main where
 
 import System.Environment (getArgs)
---import Data.List (sort)
 import Data.List (sort, intercalate)
+import Data.List.Split (splitOn)
 
 -- Part which may be turn into a Library
 
 --import Data.List (intercalate)
-import Data.List.Split (splitOn)
+--import Data.List.Split (splitOn)
 
 type Triple = (Int, Int, Int)
 
@@ -21,26 +21,43 @@ printTriples :: [Triple] -> IO()
 printTriples = mapM_ (putStrLn . showTriple)
 
 -- | Standard algorithm to generate Pythagorean Triples
-pythagTriplesFast :: [Triple]
-pythagTriplesFast = [ (a, 2*m*n, c) |
-    m <- [2 .. ]
-  , let nstart = m `mod` 2 + 1
-  , n <- [nstart, nstart+2 .. m-1]
-  , let a = m*m - n*n
-  , let c = m*m + n*n
-  , gcd a c == 1 ]
+--   Each (a, b, c) have no common factors.
+--   a & c are always odd, b is always even 
+pythagTriplesFast :: Int -> Int -> [Triple]
+pythagTriplesFast start stop =
+  let n = stop
+      m = if start < 2
+            then 2
+            else start
+  in
+    [ (a, b, c) |
+       k <- [m .. n]
+     , let nstart = k `mod` 2 + 1
+     , j <- [nstart, nstart+2 .. k-1]
+     , let a = k*k - j*j
+     , let b = 2*j*k
+     , let c = k*k + j*j ]
 
--- | Generate ordered Pythagorean Triples first by a then b
-pythagTriplesOrdered1:: [Triple]
-pythagTriplesOrdered1 = [ (a, b, c) |
-      a <- [3 .. ]
-    , b <- [a+1, a+3 .. ((a*a - 1) `div` 2)]
-    , gcd b a == 1
-    , let csqr = a*a + b*b
-    , isPerfectSquare csqr
-    , let c = floorSqrt csqr ]
+-- | Generate ordered Pythagorean Triples first by a then b.
+--   For each a, will find all corresponding b's and c'c 
+--   before moving onto the next a.
+pythagTriplesOrdered1:: Int -> Int -> [Triple]
+pythagTriplesOrdered1 start stop =
+  let n = stop
+      m = if start < 3
+            then 3
+            else start
+  in
+    [ (a, b, c) |
+       a <- [m .. n]
+     , b <- [a+1, a+3 .. ((a*a - 1) `div` 2)]
+     , gcd b a == 1
+     , let csqr = a*a + b*b
+     , isPerfectSquare csqr
+     , let c = floorSqrt csqr ]
 
 -- | Generate ordered Pythagorean Triples first by b then a
+--   Will only find a's where a < b
 pythagTriplesOrdered2 :: Int -> Int -> [Triple]
 pythagTriplesOrdered2 start stop = 
   let n = stop
@@ -71,14 +88,17 @@ showTriple = intercalate ", " . splitOn "," . show
 
 -- Part to remain an executable
 
+--import System.Environment (getArgs)
+--import Data.List (sort)
+
 main :: IO ()
 main = do
   args <- getArgs
   case args of
-    ["-o1", numStr] -> printTriples $ triplesOrdered1 (read numStr)
-    ["-o2", numStr] -> printTriples $ triplesOrdered2 (read numStr)
-    ["-f", numStr]  -> printTriples $ triplesFast (read numStr)
-    ["-fs", numStr] -> printTriples $ sort $ map sortTriple $ triplesFast (read numStr)
+    ["-o1", numStr] -> printTriples $ pythagTriplesOrdered1 3 (read numStr)
+    ["-o2", numStr] -> printTriples $ pythagTriplesOrdered2 4 (read numStr)
+    ["-f", numStr]  -> printTriples $ pythagTriplesFast 2 (read numStr)
+    ["-fs", numStr] -> printTriples $ sort $ map sortTriple $ pythagTriplesFast 2 (read numStr)
     "-h":_          -> putStrLn $ usageString ++ infoString
     "--help":_      -> putStrLn $ usageString ++ infoString
     "-o1":_         -> errorOut "option -o1 takes one argument"
@@ -86,19 +106,10 @@ main = do
     "-f":_          -> errorOut "option -f takes one argument"
     "-fs":_         -> errorOut "option -fs takes one argument"
     ('-':x:rest):_  -> errorOut $ '-':x:rest ++ " is an invalid option"
-    [numStr]        -> printTriples $ triplesFast (read numStr)
+    [numStr]        -> printTriples $ pythagTriplesFast 2 (read numStr)
     _               -> errorOut "called with invalid arguments"
   where
     errorOut str =  error $ "\n  error: " ++ str
-
-triplesOrdered1 :: Int -> [Triple]
-triplesOrdered1 num = take num pythagTriplesOrdered1
-
-triplesOrdered2 :: Int -> [Triple]
-triplesOrdered2 = pythagTriplesOrdered2 4
-
-triplesFast :: Int -> [Triple]
-triplesFast num = take num pythagTriplesFast
 
 usageString :: String
 usageString = unlines [

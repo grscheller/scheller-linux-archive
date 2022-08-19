@@ -138,7 +138,7 @@ All algorithms only print triples with no common factors.
    Also seems to produce results where `gcd(a,b,c) > 1`
    like `(8, 6, 10)` and `(40, 42, 58)`.
 
-## Build The code
+## Building the Code
 
 This project was originally about me learning how to Use
 the Stack buildtool.  Pathagorean Triples was just being an
@@ -189,8 +189,8 @@ a native Arch Build.
 
 ### Cabal Build
 
-I use Cabal from the Arch Linux Pacman package cabal-install.  I do not
-even install the Haskell Static Libraries.  As a result, I have modified
+I use Cabal from the Arch Linux Pacman package cabal-install.  Haskell static
+libraries are not even installed.  As a result, I have modified my
 `~/.cabal/config` from what `cabal update` would provide if missing.
 
 ```
@@ -214,4 +214,32 @@ So far, I have used only packages either provided by Arch Linux
 or built by myself.  For now, I have not felt the need to use
 Cabal sandboxes to avoid "Cabal Hell."
 
-I use `cabal install` to directly install executables into `~/.cabal/bin`.
+I use `cabal install` to directly install the `pythagTriples` executable
+into `~/.cabal/bin` and the `pythag-triples` library under `~/.cabal`.
+
+## Using The Code
+
+The `pythagTriples` executable installed in `~/.cabal/bin` worked just
+fine.  But when using `ghci`, no matter what I did, I could not load the
+pythag-triples package into ghci.  I could load the source code just fine
+with `ghci> load lib/PythagTriples.hs` but could not load the compiled
+version stored in `~/.cabal/store/.../pathag-triples-...ghc9.0.2.so` no
+mattered what I tried.
+
+Seems you have to use `cabal repl` from your package directory and cabal
+opens a `ghci` session with all the right settings to start importing the
+necessary modules to make your project work.  Requires `build-depens:`
+to be properly setup. 
+
+### Notes to self
+
+1. Time to create a Haskell REPL project similar to my
+   Scala3 scala-console project for `cabal repl`
+2. To use ghci directly, we don't use Cabal's infrastructure.
+3. To directly use ghci, and ghc, we would need to use `ghc-pkg`
+   to add --user packages under `~/.ghc` infrastructure.
+   * `ghc-pkg -register` to register your package so that
+   * `ghc-pkg --user -list` will be able to see your package and then
+   * `ghci -package your-awsome-package` 
+
+

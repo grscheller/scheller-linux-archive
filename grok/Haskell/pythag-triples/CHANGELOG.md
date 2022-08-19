@@ -65,3 +65,7 @@ Since first digit is zero, I am ignoring it and effectively using
 * preparing to split out pythag-triples library to lib/
 * tweak pythag-triples.cabal
 * improved pythagTriples error messages
+
+## 0.5.4.0 -- 2022-08-19
+
+* split out pythag-triples library code from pythagTriples to lib/

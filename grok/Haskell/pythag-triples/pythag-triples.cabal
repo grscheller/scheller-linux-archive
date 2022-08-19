@@ -1,6 +1,7 @@
 cabal-version:      2.4
 name:               pythag-triples
-version:            0.5.3.0
+version:            0.5.3.1
+synopsis:           Program to generate Pythagonean Triples
 
 synopsis: Compute Pythagonean Triples
 
@@ -8,9 +9,11 @@ description:
     CLI command pythagTriples used to compute Pathagorean triples.
     May expand latter to also be a library.
 
+homepage: https://github.com/grscheller/scheller-linux-archive
 bug-reports: https://github.com/grscheller/scheller-linux-archive
 
 license:            BSD-3-Clause
+license-file:       LICENSE
 author:             grscheller
 maintainer:         geoffrey@scheller.com
 copyright:          (c) 2016-2022 Geoffrey R Scheller
@@ -19,7 +22,6 @@ copyright:          (c) 2016-2022 Geoffrey R Scheller
 
 extra-source-files:
     CHANGELOG.md
-    LICENSE
     README.md
 
 executable pythagTriples
@@ -30,7 +32,9 @@ executable pythagTriples
 
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
-    build-depends:    base ^>=4.15.1.0
-    build-depends:    split
+    build-depends:
+        base ^>=4.15.1.0,
+        split
+
     hs-source-dirs:   app
     default-language: Haskell2010

@@ -59,3 +59,9 @@ Since first digit is zero, I am ignoring it and effectively using
 * `$ pythagTriples` now handles 1 or 2 nonoption arguments
 * for -o1 or -o2 you can now give both a start and end arguments
 * for -f or -fs you can give start and end "iteration level" arguments
+
+## 0.5.3.1 -- 2022-08-19
+
+* preparing to split out pythag-triples library to lib/
+* tweak pythag-triples.cabal
+* improved pythagTriples error messages

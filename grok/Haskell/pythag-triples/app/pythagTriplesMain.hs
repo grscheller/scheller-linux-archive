@@ -109,10 +109,10 @@ main = do
     "-o2":_         -> errorOut "option -o2 takes one or two arguments"
     "-f":_          -> errorOut "option -f takes one or two arguments"
     "-fs":_         -> errorOut "option -fs takes one or two arguments"
-    ('-':x:rest):_  -> errorOut $ '-':x:rest ++ " is an invalid option"
+    ('-':x:rest):_  -> errorOut $ '-':x:rest ++ " is an invalid option, try 'pythagTriples --help'"
     [numStr]        -> printTriples $ pythagTriplesFast 2 (read numStr)
-    []              -> errorOut "called with no arguments"
-    _               -> errorOut "called with invalid arguments"
+    []              -> errorOut "called with no arguments, try 'pythagTriples --help'"
+    _               -> errorOut "called with invalid arguments, try 'pythagTriples --help'"
   where
     errorOut str =  error $ "\n  error, " ++ str
 

@@ -14,8 +14,17 @@
 
 # Revision history for pythag-triples 0.x.y.z
 
-Since first digit is zero, I am ignoring it and effectively using
-3 digit versioning.  Will go to full w.x.y.z when w >=1.
+Initially, since first digit was zero and I was still setting the
+project up, I was ignoring it and was using sloppy 3 digit versioning.
+As of version 0.5.4.0, I am using strict 4 digit versioning.
+
+```
+   https://pvp.haskell.org
+   PVP summary:      +-+------- breaking API changes
+                     | | +----- non-breaking API additions
+                     | | | +--- code changes with no API change
+   version:          0.1.0.0
+```
 
 ## 0.5.0.0 -- 2022-08-15
 
@@ -69,3 +78,11 @@ Since first digit is zero, I am ignoring it and effectively using
 ## 0.5.4.0 -- 2022-08-19
 
 * split out pythag-triples library code from pythagTriples to lib/
+
+## 0.5.4.1 -- 2022-08-20
+
+* added back test code from pre 0.4 versions
+* not yet a proper test suite
+  * to run the test suite: `$ cabal test`
+  * to run test suite as a program: `$ cabal run pythag-triples-test`
+                          

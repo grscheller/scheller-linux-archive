@@ -86,3 +86,7 @@ As of version 0.5.4.0, I am using strict 4 digit versioning.
   * to run the test suite: `$ cabal test`
   * to run test suite as a program: `$ cabal run pythag-triples-test`
                           
+## 0.5.4.2 -- 2022-08-20
+
+* added `gcd j k == 1` check to pythagTriplesFast function
+

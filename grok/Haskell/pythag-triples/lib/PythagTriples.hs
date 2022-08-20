@@ -34,6 +34,7 @@ pythagTriplesFast start end =
        k <- [m .. n]
      , let nstart = k `mod` 2 + 1
      , j <- [nstart, nstart+2 .. k-1]
+     , gcd j k == 1
      , let a = k*k - j*j
      , let b = 2*j*k
      , let c = k*k + j*j ]

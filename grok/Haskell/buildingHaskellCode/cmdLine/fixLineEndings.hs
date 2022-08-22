@@ -12,23 +12,23 @@ interAct func inputFile outputFile = do
 
 main :: IO ()
 main = parseArgs
-  where parseArgs = do
-          args <- getArgs
-          case args of
-            [inFile, outFile] -> interAct myFunc inFile outFile
-            _                 -> error("Exactly 2 file arguments needed")
+  where
+    parseArgs = do
+      args <- getArgs
+      case args of
+        [inFile, outFile] -> interAct myFunc inFile outFile
+        _ -> error "Exactly 2 file arguments needed"
 
 myFunc = unlines . splitLines
-             
+
 --splitLines :: string -> [string]
 splitLines [] = []
 splitLines cs =
-    let (pre, suf) = break isLineTerminator cs
-    in  pre : case suf of 
-                ('\r':'\n':rest) -> splitLines rest
-                ('\r':rest)      -> splitLines rest
-                ('\n':rest)      -> splitLines rest
-                _                -> []
+  let (pre, suf) = break isLineTerminator cs
+   in pre : case suf of
+        ('\r' : '\n' : rest) -> splitLines rest
+        ('\r' : rest) -> splitLines rest
+        ('\n' : rest) -> splitLines rest
+        _ -> []
 
 isLineTerminator c = c == '\r' || c == '\n'
-

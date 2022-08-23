@@ -52,7 +52,7 @@ As of version 0.5.4.0, I am using strict 4 digit versioning.
 * `pythagTriplesOrdered2 :: Int -> Int -> [Triple]`
 * `pythagTriplesOrdered2 start stop`
 * `$ pythagTriples -o2 stop` prints out Triples (a, b, c) for b <= stop
-
+skell 
 ## 0.5.2.2 -- 2022-08-18
 
 * `$ pythagTriples [-f[s]] n` changed
@@ -89,4 +89,8 @@ As of version 0.5.4.0, I am using strict 4 digit versioning.
 ## 0.5.4.2 -- 2022-08-20
 
 * added `gcd j k == 1` check to pythagTriplesFast function
+
+## 0.5.4.3 -- 2022-08-22
+
+* should be no changes in behavior, just playing around with Haskell linters
 

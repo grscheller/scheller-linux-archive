@@ -1,6 +1,6 @@
 cabal-version:      2.4
 name:               pythag-triples
-version:            0.5.4.3
+version:            0.5.4.4
 synopsis:           Library and Program to generate Pythagonean Triples
 
 description:

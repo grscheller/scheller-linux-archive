@@ -1,5 +1,7 @@
 # Revision history for pythag-triples x.y.z
 
+Initially, I set up the project using sloppy 3 digit versioning.
+
 ## 0.4.0 -- 2020-04-14
 
 * First version where I try and do things canonically correctly
@@ -12,15 +14,14 @@
 * commit 5f1115830d1965c252997c7a817f8d9ddfa9bde4
 * Neovim LSP with haskell-language-server totally misconfigured
 
-# Revision history for pythag-triples 0.x.y.z
+# Revision history for pythag-triples w.x.y.z
 
-Initially, since first digit was zero and I was still setting the
-project up, I was ignoring it and was using sloppy 3 digit versioning.
 As of version 0.5.4.0, I am using strict 4 digit versioning.
 
 ```
    https://pvp.haskell.org
-   PVP summary:      +-+------- breaking API changes
+   PVP summary:      +--------- epic events/direction changes
+                     | +------- breaking API changes
                      | | +----- non-breaking API additions
                      | | | +--- code changes with no API change
    version:          0.1.0.0
@@ -93,4 +94,10 @@ skell
 ## 0.5.4.3 -- 2022-08-22
 
 * should be no changes in behavior, just playing around with Haskell linters
+
+## 0.5.4.4 -- 2022-08-23
+
+* practicing editing Haskell with Neovim lsp and haskell-language-server
+  * mostly formatting changes to reflect readability of code
+  * more consistent naming of variables 
 

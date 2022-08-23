@@ -1,6 +1,10 @@
-module PythagTriples (printTriples, pythagTriplesOrdered1,
-                      pythagTriplesOrdered2, pythagTriplesFast,
-                      showTriple, sortTriple, Triple) where
+module PythagTriples (Triple,
+                      printTriples,
+                      pythagTriplesOrdered1,
+                      pythagTriplesOrdered2,
+                      pythagTriplesFast,
+                      showTriple,
+                      sortTriple) where
 
 import Data.List       (intercalate)
 import Data.List.Split (splitOn)

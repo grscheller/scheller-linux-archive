@@ -101,3 +101,7 @@ skell
   * mostly formatting changes to reflect readability of code
   * more consistent naming of variables 
 
+## 0.6.0.0 -- 2022-08-23
+
+* fast algorithm now prints out in a more partially ordered way
+  * more consistent with -o1

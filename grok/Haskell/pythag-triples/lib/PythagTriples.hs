@@ -32,8 +32,7 @@ pythagTriplesFast start end =
           else start
    in [ (a, b, c)
         | k <- [m .. n],
-          let nstart = k `mod` 2 + 1,
-          j <- [nstart, nstart + 2 .. k - 1],
+          j <- [k - 1, k - 3 .. 1],
           gcd j k == 1,
           let a = k * k - j * j,
           let b = 2 * j * k,

@@ -3,7 +3,7 @@ lazy val root = project
   .settings(
       name := "scalaImplicits"
     , version := "0.1.5"
-    , scalaVersion := "3.1.2"
+    , scalaVersion := "3.1.0"
 
     , scalacOptions += "-deprecation"
     , scalacOptions += "-feature"

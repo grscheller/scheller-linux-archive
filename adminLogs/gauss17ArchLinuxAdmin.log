@@ -10567,6 +10567,8 @@ Purpose: To indicate what was done to create gauss17 and
 
   Looks like its intended use case is to be embedded into other tools.
 
+  See: 2022-09-03
+
 2022-04-10:
   Decided to go "all-in" with systemd-resolved on gauss17.  No Avahi.
 
@@ -11919,3 +11921,10 @@ Couple others, just to document they exist
     $ sudo pacman -Rsc (pacman -Qsq 'haskell|ghc|^stack$|^cabal-install$')
     $ sudo pacman -Syu ghc haskell-language-server cabal-install
 
+2022-09-03:
+  For nvim-metals :MetalsUpdate to work, Coursier needs to be insalled.
+
+  Updates coursier from AUR and replaced old version of it in my archlocal
+  repo.  Installed coursier 2.1.0_M6-1 to gauss17.
+
+  See 2022-05-22 for the procedure.

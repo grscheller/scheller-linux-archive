@@ -38,8 +38,7 @@ object ScalaImplicts:
 
   def run() =
     val foo: Double = 42.314159
-    val bar: Int = foo // implicit conversion prevents this
-    // from being a type mismatch error
+    val bar: Int = foo // implicit conversion prevents type mismatch error
     print("foo = "); println(foo)
     print("bar = "); println(bar)
     print("4.tripleMe = "); println(4.tripleMe) // add a method to Int

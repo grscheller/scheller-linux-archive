@@ -105,3 +105,7 @@ skell
 
 * fast algorithm now prints out in a more partially ordered way
   * more consistent with -o1
+
+## 0.6.0.1 -- 2022-09-03
+
+* minor list formatting changes

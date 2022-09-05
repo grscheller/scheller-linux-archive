@@ -30,8 +30,7 @@ pythagTriplesFast start end =
         if start < 2
           then 2
           else start
-   in [ (a, b, c)
-        | k <- [m .. n],
+   in [ (a, b, c) | k <- [m .. n],
           j <- [k - 1, k - 3 .. 1],
           gcd j k == 1,
           let a = k * k - j * j,
@@ -49,8 +48,7 @@ pythagTriplesOrdered1 start end =
         if start < 3
           then 3
           else start
-   in [ (a, b, c)
-        | a <- [m .. n],
+   in [ (a, b, c) | a <- [m .. n],
           b <- [a + 1, a + 3 .. ((a * a - 1) `div` 2)],
           gcd b a == 1,
           let csqr = a * a + b * b,
@@ -67,8 +65,7 @@ pythagTriplesOrdered2 start end =
         if start < 4
           then 4
           else start
-   in [ (a, b, c)
-        | b <- [m .. n],
+   in [ (a, b, c) | b <- [m .. n],
           a <- [(floorSqrt $ 2 * b + 1) .. b - 1],
           gcd b a == 1,
           let csqr = a * a + b * b,

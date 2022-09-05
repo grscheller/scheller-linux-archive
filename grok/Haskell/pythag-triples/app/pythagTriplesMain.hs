@@ -1,7 +1,7 @@
 module Main where
 
 import Data.List          (sort)
-import PythagTriples      (Triple, printTriples, pythagTriplesFast,
+import PythagTriples      (printTriples, pythagTriplesFast,
                            pythagTriplesOrdered1,
                            pythagTriplesOrdered2, sortTriple)
 import System.Environment (getArgs)

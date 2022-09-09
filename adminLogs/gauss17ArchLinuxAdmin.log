@@ -11941,3 +11941,10 @@ Couple others, just to document they exist
     NoUpgrade   = usr/bin/sh
     NoExtract   = usr/bin/sh
 
+2022-09-09:
+  Added shellcheck linter to system, surprised when it seemlessly
+  integrated with my current Neovim configuration.
+
+    $ sudo pacman -Syu shellcheck
+
+  Surprised when it integrated seemlessly with my current 

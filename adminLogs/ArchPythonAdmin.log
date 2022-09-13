@@ -21,7 +21,7 @@ Notes taken while configuring Arch Linux for Python development.
         Extensions to Ian Bicking's virtualenv tool
 
   I had remembered pipenv but had fotgotten its name.  Totally
-  bootstrapping from user land, I would need the following
+  bootstrapping from userland, I would need the following
 
     $ pacman -Ss pipx
     community/python-pipx 0.16.4-2
@@ -216,7 +216,7 @@ Notes taken while configuring Arch Linux for Python development.
 2022-01-29:
 
   Why is ~/.pyenv/shims/ empty on gauss17?  Only thing different I
-  really did was installed Python 3.11-dev.
+  really did was installed Python 3.11-dev.python -m tkinter
 
   To list all versions of "things" that Pyenv can install
 
@@ -350,11 +350,13 @@ Notes taken while configuring Arch Linux for Python development.
   Look into HallerPatrick/py_lsp.nvim.  Might be useful if it
   turns out that LSP has trouble distinguishing the environment
   of the Python running in nvim vs virtual environment of the
-  code being editted.
+  code being edited.
 
   I would like to keep my Python virtual environments as lean
   as possible and not have to install pynvim and pipenv into
   every one of them.
+
+  See 2022-09-13
 
 2022-02-15:
 
@@ -372,7 +374,7 @@ Notes taken while configuring Arch Linux for Python development.
 
     vim.g.python3_host_prog = os.getenv("HOME") .. '/.pyenv/shims/python'
 
-  install a version of Python
+  Install a version of Python
 
     $ pyenv install 3.9.7
     $ pyenv global 3.9.7
@@ -381,7 +383,7 @@ Notes taken while configuring Arch Linux for Python development.
     $ PIP_REQUIRE_VIRTUALENV=false pip install pynvim
     $ pyenv global system
 
-  initialize a new project and associaed virtual environment
+  Initialize a new project and associate virtual environment
 
     $ mkdir junk; cd junk
     $ pyenv local 3.9.7  # pipenv will do below without this
@@ -431,3 +433,42 @@ Notes taken while configuring Arch Linux for Python development.
     Removing virtualenv (/home/grs/.local/share/virtualenvs/junk-Jrpe9XOJ)...
     $ cd ..
     $ rm -rf junk/
+
+2022-09-13:
+
+  I almost forgot most of this!  Thank God I wrote this all down.
+
+  * To manage multiple python versions: pyenv
+      - pyenv-virtualenv plugin to manage virtual environments (not used)
+        - using pipenv in lieu of this
+    To manage virtual environments: venv (not using directly)
+      - come with Python 3.3+
+      - recommended by pypa
+      - by default, puts virtual environment in project subdirectory
+      - when used directly, need pip to install packages
+      - virtualenv manages virtual environments (not using)
+        - original tool which venv depricated
+        - seems future goals are to be very cross OS and cross Python version compatible
+        - popular with Python 2.7 clingers
+      - virtualenvwrapper gives convinence Python programs to manage virtual environments (not using)
+        - uses venv when it can
+        - not sure how it handles multiple installed Python versions
+          - does it need to be installed separately on every installed Python?
+          - maybe could use pipenvwrapper?
+    To install Python packages: pip (not usually used directly)
+      - official package installer for Python
+      - packages installed from the Python Package Index and other indexes
+  * To Manage your Python projects/packages/applications: pipenv
+      - wrapper function for pip and venv 
+      - automatically creates and manages a virtualenv for your projects
+      - adds/removes packages from your Pipfile as you install/uninstall Packages
+      - generates Pipfile.lock file for deterministic builds
+      - pipenvwrapper adds convinence shell function to POSIX like shells (not using)
+        - not POSIX compatible shellscripting
+        - bash, ksh, zsh lowest common denominator shell meta programming
+
+  For more information, see
+
+    - https://pipenv.pypa.io/en/latest/
+    - https://pipenv.pypa.io/en/latest/install/
+    - https://pipenv.pypa.io/en/latest/advanced/

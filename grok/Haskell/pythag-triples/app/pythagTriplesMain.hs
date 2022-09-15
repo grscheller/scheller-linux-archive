@@ -25,8 +25,8 @@ main = do
     "-fs" : _ -> errorOut "option -fs takes one or two arguments"
     "-f"  : _ -> errorOut "option -f takes one or two arguments"
     ('-' : x : rest) : _ -> errorOut $ '-' : x : rest ++ " is an invalid option"
-    [start, end] -> printTriples $ pythagTriplesFast (read start) (read end)
-    [end]        -> printTriples $ pythagTriplesFast 2            (read end)
+    [start, end] -> printTriples $ sort $ map sortTriple $ pythagTriplesFast (read start) (read end)
+    [end]        -> printTriples $ sort $ map sortTriple $ pythagTriplesFast            2 (read end)
     [] -> errorOut "called with no arguments"
     _ ->  errorOut "called with wrong number of arguments"
   where
@@ -51,6 +51,7 @@ usageString =
       "          factors.  Both start and end signify iteration levels",
       "          used by the algorithm.",
       "      -fs Use above fast algorithm, sort results a < b < c.",
+      "          This is the default when no options are given.",
       "      -h  Print usage and general information."
     ]
 
@@ -60,5 +61,5 @@ infoString =
     [ "    ",
       "    Pathagorean triples are integers 0 < a, b, c such that",
       "    a^2 + b^2 = c^2.  These algorithms only print triples",
-      "    with no common factors, that is  gcd(a,b,c) = 1."
+      "    with no common factors, that is gcd(a,b,c) = 1."
     ]

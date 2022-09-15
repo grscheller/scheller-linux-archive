@@ -53,7 +53,7 @@ As of version 0.5.4.0, I am using strict 4 digit versioning.
 * `pythagTriplesOrdered2 :: Int -> Int -> [Triple]`
 * `pythagTriplesOrdered2 start stop`
 * `$ pythagTriples -o2 stop` prints out Triples (a, b, c) for b <= stop
-skell 
+
 ## 0.5.2.2 -- 2022-08-18
 
 * `$ pythagTriples [-f[s]] n` changed
@@ -86,6 +86,7 @@ skell
 * not yet a proper test suite
   * to run the test suite: `$ cabal test`
   * to run test suite as a program: `$ cabal run pythag-triples-test`
+  * to run app without installing it: `$ cabal run pythagTriples 42`
                           
 ## 0.5.4.2 -- 2022-08-20
 
@@ -109,3 +110,8 @@ skell
 ## 0.6.0.1 -- 2022-09-03
 
 * minor list formatting changes
+
+## 0.7.0.0 -- 2022-09-15
+
+* when no options are given, default to fast algorithm sorted (-fs)
+  * updated error/help messages to reflect this

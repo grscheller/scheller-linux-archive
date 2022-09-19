@@ -2345,7 +2345,7 @@ Purpose: To rebuild from scratch maxwell4 after
 
   Now reboot.
 
-2022-09-15:
+2022-09-15::qt6::qt6
   Finally got the Neovim::Ext module installed for Neovim.
 
   Was installed here: ~/perl5/lib/perl5/Neovim/
@@ -2368,6 +2368,6 @@ Purpose: To rebuild from scratch maxwell4 after
     !
     Neovim::Ext is up to date. (0.05)
 
-  If I was running perl code on a production system, I would never run
+  If I were running perl code on a production system, I would never run
   any perl modules that did not come with the Linux Distribution as the
   root user.

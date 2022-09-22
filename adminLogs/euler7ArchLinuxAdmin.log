@@ -2369,5 +2369,5 @@ Purpose: To rebuild from scratch maxwell4 after
     Neovim::Ext is up to date. (0.05)
 
   If I were running perl code on a production system, I would never run
-  any perl modules that did not come with the Linux Distribution as the
-  root user.
+  any perl modules as the root user that did not come with the Linux
+  Distribution.

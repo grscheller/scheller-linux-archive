@@ -11247,14 +11247,14 @@ Purpose: To indicate what was done to create gauss17 and
 
     [General]
     EnableNetworkConfiguration=true
-    
+
     [Network]
     EnableIPv6=true
     EnableIPv4=true
-    
+
     # For pure systemd-resolved choose <- new
     NameResolvingService=systemd
-    
+
     # For systemd-resolved+systemd-resolvconf or openresolv <- previously used
     #NameResolvingService=resolvconf
 
@@ -11265,7 +11265,7 @@ Purpose: To indicate what was done to create gauss17 and
     error: failed to prepare transaction (could not satisfy dependencies)
     :: removing systemd-resolvconf breaks dependency 'openresolv' required by mozillavpn
     :: removing systemd-resolvconf breaks dependency 'resolvconf' required by netctl
-    
+
   Now, mozillavpn still does work.  My "guess" is that the line
 
     NameResolvingService=systemd
@@ -11283,26 +11283,26 @@ Purpose: To indicate what was done to create gauss17 and
 
     $ sudo pacman -R netctl
     checking dependencies...
-    
+
     Packages (1) netctl-1.28-1
-    
+
     Total Removed Size:  0.09 MiB
-    
+
     :: Do you want to remove these packages? [Y/n]
     :: Processing package changes...
     (1/1) removing netctl                               [###########################] 100%
     :: Running post-transaction hooks...
     (1/2) Reloading system manager configuration...
     (2/2) Arming ConditionNeedsUpdate...
-    
+
     $ sudo pacman -R systemd-resolvconf
     checking dependencies...
     error: failed to prepare transaction (could not satisfy dependencies)
     :: removing systemd-resolvconf breaks dependency 'openresolv' required by mozillavpn
-    
+
     $ sudo pacman -R openresolv
     error: target not found: openresolv
-    
+
     $ sudo pacman -Ss openresolv
     core/openresolv 3.12.0-1
         resolv.conf management framework (resolvconf)
@@ -11351,7 +11351,7 @@ Purpose: To indicate what was done to create gauss17 and
     $ sudo pacman -Syu wireplumber wireplumber-docs
 
   Missing packages euler7 has
-  
+
     $ sudo pacman -Syu alsa-firmware alsa-plugins alsa-utils
 
 2022-04-26:
@@ -11410,7 +11410,7 @@ Purpose: To indicate what was done to create gauss17 and
      dhcpcd[440]: wlan0: removing interface
      systemd-udevd[1225]: Using default interface naming scheme 'v250'.
      dhcpcd[440]: wlan0: waiting for carrier
- 
+
    Why is dhcpcd server removng the interface.  Searching on Internet,
    came across an unrelated problem on a Rasberry Pi due to two dhcp
    clients running at same time.  The name of one dhcp client rang a bell,
@@ -11421,14 +11421,14 @@ Purpose: To indicate what was done to create gauss17 and
         RFC2131 compliant DHCP client daemon
     extra/dhclient 4.4.3-1 [installed]
         A standalone DHCP client from the dhcp package
-        
+
   Let's try removing one.
 
     $ sudo pacman -Rsc dhclient
     checking dependencies...
-    
+
     Packages (1) dhclient-4.4.3-1
-    
+
     Total Removed Size:  2.91 MiB
     ...
 
@@ -11601,7 +11601,7 @@ Purpose: To indicate what was done to create gauss17 and
   I am happy with the results.  At new work location, abosolutely no
   bonjour/avahi severices advertised.  My euler7 and gauss17 systems
   can only find each other by their host names if they are on the same
-  Ethernet hub.  
+  Ethernet hub.
 
 2022-05-03:
   I don't enjoy nor do I want to invest the time in vscode anymore.
@@ -11637,7 +11637,7 @@ Purpose: To indicate what was done to create gauss17 and
         Build cross platform desktop apps with web technologies
     local/electron13 13.6.9-3
         Build cross platform desktop apps with web technologies
-        
+
     $ pactree -r electron
     electron
 
@@ -11675,7 +11675,7 @@ Purpose: To indicate what was done to create gauss17 and
     (mozillavpn)$ pip install -r src/mozillavpn-2.8.0/requirements.txt
     (mozillavpn)$ makepkg -s
     (mozillavpn)$ exit
-    
+
   Swap new version into archlocal repo.
 
     $ cd ~/build/ArchLocalRepo
@@ -11740,13 +11740,13 @@ Purpose: To indicate what was done to create gauss17 and
     extra/qt5-wayland 5.15.4+kde+r38-1 (qt qt5) [installed]
     extra/qt6-wayland 6.3.0-1 (qt6)
 
-  Try 
+  Try
 
     $ sudo pacman -Syu qt6-wayland
 
   Now works!
 
-  Should I figure out how to add qt6-wayland as a mozillavpn dependency? 
+  Should I figure out how to add qt6-wayland as a mozillavpn dependency?
   Not sure, optional dependency?
 
 2022-05-28:
@@ -11765,7 +11765,7 @@ Purpose: To indicate what was done to create gauss17 and
        $ for mm in vscode-{css,html,json}-language
            sudo ln -s /usr/bin/{$mm}server /usr/local/bin/$mm-server
          end
-     
+
      LSP now works on gauss17.
 
   2. From :checkhealth on both gauss17 & euler7, I am getting
@@ -11778,7 +11778,7 @@ Purpose: To indicate what was done to create gauss17 and
        $ pacman -Qs 'nodejs(|-.*m)$'
        local/nodejs-lts-erbium 12.22.12-2
            Evented I/O for V8 javascript (LTS release: Erbium)
-       
+
        $ pacman -Ss 'nodejs(|-.*m)$'
        community/nodejs 18.2.0-1
            Evented I/O for V8 javascript
@@ -11786,7 +11786,7 @@ Purpose: To indicate what was done to create gauss17 and
            Evented I/O for V8 javascript (LTS release: Fermium)
        community/nodejs-lts-gallium 16.15.0-1
            Evented I/O for V8 javascript (LTS release: Gallium)
-       ... 
+       ...
 
      Can't just removed the old package, too manny dependencies.
 
@@ -11796,7 +11796,7 @@ Purpose: To indicate what was done to create gauss17 and
        :: nodejs and nodejs-lts-erbium are in conflict. \
        Remove nodejs-lts-erbium? [y/N] y
 
-  3. :checkhealth warning, complaining lua rocks not available 
+  3. :checkhealth warning, complaining lua rocks not available
      for both gauss17 & euler7
 
        $ sudo pacman -Syu luarocks
@@ -11822,7 +11822,7 @@ Purpose: To indicate what was done to create gauss17 and
        2606:4700::6810:5d53 npmjs.com
 
 2022-05-31:
-  Continue fixing Neovim config from yesterday but from work. 
+  Continue fixing Neovim config from yesterday but from work.
 
   5. Above :checkhealth problem went away.  Yesterday gem and node
      were not working from apartment.  OK at work today.
@@ -11830,11 +11830,11 @@ Purpose: To indicate what was done to create gauss17 and
        $ gem install neovim
        Successfully installed neovim-0.9.0
        1 gem installed
-       
+
        $ gem install mdl
        Successfully installed mdl-0.11.0
        1 gem installed
-       
+
        $ gem install kramdown
        Fetching kramdown-2.4.0.gem
        Successfully installed kramdown-2.4.0
@@ -11868,7 +11868,7 @@ Purpose: To indicate what was done to create gauss17 and
   Using the command
 
     $ pacman -Ss '.*language.*server'
-    
+
   here are some language servers from the Arch Repos I am considering
 
     lua-language-server
@@ -11891,7 +11891,7 @@ Couple others, just to document they exist
 
     ccls    (clangd alternative - not as actively maintained?)
     texlab  (LSP for LaTex)
-    python-lsp-server  (uses python, type support with non-open pylance) 
+    python-lsp-server  (uses python, type support with non-open pylance)
 
 2022-06-02:
   Install some LSP language servers and associated plugins
@@ -11930,7 +11930,7 @@ Couple others, just to document they exist
   See 2022-05-22 for the procedure.
 
 2022-09-05:
-  Updated /usr/bin/sh symlink to dash
+  Updated /usr/bin/sh symlink to dash.
 
     $ ls -l /usr/bin/sh
     lrwxrwxrwx 1 root root 4 Sep  5 21:57 /usr/bin/sh -> dash*
@@ -11942,9 +11942,114 @@ Couple others, just to document they exist
     NoExtract   = usr/bin/sh
 
 2022-09-09:
-  Added shellcheck linter to system, surprised when it seemlessly
-  integrated with my current Neovim configuration.
+  Added shellcheck linter to system.
 
     $ sudo pacman -Syu shellcheck
 
-  Surprised when it integrated seemlessly with my current 
+  Surprised when it integrated seemlessly with my current with my
+  current Neovim configuration.
+
+2022-09-22:
+  Will need to remove code.  This will break something with LSP.
+  A "pacman -Syu" was failing before I did a
+
+    $ sudo pacman -R vscode-css-languageserver  \
+                     vscode-html-languageserver \
+                     vscode-json-languageserver
+
+  It was complaining that
+
+    $sudo pacman -Syu
+    ...
+    error: failed to commit transaction (conflicting files)
+    vscode-css-languageserver: /usr/bin/vscode-css-language-server exists in filesystem
+    vscode-html-languageserver: /usr/bin/vscode-html-language-server exists in filesystem
+    vscode-json-languageserver: /usr/bin/vscode-json-language-server exists in filesystem
+
+  and
+
+    $ digpath 'vscode*'
+    /usr/bin/vscode-css-language-server
+    /usr/bin/vscode-eslint-language-server
+    /usr/bin/vscode-html-language-server
+    /usr/bin/vscode-json-language-server
+
+    $ pacman -Qo /usr/bin/vscode-css-language-server
+    error: No package owns /usr/bin/vscode-css-language-server
+
+    $ ls -l /usr/bin/vscode-css-language-server
+    lrwxrwxrwx 1 root root 79 Oct 17  2021 /usr/bin/vscode-css-language-server -> \
+      ../lib/node_modules/vscode-langservers-extracted/bin/vscode-css-language-server*
+
+      $ pacman -Qo /usr/lib/node_modules
+      /usr/lib/node_modules/ is owned by acorn 1:8.8.0-1
+      /usr/lib/node_modules/ is owned by gtop 1.1.3-1
+      /usr/lib/node_modules/ is owned by node-gyp 9.1.0-1
+      /usr/lib/node_modules/ is owned by nodejs 18.9.0-1
+      /usr/lib/node_modules/ is owned by nodejs-nopt 6.0.0-1
+      /usr/lib/node_modules/ is owned by npm 8.19.2-1
+      /usr/lib/node_modules/ is owned by npm-check-updates 16.2.1-1
+      /usr/lib/node_modules/ is owned by pyright 1.1.272-1
+      /usr/lib/node_modules/ is owned by semver 7.3.7-1
+      /usr/lib/node_modules/ is owned by typescript 4.8.3-1
+      /usr/lib/node_modules/ is owned by typescript-language-server 1.2.0-1
+      /usr/lib/node_modules/ is owned by yaml-language-server 1.10.0-1
+
+      $ pacman -Qo /usr/lib/node_modules/vscode-langservers-extracted/
+      error: No package owns /usr/lib/node_modules/vscode-langservers-extracted
+
+  I am pretty sure I did not create these /usr/bin/vscode-*-language-server
+  symlinks.
+
+  Let's put the Arch Linux versions back after tossing code.
+
+    $ sudo pacman -Rsc code
+    $ sudo pacman -Syu vscode-css-languageserver  \
+                       vscode-html-languageserver \
+                       vscode-json-languageserver
+    ...
+    error: failed to commit transaction (conflicting files)
+    vscode-css-languageserver: /usr/bin/vscode-css-language-server exists in filesystem
+    vscode-html-languageserver: /usr/bin/vscode-html-language-server exists in filesystem
+    vscode-json-languageserver: /usr/bin/vscode-json-language-server exists in filesystem
+    Errors occurred, no packages were upgraded
+
+  Maybe node run as root installing these???  Any case, lets blow away
+  these "nobody owns me" symlinks.
+
+    $ digpath 'vscode*'
+    /usr/bin/vscode-css-language-server
+    /usr/bin/vscode-eslint-language-server
+    /usr/bin/vscode-html-language-server
+    /usr/bin/vscode-json-language-server
+
+    $ sudo rm (digpath 'vscode*')
+
+    $ digpath 'vscode*'
+
+
+  Try again.
+
+    $ sudo pacman -Syu vscode-css-languageserver  \
+                       vscode-html-languageserver \
+                       vscode-json-languageserver
+
+  now
+
+    /usr/bin/vscode-css-language-server  -> /usr/bin/vscode-css-languageserver
+    /usr/bin/vscode-html-language-server -> /usr/bin/vscode-html-languageserver
+    /usr/bin/vscode-json-language-server -> /usr/bin/vscode-json-languageserver
+
+  and I don't need my /usr/local/bin hack anymore.
+
+2022-09-22:
+  Got the Neovim::Ext module installed for Neovim similarly to
+  what I did on euler7.
+
+    $ cpanm -n Neovim::Ext
+
+  but still getting :checkhealth warnings about it missing.
+
+    $ sudo /usr/bin/vendor_perl/cpanm -n Neovim::Ext
+
+  now Neovim :checkhealth happy.

@@ -12346,8 +12346,24 @@ Couple others, just to document they exist
 
     $ cd ~/build/ArchLocalRepo/
     $ rm archlocal.db.tar.xz.old archlocal.files.tar.xz.old
+    $ rm mozillavpn-2.8.0-1-x86_64.pkg.tar.zst
 
-  I could see where these would be useful for a quick rollback.
+  I could see where these *.old files would be useful if you need
+  to do a quick rollback.
+
+  Note:
+
+    $ ls -ltr ~/build/ArchLocalRepo
+    total 48964
+    -rw-r--r-- 1 grs grs 45967205 Sep  3 13:20 coursier-2.1.0_M6-1-any.pkg.tar.zst
+    -rw-r--r-- 1 grs grs  4159436 Sep 27 09:38 mozillavpn-2.9.0-1-x86_64.pkg.tar.zst
+    -rw-r--r-- 1 grs grs      956 Sep 27 09:46 archlocal.db.tar.xz
+    -rw-r--r-- 1 grs grs     1412 Sep 27 09:46 archlocal.files.tar.xz
+    lrwxrwxrwx 1 grs grs       19 Sep 27 09:46 archlocal.db -> archlocal.db.tar.xz
+    lrwxrwxrwx 1 grs grs       22 Sep 27 09:46 archlocal.files -> archlocal.files.tar.xz
+
+Clearly, by the size of things, these *.zst need to be here.  The archlocal.*
+files are way too small.
 
 2022-09-27:
   Noticed that the MozillaVPN GUI client puts itself into

@@ -2371,3 +2371,47 @@ Purpose: To rebuild from scratch maxwell4 after
   If I were running perl code on a production system, I would never run
   any perl modules as the root user that did not come with the Linux
   Distribution.
+
+2022-09-27:
+  Installing MozillaVPN onto euler7.
+
+  First update local copy of my archlocal repo on euler7.  At some point
+  I should figure out how to run the repo from gauss17.
+
+    $ cd ~/build/
+    $ rsync -av --delete gauss17:build/ArchLocalRepo .
+    receiving incremental file list
+    ArchLocalRepo/
+    ArchLocalRepo/archlocal.db.tar.xz
+    ArchLocalRepo/archlocal.files.tar.xz
+    ArchLocalRepo/mozillavpn-2.9.0-1-x86_64.pkg.tar.zst
+    
+    sent 115 bytes  received 4,163,323 bytes  2,775,625.33 bytes/sec
+    total size is 53,586,026  speedup is 12.87
+
+    $ sudo pacman -Syu
+    ...
+
+    $ sudo pacman -Syu mozillavpn
+    :: Synchronizing package databases...
+     core is up to date
+     extra is up to date
+     community is up to date
+     archlocal is up to date
+    :: Starting full system upgrade...
+    resolving dependencies...
+    looking for conflicting packages...
+    
+    Packages (8) libmng-2.0.3-3  qt6-5compat-6.3.2-1  qt6-charts-6.3.2-1
+                 qt6-imageformats-6.3.2-1  qt6-networkauth-6.3.2-1  qt6-websockets-6.3.2-1
+                 wireguard-tools-1.0.20210914-1  mozillavpn-2.9.0-1
+    
+    Total Download Size:    5.58 MiB
+    Total Installed Size:  16.62 MiB
+    
+    :: Proceed with installation? [Y/n]
+    ...
+
+    $ sudo systemctl enable mozillavpn.service
+    $ sudo systemctl start mozillavpn.service
+

@@ -11658,7 +11658,7 @@ Purpose: To indicate what was done to create gauss17 and
   First stop, disable, and uninstall the service.
 
     $ sudo systemctl stop mozillavpn.service
-    $ systemctl disable mozillavpn.service
+    $ sudo systemctl disable mozillavpn.service
     $ sudo pacman -R mozillavpn
 
   Clone it, get rid of any old dirty laundry.
@@ -12053,3 +12053,203 @@ Couple others, just to document they exist
     $ sudo /usr/bin/vendor_perl/cpanm -n Neovim::Ext
 
   now Neovim :checkhealth happy.
+
+2022-09-26:
+  MozillaVPN tells me it needs me to update it again.
+
+    $ sudo systemctl stop mozillavpn.service
+    $ sudo systemctl disable mozillavpn.service
+
+    $ cd ~/build/AUR/mozillavpn/
+    $ git fetch
+    $ git status
+    On branch master
+    Your branch is behind 'origin/master' by 2 commits, and can be fast-forwarded.
+      (use "git pull" to update your local branch)
+    
+    Untracked files:
+      (use "git add <file>..." to include in what will be committed)
+    	.python-version
+    	Pipfile
+    	mozillavpn_2.8.0-jammy1.debian.tar.xz
+
+    nothing added to commit but untracked files present (use "git add" to track)
+
+    $ git pull
+    $ rm (git status -s|sed 's/\?* //g')
+
+  Let's try using the system python
+
+    $ pyenv global system
+    $ pyenv versions
+    * system (set by /home/grs/.pyenv/version)
+      3.8.12
+      3.9.7
+      3.10.2
+
+    $ python --version
+    Python 3.10.7
+
+    $ pipenv shell
+    Usage: pipenv shell [OPTIONS] [SHELL_ARGS]...
+
+    ERROR:: --system is intended to be used for pre-existing Pipfile \
+        installation, not installation of specific packages. Aborting.
+
+  Using pipenv wrong?  Should statically link it anyway in case I
+  install it on euler7.
+
+    $ pyenv uninstall 3.8.12 3.9.7 3.10.2
+    pyenv: remove /home/grs/.pyenv/versions/3.8.12? [y|N] y
+    pyenv: 3.8.12 uninstalled
+    pyenv: remove /home/grs/.pyenv/versions/3.9.7? [y|N] y
+    pyenv: 3.9.7 uninstalled
+    pyenv: remove /home/grs/.pyenv/versions/3.10.2? [y|N] y
+    pyenv: 3.10.2 uninstalled
+
+    $ pyenv install --list | grep -E '^ *3\.10\.'
+    3.10.0
+    3.10.1
+    3.10.2
+    3.10.3
+    3.10.4
+    3.10.5
+    3.10.6
+
+  Python 3.10.7 too new for pyenv and I don't want to install the
+  staic libraries on the system Python,
+
+    $ pyenv versions
+    * system (set by /home/grs/.pyenv/version)
+      3.10.6
+
+    $ pyenv local 3.10.6
+
+    $ pyenv versions
+      system
+    * 3.10.6 (set by /home/grs/build/AUR/mozillavpn/.python-version)
+
+    $ pipenv shell
+    Usage: pipenv shell [OPTIONS] [SHELL_ARGS]...
+
+    ERROR:: --system is intended to be used for pre-existing Pipfile \
+      installation, not installation of specific packages. Aborting.
+
+  Yeah, I don't know what I am doing.
+
+    $ cat .gitignore
+    /*.tar.gz
+    /*.pkg.tar.*
+    /pkg/
+    /src/
+
+    $ rm mozillavpn_2.8.0.orig.tar.gz mozillavpn-2.8.0-1-x86_64.pkg.tar.zst
+
+    $ pipenv --rm
+    Removing virtualenv (/home/grs/.local/share/virtualenvs/mozillavpn-y6eTs8GP)...
+
+  Maybe I did not waht to do this?  Definately don't want to manually
+  create a virtual environment.  Note that the line below marked with >>>
+  was not typed by me.
+
+    $ pipenv --python 3.10.6
+    Creating a virtualenv for this project...
+    Pipfile: /home/grs/build/AUR/mozillavpn/Pipfile
+    Using /home/grs/.pyenv/versions/3.10.6/bin/python3 (3.10.6) to create virtualenv...
+    ⠇ Creating virtual environment...created virtual environment CPython3.10.6.final.0-64 in 897ms
+      creator CPython3Posix(dest=/home/grs/.local/share/virtualenvs/mozillavpn-y6eTs8GP, clear=False, no_vcs_ignore=False, global=False)
+      seeder FromAppData(download=False, pip=bundle, setuptools=bundle, wheel=bundle, via=copy, app_data_dir=/home/grs/.local/share/virtualenv)
+        added seed packages: pip==22.0.4, setuptools==61.0.0, wheel==0.37.1
+      activators BashActivator,CShellActivator,FishActivator,NushellActivator,PowerShellActivator,PythonActivator
+    
+    ✔ Successfully created virtual environment!
+    Virtualenv location: /home/grs/.local/share/virtualenvs/mozillavpn-y6eTs8GP
+    Creating a Pipfile for this project...
+
+    $ pipenv shell
+    Launching subshell in virtual environment...
+     source /home/grs/.local/share/virtualenvs/mozillavpn-y6eTs8GP/bin/activate.fish
+
+    $ pipenv shell
+    Launching subshell in virtual environment...
+     source /home/grs/.local/share/virtualenvs/mozillavpn-y6eTs8GP/bin/activate.fish
+    
+>>> $  source /home/grs/.local/share/virtualenvs/mozillavpn-y6eTs8GP/bin/activate.fish
+    (mozillavpn)$ pip install -r src/mozillavpn-2.8.0/requirements.txt
+    Collecting flask
+      Downloading Flask-2.2.2-py3-none-any.whl (101 kB)
+         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 101.5/101.5 KB 892.7 kB/s eta 0:00:00
+    Collecting glean_parser==4.1.1
+      Using cached glean_parser-4.1.1-py3-none-any.whl (81 kB)
+    Collecting lxml
+      Downloading lxml-4.9.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl (6.9 MB)
+         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.9/6.9 MB 3.9 MB/s eta 0:00:00
+    Collecting PyYAML
+      Using cached PyYAML-6.0-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl (682 kB)
+    Collecting appdirs>=1.4
+      Using cached appdirs-1.4.4-py2.py3-none-any.whl (9.6 kB)
+    Collecting Jinja2>=2.10.1
+      Using cached Jinja2-3.1.2-py3-none-any.whl (133 kB)
+    Collecting Click>=7
+      Using cached click-8.1.3-py3-none-any.whl (96 kB)
+    Collecting diskcache>=4
+      Using cached diskcache-5.4.0-py3-none-any.whl (44 kB)
+    Collecting jsonschema>=3.0.2
+      Downloading jsonschema-4.16.0-py3-none-any.whl (83 kB)
+         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 83.1/83.1 KB 1.1 MB/s eta 0:00:00
+    Collecting yamllint>=1.18.0
+      Downloading yamllint-1.28.0.tar.gz (121 kB)
+         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 121.9/121.9 KB 1.3 MB/s eta 0:00:00
+      Preparing metadata (setup.py) ... done
+    Collecting Werkzeug>=2.2.2
+      Downloading Werkzeug-2.2.2-py3-none-any.whl (232 kB)
+         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 232.7/232.7 KB 2.5 MB/s eta 0:00:00
+    Collecting itsdangerous>=2.0
+      Using cached itsdangerous-2.1.2-py3-none-any.whl (15 kB)
+    Collecting MarkupSafe>=2.0
+      Using cached MarkupSafe-2.1.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (25 kB)
+    Collecting attrs>=17.4.0
+      Downloading attrs-22.1.0-py2.py3-none-any.whl (58 kB)
+         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 58.8/58.8 KB 602.1 kB/s eta 0:00:00
+    Collecting pyrsistent!=0.17.0,!=0.17.1,!=0.17.2,>=0.14.0
+      Using cached pyrsistent-0.18.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (115 kB)
+    Collecting pathspec>=0.5.3
+      Downloading pathspec-0.10.1-py3-none-any.whl (27 kB)
+    Requirement already satisfied: setuptools in /home/grs/.local/share/virtualenvs/mozillavpn-y6eTs8GP/lib/python3.10/site-packages (from yamllint>=1.18.0->glean_parser==4.1.1->-r src/mozillavpn-2.8.0/requirements.txt (line 2)) (61.0.0)
+    Building wheels for collected packages: yamllint
+      Building wheel for yamllint (setup.py) ... done
+      Created wheel for yamllint: filename=yamllint-1.28.0-py2.py3-none-any.whl size=62367 sha256=8e3ebdb05a5b78fc7aaa74208cc09f0c54d90af94278f63930af89da5f70f47e
+      Stored in directory: /home/grs/.cache/pip/wheels/76/c4/ae/84cf1800d03320836da24b630180ac52e22a6970ae1aefee05
+    Successfully built yamllint
+    Installing collected packages: appdirs, PyYAML, pyrsistent, pathspec, MarkupSafe, lxml, itsdangerous, diskcache, Click, attrs, yamllint, Werkzeug, jsonschema, Jinja2, glean_parser, flask
+    Successfully installed Click-8.1.3 Jinja2-3.1.2 MarkupSafe-2.1.1 PyYAML-6.0 Werkzeug-2.2.2 appdirs-1.4.4 attrs-22.1.0 diskcache-5.4.0 flask-2.2.2 glean_parser-4.1.1 itsdangerous-2.1.2 jsonschema-4.16.0 lxml-4.9.1 pathspec-0.10.1 pyrsistent-0.18.1 yamllint-1.28.0
+
+  Now build the mozillavpn package.
+
+    (mozillavpn)$ makepkg -s
+
+  Which resulted a massive build involving C++/JS/Go.  There was some sh complaints
+  about /usr/bin/{lrelease,lconvert} not being found.
+
+  Also,
+
+    /home/grs/.local/share/virtualenvs/mozillavpn-y6eTs8GP/bin/
+
+  was appended onto the virtual environment path.
+
+    (mozillavpn)$ ls /home/grs/.local/share/virtualenvs/mozillavpn-y6eTs8GP/bin
+    activate       activate.ps1      glean_parser*  pip-3.10*  python3.10@  wheel3.10*
+    activate.csh   activate_this.py  jsonschema*    pip3.10*   wheel*       yamllint*
+    activate.fish  deactivate.nu     pip*           python@    wheel3*
+    activate.nu    flask*            pip3*          python3@   wheel-3.10*
+
+  Leaving virtual environment
+
+    (mozillavpn)$ exit
+    $ 
+
+  Will finish tomorrow.
+
+2022-09-27:
+
+  Continuing from yesterday.

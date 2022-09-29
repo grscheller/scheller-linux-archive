@@ -10149,7 +10149,6 @@ Purpose: To indicate what was done to create gauss17 and
         link/ether ac:e0:10:8a:3d:85 brd ff:ff:ff:ff:ff:ff
 
 
-    $ kw
     $ ip addr
     1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
         link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
@@ -10168,7 +10167,7 @@ Purpose: To indicate what was done to create gauss17 and
     $ sudo systemctl status mozillavpn.service
 
   The last command shows the service up and running.  How does it know
-  that I am asubscriber?
+  that I am a subscriber?
 
     $ ip addr
     1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
@@ -12066,7 +12065,7 @@ Couple others, just to document they exist
     On branch master
     Your branch is behind 'origin/master' by 2 commits, and can be fast-forwarded.
       (use "git pull" to update your local branch)
-    
+
     Untracked files:
       (use "git add <file>..." to include in what will be committed)
     	.python-version
@@ -12148,7 +12147,7 @@ Couple others, just to document they exist
     $ pipenv --rm
     Removing virtualenv (/home/grs/.local/share/virtualenvs/mozillavpn-y6eTs8GP)...
 
-  Maybe I did not waht to do this?  Definately don't want to manually
+  Maybe I did not want to do this?  Definately don't want to manually
   create a virtual environment.  Note that the line below marked with >>>
   was not typed by me.
 
@@ -12161,7 +12160,7 @@ Couple others, just to document they exist
       seeder FromAppData(download=False, pip=bundle, setuptools=bundle, wheel=bundle, via=copy, app_data_dir=/home/grs/.local/share/virtualenv)
         added seed packages: pip==22.0.4, setuptools==61.0.0, wheel==0.37.1
       activators BashActivator,CShellActivator,FishActivator,NushellActivator,PowerShellActivator,PythonActivator
-    
+
     ✔ Successfully created virtual environment!
     Virtualenv location: /home/grs/.local/share/virtualenvs/mozillavpn-y6eTs8GP
     Creating a Pipfile for this project...
@@ -12173,7 +12172,7 @@ Couple others, just to document they exist
     $ pipenv shell
     Launching subshell in virtual environment...
      source /home/grs/.local/share/virtualenvs/mozillavpn-y6eTs8GP/bin/activate.fish
-    
+
 >>> $  source /home/grs/.local/share/virtualenvs/mozillavpn-y6eTs8GP/bin/activate.fish
     (mozillavpn)$ pip install -r src/mozillavpn-2.8.0/requirements.txt
     Collecting flask
@@ -12246,7 +12245,7 @@ Couple others, just to document they exist
   Leaving virtual environment
 
     (mozillavpn)$ exit
-    $ 
+    $
 
   Will finish tomorrow.
 
@@ -12284,11 +12283,11 @@ Couple others, just to document they exist
     coursier-2.1.0_M6-1-any.pkg.tar.zst
     mozillavpn-2.8.0-1-x86_64.pkg.tar.zst
     mozillavpn-2.9.0-1-x86_64.pkg.tar.zst
-    
-  Asside: Pacman keeps *.zst files along with corresponding *.sig 
-          in /var/cache/pacman/pkg, but I think these are what
-          get installed, not what is in the various repos.  Note
-          sure where these *.zst files should live wrt this "repo".
+
+  Aside: Pacman keeps *.zst files along with corresponding *.sig
+         in /var/cache/pacman/pkg, but I think these are what
+         get installed, not what is in the various repos.  Not
+         sure where these *.zst files should live wrt this "repo".
 
   OK, lets see if the new MozillaVPN gets picked up.
 
@@ -12302,14 +12301,14 @@ Couple others, just to document they exist
     :: Starting full system upgrade...
     resolving dependencies...
     looking for conflicting packages...
-    
+
     Packages (3) mozillavpn-2.9.0-1  python-jaraco.functools-3.5.2-1
                  shellcheck-0.8.0-205
-    
+
     Total Download Size:    7.14 MiB
     Total Installed Size:  29.33 MiB
     Net Upgrade Size:       1.63 MiB
-    
+
     :: Proceed with installation? [Y/n] Y
     :: Retrieving packages...
      mozillavpn-2.9.0...     4.0 MiB  92.2 MiB/s 00:00 [########] 100%

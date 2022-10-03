@@ -12370,3 +12370,36 @@ files are way too small.
   Will look into getting a clipboard manager installed and
   configured.
 
+2022=10-02:
+  For some reason MozillaVPN stopped working.
+
+   1. Shutdown service and disabled it.
+   2. Remove from archloacl repo
+   3. Removed from system
+   4. Having all sort of problems with pipenv
+   5. Started a 'makepkg -s' using the system python
+   6. Build got 56% through before I got:
+
+      error: #error Check if QT added support for QDnsLookup::lookup() on android
+
+   7. Tried installing kvantum, did not help
+   8. Removed a preprocessor check referencing something for Android from 
+
+      src/mozillavpn-2.9.0/src/connectionbenchmark/benchmarktaskdownload.cpp
+
+   9. Ran 'makepkg -se' to kick off another build without redownloading what I changed
+  10. All this done with the system Python without a virtual environment
+  11. Build finished
+
+      $ cp mozillavpn-2.9.0-1-x86_64.pkg.tar.zst ../../ArchLocalRepo/
+
+  12. Added back to repo
+  13. Installed mozillavpn from ArchLocalRepo
+  14. Enabled and started mozillavpn.service
+  15. Client failed to start
+
+      $ mozillavpn
+      QML debugging is enabled. Only use this in a safe environment.
+      fish: Job 1, 'mozillavpn' terminated by signal SIGABRT (Abort)
+
+  16. Back to where I started

@@ -2415,3 +2415,7 @@ Purpose: To rebuild from scratch maxwell4 after
     $ sudo systemctl enable mozillavpn.service
     $ sudo systemctl start mozillavpn.service
 
+2022-10-03:
+  Uninstalled mozillavpn, rsync'ed archlocal repo, reinstalled it.  Had to
+  manually inxtall qt6-shadertools.  Next step is to see if I can correctly
+  update my mozillavpn package to take this new dependency into effect.

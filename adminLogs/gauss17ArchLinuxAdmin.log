@@ -12383,7 +12383,7 @@ files are way too small.
       error: #error Check if QT added support for QDnsLookup::lookup() on android
 
    7. Tried installing kvantum, did not help
-   8. Removed a preprocessor check referencing something for Android from 
+   8. Removed a preprocessor check referencing something for Android from
 
       src/mozillavpn-2.9.0/src/connectionbenchmark/benchmarktaskdownload.cpp
 

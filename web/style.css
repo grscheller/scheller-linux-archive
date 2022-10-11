@@ -1,15 +1,15 @@
 body {
-  color: #DDCCDD;
+  color: rgba(220, 215, 186, 1.0);
   background-color: Black;
 }
 
 a:link {
-  color: Cyan;
+  color: rgba(122, 168, 159, 1.0);
   text-decoration: none;
 }
 
 a:visited {
-  color: Pink;
+  color: rgba(230, 180, 228, 0.5);
   text-decoration: none;
 }
 

@@ -4,12 +4,12 @@ body {
 }
 
 a:link {
-  color: rgba(122, 168, 159, 1.0);
+  color: rgba(152, 187, 108, 1.0);
   text-decoration: none;
 }
 
 a:visited {
-  color: rgba(230, 180, 228, 0.5);
+  color: rgba(154, 120, 152, 1.0);
   text-decoration: none;
 }
 

@@ -1,15 +1,15 @@
 body {
-  color: rgba(220, 215, 186, 1.0);
+  color: rgba(192, 202, 245, 1.0);
   background-color: Black;
 }
 
 a:link {
-  color: rgba(152, 187, 108, 1.0);
+  color: rgba(12, 180, 192, 1.0);
   text-decoration: none;
 }
 
 a:visited {
-  color: rgba(184, 144, 182, 1.0);
+  color: rgba(255, 192, 203, 1.0);
   text-decoration: none;
 }
 

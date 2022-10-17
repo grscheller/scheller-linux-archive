@@ -13,8 +13,9 @@
 
 ## Notes
 
-When developing this code, I usually use the root `boring_math`
-directory as my working directory.  I set
+When developing code like this form the command line, I usually use
+the root `boring_math` directory as my working directory.  I set as
+relative paths
 
 ```
    $ export PYTHONPATH=lib:../lib
@@ -27,3 +28,13 @@ here so that variable names like `m`, `n`, `a`, `b` don't make `pylint`
 complain too much.  Normally these would be horrible names but,
 in the context of mathy integer functions and functional programming,
 they do make sense.
+
+Well, Neovim using Pyright as the LSP server does not follow
+relative paths.  To get around this, I created a 
+[pyrightconfig.json](pyrightconfig.json) in the root boring_math
+directory.
+
+The next step is to figure out how to both install the library locally
+in a development virtual environment, and globally as a tool to
+explore mathy and scientific things.  I plan to use Pipenv for this,
+at least for the first step.

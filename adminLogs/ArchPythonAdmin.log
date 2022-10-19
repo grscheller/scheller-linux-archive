@@ -1,7 +1,6 @@
 Notes taken while configuring Arch Linux for Python development.
 
 2022-01-27:
-
   I really need to better grok Python virtual environments.
 
     $ pacman -Ss virtualenv
@@ -66,7 +65,6 @@ Notes taken while configuring Arch Linux for Python development.
   Thought it would install Python Virtualenv as a dependency.
 
 2022-01-27:
-
   While I am at it, I might as well look into the capability of
   installing and switching between multiple verions of Python.
 
@@ -88,7 +86,6 @@ Notes taken while configuring Arch Linux for Python development.
     /usr/share/fish/vendor_completions.d/pyenv.fish
 
 2022-01-28:
-
   There exists a pyenv extension called pyenv-virtualenv for working
   with virtualenv with pyenv.  Does not seem to be a package for
   this in the regular Arch Repos.
@@ -111,7 +108,6 @@ Notes taken while configuring Arch Linux for Python development.
   with that Python's pipenv.
 
 2022-01-28:
-
   Pipenv documentation resides here,
 
     https://pipenv.pypa.io/en/latest/
@@ -140,7 +136,6 @@ Notes taken while configuring Arch Linux for Python development.
     └─python-pip
 
 2022-01-28:
-
   Updated my fish and bash environments for pyenv.  See my commit
   dated Fri Jan 28 16:39:42 2022 -0700 on my dotfiles repo
 
@@ -180,7 +175,6 @@ Notes taken while configuring Arch Linux for Python development.
     exec "/usr/share/pyenv/libexec/pyenv" exec "$program" "$@"
 
 2022-01-29:
-
   Installed pyenv on gauss17 also.
 
   On euler7:
@@ -214,7 +208,6 @@ Notes taken while configuring Arch Linux for Python development.
      No Github clutter.
 
 2022-01-29:
-
   Why is ~/.pyenv/shims/ empty on gauss17?  Only thing different I
   really did was installed Python 3.11-dev.python -m tkinter
 
@@ -272,7 +265,6 @@ Notes taken while configuring Arch Linux for Python development.
       3.8.12
     
 2022-01-31:
-
   Will need to understand how to use virtualenv and how it interacts
   with pyenv.
 
@@ -322,7 +314,6 @@ Notes taken while configuring Arch Linux for Python development.
   only thing for which I will use pip directly. 
 
 2022-01-31:
-
   Here are two fairly recent blog posts which describe how to use
   Pyenv and Pipenv together:
 
@@ -346,7 +337,6 @@ Notes taken while configuring Arch Linux for Python development.
   the old requirements.txt mechanism.
 
 2022-02-14:
-
   Look into HallerPatrick/py_lsp.nvim.  Might be useful if it
   turns out that LSP has trouble distinguishing the environment
   of the Python running in nvim vs virtual environment of the
@@ -359,7 +349,6 @@ Notes taken while configuring Arch Linux for Python development.
   See 2022-09-13
 
 2022-02-15:
-
   Beginning to understand that pipenv is not a pip replacement and
   pip still has its use case.
 
@@ -435,7 +424,6 @@ Notes taken while configuring Arch Linux for Python development.
     $ rm -rf junk/
 
 2022-09-13:
-
   I almost forgot most of this!  Thank God I wrote this all down.
 
   * To manage multiple python versions: pyenv
@@ -472,3 +460,36 @@ Notes taken while configuring Arch Linux for Python development.
     - https://pipenv.pypa.io/en/latest/
     - https://pipenv.pypa.io/en/latest/install/
     - https://pipenv.pypa.io/en/latest/advanced/
+
+2022-10-18:
+  I am thinking about use cases for pyenv and pipenv.
+
+  1. Maintain a personnel Python environment for my Linux user.  Basically
+     installing packages I write and the dependencies they require.  Would
+     be contained in its own virtual environment.  The global default
+     pipenv for my user.  It would use the Arch system Python.
+
+  2. Development environments where I develop the packages I install.
+     Try to make as minimal as possible.
+
+  3. Specialty environments where I compartmentalize apps whose dependencies
+     are fragile or out of date.  Web based stuff for example, where
+     all the dependies go down like turtles.  May need to even use old
+     versions of Python.
+
+  4. A sandbox for pypy3?  Could I create a shared virtual environment
+     with pypy3 and python?
+
+2022-10-18:
+  To do a "health check" against your virtual environment,
+
+    $ pipenv check
+
+  After editing Pipfile, may need to blow away your virtual environment.
+
+    $ pipenv --rm
+
+  I did another `pipenv check` and pipenv created a new virtualenv.  Not
+  sure how it would handle external dependencies since my project had
+  none.  Pipefile does have infrastrucure for private Python repos.
+  See: https://medium.com/hackernoon/reaching-python-development-nirvana-bb5692adf30c

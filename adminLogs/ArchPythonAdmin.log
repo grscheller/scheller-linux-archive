@@ -491,7 +491,7 @@ Notes taken while configuring Arch Linux for Python development.
 
   I did another `pipenv check` and pipenv created a new virtualenv.  Not
   sure how it would handle external dependencies since my project had
-  none.  Pipefile does have infrastrucure for private Python repos.
+  none.  Pipfile does have infrastrucure for private Python repos.
 
   See: https://medium.com/hackernoon/reaching-python-development-nirvana-bb5692adf30c
 
@@ -505,10 +505,6 @@ Notes taken while configuring Arch Linux for Python development.
 
   Seems that pipenv will set $VIRTUAL_ENV and prepend the bin directory
   of that virtual enviroment to your $PATH before the pyenv shim.
-
-2022-10-19:
-  See this blog on how to "properly" set up a virtual environment with
-  pipenv.  Note that pyenv is not envolved,
 
 2022-10-19:
   Will do a Neovim :checkhealth outside and within the pipenv virtual

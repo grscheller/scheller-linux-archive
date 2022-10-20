@@ -424,7 +424,7 @@ Notes taken while configuring Arch Linux for Python development.
     $ rm -rf junk/
 
 2022-09-13:
-  I almost forgot most of this!  Thank God I wrote this all down.
+  I almost forgot most of this!  Thank God I wrote the above all down.
 
   * To manage multiple python versions: pyenv
       - pyenv-virtualenv plugin to manage virtual environments (not used)
@@ -492,4 +492,84 @@ Notes taken while configuring Arch Linux for Python development.
   I did another `pipenv check` and pipenv created a new virtualenv.  Not
   sure how it would handle external dependencies since my project had
   none.  Pipefile does have infrastrucure for private Python repos.
+
   See: https://medium.com/hackernoon/reaching-python-development-nirvana-bb5692adf30c
+
+2022-10-19:
+  After pulling scheller-linux-archive repo to gauss17, only problem was
+  that .python-version was not set to the system Python.
+
+  See: https://github.com/neovim/nvim-lspconfig/issues/717
+
+  for some insight on how pyenv and pipenv interact.
+
+  Seems that pipenv will set $VIRTUAL_ENV and prepend the bin directory
+  of that virtual enviroment to your $PATH before the pyenv shim.
+
+2022-10-19:
+  See this blog on how to "properly" set up a virtual environment with
+  pipenv.  Note that pyenv is not envolved, 
+
+2022-10-19:
+  Will do a Neovim :checkhealth outside and within the pipenv virtual
+  environment.
+
+  Outside:
+
+    ## nvim-lsp-installer report
+      - OK: neovim version >= 0.7.0
+
+    ## Python 3 provider (optional)
+      - INFO: pyenv: Path: /usr/share/pyenv/libexec/pyenv
+      - INFO: pyenv: Root: /home/grs/.pyenv
+      - INFO: Using: g:python3_host_prog = "/home/grs/.pyenv/shims/python"
+      - INFO: Executable: /home/grs/.pyenv/shims/python
+      - INFO: Python version: 3.10.8
+      - INFO: pynvim version: 0.4.3
+      - OK: Latest pynvim is installed.
+
+    ## Python virtualenv
+      - OK: no $VIRTUAL_ENV
+
+  Inside:
+
+    ## nvim-lsp-installer report
+      - OK: neovim version >= 0.7.0
+
+    ## Python 3 provider (optional)
+      - INFO: pyenv: Path: /usr/share/pyenv/libexec/pyenv
+      - INFO: pyenv: Root: /home/grs/.pyenv
+      - INFO: Using: g:python3_host_prog = "/home/grs/.pyenv/shims/python"
+      - INFO: Executable: /home/grs/.pyenv/shims/python
+      - ERROR: Command error (job=5, exit code 1): `/home/grs/.pyenv/shims/python -c 'import sys; sys.path = [p for p in sys.path if p != ""]; import neovim; print(neovim.__file__)'` (in '/home/grs/devel/scheller-linux-archive/grok/Python/boring_math')
+        stderr: Traceback (most recent call last):  File "<string>", line 1, in <module>ModuleNotFoundError: No module named 'neovim'
+      - INFO: Python version: 3.10.8
+      - INFO: pynvim version: unable to load neovim Python module
+      - ERROR: pynvim is not installed.
+        Error: unable to load neovim Python module
+        - ADVICE:
+          - Run in shell: /home/grs/.pyenv/shims/python -m pip install pynvim
+    
+    ## Python virtualenv
+      - INFO: $VIRTUAL_ENV is set to: /home/grs/.local/share/virtualenvs/boring_math-7KsFA2pk
+      - INFO: Python version: 3.10.8
+      - OK: $VIRTUAL_ENV provides :!python.
+
+  Now, looks to be only a little bit broken:
+
+  1. Looks like pynvim needs to be installed into the virtualenv.  Instead
+     of manually using pip, we can install it thru the [dev-packages]
+     section of Pipfile.
+  2. Can we also install pipenv into each virtual environment via the
+     Pipefile too?  Seems like a chicken and egg situation.
+  3. Why did pipenv even work with boring_math even when it was not
+     installed into the virtual invironment???  I guess it only needs to
+     be installed in the the base Python environment, no matter whether
+     it is the system Python or a Python installed by pyenv!  Pipenv
+     does not know anything about pyenv.
+  4. Maybe I should not define python3_host_prog in my nvim configs?
+  5. Maybe I should not run pipenv commands within a pipenv shell?
+
+  Beginning to understand enough so that this blog makes sense:
+
+    http://murawski.blog/pyenv-pipenv.html

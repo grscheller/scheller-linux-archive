@@ -657,3 +657,225 @@ Notes taken while configuring Arch Linux for Python development.
 
     [requires]
     python_version = "3.10"
+
+2022-10-20:
+  Hopped back to euler7 to see effect of changes from earlier today.  After
+  git pull,
+
+    $ pipenv update
+
+  was not pulling in pynvim.  I had to do a do a manual
+
+    $ pipenv install pynvim
+
+  To get pynvim installed.  This triggered the Pipfile.lock to be
+  regenerated.  Later, when trying to reproduce the problem,
+
+    $ pipenv update
+    Running $ pipenv lock then $ pipenv sync.
+    Locking [packages] dependencies...
+    Building requirements...
+    Resolving dependencies...
+    ✔ Success!
+    Locking [dev-packages] dependencies...
+    Building requirements...
+    Resolving dependencies...
+    ✔ Success!
+    Updated Pipfile.lock (16b8f2)!
+    Installing dependencies from Pipfile.lock (16b8f2)...
+    To activate this project's virtualenv, run pipenv shell.
+    Alternatively, run a command inside the virtualenv with pipenv run.
+    All dependencies are now up-to-date!
+
+    [euler7: ~/devel/scheller-linux-archive/grok/Python/boring_math] (master|✚ =)
+    $ pipenv run python -m pip list
+    Package    Version
+    ---------- -----------
+    greenlet   1.1.3.post0
+    msgpack    1.0.4
+    pip        22.0.3
+    pynvim     0.4.3
+    setuptools 60.6.0
+    wheel      0.37.1
+
+  But,
+
+    $ git diff Pipfile | cat
+    diff --git a/grok/Python/boring_math/Pipfile b/grok/Python/boring_math/Pipfile
+    index 3382f0c..c728d8f 100644
+    --- a/grok/Python/boring_math/Pipfile
+    +++ b/grok/Python/boring_math/Pipfile
+    @@ -4,6 +4,7 @@ verify_ssl = true
+     name = "pypi"
+
+     [packages]
+    +pynvim = "*"
+
+     [dev-packages]
+     pynvim = "*
+
+  Opps, my bad.  Forgot the --dev
+
+    $ pipenv uninstall pynvim
+    Uninstalling pynvim...
+    Found existing installation: pynvim 0.4.3
+    Uninstalling pynvim-0.4.3:
+      Successfully uninstalled pynvim-0.4.3
+
+    $ pipenv install --dev pynvim
+    Installing pynvim...
+    Adding pynvim to Pipfile's [dev-packages]...
+    ✔ Installation Succeeded
+    Pipfile.lock (e4eef2) out of date, updating to (5d7155)...
+    Locking [packages] dependencies...
+    Locking [dev-packages] dependencies...
+    Building requirements...
+    Resolving dependencies...
+    ✔ Success!
+    Updated Pipfile.lock (5d7155)!
+    Installing dependencies from Pipfile.lock (5d7155)...
+    To activate this project's virtualenv, run pipenv shell.
+    Alternatively, run a command inside the virtualenv with pipenv run.
+
+    $ pipenv run python -m pip list
+    Package    Version
+    ---------- -----------
+    greenlet   1.1.3.post0
+    msgpack    1.0.4
+    pip        22.0.3
+    pynvim     0.4.3
+    setuptools 60.6.0
+    wheel      0.37.1
+
+    $ git diff Pipfile | cat
+
+    $
+
+  Let's see if we can reproduce the virtual environment after blowing
+  it away.
+
+    $ pipenv --rm
+    Removing virtualenv (/home/grs/.local/share/virtualenvs/boring_math-7KsFA2pk)...
+
+    $ cat Pipfile
+    [[source]]
+    url = "https://pypi.org/simple"
+    verify_ssl = true
+    name = "pypi"
+
+    [packages]
+
+    [dev-packages]
+    pynvim = "*"
+
+    [requires]
+    python_version = "3.10"
+
+    $ pipenv install
+    Creating a virtualenv for this project...
+    Pipfile: /home/grs/devel/scheller-linux-archive/grok/Python/boring_math/Pipfile
+    Using /usr/bin/python3 (3.10.8) to create virtualenv...
+    ⠧ Creating virtual environment...created virtual environment CPython3.10.8.final.0-64 in 348ms
+      creator Venv(dest=/home/grs/.local/share/virtualenvs/boring_math-7KsFA2pk, clear=False, no_vcs_ignore=False, global=False, describe=CPython3Posix)
+      seeder FromAppData(download=False, pip=bundle, setuptools=bundle, wheel=bundle, via=copy, app_data_dir=/home/grs/.local/share/virtualenv)
+        added seed packages: pip==22.2.1, setuptools==63.2.0, wheel==0.37.1
+      activators BashActivator,CShellActivator,FishActivator,NushellActivator,PowerShellActivator,PythonActivator
+    
+    ✔ Successfully created virtual environment!
+    Virtualenv location: /home/grs/.local/share/virtualenvs/boring_math-7KsFA2pk
+    Installing dependencies from Pipfile.lock (5d7155)...
+    To activate this project's virtualenv, run pipenv shell.
+    Alternatively, run a command inside the virtualenv with pipenv run.
+    
+    $ pipenv run python -m pip list
+    Package    Version
+    ---------- -------
+    pip        22.2.1
+    setuptools 63.2.0
+    wheel      0.37.1
+    
+    $ pipenv install --dev
+    Installing dependencies from Pipfile.lock (5d7155)...
+    To activate this project's virtualenv, run pipenv shell.
+    Alternatively, run a command inside the virtualenv with pipenv run.
+
+    $ pipenv run python -m pip list
+    Package    Version
+    ---------- -----------
+    greenlet   1.1.3.post0
+    msgpack    1.0.4
+    pip        22.2.1
+    pynvim     0.4.3
+    setuptools 63.2.0
+    wheel      0.37.1
+
+    $ git status
+    On branch master
+    Your branch is up to date with 'origin/master'.
+
+    nothing to commit, working tree clean
+
+  Try some Neovim health checks,
+
+  First:
+
+    $ pipenv run nvim bin/pythag3.py
+    :healthcheck
+
+    ## Python 3 provider (optional)
+      - INFO: pyenv: Path: /usr/share/pyenv/libexec/pyenv
+      - INFO: pyenv: Root: /home/grs/.pyenv
+      - INFO: Using: g:python3_host_prog = "/home/grs/.pyenv/shims/python"
+      - INFO: Executable: /home/grs/.pyenv/shims/python
+      - INFO: Python version: 3.10.8
+      - INFO: pynvim version: 0.4.3
+      - OK: Latest pynvim is installed.
+
+    ## Python virtualenv
+      - INFO: $VIRTUAL_ENV is set to: /home/grs/.local/share/virtualenvs/boring_math-7KsFA2pk
+      - INFO: Python version: 3.10.8
+      - OK: $VIRTUAL_ENV provides :!python.
+
+  Second:
+
+    $ nvim bin/pythag3.py
+    :healthcheck
+
+    ## Python 3 provider (optional)
+      - INFO: pyenv: Path: /usr/share/pyenv/libexec/pyenv
+      - INFO: pyenv: Root: /home/grs/.pyenv
+      - INFO: Using: g:python3_host_prog = "/home/grs/.pyenv/shims/python"
+      - INFO: Executable: /home/grs/.pyenv/shims/python
+      - INFO: Python version: 3.10.8
+      - INFO: pynvim version: 0.4.3
+      - OK: Latest pynvim is installed.
+
+    ## Python virtualenv
+      - OK: no $VIRTUAL_ENV
+
+  Since the pyright LSP language server gets spawned from the nvim
+  environment, the first approach seems to me "more correct."
+
+  Also, run via either 
+
+    $ pipenv run python bin/pythag3.py 20 30
+    (3, 4, 5)
+    (5, 12, 13)
+    (7, 24, 25)
+    (8, 15, 17)
+    (20, 21, 29)
+
+    $ pipenv run bin/pythag3.py 50 42
+    (3, 4, 5)
+    (5, 12, 13)
+    (7, 24, 25)
+    (8, 15, 17)
+    (9, 40, 41)
+    (12, 35, 37)
+    (20, 21, 29)
+
+  where I am using
+
+    #!/usr/bin/env python
+
+  as the shebang line.

@@ -263,7 +263,7 @@ Notes taken while configuring Arch Linux for Python development.
     * system (set by /home/grs/.pyenv/version)
       3.10.2
       3.8.12
-    
+
 2022-01-31:
   Will need to understand how to use virtualenv and how it interacts
   with pyenv.
@@ -277,7 +277,7 @@ Notes taken while configuring Arch Linux for Python development.
 
     $ pip --version
     pip 20.3.4 from /usr/lib/python3.10/site-packages/pip (python 3.10)
-    
+
     $ /usr/bin/pip --version
     pip 20.3.4 from /usr/lib/python3.10/site-packages/pip (python 3.10)
 
@@ -311,7 +311,7 @@ Notes taken while configuring Arch Linux for Python development.
 
   Nobody home for pipenv and virtualenv for the pyenv locally installed
   Python versions.  I guess I will need to install pipenv, probably the
-  only thing for which I will use pip directly. 
+  only thing for which I will use pip directly.
 
 2022-01-31:
   Here are two fairly recent blog posts which describe how to use
@@ -398,11 +398,11 @@ Notes taken while configuring Arch Linux for Python development.
     url = "https://pypi.org/simple"
     verify_ssl = true
     name = "pypi"
-    
+
     [packages]
-    
+
     [dev-packages]
-    
+
     [requires]
     python_version = "3.9"
     (junk)$ python --version
@@ -447,7 +447,7 @@ Notes taken while configuring Arch Linux for Python development.
       - official package installer for Python
       - packages installed from the Python Package Index and other indexes
   * To Manage your Python projects/packages/applications: pipenv
-      - wrapper function for pip and venv 
+      - wrapper function for pip and venv
       - automatically creates and manages a virtualenv for your projects
       - adds/removes packages from your Pipfile as you install/uninstall Packages
       - generates Pipfile.lock file for deterministic builds
@@ -508,7 +508,7 @@ Notes taken while configuring Arch Linux for Python development.
 
 2022-10-19:
   See this blog on how to "properly" set up a virtual environment with
-  pipenv.  Note that pyenv is not envolved, 
+  pipenv.  Note that pyenv is not envolved,
 
 2022-10-19:
   Will do a Neovim :checkhealth outside and within the pipenv virtual
@@ -549,7 +549,7 @@ Notes taken while configuring Arch Linux for Python development.
         Error: unable to load neovim Python module
         - ADVICE:
           - Run in shell: /home/grs/.pyenv/shims/python -m pip install pynvim
-    
+
     ## Python virtualenv
       - INFO: $VIRTUAL_ENV is set to: /home/grs/.local/share/virtualenvs/boring_math-7KsFA2pk
       - INFO: Python version: 3.10.8
@@ -573,3 +573,87 @@ Notes taken while configuring Arch Linux for Python development.
   Beginning to understand enough so that this blog makes sense:
 
     http://murawski.blog/pyenv-pipenv.html
+
+2022-10-20:
+  Once you use pyenv ro set up which VERSION of Python to use, THAT
+  is the version which pipenv will know about.  If python runs with
+  that version but NOT in a virtual environment, will pyright LSP
+  know to use the virtual environment?  Not clear to me.
+
+    $ pyenv versions
+    * system (set by /home/grs/.pyenv/version)
+      3.10.6
+      3.10.7
+
+    $ pipenv run python -m pip list
+    Package    Version
+    ---------- -------
+    pip        22.2.1
+    setuptools 63.2.0
+    wheel      0.37.1
+
+  Just to be sure, pointing python3_host_prog to the pyenv shim,
+  then run nvim in the virtual environment.
+
+    vim.g.python3_host_prog = os.getenv('HOME') .. '/.pyenv/shims/python'
+
+  Will need to install pynvim into each virtual environment.
+  I am not sure the pyright LSP server will use the correct
+  virtual environment when nvim itself is using the base pyenv
+  python environment.
+
+    $ pipenv install --dev pynvim
+    Installing pynvim...
+    Adding pynvim to Pipfile's [dev-packages]...
+    ✔ Installation Succeeded
+    Pipfile.lock (e4eef2) out of date, updating to (5d7155)...
+    Locking [packages] dependencies...
+    Locking [dev-packages] dependencies...
+    Building requirements...
+    Resolving dependencies...
+    ✔ Success!
+    Updated Pipfile.lock (5d7155)!
+    Installing dependencies from Pipfile.lock (5d7155)...
+    To activate this project's virtualenv, run pipenv shell.
+    Alternatively, run a command inside the virtualenv with pipenv run.
+
+    $ pipenv run python -m pip list
+    Package    Version
+    ---------- -----------
+    greenlet   1.1.3.post0
+    msgpack    1.0.4
+    pip        22.2.1
+    pynvim     0.4.3
+    setuptools 63.2.0
+    wheel      0.37.1
+
+  Now, :checkhealth gives
+
+    ## Python 3 provider (optional)
+      - INFO: pyenv: Path: /usr/share/pyenv/libexec/pyenv
+      - INFO: pyenv: Root: /home/grs/.pyenv
+      - INFO: Using: g:python3_host_prog = "/home/grs/.pyenv/shims/python"
+      - INFO: Executable: /home/grs/.pyenv/shims/python
+      - INFO: Python version: 3.10.8
+      - INFO: pynvim version: 0.4.3
+      - OK: Latest pynvim is installed.
+
+    ## Python virtualenv
+      - INFO: $VIRTUAL_ENV is set to: /home/grs/.local/share/virtualenvs/boring_math-7KsFA2pk
+      - INFO: Python version: 3.10.8
+      - OK: $VIRTUAL_ENV provides :!python.
+
+  and Pipfile contains
+
+    [[source]]
+    url = "https://pypi.org/simple"
+    verify_ssl = true
+    name = "pypi"
+
+    [packages]
+
+    [dev-packages]
+    pynvim = "*"
+
+    [requires]
+    python_version = "3.10"

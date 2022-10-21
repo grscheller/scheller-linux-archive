@@ -875,3 +875,20 @@ Notes taken while configuring Arch Linux for Python development.
     #!/usr/bin/env python
 
   as the shebang line.
+
+2022-10-20:
+
+  Some pyenv factoids:
+
+  1. pyenv manages Python environments NOT Python virtual environments
+  2. pyenv a shell function 
+     - versions for bash, ksh, zsh, fish
+     - pyenv is a shell function that calls /usr/bin/pyenv (written in Bash)
+     - it modifies the existing shell instead of creating a new one
+     - it calls into a vast Bash shell infrastructure
+  3. Each python environment managed by pyenv needs its own pipenv
+  4. The pyenv shell subcommand sets and shows the shell specific Python version
+     - "pyenv shell" does not create a new shell, it modifies current one 
+     - multiple versions of Python can be enabled with it
+     - will use this to define python and pypy in same environment
+  5. The pyenv rehash subcommand needs to be called when Python versions installed

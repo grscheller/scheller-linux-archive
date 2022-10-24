@@ -1,12 +1,8 @@
 ## Location: $HOME\WindowsPowerShell\Microsoft.PowerShell_profile.ps1
-#  In an admin PS window run: Set-ExecutionPolicy -ExecutionPolicy Unrestricted
-#  Powershell window properties: give black background
-#  Powershell window properties: check legacy console
-#  Powershell window properties: uncheck legacy console
 
 ## Modify the Path environmental variable
 "Virgin Path: " + $env:Path
-$env:Path += "$home\opt\bin;"
+$env:Path += "$home\OneDrive - United States Air Force\Documents\WindowsPowerShel\bin;"
 
 ## Adjust background colors
 # Set the GUI to Cyan foreground and black background
@@ -31,6 +27,19 @@ $console.BackgroundColor = "Black"
 # Change the PowerShell prompt
 function prompt {
     "`n$pwd`n>  "
+}
+
+# Remove other people's certs from computer
+function rm_certs {
+$Certs = Get-ChildItem -Path "Cert:\CurrentUser\My" | Where-Object DNSNameList -Match "\d\d\d\d\d\d\d\d\d\d"
+    $Certs | ForEach-Object{
+        if ($_.DNSNameList -NotMatch $($env:USERNAME.substring(0,10))) {
+            Write-Host "REMOVED - NOT $env:USERNAME"
+            Get-ChildItem -Path "Cert:\CurrentUser\My" | Where-Object Thumbprint -eq $_.Thumbprint | Remove-Item -Force -Verbose
+        }else{
+            Write-Host "RETAINED - $env:USERNAME"
+        }
+    }
 }
 
 # Define something that behaves more like Posix ls -a
@@ -71,19 +80,19 @@ function dp {
 }
 
 function to-euler7 {
-    scp -P 22555 $args[0..$args.count] grs@euler7:./catch
+    scp -P 22555 $args[0..$args.count] grs@euler7:catch
 }
 
 function to-gauss17 {
-    scp -P 31502 $args[0..$args.count] grs@gauss17:./catch
+    scp -P 31502 $args[0..$args.count] grs@gauss17:catch
 }
 
 function from-euler7 {
-    scp -P 22555 "grs@euler7:./$($args[0])" .
+    scp -P 22555 "grs@euler7:$($args[0..$args.count])" .
 }
 
 function from-gauss17 {
-    scp -P 31502 "grs@gauss17:$($args[0])" .
+    scp -P 31502 "grs@gauss17:$($args[0..$args.count])" .
 }
 
 function euler7 {

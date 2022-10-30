@@ -10,5 +10,5 @@ lazy val root = project
     , scalacOptions += "-explain"
     , scalacOptions += "-explain-types"
 
-    , libraryDependencies += "com.github.sbt" % "junit-interface" % "0.13.2" % "test"
+    , libraryDependencies += "com.github.sbt" % "junit-interface" % "0.13.3" % "test"
   )

@@ -1,4 +1,9 @@
 ## Location: $HOME\WindowsPowerShell\Microsoft.PowerShell_profile.ps1
+#
+#  To edit with notepad.exe, Format -> Font -> "Courier New" & "Bold"
+#
+#    Courier New seems to be the only monospace font available.
+#
 
 ## Modify the Path environmental variable
 "Virgin Path: " + $env:Path

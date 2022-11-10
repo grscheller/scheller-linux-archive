@@ -93,6 +93,20 @@ Unlike other shells, sourced files can take arguments like shell scripts,
    hello mars
 ```
 
+## File Globbing
+
+Usually failed globs are an error in fish.  Certain builtin commands like
+`set`, `for` and `count` will happily null glob.  Without knowing this
+inconsistency (syntaxic sugar - magic builtins) null globbing would be a pain.
+
+Care must be taken with `switch` statements.  Quoted wildcards patterns can be
+used with `case` clauses.  If unquoted, failed file system null globs could
+happen.  The `switch` part could fail with an unquoted file system glob if
+there is not exactly one result.
+
+Additionally, when using quotted patterns in `case` clauses, `'a**b'` is not
+special and is treated same as `'a*b'`.
+
 ## Read Trick since Pipelines Don't Use Subshells
 
 You can use this Ksh pattern to asign values to shell variables
@@ -118,11 +132,11 @@ Read is useful when reading lines of data
    $ echo 'aa bb cc
    dd ee
    ff gg hh ii' | while read a b c
-       printf 'a - %s  b = %s  c = %s\n' $a $b $c
+       printf 'a = %s  b = %s  c = %s\n' $a $b $c
    end
-   a - aa  b = bb  c = cc
-   a - dd  b = ee  c =
-   a - ff  b = gg  c = hh ii
+   a = aa  b = bb  c = cc
+   a = dd  b = ee  c =
+   a = ff  b = gg  c = hh ii
 
    $ echo "a = $a"
    a =
@@ -130,7 +144,7 @@ Read is useful when reading lines of data
 
 Avoid shadowing outer scope variables with an an inner scope
 read.  Not only is it bad programming practice, I found it can
-cause Fish to behave a bit screwy.  Note that the variale aa does
+cause Fish to behave a bit screwy.  Note that the variable aa does
 not retain any of its while loop values.  This would be true even
 if it was set in global or universal scope.  If you really want
 to do this,

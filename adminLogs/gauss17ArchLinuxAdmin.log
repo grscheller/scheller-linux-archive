@@ -12409,5 +12409,165 @@ files are way too small.
 
   17. From log file ~/.local/share/mozillavpn.txt, can't find libQt6ShaderTools.so.6
   18. Pacman shows extra/qt6-shadertools 6.4.0-1 (qt6) not installed
-  19. I qt6-shadertools now installed
+  19. Now qt6-shadertools installed
   20. WORKS!!!!!!!!!!!!!!!!!!!!!!!!
+
+2022-11-14:
+  MozillaVPN now "offers" to upgrade itself.  Let us rebuild it instead.
+
+    1. Stop and disable service.
+
+       $ sudo systemctl stop mozillavpn.services
+       
+       $ sudo systemctl disable mozillavpn.service
+       Removed "/etc/systemd/system/multi-user.target.wants/mozillavpn.service".
+
+    2. Upgrade and rebuild.
+
+       $ cd ~/build/AUR/mozillavpn/
+
+       $ rm mozillavpn-2.9.0-1-x86_64.pkg.tar.zst mozillavpn_2.9.0.orig.tar.gz
+
+       $ git pull
+       remote: Enumerating objects: 19, done.
+       remote: Counting objects: 100% (19/19), done.
+       remote: Compressing objects: 100% (16/16), done.
+       remote: Total 16 (delta 6), reused 10 (delta 0), pack-reused 0
+       Unpacking objects: 100% (16/16), 3.20 KiB | 59.00 KiB/s, done.
+       From https://aur.archlinux.org/mozillavpn
+          a223134..adc040a  master     -> origin/master
+       Updating a223134..adc040a
+       Fast-forward
+        .SRCINFO         |  9 ++++++---
+        PKGBUILD         | 16 +++++++++++-----
+        issue_6676.patch |  5 +++++
+        3 files changed, 22 insertions(+), 8 deletions(-)
+        create mode 100644 issue_6676.patch
+
+       $ pyenv version
+       system (set by /home/grs/build/AUR/mozillavpn/.python-version)
+
+       $ makepkg -s
+       ==> Making package: mozillavpn 2.10.1-1 (Mon 14 Nov 2022 08:42:39 PM MST)
+       ==> Checking runtime dependencies...
+       ==> Checking buildtime dependencies...
+       ==> Installing missing dependencies...
+       resolving dependencies...
+       looking for conflicting packages...
+       
+       Packages (1) qt6-tools-6.4.0-1
+       
+       Total Installed Size:  17.06 MiB
+       
+       :: Proceed with installation? [Y/n]
+           ⁝
+       ==> Tidying install...
+         -> Removing libtool files...
+         -> Purging unwanted files...
+         -> Removing static library files...
+         -> Stripping unneeded symbols from binaries and libraries...
+         -> Compressing man and info pages...
+       ==> Checking for packaging issues...
+       ==> WARNING: Package contains reference to $srcdir
+       usr/lib/mozillavpn/mozillavpnnp
+       usr/bin/mozillavpn
+       ==> Creating package "mozillavpn"...
+         -> Generating .PKGINFO file...
+         -> Generating .BUILDINFO file...
+         -> Generating .MTREE file...
+         -> Compressing package...
+       ==> Leaving fakeroot environment.
+       ==> Finished making: mozillavpn 2.10.1-1 (Mon 14 Nov 2022 08:48:08 PM MST)
+
+    3. Let's see where we are at.
+
+       $ ls -l | sed -e '1d' -e 's/^.\{43\}//'
+       issue_6676.patch
+       mozillavpn
+       mozillavpn-2.10.1-1-x86_64.pkg.tar.zst
+       mozillavpn_2.10.1.orig.tar.gz
+       pkg
+       PKGBUILD
+       src
+
+       $ ls -l ../../ArchLocalRepo/ | sed -e '1d' -e 's/^.\{43\}//'
+       archlocal.db -> archlocal.db.tar.xz
+       archlocal.db.tar.xz
+       archlocal.db.tar.xz.old
+       archlocal.files -> archlocal.files.tar.xz
+       archlocal.files.tar.xz
+       archlocal.files.tar.xz.old
+       coursier-2.1.0_M6-1-any.pkg.tar.zst
+       mozillavpn-2.9.0-1-x86_64.pkg.tar.zst
+
+    4. Move new package over to ArchLocalRepo and swap it in.
+
+       $ mv mozillavpn-2.10.1-1-x86_64.pkg.tar.zst ../../ArchLocalRepo/
+       $ cd ../../ArchLocalRepo/
+       $ rm *.old mozillavpn-2.9.0-1-x86_64.pkg.tar.zst
+
+       $ ls -l | sed -e '1d' -e 's/^.\{43\}//'
+       archlocal.db -> archlocal.db.tar.xz
+       archlocal.db.tar.xz
+       archlocal.files -> archlocal.files.tar.xz
+       archlocal.files.tar.xz
+       coursier-2.1.0_M6-1-any.pkg.tar.zst
+       mozillavpn-2.10.1-1-x86_64.pkg.tar.zst
+
+       $ repo-remove archlocal.db.tar.xz mozillavpn
+       ==> Extracting archlocal.db.tar.xz to a temporary location...
+       ==> Extracting archlocal.files.tar.xz to a temporary location...
+       ==> Searching for package 'mozillavpn'...
+         -> Removing existing entry 'mozillavpn-2.9.0-1'...
+       ==> Creating updated database file 'archlocal.db.tar.xz'
+
+       $ repo-add archlocal.db.tar.xz mozillavpn-2.10.1-1-x86_64.pkg.tar.zst
+       ==> Extracting archlocal.db.tar.xz to a temporary location...
+       ==> Extracting archlocal.files.tar.xz to a temporary location...
+       ==> Adding package 'mozillavpn-2.10.1-1-x86_64.pkg.tar.zst'
+         -> Computing checksums...
+         -> Creating 'desc' db entry...
+         -> Creating 'files' db entry...
+       ==> Creating updated database file 'archlocal.db.tar.xz'
+
+    5. Now upgrade system.
+
+       $ sudo pacman -Syu
+       :: Synchronizing package databases...
+        core is up to date
+        extra        1753.5 KiB  1303 KiB/s 00:01 [#############] 100%
+        community       7.2 MiB  3.20 MiB/s 00:02 [#############] 100%
+        archlocal     956.0   B  3.42 KiB/s 00:00 [#############] 100%
+       : Starting full system upgrade...
+
+       Packages (101) alsa-card-profiles-1:0.3.60-1  cabal-install-3.4.1.0-55 …
+                      ⁝
+                      mozillavpn-2.10.1-1  neovim-0.8.1-1 …
+                      ⁝
+       :: Proceed with installation? [Y/n]
+       :: Retrieving packages...
+        mozillavpn-2.10.1-1-x86_64  4.3 MiB  253 MiB/s 00:00 [#############] 100%
+         ⁝
+       ( 84/101) upgrading mozillavpn                        [#############] 100%
+         ⁝
+
+    6. Enable and start service.
+
+       $ sudo systemctl enable mozillavpn.service
+       Created symlink /etc/systemd/system/multi-user.target.wants/mozillavpn.service → /usr/lib/systemd/system/mozillavpn.service.
+
+       $ sudo systemctl start mozillavpn.service
+
+  New MozillaVPN client has alot more network settings.
+
+2022-11-14:
+  Lets check Coursier.
+
+    $ cd ~/build/AUR/coursier
+    $ git fetch
+    $ git status
+    On branch master
+    Your branch is up to date with 'origin/master'.
+    
+    nothing to commit, working tree clean
+

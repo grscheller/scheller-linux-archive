@@ -12571,3 +12571,73 @@ files are way too small.
     
     nothing to commit, working tree clean
 
+2022-11-16:
+  Earlier today I had to quickly configure for my work computer, euler7.
+
+  So now I will take careful notes while doing the same for my pesronal
+  computer, gauss17.
+
+    0. Install chromium browser (DoD websites like Chromium/Edge)
+
+    1. Install ccid and opensc from the Arch Linux repos.
+
+    2. Start and enable pcscd.socket
+         $ sudo systemctl enable pcscd.socket
+         $ sudo systemctl start pcscd.socket
+
+    3. Download PKI CA Certificate Bundles:
+           PKCS#7 For DoD PKI Only - Version 5.9
+       from https://public.cyber.mil/pki-pke/pkipke-document-library/
+       and put here: ~/info/Certs/certificates_pkcs7_JITC.zip
+
+    4. Unpack zip file and "cd Certificates_PKCS7_v5.9_JITC/"
+
+         Certificates_PKCS7_v5.9_JITC.der.p7b
+         Certificates_PKCS7_v5.9_JITC_DoD_JITC_Root_CA_3.der.p7b
+         Certificates_PKCS7_v5.9_JITC_DoD_JITC_Root_CA_4.der.p7b
+         Certificates_PKCS7_v5.9_JITC_DoD_JITC_Root_CA_5.der.p7b
+         Certificates_PKCS7_v5.9_JITC_ECA_JITC_Root_CA_4.der.p7b
+         Certificates_PKCS7_v5.9_JITC_NSS_JITC_Root_CA_1.der.p7b
+         Certificates_PKCS7_v5.9_JITC_NSS_JITC_Root_CA_2.der.p7b
+         Certificates_PKCS7_v5.9_JITC_NSS_JITC_Root_CA_4.der.p7b
+         Certificates_PKCS7_v5.9_JITC.pem.p7b
+         Certificates_PKCS7_v5.9_JITC.sha256
+         DoD_PKE_PEM.pem
+
+     5. Firefox: 
+
+          Hamberger Menu -> Settings -> Privact & Security ->
+          Security Devices (under Certificates) -> Load
+            Module filename: /usr/lib/opensc-pkcs11.so
+          OK
+     
+          Hamberger Menu -> Settings -> Privact & Security ->
+          View Certificates (under Certificates) -> Authorities -> Import 
+            Browse to ~/info/Certs/Certificates_PKCS7_v5.9_JITC/
+            and Open all *.p7b files and the *.pem file.
+            For each checked both boxes to trust websites and email.
+          OK
+
+      6. $ modutil -dbdir sql:$HOME/.pki/nssdb/ -add "CAC Module" \
+           -libfile /usr/lib/opensc-pkcs11.so
+
+      7. Both Chromium and Firefox now can CAC onto DOD Safe.
+         MyPay only works for Chromium, but I think Firefox got past
+         the CAC login step.  Able to CAC into DTS with Firefox.
+
+      8. Taking a look at ~/.pki/nssdb/
+
+           $ ls -lh ~/.pki/nssdb/
+           total 68K
+           -rw------- 1 grs grs 28K May 31  2020 cert9.db
+           -rw------- 1 grs grs 36K May 31  2020 key4.db
+           -rw------- 1 grs grs 574 Nov 16 21:46 pkcs11.txt
+
+  Seems that back on 2017-04-24 I had gotten CAC software installed
+  but could not get Firefox to work with it.
+ 
+ 2022-11-17:
+  Clean out old cruft?
+
+    $ mv ~/.pki/nssdb/{cert9,key4}.db ~/catch
+

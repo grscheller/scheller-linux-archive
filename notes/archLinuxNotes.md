@@ -98,6 +98,11 @@ Get information on packages,
 * `pacman -Qlq <pkg>` (*list files associated with a package, use local database*)
 * `pacman -Flq <pkg>` (*list files associated with a package, use synced databases*)
 
+Find the package which owns a particular installed file,
+
+* `pacman -Qo </full/path/to/file>`
+* `pacman -Qoq </full/path/to/file>`
+
 Get package group information,
 
 * `pacman -Qg`
@@ -106,11 +111,6 @@ Get package group information,
 * `pacman -Sg <grp>` (*list packages in group, use synced database*)
 * `pacman -Qg | cut -f1 -d\  | uniq | sort` (*list names of groups in local database*)
 * `pacman -Sg | cut -f1 -d\  | uniq | sort` (*list names of groups in synced database*)
-
-Find the package which owns a particular installed file,
-
-* `pacman -Qo </full/path/to/file>`
-* `pacman -Qoq </full/path/to/file>`
 
 Query local package DB,
 

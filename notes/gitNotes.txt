@@ -1316,3 +1316,22 @@ XVII. GitHub Forking:
 
     $ git merge upstream/main
     Already up to date.
+
+
+
+TODO: Merge the following in -
+
+To create a temporary branch and push it upstream.
+
+$ git branch tmpWork
+$ git stash
+$ git checkout tmpWork
+$ git stash apply
+$ git add .
+$ git commit
+$ git push -u origin tmpWork      <- -u for upstream????
+$ git status
+On branch tmpWork
+Your branch is up to date with 'origin/tmpWork'.
+
+nothing to commit, working tree clean

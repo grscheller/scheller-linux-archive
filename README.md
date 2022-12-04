@@ -1,8 +1,10 @@
 # Geoffrey Scheller's Archive
 
-This repo contains notes and software projects which
-help me not to have to relearn so many things from scratch.
-By its very nature, it contains many loose threads.
+This repo is my "mosh pit" of notes, system admin logs, incomplete
+software projects, and a private personnal "homepage" used in lieu
+of browser bookmarks.
+
+By its very nature, this repo contains many loose threads.
 
 ## Linux/POSIX Notes
 
@@ -25,66 +27,12 @@ By its very nature, it contains many loose threads.
 
 ## System Administration Logs
 
-* [System Admin Logs](adminLogs)
+* [System Admin Logs](adminLogs/)
 
 ## Personnal Homepage - replaces browser bookmarks
 
-* [Personnal Homepage](web)
+* [Personnal Homepage](web/)
 
-## Grokking Computer Languages - many loose threads
+## Software Projects by Language
 
-* __C__
-  * [Advanced Programming in the UNIX Environment](grok/C/APUE/)
-  * [C Language Exeplars](grok/C/CExemplars/)
-  * [C Language Syntax](grok/C/CSyntax/)
-  * [Reverse Engineering with C](grok/C/CRevEngineer/)
-  * [Utilities programs written in C](grok/C/CUtils/)
-* __C++__
-  * [To Infiity and Beyond](grok/C++/ToInfinityAndBeyond/)
-* __Go__
-  * [Learn Go](grok/Go/)
-* __Gradle__
-  * [Learn Gradle](grok/Gradle/)
-* __Haskell__
-  * [pythagorean-triples package](grok/Haskell/pythag-triples)
-  * [Building Haskell Code with Cabal](grok/Haskell/buildingHaskellCode/)
-  * [Haskell Intro Programming](grok/Haskell/haskellIntroProgramming/)
-  * [Haskell Parallel and Concurrent](grok/Haskell/haskellParallelAndConcurrent/)
-* __Java__
-  * __Building Java__
-    * [Java with Make](grok/Java/buildingJava/javaWithMake/)
-    * [Java with Ant](grok/Java/buildingJava/javaWithAnt/)
-  * [Java FX Examples](grok/Java/javafxExamples/)
-  * [Testing JVM for Word Tearing](grok/Java/wordTearing/)
-  * [Abstract Data Types (ADT)](grok/Java/ADT/)
-* __JavaScript__
-  * [Overview](grok/JavaScript/)
-  * [Node Install](grok/JavaScript/node-install/)
-* __Python__
-  * [Daddy's Boring Math Libraries with examples](grok/Python/boring_math/)
-  * [Packaging Python Code](grok/Python/packaging_example/)
-  * [Calling C Code from Python](grok/Python/C_call/)
-  * [TensorFlow based Deep learning](grok/Python/tensorflow/)
-  * [PyTorch based Deep learning](grok/Python/pyTorch/)
-  * [Django Unchained](grok/Python/django/unchained/)
-* __Rust__
-  * [Learn Rust as General Purpose Language](grok/Rust/learnRust/)
-* __Scala3__
-  * [Scala 3 REPL via SDT](grok/Scala3/scala-console/)
-  * [Keywords given and extension](grok/Scala3/scalaImplicits/)
-  * [Abstract Data Types (ADT)](grok/Scala3/ADT/)
-* __Scala2__
-  * [Functional Programming in Scala](grok/Scala2/fpinscala/)
-  * [Functional Programming for Mortals](grok/Scala2/fpForMortals/)
-  * [Learn Scala2](grok/Scala2/learnScala/)
-  * [Type Level Programming in Scala](grok/Scala2/typeLevelProgramming/)
-  * [Testing Out Li Haoyi's os-lib library](grok/Scala2/osLib)
-
-## Comparing Computer Languages
-
-* [Abstract Data Types (ADT)](comp/ADT/)
-
-## Computer Graphics
-
-* [Low Level X11 (XLIB/XCB) Programming](grok/Graphics/XWindows)
-* [Cairo 2D Vector Graphics](grok/Graphics/Cairo)
+* [Grokking Computer Languages](grok/)

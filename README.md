@@ -2,7 +2,9 @@
 
 This repo is my "mosh pit" of notes, system admin logs, incomplete
 software projects, and a private personnal "homepage" used in lieu
-of a bookmark folder.  By its very nature, it contains many loose threads.
+of browser bookmarks.
+
+By its very nature, this repo contains many loose threads.
 
 ## Linux/POSIX Notes
 

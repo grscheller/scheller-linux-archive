@@ -1,9 +1,4 @@
 ## Location: $HOME\WindowsPowerShell\Microsoft.PowerShell_profile.ps1
-#
-#  To edit with notepad.exe, Format -> Font -> "Courier New" & "Bold"
-#
-#    Courier New seems to be the only monospace font available.
-#
 
 ## Modify the Path environmental variable
 "Virgin Path: " + $env:Path
@@ -41,7 +36,7 @@ $Certs = Get-ChildItem -Path "Cert:\CurrentUser\My" | Where-Object DNSNameList -
         if ($_.DNSNameList -NotMatch $($env:USERNAME.substring(0,10))) {
             Write-Host "REMOVED - NOT $env:USERNAME"
             Get-ChildItem -Path "Cert:\CurrentUser\My" | Where-Object Thumbprint -eq $_.Thumbprint | Remove-Item -Force -Verbose
-        }else{
+        } else {
             Write-Host "RETAINED - $env:USERNAME"
         }
     }
@@ -82,6 +77,11 @@ function dp {
             }
         }
     }
+}
+
+function onedrive-cache {
+    sl $Env:localappdata\Microsoft\Office\16.0\OfficeFileCache
+    Write-Output "Last time was under .\0\0"
 }
 
 function to-euler7 {

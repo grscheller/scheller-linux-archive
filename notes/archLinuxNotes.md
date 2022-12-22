@@ -116,7 +116,7 @@ Query local package DB,
 
 * `pacman -Q` (*list all installed packages*)
 * `pacman -Qe` (*list all explicitly installed packages*)
-* `pacman -Qet` (*  not reqired by other packages*)
+* `pacman -Qet` (*not reqired by other packages*)
 * `pacman -Qdt` (*list unneeded, orphaned packages*)
   * `-d, --deps` (*packages installed as dependencies*)
   * `-t, --unrequired` (*packages not required nor optionally required*)
@@ -161,7 +161,7 @@ a *soname* bump.
 
   Arch likes to cache disk space in memory
 
-```
+```bash
     $ free -h
                    total        used        free      shared  buff/cache   available
     Mem:            15Gi       1.7Gi        11Gi       127Mi       2.0Gi        13Gi
@@ -172,33 +172,40 @@ a *soname* bump.
 
 Get info on an Arch System,
 
-```
+```fish
    $ hostnamectl
-      Static hostname: gauss17
-            Icon name: computer-laptop
-              Chassis: laptop
-           Machine ID: <snip>
-              Boot ID: <snip>
-     Operating System: Arch Linux
-               Kernel: Linux 5.4.15-arch1-1
-         Architecture: x86-64
+    Static hostname: gauss17
+          Icon name: computer-laptop
+            Chassis: laptop 💻
+         Machine ID: <snip>
+            Boot ID: <snip>
+   Operating System: Arch Linux
+             Kernel: Linux 6.0.12-arch1-1
+       Architecture: x86-64
+    Hardware Vendor: Acer
+     Hardware Model: Aspire E5-491G
+   Firmware Version: V1.01
 ```
 
 Other ways,
 
-```
-   $ pacman -Q | grep '^linux '
-   linux 5.4.15.arch1-1
+```fish
+$ pacman -Q | grep '^linux'
+linux 6.0.12.arch1-1
+linux-api-headers 5.18.15-1
+linux-firmware 20221214.f3c283e-1
+linux-firmware-whence 20221214.f3c283e-1
 
-   $ uname -r
-   5.4.15-arch1-1
+$ uname -r
+6.0.12-arch1-1
 
-   $ uname -a
+$ uname -a
+Linux gauss17 6.0.12-arch1-1 #1 SMP PREEMPT_DYNAMIC Thu, 08 Dec 2022 ...
 ```
 
 ## Loginctl
 
-```
+```bash
    $ loginctl
    SESSION  UID USER  SEAT  TTY
          2 1000 geoff seat0 tty2
@@ -253,7 +260,7 @@ Other ways,
 
 To definitively show whether you are running under Wayland or Xorg,
 
-```
+```bash
     $ loginctl
     SESSION  UID USER SEAT  TTY
           3 1003 grs  seat0 tty2
@@ -264,6 +271,17 @@ To definitively show whether you are running under Wayland or Xorg,
     Type=x11
 ```
 
+```fish
+   $ loginctl
+   SESSION  UID USER SEAT  TTY
+         1 1003 grs  seat0 tty1
+   
+   1 sessions listed.
+   
+   $ loginctl show-session 1 -p Type
+   Type=wayland
+```
+
 ## DNSUTILS replacements
 
 For a while, no longer had nslookup, dig, and host.  These are back
@@ -272,7 +290,7 @@ via the extra/bind package, which replaces core/bind-utils.
 * From the core/ldns package, drill replaces dig and hosts.
 * From the core/glibc package, getent replaces nslookup.
 
-```
+```bash
    $ getent hosts 8.8.8.8
    8.8.8.8         google-public-dns-a.google.com
 
@@ -316,17 +334,15 @@ Between these three commands,
 You can reverse engineer your disk drives and how
 they are are carved up using these commands,
 
-```
-   $ sudo parted --list
-   $ mount | grep '^/dev/'
-   $ blkid
-   $ lsblk -f
-   $ df -hT
-```
+1. sudo parted --list
+1. mount | grep '^/dev/'
+1. blkid
+1. lsblk -f
+1. df -hT
 
 What types of partitians do you have?
 
-```
+```bash
   $ df -hT
   Filesystem     Type      Size  Used Avail Use% Mounted on
   dev            devtmpfs  7.8G     0  7.8G   0% /dev
@@ -405,7 +421,7 @@ What types of partitians do you have?
 
 ## Time management
 
-```
+```bash
    $ timedatectl
                   Local time: Wed 2020-07-22 08:56:06 EDT
               Universal time: Wed 2020-07-22 12:56:06 UTC
@@ -421,7 +437,7 @@ The timedatectl manpage recommends NOT to set HW clock to local time.
 
 Reset the timezone to East Coast.
 
-```
+```bash
    $ timedatectl list-timezones | grep America/Ne
    America/New_York
    $ sudo timedatectl set-timezone America/New_York
@@ -429,7 +445,7 @@ Reset the timezone to East Coast.
 
 To check if hardware clock is set to UTC time,
 
-```
+```bash
    $ sudo hwclock --verbose
    hwclock from util-linux 2.35
    System Time: 1580671267.025714

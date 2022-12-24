@@ -12636,8 +12636,74 @@ files are way too small.
   Seems that back on 2017-04-24 I had gotten CAC software installed
   but could not get Firefox to work with it.
  
- 2022-11-17:
-  Clean out old cruft?
+2022-11-17:
+  Cleaned out old cruft?
 
     $ mv ~/.pki/nssdb/{cert9,key4}.db ~/catch
 
+2022-12-23:
+  Want to help my daughter with Lua programming for
+  Roblox Studio.  Therefore will set gauss17 up for
+  Linux Wndows gaming in general and Roblox Studio
+  in particular.
+
+  First step, we need 32-bit support, so uncomment the
+  [multilib] section of /etc/pacman.conf, which is one
+  of the files I manage via my dotfiles GIT repo.
+
+    $ sudo pacman -Syu
+    :: Synchronizing package databases...
+     core is up to date
+     extra                            1718.8 KiB  3.31 MiB/s 00:01 [####] 100%
+     community is up to date
+     multilib                          161.2 KiB   537 KiB/s 00:00 [####] 100%
+     archlocal is up to date
+    :: Starting full system upgrade...
+     there is nothing to do
+
+  Created ~/Games directory.
+
+  Based on advice on Roblox related websites, will install
+  Lutris.  Should take a lot of the guess work out.  Will
+  follow Arch Wiki's for the Wine/Lutris install.
+
+    $ sudo pacman -Syu wine-staging wine-gecko wine-mono lutris
+
+  Will need to be run under XWayland.
+
+  Tried to install Epic game store, missing drivers.  The lutris/docs
+  GitHub site suggested:
+
+    $ sudo pacman -S --needed lib32-mesa vulkan-intel lib32-vulkan-intel vulkan-icd-loader lib32-vulkan-icd-loader
+    warning: lib32-mesa-22.3.1-1 is up to date -- skipping
+    warning: vulkan-icd-loader-1.3.235-1 is up to date -- skipping
+    warning: lib32-vulkan-icd-loader-1.3.235-1 is up to date -- skipping
+    resolving dependencies...
+    looking for conflicting packages...
+    
+    Packages (2) lib32-vulkan-intel-22.3.1-1  vulkan-intel-22.3.1-1
+    
+    Total Download Size:    5.75 MiB
+    Total Installed Size:  35.54 MiB
+    ...
+
+  Installed the Epic game Encased.  
+  was able to play.
+
+  Next installed Ubisoft and Origin launchers.  Was able to setup an
+  Ubisoft account, but have not been able to log in.  For Origin
+  failing to setup account.
+
+  Now to install Roblox.  From the Lutris website,
+  https://lutris.net/games/roblox/, and install the
+  Grapejuice launcher and Roblox & Studio.  The links
+  will install these items through the lutris installed
+  on gauss17.  Asks permission.
+
+  Has you create a python script via cut and paste called
+  robloxwine.py.  Installation process bombs due to this
+  script not being in a virtual environment.
+
+  I'll revisit later locking down the python version with pyenv
+  and setting up a proper virtual environment using pipenv.
+  Also may want to put the whole mess under GIT version control.

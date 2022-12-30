@@ -12418,7 +12418,7 @@ files are way too small.
     1. Stop and disable service.
 
        $ sudo systemctl stop mozillavpn.services
-       
+
        $ sudo systemctl disable mozillavpn.service
        Removed "/etc/systemd/system/multi-user.target.wants/mozillavpn.service".
 
@@ -12454,11 +12454,11 @@ files are way too small.
        ==> Installing missing dependencies...
        resolving dependencies...
        looking for conflicting packages...
-       
+
        Packages (1) qt6-tools-6.4.0-1
-       
+
        Total Installed Size:  17.06 MiB
-       
+
        :: Proceed with installation? [Y/n]
            ⁝
        ==> Tidying install...
@@ -12568,7 +12568,7 @@ files are way too small.
     $ git status
     On branch master
     Your branch is up to date with 'origin/master'.
-    
+
     nothing to commit, working tree clean
 
 2022-11-16:
@@ -12604,15 +12604,15 @@ files are way too small.
          Certificates_PKCS7_v5.9_JITC.sha256
          DoD_PKE_PEM.pem
 
-     5. Firefox: 
+     5. Firefox:
 
           Hamberger Menu -> Settings -> Privact & Security ->
           Security Devices (under Certificates) -> Load
             Module filename: /usr/lib/opensc-pkcs11.so
           OK
-     
+
           Hamberger Menu -> Settings -> Privact & Security ->
-          View Certificates (under Certificates) -> Authorities -> Import 
+          View Certificates (under Certificates) -> Authorities -> Import
             Browse to ~/info/Certs/Certificates_PKCS7_v5.9_JITC/
             and Open all *.p7b files and the *.pem file.
             For each checked both boxes to trust websites and email.
@@ -12635,7 +12635,7 @@ files are way too small.
 
   Seems that back on 2017-04-24 I had gotten CAC software installed
   but could not get Firefox to work with it.
- 
+
 2022-11-17:
   Cleaned out old cruft?
 
@@ -12680,14 +12680,14 @@ files are way too small.
     warning: lib32-vulkan-icd-loader-1.3.235-1 is up to date -- skipping
     resolving dependencies...
     looking for conflicting packages...
-    
+
     Packages (2) lib32-vulkan-intel-22.3.1-1  vulkan-intel-22.3.1-1
-    
+
     Total Download Size:    5.75 MiB
     Total Installed Size:  35.54 MiB
     ...
 
-  Installed the Epic game Encased.  
+  Installed the Epic game Encased.
   was able to play.
 
   Next installed Ubisoft and Origin launchers.  Was able to setup an
@@ -12707,3 +12707,262 @@ files are way too small.
   I'll revisit later locking down the python version with pyenv
   and setting up a proper virtual environment using pipenv.
   Also may want to put the whole mess under GIT version control.
+
+2022-12-28:
+  After Christmas went back to do above Lutrix install.
+  For some unknown reason I could not re-find the website
+  "https://lutris.net/games/roblox/" above.  Ended up installing
+  grapejuice from the AUR.
+
+    $ grapejuice --help 2>/dev/null
+    Usage: python -m grapejuice [OPTIONS] COMMAND [ARGS]...
+
+    Options:
+      --help  Show this message and exit.
+
+    Commands:
+      app
+      first-time-setup
+      player
+      studio
+      studio-auth
+      top
+      uninstall
+
+    $ grapejuice first-time-setup
+    $ grapejuice app
+    $ grapejuice studio
+    $ grapejuice-gui
+
+  Grapejuice is just the launcher.  The "first-time-setup" did install
+  the Roblox "app" but not studio.  Running grapejuice-gui allowed me
+  to install Roblox studio.  The grapejuice-gui does permit you to launch
+  and configure Roblox app and studio.  Not sure what "player" does.
+
+  According to my daughters, the mouse is usable but "laggy" running the
+  app and studio off the integrated Intel card.  There is a configuration
+  option in grapejuice-gui for "Use PRIME offloading" and it also correctly
+  identifies the "NVIDIA Corporation GM108M [GeForce 940M] (rev a2)".
+
+  Let's investigate whether PRIME is an option under Wayland.
+
+2022-12-28:
+  My NVidia card is EGL Streams and not GBM, which I thought ruled out Wayland.
+
+  But, from
+
+    https://download.nvidia.com/XFree86/Linux-x86_64/510.39.01/README/gbm.html
+
+  "GBM is a memory allocation API developed as a component of the Mesa project.
+   Most Wayland compositors use the GBM API to initialize an EGLDisplay object
+   directly on a GPU, and to allocate the EGLSurface representing the desktop.
+   The NVIDIA driver includes a GBM backend enabling the use of such software
+   on NVIDIA GPUs. A GBM EGL external platform library is also included to
+   enable the use of GBM objects in EGL."
+
+  Maybe there is hope?
+
+2022-12-29:
+  Continue with setting up NVIDIA offloading.
+
+  Lets just "go for it" and see what gets installed and what conflicts.
+
+    $ sudo pacman -Syu nvidia-prime
+    :: Synchronizing package databases...
+     core is up to date
+     extra is up to date
+     community is up to date
+     multilib is up to date
+     archlocal is up to date
+    :: Starting full system upgrade...
+    resolving dependencies...
+    looking for conflicting packages...
+    warning: dependency cycle detected:
+    warning: xorg-server will be installed before its nvidia-utils dependency
+
+    Packages (6) egl-wayland-2:1.1.11-2  eglexternalplatform-1.1-2  nvidia-utils-525.60.11-1
+                 xf86-input-libinput-1.2.1-1  xorg-server-21.1.6-1  nvidia-prime-1.0-4
+
+    Total Download Size:   258.56 MiB
+    Total Installed Size:  654.41 MiB
+
+  Encouraging.  Now I need to research how to confgure it.
+
+2022-12-30:
+  Did not do any additioal configuration to system.  Did prefer Vulkan with
+  grapejuice-gui.  Roblox app, thru grapejuice, workng better.  Much less mouse
+  glickiness.  Was not able to successfully launch Encased thru Lutris.
+
+  Here is some interesting information from "grapejuice app" stderr:
+
+    [INFO] grapejuice/root:- Log level was set to 'INFO'
+    [INFO] grapejuice/root:- The log file is stored at '~/.local/share/grapejuice/logs/2022-12-30_10-09-35_grapejuice.log'
+    [INFO] grapejuice/common_prepare:- Using locale directory /usr/share/locale
+
+    [INFO] grapejuice/grapejuice_common.features.settings:- Going to profile hardware
+    [INFO] grapejuice/grapejuice_common.hardware_info.hardware_profile:- Computing hardware profile parameters
+    [INFO] grapejuice/grapejuice_common.hardware_info.hardware_profile:- Getting lspci and XRandR data
+    [INFO] grapejuice/grapejuice_common.hardware_info.xrandr_factory:- Creating XRandR instance
+    [INFO] grapejuice/grapejuice_common.hardware_info.xrandr_factory:- Falling back to PhonyXRandR
+    X Error of failed request:  BadValue (integer parameter out of range for operation)
+      Major opcode of failed request:  150 (GLX)
+      Minor opcode of failed request:  24 (X_GLXCreateNewContext)
+      Value in failed request:  0x0
+      Serial number of failed request:  50
+      Current serial number in output stream:  51
+    [ERROR] grapejuice/grapejuice_common.hardware_info.hardware_profile:- Command '['glxinfo']' returned non-zero exit status 1.
+    [INFO] grapejuice/grapejuice_common.hardware_info.hardware_profile:
+      - Got multiple graphics cards: True
+    [INFO] grapejuice/grapejuice_common.hardware_info.hardware_profile:
+      - We can prime a graphics card: False
+
+  note: Prime configuration needed?
+
+    [INFO] grapejuice/grapejuice_common.hardware_info.graphics_card:
+      - Found ICD at '/usr/share/vulkan/icd.d/intel_icd.x86_64.json'
+    [INFO] grapejuice/grapejuice_common.hardware_info.graphics_card:
+      - Found ICD at '/usr/share/vulkan/icd.d/intel_icd.i686.json'
+    [INFO] grapejuice/grapejuice_common.hardware_info.graphics_card:
+      - Found ICD at '/usr/share/vulkan/icd.d/nvidia_icd.json'
+    [INFO] grapejuice/grapejuice_common.hardware_info.hardware_profile:
+      - Pick the first vulkan card
+    [INFO] grapejuice/grapejuice_common.hardware_info.hardware_profile:
+      - Target card can do Vulkan, prefer vulkan
+    [INFO] grapejuice/grapejuice_common.features.settings:
+      - Saving settings after load, because something was wrong or needs updating
+
+  note: Why downgrading itself?
+
+    [INFO] grapejuice/grapejuice_common.features.settings:
+      - Performing migration from 3 to2
+    [INFO] grapejuice/grapejuice_common.features.settings:
+      - Migration index (3, 2)
+    [INFO] grapejuice/grapejuice_common.features.settings:
+      - Applying migration (3, 2):
+        <function stop_using_pydantic at 0x7f0bef6e17e0>
+    [INFO] grapejuice/grapejuice_common.features.settings:
+      - Applying and saving new settings version 2
+
+  note: Everything below happening in pairs, two cards or two processes?  Only
+        recording one.
+
+    [INFO] grapejuice/root:
+      - Log level was set to 'INFO'
+
+    [INFO] grapejuice/root:
+      - The log file is stored at '~/.local/share/grapejuice/logs/2022-12-30_10-09-36_grapejuice.log'
+
+    [INFO] grapejuice/common_prepare:
+      - Using locale directory /usr/share/locale
+
+    [INFO] grapejuice/grapejuice_common.features.settings:
+      - Performing migration from 3 to2
+
+    [INFO] grapejuice/grapejuice_common.features.settings:
+      - Migration index (3, 2)
+
+    [INFO] grapejuice/grapejuice_common.features.settings:
+      - Applying migration (3, 2):
+        <function stop_using_pydantic at 0x7f0bef6e17e0>
+
+    [INFO] grapejuice/grapejuice_common.features.settings:
+      - Applying and saving new settings version 2
+
+    [INFO] grapejuice/grapejuice_common.wine.wineprefix_roblox:
+      - Writing flags for RobloxProduct.app to:
+        ~/.local/share/grapejuice/prefixes/studio/drive_c/users/[REDACTED]/AppData/Local/Roblox/Versions/version-e3de6c198f2c469b/ClientSettings/ClientAppSettings.json
+
+    [INFO] grapejuice/grapejuice_common.wine.wineprefix_core_control:
+       - Using Wine home '/usr'
+
+    [INFO] grapejuice/grapejuice_common.wine.wineprefix_core_control:
+      - Applying environment: {
+          "WINEDLLOVERRIDES": "dxdiagn=;winemenubuilder.exe=",
+          "WINEPREFIX":       "~/.local/share/grapejuice/prefixes/studio",
+          "WINEARCH":         "win64",
+          "WINEDEBUG":       "-all"
+        }
+
+    [INFO] grapejuice/grapejuice_common.wine.wineprefix_core_control:
+      - Using Wine home '/usr'
+
+    [INFO] grapejuice/grapejuice_common.wine.wineprefix_core_control:
+      - PRIME environment variables: {
+          "DRI_PRIME":                 "1",
+          "__NV_PRIME_RENDER_OFFLOAD": "1",
+          "__VK_LAYER_NV_optimus":     "NVIDIA_only",
+          "__GLX_VENDOR_LIBRARY_NAME": "nvidia"
+        }
+
+    [INFO] grapejuice/grapejuice_common.wine.wineprefix_core_control:
+      - Using Wine home '/usr'
+
+    [INFO] grapejuice/grapejuice_common.wine.wineprefix_core_control:
+      - Applying environment: {
+          "WINEDLLOVERRIDES": "dxdiagn=;winemenubuilder.exe=",
+          "WINEPREFIX": "~/.local/share/grapejuice/prefixes/studio",
+          "WINEARCH": "win64",
+          "DRI_PRIME": "1",
+          "__NV_PRIME_RENDER_OFFLOAD": "1",
+          "__VK_LAYER_NV_optimus": "NVIDIA_only",
+          "__GLX_VENDOR_LIBRARY_NAME": "nvidia",
+          "WINEDEBUG": "-all"
+        }
+
+    [INFO] grapejuice/grapejuice_common.wine.wineprefix_core_control:
+      - Prepared environment for wine
+
+    [INFO] grapejuice/grapejuice_common.wine.wineprefix_core_control:
+      - Resolved exe path to ~/.local/share/grapejuice/prefixes/studio/drive_c/users/[REDACTED]/AppData/Local/Roblox/Versions/version-e3de6c198f2c469b/RobloxPlayerLauncher.exe
+
+    [INFO] grapejuice/grapejuice_common.wine.wineprefix_core_control:
+      - Resolving wine binary for prefix ~/.local/share/grapejuice/prefixes/studio
+
+    [INFO] grapejuice/grapejuice_common.wine.wineprefix_core_control:
+      - Using Wine home '/usr'
+
+    [INFO] grapejuice/grapejuice_common.wine.wineprefix_core_control:
+      - Resolved wine binary path:
+        /usr/bin/wine
+
+    [INFO] grapejuice/grapejuice_common.wine.wineprefix_core_control:
+      - Running exe RobloxPlayerLauncher.exe
+
+    [INFO] grapejuice/grapejuice_common.wine.wineprefix_core_control:
+      - Opening log fds
+
+    [INFO] grapejuice/grapejuice_common.wine.wineprefix_core_control:
+      - Running process synchronously
+
+    [ERROR] grapejuice/grapejuice_common.logs.log_vacuum:
+      - Either creating the logging directory, or the link to the logging directory failed.
+    Legacy (link) location: ~/.local/var/log/grapejuice
+    Logging directory : ~/.local/share/grapejuice/logs
+    FileNotFoundError: [Errno 2] No such file or directory: '~/.local/share/grapejuice/logs' -> '~/.local/var/log/grapejuice'
+
+    [INFO] grapejuice/grapejuice_common.wine.wineprefix_core_control:- Closing fds
+
+    [INFO] grapejuice/grapejuice_common.logs.log_vacuum:- Removing empty log file: ~/.local/share/grapejuice/logs/2022-12-30_10-09-37_RobloxPlayerLauncher.exe_stdout.log
+
+2022-12-30:
+  Contunuing from above, before hythothesizing, lets get some low hanging fruit.
+
+    $ mkdir -p ~/.local/var/log
+    $ ln -s ~/.local/share/grapejuice/logs  ~/.local/var/log/grapejuice
+    $ ls -ld ~/.local/var/log/grapejuice
+    lrwxrwxrwx 1 grs grs 38 Dec 30 12:33 /home/grs/.local/var/log/grapejuice -> /home/grs/.local/share/grapejuice/logs/
+
+  From ~/.local/share/grapejuice/logs/2022-12-30_12-38-29_grapejuice.log above
+  worked.  This permitted the following log file to be created,
+  ~/.local/share/grapejuice/logs/2022-12-30_12-38-33_RobloxPlayerLauncher.exe_stderr.log.
+  This seams to indicate that the Roblox game I launched was using DX -> Vulkan
+  translation on the Intel Card.
+
+  A suspect the improved mouse performance was due to DX -> Vulkan translation
+  over DX -> OpenGL translation.
+
+  The Arch Wiki Prime pages are in terms of X and not XWayland.  Other info I 
+  have seen seems to incicate the prefered mechanism to run Windows games on
+  Linux is to use Prime running on Wayland.  Also seen that experimental XOrg
+  features are more likely to appear in XWayland than X.  Interesting...
+

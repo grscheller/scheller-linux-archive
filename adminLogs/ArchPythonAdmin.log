@@ -571,7 +571,7 @@ Notes taken while configuring Arch Linux for Python development.
     http://murawski.blog/pyenv-pipenv.html
 
 2022-10-20:
-  Once you use pyenv ro set up which VERSION of Python to use, THAT
+  Once you use pyenv to set up which VERSION of Python to use, THAT
   is the version which pipenv will know about.  If python runs with
   that version but NOT in a virtual environment, will pyright LSP
   know to use the virtual environment?  Not clear to me.
@@ -708,7 +708,7 @@ Notes taken while configuring Arch Linux for Python development.
     +pynvim = "*"
 
      [dev-packages]
-     pynvim = "*
+     pynvim = "*"
 
   Opps, my bad.  Forgot the --dev
 
@@ -887,8 +887,8 @@ Notes taken while configuring Arch Linux for Python development.
      - it modifies the existing shell instead of creating a new one
      - it calls into a vast Bash shell infrastructure
   3. Each python environment managed by pyenv needs its own pipenv
-  4. The pyenv shell subcommand sets and shows the shell specific Python version
+  4. "pyenv shell subcommand sets and shows the shell specific Python version
      - "pyenv shell" does not create a new shell, it modifies current one 
      - multiple versions of Python can be enabled with it
      - will use this to define python and pypy in same environment
-  5. The pyenv rehash subcommand needs to be called when Python versions installed
+  5. "pyenv rehash" subcommand needs to be called when Python versions installed

@@ -30,7 +30,7 @@ in the context of mathy integer functions and functional programming,
 they do make sense.
 
 Well, Neovim using Pyright as the LSP server does not follow
-relative paths.  To get around this, I created a 
+relative paths.  To get around this, I created a
 [pyrightconfig.json](pyrightconfig.json) in the root boring_math
 directory.
 

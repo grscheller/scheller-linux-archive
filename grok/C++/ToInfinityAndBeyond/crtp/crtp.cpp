@@ -1,18 +1,20 @@
 /*
  *  Illustrating Curiously Recurring Template Pattern
  */
-#include "counter.h"
 #include <iostream>
+#include <ostream>
+#include "./counter.h"
 
-using namespace std;
+using std::cout;
+using std::endl;
 
 class Dog : public counter<Dog> {
-public:
+ public:
   void speak() { cout << "Bark, Bark" << endl; }
 };
 
 class Robot : public counter<Robot> {
-public:
+ public:
   void speak() { cout << "Danger Will Robinson! Danger!" << endl; }
 };
 

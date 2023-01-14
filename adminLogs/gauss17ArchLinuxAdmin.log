@@ -10,7 +10,7 @@ Purpose: To indicate what was done to create gauss17 and
          Originally ran into issues getting an NVidia Optimus
          graphics card working with the proprietary NVidia
          drivers.  On the rebuild Arch handled the card and
-         drivers without much fuss.
+         drivers without much fuss. (see 2023-01-02)
 
 2016-07-04:
 
@@ -13143,3 +13143,73 @@ files are way too small.
     
     OpenGL ES profile version string: OpenGL ES 3.2 NVIDIA 525.60.11
     OpenGL ES profile shading language version string: OpenGL ES GLSL ES 3.20
+
+2023-01-02:
+  Finally found some definative info on my NVIDIA card.  I wish I had this
+  information 6 years ago.  Would have avoided a lot of guess work.
+
+    https://www.techpowerup.com/gpu-specs/geforce-940m.c2643
+
+    Recommended Gaming Resolutions: 1366x768-good 1600x900-meh 1920x1080-poor 
+
+    The GeForce 940M was a mobile graphics chip by NVIDIA, launched on
+    March 13th, 2015. Built on the 28 nm process, and based on the GM108
+    graphics processor, in its N16S-GT-S variant, the chip supports DirectX 12.
+    Even though it supports DirectX 12, the feature level is only 11_0, which
+    can be problematic with newer DirectX 12 titles. It features 384 shading
+    units, 24 texture mapping units, and 8 ROPs. NVIDIA has paired 2,048 MB DDR3
+    memory with the GeForce 940M, which are connected using a 64-bit memory
+    interface. The GPU is operating at a frequency of 1072 MHz, which can be
+    boosted up to 1176 MHz, memory is running at 900 MHz.
+
+    Being a mxm module card, the NVIDIA GeForce 940M does not require any
+    additional power connector, its power draw is rated at 33 W maximum.
+    This device has no display connectivity, as it is not designed to have
+    monitors connected to it. Rather it is intended for use in laptop/notebooks
+    and will use the output of the host mobile device. GeForce 940M is connected
+    to the rest of the system using a PCI-Express 3.0 x8 interface.
+
+  Now,
+
+    >>> 1366*768/2024/1000 = 0.5183241106719367
+    >>> 1920*1080/2024/1000 = 1.0245059288537
+
+  Hence use the laptop screen and not the HDMI monitor for gaming.
+
+2023-01-14:
+  Getting the following error on stdout fore sway
+
+    [GFX1-]: glxtest: VA-API test failed: failed to initialise VAAPI connection.
+
+  Pacman says
+
+    $ pacman -Ss vaapi
+    extra/gstreamer-vaapi 1.20.5-5
+        Multimedia graph framework - vaapi plugin
+    community/intel-media-driver 22.6.4-1
+        Intel Media Driver for VAAPI — Broadwell+ iGPUs
+    community/libvdpau-va-gl 0.4.2-3
+        VDPAU driver with OpenGL/VAAPI backend
+
+    $ pacman -Ss libvdpau
+    extra/libvdpau 1.5-1 [installed]
+        Nvidia VDPAU library
+    community/libvdpau-va-gl 0.4.2-3
+        VDPAU driver with OpenGL/VAAPI backend
+    multilib/lib32-libvdpau 1.5-1
+        Nvidia VDPAU library
+
+  Let's make aneducated guess on missing packages.
+
+    $ pacman -Syu libvdpau-va-gl lib32-libvdpau
+
+  First one for intel chipset, second one to match
+  the 64 bit version for NVIDIA.  Though I don't think
+  Optimus NVIDIA chip supports this uilt in video stuff.
+
+  Reboot.  Still getting the error when Firefox starts.
+
+    [GFX1-]: glxtest: VA-API test failed: failed to initialise VAAPI connection.
+
+  Maybe with the NVIDIA drives the Optimus chip is the main video driver
+  and the INTEL chip just passes the rendering to the display?

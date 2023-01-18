@@ -16,10 +16,13 @@ In modern Unix terminal emulators and Libre Office, input and display
 of unicode code points just works.  Terminals are fixed width font
 beasts, but Libre Office handles the variable width code points just fine.
 
-Python 3 can be used to tranlate a cut-n-paste character to its
+Python 3 can be used to translate a cut-n-paste character to its
 hexidecimal codepoint:
   >>> hex(ord('β'))
   '0x3b2'
+
+Neovim normal mode command 'ga' will list the decimal, hex, octal values of
+a charater.  To write a character in insert mode, '<c-v>u03bb' prints 'λ'.
 
 Code points can be entered from the terminal or directly into Libre Office
 via <ctrl>+<shift>+u3b2<ret>.  The <ctrl>+<shift>+u is typed by pressing the

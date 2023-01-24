@@ -2419,3 +2419,26 @@ Purpose: To rebuild from scratch maxwell4 after
   Uninstalled mozillavpn, rsync'ed archlocal repo, reinstalled it.  Had to
   manually inxtall qt6-shadertools.  Next step is to see if I can correctly
   update my mozillavpn package to take this new dependency into effect.
+
+2023-01-19:
+  Pacman update failed.  Probably due to going a month without an update.
+
+  When I did a
+
+    $ sudo pazcman -Syu
+
+  I got the following error message
+
+    error: openssl signature from "Pierre Schmitz <pierre@archlinux.org>" is marginal trust
+    :: File /mnt/var/cache/pacman/pkg/openssl-3.0.7-4-x86_64.pkg.tar.zst is corrupted (invalid or corrupted package (PGP signature)).
+
+  due to openssl signatures being out of date.  These were update sometime in
+  around Dec 20.  To get around this I had to do a "partial" update to get
+  the current archlinux-keyring, before doing the full upgrade.
+
+    $ sudo pacman -Sy archlinux-keyring
+    $ sudo pazcman -Syu
+
+  that fixed the issue.
+
+  Note: never do a "pacman -Sy" without following up with a "pacman -Syu"

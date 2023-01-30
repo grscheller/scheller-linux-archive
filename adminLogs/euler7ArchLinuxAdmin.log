@@ -2442,3 +2442,11 @@ Purpose: To rebuild from scratch maxwell4 after
   that fixed the issue.
 
   Note: never do a "pacman -Sy" without following up with a "pacman -Syu"
+
+2023-01-30:
+  Repeated fix done on gauss17 involving VA-API test failure from Firefox.
+  
+    $ sudo pacman -Syu libva-intel-driver intel-media-driver
+
+  Since work computer does not have 32-bit drivers, I did not
+  install the lib32-libva-intel-driver. 

@@ -12961,7 +12961,7 @@ files are way too small.
   A suspect the improved mouse performance was due to DX -> Vulkan translation
   over DX -> OpenGL translation.
 
-  The Arch Wiki Prime pages are in terms of X and not XWayland.  Other info I 
+  The Arch Wiki Prime pages are in terms of X and not XWayland.  Other info I
   have seen seems to incicate the prefered mechanism to run Windows games on
   Linux is to use Prime running on Wayland.  Also seen that experimental XOrg
   features are more likely to appear in XWayland than X.  Interesting...
@@ -13005,7 +13005,7 @@ files are way too small.
 
   Reboot,
 
-  When launching sway I got   
+  When launching sway I got
 
     $ sway
     00:00:00.001 [ERROR] [sway/main.c:65] Proprietary Nvidia drivers are NOT \
@@ -13078,7 +13078,7 @@ files are way too small.
       - Applying environment: {
           "WINEDLLOVERRIDES": "dxdiagn=;winemenubuilder.exe=",
           "WINEPREFIX": "~/.local/share/grapejuice/prefixes/studio",
-          "WINEARCH": "win64",  
+          "WINEARCH": "win64",
           "DRI_PRIME": "1",
           "__NV_PRIME_RENDER_OFFLOAD": "1",
           "__VK_LAYER_NV_optimus": "NVIDIA_only",
@@ -13112,15 +13112,15 @@ files are way too small.
     OpenGL core profile shading language version string: 4.60
     OpenGL core profile context flags: (none)
     OpenGL core profile profile mask: core profile
-    
+
     OpenGL version string: 4.6 (Compatibility Profile) Mesa 22.3.1
     OpenGL shading language version string: 4.60
     OpenGL context flags: (none)
     OpenGL profile mask: compatibility profile
-    
+
     OpenGL ES profile version string: OpenGL ES 3.2 Mesa 22.3.1
     OpenGL ES profile shading language version string: OpenGL ES GLSL ES 3.20
-    
+
     $ prime-run glxinfo -B
     name of display: :0
     display: :0  screen: 0
@@ -13135,12 +13135,12 @@ files are way too small.
     OpenGL core profile shading language version string: 4.60 NVIDIA
     OpenGL core profile context flags: (none)
     OpenGL core profile profile mask: core profile
-    
+
     OpenGL version string: 4.6.0 NVIDIA 525.60.11
     OpenGL shading language version string: 4.60 NVIDIA
     OpenGL context flags: (none)
     OpenGL profile mask: (none)
-    
+
     OpenGL ES profile version string: OpenGL ES 3.2 NVIDIA 525.60.11
     OpenGL ES profile shading language version string: OpenGL ES GLSL ES 3.20
 
@@ -13150,7 +13150,7 @@ files are way too small.
 
     https://www.techpowerup.com/gpu-specs/geforce-940m.c2643
 
-    Recommended Gaming Resolutions: 1366x768-good 1600x900-meh 1920x1080-poor 
+    Recommended Gaming Resolutions: 1366x768-good 1600x900-meh 1920x1080-poor
 
     The GeForce 940M was a mobile graphics chip by NVIDIA, launched on
     March 13th, 2015. Built on the 28 nm process, and based on the GM108
@@ -13171,13 +13171,13 @@ files are way too small.
 
   Now,
 
-    >>> 1366*768/2024/1000 = 0.5183241106719367
-    >>> 1920*1080/2024/1000 = 1.0245059288537
+    >>> 1366*768/2048/1000 = 0.51225
+    >>> 1920*1080/2048/1000 = 1.0125
 
   Hence use the laptop screen and not the HDMI monitor for gaming.
 
 2023-01-14:
-  Getting the following error on stdout fore sway
+  Getting the following message on stdout for sway
 
     [GFX1-]: glxtest: VA-API test failed: failed to initialise VAAPI connection.
 
@@ -13199,17 +13199,30 @@ files are way too small.
     multilib/lib32-libvdpau 1.5-1
         Nvidia VDPAU library
 
-  Let's make aneducated guess on missing packages.
+  Let's make an educated guess on missing packages.
 
     $ pacman -Syu libvdpau-va-gl lib32-libvdpau
 
   First one for intel chipset, second one to match
   the 64 bit version for NVIDIA.  Though I don't think
-  Optimus NVIDIA chip supports this uilt in video stuff.
+  Optimus NVIDIA chip supports this built in video stuff.
 
-  Reboot.  Still getting the error when Firefox starts.
+  Reboot.  Still getting the message when Firefox starts.
 
     [GFX1-]: glxtest: VA-API test failed: failed to initialise VAAPI connection.
 
   Maybe with the NVIDIA drives the Optimus chip is the main video driver
   and the INTEL chip just passes the rendering to the display?
+
+2023-01-29:
+  Fixed Firefox warning message above (2023-01-14) based on info from
+
+    https://github.com/elFarto/nvidia-vaapi-driver/issues/131
+
+  I installed a few missing drivers,
+
+    $ sudo pacman -Syu libva-intel-driver \
+                       lib32-libva-intel-driver \
+                       intel-media-driver
+
+  Not sure which ones did the trick.

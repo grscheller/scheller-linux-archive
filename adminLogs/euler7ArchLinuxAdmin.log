@@ -2450,3 +2450,283 @@ Purpose: To rebuild from scratch maxwell4 after
 
   Since work computer does not have 32-bit drivers, I did not
   install the lib32-libva-intel-driver. 
+
+2023-01-31:
+  Reading a book about functional programming.  Examples given in
+  OCaml and Haskell.  Need to install OCaml infrastucture.
+
+    $ pacman -Sg
+
+  does not show any sort of "OCaml" package.
+
+    $ pacman -Ssq ocaml
+    ocaml
+    ocaml-bigarray-compat
+    ocaml-compiler-libs
+    ocaml-ctypes
+    ocaml-integers
+    ocaml-result
+    ocaml-topkg
+    camlp5
+    dune
+    ocaml-base
+    ocaml-cairo
+    ocaml-csexp
+    ocaml-findlib
+    ocaml-hashcons
+    ocaml-lablgl
+    ocaml-num
+    ocaml-pp
+    ocaml-ppx_derivers
+    ocaml-sexplib0
+    ocaml-stdio
+    ocaml-stdlib-shims
+    ocaml-zarith
+    ocamlbuild
+    opam
+
+  opam: OCaml package manager
+  dune: Composable build sustem for OCaml (formally jbuilder)
+  ocaml-topkg: A packager for distributing OCaml software
+
+  Lets install this stuff
+
+    $ sudo pacman -Syu (pacman -Ssq ocaml)
+    :: Synchronizing package databases...
+     core is up to date
+     extra is up to date
+     community is up to date
+     multilib is up to date
+     archlocal is up to date
+    :: Starting full system upgrade...
+    resolving dependencies...
+    looking for conflicting packages...
+
+    Packages (27) \
+    camlp-streams-5.0.1-1  gtk2-2.24.33-2  lablgtk2-2.18.12-2
+    camlp5-8.0-4  dune-3.6.2-1  ocaml-4.14.0-1
+    ocaml-base-0.15.0-2  ocaml-bigarray-compat-1.0.0-3
+    ocaml-cairo-0.6.4-1  ocaml-compiler-libs-4.14.0-1
+    ocaml-csexp-1.5.1-5  ocaml-ctypes-0.20.1-1
+    ocaml-findlib-1.9.6-1  ocaml-hashcons-1.3-5
+    ocaml-integers-0.7.0-1  ocaml-lablgl-1.06-12
+    ocaml-num-1.4-6  ocaml-pp-1.1.2-3
+    ocaml-ppx_derivers-1.2.1-9  ocaml-result-1.5-7
+    ocaml-sexplib0-0.15.1-2  ocaml-stdio-0.15.0-2
+    ocaml-stdlib-shims-0.3.0-5  ocaml-topkg-1.0.5-1
+    ocaml-zarith-1.12-5  ocamlbuild-0.14.2-1  opam-2.1.4-1 
+
+  Dumping some output here to be added to a OCaml admin log
+  later.
+  
+$ opam init
+No configuration file found, using built-in defaults.
+Checking for available remotes: rsync and local, git.
+  - you won't be able to use mercurial repositories unless you install
+    the hg command on your system.
+  - you won't be able to use darcs repositories unless you install the
+    darcs command on your system.
+
+
+<><> Fetching repository information ><><><><><><><><><><><><><><><><><>
+[default] Initialised
+
+<><> Required setup - please read <><><><><><><><><><><><><><><><><><><>
+
+  In normal operation, opam only alters files within ~/.opam.
+
+  However, to best integrate with your system, some environment variables
+  should be set. If you allow it to, this initialisation step will update
+  your fish configuration by adding the following line to ~/.config/fish/config.fish:
+
+    source /home/grs/.opam/opam-init/init.fish > /dev/null 2> /dev/null; or true
+
+  Otherwise, every time you want to access your opam installation, you will
+  need to run:
+
+    eval (opam env)
+
+  You can always re-run this setup with 'opam init' later.
+
+Do you want opam to modify ~/.config/fish/config.fish? [N/y/f]
+(default is 'no', use 'f' to choose a different file) y
+
+User configuration:
+  Updating ~/.config/fish/config.fish.
+
+<><> Creating initial switch 'default' (invariant ["ocaml" {>= "4.05.0"}] - initially with ocaml-system)
+
+<><> Installing new switch packages <><><><><><><><><><><><><><><><><><>
+Switch invariant: ["ocaml" {>= "4.05.0"}]
+
+<><> Processing actions <><><><><><><><><><><><><><><><><><><><><><><><>
+∗ installed base-bigarray.base
+∗ installed base-threads.base
+∗ installed base-unix.base
+∗ installed ocaml-system.4.14.0
+∗ installed ocaml-config.2
+∗ installed ocaml.4.14.0
+Done.
+# Run eval (opam env --switch=default) to update the current shell
+environment
+
+*** Should have done above before next step????  Looks like it is
+*** installing everything locally.
+
+$ opam install utop
+The following actions will be performed:
+  ∗ install ocamlfind         1.9.5  [required by utop]
+  ∗ install dune              3.6.1  [required by utop]
+  ∗ install ocamlbuild        0.14.2 [required by logs]
+  ∗ install base-bytes        base   [required by ocplib-endian]
+  ∗ install trie              1.0.0  [required by mew]
+  ∗ install result            1.5    [required by zed]
+  ∗ install csexp             1.5.1  [required by dune-configurator]
+  ∗ install cppo              1.6.9  [required by utop]
+  ∗ install uchar             0.0.2  [required by zed]
+  ∗ install topkg             1.0.6  [required by logs]
+  ∗ install mew               0.1.0  [required by mew_vi]
+  ∗ install dune-configurator 3.6.1  [required by lwt]
+  ∗ install ocplib-endian     1.2    [required by lwt]
+  ∗ install uutf              1.0.3  [required by zed]
+  ∗ install react             1.2.2  [required by utop]
+  ∗ install lwt               5.6.1  [required by utop]
+  ∗ install uucp              15.0.0 [required by zed]
+  ∗ install mew_vi            0.5.0  [required by lambda-term]
+  ∗ install lwt_react         1.2.0  [required by utop]
+  ∗ install logs              0.7.0  [required by utop]
+  ∗ install uuseg             15.0.0 [required by zed]
+  ∗ install zed               3.2.1  [required by utop]
+  ∗ install lambda-term       3.3.1  [required by utop]
+  ∗ install utop              2.11.0
+===== ∗ 24 =====
+Do you want to continue? [Y/n] y
+
+<><> Processing actions <><><><><><><><><><><><><><><><><><><><><><><><>
+⬇ retrieved csexp.1.5.1  (https://opam.ocaml.org/cache)
+⬇ retrieved cppo.1.6.9  (https://opam.ocaml.org/cache)
+⬇ retrieved lambda-term.3.3.1  (https://opam.ocaml.org/cache)
+⬇ retrieved dune.3.6.1  (https://opam.ocaml.org/cache)
+⬇ retrieved logs.0.7.0  (https://opam.ocaml.org/cache)
+⬇ retrieved lwt.5.6.1  (https://opam.ocaml.org/cache)
+⬇ retrieved mew.0.1.0  (https://opam.ocaml.org/cache)
+⬇ retrieved lwt_react.1.2.0  (https://opam.ocaml.org/cache)
+⬇ retrieved mew_vi.0.5.0  (https://opam.ocaml.org/cache)
+⬇ retrieved dune-configurator.3.6.1  (https://opam.ocaml.org/cache)
+⬇ retrieved ocamlbuild.0.14.2  (https://opam.ocaml.org/cache)
+⬇ retrieved ocamlfind.1.9.5  (https://opam.ocaml.org/cache)
+[ERROR] The compilation of ocamlbuild.0.14.2 failed at "make
+        check-if-preinstalled all opam-install".
+⬇ retrieved result.1.5  (https://opam.ocaml.org/cache)
+⬇ retrieved ocplib-endian.1.2  (https://opam.ocaml.org/cache)
+⬇ retrieved react.1.2.2  (https://opam.ocaml.org/cache)
+⬇ retrieved trie.1.0.0  (https://opam.ocaml.org/cache)
+⬇ retrieved uchar.0.0.2  (https://opam.ocaml.org/cache)
+⬇ retrieved topkg.1.0.6  (https://opam.ocaml.org/cache)
+⬇ retrieved uuseg.15.0.0  (https://opam.ocaml.org/cache)
+⬇ retrieved utop.2.11.0  (https://opam.ocaml.org/cache)
+⬇ retrieved uutf.1.0.3  (https://opam.ocaml.org/cache)
+⬇ retrieved uucp.15.0.0  (https://opam.ocaml.org/cache)
+⬇ retrieved zed.3.2.1  (https://opam.ocaml.org/cache)
+∗ installed ocamlfind.1.9.5
+∗ installed base-bytes.base
+∗ installed dune.3.6.1
+∗ installed trie.1.0.0
+∗ installed result.1.5
+∗ installed csexp.1.5.1
+∗ installed mew.0.1.0
+∗ installed cppo.1.6.9
+∗ installed ocplib-endian.1.2
+∗ installed dune-configurator.3.6.1
+∗ installed lwt.5.6.1
+
+#=== ERROR while compiling ocamlbuild.0.14.2 ==========================#
+# context     2.1.4 | linux/x86_64 | ocaml.4.14.0 | https://opam.ocaml.org#bf34c78d
+# path        ~/.opam/default/.opam-switch/build/ocamlbuild.0.14.2
+# command     ~/.opam/opam-init/hooks/sandbox.sh build make check-if-preinstalled all opam-install
+# exit-code   2
+# env-file    ~/.opam/log/ocamlbuild-9734-0d2c44.env
+# output-file ~/.opam/log/ocamlbuild-9734-0d2c44.out
+### output ###
+# if test -d /usr/lib/ocaml/ocamlbuild; then\
+#   >&2 echo "ERROR: Preinstalled ocamlbuild detected at"\
+#        "/usr/lib/ocaml/ocamlbuild";\
+#   >&2 echo "Installation aborted; if you want to bypass this"\
+#         "safety check, pass CHECK_IF_PREINSTALLED=false to make";\
+#   exit 2;\
+# fi
+# ERROR: Preinstalled ocamlbuild detected at /usr/lib/ocaml/ocamlbuild
+# Installation aborted; if you want to bypass this safety check, pass CHECK_IF_PREINSTALLED=false to make
+# make: *** [Makefile:410: check-if-preinstalled] Error 2
+
+
+
+<><> Error report <><><><><><><><><><><><><><><><><><><><><><><><><><><>
+┌─ The following actions failed
+│ λ build ocamlbuild 0.14.2
+└─
+┌─ The following changes have been performed (the rest was aborted)
+│ ∗ install base-bytes        base
+│ ∗ install cppo              1.6.9
+│ ∗ install csexp             1.5.1
+│ ∗ install dune              3.6.1
+│ ∗ install dune-configurator 3.6.1
+│ ∗ install lwt               5.6.1
+│ ∗ install mew               0.1.0
+│ ∗ install ocamlfind         1.9.5
+│ ∗ install ocplib-endian     1.2
+│ ∗ install result            1.5
+│ ∗ install trie              1.0.0
+└─
+# Run eval (opam env) to update the current shell environment
+
+The former state can be restored with:
+    /usr/bin/opam switch import
+"/home/grs/.opam/default/.opam-switch/backup/state-20230131222009.export"
+
+
+
+*** Let's see what it did to my config.fish
+$ $DOTFILE_GIT_REPO/dfInstall -c target
+
+Target: '/home/grs/.config/alacritty/alacritty_arch.yml' doesn't exist.
+
+Target: '/home/grs/.config/fish/config.fish' differs from
+Source: '/home/grs/devel/dotfiles/config/fish/config.fish'.
+
+Target: '/home/grs/.config/sway/config' differs from
+Source: '/home/grs/devel/dotfiles/config/sway/config'. 
+
+$ diff devel/dotfiles/config/fish/config.fish .config/fish/config.fish
+142a143,145
+>
+> # opam configuration
+> source /home/grs/.opam/opam-init/init.fish > /dev/null 2> /dev/null; or true
+
+*** Will need to redo this, but will get it working on
+*** gauss17 first.
+
+$ opam init
+
+<><> Required setup - please read <><><><><><><><><><><><><><><><><><><>
+
+  In normal operation, opam only alters files within ~/.opam.
+
+  However, to best integrate with your system, some environment variables
+  should be set. If you allow it to, this initialisation step will update
+  your fish configuration by adding the following line to ~/.config/fish/config.fish:
+
+    source /home/grs/.opam/opam-init/init.fish > /dev/null 2> /dev/null; or true
+
+  Otherwise, every time you want to access your opam installation, you will
+  need to run:
+
+    eval (opam env)
+
+  You can always re-run this setup with 'opam init' later.
+
+Do you want opam to modify ~/.config/fish/config.fish? [N/y/f]
+(default is 'no', use 'f' to choose a different file) N
+A hook can be added to opam's init scripts to ensure that the shell
+remains in sync with the opam environment when they are loaded. Set
+that up? [y/N] y

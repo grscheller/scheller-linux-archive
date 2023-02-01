@@ -3,13 +3,13 @@
 CC=clang
 CFLAGS=-Wall
 UTILS=realpath
-XUTILS=jigglemouse
+XUTILS=jigglemouseX
 
 default: binaries
 
 binaries: $(UTILS) $(XUTILS)
 
-jigglemouse: jigglemouse.c
+jigglemouseX: jigglemouseX.c
 	$(CC) $(CFLAGS) -o $@ $< -lX11
 
 realpath: realpath.c

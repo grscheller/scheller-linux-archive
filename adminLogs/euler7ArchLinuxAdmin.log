@@ -2730,3 +2730,17 @@ Do you want opam to modify ~/.config/fish/config.fish? [N/y/f]
 A hook can be added to opam's init scripts to ensure that the shell
 remains in sync with the opam environment when they are loaded. Set
 that up? [y/N] y
+
+2023-02-08:
+  Installing Kanshi package from community to make Wayland "hot pluggable".
+
+    $ sudo pacman -Syu kanshi
+
+  Now I need to configure it and get my Sway config to interact with it.
+
+  Can be run as a Systemd User daemon whenever swaywm is running.
+
+    See:
+      https://wiki.archlinux.org/title/sway/
+      https://wiki.archlinux.org/title/Systemd/User/
+      https://www.reddit.com/r/swaywm/comments/g4vzrq/does_anyone_use_kanshi/

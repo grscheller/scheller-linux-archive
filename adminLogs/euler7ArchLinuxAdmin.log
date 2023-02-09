@@ -2385,7 +2385,7 @@ Purpose: To rebuild from scratch maxwell4 after
     ArchLocalRepo/archlocal.db.tar.xz
     ArchLocalRepo/archlocal.files.tar.xz
     ArchLocalRepo/mozillavpn-2.9.0-1-x86_64.pkg.tar.zst
-    
+
     sent 115 bytes  received 4,163,323 bytes  2,775,625.33 bytes/sec
     total size is 53,586,026  speedup is 12.87
 
@@ -2401,14 +2401,14 @@ Purpose: To rebuild from scratch maxwell4 after
     :: Starting full system upgrade...
     resolving dependencies...
     looking for conflicting packages...
-    
+
     Packages (8) libmng-2.0.3-3  qt6-5compat-6.3.2-1  qt6-charts-6.3.2-1
                  qt6-imageformats-6.3.2-1  qt6-networkauth-6.3.2-1  qt6-websockets-6.3.2-1
                  wireguard-tools-1.0.20210914-1  mozillavpn-2.9.0-1
-    
+
     Total Download Size:    5.58 MiB
     Total Installed Size:  16.62 MiB
-    
+
     :: Proceed with installation? [Y/n]
     ...
 
@@ -2445,11 +2445,11 @@ Purpose: To rebuild from scratch maxwell4 after
 
 2023-01-30:
   Repeated fix done on gauss17 involving VA-API test failure from Firefox.
-  
+
     $ sudo pacman -Syu libva-intel-driver intel-media-driver
 
   Since work computer does not have 32-bit drivers, I did not
-  install the lib32-libva-intel-driver. 
+  install the lib32-libva-intel-driver.
 
 2023-01-31:
   Reading a book about functional programming.  Examples given in
@@ -2514,11 +2514,11 @@ Purpose: To rebuild from scratch maxwell4 after
     ocaml-ppx_derivers-1.2.1-9  ocaml-result-1.5-7
     ocaml-sexplib0-0.15.1-2  ocaml-stdio-0.15.0-2
     ocaml-stdlib-shims-0.3.0-5  ocaml-topkg-1.0.5-1
-    ocaml-zarith-1.12-5  ocamlbuild-0.14.2-1  opam-2.1.4-1 
+    ocaml-zarith-1.12-5  ocamlbuild-0.14.2-1  opam-2.1.4-1
 
   Dumping some output here to be added to a OCaml admin log
   later.
-  
+
 $ opam init
 No configuration file found, using built-in defaults.
 Checking for available remotes: rsync and local, git.
@@ -2695,7 +2695,7 @@ Target: '/home/grs/.config/fish/config.fish' differs from
 Source: '/home/grs/devel/dotfiles/config/fish/config.fish'.
 
 Target: '/home/grs/.config/sway/config' differs from
-Source: '/home/grs/devel/dotfiles/config/sway/config'. 
+Source: '/home/grs/devel/dotfiles/config/sway/config'.
 
 $ diff devel/dotfiles/config/fish/config.fish .config/fish/config.fish
 142a143,145
@@ -2741,6 +2741,61 @@ that up? [y/N] y
   Can be run as a Systemd User daemon whenever swaywm is running.
 
     See:
-      https://wiki.archlinux.org/title/sway/
-      https://wiki.archlinux.org/title/Systemd/User/
-      https://www.reddit.com/r/swaywm/comments/g4vzrq/does_anyone_use_kanshi/
+      https://wiki.archlinux.org/title/sway
+      https://www.reddit.com/r/swaywm/comments/g4vzrq/does_anyone_use_kanshi
+
+2023-02-09:
+  Continue Kanshi config.  From https://wiki.archlinux.org/title/sway they
+  use Kanshi as an example of starting and stopping systemd services when
+  sway starts and stops.
+
+  I am adding these configuration to my dotfiles repo, but I'll write it
+  up as if I am working directly on euler7.
+
+  Create ~/.config/systemd/user/sway-session.target with the content
+
+    [Unit]
+    Description=Sway compositor seesion
+    Documentation=man:systemd.special
+    BindsTo=graphical-session.target
+    Wants=graphical-session-pre.target
+    After=graphical-session-pre.target
+
+  Edit ~/.config/sway/config adding
+
+    exec "systemctl --user import-environment; systemctl --user start sway-session.target"
+
+  to the ## Output configuration section.  Example used exec-always, but I think
+  exec is more appropriate.
+
+  We need to link the kanshi service to sway-session.target, so
+  create ~/.config/systemd/user/kanshi.service
+
+    [Unit]
+    Description=Dynamic output configuratin for Wayland compositors
+    Documentation=https://sr.ht/~emerson/kanshi
+    BindsTo=sway-session.target
+
+    [Service]
+    Type=simple
+    ExecStart=/usr/bin/kanshi
+
+    [Install]
+    WantedBy=sway-session.target
+
+  Finally, make sure, even if empty, a kanshi config file exists
+
+    $ mkdir ~/.config/kanshi/config
+
+  Kanshi will add new entries to this config which I can modify.  Not sure
+  yet how I will handle sway integration and dotfiles management of this file.
+
+  Rebbot,
+
+    $ systemctl --user status kanshi.service
+    ○ kanshi.service - Dynamic output configuratin for Wayland compositors
+         Loaded: loaded (/home/grs/.config/systemd/user/kanshi.service; disabled; preset: enabled)
+         Active: inactive (dead)
+           Docs: https://sr.ht/~emerson/kanshi
+
+  Will repeat on gauss17, need to get to bottom of why service did not start.

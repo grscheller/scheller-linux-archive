@@ -2799,3 +2799,50 @@ that up? [y/N] y
            Docs: https://sr.ht/~emerson/kanshi
 
   Will repeat on gauss17, need to get to bottom of why service did not start.
+
+2023-02-10:
+  Let's get to the bottom of why Kanshi (Himself) is not loading.
+
+    $ systemctl status graphical.target
+    ● graphical.target - Graphical Interface
+         Loaded: loaded (/usr/lib/systemd/system/graphical.target; static)
+         Active: active since Fri 2023-02-10 09:05:40 MST; 4h 33min ago
+          Until: Fri 2023-02-10 09:05:40 MST; 4h 33min ago
+           Docs: man:systemd.special(7)
+
+    $ systemctl --user status sway-session.target
+    ● sway-session.target - Sway compositor session
+         Loaded: loaded (/home/grs/.config/systemd/user/sway-session.target; static)
+         Active: active since Fri 2023-02-10 11:08:59 MST; 2h 33min ago
+          Until: Fri 2023-02-10 11:08:59 MST; 2h 33min ago
+           Docs: man:systemd.special
+
+    $ systemctl --user status kanshi.service
+    ○ kanshi.service - Dynamic output configuration for Wayland compositors
+         Loaded: loaded (/home/grs/.config/systemd/user/kanshi.service; disabled; preset: enabled)
+         Active: inactive (dead)
+           Docs: https://sr.ht/~emerson/kanshi
+
+  From redhat.com Systemd documentation
+
+     basic       unit target covering basic boot-up
+     rescue      unit target that pulls in the base system and spawns a rescue shell
+     multi-user  unit target for setting up a multi-user system
+     graphical   unit target for setting up a graphical login screen
+     emergency   unit target that starts an emergency shell on the main console
+     sysinit     unit target that pulls in the services required for system initializatio
+
+  I am not using a display manager.  Sway does not even officially support
+  display managers, though most work with it.
+
+  But above status shows that graphical.target was reached 2 hours before
+  I even started Sway.
+    
+  Found these repos that might be useful:
+
+    https://github.com/alebastr/sway-systemd
+    https://github.com/alebastr/dotfiles
+    https://gitlab.com/fedora/sigs/sway/sway-config-fedora
+
+  Aside: might also want to look into mako, a lightweight notification daemon
+  for Wayland.  Works on Sway.  Packman package already installed in euler7.

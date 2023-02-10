@@ -2790,7 +2790,7 @@ that up? [y/N] y
   Kanshi will add new entries to this config which I can modify.  Not sure
   yet how I will handle sway integration and dotfiles management of this file.
 
-  Rebbot,
+  Reboot,
 
     $ systemctl --user status kanshi.service
     ○ kanshi.service - Dynamic output configuratin for Wayland compositors

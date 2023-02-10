@@ -13264,3 +13264,8 @@ files are way too small.
   monitor.  A better approach would be to bind all but one screen
   to the external monitor.  Sometimes I do take the laptop places,
   so I may need to script swapping configurations.
+
+2023-02-10:
+  Added Kanshi support to Sway.  Repeated what I did on euler7
+  on 2023-02-09.  Same problem of Kanshi not starting.  Probably
+  I muffed the systemd user config.

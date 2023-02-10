@@ -13226,3 +13226,41 @@ files are way too small.
                        intel-media-driver
 
   Not sure which ones did the trick.
+
+2023-02-04:
+  Looking into having sway not use the laptop screen and let the 
+  screen continue to host my virtual terminals via agetty.  Some
+  initial observation:
+
+    - while booting the external monitor starts mirroring laptop screen
+      - short delay before this happens
+      - use `stty rows 44 columns 158` to match geometry of the ext monitor
+        - via my `rc` fish function
+    - usually bring sway up on first virtual terminal
+      - switching to another virtual works, laptop and monitor synced
+        - back to initial laptop screen geometry
+          - logging in and resetting geometry
+          - then log out
+          - geometry stays that of the monitor
+      - able to run two separate sway sessions on tty1 & tty3
+      - each alacritty process itself spawns a fish process
+        - alacritty itself is not associated with a pseudo-terminal
+        - spawns a fish shell which is
+          - pts/0, pts/1, pts/2, ...
+        - makes sense, alacritty is a GUI program
+          - creates pseudo-terminal for terminal programs to run in
+
+  Looks like a sway session can be associated with each virtual terminal,
+  not to be confused with a pseudo terminal.  A "real" tty would just be
+  infrastructure running on top of a serial connection into the computer.
+  Last time I saw one of these on a laptop was at least 20 years ago.
+
+  Beginning to realize that what I originally wanted probably is probably
+  unfeasible.
+
+  My problem is that sometimes my mouse drifts to desktop 0 on the
+  laptop screen, which is usually closed.  Then when I launch other
+  desktops, they pile up on the laptop screen and not the external
+  monitor.  A better approach would be to bind all but one screen
+  to the external monitor.  Sometimes I do take the laptop places,
+  so I may need to script swapping configurations.

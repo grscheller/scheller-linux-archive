@@ -2837,7 +2837,7 @@ that up? [y/N] y
 
   But above status shows that graphical.target was reached 2 hours before
   I even started Sway.
-    
+
   Found these repos that might be useful:
 
     https://github.com/alebastr/sway-systemd

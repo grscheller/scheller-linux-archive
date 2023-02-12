@@ -13228,7 +13228,7 @@ files are way too small.
   Not sure which ones did the trick.
 
 2023-02-04:
-  Looking into having sway not use the laptop screen and let the 
+  Looking into having sway not use the laptop screen and let the
   screen continue to host my virtual terminals via agetty.  Some
   initial observation:
 
@@ -13269,3 +13269,232 @@ files are way too small.
   Added Kanshi support to Sway.  Repeated what I did on euler7
   on 2023-02-09.  Same problem of Kanshi not starting.  Probably
   I muffed the systemd user config.
+
+2023-02-11:
+  Forgot to add kanshi package to gauss17
+
+    $ sudo pacman -Syu kanshi
+
+  Updated ~/.config/systemd/user files based on examples from
+
+    https://github.com/alebastr/sway-systemd
+    https://github.com/alebastr/dotfiles (Jun 9, 2022)
+
+  See if service is running
+
+    $ systemctl --user status kanshi.service
+    ○ kanshi.service - Dynamic output configuration for Wayland compositors
+         Loaded: loaded (/home/grs/.config/systemd/user/kanshi.service; disabled; preset: enabled)
+         Active: inactive (dead)
+           Docs: https://sr.ht/~emerson/kanshi
+
+  Let's try enabling it
+
+    $ systemctl --user enable kanshi.service
+    Created symlink /home/grs/.config/systemd/user/sway-session.target.wants/kanshi.service → /home/grs/.config/systemd/user/kanshi.service.
+
+  Reboot.  It works!
+
+    $ systemctl --user status kanshi.service
+    ● kanshi.service - Dynamic output configuration for Wayland compositors
+         Loaded: loaded (/home/grs/.config/systemd/user/kanshi.service; enabled; preset: enabled)
+         Active: active (running) since Sat 2023-02-11 05:03:15 MST; 37s ago
+           Docs: https://sr.ht/~emerson/kanshi
+       Main PID: 895 (kanshi)
+          Tasks: 1 (limit: 19026)
+         Memory: 452.0K
+            CPU: 5ms
+         CGroup: /user.slice/user-1003.slice/user@1003.service/app.slice/kanshi.service
+                 └─895 /usr/bin/kanshi
+
+    Feb 11 05:03:15 gauss17 systemd[642]: Started Dynamic output configuration for Wayland compositors.
+    Feb 11 05:03:15 gauss17 kanshi[895]: no profile matched
+
+    $ ll .config/kanshi/config
+    -rw-r--r-- 1 grs grs 0 Feb 10 03:56 .config/kanshi/config
+
+  Maybe I have to manually edit .config/kanshi.config?  Let's try.
+
+  Restart Sway with these configs:
+
+    $ cat ~/.config/systemd/user/sway-session.target
+    [Unit]
+    Description=Sway compositor session
+    Documentation=man:systemd.special(7)
+    BindsTo=graphical-session.target
+    Wants=graphical-session-pre.target
+    After=graphical-session-pre.target
+
+    $ cat ~/.config/systemd/user/kanshi.service
+    [Unit]
+    Description=Dynamic output configuration for wlroot compositors
+    Documentation=man:kansh(1)
+    BindsTo=sway-session.target
+
+    [Service]
+    Type=simple
+    ExecStart=/usr/bin/kanshi
+    Restart=always
+
+    [Install]
+    WantedBy=sway-session.target
+
+    $ cat ~/.config/kanshi/config
+    profile {
+        output eDP-1 enable position 0,0
+    }
+
+    profile{
+        output eDP-1 disable
+        output HDMI-A-1 mode 1920x1080 position 0,0
+    }
+
+2023-02-11:
+  Will install a Wayland notifications daemon called mako.
+
+    $ sudo pacman -Ss '^mako$'
+    community/mako 1.7.1-2 [installed]
+        Lightweight notification daemon for Wayland
+    $ sudo pacman -S mako
+
+  Mako configuration file located here,
+
+    ~/.config/mako/config
+
+  Updated ~/.config/sway/config with
+
+    exec /usr/bin/mako
+
+2023-02-12:
+  Mako is functioning
+
+    $ notify-send --urgency=critical "Attention" "Hello World!"
+    $ notify-send --urgency=normal "Attention" "Hello World!"
+    $ notify-send --urgency=low "Attention" "Hello World!"
+
+  all display graphical notifications on my desktop,
+
+    $ pgrep -a mako
+    4027 /usr/bin/mako
+
+  so something is running, but
+
+    $ systemctl --user status mako.service
+    × mako.service - Graphical notifcation daemon for Wayland compositors
+         Loaded: loaded (/home/grs/.config/systemd/user/mako.service; enabled; preset: enabled)
+         Active: failed (Result: exit-code) since Sat 2023-02-11 17:30:09 MST; 16h ago
+       Duration: 12ms
+           Docs: man:mako(1)
+       Main PID: 4068 (code=exited, status=1/FAILURE)
+            CPU: 12ms
+
+    Feb 11 17:30:09 gauss17 systemd[622]: mako.service: Scheduled restart job, restart counter is at 5.
+    Feb 11 17:30:09 gauss17 systemd[622]: Stopped Graphical notifcation daemon for Wayland compositors.
+    Feb 11 17:30:09 gauss17 systemd[622]: mako.service: Start request repeated too quickly.
+    Feb 11 17:30:09 gauss17 systemd[622]: mako.service: Failed with result 'exit-code'.
+    Feb 11 17:30:09 gauss17 systemd[622]: Failed to start Graphical notifcation daemon for Wayland compositors.
+
+  and there is no problem with kanshi
+
+    $ systemctl --user status kanshi.service
+    ● kanshi.service - Dynamic output configuration for wlroot compositors
+         Loaded: loaded (/home/grs/.config/systemd/user/kanshi.service; enabled; preset: enabled)
+         Active: active (running) since Sat 2023-02-11 17:30:08 MST; 16h ago
+           Docs: man:kansh(1)
+       Main PID: 4032 (kanshi)
+          Tasks: 1 (limit: 19026)
+         Memory: 340.0K
+            CPU: 2ms
+         CGroup: /user.slice/user-1003.slice/user@1003.service/app.slice/kanshi.service
+                 └─4032 /usr/bin/kanshi
+
+    Feb 11 17:30:08 gauss17 systemd[622]: Started Dynamic output configuration for wlroot compositors.
+    Feb 11 17:30:08 gauss17 kanshi[4032]: applying profile '<anonymous at line 5, col 8>'
+    Feb 11 17:30:08 gauss17 kanshi[4032]: applying profile output 'eDP-1' on connected head 'eDP-1'
+    Feb 11 17:30:08 gauss17 kanshi[4032]: applying profile output 'HDMI-A-1' on connected head 'HDMI-A-1'
+    Feb 11 17:30:08 gauss17 kanshi[4032]: running commands for configuration '<anonymous at line 5, col 8>'
+    Feb 11 17:30:08 gauss17 kanshi[4032]: configuration for profile '<anonymous at line 5, col 8>' applied
+
+  I was wondering if mako forks a child and dies causing systemd
+  to keep re-spawning, like the old System V daemonization process
+  of forking a child that forks a child to dissociate the daemon
+  process from the controlling terminal and session group.
+
+  I looked at the Mako source code, this is not what it is doing.
+  It looks like it is checking for config updates, then interacts
+  with dbus and wayland, then if all goes well, goes into an
+  event loop.  Maybe when I have more time, I could investigate
+  the details.
+
+  Problem might be me not understanding the purpose of this Systemd
+  graphical-session-pre psudo-target thingy.
+
+  Let's exit Sway and see where we are.
+
+    CTRL+SHIFT+e
+
+  We are still at graphical-session, both kanshi & make failed out and
+  sway-session is still active!
+
+  Reboot and see where we are at before launching wayland...
+
+  Both graphical-session & sway-session not active.  Both Kanshi & mako
+  loaded but not running.
+
+  Let's exec sway and see where we are
+  
+    $ set -qx SWAYSOCK; or cd && exec sway --unsupported-gpu > sw_out 2> sw_err
+
+  Sway started normally, lets see where mako & kanshi are at.
+
+    $ systemctl --user status mako.service
+    ● mako.service - Graphical notifcation daemon for Wayland compositors
+         Loaded: loaded (/home/grs/.config/systemd/user/mako.service; enabled; preset: enabled)
+         Active: active (running) since Sun 2023-02-12 11:11:54 MST; 5min ago
+           Docs: man:mako(1)
+       Main PID: 3000 (mako)
+          Tasks: 1 (limit: 19026)
+         Memory: 1.1M
+            CPU: 10ms
+         CGroup: /user.slice/user-1003.slice/user@1003.service/app.slice/mako.service
+                 └─3000 /usr/bin/mako
+
+    Feb 12 11:11:54 gauss17 systemd[2724]: Started Graphical notifcation daemon for Wayland compositors.
+
+    $ systemctl --user status kanshi.service
+    ● kanshi.service - Dynamic output configuration for wlroot compositors
+         Loaded: loaded (/home/grs/.config/systemd/user/kanshi.service; enabled; preset: enabled)
+         Active: active (running) since Sun 2023-02-12 11:11:54 MST; 6min ago
+           Docs: man:kansh(1)
+       Main PID: 2991 (kanshi)
+          Tasks: 1 (limit: 19026)
+         Memory: 340.0K
+            CPU: 2ms
+         CGroup: /user.slice/user-1003.slice/user@1003.service/app.slice/kanshi.service
+                 └─2991 /usr/bin/kanshi
+
+  Damn, now mako is working!?!?
+
+  Not only is it working, I can send notifications from other virtual consoles.
+  Note that when I moved to TTY3, laptop monitor got enabled.  When I moved
+  back to tty1, Kanshi? immediately disabled the laptop monitor.
+
+  OK, here are some observations
+
+   * Seems like graphical-session.target doesn't get shutdown when
+     the sway wm dies.
+     * My guess is that it is expecting a display manager to be
+       present and the user graphical-session to be over?
+   * When I exec sway from my login shell (or reboot from sway)
+     my user sway-session is done.
+   * Systemd --user works on a per user basis, not a per login
+     session basis.
+
+  and leasons learned, 
+
+   * Always exec sway from a login shell (or use a Display Manager).
+   * When exiting sway, Sway user should avoid being logged
+     in on other virtual consoles or through ssh sessions.
+   * Since I am now using Systemd --user to manage my sway user
+     daemon processes, probably not a good idea to have multiple
+     sway instances running on multiple virtual consoles.

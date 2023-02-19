@@ -1,6 +1,7 @@
 body {
   color: rgba(192, 202, 245, 1.0);
   background-color: Black;
+  font-family: cantarell,liberation,arial,helvetica,sans-serif
 }
 
 a:link {

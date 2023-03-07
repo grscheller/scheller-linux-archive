@@ -6,7 +6,6 @@
 #include <stdio.h>
 
 char *removeAllSpaces(char *data) {
-
     char *in, *out;
 
     for (in = out = data; *in !='\0'; in++)
@@ -17,7 +16,6 @@ char *removeAllSpaces(char *data) {
 }
 
 int main(int argc, char *argv[]) {
-
     for (int ii = 1; ii < argc; ii++)
         printf("%s\n", removeAllSpaces(argv[ii]));
 

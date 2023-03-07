@@ -9,8 +9,7 @@
 #include <stdlib.h>
 #include <stdarg.h>
 
-char *make_message(const char *fmt, ...)
-{
+char *make_message(const char *fmt, ...) {
     int n = 0;
     size_t size = 0;
     char *p = NULL;
@@ -58,9 +57,9 @@ int main(int argc, char *argv[])
 
     myMessage = make_message(formatStr, "Joe Blow", "Jane Doe", name);
 
-    if (myMessage != NULL)
+    if (myMessage != NULL) {
         printf("%s", myMessage);
-    else {
+    } else {
         printf("Something went wrong.\n");
         return 1;
     }

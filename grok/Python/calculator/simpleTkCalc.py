@@ -53,18 +53,18 @@ class app(Frame):
             if iEquals == '=':
                 btniEquals = button(EqualButton, LEFT, iEquals, None)
                 btniEquals.bind('<ButtonRelease-1>',
-                                lambda _,s=self, storeObj=display: s.calc(storeObj), '+')
+                                lambda _,s=self, storeObj=display: s.calc(storeObj),
+                                '+')
             else:
                 btniEquals = button(EqualButton, LEFT, iEquals,
                                     lambda storeObj=display, s=' %s ' % iEquals:
                                         storeObj.set(storeObj.get() + s))
  
     def calc(self, display):
-            try:
-                display.set(eval(display.get()))
-            except:
-                display.set("ERROR")
+        try:
+            display.set(eval(display.get()))
+        except:
+            display.set("ERROR")
 
- 
 if __name__=='__main__':
- app().mainloop()
+    app().mainloop()

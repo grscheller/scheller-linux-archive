@@ -2,8 +2,9 @@
 
 # Lightly modified from: https://www.simplifiedpython.net/python-calculator with
 # the help of the pyright LSP server.  The Arch system Python already had tkinter
-# module, but the tk and tcl Pacman packages also needed to be installed. Note, 
-# the example being followed used old style Tk, not the newer ttk version.
+# module, but the tk and tcl Pacman packages also needed to be installed.
+#
+# Note, the example being followed used old style Tk, not the newer ttk version.
 #
 # I don't think Tk has working closurses, hence the use of default parameters below
 # in lambda functions.
@@ -76,26 +77,27 @@ class myCalc(tk.Frame):
         return entry
 
     def __init__(self):
+        ## Configure tk.Frame parent class
         tk.Frame.__init__(self)
-
-        # Configure tk.Frame parent class
         self.option_add('*Font', tkfont.Font(family='arial', size=16, weight='bold'))
         self.pack(expand=tk.YES, fill=tk.BOTH)
  
-        # Construct display
+        ## Construct display
         display = tk.StringVar()
         self._mk_entry(tk.TOP, display)
  
+        ## Construct top row
+        top_frame = self._mk_frame(tk.TOP)
+
         # Construct clear button
-        clear_frame = self._mk_frame(tk.TOP)
         self._mk_button(
-            clear_frame,
+            top_frame,
             tk.LEFT,
             'C',
             lambda disp=display, _='C': disp.set('')
         )
  
-        # Construct calculator data entry buttons
+        ## Construct calculator data entry buttons
         for rowButtons in ('789/', '456*', '123-', '0.+'):
             button_frame = self._mk_frame(tk.TOP)
             for rowButton in rowButtons:
@@ -106,9 +108,11 @@ class myCalc(tk.Frame):
                     lambda disp=display, rb=rowButton: disp.set(disp.get() + rb)
                 )
  
+        ## Construct bottom row
+        bottom_frame = self._mk_frame(tk.TOP)
+
         # Construct equals button
-        eq_frame = self._mk_frame(tk.TOP)
-        eq_button = self._mk_button(eq_frame , tk.LEFT, '=', None)
+        eq_button = self._mk_button(bottom_frame , tk.LEFT, '=', None)
         eq_button.bind('<ButtonRelease-1>', lambda _, _self=self, disp=display: _self._calc(disp), '+')
  
     def _calc(self, display):

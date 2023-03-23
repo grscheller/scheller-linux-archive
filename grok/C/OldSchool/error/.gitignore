@@ -1,0 +1,4 @@
+perror
+strerror
+*.o
+*.exe

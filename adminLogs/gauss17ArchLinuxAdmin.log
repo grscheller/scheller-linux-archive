@@ -13498,3 +13498,26 @@ files are way too small.
    * Since I am now using Systemd --user to manage my sway user
      daemon processes, probably not a good idea to have multiple
      sway instances running on multiple virtual consoles.
+
+2023-03-24:
+  Got the following error message when I did "git fetch"
+  from GitHub:
+
+    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    @ WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED! @
+    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+  GitHub blog:
+
+    https://github.blog/2023-03-23-we-updated-our-rsa-ssh-host-key/
+
+  says
+
+    At approximately 05:00 UTC on March 24, out of an abundance
+    of caution, we replaced our RSA SSH host key used to secure
+    Git operations for GitHub.com.
+
+  to fix this
+
+    $ ssh-keygen -R github.com
+

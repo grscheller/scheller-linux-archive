@@ -9,12 +9,14 @@ backwards compatibility.  As a result, Fish is not POSIX compatible.
 
 These are equivalent,
 
-```
-   [fish]
+```fish
+   $ #fish
    $ echo hello (echo boobar fuzzbaz|sed 's/bar/bus/') world
    hello boobus fuzzbaz world
+```
 
-   [bash]
+```bash
+   $ #bash
    $ echo hello $(echo boobar fuzzbaz|sed 's/bar/bus/') world
    hello boobus fuzzbaz world
 ```
@@ -23,15 +25,17 @@ These are equivalent,
 
 These are equivalenr
 
-```
-   [fish]
+```fish
+   $ #fish
    $ diff (printf 'a b\nc d e\nx y\n'|psub) (printf 'a b\nc f e\nx y\n'|psub)
    2c2
    < c d e
    ---
    > c f e
+```
 
-   [bash]
+```bash
+   $ #bash
    $ diff <(printf 'a b\nc d e\nx y\n') <(printf 'a b\nc f e\nx y\n')
    2c2
    < c d e
@@ -41,11 +45,11 @@ These are equivalenr
 
 psub takes the following options:
 
-| Option      | Long Option       | Description                                       |
-|:-----------:|:----------------- |:------------------------------------------------- |
-| `-f`        | `--file`          | use regular file, allows seeking, but is slower   |
-| `-F`        | `--fifo`          | use fifo, faster but buffering problems can occur |
-| `-s SUFFIX` | `--suffix=SUFFIX` | append SUFFIX like .c onto backing file or fifo   |
+| Option      | Description                                       |
+|:-----------:|:------------------------------------------------- |
+| `-f`        | use regular file, allows seeking, but is slower   |
+| `-F`        | use fifo, faster but buffering problems can occur |
+| `-s SUFFIX` | append SUFFIX like .c onto backing file or fifo   |
 
 While bash uses the /dev/fd/ device files, psub is a fish function that returns
 the name of a file or fifo it creates and later cleans up.  Using an actual file
@@ -56,12 +60,14 @@ for nonblocking writing.
 
 The fish source command can read from stdin,
 
-```
-   [fish]
+```fish
+   $ #fish
    $ echo echo happy feet | source
    happy feet
+```
 
-   [bash]
+```bash
+   $ #bash
    $ source <(echo echo happy feet)
    happy feet
 ```
@@ -69,9 +75,9 @@ The fish source command can read from stdin,
 Here is a more practical example, import the abbriviations
 from another system,
 
-```
-   [fish]
+```fish
    $ ssh some_host abbr -s | source
+   ...
 ```
 
 This assumes your login shell is fish on the other system and
@@ -79,7 +85,7 @@ ssh is configured correctly.
 
 Unlike other shells, sourced files can take arguments like shell scripts,
 
-```
+```fish
    $ echo 'set foo hello
      echo $foo $argv[2]
      ' | source - goat world frog
@@ -112,7 +118,7 @@ special and is treated same as `'a*b'`.
 You can use this Ksh pattern to asign values to shell variables
 in the current shell.
 
-```
+```fish
    $ echo foobar buzzbaz | sed 's/bar/bus/' | read Foo Buzz
    $ echo $Foo $Buzz
    foobus buzzbaz
@@ -121,14 +127,14 @@ in the current shell.
 With no variables, read simply sends output to stdout, not some
 default variable.
 
-```
+```fish
    $ echo boobar fuzzbaz|sed 's/bar/bus/' | read
    boobus fuzzbaz
 ```
 
 Read is useful when reading lines of data
 
-```
+```fish
    $ echo 'aa bb cc
    dd ee
    ff gg hh ii' | while read a b c
@@ -149,7 +155,7 @@ not retain any of its while loop values.  This would be true even
 if it was set in global or universal scope.  If you really want
 to do this,
 
-```
+```fish
    $ set -g aa AA
 
    $ begin
@@ -167,7 +173,7 @@ to do this,
 Fish is a bit more flexible with whitespace than other shell.  Note
 that the shell variable xx has not been set before the while loop.
 
-```
+```fish
    $ echo 'aa
      bb
      cc' |
@@ -191,9 +197,9 @@ Todo: see type psub, man argparse, man fish_opt
 
 Update command completions based on manpages.
 
-```
+```fish
    $ fish_update_completions
+   ...
 ```
 
   Todo: see man fish_update_completions
-

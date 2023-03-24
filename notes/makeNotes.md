@@ -75,7 +75,7 @@ Notes on Built-in Targets:
 
 Comments begin with a #
 
-```
+```make
     # Comment ends at end of the line
 
     # My prefered way
@@ -95,19 +95,19 @@ Comments begin with a #
 
 Make rules can automate tasks.  Only lines which begins the
 POSIX shell action, the ones with the "for" and "rm", needs to starts with
-a `<tab>`.  We are just escaping the final `<new-line>'s` and writing
-a "one-liner".
+a "hard"`<tab>`.  We are just escaping the final `<new-line>'s` and
+writing a "one-liner".
 
-```
+```make
     timeit: $(BINARIES)
-	for bb in $(BINARIES);\
+    for bb in $(BINARIES);\
     do\
         echo -ne "\n$$bb: ";\
         time ./$$bb;\
     done
 
     clean:
-	rm -f $(BINARIES)
+    rm -f $(BINARIES)
 
     .PHONY: timeit clean
 ```
@@ -117,5 +117,3 @@ Notes on automating tasks:
 * `$$` prevents make variable expansion and passes the shell a single `$`
 * Using `./` for start of path to executable
 * Also, I don't put `.` in my `$PATH`
-* I use a tabstop of 4 in vim, so spaces before
-  the "for" above need to be a tab.

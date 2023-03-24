@@ -107,6 +107,5 @@ It is the canonical key to communicate directly with the Sway WM.
   * `Mod+e` toggle sibling containers between horizontal and vertical layout
   * `Mod+w` tab sibling containers in parent
   * `Mod+s` stack sibling containers in parent
-  * `Mod+v` make current container vertically laid out
-  * `Mod+b` make current container horizontally laid out
-
+  * `Mod+v` put window in new container & vertically lay out
+  * `Mod+b` put window in new container & horizontally lay out

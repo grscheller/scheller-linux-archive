@@ -88,7 +88,7 @@ Haskell reference manuals, or my general observations.
 * If `n` is grounded, then so is `S n`.
 * Non-grounded expreessions exist,
 
-  ```
+  ```haskell
      data NaturalNumber = Zero | S NaturalNumber
      infinity = S infinity
   ```
@@ -101,7 +101,7 @@ into the runtime implementation.
 * Unit type:
   * The Unit type and Unit type constuctor
 
-    ```
+    ```haskell
        data () = () deriving (Eq, Ord, Show)
     ```
 
@@ -111,7 +111,7 @@ into the runtime implementation.
 
   * Represents true and false boolean values.
 
-    ```
+    ```haskell
        Bool type:
        data Bool
            = False
@@ -122,20 +122,20 @@ into the runtime implementation.
 * Tuple type:
   * Two-tuple type class.
 
-    ```
+    ```haskell
        data (,) a b = (,) a b
     ```
 
   * Slightly syntatic sugared, otherwise parser would hijack `(` and `)`.
   * Without the syntatic sugar, we would have to define it as
 
-    ```
+    ```haskell
        data Pair a b = Pair a b deriving (Eq, Ord, Show)
     ```
 
   * Sugar to use and display like as done in mathematics,
 
-    ```
+    ```haskell
        Prelude> (,) 2 3 == (2,3)
        True
        Prelude> show $ (,) 3 2
@@ -145,7 +145,7 @@ into the runtime implementation.
     * Unlike Python, `,` is not an operator on its own.
     * The abstraction is that of a key-value pair.
 
-      ```
+      ```haskell
          Prelude> fmap (\x -> x + 40) (1,2)
          (1,42)
       ```
@@ -153,7 +153,7 @@ into the runtime implementation.
 * List type:
   * Example of a recursive type
 
-    ```
+    ```haskell
        infixr 5 :
        data [] a
            = []
@@ -164,7 +164,7 @@ into the runtime implementation.
   * The ordering is lexical, assuming that the underlying type a is ordered.
   * Syntaxic sugar to allow
 
-    ```
+    ```haskell
        Prelude> foo a b = [a, b, a + b]
        Prelude> foo 1 2
        [1,2,3]
@@ -174,21 +174,21 @@ into the runtime implementation.
 
 With pattern matching,
 
-```
+```haskell
    addMaybes (Just x) (Just y) = Just (x + y)
    addMaybes _ _               = Nothing
 ```
 
 with guards,
 
-```
+```haskell
    addMaybes mx my | Just x <- mx, Just y <- my = Just (x + y)
    addMaybes _  _                               = Nothing
 ```
 
 and λ-abstractions can also deconstruct patterns
 
-```
+```haskell
    (/(Right x) -> x)  -- run time error if pattern has wrong constructor
                       -- guards & multiple bindings not allowed.
 ```
@@ -198,13 +198,13 @@ and λ-abstractions can also deconstruct patterns
 Function application is most fundamental concept, so function
 application is just done by justiposition.
 
-```
+```haskell
    fun arg1 arg2 arg3
 ```
 
 Some say arguments are "separated by spaces."  But
 
-```
+```haskell
    fun(arg1)(arg2)(arg3)
 ```
 
@@ -217,7 +217,7 @@ would be parsed as justiposition too, but considered "bad style."
 In Haskell, most predefined operators are either just library functions
 or are cooked into the parser, examples of these are:
 
-```
+```haskell
    .., :, ::, =, \, |, <-, ->, @, ~, =>, --
 ```
 
@@ -238,7 +238,7 @@ matter how low precedencer.
 
 Default fixitity:
 
-```
+```haskell
    infixl 9  !!             -- This is the default when fixity unspecified
    infixr 9  .
    infixr 8  ^, ^^, ⋆⋆

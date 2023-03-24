@@ -43,7 +43,7 @@
   * Once bound, can not be changed
 * Functions arguments separated by whitespace
 
-   ```
+   ```haskell
       myFunction arg1 arg2 arg3
    ```
 
@@ -74,7 +74,7 @@
 
 ### Notational conventions
 
-```
+```haskell
    `[pattern]`      optional
    `{pattern}`      zero or more repetitions
    `(pattern)`      grouping
@@ -120,7 +120,7 @@
 
 ### Identifiers and Operators
 
-```
+```haskell
    identifier ➔ letter{letter ǀ digit ǀ _ ǀ '}
 ```
 
@@ -128,19 +128,19 @@
 * Separate namespaces
   * variable identifiers start with lower case letter
 
-     ```
+     ```haskell
         varid ➔ (small {small ǀ large ǀ digit ǀ '})<reservedid>
      ```
 
   * constructor identifiers start with upper case letter
 
-     ```
+     ```haskell
         conid ➔ large {small ǀ large ǀ digit ǀ '}
      ```
 
 ### Reserved identifiers
 
-```
+```haskell
    reservedid ➔ case ǀ class ǀ data ǀ default ǀ deriving ǀ do ǀ else
               ǀ foreign ǀ if ǀ import ǀ in ǀ infix ǀ infixl ǀ infixr
               ǀ instance ǀ let ǀ module ǀ newtype ǀ of ǀ then
@@ -149,7 +149,7 @@
 
 ## Operator symbols
 
-```
+```haskell
    special  ➔   | ǀ , ǀ ; ǀ [ ǀ ] ǀ ` ǀ { ǀ }
    symbol ➔ asciiSymbol ǀ unicodeSymbol<special ǀ _ ǀ " ǀ '>
    reservedop ➔ .. ǀ : ǀ :: ǀ = ǀ \ ǀ | ǀ <- ǀ -> ǀ @ ǀ ~ ǀ =>
@@ -165,14 +165,14 @@
 * With the exception of the prefix operator `-`, all other operators
   are infix.  May need parentheses to force `-` prefix
 
-  ```
+  ```haskell
      ghci> 4 - (- 3)
      7
   ```
 
 * Operators are just functions and can be called as such
 
-  ```
+  ```haskell
      ghci> 2 + 3
      5
      ghci> (+) 2 3
@@ -181,7 +181,7 @@
 
 * Functions have infix forms too
 
-  ```
+  ```haskell
      ghci> mod 8 3
      2
      ghci> 8 `mod` 3
@@ -190,7 +190,7 @@
 
 ### The six different type of names
 
-```
+```haskell
    varid
    conid
    tyvar ➔ varid
@@ -206,7 +206,7 @@
 * Variables, data constructors, type constructors, and type classes
   can have "qualified" names, but not type variables or module names
 
-   ```
+   ```haskell
       qvarid ➔ [modid .] varid
       qconid ➔ [modid .] conid
       qtycon ➔ [modid .] tycon
@@ -219,45 +219,45 @@
 
 * `f.g` lexes as 3 tokens
 
-  ```
+  ```haskell
      f . g
   ```
 
 * `F.g` lexes as a qualified name
 
-  ```
+  ```haskell
      F.g
   ```
 
 * `f..` lexes as 2 tokens
 
-  ```
+  ```haskell
      f ..
   ```
 
 * `F..` lexes as a qualified `.`
 * `F.`  lexes as 2 tokens
 
-  ```
+  ```haskell
      F .
   ```
 
 * Prelude.+ is an infix operator with same fixity as + in the Prelude
 * `bar(3)` lexes as 4 tokens
 
-  ```
+  ```haskell
      bar ( 3 )
   ```
 
   and eventually sematically interpretted as
 
-  ```
+  ```haskell
      bar 3
   ```
 
 ### Numeric Literals
 
-```
+```haskell
    decimal ➔ digit{digit}
    octal   ➔ octit{octic}
    hexadecimal ➔ hexit{hexit}
@@ -279,7 +279,7 @@
 
 ### Character and String Literals
 
-```
+```haskell
    char    ➔  ' (graphic<'ǀ\> ǀ space ǀ escape<\&>) '
    string  ➔  " {graphic<"ǀ\> ǀ space ǀ escape ǀ gap} "
    escape  ➔  \ (charesc ǀ ascii ǀ decimal ǀ o octal ǀ x hexadecimal)
@@ -315,7 +315,7 @@
   * Parser "substitutes" certain indentation with brackets and semicolens.
 * Example with layout
 
-  ```
+  ```haskell
      size :: Stack a -> Int
      size s = length (stkToLst s) where
                 stkToLst Empty          = []
@@ -324,7 +324,7 @@
 
 * How the parser would interpret above
 
-  ```
+  ```haskell
      size :: Stack a -> Int
      ;size s = length (stkToLst s) where
                 {stkToLst Empty          = []
@@ -334,7 +334,7 @@
 
 * How a C coder would hand code it, tastes vary
 
-  ```
+  ```haskell
      size :: Stack a -> Int;
      size s = length (stkToLst s) where {
                   stkToLst Empty  = [];
@@ -346,7 +346,7 @@
 
 * In a more Haskellian style
 
-  ```
+  ```haskell
      size :: Stack a -> Int
      ; size s = length (stkToLst s) where
                 { stkToLst Empty  = []
@@ -357,7 +357,7 @@
 
 * How to type above into ghci
 
-```
+```haskell
    ghci> let size s=length (s2L s) where {s2L Empty=[];s2L (MKStack x s)=x:xs where {xs=s2L s}}
 ```
 
@@ -365,7 +365,7 @@
 
 * Layout and non-layout can be mixed
 
-```
+```haskell
    f x = let a = 1; b = 2
              g y = exp2
           in exp1
@@ -388,7 +388,7 @@
 
 ### Structure of expressions
 
-```
+```haskell
    exp      ➔  infixexp :: [context =>] type      (expression type signature)
             ǀ  infixexp
 
@@ -431,7 +431,7 @@
   * Actually as far **lexiconically** as possible.
   * Don't take "right" too literally.
 
-  ```
+  ```haskell
       Examples:                     Parses as:
       f x + g y                     (f x) + (g y)
       - f x + y                     (- (f x)) + y
@@ -455,7 +455,7 @@
 
 ### Variables, Constructors, Operators, and Literals
 
-```
+```haskell
    aexp  ➔   qvar                      (variable)
          ǀ   gcon                      (general constructor)
          ǀ   literal

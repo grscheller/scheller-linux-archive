@@ -5,7 +5,7 @@ sources user's ~/.profile with /etc/gdm/Xsession using /bin/sh.
 
 ## GNOME Version
 
-```
+```bash
    $ gnome-shell --version
    GNOME Shell 40.0
 ```
@@ -165,13 +165,14 @@ sources user's ~/.profile with /etc/gdm/Xsession using /bin/sh.
     * click on title bar
     * Super+W (toggles raising & lowering - configured above)
 
-```
+```bash
    $ gsettings set org.gnome.desktop.wm.preferences raise-on-click false
+   $
 ```
 
 * Get and change screen lock delaytime
 
-```
+```bash
    $ gsettings get org.gnome.desktop.session idle-delay
    uint32 300
    $ gsettings set org.gnome.desktop.session idle-delay 3600
@@ -185,8 +186,9 @@ sources user's ~/.profile with /etc/gdm/Xsession using /bin/sh.
 
 Install a default set of extenstions managed by Arch,
 
-```
+```bash
    $ sudo pacman -Syu gnome-shell-extensions
+   $
 ```
 
 * Turn extensions on via Gnome-Extentions GUI
@@ -210,17 +212,19 @@ Install a default set of extenstions managed by Arch,
 * Search on gnome-shell-extension
 * Create a place to build the extension
 
-  ```
+  ```bash
      $ mkdir -p ~/build/AUR/gnome-extensions/
+     $
   ```
 
 * Example: Install gnome-shell-extension-extensions
 
-  ```
+  ```bash
      $ cd ~/build/AUR/gnome-extensions/
      $ git clone https://aur.archlinux.org/gnome-shell-extension-extensions-git.git
      $ cd gnome-shell-extension-extensions-git
      $ makepkg -sri
+     $
   ```
 
 * This installs Extensions for all users

@@ -25,8 +25,9 @@ created or modified is a static shared library of `*.o` object files.
 
 Create/update an archive static library and symbol table.
 
-```
+```bash
    $ ar rcs libapue2.a errorHandlers.o limits.o
+   $
 ```
 
 ## nm
@@ -40,7 +41,7 @@ and ar archives of object files.
 
 For object files:
 
-```
+```bash
    $ nm errorHandlers.o
                     U abort
    0000000000000000 T err_cont
@@ -67,7 +68,7 @@ For object files:
 
 For ar archives:
 
-```
+```bash
    $ nm libapue2.a
 
    errorHandlers.o:
@@ -115,7 +116,7 @@ which modules contain which names, if one exists.
 
 The mapping is created via either the `ranlib` or `ar s` commands.
 
-```
+```bash
     $ nm -s libapue2.a
 
     Archive index:

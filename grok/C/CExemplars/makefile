@@ -16,16 +16,16 @@ removeSpaces: removeSpaces.c cc.mk
 
 sumIt: $(SUMIT_BINARIES)
 
-sumItBasic: sumit.c cc.mk
+sumItBasic: sumIt.c cc.mk
 	$(CC) $(CFLAGS) -o $@ $<
 
-sumItO2: sumit.c cc.mk
+sumItO2: sumIt.c cc.mk
 	$(CC) $(CFLAGS) -O2 -o $@ $<
 
-sumItV: sumit.c cc.mk
+sumItV: sumIt.c cc.mk
 	$(CC) $(CFLAGS) -DVOLATILE -o $@ $<
 
-sumItVO2: sumit.c cc.mk
+sumItVO2: sumIt.c cc.mk
 	$(CC) $(CFLAGS) -DVOLATILE -O2 -o $@ $<
 
 timeIt: $(SUMIT_BINARIES)

@@ -2,6 +2,6 @@
 
 Best practices for ANSI-C coding/algorithms/compilation.
 
-* **removeSpaces.c**: O(n) string manipulation
-* **sumit.c**: [Compiler over-optimization](sumit.md)
 * **makeMessage.c**: allocate space & create a formatted message
+* **removeSpaces.c**: O(n) string manipulation
+* **sumIt.c**: [Compiler over-optimization](sumIt.md)

@@ -7,7 +7,7 @@
 
 Build 4 binaries from one source file, time them, and clean up:
 
-```sh
+```bash
    make sumIt
    make timeit
    make clean
@@ -15,7 +15,7 @@ Build 4 binaries from one source file, time them, and clean up:
 
 Example run:
 
-```sh
+```bash
    $ make timeit
    gcc sumit.c -Wall -std=c99 -o sumIt
    gcc sumit.c -Wall -std=c99 -O2 -o sumItO2

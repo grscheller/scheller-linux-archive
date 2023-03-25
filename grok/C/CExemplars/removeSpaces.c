@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
  *     locations in a data structure.
  *  2. Data structure (char *) returned is same as what
  *     initially given.  Not pointing to local or static memory
- *     location within the function.  Not memory allocated on heap.
+ *     location within the function.  No memory allocated on heap.
  *  3. O(n) computational complexity.  Very efficient.
  *  4. Reusing the memory location as opposed to manipulating
  *     the data within it.
@@ -38,6 +38,7 @@ int main(int argc, char *argv[]) {
  *       in = ( out = data )
  *
  *  Safety:
+ *
  *  1. Function has side effects.  
  *  2. Function assumes null terminated string.  Use, or
  *     implement, something like strncpy if strings are

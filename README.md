@@ -1,8 +1,7 @@
 # Geoffrey Scheller's Archive
 
-This is my "mosh pit" of notes, system admin logs, incomplete
-software projects, and a private personnal "homepage" used in
-lieu of browser bookmarks.
+This is my "mosh pit" of notes, system admin & software
+development logs, and general grokking of computer languages.
 
 * [Personal Notes](notes/)
 * [System Admin Logs](adminLogs/)

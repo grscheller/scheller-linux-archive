@@ -37,7 +37,7 @@ material.  This one, I think, actually is successful at being deeper.
 
 ## Original invitation to community on Haskell-Cafe
 
-```
+```text
    Message: 2
    Date: Sun, 24 Sep 2017 10:52:03 -0500
    From: "Stuart A. Kurtz" <stuart@cs.uchicago.edu>
@@ -87,7 +87,7 @@ material.  This one, I think, actually is successful at being deeper.
    The University of Chicago
 ```
 
-```
+```text
    Message: 3
    Date: Sun, 24 Sep 2017 19:19:24 -0500
    From: "Stuart A. Kurtz" <stuart@cs.uchicago.edu>

@@ -11,8 +11,9 @@ blog post.
 
 Bootstrapping from a canned Scala "hello world" project.
 
-```
-    $ sbt new scala/hello-world.g8
+```bash
+   $ sbt new scala/hello-world.g8
+   ...
 ```
 
 Seems to half created a multiproject build.  Using the above blog post,

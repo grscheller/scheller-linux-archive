@@ -4,7 +4,7 @@
 
 Lets first desugar the expression.  This is done at compile time.
 
-```
+```haskell
 sumf (sumf square) [[1,2],[3,4]]
 sumf (sumf square) ([1,2]):([3,4]):[]    -- Outer desugaring
 sumf (sumf square) (1:2:[]):(3:4:[]):[]  -- Inner desugaring
@@ -19,7 +19,7 @@ Now, the run time evaluation below assumes that:
 * Calculation is single threaded.
 * Trivial steps, like `square 2 => 2 * 2 => 4`, are consolidated.
 
-```
+```haskell
 sumf (sumf square) (1:2:[]):(3:4:[]):[]
 (sumf square) (1:2:[]) + sumf (sumf square) (3:4:[]):[]
 square 1 + sumf square 2:[] + sumf (sumf square) (3:4:[]):[]

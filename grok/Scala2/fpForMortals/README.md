@@ -9,7 +9,7 @@ by Sam Halliday.
 
 ### The build.sbt file suggested by book
 
-```
+```sbt
    scalaVersion in ThisBuild := "2.12.3"
    scalacOptions in ThisBuild ++= Seq(
      "-language:_",
@@ -34,7 +34,7 @@ by Sam Halliday.
 
 Use the following import statements in code:
 
-```
+```scala
    import scalaz._, Scalaz._
    import simulacrum._
    import stalactite._
@@ -47,13 +47,14 @@ Use the following import statements in code:
 * Launch Scala REPL configured for Scalaz as above.
 * First, cd to the scalazREPL directory, and then run
 
-  ```
+  ```bash
      $ sbt console
+     scala>
   ```
 
 * As a convienence, boilerplate in build.sbt file automatically imports
 
-  ```
+  ```scala
      import scalaz._
      import Scalaz._
      import simulacrum._

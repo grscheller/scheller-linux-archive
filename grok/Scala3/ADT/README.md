@@ -10,9 +10,11 @@ and
 
 To compile, run and cleanup from commandline
 
-```
+```bash
    $ scalac ADT.scala
+   ...
    $ scala grok.adt.ADT
+   ...
    $ rm -r grok/
 ```
 
@@ -21,7 +23,7 @@ To compile, run and cleanup from commandline
 Have to use Scala Build Tool (SBT) right now since Scala 3 has
 not been added to Arch Repos yet.
 
-```
+```bash
    $ sbt
    sbt:ADT> compile
    sbt:ADT> run

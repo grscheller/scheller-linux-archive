@@ -9,7 +9,7 @@ question is.  Well, the monad in question does need to be
 capable of containing something in the Ord and Num type
 classes.
 
-```
+```haskell
    foo :: (Monad m, Ord b, Num b) => m b -> m b
    foo yy = do
      y <- yy
@@ -20,7 +20,7 @@ classes.
 
 For the Maybe Monad,
 
-```
+```haskell
    Prelude> foo $ Just 10
    Just 0
    Prelude> foo $ Just 21
@@ -31,7 +31,7 @@ For the Maybe Monad,
 
 For the List Monad,
 
-```
+```haskell
    Prelude> foo [5,10,15,20,21,25]
    [0,0,0,40,42,50]
 ```

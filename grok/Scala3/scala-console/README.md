@@ -6,7 +6,7 @@ Minimalistic SBT config to run scala console
 
 Verify Java and SBT versions
 
-```
+```bash
    $ javac --version
    javac 11.0.11
    $ sbt  --version
@@ -22,7 +22,7 @@ directories.  Deleted these.
 Follow directions from Scala download
 [page](https://docs.scala-lang.org/scala3/getting-started.html)
 
-```
+```bash
    $ mkdir Scala3
    $ cd scala3
    $ sbt new scala/scala3.g8
@@ -36,7 +36,7 @@ Follow directions from Scala download
 
 This downloaded a "hello world" template from GitHub.  Lets see what we got
 
-```
+```bash
    $ find . -type f
    ./scala-console/src/test/scala/Test1.scala
    ./scala-console/src/main/scala/Main.scala
@@ -52,7 +52,7 @@ a pretty useless file it pulled down from GitHub.  At least it gives the
 location.  Replacing that file with this one and getting rid of some
 unnecessary clutter,
 
-```
+```bash
    mv README.md scala-console/
    rm -rf project/ target/
    cd scala-console
@@ -62,13 +62,13 @@ unnecessary clutter,
 
 First, remove source code.
 
-```
+```bash
    rm -rf src/
 ```
 
 Next, exit down build.sbt
 
-```
+```scala
    val scala3Version = "3.0.0"
 
    lazy val root = project
@@ -86,7 +86,7 @@ First thing `sbt` command did was to locally upgrade itself to 1.5.2.
 This was not configured in build.sbt.  Once everything installed, I
 relaunched `sbt`.
 
-```
+```scala
    $ sbt console
    [info] welcome to sbt 1.5.2 (Oracle Corporation Java 11.0.11)
    [info] loading project definition from /home/grs/devel/scheller-linux-archive/grok/Scala3/scala-console/project
@@ -119,7 +119,7 @@ relaunched `sbt`.
 Running scala outside this project in an empty directory, I get
 Arch's Scala version
 
-```
+```scala
    scala> scala.util.Properties.versionString
    val res1: String = version 2.13.5-20210527-235018-unknown
 ```

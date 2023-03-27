@@ -10,7 +10,7 @@ Created a new file, taken from the beginning of chapter 7,
 [firstConcurrentSteps/fork.hs](firstConcurrentSteps/fork.hs)
 with the following contents:
 
-```
+```haskell
 import Control.Concurrent
 import Control.Monad
 import System.IO
@@ -24,7 +24,7 @@ import System.IO
 
 To build,
 
-```
+```bash
    $ ghc -Wall -dynamic fork.hs
    [1 of 1] Compiling Main             ( fork.hs, fork.o )
    Linking fork ...
@@ -32,7 +32,7 @@ To build,
 
 to run,
 
-```
+```bash
    $ ./fork
    BBBBBABABABABABABABABABABABABABABABAAAAA
 ```

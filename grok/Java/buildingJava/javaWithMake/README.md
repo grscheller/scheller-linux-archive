@@ -7,7 +7,7 @@ rules.
 
 ## Targets
 
-```
+```bash
    $ make
    javac -d classes Carl.java
    javac -d classes IsPrime.java
@@ -37,7 +37,7 @@ Change directory to the base directory, the one with the makefile.
 
 From class files:
 
-```
+```bash
    $ export CLASSPATH=classes
    $ java IsPrime 2 721692259 721692261
    2 is prime.
@@ -47,7 +47,7 @@ From class files:
 
 From jar files:
 
-```
+```bash
    $ java -cp javaWithMake.jar Carl 10
    Sum of 1 to 10 is 55
 

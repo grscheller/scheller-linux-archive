@@ -1,3 +1,5 @@
+# Contributing
+
 This GitHub repo helps me organize, prioritize, and stay up to speed
 on a variety of software development and system administration topics.
 It is primarily focused on Linux and other POSIX like environments.

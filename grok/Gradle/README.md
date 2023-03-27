@@ -12,7 +12,7 @@
 Gradle can use Groovy or Kotlin as a DSL in its
 build.gradle configuration file.  This example uses Groovy.
 
-```
+```bash
   $ cd first-attempt
   $ gradle -q intro
   Hello World
@@ -21,7 +21,7 @@ build.gradle configuration file.  This example uses Groovy.
 
 The -q means quiet (log errors only)
 
-```
+```bash
   $ gradle intro
 
   > Task :hello
@@ -40,7 +40,7 @@ Following a tutorial I found
 [here](https://guides.gradle.org/creating-new-gradle-builds/)
 on the Gradle website.
 
-  ```
+  ```bash
     $ mkdir follow-tutorial; cd follow-tutorial
     $ gradle init
     Starting a Gradle Daemon (subsequent builds will be faster)

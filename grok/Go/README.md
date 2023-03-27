@@ -14,14 +14,14 @@ Traditional "Hello World" program
 
 Run as an interpreter:
 
-```
+```bash
    $ go run hello.go
    Hello, World!
 ```
 
 Compile and then run:
 
-```
+```bash
    $ go build hello.go
    $ ./hello
    Hello, World!

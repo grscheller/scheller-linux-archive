@@ -4,7 +4,7 @@ Source code: [Sort.hs](Sort.hs)
 
 Consider `sort [2,1,3,1]` where
 
-```
+```haskell
 sort :: Ord a => [a] -> [a]
 sort = foldr insert [] where
   insert x [] = [x]
@@ -15,7 +15,7 @@ sort = foldr insert [] where
 
 and, restricted to lists, `foldr` is defined
 
-```
+```haskell
 foldr :: (a -> b -> b) -> b -> [a] -> b
 foldr f z [] = z
 foldr f z (a:as) = f a (foldr f z as)
@@ -23,7 +23,7 @@ foldr f z (a:as) = f a (foldr f z as)
 
 I won't desugar the list.  Lets force the calculation with `head`.
 
-```
+```haskell
 head $ sort [2,1,3,1]
 head (sort [2,1,3,1])
 head (foldr insert [] [2,1,3,1])

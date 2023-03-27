@@ -8,20 +8,23 @@
 
 To compile all projects,
 
-```
+```bash
    $ sbt compile
+   ...
 ```
 
 compile just one project,
 
-```
+```bash
    $ sbt splat/compile
+   ...
 ```
 
 run one project,
 
-```
+```bash
    $ sbt splat/run
+   ...
 ```
 
 make sure you launch sbt from the root learnScala directory.
@@ -33,46 +36,50 @@ how to build from the command line with scalac and sbt.
 
 Compile to `*.class` files and run without SBT,
 
-```
+```bash
   $ cd longLines
-
+  ...
   $ scalac LongLines.scala
+  ...
   $ scala FindLongLines 45 ../README.md
-
+  ...
   $ rm *.class
 ```
 
 Compile to Jar file and run without SBT,
 
-```
+```bash
   $ scalac LongLines.scala -d longLines.jar
+  ...
   $ scala longLines.jar 40 ../README.md
-
+  ...
   $ rm LongLines.jar
+  ...
 ```
 
 To run as part of the hierarchical build,
 
-```
+```bash
   $ cd ..
 
   $ sbt
   sbt:learnScala> longLines/run 73 README.md
   sbt:learnScala> exit
   [info] shutting down sbt server
-
 ```
 
 To run hierarchical build with sbt from commandline,
 
-```
+```bash
   $ sbt "longLines/run 73 README.md"
+  ...
 ```
 
 To run what was built with hierarchical SBT build from commandline,
 
-```
+```bash
   $ scala longLines/target/scala-2.13/longlines_2.13-0.1-SNAPSHOT.jar 73 README.md
+  ...
 ```
 
 ## 3. Multiple packages in single build: [multiPackage](multiPackage/)
@@ -91,7 +98,7 @@ array or tuple into a fixed or variable-arity function.
 
 In Python:
 
-```
+```python
    >>> def f(m,n,p):
    ...   return m*n + p
    ...
@@ -111,33 +118,36 @@ combinations seem to me more naturally handled by unpacking and repacking.
 
 To "splat" a variable length datastructure into a variadic function:
 
-```
+```scala
    val a1 = bar(xs: _*)
 ```
 
 To "splat" a tuple into a fixed-arity function:
 
-```
+```scala
    val a2 = foo _ tupled (42, 3.0, "Fred")
 ```
 
 To "splat" a tuple into a curried function:
 
-```
+```scala
    val a3 = Function.uncurried(fooC _) tupled (42, 3.0, "fred")
 ```
 
 To compile outside the sbt build,
 
-```
+```bash
    $ cd splat
+   ...
    $ scalac Splat.scala
+   ...
 ```
 
 To run outside sbt build,,
 
-```
+```bash
    $ scala grokScala.splat.Splat
+   ...
 ```
 
 ## 5. Scala code blocks: [codeblocks](codeblocks/)
@@ -148,7 +158,7 @@ extend code blocks behave like functions.
 
 I found something I thought peculiar while in the scala REPL:
 
-```
+```scala
     scala> val dog = {
          |   println("This is run just once.")
          |   var fido = 5
@@ -204,7 +214,7 @@ Codeblocks, like any good closures, can contain state.
   use `=`, like methods do, their "return values" definately are
   not λ-functions, but instances of the class/trait.
 
-```
+```scala
    trait Foo[+A] { self =>
       ...
    }
@@ -268,7 +278,7 @@ Explore how a Scala instance method can be converted to a function.
 
 Consider the class in the file methodAsFunction.scala:
 
-```
+```scala
    class MethodAsFunctions {
      def m1(x: Int) = x + 30        // instance method
      val f1 = (x: Int) => x + 30    // λ-function
@@ -279,7 +289,7 @@ Consider the class in the file methodAsFunction.scala:
 
 and using the Scala REPL
 
-```
+```scala
    scala> import methodAsFunctions._
    import methodAsFunctions._
 

@@ -13,7 +13,7 @@ dependencies, need to be put into different Cabal sandboxes to avoid
 Let us start with a completely trivial Haskell program,
 [cmdLine/hw.hs](cmdLine/hw.hs), with the following contents:
 
-```
+```haskell
    module Main where
 
    main :: IO ()
@@ -29,21 +29,22 @@ I think the hint is to use dynamic linking whenever possible.
 Use static linking when you want to distribute code across
 "sufficiently" binary compatible systems.
 
-```
+```bash
    $ cd cmdLine
    $ ghc -Wall -dynamic hw.hs
+   $
 ```
 
 to run,
 
-```
+```bash
    $ ./hw
    Hello, World!
 ```
 
 Lets see what was built,
 
-```
+```bash
    $ ls -l hw
    -rwxrwx--- 1 geoff geoff 17544 Mar 11 21:52 hw
 
@@ -68,21 +69,22 @@ Lets see what was built,
 
 Now, rebuild making the ghc libraries static.
 
-```
+```bash
    $ rm hw hw.hi hw.o
+   $
    $ ghc -Wall hw.hs
 ```
 
 run it again,
 
-```
+```bash
    $ ./hw
    Hello, World!
 ```
 
 this time, what was built is a bit bigger,
 
-```
+```bash
    $ ls -l hw
    -rwxrwx--- 1 geoff geoff 1079760 Mar 11 22:09 hw
 

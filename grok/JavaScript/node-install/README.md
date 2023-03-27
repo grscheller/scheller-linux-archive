@@ -13,8 +13,9 @@ Chrome's V8 JavaScript engine.
 
 Available in community repo.
 
-```
+```bash
    $ sudo pacman -Syu nodejs npm npm-check-updates
+   ...
 ```
 
 ### Install on OpenBSD
@@ -22,8 +23,9 @@ Available in community repo.
 Available in ports collection at
 /usr/ports/lang/node, or via the package manager
 
-```
+```bash
    $ pkg_add node
+   ...
 ```
 
 ### Install on Windows
@@ -31,14 +33,16 @@ Available in ports collection at
 Download the Windows installer from nodejs.org,
 or alternatively via Chocolatey
 
-```
+```bash
    $ cinst nodejs
+   ...
 ```
 
 For a full install with npm
 
-```
+```bash
    $ cinst nodejs.install
+   ...
 ```
 
 ## npm
@@ -61,10 +65,10 @@ is cross platform.
 ## Simple Example
 
 The Script, [app.js](app.js), will generates a
-webpage webpage running off port 3000i which
+webpage webpage running off port 3000 which
 simply says "Hello World".
 
-```
+```bash
    $ node app.js
    Server running at http://192.168.1.22:3000/
    ^C

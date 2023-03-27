@@ -7,15 +7,18 @@
 
 Compile and test your systems under various settings:
 
-```
+```bash
    $ make ftm
+   $ ...
    $ make testSys
+   $ ...
    $ make clean
+   ...
 ```
 
 Example run:
 
-```
+```bash
     $ make testSys
     gcc -Wall -o ftmBasic featureTestMacros.c
     gcc -Wall -D_XOPEN_SOURCE=500 -o ftmXOpen500 featureTestMacros.c

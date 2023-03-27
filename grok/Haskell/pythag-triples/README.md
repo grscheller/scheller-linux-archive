@@ -12,12 +12,12 @@ Arch Linux Haskell dynamic library infrastructure.
 
 * [Usage](#usage)
 * [Design Considerations](#design-considerations)
-* [Build Considerations](#build-considerations)
-* [CHANGELOG](CHANGELOG.md)
+* [Build Considerations](#building-the-code)
+* [CHANGELOG](CHANGELOG.md#revision-history-for-pythag-triples)
 
 ## Usage
 
-```
+```text
 pythagTriples  [-o1|-o2|-f|-fs|-h] number"
   where"
     number = number of triples to print"
@@ -41,7 +41,7 @@ All algorithms only print triples with no common factors.
 
 1. These algorithms generate pathagorean triples with no common factors.
 
-   ```
+   ```text
        a^2 + b^2 = c^2  where gcd(a, b, c) = 1
                           and 0 < a < b < c
    ```
@@ -54,7 +54,7 @@ All algorithms only print triples with no common factors.
    Choosing `gcd(a, b, c)` geometrically this is the right choice
    since as right triangles
 
-   ```
+   ```text
        (3, 4, 5) and (6, 8, 10) and (4, 3, 5)
    ```
 
@@ -62,7 +62,7 @@ All algorithms only print triples with no common factors.
 
 2. There is no such thing as a equilateral pyathogorean triangle.
 
-   ```
+   ```text
        a^2 + a^2 = c^2 => 2*a^2 = c^2 => sqrt(2) = c/a
    ```
 
@@ -74,7 +74,7 @@ All algorithms only print triples with no common factors.
    As `b` gets larger, eventually the difference in length
    beween `c` and `b` is less than `1`.
 
-   ```
+   ```text
                   *
                   *    *       c
           fixed a *         *
@@ -86,7 +86,7 @@ All algorithms only print triples with no common factors.
 
    Hence, `c-b < 1` => no more triples.
 
-   ```
+   ```text
       a^2 + b^2 = c^2
       a^2 = c^2 - b^2 = (c-b)*(c+b) < c + b
       a^2 < sqrt(a^2 + b^2) + b
@@ -98,7 +98,7 @@ All algorithms only print triples with no common factors.
 
    Therefore, we only need to check values of b for which
 
-   ```
+   ```text
       a+1 <= b <= (a^2 - 1)/2
    ```
 
@@ -115,7 +115,7 @@ All algorithms only print triples with no common factors.
    But what about the case if `a` and `b` both odd?  That would
    imply `c` could be even.  Concider this case,
 
-   ```
+   ```text
       a^2 + b^2 = c^2
       (2*m+1)^2 + (2*n+1)^2 = (2*p)^2
       4*m^2 + 4*m + 1 + 4*n^2 + 4*n + 1 = 4*p^2
@@ -131,7 +131,7 @@ All algorithms only print triples with no common factors.
 
 5. I came across a faster algorithm which produces unordered results,
 
-   ```
+   ```text
       [(m^2 - n^2, 2*m*n, m^2 + n^2) | m <- [1 ..] , n <- [1 .. m-1]]
    ```
 
@@ -169,11 +169,15 @@ came from,
 
 On 2022-08-10 was able to rebuild project via
 
-```
+```bash
    $ stack init --force
+   ...
    $ stack build
+   ...
    $ stack install
+   ...
    $ pythagTriples 200
+   ...
 ```
 
 This installs the executable in `~/.local/bin/pythagTriples`.
@@ -193,19 +197,19 @@ I use Cabal from the Arch Linux Pacman package cabal-install.  Haskell static
 libraries are not even installed.  As a result, I have modified my
 `~/.cabal/config` from what `cabal update` would provide if missing.
 
-```
+```diff
     < -- library-vanilla: True
     > library-vanilla: False
-    
+
     < -- shared:
     > shared: True
-    
+
     < -- executable-dynamic: False
     > executable-dynamic: True
-    
+
     < -- overwrite-policy:
     > overwrite-policy: always
-    
+
     <   -- ghc-options:
     >   ghc-options: -dynamic
 ```
@@ -229,7 +233,7 @@ mattered what I tried.
 Seems you have to use `cabal repl` from your package directory and cabal
 opens a `ghci` session with all the right settings to start importing the
 necessary modules to make your project work.  Requires `build-depens:`
-to be properly setup. 
+to be properly setup.
 
 ### Notes to self
 
@@ -240,6 +244,4 @@ to be properly setup.
    to add --user packages under `~/.ghc` infrastructure.
    * `ghc-pkg -register` to register your package so that
    * `ghc-pkg --user -list` will be able to see your package and then
-   * `ghci -package your-awsome-package` 
-
-
+   * `ghci -package your-awsome-package`

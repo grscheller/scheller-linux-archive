@@ -17,4 +17,3 @@ has deadlocking problems with fixed size threadpools and is quite a thread hog.
 
 The fpinscala.parallelism package is the non-blocking, Actor based concurency
 API that the book gently leads you to develop.
-

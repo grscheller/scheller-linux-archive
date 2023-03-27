@@ -8,7 +8,7 @@ over MySQL only because the former is what is used at work.
 From the [Django Arch Wiki](https://wiki.archlinux.org/title/Django)
 page.
 
-```
+```bash
    $ sudo pacman -Syu python-psycopg2 python-django
    $ python -m django --version
    3.2.10
@@ -23,11 +23,12 @@ page.
 
 To start a Django project,
 
-```
+```bash
    $ django-admin startproject unchained
+   $
 ```
 
-I will begin by following the 
+I will begin by following the
 [official Django](https://docs.djangoproject.com/en/3.2/intro/tutorial01/)
 tutorial.  Once I get a skeleton running, I am not sure how I will morph
 it to take avantage of such a great name, `unchained`.
@@ -36,9 +37,11 @@ it to take avantage of such a great name, `unchained`.
 
 Need to find a better way to manage Python projects.
 
-```
+```bash
    $ export PYTHONPATH=lib:../lib
+   $
    $ export PATH=$PATH:bin
+   $
 ```
 
 Actually, I will need to configure a Python virtual environment before

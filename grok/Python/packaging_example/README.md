@@ -28,8 +28,9 @@ from the [Real Python](https://realpython.com/) website.
 On Arch, the system Python is probably kept more up to date than anything
 I would manual manage.
 
-```
+```bash
    $ sudo pacman -S python-pipenv
+   ...
 ```
 
 Similarly for other relatively up to date Linux distributions, use
@@ -41,19 +42,17 @@ The system Python on MacOS is a joke.  I installed the Anaconda Python
 [Individual Edition](https://www.anaconda.com/products/individual)
 distribution.
 
-```
-   Todo:
-```
-
 ### Poor man's install
 
 As a last resort, use [Pipx](https://pypi.org/project/pipx/) to
 install Pipenv into your home directory.  Especially if you are
-an unempowered user with admin privileges.
+an unempowered user with no admin privileges.
 
-```
-   pip install --user pipx
-   pipx install pipenv
+```bash
+   $ pip install --user pipx
+   ...
+   $ pipx install pipenv
+   ...
 ```
 
 I have not personally tested this.
@@ -67,4 +66,3 @@ enable deterministic builds.
 
 Pipenv uses pip and virtualenv under the hood and provides
 a single command line interface for their functionality.
-

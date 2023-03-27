@@ -2,14 +2,14 @@
 
 Compare laziness of the implementations
 
-```
+```haskell
    x * Zero = Zero
    x * S y  = x + x * y
 ```
 
 verses
 
-```
+```haskell
    x * Zero = Zero
    x * S y  = x * y + x
 ```
@@ -31,13 +31,13 @@ Consider the true mathematical statements, which follow from the distributive
 theorem of Natural Numbers, and are equalivalent via the commutative theorem
 for `+`,
 
-```
+```haskell
    x*(y + 1) = x*y + x                x*(1 + y) = x + x*y
 ```
 
 from these we abstract competing definitions for `(*)`
 
-```
+```haskell
    x * S y = x * y + x                x * S y = x + x * y
 ```
 
@@ -57,7 +57,7 @@ Consider the evaluation of `three * three`, where we are letting `z = Zero`
 
 ### Originally version suggested
 
-```
+```haskell
 x + Zero = x
 x + S y = S (x + y)
 
@@ -66,7 +66,7 @@ x * S y  = x + x * y
 
 ```
 
-```
+```haskell
 
 three * three
 S(S(S(z))) * S(S(S(z)))
@@ -91,7 +91,7 @@ Almost completely evaluated until I get down to a type constructor.
 
 ### Improved version suggested
 
-```
+```haskell
 x + Zero = x
 x + S y = S (x + y)
 
@@ -99,7 +99,7 @@ _ * Zero = Zero
 x * S y  = x * y + x
 ```
 
-```
+```haskell
 three * three
 S(S(S(z))) * S(S(S(z)))
 S(S(S(z))) * S(S(z)) + S(S(S(z)))
@@ -126,7 +126,7 @@ Three substitutions lazier, but total number of steps to full evaluation longer.
 
 ### Redundant version of improved version
 
-```
+```haskell
 x + Zero = x
 Zero + x = x
 x + S y = S (x + y)
@@ -136,7 +136,7 @@ Zero * _ = Zero
 x * S y  = x * y + x
 ```
 
-```
+```haskell
 three * three
 S(S(S(z))) * S(S(S(z)))
 S(S(S(z))) * S(S(z)) + S(S(S(z)))
@@ -165,7 +165,7 @@ Consider the evaluation of `three * three == two`,
 
 ### Version originally suggested
 
-```
+```haskell
 x + Zero = x
 x + S y = S (x + y)
 
@@ -173,7 +173,7 @@ _ * Zero = Zero
 x * S y  = x + x * y
 ```
 
-```
+```haskell
 three * three == two
 S(S(S(z))) * S(S(S(z))) == S(S(z))
 S(S(S(z))) + S(S(S(z))) * S(S(z)) == S(S(z))
@@ -196,7 +196,7 @@ Done in 14 evaluations.
 
 ### Suggested improved version
 
-```
+```haskell
 x + Zero = x
 x + S y = S (x + y)
 
@@ -204,7 +204,7 @@ _ * Zero = Zero
 x * S y  = x * y + x
 ```
 
-```
+```haskell
 three * three == two
 S(S(S(z))) * S(S(S(z))) == S(S(z))
 S(S(S(z))) * S(S(z)) + S(S(S(z))) == S(S(z))
@@ -226,7 +226,7 @@ Done in 13 evaluations.
 
 ### Redundant version
 
-```
+```haskell
 x + Zero = x
 Zero + x = x
 x + S y = S (x + y)
@@ -236,7 +236,7 @@ Zero * _ = Zero
 x * S y  = x * y + x
 ```
 
-```
+```haskell
 three * three == two
 S(S(S(z))) * S(S(S(z))) == S(S(z))
 S(S(S(z))) * S(S(z)) + S(S(S(z))) == S(S(z))
@@ -254,4 +254,3 @@ False
 ```
 
 Done in 12 evaluations.
-

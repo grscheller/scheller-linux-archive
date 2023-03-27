@@ -12,7 +12,7 @@ can be found on the Rust
 
 Consider code a beginner C programmer might write,
 
-```
+```c
     #include <stdio.h>
 
     int main(void) {
@@ -29,20 +29,20 @@ Consider code a beginner C programmer might write,
 This program compiles without *even a warning message*, but when run
 surprises the programmer with the output,
 
-```
+```text
    5
    1
 ```
 
 What the programmer probably meant on line 7 was,
 
-```
+```c
     if ( x == 0 || (-10 < y) && (y < 10) ) {
 ```
 
 and not,
 
-```
+```c
     if ( x = (0 || ((-10 < y) < 10)) ) {
 ```
 
@@ -63,23 +63,25 @@ OS kernel.
 The Rust toolchain really, really, really wants to be installed
 locally into a developer's home directory.  Following the Rust website,
 
-```
+```bash
    $ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+   ...
 ```
 
 The Rust tool chain will be installed here: `~/.cargo/bin`
 
 To later update the installed toolchains,
 
-```
+```bash
    $ rustup update
+   ...
 ```
 
 ### 3. First steps Rust toolchain - [baby\_steps](baby_steps/)
 
 Create a new project with a main function,
 
-```
+```bash
    $ cargo new --bin baby_steps
         Created binary (application) baby_steps project
 ```
@@ -91,7 +93,7 @@ of the .gitignore file it would have created in the baby\_steps directory.
 The source code it created was the canonical "Hello World" program in the
 file `src/main.rs`,
 
-```
+```rust
    fn main() {
        println!("Hello, world!");
    }
@@ -99,8 +101,7 @@ file `src/main.rs`,
 
 To build and run the code,
 
-```
-   $ cargo run
+```bash
    $ cargo run
       Compiling baby_steps v0.1.2 (/home/grs/devel/scheller-linux-archive/grok/Rust/learnRust/baby_steps)
        Finished dev [unoptimized + debuginfo] target(s) in 0.22s
@@ -114,24 +115,27 @@ to the Git repo.
 
 Executable can be run from the commandline,
 
-```
+```bash
    $ ./target/debug/baby_steps
    Hello, world!
 ```
 
 To just build,
 
-```
+```bash
    $ cargo build
+   ...
 ```
 
 Both the run and build targets build a "debug" version.
 
 To build or run a "release" version with full optimization,
 
-```
+```bash
    $ cargo build --release
+   ...
    $ cargo run --release
+   ...
 ```
 
 The executable is `./target/release/baby_steps`.

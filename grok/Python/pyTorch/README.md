@@ -14,4 +14,3 @@ using Anaconda instead of the Arch Linux Python.
 * See post 2018-02-14 entries in
   [gauss17 admin logs](../../../adminLogs/gauss17ArchLinuxAdmin.log)
   for the Anaconda setup.
-

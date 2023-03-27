@@ -10,8 +10,10 @@ and
 
 To compile, run and cleanup
 
-```
+```bash
    $ javac ADT.java
+   ...
    $ java ADT
+   ...
    $ rm *.class
 ```

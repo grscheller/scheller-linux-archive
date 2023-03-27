@@ -13,14 +13,14 @@ Traditional "Hello World" program written in Zig
 
 Run as an interpreter:
 
-```
+```bash
    $ zig run hw.zig
    Hello, World!!!
 ```
 
 Compile and then run:
 
-```
+```bash
    $ zig build-exe hw.zig -O ReleaseSmall --strip
    $ ./hw
    Hello, World!!!

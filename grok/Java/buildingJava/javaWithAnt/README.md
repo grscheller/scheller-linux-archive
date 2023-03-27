@@ -8,11 +8,15 @@ uses XML configuration files.
 
 ## Targets
 
-```
+```bash
    $ ant clean
+   ...
    $ ant clobber
+   ...
    $ ant compile
+   ...
    $ ant jar
+   ...
 ```
 
 ## To run
@@ -22,7 +26,7 @@ file.
 
 From class files:
 
-```
+```bash
    $ export CLASSPATH=classes
    $ java IsPrime 37 111
    37 is prime.
@@ -31,7 +35,7 @@ From class files:
 
 From jar file:
 
-```
+```bash
    $ java -cp javaWithAnt.jar IsPrime 100 191
    100 is not prime
    191 is prime

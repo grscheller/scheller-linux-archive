@@ -33,14 +33,16 @@ the Java Virtual Machine (JVM).
 
 Run code:
 
-```
+```bash
     $ sbt run
+    ...
     $ sbt test/run
+    ...
 ```
 
 My usual work flow is "continuous compile,"
 
-```
+```bash
     $ sbt
     [info] welcome to sbt 1.5.4 (Oracle Corporation Java 11.0.11)
     [info] loading settings for project fpinscala-build-build from metals.sbt ...

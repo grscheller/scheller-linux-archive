@@ -21,7 +21,7 @@ Run as an interpreter:
 Compile and then run:
 
 ```bash
-   $ zig build-exe hw.zig -O ReleaseSmall --strip
+   $ zig build-exe hw.zig -O ReleaseSmall
    $ ./hw
    Hello, World!!!
    $ ls -lh hw

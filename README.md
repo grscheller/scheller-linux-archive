@@ -9,3 +9,7 @@ development logs, and general grokking of computer languages.
 * [Personnal Homepage](web/)
 
 By its very nature, this repo contains many loose threads.
+
+## License Summary
+
+See [LICENSE](LICENSE) for details.

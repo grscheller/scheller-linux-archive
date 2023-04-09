@@ -1,7 +1,7 @@
 These are the notes I update as I learn more about
 the GIT source code revision control suite.
 
-On Linux there is a good GIT tutorial in the man pages.
+On most Linux distributions there is a good GIT tutorial in the man pages.
 
     $ man gittutorial
 
@@ -31,8 +31,9 @@ https://www.atlassian.com/git/tutorials/setting-up-a-repository
 https://help.github.com
 https://www.garron.me/en/articles/git-101-basics-introduction-basic-use-commands.html
 
-Before getting overrun by very opinionated "no opinionated" trolls, Stack Overflow
-contained lots of good "from the trenches" best practices advice on GIT best practices.
+Stack Overflow, before being overrun by the "no opinionated content"
+trolls, contained lots of good "from the trenches" best practices
+advice on GIT.
 
 I. Getting started with some configuration.
 

@@ -4,25 +4,26 @@
 
 The project consists of the scheller-linux-archive GitHub repository,
 its associated GitHub community infrastructure, and any Wiki pages
-associated with this repo. The project maintainer is
-Geoffrey R. Scheller.
+associated with this repo.  It is a personnal project of its
+maintainer, Geoffrey R. Scheller.  Suggestions, constructive
+criticisms, and contributions are all still very much welcomed.
 
 ## Purpose of Project
 
 The primary purpose of this GitHub repo is to capture what the
 project's maintainer learns in a way that helps him stay up to
 speed on topics related to software development and system
-administration in Linux and other Unix like operating systems.
+administration for Linux and other Unix like operating systems.
 
 ## Community Standards
 
 In the interest of fostering an open and welcoming environment, we as
-contributors and maintainers pledge to making participation in our
-project and our community a harassment-free experience for everyone,
-regardless of age, body size, disability, ethnicity, gender identity
-and expression, level of experience, formal education, nationality,
-personal appearance, political persuation, race, religion, or sexual
-identity and orientation.
+contributors and the maintainer pledge to making participation in the
+project and associated community a harassment-free experience for
+everyone, regardless of age, body size, disability, ethnicity, gender
+identity and expression, level of experience, formal education,
+nationality, personal appearance, political persuation, race,
+religion, or sexual identity and orientation.
 
 Examples of behavior contributing to
 creating a positive environment include:
@@ -63,13 +64,13 @@ threatening, offensive, or harmful.
 
 ## Scope of Community
 
-This Code of Conduct applies basically to the project maintainer
-and whomever uses the GitHub infrastructure available to GitHub
-users in regards to this GitHub repo.  Geoffrey R. Scheller is the
-only individual who represents this project. Examples of representing
-a project or community include using an official project e-mail
-address, posting via an official social media account, or acting
-as an appointed representative at an online or offline event.
+This Code of Conduct applies to the project maintainer and whomever
+uses the GitHub infrastructure available to GitHub users in regards
+to GitHub workflows.  Geoffrey R. Scheller is the only individual
+who represents this project.  Examples of representing a project
+or community include using an official project e-mail address,
+posting via an official social media account, or acting as an
+appointed representative at an online or offline event.
 
 ## Enforcement
 
@@ -80,7 +81,7 @@ respond in a way that he deems appropriate to the circumstances.
 
 ## Attribution
 
-This Code of Conduct was edited from the default boilerplate provided
-by GitHub, which itself is based on the
+This Code of Conduct was edited from the default boilerplate
+provided by GitHub, which itself is based on the
 [Contributor Covenant](http://contributor-covenant.org/)
-code of conduct.
+code of conduct, most likely version 2.0.

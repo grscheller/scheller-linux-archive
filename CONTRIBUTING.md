@@ -1,15 +1,10 @@
 # Contributing
 
-This GitHub repo helps me organize, prioritize, and stay up to speed
-on a variety of software development and system administration topics.
-It is primarily focused on Linux and other POSIX like environments.
+This GitHub repository helps me stay organized and up-to-speed
+on a variety of software development and system administration
+topics.  Currently, it is targeted toward desktop Arch Linux
+laptops and workstations.
 
-I use this repo to maintain my less mature personal software
-development projects.  As such, this repo has many loose threads.
-As subtopics mature, I will spin them off to their own repos.
-
-I make the archive available to others as a public service.
-If you wish to point out an error or suggest an improvement,
-please drop me an e-mail at geoffrey@scheller.com.  That
-said, you are still welcome to use any supported means GitHub
-provides (Issues, Pull Requests, etc.) to provide me feedback.
+If you wish to suggest any improvements, or point out any
+errors, please let me know via GitHub issues, pull requests,
+or more informally by emailing me at geoffrey@scheller.com.

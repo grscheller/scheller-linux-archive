@@ -18,8 +18,7 @@ object IntWrapper:
   given doubleToInt: Conversion[Double, Int] with
     def apply(d: Double): Int = d.toInt
   given intToIntWrapper: Conversion[Int, IntWrapper] = IntWrapper(_)
-  given doubleToIntWrapper: Conversion[Double, IntWrapper] = (x: Double) =>
-    IntWrapper(x.toInt)
+  given doubleToIntWrapper: Conversion[Double, IntWrapper] = (x: Double) => IntWrapper(x.toInt)
 
   extension (first: Int) def x(second: Int) = IntWrapper(first * second)
 
@@ -44,7 +43,6 @@ object ScalaImplicts:
     print("4.tripleMe = "); println(4.tripleMe) // add a method to Int
     print("foo.doubleMe = "); println(foo.doubleMe) // add a method to Double
     print("bar x 10 = "); println(bar x 10)
-
     given geoffrey: PreferedName = PreferedName("Geoffrey")
     val beowulf: PreferedName = PreferedName("Beowulf")
     sayHello

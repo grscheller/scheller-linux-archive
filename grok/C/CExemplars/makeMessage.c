@@ -43,8 +43,7 @@ char *make_message(const char *fmt, ...) {
     return p;
 }
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     char *myMessage = NULL;
     char *name;
 

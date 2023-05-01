@@ -22,7 +22,7 @@ fn main() {
     //
     // Like Python ranges, exclusive of 2nd value
     //
-    let secret_number = rand::thread_rng().gen_range(1, 101);
+    let secret_number = rand::thread_rng().gen_range(1..101);
 
     loop {
         // Without the "ln", does not flush to stdout before the read_line.

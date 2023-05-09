@@ -17,17 +17,7 @@ When developing code like this form the command line, I usually use
 the root `boring_math` directory as my working directory.  I set as
 relative paths
 
-```bash
-   $ export PYTHONPATH=lib:../lib
-   $ export PATH=$PATH:bin
-```
-
-``` bash
-   $ export PYTHONPATH=lib:../lib
-   $ export PATH=$PATH:bin
-```
-
-``` sh
+```sh
    $ export PYTHONPATH=lib:../lib
    $ export PATH=$PATH:bin
 ```

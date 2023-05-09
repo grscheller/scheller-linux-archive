@@ -19,9 +19,17 @@ relative paths
 
 ```bash
    $ export PYTHONPATH=lib:../lib
-   $
    $ export PATH=$PATH:bin
-   $
+```
+
+``` bash
+   $ export PYTHONPATH=lib:../lib
+   $ export PATH=$PATH:bin
+```
+
+``` sh
+   $ export PYTHONPATH=lib:../lib
+   $ export PATH=$PATH:bin
 ```
 
 so `python` and `pylint` can find these libraries and my shell can

@@ -13442,7 +13442,7 @@ files are way too small.
   loaded but not running.
 
   Let's exec sway and see where we are
-  
+
     $ set -qx SWAYSOCK; or cd && exec sway --unsupported-gpu > sw_out 2> sw_err
 
   Sway started normally, lets see where mako & kanshi are at.
@@ -13490,7 +13490,7 @@ files are way too small.
    * Systemd --user works on a per user basis, not a per login
      session basis.
 
-  and leasons learned, 
+  and leasons learned,
 
    * Always exec sway from a login shell (or use a Display Manager).
    * When exiting sway, Sway user should avoid being logged
@@ -13521,3 +13521,248 @@ files are way too small.
 
     $ ssh-keygen -R github.com
 
+2023-05-14:
+  MozillaVPN has been failing for a few weeks,
+
+    $ systemctl status mozillavpn.service | cat
+    × mozillavpn.service - MozillaVPN D-Bus service
+         Loaded: loaded (/usr/lib/systemd/system/mozillavpn.service; enabled; preset: disabled)
+         Active: failed (Result: exit-code) since Sat 2023-05-13 20:53:56 MDT; 2h 6min ago
+        Process: 417 ExecStart=/usr/bin/mozillavpn linuxdaemon (code=exited, status=127)
+       Main PID: 417 (code=exited, status=127)
+            CPU: 41ms
+
+    May 13 20:53:56 gauss17 systemd[1]: Starting MozillaVPN D-Bus service...
+    May 13 20:53:56 gauss17 mozillavpn[417]: /usr/bin/mozillavpn: symbol lookup error: /usr/bin/mozillavpn: undefined symbol: _ZN16QNetworkDatagram7destroyEP23QNetworkDatagramPrivate, version Qt_6
+    May 13 20:53:56 gauss17 systemd[1]: mozillavpn.service: Main process exited, code=exited, status=127/n/a
+    May 13 20:53:56 gauss17 systemd[1]: mozillavpn.service: Failed with result 'exit-code'.
+    May 13 20:53:56 gauss17 systemd[1]: Failed to start MozillaVPN D-Bus service.
+
+  Time to rebuild & reinstall it. Maybe Arch is now including it,
+
+    $ pacman -Ss 'mozilla.*vpn'
+    archlocal/mozillavpn 2.10.1-1 [installed]
+        A fast, secure and easy to use VPN. Built by the makers of Firefox.
+
+  Need to rebuild it from the AUR and put it in archlocal.  I will follow what
+  I did on 2922-11-14 and streamlining the steps.
+
+    $ sudo systemctl stop mozillavpn.service
+
+    $ sudo systemctl disable mozillavpn.service
+    Removed "/etc/systemd/system/multi-user.target.wants/mozillavpn.service".
+
+    $ cd ~/build/AUR/mozillavpn/
+
+    $ makepkg -c
+
+    $ git fetch
+    ...
+
+    $ git status
+    On branch master
+    Your branch is behind 'origin/master' by 8 commits, and can be fast-forwarded.
+    ...
+
+    $ git pull
+    Updating adc040a..e110b73
+    Fast-forward
+     .SRCINFO         | 20 ++++++++++----------
+     .gitignore       |  8 ++++----
+     PKGBUILD         | 46 +++++++++++++++++++++++++++-------------------
+     issue_6676.patch |  5 -----
+     4 files changed, 41 insertions(+), 38 deletions(-)
+     delete mode 100644 issue_6676.patch
+
+    $ pyenv version
+    system (set by /home/grs/.local/share/pyenv/version)
+
+    $ makepkg -s
+    ==> Making package: mozillavpn 2.14.0-1 (Sun 14 May 2023 09:22:51 AM MDT)
+    ==> Checking runtime dependencies...
+    ==> Checking buildtime dependencies...
+    ==> Installing missing dependencies...
+    error: target not found: python-glean_parser
+    ==> ERROR: 'pacman' failed to install missing dependencies.
+    ==> Missing dependencies:
+      -> python-glean_parser
+    ==> ERROR: Could not resolve all dependencies.
+
+  Missing dependency, not in the Arch repos, it provides tools for parsing the
+  metadata for Mozilla's glean telemetry SDK.  Let's try installing
+  python-glean_parser from the AUR into archlocal too.
+
+    $ cd ..
+    $ cd python-glean_parser/
+    $ makepkg -s
+    ==> Making package: python-glean_parser 7.1.0-1 (Sun 14 May 2023 09:38:30 AM MDT)
+    ==> Checking runtime dependencies...
+    ==> Installing missing dependencies...
+    error: target not found: python-diskcache
+    ==> ERROR: 'pacman' failed to install missing dependencies.
+    ==> Missing dependencies:
+      -> python-jsonschema
+      -> python-iso8601
+      -> python-diskcache
+    ==> Checking buildtime dependencies...
+    ==> ERROR: Could not resolve all dependencies.
+
+  Why do people have to build crap on top of crap on top of crap!!!  Hopefully
+  I will not need to setup a Python virtual environment just to build this thing.
+
+    $ pacman -Ss '^Python-(jsonschema|iso8601|diskcache)$'
+    community/python-iso8601 1.1.0-3
+        Simple module to parse ISO 8601 dates
+    community/python-jsonschema 4.17.3-3
+        An implementation of JSON Schema validation for Python
+
+  Will need to go to AUR to install python-diskcache, I'll just install it
+  straight onto gauss17.  Will do the same for the glean_parsor.
+
+    $ sudo pacman -S python-iso8601 python-jsonschema
+    $ cd ..
+    $ git clone https://aur.archlinux.org/python-diskcache.git
+    $ cd python-diskcache
+    $ makepkg -sri
+    $ cd ../python-glean_parser/
+    $ makepkg -sri
+    ...
+    ERROR: Could not find an activated virtualenv (required).
+
+  Now I'll have to figure out again how to set up a Python virtual environment.
+
+    $ pyenv version
+    system (set by /home/grs/.local/share/pyenv/version)
+
+    $ pyenv versions
+    * system (set by /home/grs/.local/share/pyenv/version)
+      3.10.6
+      3.10.7
+      3.10.8
+      pypy3.9-7.3.8
+
+  Thats the version of python I want to use.  Now figure out how to set up a
+  virtual environment with this.
+
+  I am getting confused looking at pipenv, too much intfrastructure required.
+  Let's just try using 'python -m venv <directory>'.
+
+    $ python -m venv venv
+    $ ls -l venv/bin/python
+    lrwxrwxrwx 1 grs grs 15 May 14 11:00 venv/bin/python -> /usr/bin/python*
+    $ source venv/bin/activate.fish
+    (venv)$ makepkg -sri
+    (venv)$ cd ../mozillavpn
+    (venv)$ makepkg -s
+    ...
+    ...
+    ...
+    github.com/mozilla-mobile/mozilla-vpn-client/src/platforms/linux/netfilter
+    [  7%] Built target netfilter_builder
+    make: *** [Makefile:146: all] Error 2
+    ==> ERROR: A failure occurred in build().
+        Aborting...
+
+  I can't figure out where this Makefile that failing is.  But... it seems that
+  the mozillavpn AUR package handles these 3rd party dependencies itself.  So,
+  I will uninstall everything and start over but with a fresh python virtual
+  environment.
+
+  During the grapejuice installation, a python virtual environment was created
+  here: ~/build/AUR/venv/grapejuice
+  I do not remember explicitly doing such????
+
+  So, I will uninstall what I installed, blow away all the sources, and create
+  a virtual environment for mozillavpn here: ~/build/AUR/venv/mozillavpn
+
+    (venv)$ deactivate
+    $ cd ~/build/AUR
+    $ ls
+    coursier/    mozillavpn/        python-glean_parser/
+    grapejuice/  python-diskcache/  venv/
+    $ sudo rm -rf mozillavpn/ python-diskcache/ python-glean_parser/
+    $ ls
+    coursier/  grapejuice/  venv/
+    $ pacman -Qs 'python-(diskcache|glean_parser)'
+    local/python-diskcache 5.4.0-1
+        Python disk and file backed cache library
+    local/python-glean_parser 7.1.0-1
+        Tools for parsing the metadata for Mozilla's glean telemetry SDK
+    $ sudo pacman -Rsc python-diskcache python-glean_parser
+    $ cd venv/
+    $ ls
+    grapejuice/
+    $ python -m venv mozillavpn
+    $ ls
+    grapejuice/  mozillavpn/
+    $ source mozillavpn/bin/activate.fish
+    (mozillavpn)$ cd ..
+    (mozillavpn)$ git clone https://aur.archlinux.org/mozillavpn.git
+    (mozillavpn)$ cd mozillavpn/
+    (mozillavpn)$ makepkg -sr
+    ==> Making package: mozillavpn 2.14.0-1 (Sun 14 May 2023 12:53:13 PM MDT)
+    ==> Checking runtime dependencies...
+    ==> Checking buildtime dependencies...
+    ==> Installing missing dependencies...
+    error: target not found: python-glean_parser
+    ==> ERROR: 'pacman' failed to install missing dependencies.
+    ==> Missing dependencies:
+      -> python-glean_parser
+    ==> ERROR: Could not resolve all dependencies.
+
+  Fealing a little déjà vu?  I think I know how things will go.
+    
+    (mozillavpn)$ git clone https://aur.archlinux.org/python-glean_parser.git
+    (mozillavpn)$ cd python-glean_parser
+    (mozillavpn)$ makepkg -sri
+    ==> Making package: python-glean_parser 7.1.0-1 (Sun 14 May 2023 01:07:26 PM MDT)
+    ==> Checking runtime dependencies...
+    ==> Installing missing dependencies...
+    error: target not found: python-diskcache
+    ==> ERROR: 'pacman' failed to install missing dependencies.
+    ==> Missing dependencies:
+      -> python-diskcache
+    ==> Checking buildtime dependencies...
+    ==> ERROR: Could not resolve all dependencies.
+
+  Hopefully not down the same rabbit hole.
+
+    (mozillavpn)$ cd ..
+    (mozillavpn)$ git clone https://aur.archlinux.org/python-diskcache.git
+    (mozillavpn)$ cd python-diskcache/
+    (mozillavpn)$ makepkg -sri
+    (mozillavpn)$ cd ../glean_parser/
+    (mozillavpn)$ makepkg -sri
+    (mozillavpn)$ cd ../mozillavpn/
+    (mozillavpn)$ makepkg -sr
+    github.com/mozilla-mobile/mozilla-vpn-client/src/platforms/linux/netfilter
+    [  7%] Built target netfilter_builder
+    make: *** [Makefile:146: all] Error 2
+    ==> ERROR: A failure occurred in build().
+        Aborting...
+
+  Same damn rabbit hole.  
+
+  Have to figure out where this Makefile is located.
+
+  PUNT!!!!!!
+
+    $ sudo pacman -Rsc python-diskcache python-glean_parser
+    $ $ sudo pacman -Rsc mozillavpn
+    checking dependencies...
+
+    Packages (8) libmng-2.0.3-3  qt6-5compat-6.5.0-1  qt6-charts-6.5.0-1
+                 qt6-imageformats-6.5.0-1  qt6-networkauth-6.5.0-1
+                 qt6-websockets-6.5.0-1  wireguard-tools-1.0.20210914-1
+                 mozillavpn-2.10.1-1
+
+  I have wasted too much time trying to build this Franken-thing of
+  glued together components.
+
+  I think these VPN companies think Ubuntu is the only Linux distribution
+  in existence.
+
+  Will try Mullvad VPN directly.  Uses either OpenVPN or Wireguard.
+
+    https://wiki.archlinux.org/title/Mullvad
+    https://mullvad.net/en/pricing

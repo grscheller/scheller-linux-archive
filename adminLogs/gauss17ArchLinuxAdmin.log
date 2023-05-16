@@ -6672,7 +6672,7 @@ Purpose: To indicate what was done to create gauss17 and
   - GnuPG (Gnu Privacy Guard) - free software implementing OpenPGP
   - gpg - command-line tool for GnuPG
 
-  I will use PGP (mot GnuPG, GPG, or OpenPGP) as an adjective:
+  I will use PGP (not GnuPG, GPG, or OpenPGP) as an adjective:
 
     - PGP key
     - PGP signature

@@ -1,0 +1,52 @@
+Name change:
+
+``` bash
+   $ git branch -m main master
+   $ git fetch origin
+   $ git branch -u origin/master master
+   branch 'master' set up to track 'origin/master'.
+   $ git remote set-head origin -a
+   origin/HEAD set to master
+```
+
+
+
+$ git submodule
+-316dd57a92ba9bdacbef0a58887068da11dd8e4d config/nvim
+
+```
+   $ git clone git@github.com:grscheller/dotfiles
+   $ cd dotfiles
+   $ git submodule init
+   $ git submodule update
+```
+
+$ git submodule status
+ 316dd57a92ba9bdacbef0a58887068da11dd8e4d config/nvim (316dd57)
+
+
+
+Since git 1.8
+$ git submodule update --remote --merge   <- how does a detached commit know what to merge?
+                                            "lasest commit" seems vague, especially if there
+                                            is branching happening.
+
+Think $ git merge main     <- in submodule
+      $ cd ..              <- now in "parent" repo
+      $ git status     <- figure out what to do to commit change
+      
+
+      make sure whatever commit you want to get to in the submodule
+      can be fast forewarded to
+
+      make sure the commit you are pointing too is in the history
+      of a maintained branch or tag of the submodule
+
+      Why submodules?  We don't call git repos modules?
+
+      The "submodule" is its own repo, not a part of the parent.
+
+
+Find branches whose history contains a given commit:
+
+  git branch -r --contains <commit>

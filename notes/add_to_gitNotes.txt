@@ -27,9 +27,10 @@ $ git submodule status
 
 
 Since git 1.8
-$ git submodule update --remote --merge   <- how does a detached commit know what to merge?
-                                            "lasest commit" seems vague, especially if there
-                                            is branching happening.
+$ git submodule update --remote --merge   <- How does a detached commit know what to merge?
+                                             "lasest commit" seems vague, especially if there
+                                             is branching happening???
+                                             Brought in remotes/origin/HEAD
 
 Think $ git merge main     <- in submodule
       $ cd ..              <- now in "parent" repo

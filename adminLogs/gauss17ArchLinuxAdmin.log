@@ -13711,7 +13711,7 @@ files are way too small.
     ==> ERROR: Could not resolve all dependencies.
 
   Fealing a little déjà vu?  I think I know how things will go.
-    
+
     (mozillavpn)$ git clone https://aur.archlinux.org/python-glean_parser.git
     (mozillavpn)$ cd python-glean_parser
     (mozillavpn)$ makepkg -sri
@@ -13741,7 +13741,7 @@ files are way too small.
     ==> ERROR: A failure occurred in build().
         Aborting...
 
-  Same damn rabbit hole.  
+  Same damn rabbit hole.
 
   Have to figure out where this Makefile is located.
 
@@ -13766,3 +13766,255 @@ files are way too small.
 
     https://wiki.archlinux.org/title/Mullvad
     https://mullvad.net/en/pricing
+
+2023/06/19:
+  Putting VPN on hold. Will return to this at some point.
+
+  Two options:
+    1. Configure Arch to do VPN and get Mullvad.
+    2. Get a Flatpak VPN client compatible with Arch. (Does one exist?)
+
+2023/06/19:
+  Will install Nix package manager onto gauss17.
+
+  Nix is a 3rd party package manager. Not to be confused with NixOS which is
+  a Linux Distribution that uses Nix.
+
+  Looking into replacing the Mason infrastructure in my Neovim configs with
+  a Nix based one. Henced the need for Nix.
+
+  First, let's see what installing Nix will drag in:
+
+    $ sudo pacman -Syu nix nix-docs
+    ...
+    Package (21)              New Version  Net Change  Download Size
+
+    extra/aws-c-auth          0.6.26-1       0.29 MiB       0.08 MiB
+    extra/aws-c-cal           0.5.26-1       0.16 MiB       0.04 MiB
+    extra/aws-c-common        0.8.17-1       0.71 MiB       0.17 MiB
+    extra/aws-c-compression   0.2.16-1       0.04 MiB       0.01 MiB
+    extra/aws-c-event-stream  0.2.20-1       0.16 MiB       0.05 MiB
+    extra/aws-c-http          0.7.7-1        0.56 MiB       0.17 MiB
+    extra/aws-c-io            0.13.21-1      0.46 MiB       0.12 MiB
+    extra/aws-c-mqtt          0.8.10-1       0.45 MiB       0.13 MiB
+    extra/aws-c-s3            0.2.8-1        0.23 MiB       0.07 MiB
+    extra/aws-c-sdkutils      0.1.9-1        0.13 MiB       0.04 MiB
+    extra/aws-checksums       0.1.14-1       0.07 MiB       0.04 MiB
+    extra/aws-crt-cpp         0.20.0-1       1.17 MiB       0.24 MiB
+    extra/aws-sdk-cpp         1.11.67-1    559.00 MiB      46.89 MiB
+    extra/editline            1.17.1-2       0.07 MiB       0.03 MiB
+    extra/libcpuid            0.6.3-1        0.24 MiB       0.08 MiB
+    extra/libsodium           1.0.18-2       0.49 MiB       0.17 MiB
+    extra/lowdown             1.0.1-1        2.55 MiB       0.60 MiB
+    extra/nix-busybox         1.35.0-1       1.20 MiB       0.66 MiB
+    extra/s2n-tls             1.3.43-1       1.42 MiB       0.33 MiB
+    extra/nix                 2.16.1-1      10.13 MiB       3.26 MiB
+    extra/nix-docs            2.16.1-1      31.60 MiB       1.48 MiB
+
+    $ pacman -Ss aws-c-auth
+    extra/aws-c-auth 0.6.26-1
+        C99 library implementation of AWS client-side authentication: standard credentials
+        providers and signing
+
+    $ pacman -Ss nix-busybox
+    extra/nix-busybox 1.35.0-1
+        Slimmed down busybox for Nix sandbox builds
+
+  OK, no downgrades like Cuda would require, let's go for it
+
+    $ sudo pacman -Syu nix nix-docs
+    ...
+    (20/21) installing nix                  [###########################] 100%
+
+    Nix is installed but is not configured.
+
+    To access Nix's daemon socket, users must be a member of the group 'nix-users'.
+
+    (21/21) installing nix-docs             [###########################] 100%
+    :: Running post-transaction hooks...
+    (1/4) Creating system user accounts...
+    Creating group 'nix-users' with GID 978.
+    Creating group 'nixbld' with GID 977.
+    Creating user 'nixbld01' (Nix builder 01) with UID 976 and GID 977.
+    Creating user 'nixbld02' (Nix builder 02) with UID 975 and GID 977.
+    Creating user 'nixbld03' (Nix builder 03) with UID 974 and GID 977.
+    Creating user 'nixbld04' (Nix builder 04) with UID 973 and GID 977.
+    Creating user 'nixbld05' (Nix builder 05) with UID 972 and GID 977.
+    Creating user 'nixbld06' (Nix builder 06) with UID 971 and GID 977.
+    Creating user 'nixbld07' (Nix builder 07) with UID 970 and GID 977.
+    Creating user 'nixbld08' (Nix builder 08) with UID 969 and GID 977.
+    Creating user 'nixbld09' (Nix builder 09) with UID 968 and GID 977.
+    Creating user 'nixbld10' (Nix builder 10) with UID 967 and GID 977.
+    (2/4) Reloading system manager configuration...
+    (3/4) Creating temporary files...
+    (21/21) installing nix-docs             [###########################] 100%
+    :: Running post-transaction hooks...
+    (1/4) Creating system user accounts...
+    Creating group 'nix-users' with GID 978.
+    Creating group 'nixbld' with GID 977.
+    Creating user 'nixbld01' (Nix builder 01) with UID 976 and GID 977.
+    Creating user 'nixbld02' (Nix builder 02) with UID 975 and GID 977.
+    Creating user 'nixbld03' (Nix builder 03) with UID 974 and GID 977.
+    Creating user 'nixbld04' (Nix builder 04) with UID 973 and GID 977.
+    Creating user 'nixbld05' (Nix builder 05) with UID 972 and GID 977.
+    Creating user 'nixbld06' (Nix builder 06) with UID 971 and GID 977.
+    Creating user 'nixbld07' (Nix builder 07) with UID 970 and GID 977.
+    Creating user 'nixbld08' (Nix builder 08) with UID 969 and GID 977.
+    Creating user 'nixbld09' (Nix builder 09) with UID 968 and GID 977.
+    Creating user 'nixbld10' (Nix builder 10) with UID 967 and GID 977.
+    (2/4) Reloading system manager configuration...
+    (3/4) Creating temporary files...
+
+  Add my user to the nix-users group.
+
+    $ sudo usermod -aG nix-users grs
+    $ tail -3 /etc/group
+    mpd:x:45:
+    nix-users:x:978:grs
+    nixbld:x:977:nixbld01,nixbld02,nixbld03,nixbld04,nixbld05,nixbld06,nixbld07,nixbld08,nixbld09,nixbld10
+    $ grep grs /etc/group
+    lp:x:7:cups,daemon,grs
+    wheel:x:10:root,grs
+    users:x:100:grs
+    grs:x:1003:
+    nix-users:x:978:grs
+
+  Hummm... grs is not in grs nor mpd groups? This needs fixing
+
+    $ sudo usermod -aG grs,mpd grs
+    $ grep grs /etc/group
+    lp:x:7:cups,daemon,grs
+    wheel:x:10:root,grs
+    users:x:100:grs
+    grs:x:1003:grs
+    mpd:x:45:grs
+    nix-users:x:978:grs
+
+  Following the Arch-Wiki webpage to configure Nix.
+
+  First enable and start daemon.
+
+    $ systemctl is-enabled nix-daemon
+    disabled
+
+    $ sudo systemctl enable nix-daemon
+    Created symlink /etc/systemd/system/multi-user.target.wants/nix-daemon.service → /usr/lib/systemd/system/nix-daemon.service.
+
+    $ sudo systemctl start nix-daemon
+
+    $ sudo systemctl status nix-daemon
+    ● nix-daemon.service - Nix Daemon
+         Loaded: loaded (/usr/lib/systemd/system/nix-daemon.service; enabled; preset: dis>
+         Active: active (running) since Mon 2023-06-19 17:30:16 MDT; 20s ago
+           Docs: man:nix-daemon
+                 https://nixos.org/manual
+       Main PID: 9758 (nix-daemon)
+          Tasks: 2 (limit: 19021)
+         Memory: 2.6M
+            CPU: 34ms
+         CGroup: /system.slice/nix-daemon.service
+                 └─9758 nix-daemon --daemon
+
+    Jun 19 17:30:16 gauss17 systemd[1]: Started Nix Daemon.
+
+  Now wiki has me add a Nix "channel"
+
+    $ nix-channel --add https://nixos.org/channels/nixpkgs-unstable
+    $ nix-channel --update
+    unpacking channels...
+
+  What's a channel? From the Nix website: 
+
+    Channels can be broadly categorized into
+      stable and unstable channels, and
+      large and small channels:
+
+      Stable/unstable:
+        Stable channels (nixos-23.05)
+          provide conservative updates for fixing bugs and security
+          vulnerabilities, but do not receive major updates after
+          initial release. New stable channels are released every six months.
+
+        Unstable channels (nixos-unstable, nixpkgs-unstable)
+          correspond to the main development branch (master) of Nixpkgs,
+          delivering the latest tested updates on a rolling basis.
+
+      Large/small:
+        Large channels (nixos-23.05, nixos-unstable)
+          provide binary builds for the full breadth of Nixpkgs.
+
+        Small channels (nixos-23.05-small, nixos-unstable-small)
+          are identical to large channels, but contain fewer binaries.
+          This means they update faster, but require more to be built
+          from source.
+
+     Most users will want the stable/large channel, currently nixos-23.05
+
+  Next need to update my user $PATH to include ~/.nix-profile/bin another
+  damn home config directory.
+
+    $ cd
+    $ ls -ld .nix*
+    -rw-r--r-- 1 grs grs   52 Jun 19 17:36 .nix-channels
+    drwxr-xr-x 2 grs grs 4096 Jun 19 17:36 .nix-defexpr/
+
+  Updated my dotfiles home repo to ensure this directory exists.
+
+  Now add
+
+    max-jobs = auto
+
+  to /etc/nix/nix.conf, I'll manage this file via sfInstall from
+  my dotfiles repo. Note, not sure this is necessary, Arch-Wiki says to do this
+  if "you install Nix from the official repositories".
+
+  Time to reboot and test Nix.
+
+    $ nix-env -iA nixpkgs.hello
+    error: '/home/grs/.nix-profile' is not a symlink
+
+  Well, I guess it does not want this to exist as a real dierctory. Need to
+  undo some of what I've done. No idea where this symlink needs to point. Let's
+  just remove it and see what Nix whines about.
+
+    $ nix-env -iA nixpkgs.hello
+    installing 'hello-2.12.1'
+    these 5 paths will be fetched (6.77 MiB download, 31.31 MiB unpacked):
+      /nix/store/wpgrc564ys39vbyv0m50qxmq8dvhi7cc-glibc-2.37-8
+      /nix/store/8jvsb5xz6vpgbv4hls6n9lxdfd3b4vfh-hello-2.12.1
+      /nix/store/44x4pk1d6q8gixdn03j2pmbjbspff296-libidn2-2.3.4
+      /nix/store/ylm9xzdbznl6ymqwzy6i7f89ig323ilm-libunistring-1.1
+      /nix/store/1hgk46w2n5fkw9n5b2z1wlx7swfahwg9-xgcc-12.3.0-libgcc
+    copying path '/nix/store/1hgk46w2n5fkw9n5b2z1wlx7swfahwg9-xgcc-12.3.0-libgcc' from 'https://cache.nixos.org'...
+    copying path '/nix/store/ylm9xzdbznl6ymqwzy6i7f89ig323ilm-libunistring-1.1' from 'https://cache.nixos.org'...
+    copying path '/nix/store/44x4pk1d6q8gixdn03j2pmbjbspff296-libidn2-2.3.4' from 'https://cache.nixos.org'...
+    copying path '/nix/store/wpgrc564ys39vbyv0m50qxmq8dvhi7cc-glibc-2.37-8' from 'https://cache.nixos.org'...
+    copying path '/nix/store/8jvsb5xz6vpgbv4hls6n9lxdfd3b4vfh-hello-2.12.1' from 'https://cache.nixos.org'...
+    building '/nix/store/af2jcaxnaxwlfp93jpask2mn967cv67y-user-environment.drv'...
+
+    $ digpath hello
+    /home/grs/.nix-profile/bin/hello
+
+    $ ls -ld /home/grs/.nix-profile
+    lrwxrwxrwx 1 grs grs 43 Jun 19 19:26 \
+      /home/grs/.nix-profile -> /home/grs/.local/state/nix/profiles/profile/
+
+    $ hello
+    Hello, world!
+
+  It worked!!!
+
+    $ nix-env -q|cat
+    hello-2.12.1
+
+  To uninstall,
+
+    $ nix-env --uninstall hello
+    uninstalling 'hello-2.12.1'
+    building '/nix/store/xsk9wjy0dpp7w7d3r3bkzxzaklqdzq6q-user-environment.drv'...
+
+  Check "generations"
+
+    $ nix-env --list-generations|cat
+       1   2023-06-19 19:26:06
+       2   2023-06-19 19:33:08   (current)

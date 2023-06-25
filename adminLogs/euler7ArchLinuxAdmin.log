@@ -2845,4 +2845,44 @@ that up? [y/N] y
     https://gitlab.com/fedora/sigs/sway/sway-config-fedora
 
   Aside: might also want to look into mako, a lightweight notification daemon
-  for Wayland.  Works on Sway.  Packman package already installed in euler7.
+  for Wayland.  Works on Sway.  Pacman package already installed in euler7.
+
+2023-06-21:
+  Repeating Nix package manager install and config as was done for gauss17.
+
+  First install /etc/nix/nix.conf and put ~/.nix-profile/bin on $PATH.
+
+    $ sudo $DOTFILE_GIT_REPO/sfInstall
+    $ cat /etc/nix/nix.conf
+    #
+    # https://nixos.org/manual/nix/stable/#sec-conf-file
+    #
+    
+    # Unix group containing the Nix build user accounts
+    build-users-group = nixbld
+    
+    # Disable sandbox
+    # sandbox = false
+    
+    # Beginning grs changes
+    max-jobs = auto
+
+  Install Nix.
+    $ sudo pacman -Syu nix nix-docs
+
+  Enable Nix and Configure.
+
+    $ sudo usermod -aG nix-users grs
+    $ sudo systemctl enable nix-daemon
+    $ sudo systemctl start nix-daemon
+    $ nix-channel --add https://nixos.org/channels/nixpkgs-unstable
+    $ nix-channel --update
+
+  At this point I did a reboot.
+
+    $ nix-env -iA nixpkgs.hello
+    $ hello
+    Hello, world!
+    $ digpath hello
+    /home/grs/.nix-profile/bin/hello
+

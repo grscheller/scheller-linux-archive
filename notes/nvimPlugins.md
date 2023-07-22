@@ -4,7 +4,7 @@
 
 These plugins manage 3rd party tools used by other plugins.
 
-Some plugins, like nvim-metals or rust-tools.nvim, will either involk
+Some plugins, like nvim-metals or rust-tools.nvim, will either invoke
 lspconfig, dap, or null-ls directly themselves, or configure the Neovim
 LSP client directly.
 

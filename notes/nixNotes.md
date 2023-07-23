@@ -52,8 +52,8 @@ I had to add ~/.nix-profile/bin after any path trimming. The
 nixpkgs-unstable channel best matches Arch's rolling release philosophy.
 
 Neovim lazy-lsp.nvim plugin leverages the Nix infrastructure. Seems to
-work but at this point I am not sure what it is doing. Seems to be
-mwchanisms to simultaniously run different Nix build commands in
+work but at this point I am not sure what it is doing. Seems to have
+mechanisms to simultaniously run different Nix build commands in
 different Nix environments.
 
 ## NixOS/nixpkgs GitHub repo
@@ -61,10 +61,10 @@ different Nix environments.
 This repo contains a collection of over 80,000 software packages that
 can be installed with the Nix package manager. It also implements NixOS,
 a purely-functional Linux distribution. Nixpkgs and NixOS are built and
-tested by a continuous integration system, 
+tested by a continuous integration system. 
 
-Directly leveraging this repo probably probably what you will need to do
-to support patching on crusty old software builds on old LTS OS's.
+Directly leveraging this repo is probably what you will need to do
+to support patching crusty old software builds on old LTS OS's.
 At this point, I don't see a need for this.
 
 ## Installing a package
@@ -87,10 +87,10 @@ is the same as
    $ nix-env --install --attr nixpkgs.hello
 ```
 
-where --attr means to use the arguments are attribute paths that select
-attributes from the top-level Nix expression. This is faster than using
-derivation names and unambiguous. To find out the attribute paths of
-available packages, use nix-env --query --available --attr-path.
+where --attr means to select an attribute from the top-level Nix
+expression. This is faster than using derivation names and
+unambiguous. To find out the attribute paths of available packages,
+use `nix-env --query --available --attr-path`.
 
 ```sh
    $ nix-env --query --available --attr-path | grep -i hello

@@ -90,7 +90,7 @@ is the same as
 where --attr means to select an attribute from the top-level Nix
 expression. This is faster than using derivation names and
 unambiguous. To find out the attribute paths of available packages,
-use `nix-env --query --available --attr-path`.
+use:
 
 ```sh
    $ nix-env --query --available --attr-path | grep -i hello

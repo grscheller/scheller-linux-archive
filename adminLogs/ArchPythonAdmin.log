@@ -892,3 +892,56 @@ Notes taken while configuring Arch Linux for Python development.
      - multiple versions of Python can be enabled with it
      - will use this to define python and pypy in same environment
   5. "pyenv rehash" subcommand needs to be called when Python versions installed
+
+2023-08-06:
+
+  Pipx: Install and Run Python Applications in Isolated Environments
+
+  Pipenv, or managing a virtual environment manually, is a bit overkill
+  if all you want to do is just install an external Python program. Pipx
+  is not for installing Python libraries, te packages need entry points.
+
+  Pip will step on what Pacman manages.
+
+  Pipx can automatically creates a virtual environment, installs the
+  package, and add a link for it to ~/.local/bin
+
+    $ pipx install pycowsay
+      installed package pycowsay 0.0.0.1, installed using Python 3.11.3
+      These apps are now globally available
+        - pycowsay
+    done!
+    
+    $ pycowsay I am a cow
+
+      ----------
+    < I am a cow >
+      ----------
+       \   ^__^
+        \  (oo)\_______
+           (__)\       )\/\
+               ||----w |
+               ||     ||
+
+    $ digpath pycowsay
+    /home/grs/.local/bin/pycowsay
+
+    $ ls -l (digpath pycowsay)
+    lrwxrwxrwx 1 grs grs 49 Aug  6 13:54 /home/grs/.local/bin/pycowsay ->
+                     /home/grs/.local/pipx/venvs/pycowsay/bin/pycowsay*
+
+  When developimg for pipx, make sure to include an entry_points section in
+  the  setup.py file for the application"
+
+    setup(
+        # other arguments here...
+        entry_points={
+            'console_scripts': [
+                'foo = my_package.some_module:main_func',
+                'bar = other_module:some_func',
+            ],
+            'gui_scripts': [
+                'baz = my_package_gui:start_func',
+            ]
+        }
+    )

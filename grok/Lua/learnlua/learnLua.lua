@@ -63,16 +63,16 @@ end
 
 -- Undefined variables return nil.
 -- This is not an error:
-foo = anUnknownVariable  -- Now foo = nil.
-
-aBoolValue = false
+local foo = anUnknownVariable  -- Now foo = nil.
+local aBoolValue = false
 
 -- Only nil and false are falsy; 0 and '' are true!
+if not foo then print('twas false') end
 if not aBoolValue then print('twas false') end
 
 -- 'or' and 'and' are short-circuited.
 -- This is similar to the a?b:c operator in C/js:
-ans = aBoolValue and 'yes' or 'no'  --> 'no'
+local ans = aBoolValue and 'yes' or 'no'  --> 'no'
 
 karlSum = 0
 for i = 1, 100 do  -- The range includes both ends.
@@ -130,8 +130,8 @@ x, y = bar('zaphod')  --> prints "zaphod  nil nil"
 
 -- Functions are first-class, may be local/global.
 -- These are the same:
-function f(x) return x * x end
-f = function (x) return x * x end
+local function f(x) return x * x end
+local f = function (x) return x * x end
 
 -- And so are these:
 local function g(x) return math.sin(x) end
@@ -234,10 +234,10 @@ s = f1 + f2  -- call __add(f1, f2) on f1's metatable
 -- Class-like patterns given below would fix this.
 
 -- An __index on a metatable overloads dot lookups:
-defaultFavs = {animal = 'gru', food = 'donuts'}
-myFavs = {food = 'pizza'}
+local defaultFavs = {animal = 'gru', food = 'donuts'}
+local myFavs = {food = 'pizza'}
 setmetatable(myFavs, {__index = defaultFavs})
-eatenBy = myFavs.animal  -- works! thanks, metatable
+local eatenBy = myFavs.animal  -- works! thanks, metatable
 
 -- Direct table lookups that fail will retry using
 -- the metatable's __index value, and this recurses.

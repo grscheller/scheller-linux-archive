@@ -21,17 +21,23 @@
 -- 1. Variables and flow control.
 ----------------------------------------------------
 
-num = 42  -- All numbers are doubles.
+VARIABLE = "I am a global string variable"
+-- Variables global unless "local" keyword used,
+-- Like Python, either "" or '' can be used.
+-- By convention, globals should be either in
+-- all capital letters or CamelCase'. Be consistent.
+
+local num = 42  -- All numbers are doubles.
 -- Don't freak out, 64-bit doubles have 52 bits for
 -- storing exact int values; machine precision is
 -- not a problem for ints that need < 52 bits.
 
-s = 'walternate'  -- Immutable strings like Python.
-t = "double-quotes are also fine"
-u = [[ Double brackets
-       start and end
-       multi-line strings.]]
-t = nil  -- Undefines t; Lua has garbage collection.
+local s = 'walternate'  -- Immutable strings like Python.
+local t = "double-quotes are also fine"
+local u = [[Double brackets
+            start and end
+            multi-line strings.]]
+local t = nil  -- Undefines t; Lua has garbage collection.
 
 -- Blocks are denoted with keywords like do/end:
 while num < 50 do
@@ -46,7 +52,7 @@ elseif s ~= 'walternate' then  -- ~= is not equals.
   io.write('not over 40\n')  -- Defaults to stdout.
 else
   -- Variables are global by default.
-  thisIsGlobal = 5  -- Camel case is common.
+  ThisIsGlobal = 5  -- Camel case is common.
 
   -- How to make a variable local:
   local line = io.read()  -- Reads next stdin line.

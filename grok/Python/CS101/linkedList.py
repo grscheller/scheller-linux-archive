@@ -3,18 +3,30 @@
 #   Using https://realpython.com/linked-lists-python/ as a guide.
 #
 #   Notes:
-#     1. Using None to represent nothing, therefore None is not a ligitimate
-#        data value.
+#     1. Using None to represent nothing, therefore None is not a
+#        legitimate data value.
 #     2. Python has no automatic type coersion, hence the use of
 #        the str & repr functions.
 #          __repr__() gives the formal string representation for developers
 #          __str__() gives an informal string representation for users
+#     3. Prefer ''.join() forms over a = a + b or a += b. This will ensure
+#        that concatenation occurs in linear time across various
+#        python implementations.
+#     4. Module level “dunders” such as __all__, __author__, __version__, etc.
+#        should be placed after the module docstring but before any import
+#        statement.
+#     5. This file is an example of a python "module". A Python package is
+#        is a directory consisting of Python modules and packages. A package
+#        contains an __init__.py file tying everything together..
 #
 
-class Node:
+__all__ = ['LinkedList']
+__author__ = "Geoffrey R. Scheller"
+
+class _Node:
     def __init__(self, data, nodeNext=None):
-        self.data = data
-        self.next = nodeNext
+        self._data = data
+        self._next = nodeNext
 
 class LinkedList:
     def __init__(self, dataList=None):
@@ -24,15 +36,15 @@ class LinkedList:
             dataListReversed = dataList.copy()
             dataListReversed.reverse()
             for data in dataListReversed:
-                node = Node(data, self.head)
+                node = _Node(data, self.head)
                 self.head = node
                 self.count += 1
 
     def __iter__(self):
         node = self.head
         while node is not None:
-            yield node.data
-            node = node.next
+            yield node._data
+            node = node._next
 
     def __repr__(self):
         dataListStrs = []
@@ -42,7 +54,7 @@ class LinkedList:
         return " -> ".join(dataListStrs)
 
     def push(self, data):
-        node = Node(data, self.head)
+        node = _Node(data, self.head)
         self.head = node
         self.count += 1
 
@@ -50,8 +62,8 @@ class LinkedList:
         if self.head is None:
             return None
         else:
-            data = self.head.data
-            self.head = self.head.next
+            data = self.head._data
+            self.head = self.head._next
             self.count -= 1
             return data
 

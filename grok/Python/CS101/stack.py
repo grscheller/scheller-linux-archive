@@ -1,4 +1,9 @@
-# Singularly linked list with Python
+"""LIFO stack
+
+Module implementing a LIFO stack using a singularly linked list.
+"""
+
+# Implement a stack using a singularly linked list
 #
 #   Using https://realpython.com/linked-lists-python/ as a guide.
 #
@@ -16,19 +21,28 @@
 #        should be placed after the module docstring but before any import
 #        statement.
 #     5. This file is an example of a python "module". A Python package is
-#        is a directory consisting of Python modules and packages. A package
-#        contains an __init__.py file tying everything together..
+#        is a directory containing Python modules and packages, alng with
+#        __init__.py file gluing everything together.
 #
 
-__all__ = ['LinkedList']
+__all__ = ['Stack']
 __author__ = "Geoffrey R. Scheller"
 
 class _Node:
+    """
+    Nodes making up the linked list. None represents a "nothing" and indicates
+    the end of the list. Therefore, None is not a ligitamate data value.
+    """
     def __init__(self, data, nodeNext=None):
         self._data = data
         self._next = nodeNext
 
-class LinkedList:
+class Stack:
+    """
+    Last In, First Out (LIFO) stack datastructure. The stack is implemented
+    as a singularly linked list of nodes. The stack points to either the first
+    node in the list, or to None.
+    """
     def __init__(self, dataList=None):
         self.head = None
         self.count = 0
@@ -41,12 +55,14 @@ class LinkedList:
                 self.count += 1
 
     def __iter__(self):
+        """Iterator yielding data stored in the stack, does not consume data."""
         node = self.head
         while node is not None:
             yield node._data
             node = node._next
 
     def __repr__(self):
+        """Display the data in the stack."""
         dataListStrs = []
         for data in self:
             dataListStrs.append(repr(data))
@@ -54,11 +70,13 @@ class LinkedList:
         return " -> ".join(dataListStrs)
 
     def push(self, data):
+        """Push data onto top of stack."""
         node = _Node(data, self.head)
         self.head = node
         self.count += 1
 
     def pop(self):
+        """Pop data off of top of stack."""
         if self.head is None:
             return None
         else:
@@ -68,7 +86,8 @@ class LinkedList:
             return data
 
 def test_it ():
-    ll = LinkedList([1, 2, 3])
+    """Poor man's test suite"""
+    ll = Stack([1, 2, 3])
 
     print("initial list:", ll, "\ninitially with", ll.count, "elements")
     print("\npush 10, 7, and then 13\n")
@@ -89,7 +108,7 @@ def test_it ():
     print("That's all folkes! no more data to show!")
 
     print("\ntest mixed data types, float, string, tuple")
-    ll = LinkedList([3.14159, "Hello Python", (42, "Excelsior!")])
+    ll = Stack([3.14159, "Hello Python", (42, "Excelsior!")])
     print(ll)
 
 if __name__ == "__main__":

@@ -2,34 +2,6 @@
 
 Module implementing a FIFO Queue with a Python List based circular array
 """
-
-# Notes:
-#
-#   1. See collections.deque for an implementation of a linked list which
-#      can access, insert, or remove elements from the beginning or end
-#      of a list with constant O(1) performance.
-#   2. Implements a circular array using a Python array.
-#   3. In Python, functions arguments are all done by value...but all
-#      values are references to objects! "Variables" are just labels we
-#      put on objects. An object can have multiple, or no, labels on it.
-#   4. Everything in Python is an object, or is a piece of compiled
-#      code that acts like an object. These "objects" are either built
-#      into the interpreter ("builtins"), are written with Python in mind
-#      and use the Python FFI (needing some knowledge of Python internals),
-#      or uses a language specific interface package like ctypes.
-#   5. Classes are objects too! They are instantiated by "meta-classes".
-#      Of course, the turtles can't go down forever.
-#      (TL/DR) The Python class keyword is actually syntactic surgar
-#      for the Python type() builtin function. Not only does type display
-#      the types of objects, it is actually the meta-class at the bottom of
-#      the turtle pile. Type is its own meta-class. Actually this is something
-#      that can't reproduce in pure Python, it is done by cheating a bit at
-#      the implementation level. Python 3 has other syntactic sugars for
-#      defining and dealing with meta-classes. See PEP-3115 at
-#      https://peps.python.org/pep-3115/ or the stackoverflow answer here
-#      https://stackoverflow.com/questions/100003/what-are-metaclasses-in-python
-#
-
 __all__ = ['Queue']
 __author__ = "Geoffrey R. Scheller"
 

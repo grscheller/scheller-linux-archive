@@ -1,10 +1,10 @@
-""" Module: func_tools
+"""Boring Math Functional Library
 
-    Poor man's version of itertools
-
+Library of functional programming inspired tools. A poor man's version of
+itertools.
 """
 
-__author__ = "Geoffrey Scheller"
+__author__ = "Geoffrey R. Scheller"
 
 import sys
 

@@ -1,10 +1,9 @@
-""" integer_math
+"""Boring Math integer library
 
-    Library of functions of an integer pure math nature.
-
+Library of functions of an integer pure math nature.
 """
 
-__author__ = "Geoffrey Scheller"
+__author__ = "Geoffrey R. Scheller"
 
 import sys
 from func_tools import take
@@ -14,7 +13,6 @@ __all__ = ['gcd', 'lcm', 'primes',
            'ackermann',
            'fibonacci', 'fibonacci_list', 'fibonacci_tuple',
            'fibonacci_mult', 'fibonacci_mult_list', 'fibonacci_mult_tuple']
-
 
 # Number Theory mathematical Functions.
 
@@ -76,7 +74,6 @@ def primes(start=2, end_before=100):
     the prime_list function for start <= prime < end_before
     """
     return iter(_prime_list(start, end_before))
-
 
 # Pythagorean Triples related mathematical functions.
 
@@ -141,7 +138,6 @@ def pythag3(a_max=3, all_max=None):
                 if gcd(side_a, side_b) == 1:
                     yield side_a, side_b, squares[csq]
 
-
 # Computable but not primitive recursive functions
 
 def ackermann(m_arg=0, n_arg=0):
@@ -168,7 +164,6 @@ def ackermann(m_arg=0, n_arg=0):
             acker.append(n_arg-1)
 
     return acker[0]
-
 
 # Fibonacci related mathematical functions.
 
@@ -221,7 +216,6 @@ def fibonacci_mult_list(fib0=2, fib1=3, count=10):
 def fibonacci_mult_tuple(fib0=2, fib1=3, count=10):
     """Returns a tuple with a fibonacci sequence using * instead of +."""
     return tuple(fibonacci_mult_list(fib0, fib1, count))
-
 
 if __name__ == '__main__':
     sys.exit(0)

@@ -951,3 +951,86 @@ Notes taken while configuring Arch Linux for Python development.
 
     sudo pacman -Syu python-pytest
 
+2023-08-24:
+  A lot of the following information, I got from beginning here:
+
+    https://bernat.tech/posts/pep-517-and-python-packaging/
+
+  There are 3 types of Python package distributions:
+
+    1. source tree
+    2. source distribution
+    3. wheels (no build operations done on the user's computer)
+
+  Only the second two types get uploaded to PyPI. The first one requires you to
+  feed GIT repo information to pip.
+
+  The setup.py process is old. The distutils package was created in 2000.  You
+  wrote an imperative script to slog through every step of the install process.
+  At the time all distributions were source distribitions. To install a source
+  distribution pip more or less did the following steps:
+
+    1. Discover the package.
+    2. Download the source distribution and extract the package.
+    3. Run "python setup.py install.
+
+  The package maintainer wrote the setup.py script. The package maintainer used
+
+    $ python setup.py sdist   # to generate the the distribution
+    $ python setup.py upload  # to upload to a central repository (now deprecated!)
+
+  In 2013 the twine tool was invented to upload the package.
+
+  In 2004 setuptools was created for Python 2.6. This Python utility was built
+  upon the distutils package. This helped with dependency management and provided
+  many other additional features like the ability to declare and automatically
+  install dependencies.
+
+  There were some problems:
+
+     - Lots of monkey copied setup.py files out in the wild.
+     - Pip ran the setuptools installed on the user's system, not necessarily
+       the one the maintainer used to generate the package.
+     - Both sutuptools & distutils were handcuffed by backward compatibility.
+     - How to handle other build tools loke cpython?
+     - Whole historically driven, backward compatible, process became almost
+       impossible to grok.
+
+  To address the problem, two PEPs created.
+
+    - PEP-517: A build system independent format for build trees (2015-2017)
+    - PEP-518: Specifying Minimum Build System Requirements for Python Projects (2016)
+
+  These PEPs allowed the creation of declaritive packaging tools tuned to the
+  package's use case and unshackled from distutils and setuptools cruft.
+  Though PEP-517 was accepted in 2017, pip took a while to implement it.
+
+2023-08-24:
+
+  Moving forward.
+
+  I don't need a Python package management system backwardly compatible to
+  Python 2.4. If you want to use a version of Python before 3.4, God bless you,
+  use old deprecated packages and toolchains. Don't bother people who want
+  to live in the middle of the 21st century.
+
+  Since I quite like the Python 3.10 Match-Case statement, it is unlightly
+  I will use any version of Python before 3.10 (unless you pay me well with
+  lots of money). See PEP-636 for why I am so excited about structural pattern
+  matching.
+
+  Instead of involking the backend through setup.py, backends are involked
+  through modules & functions. All packaging backends must provide an API that
+  implements two methods "build_wheel" and "build_sdist" at the very minimum.
+
+  Since pip 19.0 (pip currently on 23.2.1 for Python 3.11) pip supports PEP-517
+  when a project has a pyproject.toml file in its root directory.
+
+  For examples of package configurations for many different backends, see
+  Bernát Gábor's GitHub profile: https://github.com/gaborbernat.
+
+2023-08-24:
+  Installed python flit onto gauss17 & euler7.
+
+    sudo pacman -Syu python-pytest
+

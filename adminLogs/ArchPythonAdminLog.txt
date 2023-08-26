@@ -1032,5 +1032,5 @@ Notes taken while configuring Arch Linux for Python development.
 2023-08-24:
   Installed python flit onto gauss17 & euler7.
 
-    sudo pacman -Syu python-pytest
+    sudo pacman -Syu python-flit
 

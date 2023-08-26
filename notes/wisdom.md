@@ -26,7 +26,7 @@
 * Don't take yourself too seriously.
 * Learn by understanding.
 * Violence is the last resort of the incompetent.
-  * (Isaac Asimov)
+  * (Salvor Hardin - Isaac Asimov)
 * The reason it works is because it works.
   * (Prof. Pat Browne)
 * That which is not easily understood is best hidden in the open.

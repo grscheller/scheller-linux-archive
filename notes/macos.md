@@ -22,7 +22,7 @@ I will not personally use Apple products due to
   * Dropping support for OS upgrades on older non-upgradable hardware
 * Avoiding the use of modern FOSS licenses
   * resulting in using old crufty versions of POSIX tooling
-  * requiring the use of their party tooling for software development
+  * requiring the use of third party tooling for software development
   * not returning to the FOSS community yet being a Berkeley derived Unix
 * Wanting to keep their user base "dumb"
   * making software development more difficult than it needs to be
@@ -31,14 +31,14 @@ I will not personally use Apple products due to
 ## Third Party Package Managers
 
 In the old "Unix Wars" days, software developers had a saying, "Sun
-Solaris is not Unix until you install a C compiler."  For years I have
+Solaris is not Unix until you install a C compiler." For years I have
 been running MacOS in "developer mode" to avoid it rejecting the
-software I write.  The "full stack" web developers I work with can only
-program with a Mac running vscode.  Most of them seem to have never
-written anything that didn't run in the cloud or a browser.  Asking them
-how to software develop on a Mac is useless.  This is usually what you
+software I write. The "full stack" web developers I work with can only
+program with a Mac running vscode. Most of them seem to have never
+written anything that didn't run in the cloud or a browser. Asking them
+how to software develop on a Mac is useless. This is usually what you
 get coming out of software bootcamps, and increasingly what I am seeing
-coming out of colleges.  These monkey trained victims remind me of the
+coming out of colleges. These monkey trained victims remind me of the
 CGI Perl and VBA developers I have worked with in the past.
 
 ### Homebrew
@@ -55,3 +55,20 @@ developer mode to use it.
 Since Alacritty is a GUI app (icon in the Applications directory),
 this means it’s packaged as a Homebrew 'cask', and has to be installed
 with the --cask flag.
+
+## MacOS Soyboy Administration
+
+### To reboot MacOS from Apple keyboard:
+
+* Ctrl + Command + Power
+
+### Reimaging a Mac mini:
+
+1. Make sure Apple keyboard are plugged into computer and turned on
+2. Make sure you have Ethernet cable plugged with connectivity to Internet
+3. Power off system
+4. hold down key combo Opt-Cmd-R while rebooting
+5. Once booted into "recovery app", unplug mouse & keyboard
+5. In the recovery app window, select Reinstall macOS
+6. Fumble through idiot online instructions
+7. Upgrade to latest compatible MacOS

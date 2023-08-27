@@ -50,7 +50,7 @@
 * Lord, grant me the strength to change that which I can, the serenity to accept that which I cannot change, and the wisdom to know the difference.
 * Beware of the introverts. They are like mirrors; they reflect back your preconceptions. They are much more likely to stab you in the back than the brash and arrogant.
 * Subtle is the Lord.
-  * (Einstein).
+  * (Albert Einstein).
 * Simple is better.
 * A man hates you by how you act, a woman hates you for what you think.
 * Why hate? Do good. Remain curious.
@@ -289,8 +289,8 @@
   * (Marc MacYoung)
 * def. Martial Arts: The various skills or practices that originated as methods of combat.
   * (Peter Lorge - Classical Chinese military historian)
-* Lords Prayer: Our Father, who art in Heaven, hollowed be Thy name. Thy Kingdom come, Thy will be done, on Earth as it is in Heaven. Give us this day our daily bread, and forgive us our debts, as we forgive our debtors. Lead us not into temptation, but deliver us from evil.
-* The Lord our God, the Lord is one. Love the Lord your God with all your heart, with all your soul, with all your mind, and all your strength ... Love your neighbor as yourself.
+* Lords Prayer: Our Father, who art in Heaven, hollowed be Thy name. Thy Kingdom come, Thy will be done, on Earth as it is in Heaven. Give us this day our daily bread, and please forgive us our trespasses, and help us forgive those who trespass against us. Lead us not into temptation, but deliver us from evil.
+* The Lord our God, the Lord is one. Love the Lord your God with all your heart, with all your soul, with all your mind, and all your strength... Likewise, love your neighbor as yourself.
   * (Mark 12:29-31)
 * Self-defense is about preparation for, avoidance of, and deescalation of violent situations. Combat has to do with prevailing in violence. Warfare involves both in political and logistical contexts.
 * Supernormal accomplishment is not supernatural, that's why it is called gungfu, literally, "skill achieved through persistent effort."
@@ -313,7 +313,7 @@
 * I have striven not to laugh at human actions, not to weep at them, not to hate them, but to understand them.
   * (Baruch Spinozo - 1676)
 * Selflessness is not necessarily a virtue; selfishness is not necessary a vice. It all depends where you put your empathy and logic.
-* Political Cycle: Bondage -> Revolution -> Liberty -> Complacency-> Apathy -> Bondage
+* The Political Cycle: Bondage -> Revolution -> Liberty -> Complacency-> Apathy -> Bondage
 * Society is better off when the techies are either off doing their own agendas or employed by business men. Less so when employed as civil servants or by the military. Society is totally screwed when the techies are tools of politicians. 
 * Techies were gainfully employed throughout the dark ages, helping one warlord to lay siege to another warlord's cities and castles. They got quite good building siege engines, trebuchets, sapper tunnels, and later cannons. 
 * Government naturally gravitates toward corruption.
@@ -352,10 +352,16 @@
   * (Richard Feynman)
 * ...it is better to solve the right problem the wrong way than the wrong problem the right way.
   * (Dick Hamming)
-* When in doubt, use brute force.
-  * (Ken Thompson)
 * Nothing in nature that benefits us comes through force. Force leads to resistance.
   * (Susi Hately)
+* When in doubt, use brute force.
+  * (Ken Thompson)
 * Don't say everything you think.
 * Never regard study as a duty, but as the enviable opportunity to learn.
   * (Albert Einstein)
+* I am enough of the artist to draw freely upon my imagination. Imagination is more important than knowledge. Knowledge is limited. Imagination encircles the world.
+  * (Albert Einstein - Saturday Evening Post)
+* Theory will take you only so far.
+  * (Ernest Lawrence )
+* When they’ve punished you enough, they’ll serve you salmon and potato salad, make speeches, give you a medal, and pat you in the back telling all is forgiven. Just remember, it won’t be for you… it would be for them.
+  * (Attributed to Einstein - Christopher Nolan's Oppenheimer movie)

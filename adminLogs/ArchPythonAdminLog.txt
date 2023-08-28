@@ -776,20 +776,20 @@ Notes taken while configuring Arch Linux for Python development.
       seeder FromAppData(download=False, pip=bundle, setuptools=bundle, wheel=bundle, via=copy, app_data_dir=/home/grs/.local/share/virtualenv)
         added seed packages: pip==22.2.1, setuptools==63.2.0, wheel==0.37.1
       activators BashActivator,CShellActivator,FishActivator,NushellActivator,PowerShellActivator,PythonActivator
-    
+
     ✔ Successfully created virtual environment!
     Virtualenv location: /home/grs/.local/share/virtualenvs/boring_math-7KsFA2pk
     Installing dependencies from Pipfile.lock (5d7155)...
     To activate this project's virtualenv, run pipenv shell.
     Alternatively, run a command inside the virtualenv with pipenv run.
-    
+
     $ pipenv run python -m pip list
     Package    Version
     ---------- -------
     pip        22.2.1
     setuptools 63.2.0
     wheel      0.37.1
-    
+
     $ pipenv install --dev
     Installing dependencies from Pipfile.lock (5d7155)...
     To activate this project's virtualenv, run pipenv shell.
@@ -852,7 +852,7 @@ Notes taken while configuring Arch Linux for Python development.
   Since the pyright LSP language server gets spawned from the nvim
   environment, the first approach seems to me "more correct."
 
-  Also, run via either 
+  Also, run via either
 
     $ pipenv run python bin/pythag3.py 20 30
     (3, 4, 5)
@@ -881,14 +881,14 @@ Notes taken while configuring Arch Linux for Python development.
   Some pyenv factoids:
 
   1. pyenv manages Python environments NOT Python virtual environments
-  2. pyenv a shell function 
+  2. pyenv a shell function
      - versions for bash, ksh, zsh, fish
      - pyenv is a shell function that calls /usr/bin/pyenv (written in Bash)
      - it modifies the existing shell instead of creating a new one
      - it calls into a vast Bash shell infrastructure
   3. Each python environment managed by pyenv needs its own pipenv
   4. "pyenv shell subcommand sets and shows the shell specific Python version
-     - "pyenv shell" does not create a new shell, it modifies current one 
+     - "pyenv shell" does not create a new shell, it modifies current one
      - multiple versions of Python can be enabled with it
      - will use this to define python and pypy in same environment
   5. "pyenv rehash" subcommand needs to be called when Python versions installed
@@ -911,7 +911,7 @@ Notes taken while configuring Arch Linux for Python development.
       These apps are now globally available
         - pycowsay
     done!
-    
+
     $ pycowsay I am a cow
 
       ----------
@@ -1011,8 +1011,10 @@ Notes taken while configuring Arch Linux for Python development.
 
   I don't need a Python package management system backwardly compatible to
   Python 2.4. If you want to use a version of Python before 3.4, God bless you,
-  use old deprecated packages and toolchains. Don't bother people who want
-  to live in the middle of the 21st century.
+  use old deprecated packages and toolchains. Pay developers fairly to update
+  them. But please, don't bother those who want to live in the middle of the
+  21st century. Nor insist volenteer maintainers keep packages irrationally
+  backward compatible.
 
   Since I quite like the Python 3.10 Match-Case statement, it is unlightly
   I will use any version of Python before 3.10 (unless you pay me well with
@@ -1030,7 +1032,175 @@ Notes taken while configuring Arch Linux for Python development.
   Bernát Gábor's GitHub profile: https://github.com/gaborbernat.
 
 2023-08-24:
-  Installed python flit onto gauss17 & euler7.
+  Installed python Flit onto gauss17 & euler7.
 
     sudo pacman -Syu python-flit
 
+  When using pip, Flit requires Python 3 and therefore needs to be installed
+  using the Python 3 version of pip. Python 2 modules can be distributed using
+  Flit, but need to be importable on Python 3 without errors.
+
+2023-08-27:
+
+  As I continue moving forward and educating myself on how to maintain PyPI
+  packages...
+
+  Since so far I have only written pure Python packages, I will use the Flit
+  as my packaging backend for PyPI. I will be following the Flit documentation
+  located on PyPA: https://flit.pypa.io and I will use Flit's GitHub repo itself
+  as a guide to set up a Flit based repo: https://github.com/pypa/flit
+
+  My first python package to push to PyPI will be grscheller.datastuctures.
+  Version numbers 0.X.Y will be used while data structures are still a part of
+  the grscheller-python-libs repo. Will use 1.0.X when I break it out to its own
+  GitHub repo, and 1.1.0 for first version pushed out tp PyPI.
+
+  Why use Flit? From its PyPa website:
+
+    - flit init helps you set up the information Flit needs about your package.
+
+    - Subpackages are automatically included: you only need to specify the
+      top-level package.
+
+    - Data files within a package directory are automatically included.
+      Missing data files has been a common packaging mistake with other tools.
+
+    - The version number is taken from your package’s __version__ attribute,
+      so that always matches the version that tools like pip see.
+
+    - flit publish uploads a package to PyPI, so you don’t need a separate tool
+      to do this.
+  
+  Document steps/decisions I take:
+
+  01. Simplfy datastuctures/__init__.py
+
+        """Python datastructures which do not throw exceptions."""
+
+        __version__ = "0.1.0"
+
+        from .dqueue import *
+        from .stack import *
+
+      This will be the only location where __version__ will be recorded.
+
+  02. Copy LICENSE file from root of grscheller-python-libs repo to
+  grscheller/datastructures/ directory.
+
+  03. Put the following copyright notices at the beginning of both stack.py and
+  dqueue.py
+
+    # Copyright 2023 Geoffrey R. Scheller
+    # 
+    # Licensed under the Apache License, Version 2.0 (the "License");
+    # you may not use this file except in compliance with the License.
+    # You may obtain a copy of the License at
+    # 
+    #     http://www.apache.org/licenses/LICENSE-2.0
+    # 
+    # Unless required by applicable law or agreed to in writing, software
+    # distributed under the License is distributed on an "AS IS" BASIS,
+    # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    # See the License for the specific language governing permissions and
+    # limitations under the License.
+
+  04. Initialize grsscheller/datasstructures for use by Flit.
+
+    $ cd ~/devel/grscheller-python-libs/grscheller/datastructures
+    $ flit init
+    Module name: grscheller.datastructures
+    Try again.
+    Module name: datastructures
+    Author: Geoffrey R. Scheller
+    Author email: geoffrey@scheller.com
+    Home page:
+    Choose a license (see http://choosealicense.com/ for more info)
+    1. MIT - simple and permissive
+    2. Apache - explicitly grants patent rights
+    3. GPL - ensures that code based on this is shared with the same terms
+    4. Skip - choose a license later
+    Enter 1-4: 2
+    
+    Written pyproject.toml; edit that file to add optional extra info.
+
+  Created the following pyproject.toml file:
+
+    [build-system]
+    requires = ["flit_core >=3.2,<4"]
+    build-backend = "flit_core.buildapi"
+    
+    [project]
+    name = "datastructures"
+    authors = [{name = "Geoffrey R. Scheller", email = "geoffrey@scheller.com"}]
+    license = {file = "LICENSE"}
+    classifiers = ["License :: OSI Approved :: Apache Software License"]
+    dynamic = ["version", "description"]
+
+  Based on what the Flit does for its own GitHub repo, I added
+
+    [project.urls]
+    Documentation = "https://github.com/grscheller/datastructures/README.md"
+    Source = "https://github.com/grscheller/datastructures"
+    Changelog = "https://grscheller/grscheller/datastructures/CHANGELOG.md"
+
+2023-08-27:
+
+  Next steps are to get grscheller registered with PyPI and figure out how to
+  associate datastructures with the name grscheller.datastructures.
+
+  05. Went to PyPI.org and set up a PyPI account with two-factor authentication.
+      Usng same two-factor authentication service as DevSecOps at work.
+
+      user name: grscheller
+
+      When I click "Your Projects" I get:
+
+        You have not uploaded any projects to PyPI, yet. To learn how
+        to get started, visit the Python Packaging User Guide.
+
+        https://packaging.python.org/
+
+  06. Create GitHub Repo: https://github.com/grscheller/datastructures
+
+      Created on GitHub with just an Apache 2.0 boilerplate license.
+
+        $ cd ~/devel/grscheller-python-libs-submodules/
+        $ mkdir grscheller
+        $ cd grscheller
+
+      Copied over package datastructure package from grscheller-python-libs the
+      repo. Added .pytset_cache/ to .gitignore file.
+
+        $ set PYTHONPATH /home/grs/devel/grscheller-python-libs-submodules
+        $ cd
+        $ pytest --pyargs grscheller.datastructures
+        ======================================= test session starts ========================================
+        platform linux -- Python 3.11.3, pytest-7.4.0, pluggy-1.2.0
+        rootdir: /home/grs
+        collected 8 items
+        
+        devel/grscheller-python-libs-submodules/grscheller/datastructures/tests/test_dqueue.py ...    [ 37%]
+        devel/grscheller-python-libs-submodules/grscheller/datastructures/tests/test_stack.py .....   [100%]
+        
+        ======================================== 8 passed in 0.02s =========================================
+        $ cd -
+        $ pwd
+        /home/grs/devel/grscheller-python-libs-submodules/grscheller/datastructures
+
+      Committed changes to datastructures repo and pushed up to GitHub.
+
+    07. Remove datastructures from grscheller-python-libs and add back as a GIT
+        submodule. Updated PYTHONPATH in fish to
+
+          $ set PYTHONPATH /home/grs/devel/grscheller-python-libs-submodules /home/grs/devel/grscheller-python-libs
+
+        Might want a write a shell script to juggle $PYTHONPATH
+
+        Removed datastructures from grscheller-python-libs repo and pushed
+        change to GitHub.
+
+        TODO: Consider just pushing boring_math and func_tools to their own GIT
+              repos and doing away with grscheller-python-libs???
+
+        Hold off adding datastructures back as a submodule. Also will probably
+        just drop func_tools and move boring_math to its own repo.

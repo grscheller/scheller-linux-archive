@@ -289,13 +289,13 @@
   * (Marc MacYoung)
 * def. Martial Arts: The various skills or practices that originated as methods of combat.
   * (Peter Lorge - Classical Chinese military historian)
-* Lords Prayer: Our Father, who art in Heaven, hollowed be Thy name. Thy Kingdom come, Thy will be done, on Earth as it is in Heaven. Give us this day our daily bread, and please forgive us our trespasses, and help us forgive those who trespass against us. Lead us not into temptation, but deliver us from evil.
+* Lords Prayer: Heavenly Father, holy is Your name. Your Kingdom come, Your will be done, on Earth as it is in Heaven. Give us this day our daily bread. Forgive us our trespasses, and help us to forgive those who trespass against us. Lead us not into temptation, but deliver us from evil.
 * The Lord our God, the Lord is one. Love the Lord your God with all your heart, with all your soul, with all your mind, and all your strength... Likewise, love your neighbor as yourself.
   * (Mark 12:29-31)
 * Self-defense is about preparation for, avoidance of, and deescalation of violent situations. Combat has to do with prevailing in violence. Warfare involves both in political and logistical contexts.
 * Supernormal accomplishment is not supernatural, that's why it is called gungfu, literally, "skill achieved through persistent effort."
   * (Lee Scheele)
-* Martial Arts can be applied to both combat and competition; but neither is the point of Martial Arts.
+* Martial Arts can be applied to combat, competition, health, self-improvement (physical, mental, social); but why do I do it? Because it is fun.
 * Neither self-defense nor combat are about the fair fight. Competition can be a tool to help develop a Martial Art and safely practice it; but it can also lead you astray, especially if the rules are used to manipulate the outcome.
 * No pain, no pain.
   * (Sifu Dug Corpolongo)
@@ -365,3 +365,4 @@
   * (Ernest Lawrence )
 * When they’ve punished you enough, they’ll serve you salmon and potato salad, make speeches, give you a medal, and pat you in the back telling all is forgiven. Just remember, it won’t be for you… it would be for them.
   * (Attributed to Einstein - Christopher Nolan's Oppenheimer movie)
+* Awards are more for the benefit of the presenter than the recipient.

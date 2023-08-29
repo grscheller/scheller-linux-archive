@@ -1,12 +1,11 @@
-# Geoffrey Scheller's Archive
+# Geoffrey Scheller's Linux Mosh Pit
 
-This is my "mosh pit" of Linux notes, my "homepage" of links, system
-admin & development logs, and computer language playground.
+Colections of stuff not worth their Github repos.
 
-* [Personal Notes](notes/)
-* [Personnal Homepage](web/)
-* [System Admin Logs](adminLogs/)
-* [Grokking Computer Languages](grok/)
+* [Linux Notes](notes/): primarily Linux/Unix related
+* [System Admin/Software Development Logs](adminLogs/): least I forget
+* [Personnal Homepage](web/): in leiu of using browser bookmarks
+* [Grokking Computer Languages](grok/): place to commit scratch code
 
 By its very nature, this repo contains many loose threads.
 

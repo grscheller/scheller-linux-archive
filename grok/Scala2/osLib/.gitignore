@@ -1,5 +1,0 @@
-target/
-project/build.properties
-**/*.class
-**/*.jar
-**/*.txt

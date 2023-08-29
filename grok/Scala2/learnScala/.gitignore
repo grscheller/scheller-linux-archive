@@ -1,5 +1,0 @@
-project/build.properties
-.bsp
-**/*.class
-**/*.jar
-**/target/

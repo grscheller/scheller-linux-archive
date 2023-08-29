@@ -1,9 +1,9 @@
 # Geoffrey Scheller's Linux Mosh Pit
 
-Colections of stuff not worth their own Github repos.
+Collections of stuff not worth their own GitHub repositories.
 
-* [Linux Notes](notes/): primarily Linux/Unix related
-* [System Admin/Software Development Logs](adminLogs/): help me come back up to speed when I forget
+* [Linux Notes](notes/): personal notes primarily Linux/Unix related
+* [System Admin/Software Development Logs](adminLogs/): to help me figure out what I did
 * [Personnal Homepage](web/): in leiu of using browser bookmarks
 * [Grokking Computer Languages](grok/): place to commit scratch code
 

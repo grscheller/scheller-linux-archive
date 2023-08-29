@@ -1,6 +1,4 @@
-Purpose is to document C language factoids:
-
-01. Format strings used in the C99 standard.
+Format strings used in the C99 standard.
 
     Note: [parameter] is POSIX extension.
 

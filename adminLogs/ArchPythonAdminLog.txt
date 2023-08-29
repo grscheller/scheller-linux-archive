@@ -434,7 +434,7 @@ Notes taken while configuring Arch Linux for Python development.
       - recommended by pypa
       - by default, puts virtual environment in project subdirectory
       - when used directly, need pip to install packages
-      - virtualenv manages virtual environments (not using)
+      - virtualenv manages virtual enviroGnments (not using)
         - original tool which venv depricated
         - seems future goals are to be very cross OS and cross Python version compatible
         - popular with Python 2.7 clingers
@@ -1070,7 +1070,7 @@ Notes taken while configuring Arch Linux for Python development.
 
     - flit publish uploads a package to PyPI, so you don’t need a separate tool
       to do this.
-  
+
   Document steps/decisions I take:
 
   01. Simplfy datastuctures/__init__.py
@@ -1091,13 +1091,13 @@ Notes taken while configuring Arch Linux for Python development.
   dqueue.py
 
     # Copyright 2023 Geoffrey R. Scheller
-    # 
+    #
     # Licensed under the Apache License, Version 2.0 (the "License");
     # you may not use this file except in compliance with the License.
     # You may obtain a copy of the License at
-    # 
+    #
     #     http://www.apache.org/licenses/LICENSE-2.0
-    # 
+    #
     # Unless required by applicable law or agreed to in writing, software
     # distributed under the License is distributed on an "AS IS" BASIS,
     # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -1120,7 +1120,7 @@ Notes taken while configuring Arch Linux for Python development.
     3. GPL - ensures that code based on this is shared with the same terms
     4. Skip - choose a license later
     Enter 1-4: 2
-    
+
     Written pyproject.toml; edit that file to add optional extra info.
 
   Created the following pyproject.toml file:
@@ -1128,7 +1128,7 @@ Notes taken while configuring Arch Linux for Python development.
     [build-system]
     requires = ["flit_core >=3.2,<4"]
     build-backend = "flit_core.buildapi"
-    
+
     [project]
     name = "datastructures"
     authors = [{name = "Geoffrey R. Scheller", email = "geoffrey@scheller.com"}]
@@ -1178,10 +1178,10 @@ Notes taken while configuring Arch Linux for Python development.
         platform linux -- Python 3.11.3, pytest-7.4.0, pluggy-1.2.0
         rootdir: /home/grs
         collected 8 items
-        
+
         devel/grscheller-python-libs-submodules/grscheller/datastructures/tests/test_dqueue.py ...    [ 37%]
         devel/grscheller-python-libs-submodules/grscheller/datastructures/tests/test_stack.py .....   [100%]
-        
+
         ======================================== 8 passed in 0.02s =========================================
         $ cd -
         $ pwd
@@ -1199,8 +1199,272 @@ Notes taken while configuring Arch Linux for Python development.
         Removed datastructures from grscheller-python-libs repo and pushed
         change to GitHub.
 
-        TODO: Consider just pushing boring_math and func_tools to their own GIT
-              repos and doing away with grscheller-python-libs???
+    TODO: Consider just pushing boring_math and func_tools to their own GIT
+          repos and doing away with grscheller-python-libs???
 
-        Hold off adding datastructures back as a submodule. Also will probably
-        just drop func_tools and move boring_math to its own repo.
+    Hold off adding datastructures back as a submodule. Also will probably
+    just drop func_tools and move boring_math to its own repo.
+
+2023-08-29:
+
+  Abandoned idea of submodules. Will push boring-math to its own repo. Will drop
+  func_tools in lieu of just using itertools and functools from the Python
+  standard libraries.
+
+  08. Before pushing grscheller.datastructures to PyPI, first set things up to
+      install the package with pip from GitHub.
+
+      Create a git tag for the 0.2.0.0 version on datastructures:
+
+        $ git tag -a v0.2.0.0 -m "First version grscheller.datastructures released on GitHub"
+        $ git push prigin v0.2.0.0
+
+      Source code for this tag is now downloadable from GitHub web frontend in
+      either zip or tar.gz format.
+
+  Not sure how pip will handle the grscheller part of the package name.
+  Will I need to put a grscheller directory in the repo for this to
+  work? Other packages just use an unqualified package name to have pip
+  install it, see
+
+      https://github.com/NiklasTiede/TinyHTTPie
+      https://the-coding-lab.com/2021/8-publishing-at-pypi/
+
+  for a setuptools/twine example which only has pip use an unqualified
+  name. I doubt "datastructures" would be available and wouldn't want to
+  use such a generic name without namespacing it. If only unqualified
+  names can be used, I'd have to come up with a unique name expressing
+  its purpose. Maybe non-burping-red-drangon-datastructures?
+
+  No sense worrying until it fails.
+
+  Before continuing with step 09, try installing package with pip via GitHub.
+
+  First see if pip is working correctly.
+
+      $ set PIP_REQUIRE_VIRTUALENV false
+      $ pip install pip-install-test
+      error: externally-managed-environment
+
+      × This environment is externally managed
+      ╰─> To install Python packages system-wide, try 'pacman -S
+          python-xyz', where xyz is the package you are trying to
+          install.
+
+          If you wish to install a non-Arch-packaged Python package,
+          create a virtual environment using 'python -m venv path/to/venv'.
+          Then use path/to/venv/bin/python and path/to/venv/bin/pip.
+
+          If you wish to install a non-Arch packaged Python application,
+          it may be easiest to use 'pipx install xyz', which will manage a
+          virtual environment for you. Make sure you have python-pipx
+          installed via pacman.
+
+      note: If you believe this is a mistake, please contact your Python installation or OS distribution provider. You can override this, at the risk of breaking your Python installation or OS, by passing --break-system-packages.
+      hint: See PEP 668 for the detailed specification.
+
+  OK, Arch does not want me to molest its Python configuration outside of
+  Pacman. I'll just continue using PYTHONPATH when using datastructures with the
+  system Python. To test pip, I'll need to create a virtual environment.
+
+    $ set PIP_REQUIRE_VIRTUALENV true
+    $ pip install pip-install-test
+    ERROR: Could not find an activated virtualenv (required).
+
+  Should I just use venv or pyenv? Well, might have well leverage my investment
+  in pyenv and reacquaint myself with it.
+
+  On euler7,
+
+    $ pyenv versions
+    * system (set by /home/grs/.local/share/pyenv/version)
+      3.8.12
+      3.9.7
+      3.10.2
+
+    $ pyenv uninstall 3.8.12
+    $ pyenv uninstall 3.8.12 3.9.7 3.10.2
+    pyenv: remove /home/grs/.local/share/pyenv/versions/3.8.12? [y|N] y
+    pyenv: 3.8.12 uninstalled
+    pyenv: remove /home/grs/.local/share/pyenv/versions/3.9.7? [y|N] y
+    pyenv: 3.9.7 uninstalled
+    pyenv: remove /home/grs/.local/share/pyenv/versions/3.10.2? [y|N] y
+    pyenv: 3.10.2 uninstalled
+
+    $ pyenv versions
+    * system (set by /home/grs/.local/share/pyenv/version)
+
+  These versions were for web frameworks which force web-kiddies to use
+  old versions of Python. At least they were not too crufty.
+
+  I'll install the same version of Python Arch uses.
+
+    $ python --version
+    Python 3.11.5
+
+    $ pyenv install 3.11.5
+    Downloading Python-3.11.5.tar.xz...
+    -> https://www.python.org/ftp/python/3.11.5/Python-3.11.5.tar.xz
+    Installing Python-3.11.5...
+
+    BUILD FAILED (Arch Linux using python-build 20180424)
+
+    Inspect or clean up the working tree at /tmp/python-build.20230829131800.93756
+    Results logged to /tmp/python-build.20230829131800.93756.log
+
+    Last 10 log lines:
+    Traceback (most recent call last):
+      File "<frozen runpy>", line 189, in _run_module_as_main
+      File "<frozen runpy>", line 148, in _get_module_details
+      File "<frozen runpy>", line 112, in _get_module_details
+      File "/tmp/python-build.20230829131800.93756/Python-3.11.5/Lib/ensurepip/__init__.py", line 4, in <module>
+        import subprocess
+      File "/tmp/python-build.20230829131800.93756/Python-3.11.5/Lib/subprocess.py", line 104, in <module>
+        from _posixsubprocess import fork_exec as _fork_exec
+   gg ModuleNotFoundError: No module named '_posixsubprocess'
+    make: *** [Makefile:1880: install] Error 1
+
+  Same error when I try installing Python 3.10.13.
+
+  Did work for Python 3.8.18.
+  Fails for Python 3.9.0, different error.
+  Fails for 3.10.1. Not interested in using any version before this one.
+
+  Seems that pyenv moved where it stores its stuff
+
+      ~/.pyenv/shims -> /home/grs/.local/share/pyenv/shims
+
+  OK, wasted enough time with pyenv. I'll just use the system python and
+  a virtual environment.
+
+  Create a Python virtual environment with system python.
+
+      $ cd ~/devel
+      $ python -m venv venv_system
+      $ ls venv_system/
+      bin/  include/  lib/  lib64@  pyvenv.cfg
+      $ ls venv_system/bin
+      $ ls venv_system/bin/
+      activate      activate.fish  pip*   pip3.11*  python3@
+      activate.csh  Activate.ps1   pip3*  python@   python3.11@
+
+  Now lets activate it.
+
+      $ source venv_system/bin/activate.fish
+      (venv_system)$
+
+  Will supress the (venv_system) part of the prompt below.
+
+      $ string join \n $PATH
+      /home/grs/devel/venv_system/bin
+      /home/grs/.local/share/pyenv/shims
+      /usr/lib/jvm/java-17-openjdk/bin
+      ...
+
+      $ file venv_system/bin/python
+      venv_system/bin/python: symbolic link to /usr/bin/python
+
+      $ python --version
+      Python 3.11.5
+
+  Now test to see if pip now works.
+
+      $ pip install pip-install-test
+      Collecting pip-install-test
+        Downloading pip_install_test-0.5-py3-none-any.whl (1.7 kB)
+      Installing collected packages: pip-install-test
+      Successfully installed pip-install-test-0.5
+
+      $ python
+      Python 3.11.5 (main, Aug 28 2023, 20:02:58) [GCC 13.2.1 20230801] on linux
+      Type "help", "copyright", "credits" or "license" for more information.
+      >>> import pip_install_test
+      Good job!  You installed a pip module.
+
+      Now get back to work!
+      >>> exit()
+
+      $ pip uninstall pip-install-test
+      ...
+
+      $ pypi
+      Set $PYTHONPATH to /home/grs/devel/pypi:/home/grs/devel/grscheller-python-libs
+      $ pytest --pyargs grscheller.datastructures
+      ================================== test session starts ===================================
+      platform linux -- Python 3.11.5, pytest-7.4.0, pluggy-1.2.0
+      rootdir: /home/grs/devel/junk
+      collected 8 items
+
+      tests/test_dqueue.py ...                                                           [ 37%]
+      tests/test_stack.py .....                                                          [100%]
+
+      =================================== 8 passed in 0.01s ====================================
+      $ pypi
+      Removed $PYTHONPATH
+
+      $ pytest --pyargs grscheller.datastructures
+      ================================== test session starts ===================================
+      platform linux -- Python 3.11.5, pytest-7.4.0, pluggy-1.2.0
+      rootdir: /home/grs/devel/junk
+      collected 0 items
+
+      ================================= no tests ran in 0.00s ==================================
+      ERROR: module or package not found: grscheller.datastructures (missing __init__.py?
+
+  Good, ready to see how well grscheller.datafiles installs from its GitHub
+  repo.
+
+  09. Try installing datastructures package fromm its GitHub repo into a Python
+      Virtual environment.
+
+        $ pip install git+https://github.com/grscheller/datastructures@v0.2.0.0
+        Collecting git+https://github.com/grscheller/datastructures@v0.2.0.0
+          Cloning https://github.com/grscheller/datastructures (to revision v0.2.0.0) to /tmp/pip-req-build-l1y94lvt
+          Running command git clone --filter=blob:none --quiet https://github.com/grscheller/datastructures /tmp/pip-req-build-l1y94lvt
+          Running command git checkout -q 3a6bd777768ee515855cd15b4f5dc6e3f454c512
+          Resolved https://github.com/grscheller/datastructures to commit 3a6bd777768ee515855cd15b4f5dc6e3f454c512
+          Installing build dependencies ... done
+          Getting requirements to build wheel ... error
+          error: subprocess-exited-with-error
+        
+          × Getting requirements to build wheel did not run successfully.
+          │ exit code: 1
+          ╰─> [15 lines of output]
+              Traceback (most recent call last):
+                File "/home/grs/devel/venv_system/lib/python3.11/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py", line 353, in <module>
+                  main()
+                File "/home/grs/devel/venv_system/lib/python3.11/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py", line 335, in main
+                  json_out['return_val'] = hook(**hook_input['kwargs'])
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                File "/home/grs/devel/venv_system/lib/python3.11/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py", line 118, in get_requires_for_build_wheel
+                  return hook(config_settings)
+                         ^^^^^^^^^^^^^^^^^^^^^
+                File "/tmp/pip-build-env-0huuhuq1/overlay/lib/python3.11/site-packages/flit_core/buildapi.py", line 31, in get_requires_for_build_wheel
+                  module = Module(info.module, Path.cwd())
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                File "/tmp/pip-build-env-0huuhuq1/overlay/lib/python3.11/site-packages/flit_core/common.py", line 59, in __init__
+                  raise ValueError("No file/folder found for module {}".format(name))
+              ValueError: No file/folder found for module datastructures
+              [end of output]
+        
+          note: This error originates from a subprocess, and is likely not a problem with pip.
+        error: subprocess-exited-with-error
+        
+        × Getting requirements to build wheel did not run successfully.
+        │ exit code: 1
+        ╰─> See above for output.
+        
+        note: This error originates from a subprocess, and is likely not a problem with pip.
+
+      Progress! Failed getting requirements to build the "wheel", but a sort of
+      expected it to. Says more configuration is needed in order to build the
+      "wheel." Didn't they use to call something like this an egg?
+
+      It caught on that flit was used as the build tool. Need to figure out if
+      I need to do something with FLIT or with the package to configure it so
+      that this wheel thingy can be built.
+
+  So far, clone the repo it works. Pip clones the repo and knows the FLIT is the backend, but
+  something (FLIT? pip?) does not know how to get the requirements to build the
+  wheel.
+           

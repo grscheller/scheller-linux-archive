@@ -3,7 +3,7 @@
 Colections of stuff not worth their own Github repos.
 
 * [Linux Notes](notes/): primarily Linux/Unix related
-* [System Admin/Software Development Logs](adminLogs/): to help come back up to speed
+* [System Admin/Software Development Logs](adminLogs/): help me come back up to speed when I forget
 * [Personnal Homepage](web/): in leiu of using browser bookmarks
 * [Grokking Computer Languages](grok/): place to commit scratch code
 

@@ -1426,7 +1426,7 @@ Notes taken while configuring Arch Linux for Python development.
           Installing build dependencies ... done
           Getting requirements to build wheel ... error
           error: subprocess-exited-with-error
-        
+
           × Getting requirements to build wheel did not run successfully.
           │ exit code: 1
           ╰─> [15 lines of output]
@@ -1446,14 +1446,14 @@ Notes taken while configuring Arch Linux for Python development.
                   raise ValueError("No file/folder found for module {}".format(name))
               ValueError: No file/folder found for module datastructures
               [end of output]
-        
+
           note: This error originates from a subprocess, and is likely not a problem with pip.
         error: subprocess-exited-with-error
-        
+
         × Getting requirements to build wheel did not run successfully.
         │ exit code: 1
         ╰─> See above for output.
-        
+
         note: This error originates from a subprocess, and is likely not a problem with pip.
 
       Progress! Failed getting requirements to build the "wheel", but a sort of
@@ -1467,4 +1467,75 @@ Notes taken while configuring Arch Linux for Python development.
   So far, clone the repo it works. Pip clones the repo and knows the FLIT is the backend, but
   something (FLIT? pip?) does not know how to get the requirements to build the
   wheel.
-           
+
+2023-08-30:
+
+  <add info on FLIT> can handle empty higharchical namespaces>
+
+  Was able to install from GitHub with pip. From the virtual environment:
+
+    $ pip install git+https://github.com/grscheller/datastructures@v0.2.0.2
+    Collecting git+https://github.com/grscheller/datastructures@v0.2.0.2
+      Cloning https://github.com/grscheller/datastructures (to revision v0.2.0.2) to /tmp/pip-req-build-h27n05qo
+      Running command git clone --filter=blob:none --quiet https://github.com/grscheller/datastructures /tmp/pip-req-build-h27n05qo
+      Running command git checkout -q 38a74ca88ce2874c79b0f8242b2dcd5d0af30386
+      Resolved https://github.com/grscheller/datastructures to commit 38a74ca88ce2874c79b0f8242b2dcd5d0af30386
+      Installing build dependencies ... done
+      Getting requirements to build wheel ... done
+      Preparing metadata (pyproject.toml) ... done
+    Building wheels for collected packages: grscheller.datastructures
+      Building wheel for grscheller.datastructures (pyproject.toml) ... done
+      Created wheel for grscheller.datastructures: filename=grscheller_datastructures-0.2.0.2-py2.py3-none-any.whl size=11091 sha256=3b554425975a9987a2f8dd19e23e7a0ac7cc6cdf6348bf094e2a19d96399897f
+      Stored in directory: /tmp/pip-ephem-wheel-cache-hutqkexz/wheels/48/b4/cc/040205d6a165dbbb6539f14da4e8fb4561644adcfc8020b188
+    Successfully built grscheller.datastructures
+    Installing collected packages: grscheller.datastructures
+    Successfully installed grscheller.datastructures-0.2.0.2
+
+    $ ipython
+    /usr/lib/python3.11/site-packages/IPython/core/interactiveshell.py:889: UserWarning: Attempting to work in a virtualenv. If you encounter problems, please install IPython inside the virtualenv.
+      warn(
+    Python 3.11.5 (main, Aug 28 2023, 20:02:58) [GCC 13.2.1 20230801]
+    Type 'copyright', 'credits' or 'license' for more information
+    IPython 8.14.0 -- An enhanced Interactive Python. Type '?' for help.
+
+    In [1]: from grscheller.datastructures import *
+
+    In [2]: foo = Stack()
+
+    In [3]: foo.push(1).push(2).push(3)
+    Out[3]: [ 3 -> 2 -> 1 -> None ]
+
+    In [4]: foo.pop()
+    Out[4]: 3
+
+    In [5]: foo.pop()
+    Out[5]: 2
+
+    In [6]:
+    Do you really want to exit ([y]/n)?
+    $ echo $PYTHONPATH
+
+    $ pytest --pyargs grscheller.datastructures
+    ================================== test session starts ===================================
+    platform linux -- Python 3.11.5, pytest-7.4.0, pluggy-1.2.0
+    rootdir: /home/grs/devel
+    collected 0 items
+
+    ================================= no tests ran in 0.00s ==================================
+    ERROR: module or package not found: grscheller.datastructures (missing __init__.py?)
+
+  So, grscheller.datastructures installed into virtual environment and works but
+  test suite fails to rum.
+
+    $ pip list
+    Package                   Version
+    ------------------------- -------
+    grscheller.datastructures 0.2.0.2
+    pip                       23.2.1
+    setuptools                65.5.0
+    (venv_system)
+    [grs@euler7: ~/devel]
+    $ digpath pip
+    /home/grs/devel/venv_system/bin/pip
+    /home/grs/.local/share/pyenv/shims/pip
+    /usr/bin/pip

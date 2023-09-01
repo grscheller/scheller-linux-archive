@@ -1470,7 +1470,15 @@ Notes taken while configuring Arch Linux for Python development.
 
 2023-08-30:
 
-  <add info on FLIT> can handle empty higharchical namespaces>
+  Can use multilevel package names like geoffrey.datastructures, so long as the
+  outer one is an empty directory. 
+  See https://github.com/pypa/flit/issues/370 for the pypi/flit issue from 2020
+  that prompted the dev to add the feature.
+
+  Note: This enhancement only tries to support PEP 420 'implicit' namespace
+        packages, where the namespace package (the outer one) doesn't have an
+        __init__.py file. This choice totally makes sense, grscheller by itself
+        is not a package, just a namespace.
 
   Was able to install from GitHub with pip. From the virtual environment:
 
@@ -1539,3 +1547,7 @@ Notes taken while configuring Arch Linux for Python development.
     /home/grs/devel/venv_system/bin/pip
     /home/grs/.local/share/pyenv/shims/pip
     /usr/bin/pip
+
+  From what I've seen online, it would be possible to get the test suite to
+  work, but the examples I found required some setup.py hacking. Also, the
+  standard practice is not to provide end users access to test suites.

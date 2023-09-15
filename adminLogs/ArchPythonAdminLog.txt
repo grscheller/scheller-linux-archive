@@ -1967,3 +1967,53 @@ Notes taken while configuring Arch Linux for Python development.
     setuptools                65.5.0
 
   Success!
+
+2023-09-09:
+  Was able to install grscheller.datastructures from GitHub with tests.
+
+    $ pip list
+    Package    Version
+    ---------- -------
+    pip        23.2.1
+    setuptools 65.5.0
+
+    $ pip install "grscheller.datastructures[test] @ git+https://git@github.com/grscheller/datastructures@v0.3.1.0"
+    Collecting grscheller.datastructures[test]@ git+https://git@github.com/grscheller/datastructures@v0.3.1.0
+      Cloning https://****@github.com/grscheller/datastructures (to revision v0.3.1.0) to /tmp/pip-install-yoiytp9x/grscheller-datastructures_eae8ab25c9f641d2a4982464e35466cd
+      Running command git clone --filter=blob:none --quiet 'https://****@github.com/grscheller/datastructures' /tmp/pip-install-yoiytp9x/grscheller-datastructures_eae8ab25c9f641d2a4982464e35466cd
+      Running command git checkout -q 78b6bbe6fc52e37d3bb2d2cb1538130219df9c90
+      Resolved https://****@github.com/grscheller/datastructures to commit 78b6bbe6fc52e37d3bb2d2cb1538130219df9c90
+      Installing build dependencies ... done
+      Getting requirements to build wheel ... done
+      Preparing metadata (pyproject.toml) ... done
+    Collecting pytest>=7.4 (from grscheller.datastructures[test]@ git+https://git@github.com/grscheller/datastructures@v0.3.1.0)
+      Obtaining dependency information for pytest>=7.4 from https://files.pythonhosted.org/packages/df/d0/e192c4275aecabf74faa1aacd75ef700091913236ec78b1a98f62a2412ee/pytest-7.4.2-py3-none-any.whl.metadata
+      Downloading pytest-7.4.2-py3-none-any.whl.metadata (7.9 kB)
+    Collecting iniconfig (from pytest>=7.4->grscheller.datastructures[test]@ git+https://git@github.com/grscheller/datastructures@v0.3.1.0)
+      Using cached iniconfig-2.0.0-py3-none-any.whl (5.9 kB)
+    Collecting packaging (from pytest>=7.4->grscheller.datastructures[test]@ git+https://git@github.com/grscheller/datastructures@v0.3.1.0)
+      Using cached packaging-23.1-py3-none-any.whl (48 kB)
+    Collecting pluggy<2.0,>=0.12 (from pytest>=7.4->grscheller.datastructures[test]@ git+https://git@github.com/grscheller/datastructures@v0.3.1.0)
+      Obtaining dependency information for pluggy<2.0,>=0.12 from https://files.pythonhosted.org/packages/05/b8/42ed91898d4784546c5f06c60506400548db3f7a4b3fb441cba4e5c17952/pluggy-1.3.0-py3-none-any.whl.metadata
+      Using cached pluggy-1.3.0-py3-none-any.whl.metadata (4.3 kB)
+    Downloading pytest-7.4.2-py3-none-any.whl (324 kB)
+       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 324.5/324.5 kB 2.3 MB/s eta 0:00:00
+    Using cached pluggy-1.3.0-py3-none-any.whl (18 kB)
+    Building wheels for collected packages: grscheller.datastructures
+      Building wheel for grscheller.datastructures (pyproject.toml) ... done
+      Created wheel for grscheller.datastructures: filename=grscheller_datastructures-0.3.0.2-py3-none-any.whl size=13784 sha256=c07c8e14121efdc45f3250b9a6f7f9b4e2974d41f4a8b3f670df449b5e1187e3
+      Stored in directory: /tmp/pip-ephem-wheel-cache-88d89h2g/wheels/e5/81/05/67d80536540da437b0d116e85716211a4d2ff766fbde92969b
+    Successfully built grscheller.datastructures
+    Installing collected packages: pluggy, packaging, iniconfig, grscheller.datastructures, pytest
+    Successfully installed grscheller.datastructures-0.3.0.2 iniconfig-2.0.0 packaging-23.1 pluggy-1.3.0 pytest-7.4.2
+
+    $ pip list
+    Package                   Version
+    ------------------------- -------
+    grscheller.datastructures 0.3.0.2
+    iniconfig                 2.0.0
+    packaging                 23.1
+    pip                       23.2.1
+    pluggy                    1.3.0
+    pytest                    7.4.2
+    setuptools                65.5.0

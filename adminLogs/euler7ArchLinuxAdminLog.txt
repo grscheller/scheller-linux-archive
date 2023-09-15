@@ -2886,3 +2886,73 @@ that up? [y/N] y
     $ digpath hello
     /home/grs/.nix-profile/bin/hello
 
+2023-09-14:
+  Install VMware for work. Need a virtual windows desktop to log into.
+  Had a coworker help me install and configure it. Going through my shell
+  history to list the steps. Reordered to eliminate goofs & bind alleys.
+
+    $ cd ~/build
+    $ mkdir VmwareHorizon
+    $ git clone https://aur.archlinux.org/vmware-horizon-client
+    $ git clone https://aur.archlinux.org/vmware-keymaps
+    $ sudo pacman -Syu
+    $ sudo pacman -Syu patchelf
+    $ cd vmware-horizon-client
+    $ makepkg
+    $ sudo pacman -U *.zst
+    $ cd ../vmware-keymaps
+    $ makepkg
+    $ sudo pacman -U vmware-keymaps-1.0-3-any.pkg.tar.zst
+    ...
+    $ cd /usr/lib/vmware
+    $ sudo mkdir pkcs11
+    $ cd pkcs11/
+    $ sudo ln -s /usr/lib64/pkcs11/opensc-pkcs11.so libopenscpkcs11.so
+    $ sudo systemctl enable vmware-horizon-usb.service
+    $ sudo systemctl start vmware-horizon-usb.service
+    $ sudo systemctl status vmware-horizon-usb.service         # re-ran later
+    ● vmware-horizon-usb.service - VMware Horizon USB daemon
+         Loaded: loaded (/usr/lib/systemd/system/vmware-horizon-usb.service; enabled; preset:>
+         Active: active (running) since Thu 2023-09-14 13:37:15 MDT; 1h 43min ago
+        Process: 28778 ExecStart=/usr/lib/systemd/scripts/vmware-horizon-usb (code=exited, st>
+       Main PID: 28791 (vmware-usbarbit)
+          Tasks: 1 (limit: 18900)
+         Memory: 1.0M
+            CPU: 268ms
+         CGroup: /system.slice/vmware-horizon-usb.service
+                 └─28791 /usr/lib/vmware/view/usb/vmware-usbarbitrator
+
+    Sep 14 13:37:15 euler7 systemd[1]: Starting VMware Horizon USB daemon...
+    Sep 14 13:37:15 euler7 systemd[1]: Started VMware Horizon USB daemon.
+
+  Created fish abbr vm for:
+    vmware-view --display=:0 --serverURL=afrcdesktops.us.af.mil
+
+  In the end, this is what got installed:
+
+    $ pacman -Qs '^vmware'
+    local/vmware-horizon-client 2306-1
+        VMware Horizon Client connect to VMware Horizon virtual desktop
+    local/vmware-horizon-html5mmr 2306-1
+        VMware Horizon Client connect to VMware Horizon virtual desktop - HTML5 MultiMedia
+        Redirection
+    local/vmware-horizon-integrated-printing 2306-1
+        VMware Horizon Client connect to VMware Horizon virtual desktop - integrated printing
+    local/vmware-horizon-mmr 2306-1
+        VMware Horizon Client connect to VMware Horizon virtual desktop - multimedia
+        redirection
+    local/vmware-horizon-rtav 2306-1
+        VMware Horizon Client connect to VMware Horizon virtual desktop - Real-Time
+        Audio-Video (webcam and audio-in)
+    local/vmware-horizon-smartcard 2306-1
+        VMware Horizon Client connect to VMware Horizon virtual desktop - smartcard
+        authentication
+    local/vmware-horizon-tsdr 2306-1
+        VMware Horizon Client connect to VMware Horizon virtual desktop - folder sharing
+    local/vmware-horizon-usb 2306-1
+        VMware Horizon Client connect to VMware Horizon virtual desktop - USB device
+        redirection
+    local/vmware-keymaps 1.0-3
+        Keymaps required by some VMware packages
+
+  VMware is an X-client running in XWayland. Can be a touchy.

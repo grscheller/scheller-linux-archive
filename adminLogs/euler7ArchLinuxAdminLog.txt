@@ -2956,3 +2956,12 @@ that up? [y/N] y
         Keymaps required by some VMware packages
 
   VMware is an X-client running in XWayland. Can be a touchy.
+
+2023-09-19:
+  Both vmware-horizon-client and mpd want to use port 6600. Since
+  vmware virtual desktop has not been as thoroughly debugged on Wayland
+  yet, I decided I want my music more than a virtual Windows-11 box. We
+  all have our priorities.
+
+    $ sudo pacman -Rsc vmware-horizon-client vmware-keymaps
+

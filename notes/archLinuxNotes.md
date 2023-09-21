@@ -53,7 +53,7 @@ List all systemd services that run at each boot,
 
 * `systemctl list-units-files --type=service --state=enabled`
 
-Display status of a particular systemd sercive,
+Display status of a particular systemd service,
 
 * `systemctl status <service_name>`
 * `systemctl status NetworkManager.service`

@@ -13923,7 +13923,7 @@ files are way too small.
     $ nix-channel --update
     unpacking channels...
 
-  What's a channel? From the Nix website: 
+  What's a channel? From the Nix website:
 
     Channels can be broadly categorized into
       stable and unstable channels, and
@@ -14018,3 +14018,38 @@ files are way too small.
     $ nix-env --list-generations|cat
        1   2023-06-19 19:26:06
        2   2023-06-19 19:33:08   (current)
+
+2023-09-18:
+  Back on 2023/06/19 I added myself to both the grsand mpd groups. No
+  reason to be in either.
+
+    $ grep grs /etc/group
+    lp:x:7:cups,daemon,grs
+    wheel:x:10:root,grs
+    users:x:100:grs
+    grs:x:1003:grs
+    mpd:x:45:grs
+    nix-users:x:978:grs
+
+    $ sudo usermod -rG mpd grs
+    $ sudo usermod -rG grs grs
+
+    $ grep grs /etc/group
+    lp:x:7:cups,daemon,grs
+    wheel:x:10:root,grs
+    users:x:100:grs
+    grs:x:1003:
+    nix-users:x:978:grs
+
+  Based on the mpd Music Player Daemon ArchWiki page, I configured user
+  configuration files for my sway_env GitHub repo.
+
+    $ mpc random on
+    $ mpc add /
+    $ mpc play
+    Joe Bonamassa - I Know Where I Belong
+    [playing] #17/106   0:00/5:38 (0%)
+    volume:100%   repeat: off   random: on    single: off   consume: off
+
+    $ mpc queue
+    Ludwig von Beethoven - Symphony No.5  - Op.67 - II

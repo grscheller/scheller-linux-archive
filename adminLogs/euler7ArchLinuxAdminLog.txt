@@ -3000,3 +3000,11 @@ that up? [y/N] y
     $ sudo pacman -Syu netctl
 
   Too much of a rabbit-hole to sort out at work.
+
+2023-09-21:
+  Removed avahi dependencies from
+
+    /etc/nsswitch.conf
+    /etc/systemd/systemd-resolved.conf
+
+  See gauss17ArchLinuxAdmin.txt this date.

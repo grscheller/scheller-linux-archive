@@ -2956,3 +2956,47 @@ that up? [y/N] y
         Keymaps required by some VMware packages
 
   VMware is an X-client running in XWayland. Can be a touchy.
+
+2023-09-19:
+  Both vmware-horizon-client and mpd want to use port 6600. Since
+  vmware virtual desktop has not been as thoroughly debugged on Wayland
+  yet, I decided I want my music more than a virtual Windows-11 box. We
+  all have our priorities.
+
+    $ sudo pacman -Rsc vmware-horizon-client vmware-keymaps
+
+2023-09-20:
+  Trying to get mpd to work as a systemd service on euler7.
+
+  Some error messages regarding timidity, let's install it.
+
+    $ sudo pacman -Syu timidity freepats-general-midi soundfont-fluid
+
+  I don't think this is the problem, but who knows?
+
+  Added to bottom of /etc/timidity/timidity.cfg:
+  
+    # start grs changes:
+    soundfont /usr/share/soundfonts/freepats-general-midi.sf2
+    #soundfont /usr/share/soundfonts/fluidR3_GM.sf2
+
+  I did not enable anything, but
+
+    $ systemctl --user status timidity.service
+    ○ timidity.service - TiMidity++ Daemon
+         Loaded: loaded (/usr/lib/systemd/user/timidity.service; disabled; preset: enabled)
+         Active: inactive (dead)
+
+2023-09-18:
+  While working above (same date) I find I may not need Avahi deomon.
+  See: https://bbs.archlinux.org/viewtopic.php?id=253717
+
+  Says Systemd-resolved can function as a mDNS responder and replace
+  avahi IF you combine systemd-resolved with systemd-networkd OR
+  NetworkManager.
+
+  Also found out what replaced the old netstat tools:
+
+    $ sudo pacman -Syu netctl
+
+  Too much of a rabbit-hole to sort out at work.

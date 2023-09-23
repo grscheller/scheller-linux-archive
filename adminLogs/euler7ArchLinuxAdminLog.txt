@@ -2987,7 +2987,7 @@ that up? [y/N] y
          Loaded: loaded (/usr/lib/systemd/user/timidity.service; disabled; preset: enabled)
          Active: inactive (dead)
 
-2023-09-18:
+2023-09-20:
   While working above (same date) I find I may not need Avahi deomon.
   See: https://bbs.archlinux.org/viewtopic.php?id=253717
 

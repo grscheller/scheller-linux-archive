@@ -2017,3 +2017,99 @@ Notes taken while configuring Arch Linux for Python development.
     pluggy                    1.3.0
     pytest                    7.4.2
     setuptools                65.5.0
+
+2023-09-24:
+  Pushed another release of grscheller.datastructures to PyPI. Desided
+  notes above a bit to unwieldy.
+
+  First make surw $PYTHONPATH is NOT set.
+  
+    $ echo $PYTHONPATH
+    $
+
+  Go to repo location
+
+    $ cd ~/devel/pypy/datastructures
+
+  Updated PyPI version to 0.5.2.1
+
+    $ nvim ./src/grscheller/datastructures/__init__.py
+
+  Tag and push to GitHub,
+
+    $ git add .
+    $ git commit
+    $ git push
+    $ git tag -a v0.5.2.1 -m "geared datastructures to FP"
+    $ git push origin v0.5.2.1
+
+  Activate Python Virtual environment and and clean up,
+
+    $ source /home/grs/devel/venv_system/bin/activate.fish
+    $ pip uninstall -y (pip list|tail +3|fields 1|grep -Ev "(pip|setuptools)"
+    $ pip list
+    Package                   Version
+    ------------------------- -------
+    pip                       23.2.1
+    setuptools                65.5.0
+
+  Publish package to PyPI
+    $ flit publish
+
+  Go to home directory and install package with test suite.
+
+    $ cd
+    $ pip install grscheller.datastructures[test]
+    $ pip list
+    Package                   Version
+    ------------------------- -------
+    grscheller.datastructures 0.5.2.1
+    iniconfig                 2.0.0
+    packaging                 23.1
+    pip                       23.2.1
+    pluggy                    1.3.0
+    pytest                    7.4.2
+    setuptools                65.5.0
+
+  Tested package out with ipython, made sure I was using the right
+  version of pytest, then ran pytest tests.
+
+    $ ipython
+
+    $ digpath pytest
+    /home/grs/devel/venv_system/bin/pytest
+    /usr/bin/pytest
+ 
+    $ pytest --pyargs grscheller.datastructures
+    ============================================== test session starts ==============================================
+    platform linux -- Python 3.11.5, pytest-7.4.2, pluggy-1.3.0
+    rootdir: /home/grs
+    collected 17 items
+
+    devel/venv_system/lib/python3.11/site-packages/grscheller/datastructures/tests/dqueue_test.py .....        [ 29%]
+    devel/venv_system/lib/python3.11/site-packages/grscheller/datastructures/tests/maybe_test.py .....         [ 58%]
+    devel/venv_system/lib/python3.11/site-packages/grscheller/datastructures/tests/stack_test.py .......       [100%]
+
+    =============================================== 17 passed in 0.03s ==============================================
+
+  Now get out of the virtual environment.
+
+    $ deactivate
+
+  That's all folks. I used a few of my fish abbreviations above:
+
+       ve: 'source /home/grs/devel/venv_system/bin/activate.fish'
+    veclr: 'pip uninstall -y (pip list|tail +3|fields 1|grep -Ev "(pip|setuptools)")
+       pl: 'pip list'
+
+  Fish function:
+
+    digpath: like which, but does not stop at the first file it finds
+
+  While in the virtual invironment, I used the version of flit that came
+  with Arch: /usr/bin/flit a #!/usr/bin/python script. Probably not the
+  cleanest thing to do, but it worked.
+
+  Probably should have done the flit step outside the virtual
+  environmet, or installed flit into the virtual environment.
+

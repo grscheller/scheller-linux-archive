@@ -13879,7 +13879,7 @@ files are way too small.
     grs:x:1003:
     nix-users:x:978:grs
 
-  Hummm... grs is not in grs nor mpd groups? This needs fixing
+  Hummm... grs is not in grs nor mpd groups? This needs fixing <- future me: no it does not 2023-09-18
 
     $ sudo usermod -aG grs,mpd grs
     $ grep grs /etc/group
@@ -13911,7 +13911,7 @@ files are way too small.
        Main PID: 9758 (nix-daemon)
           Tasks: 2 (limit: 19021)
          Memory: 2.6M
-            CPU: 34ms
+            CPU: 34ms20
          CGroup: /system.slice/nix-daemon.service
                  └─9758 nix-daemon --daemon
 
@@ -14020,7 +14020,7 @@ files are way too small.
        2   2023-06-19 19:33:08   (current)
 
 2023-09-18:
-  Back on 2023/06/19 I added myself to both the grsand mpd groups. No
+  Back on 2023/06/19 I added myself to both the grs and mpd groups. No
   reason to be in either.
 
     $ grep grs /etc/group
@@ -14071,3 +14071,13 @@ files are way too small.
 
   I will remove nsswitch.conf from the dotfiles repo after I also
   update euler7.
+
+2023-09-25:
+  During a Pacman update, saw the following nvidia cuda message:
+
+    ( 8/29) upgrading nvidia-utils                                                                          [##############################################################] 100%
+    If you run into trouble with CUDA not being available, run nvidia-modprobe first.
+    If you use GDM on Wayland, you might have to run systemctl enable --now nvidia-resume.service
+
+  It has been centuries since I poked my nose under the CUDA
+  tent. Actually, four and a half years.

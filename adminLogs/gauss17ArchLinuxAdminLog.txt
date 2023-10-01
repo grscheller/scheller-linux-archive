@@ -14054,6 +14054,24 @@ files are way too small.
     $ mpc queue
     Ludwig von Beethoven - Symphony No.5  - Op.67 - II
 
+2023-09-21:
+  Made changes to (on 2022-04-28)
+
+    /etc/nsswitch.conf
+    /etc/systemd/systemd-resolved.conf
+
+  when I was messing arounf with avahi. Reverted those changes.
+  I did keep keep the DNSSEC setting,
+
+    $ diff resolved.conf /etc/systemd/resolved.conf.pacnew
+    26d25
+    < DNSSEC=allow-downgrade
+
+  the default setting is no.
+
+  I will remove nsswitch.conf from the dotfiles repo after I also
+  update euler7.
+
 2023-09-25:
   During a Pacman update, saw the following nvidia cuda message:
 

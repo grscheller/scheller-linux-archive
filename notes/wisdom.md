@@ -366,3 +366,20 @@
 * When they’ve punished you enough, they’ll serve you salmon and potato salad, make speeches, give you a medal, and pat you in the back telling all is forgiven. Just remember, it won’t be for you… it would be for them.
   * (Attributed to Einstein - Christopher Nolan's Oppenheimer movie)
 * Awards are more for the benefit of the presenter than the recipient.
+* "Yes if..." not "No because..."
+  * Jace Gross
+* Appear weak when you are strong, and strong when you are weak.
+  * (Sun Tzu)
+* In the midst of chaos, there is also opportunity.
+  * (Sun Tzu)
+* Victorious warriors win first and then go to war.
+  * (Sun Tzu)
+* If you know the enemy and know yourself, you need not fear the results of a hundred battles.
+  * (Sun Tzu)
+* "Simplicity is a prerequisite for reliability"
+  * Edsger W. Dijkstra
+* Don't confuse "Simple" with "Easy" - they are different. The latter is usually at the expence of the former.
+* Having tests should not encourage someone to change code without being careful.
+  * Rich Hickey
+* Simplicity is a choice. We have a culture of complexity. Avoid tools, languages, constructs, etc. that generate complex outputs. Simple != easy. Look for complexity and avoid it. Reliability tools: testing, refactoring, and type systems are good but secondary. They do not enforce simplicity. They are just a safety net.
+  * Rich Hickey

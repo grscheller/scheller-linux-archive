@@ -1,0 +1,144 @@
+Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
+         System needs to be well configured out of the box and easy for
+         my daughters (read this as me over the phone) to maintain.
+
+2023-10-01:
+  Installing PoPOS on a Dell Intel Xeon
+    - 4HT core - CPU E3-1505M v6@300GHz
+    - 32 GB memory
+    - ??? Intel(R) UHD Graphics
+    - ??? NVIDIA GeForce MX250 Graphics
+
+  Going with PoPOS 22.04 LTS (NVIDIA)
+
+  Downloaded latest ISO image to gauss17 from
+
+    https://pop.system76.com/
+
+  should have
+
+    SHA5: 33bc14a6499ad513fe64c0394e3af766110b75967578e47f4e4f4251d0fa6f14
+
+  downloaded the file
+
+    pop-os_22.04_amd64_nvidia_34.iso
+
+  Test validity,
+
+    [grs@gauss17]
+    $ sha256sum pop-os_22.04_amd64_nvidia_34.iso
+    33bc14a6499ad513fe64c0394e3af766110b75967578e47f4e4f4251d0fa6f14  pop-os_22.04_amd64_nvidia_34.iso
+
+  Put USB thumb drive in:
+
+    [grs@gauss17]
+    $ lsblk
+    NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
+    sda      8:0    0 119.2G  0 disk
+    ├─sda1   8:1    0   512M  0 part /boot
+    └─sda2   8:2    0 118.7G  0 part /
+    sdb      8:16   0 931.5G  0 disk
+    ├─sdb1   8:17   0   512M  0 part
+    ├─sdb2   8:18   0  63.5G  0 part /extra
+    ├─sdb3   8:19   0    16G  0 part [SWAP]
+    └─sdb4   8:20   0 851.5G  0 part /home
+    sdc      8:32   1  57.6G  0 disk
+    └─sdc1   8:33   1  57.6G  0 part
+
+    [grs@gauss17]
+    $ lsblk -f
+    NAME FSTYPE FSVER LABEL UUID                                 FSAVAIL FSUSE% MOUNTPOINTS
+    sda
+    ├─sda1
+    │    vfat   FAT32       A024-8139                             403.1M    21% /boot
+    └─sda2
+         ext4   1.0         0859da7c-f429-470d-818f-d3951b5d89af   50.6G    51% /
+    sdb
+    ├─sdb1
+    │    vfat   FAT32       BC00-6365
+    ├─sdb2
+    │    ext4   1.0         4b1b0623-c1d0-4da9-8164-20ee74253def   47.1G    19% /extra
+    ├─sdb3
+    │    swap   1           a5945738-343f-4cfb-ad76-8ca012eb2576                [SWAP]
+    └─sdb4
+         ext4   1.0         833c2579-bc84-463a-96a4-89478bd89e9e  711.6G    10% /home
+    sdc
+    └─sdc1
+         vfat   FAT32       8F38-B2AA
+
+  Now "burn" the image,
+
+    [grs@gauss17]
+    $ sudo dd bs=4M if=pop-os_22.04_amd64_nvidia_34.iso of=/dev/sdc conv=fdatasync
+    724+0 records in
+    724+0 records out
+    3036676096 bytes (3.0 GB, 2.8 GiB) copied, 57.8096 s, 52.5 MB/s
+
+  Let's see what we got
+
+    [grs@gauss17]
+    $ lsblk
+    NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
+    sda      8:0    0 119.2G  0 disk
+    ├─sda1   8:1    0   512M  0 part /boot
+    └─sda2   8:2    0 118.7G  0 part /
+    sdb      8:16   0 931.5G  0 disk
+    ├─sdb1   8:17   0   512M  0 part
+    ├─sdb2   8:18   0  63.5G  0 part /extra
+    ├─sdb3   8:19   0    16G  0 part [SWAP]
+    └─sdb4   8:20   0 851.5G  0 part /home
+    sdc      8:32   1  57.6G  0 disk
+    ├─sdc1   8:33   1   2.8G  0 part
+    └─sdc2   8:34   1     4M  0 part
+
+    [grs@gauss17]
+    $ lsblk -f
+    NAME FSTYPE FSVER LABEL                     UUID                                 FSAVAIL FSUSE% MOUNTPOINTS
+    sda                                                                                   
+    ├─sda1
+    │    vfat   FAT32                           A024-8139                             403.1M    21% /boot
+    └─sda2
+         ext4   1.0                             0859da7c-f429-470d-818f-d3951b5d89af   50.6G    51% /
+    sdb                                                                                   
+    ├─sdb1
+    │    vfat   FAT32                           BC00-6365                                 
+    ├─sdb2
+    │    ext4   1.0                             4b1b0623-c1d0-4da9-8164-20ee74253def   47.1G    19% /extra
+    ├─sdb3
+    │    swap   1                               a5945738-343f-4cfb-ad76-8ca012eb2576                [SWAP]
+    └─sdb4
+         ext4   1.0                             833c2579-bc84-463a-96a4-89478bd89e9e  708.8G    10% /home
+    sdc  iso966 Jolie Pop_OS 22.04 amd64 Nvidia 2023-09-13-19-15-11-00                    
+    ├─sdc1
+    │    iso966 Jolie Pop_OS 22.04 amd64 Nvidia 2023-09-13-19-15-11-00                    
+    └─sdc2
+         vfat   FAT12                           A38C-CAF4
+
+2023-10-01:
+  On the Dell,
+    
+    F1: Reboot
+    F2: Setup
+    F5: Run diagnostics
+
+  Previously ran diagnostics. Hard drive dead. Laptop connected to
+  internet and diagnostics suggested replacing drive with an
+  optical drive: Dell 2.5" SATA SSD
+
+  SSD drive was a drop-in replacement.
+
+  In the "BIOS" UEFI setup, turned off legacy mode and the Secure Boot
+  misfeature. Went to confirm boot order, could not figure out how to
+  change. Should not matter since no OS on SSD. USB thumbdrive could be
+  first?
+
+  Reboot with the USB thumbdrive in place.
+
+  Had to power cycle before it recondized thumb drive and booted into
+  PopOS. Did see one NVIDIA error flash by, but PoPOS website indicated
+  that NVidia drives may need installing. System has a descrete NV card.
+
+  Dropped into Live-OS GUI environment, took a minute, but intall GUI
+  popped up. 
+
+    

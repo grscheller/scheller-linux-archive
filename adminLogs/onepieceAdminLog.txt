@@ -6,6 +6,8 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
   Installing PoPOS on a Dell Intel Xeon
     - 4HT core - CPU E3-1505M v6@300GHz
     - 32 GB memory
+    - Intel Corporation HD Graphics P630 (rev 04)
+    - NVIDIA Corporation GM107GLM [Quadro M620 Mobile] (rev a2)
     - ??? Intel(R) UHD Graphics
     - ??? NVIDIA GeForce MX250 Graphics
 
@@ -138,7 +140,82 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
   PopOS. Did see one NVIDIA error flash by, but PoPOS website indicated
   that NVidia drives may need installing. System has a descrete NV card.
 
-  Dropped into Live-OS GUI environment, took a minute, but intall GUI
-  popped up. 
+  Dropped into a Live-OS desktop GUI environment, took a minute before
+  the intallation GUI popped up. 
 
+2023-10-01:
+  Installed PopOS through GUI without any problems, took most defaults,
+  did not encrypt hard drive.
+  
+  During install I created user account "buggy" and set timezone to EDT.
+
+  Things I did post-install (tried to keep minimal):
+
+    - Created /etc/sudoers.d/DaddyAdditionsUpdated to allow user buggy
+      to use sudo without password. Edited with visudo.
+      - Have to give daughters the "with great power calls great
+        responsibilities" talk.
+    - Created ~/.bash_daddy and edited ~/.bashrc to include it.
+      - just added: set -o vi 
+        to command-line edit with vi commands
+    - Changed system name to "onepiece"
+      - $ sudo hostnamectl set-hostname onepiece
+      - gui install had named it pop-os
+    - Installed Neovim
+      - $ sudo apt install neovim
+      - made no attempt to configure it
+      - mouse is turned off, so mouse clicks talk to terminal app
+        - might be more intuitive behavior for beginners
+    - Installed Python
+      - $ sudo apt install python-is-python3
+    - Git was already installed
+    - Installed Dark Reader pluggin to Firefox
+
+  Let's check video settings:
+
+    $ lspci -k | grep -A 2 -E "(VGA|3D)"
+    00:02.0 VGA compatible controller: Intel Corporation HD Graphics P630 (rev 04)
+        DeviceName:  Onboard IGD
+        Subsystem: Dell HD Graphics P630
+    --
+    01:00.0 3D controller: NVIDIA Corporation GM107GLM [Quadro M620 Mobile] (rev a2)
+        Subsystem: Dell GM107GLM [Quadro M620 Mobile]
+        Kernel driver in use: nvidia
+
+  Good!!! Looks like correct drivers are installed for gaming. PopOS
+  is designed for gaming. Much as I'd love to set this up, this is my
+  daughter's job.
+
+  Let's see if we are XOrg or Waylanf.
+
+    $ journalctl -b |grep -i wayland
+    Oct 01 20:14:49 onepiece systemd[1940]: Starting GNOME Shell on Wayland...
+    Oct 01 20:14:49 onepiece systemd[1940]: org.gnome.Shell@wayland.service: Skipped due to 'exec-condition'.
+    Oct 01 20:14:49 onepiece systemd[1940]: Condition check resulted in GNOME Shell on Wayland being skipped.
+
+  Are we using wayland? and Gnome? I thought PopOS used something called Cosmic Desktop?
+
+  Let's find out.
+
+    $ systemctl list-units|grep -i -E '(wayland|x11)'
     
+    $ systemctl --user list-units|grep -i -E '(wayland|x11)'
+      org.gnome.Shell@x11.service               loaded active running   GNOME Shell on X11
+      gnome-session-x11-services.target         loaded active active    GNOME session X11 services
+      gnome-session-x11.target                  loaded active active    GNOME X11 Session
+      gnome-session-x11@pop.target              loaded active active    GNOME X11 Session (session: pop)
+
+2023-10-01:
+  Both fd and rg are missing. Took a little hunting to find the package names.
+
+   $ sudo apt install ripgrep
+   $ sudo apt install fdfind
+
+  The latter was already installed but by the fdfind name. I added an alias to ~/.bash_daddy.
+    
+2023-10-02:
+  Created a single file Neovim configuration. Located
+  ~/.config/nvim/init.lua. Kept it single file and "grokable" for
+  them. Used more advanced Lua constructs because some of my daughters
+  want to learn Lua for Roblox.
+

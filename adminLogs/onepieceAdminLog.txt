@@ -1,9 +1,9 @@
 Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
          System needs to be well configured out of the box and easy for
-         my daughters (read this as me over the phone) to maintain.
+         my daughters, or me over the phone, to administer.
 
 2023-10-01:
-  Installing PoPOS on a Dell Intel Xeon
+  Installing PopOS 22.04 LTS on a Dell Intel Xeon
     - 4HT core - CPU E3-1505M v6@300GHz
     - 32 GB memory
     - Intel Corporation HD Graphics P630 (rev 04)
@@ -211,11 +211,57 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
    $ sudo apt install ripgrep
    $ sudo apt install fdfind
 
-  The latter was already installed but by the fdfind name. I added an alias to ~/.bash_daddy.
+  The latter was already installed but by the fdfind name. I added an alias
+  to ~/.bash_daddy.
     
 2023-10-02:
   Created a single file Neovim configuration. Located
   ~/.config/nvim/init.lua. Kept it single file and "grokable" for
-  them. Used more advanced Lua constructs because some of my daughters
-  want to learn Lua for Roblox.
+  them. Used some more advanced Lua constructs because some of my
+  daughters want to learn Lua for Roblox.
 
+2023-10-11:
+  Configured the Pop!_Shop "App" <- the GUI between "Terminal" & "Settings" on
+  the task bar at bttom of desktop, to automatically perform system and flatpak
+  updates. Scheduled this every weekday at 7:00AM when I know my daughters will
+  be in bed.
+
+2023-10-11:
+  Added the alias
+
+    alias nv='flatpak run io.neovim.nvim'
+
+  to ~/.bash_daddy so that bash can find neovim from the command-line. Runs
+  in the terminal it was launched in.
+
+  I thought running nvim as a flatpak was less probamatic than than configuring
+  nonstandard PopOS???, Ubuntu, or the Debian Sid repos.
+
+2023-10-11:
+  Installed Neofetch.
+
+    $ sudo apt install neofetch
+
+  Run neofetch (in regular terminal, not nvim terminal):
+
+    buggy@onepiece:~$ neofetch 
+                 /////////////                buggy@onepiece 
+             /////////////////////            -------------- 
+          ///////*767////////////////         OS: Pop!_OS 22.04 LTS x86_64 
+        //////7676767676*//////////////       Host: Precision 3520 
+       /////76767//7676767//////////////      Kernel: 6.4.6-76060406-generic 
+      /////767676///*76767///////////////     Uptime: 1 hour, 38 mins 
+     ///////767676///76767.///7676*///////    Packages: 1888 (dpkg), 8 (flatpak) 
+    /////////767676//76767///767676////////   Shell: bash 5.1.16 
+    //////////76767676767////76767/////////   Resolution: 1920x1080 
+    ///////////76767676//////7676//////////   DE: GNOME 42.5 
+    ////////////,7676,///////767///////////   WM: Mutter 
+    /////////////*7676///////76////////////   WM Theme: Pop 
+    ///////////////7676////////////////////   Theme: Pop-dark [GTK2/3] 
+     ///////////////7676///767////////////    Icons: Pop [GTK2/3] 
+      //////////////////////'////////////     Terminal: gnome-terminal 
+       //////.7676767676767676767,//////      CPU: Intel Xeon E3-1505M v6 (8) @ 4.000GHz 
+        /////767676767676767676767/////       GPU: NVIDIA Quadro M620 Mobile 
+          ///////////////////////////         GPU: Intel HD Graphics P630 
+             /////////////////////            Memory: 4365MiB / 31949MiB 
+                 /////////////

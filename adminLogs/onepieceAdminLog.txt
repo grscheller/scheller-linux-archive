@@ -638,3 +638,18 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
 
   I kept shortcuts for both alacritty and gnome-terminal in the dock for
   you to choose from.
+
+2023-10-15:
+  YES!!!!!!!!! This desktop has a tiling mode!!!
+
+  On the topbar, to the left of the power/network/bluetooth controls is
+  a button where you can put the desktop in tiling mode. A fairly
+  intuitive tiler. Alacritty plays very nicely in this mode. Can turn
+  off title bars too to gain some real estate. Firefox, calaculator,
+  gnome-terminal keep their title bars.
+
+  In tiling mode still click focus, but windows can easily be
+  repositioned and resized with the mouse. Windows will also tab
+  themselves. Probably won't need screen ot tmux. Need to investigate
+  keybindings for this mode.
+

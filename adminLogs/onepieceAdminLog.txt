@@ -138,7 +138,7 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
 
   Had to power cycle before it recondized thumb drive and booted into
   PopOS. Did see one NVIDIA error flash by, but PoPOS website indicated
-  that NVidia drives may need installing. System has a descrete NV card.
+  that NVidia drives may need installing. System has a discrete NV card.
 
   Dropped into a Live-OS desktop GUI environment, took a minute before
   the intallation GUI popped up. 
@@ -155,9 +155,9 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
       to use sudo without password. Edited with visudo.
       - Have to give daughters the "with great power calls great
         responsibilities" talk.
-    - Created ~/.bash_daddy and edited ~/.bashrc to include it.
-      - just added: set -o vi 
-        to command-line edit with vi commands
+    - Edited ~/.bashrc.
+      - Added: set -o vi 
+        - to use vi command-line editing
     - Changed system name to "onepiece"
       - $ sudo hostnamectl set-hostname onepiece
       - gui install had named it pop-os
@@ -186,14 +186,15 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
   is designed for gaming. Much as I'd love to set this up, this is my
   daughter's job.
 
-  Let's see if we are XOrg or Waylanf.
+  Let's see if we are XOrg or Wayland.
 
     $ journalctl -b |grep -i wayland
     Oct 01 20:14:49 onepiece systemd[1940]: Starting GNOME Shell on Wayland...
     Oct 01 20:14:49 onepiece systemd[1940]: org.gnome.Shell@wayland.service: Skipped due to 'exec-condition'.
     Oct 01 20:14:49 onepiece systemd[1940]: Condition check resulted in GNOME Shell on Wayland being skipped.
 
-  Are we using wayland? and Gnome? I thought PopOS used something called Cosmic Desktop?
+  Are we using XOrg? and Gnome? I thought PopOS used something called Cosmic Desktop?
+  Looks like they intend the default to be Wayland in the future, but dropped back to XOrg for now.
 
   Let's find out.
 
@@ -211,8 +212,8 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
    $ sudo apt install ripgrep
    $ sudo apt install fdfind
 
-  The latter was already installed but by the fdfind name. I added an alias
-  to ~/.bash_daddy.
+  The latter was already installed but by the fdfind name. I added a fd alias
+  to ~/.bashrc for it.
     
 2023-10-02:
   Created a single file Neovim configuration. Located
@@ -227,15 +228,20 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
   be in bed.
 
 2023-10-11:
+  PopOS apt installed Neovim version 0.6.1, way yoo old. In order to use it,
+  I would have to embed too much VimL script into ~/.config/nvim/init.lua. VimL
+  script is not the future, Lua is. I would not want to inflict having to learn
+  VimL script on my daughters.
+
   Added the alias
 
     alias nv='flatpak run io.neovim.nvim'
 
-  to ~/.bash_daddy so that bash can find neovim from the command-line. Runs
+  to ~/.bashrc so that bash can find neovim from the command-line. Now runs
   in the terminal it was launched in.
 
-  I thought running nvim as a flatpak was less probamatic than than configuring
-  nonstandard PopOS???, Ubuntu, or the Debian Sid repos.
+  I thought running nvim as a flatpak was less probamatic than a non-standard
+  PopOS configuration, Ubuntu repos, the Debian Sid repo, or hacker Bob's repo.
 
 2023-10-11:
   Installed Neofetch.
@@ -265,3 +271,370 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
           ///////////////////////////         GPU: Intel HD Graphics P630 
              /////////////////////            Memory: 4365MiB / 31949MiB 
                  /////////////
+
+2023-10-12:
+  I hate flatpaks!!!!! Wonder why nvim was ignoring ~/.config/nvim/init.lua, a :checkhealth showed
+  that that it was looking somewhere under some flatmap infrastructure directory!!!!
+  Somewhere under the ~/.var/app/io.neovim.nvim/data/nvim/ real directory.
+  Uninstalled the Neovim
+  flatmap. What good are flatpaks if they don't integrate with their host OS?????
+
+  Can't use what comes with the base OS:
+
+    buggy@onepiece:~$ apt show neovim
+    Package: neovim
+    Version: 0.6.1-3
+    Priority: extra
+    Section: universe/editors
+    Origin: Ubuntu
+    Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+    Original-Maintainer: Debian Vim Maintainers <team+vim@tracker.debian.org>
+
+  Might as well be using ed.
+
+2023-10-12:
+  Let's move off the LTS to see if we can get a later version of Neovim.
+
+    $ sudo apt update
+    $ sudo apt full-upgrade
+    $ pop-upgrade recovery upgrade from-release
+    $ pop-upgrade release upgrade
+
+  Nope, this just update 7 packages. Lets redo them:
+
+    $ sudo apt update
+    Hit:1 http://apt.pop-os.org/proprietary jammy InRelease
+    Hit:2 http://apt.pop-os.org/release jammy InRelease
+    Hit:3 http://apt.pop-os.org/ubuntu jammy InRelease
+    Hit:4 http://apt.pop-os.org/ubuntu jammy-security InRelease
+    Hit:5 http://apt.pop-os.org/ubuntu jammy-updates InRelease
+    Hit:6 http://apt.pop-os.org/ubuntu jammy-backports InRelease
+    Reading package lists... Done
+    Building dependency tree... Done
+    Reading state information... Done
+    All packages are up to date.
+
+    $ sudo apt upgrade
+    Reading package lists... Done
+    Building dependency tree... Done
+    Reading state information... Done
+    Calculating upgrade... Done
+    The following packages were automatically installed and are no longer required:
+      libluajit-5.1-2 libluajit-5.1-common libmsgpackc2 libtermkey1 libtree-sitter0
+      libunibilium4 libvterm0 lua-luv neovim-runtime python3-greenlet
+      python3-msgpack python3-neovim python3-pynvim xclip
+    Use 'sudo apt autoremove' to remove them.
+    0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+
+    $ sudo apt full-upgrade
+    Reading package lists... Done
+    Building dependency tree... Done
+    Reading state information... Done
+    Calculating upgrade... Done
+    The following packages were automatically installed and are no longer required:
+      libluajit-5.1-2 libluajit-5.1-common libmsgpackc2 libtermkey1 libtree-sitter0
+      libunibilium4 libvterm0 lua-luv neovim-runtime python3-greenlet
+      python3-msgpack python3-neovim python3-pynvim xclip
+    Use 'sudo apt autoremove' to remove them.
+    0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+
+    $ pop-upgrade recovery upgrade from-release
+    checking if pop-upgrade requires an update
+    Recovery event: fetching recovery files
+    Recovery upgrade status: recovery partition refueled and ready to go
+
+    $ pop-upgrade release upgrade
+    checking if pop-upgrade requires an update
+    Current Release: 22.04
+    Upgrading to: 22.10
+    New version available: false
+    no release available to upgrade to
+    
+  After a little research, I am at the latest release.
+
+  My choices are:
+
+    1. Install a PPA:
+
+       Import the stable Neovim PPA with the following command:
+
+         $ sudo add-apt-repository ppa:neovim-ppa/stable -y
+
+       Or, to import the unstable Neovim PPA, use this command:
+
+         $ sudo add-apt-repository ppa:neovim-ppa/unstable -y
+
+    2. Install the Nix package manage:
+
+         $ sh <(curl -L https://nixos.org/nix/install) --daemon
+
+       See https://nixos.org/learn
+
+    3. Figure out where the Flatpack wants Neovim's configuration files:
+
+       Reinstall the Neovim flatpak.
+
+       From within a Neovim :term session,
+
+         sh-5.2$ env|grep -i xdg
+         XDG_CONFIG_DIRS=/app/etc/xdg:/etc/xdg
+         XDG_MENU_PREFIX=gnome-
+         XDG_DATA_HOME=/home/buggy/.var/app/io.neovim.nvim/data
+         XDG_CONFIG_HOME=/home/buggy/.var/app/io.neovim.nvim/config
+         XDG_SESSION_DESKTOP=pop
+         XDG_SESSION_TYPE=x11
+         XDG_CURRENT_DESKTOP=pop:GNOME
+         XDG_CACHE_HOME=/home/buggy/.var/app/io.neovim.nvim/cache
+         XDG_SESSION_CLASS=user
+         XDG_STATE_HOME=/home/buggy/.var/app/io.neovim.nvim/.local/state
+         XDG_RUNTIME_DIR=/run/user/1000
+         XDG_DATA_DIRS=/app/share:/usr/share:/usr/share/runtime/share:/run/host/user-share:/run/host/share
+
+         $ cp .config/nvim/init.lua  /home/buggy/.var/app/io.neovim.nvim/config/nvim/
+
+       From an external shell,
+
+         $ env | grep -i xdg
+         XDG_CONFIG_DIRS=/etc/xdg/xdg-pop:/etc/xdg
+         XDG_MENU_PREFIX=gnome-
+         XDG_SESSION_DESKTOP=pop
+         XDG_SESSION_TYPE=x11
+         XDG_CURRENT_DESKTOP=pop:GNOME
+         XDG_SESSION_CLASS=user
+         XDG_RUNTIME_DIR=/run/user/1000
+         XDG_DATA_DIRS=/usr/share/pop:/usr/share/gnome:/home/buggy/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/
+
+       At least $XDG_CONFIG_HOME should default to ~/.config
+       
+       Looks like they are trying to make things "easy" for GUI users at
+       the expense of intermediate users. I wish they'd just keep things
+       "simple."
+
+2023-10-15:
+  Anycase, when the Neovim flatpak is launched from the GUI or the
+  terminal, it uses the flatpak $XDG paths. Apt installed applications
+  use the systme $XDG paths.
+
+  So in anticipation of a more up-to-date Neovim in a future PoPOS
+  release or update,
+
+    - put the configuration here: ~/.config/nvim/init.lua
+    - created a sym-link from the Flatpak XDG location
+      
+        $ ln -s ~/.config/nvim/init.lua  ~/.var/app/io.neovim.nvim/config/nvim/init.lua
+
+    - created the nv alias in ~/.bashrc for the flatpak
+
+        alias nv='flatpak run io.neovim.nvim'
+
+  If PopOS ever updates the Neovim package, we can run it as nvim
+  without clashing with the flatpak version.
+
+2023-10-15:
+  Getting tired of emailing changes between onepiece and euler7. I don't
+  want to create a second account for myself, nor configure my GitHub
+  credentials with the buggy account. The computers right now are
+  sitting in the same room. Will install and enable the sshd daemon.
+
+    $ apt search openssh-server
+    Sorting... Done
+    Full Text Search... Done
+    openssh-server/jammy-updates 1:8.9p1-3ubuntu0.4 amd64
+      secure shell (SSH) server, for secure access from remote machines
+    
+    $ sudo apt install openssh-server
+    ...
+
+    $ sudo systemctl status sshd.service 
+    ● ssh.service - OpenBSD Secure Shell server
+         Loaded: loaded (/lib/systemd/system/ssh.service; enabled; vendor preset: enabled)
+         Active: active (running) since Sun 2023-10-15 14:24:14 EDT; 5min ago
+           Docs: man:sshd(8)
+                 man:sshd_config(5)
+       Main PID: 4496 (sshd)
+          Tasks: 1 (limit: 38191)
+         Memory: 1.7M
+            CPU: 19ms
+         CGroup: /system.slice/ssh.service
+                 └─4496 "sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups"
+
+    Oct 15 14:24:14 onepiece systemd[1]: Starting OpenBSD Secure Shell server...
+    Oct 15 14:24:14 onepiece sshd[4496]: Server listening on 0.0.0.0 port 22.
+    Oct 15 14:24:14 onepiece sshd[4496]: Server listening on :: port 22.
+    Oct 15 14:24:14 onepiece systemd[1]: Started OpenBSD Secure Shell server.
+
+    $ systemctl is-enabled sshd.service 
+    alias
+
+  Huh???....
+    
+    $ systemctl is-enabled ssh.service 
+    enabled
+    
+    $ systemctl status ssh.service 
+    ● ssh.service - OpenBSD Secure Shell server
+         Loaded: loaded (/lib/systemd/system/ssh.service; enabled; vendor preset: enabled)
+         Active: active (running) since Sun 2023-10-15 14:24:14 EDT; 10min ago
+           Docs: man:sshd(8)
+                 man:sshd_config(5)
+       Main PID: 4496 (sshd)
+          Tasks: 1 (limit: 38191)
+         Memory: 1.7M
+            CPU: 19ms
+         CGroup: /system.slice/ssh.service
+                 └─4496 "sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups"
+    
+    Oct 15 14:24:14 onepiece systemd[1]: Starting OpenBSD Secure Shell server...
+    Oct 15 14:24:14 onepiece sshd[4496]: Server listening on 0.0.0.0 port 22.
+    Oct 15 14:24:14 onepiece sshd[4496]: Server listening on :: port 22.
+    Oct 15 14:24:14 onepiece systemd[1]: Started OpenBSD Secure Shell server.
+
+    $ systemctl is-enabled ssh.service
+    enabled
+
+  Not only did it install it, it started it and enabled it too, even
+  when I gave it the wrong name!!! How is one expected to learn anything
+  if the system is setup so it can be fuddled through? Simplicity,
+  understandability, and reproducibility are more important to me than
+  "it just works." Because when it doesn't "just work" you have a real
+  big ball-of-mud to unroll. Enough preaching. I do likw PopOS and am
+  really looking foeward helping my daughters upgrade it to the next
+  version running theCosmic desktop under Wayland.
+
+  Neither gauss17 nor onepiece knew of each other.
+
+  I am editing this now while remotingly logged in via ssh from
+  gauss17. Had to use the IP address. The onepiece system does not know
+  anything about my alacritty terminal emulator. I am getting
+  a monochrome terminal session.
+
+    $ sudo apt install alacritty
+    ...
+    The following NEW packages will be installed:
+      alacritty xclip
+    ...
+
+  Launched alacritty terminal on onepiece, bash session definately more
+  readable than gnome-terminal. Neovim sessions definately more
+  readable. While remotely logged into onepiece thru ssh from an alacritty
+  terminal running on gauss17, bash does not know about colors but nvim
+  and neofetch do.
+
+    $ echo $TERM
+    alacritty
+
+  Need to adjust ~/.bashrc startp script...
+
+2023-10-15:
+  But first, onepiece keeps going asleep on me after only a couple of
+  minutes. Let's see if my "spin" script will fix this.
+
+    buggy@onepiece:~$ mkdir bin .local/bin
+    [grs@gauss17: ~]$ scp bin/spin buggy@192.168.1.8:bin/spin
+    buggy@192.168.1.8's password:
+    spin                                100%  431    65.6KB/s   00:00
+
+  Spin is a simple shell script that rotates a bar around clockwise.
+  Lets see if that is enough to keep onepiece awake.
+
+2023-10-15:
+  Back to getting bash configured for alacritty. Added "alacritty" to
+  script logic.
+
+  Also... The neovim flatpak lies to you.
+
+    $ cd /etc/skel
+    $ vi ./.bashrc   <- edits that file
+    $ nv ./.bashrc   <- edits /home/buggy/.bashrc !!!!!
+
+  Another example of NOT trusting Flatpaks!!! There obviously is
+  a "monkey-in-the-middle" messing up a trusted code base. If a user
+  does not yet understand hierarchical file system structure, they have
+  NO BUSINESS EDITING ~/.bashrc!!!!!
+
+  I don't like tools that lie to you. As soon a more up to date system
+  version installable with apt is available, we need to dump this
+  flatpak. I don't hate flatpaks, appimages, nor snaps; just the morons
+  who put them together.
+
+2023-10-15:
+  While ranting above, one piece fell asleep on me again. Let's go into
+  the setting app and adjust this to more appropriate settings for
+  a home computer. Settings app is last icon in the dock at bottom.
+
+  Changes made:
+  
+    Superkey: now shows desktop view
+      Infititely more useful than showing running running apps
+      or the worthless launcher. I think that actually is the
+      vanilla Gnome default behavior.
+
+    Turned on "hot corner"
+      Does the same as the Superkey, useful if your hand is on the mouse
+      and not the keyboard. Some people hate this. Tastes vary.
+
+    Appearance: Dark
+      I set this a while ago.
+
+    Dock Visibility: Intelligently hide
+      Unless you use a 42" monitor, the increase in screen real estate
+      is much appriciated.
+
+    Dock icon size: Made smaller
+      Looks cooler, more room for icons, takes up less space, and most
+      of all, it does not remind me of a Mac anymore.
+
+  That is about it. Everything else looked reasonable.
+
+  Note: You can change keyboard shortcuts via the "hamberger" menu on
+        the left side of the top of the settings app.
+
+  Note: No suspend/hibernate settings.
+
+  Note: Very useful help menu in hamberger menu.
+
+  But wait!!! There in an < icon at the top left of the settings app
+  that takes you to way more stuff.
+
+    Changes made:
+
+      Screen blanking after 15 min (was 5 minutes)
+      Autoscreen lock after 1 hour after sceen blanking
+
+2023-10-15:
+  Back to Alacritty, default font looks good. Unless Neovim is
+  configured for software development, full fledged IDE with LSP
+  support, no sense installing and configuring a Nerd-Font. 
+
+  Surprise! when Super-T shortcut is hit, it opens an Alacritty
+  terminal, not the gnome-terminal any more.
+
+    Ctrl+Shift+C copied
+    Ctrl+Shift+P pastes
+
+  If in neovim with alacritty, hold down the shift key when you select
+  with the mouse. That way the mouse is talking to the alacritty
+  terminal app and not the Neovim program running in the alacritty
+  terminal.
+
+  There are many ways you can cut and paste using Neovim directly. One
+  way is to highlight the with the mouse WITHOUT pressing Shift key.
+  Then press "+y to "yank" copies the text to the system clipboard. 
+
+  You can paste from the system clipboard into Neovim using "+p key
+  combination. The text in the system clipboard is pasted to where the
+  cursor is.
+
+  With gnome-terminal, you can always right click to get a copy, cut
+  paste menu where you can copy and past into the terminal. If Neovim is
+  running in the terminal, it just thinks you typed it.
+
+  If all else fails, use nano to edit text files. It is brain-dead
+  simple and a good choice for the brain-dead. If you ever what to edit
+  programming source code files, html files, markdown files, system
+  configuration files, csv database dump files - you will need to to
+  learn how to use and configure something more powerful, like vim,
+  neovim, or emacs.
+
+  I kept shortcuts for both alacritty and gnome-terminal in the dock for
+  you to choose from.

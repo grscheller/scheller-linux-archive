@@ -383,5 +383,5 @@
   * Rich Hickey
 * Simplicity is a choice. We have a culture of complexity. Avoid tools, languages, constructs, etc. that generate complex outputs. Simple != easy. Look for complexity and avoid it. Reliability tools: testing, refactoring, and type systems are good but secondary. They do not enforce simplicity. They are just a safety net.
   * Rich Hickey
-* The real power of a data structure comes not from what it enables you to do, but from what it does not allow you to do.
+* The real power of a data structure comes not from what it enables you to do, but from what it prevents you from doing.
 * An object oriented programmer is someone who cannot define the word "function" without using the word "method" to do so.

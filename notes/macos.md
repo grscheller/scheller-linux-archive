@@ -24,9 +24,16 @@ I will not personally use Apple products due to
   * resulting in using old crufty versions of POSIX tooling
   * requiring the use of third party tooling for software development
   * not returning to the FOSS community yet being a Berkeley derived Unix
+* Lack of an adaquet system package manager
 * Wanting to keep their user base "dumb"
   * making software development more difficult than it needs to be
   * forcing users to adapt to bad choices made for a non-configurable UI
+* Default software development tools provided too old, yet
+  * not providing an adequate system package manager to upgrade them
+  * forcing the use of a 3rd party package managers like
+    * Homebrew
+    * SDKMAN!
+    * Nix
 
 ## Third Party Package Managers
 
@@ -64,11 +71,11 @@ with the --cask flag.
 
 ### Reimaging a Mac mini:
 
-1. Make sure Apple keyboard are plugged into computer and turned on
-2. Make sure you have Ethernet cable plugged with connectivity to Internet
-3. Power off system
-4. hold down key combo Opt-Cmd-R while rebooting
-5. Once booted into "recovery app", unplug mouse & keyboard
-5. In the recovery app window, select Reinstall macOS
-6. Fumble through idiot online instructions
-7. Upgrade to latest compatible MacOS
+1. Make sure Apple keyboard & mouse are plugged into computer and turned on.
+2. Make sure you have Ethernet cable plugged with connectivity to Internet.
+3. Power off system.
+4. Hold down key combo Opt-Cmd-R while rebooting.
+5. Once booted into "recovery app", unplug mouse & keyboard.
+5. In the recovery app window, select Reinstall macOS.
+6. Fumble through idiot instructions app provides.
+7. Upgrade to latest compatible MacOS.

@@ -10,7 +10,7 @@ a:link {
 }
 
 a:visited {
-  color: #b98d7b;
+  color: #d17ed6;
   text-decoration: none;
 }
 
@@ -22,15 +22,7 @@ p {
   margin-left: 30px;
 }
 
-h2 {
-  color: #b6927b;
-}
-
-table {
-  width: 100%;
-}
-
-td {
-  vertical-align: top;
-  padding: 10px;
+h3 {
+  color: #dca561;
+  margin-left: 30px;
 }

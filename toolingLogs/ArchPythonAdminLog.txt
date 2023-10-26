@@ -2019,10 +2019,10 @@ Notes taken while configuring Arch Linux for Python development.
     setuptools                65.5.0
 
 2023-09-24:
-  Pushed another release of grscheller.datastructures to PyPI. Desided
+  Pushed another release of grscheller.datastructures to PyPI. Decided
   notes above a bit to unwieldy.
 
-  First make surw $PYTHONPATH is NOT set.
+  First make sure $PYTHONPATH is NOT set.
   
     $ echo $PYTHONPATH
     $
@@ -2113,3 +2113,19 @@ Notes taken while configuring Arch Linux for Python development.
   Probably should have done the flit step outside the virtual
   environmet, or installed flit into the virtual environment.
 
+2023-10-26:
+  Decided to use pdoc3 to generate documentation for my
+  grscheller.datastuctures PyPI package.
+
+  Does not come in the arch repos, will install it into my venv_system
+  virtual environment.
+
+    $ pip install pdoc3
+
+  This installed MarkupSafe-2.1.3 mako-1.2.4 markdown-3.5 pdoc3-0.10.0
+
+  Note that this virtual environment does not include the datastructures
+  package.
+
+    $ pypi datastructures
+    Set $PYTHONPATH to /home/grs/devel/pypi/datastructures/src

@@ -2129,3 +2129,77 @@ Notes taken while configuring Arch Linux for Python development.
 
     $ pypi datastructures
     Set $PYTHONPATH to /home/grs/devel/pypi/datastructures/src
+
+2023-10-27:
+  Based on my work flow, I have determined I need two Python virtual
+  environments for now. Both will leverage the system Python.
+
+  Pacman installed programs will continue using the base system Python
+  infrastructure. I will try to minimalize this environment.
+
+  I will create a virtual environment for my daily Python use. It will
+  contain the latest PyPI released versions of my grscheller python
+  packages as well as a lot of other bells and whistles. Eventually this
+  will be the enviroment my fish configuration will put me in when I log
+  in.
+
+  Finally I will create a minimal Python virtual environment for the
+  purpose of developing my grscheller PyPI packages. It will not have
+  any grscheller packages installed. I will configure $PYTHONPATH using
+  my fish pypi function. It will have pytest and ipython installed.
+  Probably not much else.
+
+2023-10-27:
+  First some cleanup. On gauss17 there is a lot of cruft I naively
+  installed thinking "that might be nice to use someday" or web
+  frameworks I tried out once.
+
+  In one terminal:
+
+    $ for pp in (pacman -Qs python-|grep -E 'local'|sed 's/^local\///'|sed 's/ .*$//')
+          pactree -r $pp
+          echo
+      end|less
+
+  In another terminal:
+
+    $ pacman -Ss ...
+    $ pacman -Qs ...
+    $ pactree -r ...
+    $ sudo pacman -Rsc ...
+
+2023-10-27:
+  Now I will redo my virtual environment infrastructure.
+
+    $ rm -rf ~/devel/venv_system
+    $ mkdir ~/devel/python_envs
+    $ cd ~/devel/python_envs
+    $ python -m venv grs
+    $ python -m venv pypi
+    $ ls *
+    grs:
+    bin/  include/  lib/  lib64@  pyvenv.cfg
+
+    pypi:
+    bin/  include/  lib/  lib64@  pyvenv.cfg
+
+  Here are my fish abbreviationsI will use manage the above
+
+    abbr -a vg source ~/devel/python_envs/grs/bin/activate.fish
+    abbr -a vp source ~/devel/python_envs/pypi/bin/activate.fish
+    abbr -a -- vclr 'pip uninstall -y (pip list|tail +3|fields 1|grep -Ev "(pip|setuptools)")'
+    abbr -a vd deactivate
+    abbr -a pl pip list|cat
+    abbr -a -- ipy ipython --TerminalInteractiveShell.editing_mode=vi
+
+  Here is the Python enviroment variables my fish configuration sets up
+
+    PIP_REQUIRE_VIRTUALENV=true
+    PYENV_SHELL=fish
+    PYENV_ROOT=/home/grs/.local/share/pyenv
+
+  Hummm... After I get everything working, I'll uninstall pyenv. Will
+  reinstall it at such time I need to use multiple versions of Python.
+
+  Time to fix my fish environment and reboot.
+

@@ -2203,3 +2203,39 @@ Notes taken while configuring Arch Linux for Python development.
 
   Time to fix my fish environment and reboot.
 
+2023-10-17:
+
+  Decided to uninstall pyenv. Easy, I only conditionally configure it in
+  my fish shell if it was installed.
+
+  This is what I will initially install into the virtual environments:
+
+    grs (PyPI names):
+      fonttools (for ~/bin/codepoint python script)
+      grscheller.datastuctures
+      flit
+      ipython
+      pydantic
+
+    pypi (PyPI names):
+      flit
+      ipython
+      pytest
+
+  System python toplevel dependenciew (after my cleanup):
+
+    system python (pacman names):
+      cppcheck (uses python-pygments)
+      grapejuice
+      lutris
+      python-pipx
+      python-pynvim
+      yamllint
+      yt-dlp
+
+  With dependencies:
+
+    grs:    35 packages
+    pypi:   33 packages
+    system: 68 packages (before cleanup this number was huge)
+

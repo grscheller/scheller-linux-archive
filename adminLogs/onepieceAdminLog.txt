@@ -499,7 +499,7 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
   "it just works." Because when it doesn't "just work" you have a real
   big ball-of-mud to unroll. Enough preaching. I do likw PopOS and am
   really looking foeward helping my daughters upgrade it to the next
-  version running theCosmic desktop under Wayland.
+  version running the Cosmic desktop under Wayland.
 
   Neither gauss17 nor onepiece knew of each other.
 
@@ -555,7 +555,7 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
   I don't like tools that lie to you. As soon a more up to date system
   version installable with apt is available, we need to dump this
   flatpak. I don't hate flatpaks, appimages, nor snaps; just the morons
-  who put them together.
+  who do the packaging.
 
 2023-10-15:
   While ranting above, one piece fell asleep on me again. Let's go into
@@ -565,9 +565,9 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
   Changes made:
   
     Superkey: now shows desktop view
-      Infititely more useful than showing running running apps
-      or the worthless launcher. I think that actually is the
-      vanilla Gnome default behavior.
+      Infititely more useful than showing running apps or the worthless
+      launcher. I think that actually is the vanilla Gnome default
+      behavior.
 
     Turned on "hot corner"
       Does the same as the Superkey, useful if your hand is on the mouse
@@ -612,7 +612,7 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
     Ctrl+Shift+C copied
     Ctrl+Shift+P pastes
 
-  If in neovim with alacritty, hold down the shift key when you select
+  If in Neovim with alacritty, hold down the shift key when you select
   with the mouse. That way the mouse is talking to the alacritty
   terminal app and not the Neovim program running in the alacritty
   terminal.
@@ -653,3 +653,159 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
   themselves. Probably won't need screen ot tmux. Need to investigate
   keybindings for this mode.
 
+2023-10-29:
+  Have logged in in a while. Onepiece Cosmic desktop seems to be
+  suspending the system again after only a few minutes of activity.
+  Need to turn this misfeature off FOREVER!!!
+
+  Will install a Gnome Extension called Caffeine to do this.
+
+  Pop!_OS 22.04 desktop is based on GNOME 42. First add Gnome Shell
+  Integration to firefox browser from https://extensions.gnome.org/
+  website. 
+
+  Well, when I launch the gnome extensions plugin from the browser, it
+  complains:
+
+    Your native host connector do not support following APIs: v6. Probably you should
+    upgrade native host connector or install plugins for missing APIs. Refer documentation
+    for instructions.
+
+  Hummmm...Something tells me Pop! OS does not want me to do it this
+  way.
+
+    $ apt search 'caffeine'
+    Sorting... Done
+    Full Text Search... Done
+    caffeine/jammy,jammy 2.9.8-2 all
+      prevent the desktop becoming idle in full-screen mode
+
+    fonts-aenigma/jammy,jammy 0.0.20080511+dfsg-4 all
+      465 free TrueType fonts by Brian Kent
+
+    libcaffeine-java/jammy,jammy 2.6.2-1.1 all
+      High performance caching library
+
+  Let's install it.
+
+    $ sudo apt install 'caffeine'
+    Reading package lists... Done
+    Building dependency tree... Done
+    Reading state information... Done
+    The following additional packages will be installed:
+      gir1.2-ayatanaappindicator3-0.1 python3-ewmh
+    Suggested packages:
+      python-ewmh-doc
+    The following NEW packages will be installed:
+      caffeine gir1.2-ayatanaappindicator3-0.1 python3-ewmh
+    0 upgraded, 3 newly installed, 0 to remove and 51 not upgraded.
+    Need to get 61.0 kB of archives.
+    After this operation, 392 kB of additional disk space will be used.
+    Do you want to continue? [Y/n]
+    Get:1 http://apt.pop-os.org/ubuntu jammy/main amd64 gir1.2-ayatanaappindicator3-0.1 amd64 0.5.90-7ubuntu2 [5,822 B]
+    Get:2 http://apt.pop-os.org/ubuntu jammy/universe amd64 python3-ewmh all 0.1.6-2 [6,840 B]
+    Get:3 http://apt.pop-os.org/ubuntu jammy/universe amd64 caffeine all 2.9.8-2 [48.3 kB]
+    Fetched 61.0 kB in 0s (290 kB/s)
+    Selecting previously unselected package gir1.2-ayatanaappindicator3-0.1.
+    (Reading database ... 260500 files and directories currently installed.)
+    Preparing to unpack .../gir1.2-ayatanaappindicator3-0.1_0.5.90-7ubuntu2_amd64.deb ...
+    Unpacking gir1.2-ayatanaappindicator3-0.1 (0.5.90-7ubuntu2) ...
+    Selecting previously unselected package python3-ewmh.
+    Preparing to unpack .../python3-ewmh_0.1.6-2_all.deb ...
+    Unpacking python3-ewmh (0.1.6-2) ...
+    Selecting previously unselected package caffeine.
+    Preparing to unpack .../caffeine_2.9.8-2_all.deb ...
+    Unpacking caffeine (2.9.8-2) ...
+    Setting up python3-ewmh (0.1.6-2) ...
+    Setting up gir1.2-ayatanaappindicator3-0.1 (0.5.90-7ubuntu2) ...
+    Setting up caffeine (2.9.8-2) ...
+    Processing triggers for hicolor-icon-theme (0.17-2) ...
+    Processing triggers for gnome-menus (3.36.0-1ubuntu3) ...
+    Processing triggers for man-db (2.10.2-1) ...
+    Processing triggers for desktop-file-utils (0.26-1ubuntu3) ...
+
+  Do a full reboot and see what shows up in the System Tray (upper right
+  corner).
+
+  Well, nothing is showing up in the system tray upon reboot or
+  launching the caffine Python script from the command line. After
+  several attemps, I notice a bunch are running in the background.
+
+  Lets try another reboot and see what is running.
+
+    $ ps -fu buggy | grep caffeine
+    buggy       2277    2089  4 11:08 ?        00:00:00 /usr/bin/python3 /usr/bin/caffeine
+    buggy       2594    2570  0 11:08 pts/0    00:00:00 grep --color=auto caffeine
+
+  Seems to be a pattern. Don't know if it ia a Pop! OS, Ubuntu, or
+  Debian thing, but when apt is used to install software, it configures
+  it enables it.
+
+  The Cosmic Desktop on Pop!_OS 22.04 is implemented using System 76
+  Gnome extensions. I guess the caffine extension is incompatible with
+  the Cosmic system tray.
+
+  Let's see if it keeps the system from suspending itself.
+
+  After 23 minutes system was still alive, but there was a notification
+  n the upper middle of the screen about the system was soon to suspend
+  due inactivity. Another notification came in on the right, but was
+  gone when I went to read it.
+
+  Let it sit again, starting stopwatch.
+
+  After an hour and the system was suspended.
+
+  Looked at /usr/bin/caffeine, it is a Python GTK GUI application. Looks
+  to be using GTK3 while I think Cosmic uses GTK4. This piece of junk
+  looks like it was written by a script kiddie based on Stack Overflow
+  answers. Just swallows exceptions. Seems to be doing very generic XDG
+  and Gnome desktop things. Geared to when you have screen app running
+  and you are not interacting with keyboard or mouse.
+
+  I will unenstall it.
+
+    $ sudo apt remove caffeine
+
+  Also, when I launch the Firefox Gnome Extension 
+
+    Your native host connector do not support following APIs: v6.
+    Probably you should upgrade native host connector or install plugins
+    for missing APIs. Refer documentation for instructions.
+
+  I think trying to "fix" this will break what System76's Cosmic desktop
+  decorated Gnome Shell.
+
+2023-10-29:
+  Under Settings -> Power I fixed the suspend issue. System will
+  suspend after a half hour when on battery power only.
+
+2023-10-29:
+  Time to look at gaming.
+
+    $ sudo apt install steam
+    $ sudo apt install lutris
+
+  Now reboot and see where we are at.
+
+  I am having trouble passing the Stream Cap'tas and my Lutris logins are
+  all messed up....
+
+  You are on your own.
+
+2023-10-29:
+  Some final system updates before shipping the computer East.
+
+    $ sudo apt update
+    $ sudo apt upgrade
+
+  Install system Neovim, maybe on an upgrade we will get a more modern
+  version.
+
+    $ sudo apt install neovim
+    
+  The flatpak is still installed:
+
+    System  -> nvim
+    Flatpak -> nv
+    

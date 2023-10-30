@@ -465,3 +465,15 @@ To check if hardware clock is set to UTC time,
 ```
 
 This shows HW clock is actually kept in UTC time.
+
+## Wifi Networking
+
+Connecting to a wifi network from the command line. Done from the system
+console.
+
+```
+    $ iwctl device list  # One wireless device, wlan0 in station mode.
+    $ iwctl station wlan0 scan
+    $ iwctl station wlan0 get-networks
+    $ iwctl --passphrase <pass phrase> station wlan0 connect <SSID>
+```

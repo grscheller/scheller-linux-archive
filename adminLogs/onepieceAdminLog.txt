@@ -878,3 +878,28 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
   Took several iterations before Lazy got everthing loaded correctly.
 
   Will work to get LSP & Nix working.
+
+2023-12-24:
+  Trying to get LSP working with Neovin.
+
+  Commented out from "excluded_servers" in lsp.lua: bashls, lua_ls, 
+
+  Install Clang LSP server, formatter, linter, and clang itself:
+
+    $ sudo apt install clang clang-format clang-tidy clangd
+
+  Install Nix package manager system wide.
+
+    sh <(curl -L https://nixos.org/nix/install) --daemon
+
+2023-12-24:
+  Install Nerd-Fonts.
+
+  From https://www.nerdfonts.com/font-downloads download
+  RobotoMono.zip and $ ax FiraCode.zip
+
+    $ mkdir ~/.local/share/fonts
+    $ ax RobotoMono.zip
+    $ mv *.ttf ~/.local/share/fonts/
+    $ ax FiraCode.zip
+    $ mv *.ttf ~/.local/share/fonts/

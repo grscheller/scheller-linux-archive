@@ -1276,7 +1276,7 @@ XVI. GIT Stash:
     $ git pull
     $ git stash pop
 
-XVII. GitHub Forking:
+XVII. Git Forking from GitHub (not GitHub forking):
 
   A GitHub project does almost what you want to do.
 

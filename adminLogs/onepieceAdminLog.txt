@@ -96,29 +96,29 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
     [grs@gauss17]
     $ lsblk -f
     NAME FSTYPE FSVER LABEL                     UUID                                 FSAVAIL FSUSE% MOUNTPOINTS
-    sda                                                                                   
+    sda
     ├─sda1
     │    vfat   FAT32                           A024-8139                             403.1M    21% /boot
     └─sda2
          ext4   1.0                             0859da7c-f429-470d-818f-d3951b5d89af   50.6G    51% /
-    sdb                                                                                   
+    sdb
     ├─sdb1
-    │    vfat   FAT32                           BC00-6365                                 
+    │    vfat   FAT32                           BC00-6365
     ├─sdb2
     │    ext4   1.0                             4b1b0623-c1d0-4da9-8164-20ee74253def   47.1G    19% /extra
     ├─sdb3
     │    swap   1                               a5945738-343f-4cfb-ad76-8ca012eb2576                [SWAP]
     └─sdb4
          ext4   1.0                             833c2579-bc84-463a-96a4-89478bd89e9e  708.8G    10% /home
-    sdc  iso966 Jolie Pop_OS 22.04 amd64 Nvidia 2023-09-13-19-15-11-00                    
+    sdc  iso966 Jolie Pop_OS 22.04 amd64 Nvidia 2023-09-13-19-15-11-00
     ├─sdc1
-    │    iso966 Jolie Pop_OS 22.04 amd64 Nvidia 2023-09-13-19-15-11-00                    
+    │    iso966 Jolie Pop_OS 22.04 amd64 Nvidia 2023-09-13-19-15-11-00
     └─sdc2
          vfat   FAT12                           A38C-CAF4
 
 2023-10-01:
   On the Dell,
-    
+
     F1: Reboot
     F2: Setup
     F5: Run diagnostics
@@ -141,12 +141,12 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
   that NVidia drives may need installing. System has a discrete NV card.
 
   Dropped into a Live-OS desktop GUI environment, took a minute before
-  the intallation GUI popped up. 
+  the intallation GUI popped up.
 
 2023-10-01:
   Installed PopOS through GUI without any problems, took most defaults,
   did not encrypt hard drive.
-  
+
   During install I created user account "buggy" and set timezone to EDT.
 
   Things I did post-install (tried to keep minimal):
@@ -156,7 +156,7 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
       - Have to give daughters the "with great power calls great
         responsibilities" talk.
     - Edited ~/.bashrc.
-      - Added: set -o vi 
+      - Added: set -o vi
         - to use vi command-line editing
     - Changed system name to "onepiece"
       - $ sudo hostnamectl set-hostname onepiece
@@ -199,7 +199,7 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
   Let's find out.
 
     $ systemctl list-units|grep -i -E '(wayland|x11)'
-    
+
     $ systemctl --user list-units|grep -i -E '(wayland|x11)'
       org.gnome.Shell@x11.service               loaded active running   GNOME Shell on X11
       gnome-session-x11-services.target         loaded active active    GNOME session X11 services
@@ -214,7 +214,7 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
 
   The latter was already installed but by the fdfind name. I added a fd alias
   to ~/.bashrc for it.
-    
+
 2023-10-02:
   Created a single file Neovim configuration. Located
   ~/.config/nvim/init.lua. Kept it single file and "grokable" for
@@ -250,26 +250,26 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
 
   Run neofetch (in regular terminal, not nvim terminal):
 
-    buggy@onepiece:~$ neofetch 
-                 /////////////                buggy@onepiece 
-             /////////////////////            -------------- 
-          ///////*767////////////////         OS: Pop!_OS 22.04 LTS x86_64 
-        //////7676767676*//////////////       Host: Precision 3520 
-       /////76767//7676767//////////////      Kernel: 6.4.6-76060406-generic 
-      /////767676///*76767///////////////     Uptime: 1 hour, 38 mins 
-     ///////767676///76767.///7676*///////    Packages: 1888 (dpkg), 8 (flatpak) 
-    /////////767676//76767///767676////////   Shell: bash 5.1.16 
-    //////////76767676767////76767/////////   Resolution: 1920x1080 
-    ///////////76767676//////7676//////////   DE: GNOME 42.5 
-    ////////////,7676,///////767///////////   WM: Mutter 
-    /////////////*7676///////76////////////   WM Theme: Pop 
-    ///////////////7676////////////////////   Theme: Pop-dark [GTK2/3] 
-     ///////////////7676///767////////////    Icons: Pop [GTK2/3] 
-      //////////////////////'////////////     Terminal: gnome-terminal 
-       //////.7676767676767676767,//////      CPU: Intel Xeon E3-1505M v6 (8) @ 4.000GHz 
-        /////767676767676767676767/////       GPU: NVIDIA Quadro M620 Mobile 
-          ///////////////////////////         GPU: Intel HD Graphics P630 
-             /////////////////////            Memory: 4365MiB / 31949MiB 
+    buggy@onepiece:~$ neofetch
+                 /////////////                buggy@onepiece
+             /////////////////////            --------------
+          ///////*767////////////////         OS: Pop!_OS 22.04 LTS x86_64
+        //////7676767676*//////////////       Host: Precision 3520
+       /////76767//7676767//////////////      Kernel: 6.4.6-76060406-generic
+      /////767676///*76767///////////////     Uptime: 1 hour, 38 mins
+     ///////767676///76767.///7676*///////    Packages: 1888 (dpkg), 8 (flatpak)
+    /////////767676//76767///767676////////   Shell: bash 5.1.16
+    //////////76767676767////76767/////////   Resolution: 1920x1080
+    ///////////76767676//////7676//////////   DE: GNOME 42.5
+    ////////////,7676,///////767///////////   WM: Mutter
+    /////////////*7676///////76////////////   WM Theme: Pop
+    ///////////////7676////////////////////   Theme: Pop-dark [GTK2/3]
+     ///////////////7676///767////////////    Icons: Pop [GTK2/3]
+      //////////////////////'////////////     Terminal: gnome-terminal
+       //////.7676767676767676767,//////      CPU: Intel Xeon E3-1505M v6 (8) @ 4.000GHz
+        /////767676767676767676767/////       GPU: NVIDIA Quadro M620 Mobile
+          ///////////////////////////         GPU: Intel HD Graphics P630
+             /////////////////////            Memory: 4365MiB / 31949MiB
                  /////////////
 
 2023-10-12:
@@ -349,7 +349,7 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
     Upgrading to: 22.10
     New version available: false
     no release available to upgrade to
-    
+
   After a little research, I am at the latest release.
 
   My choices are:
@@ -405,7 +405,7 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
          XDG_DATA_DIRS=/usr/share/pop:/usr/share/gnome:/home/buggy/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/
 
        At least $XDG_CONFIG_HOME should default to ~/.config
-       
+
        Looks like they are trying to make things "easy" for GUI users at
        the expense of intermediate users. I wish they'd just keep things
        "simple."
@@ -420,7 +420,7 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
 
     - put the configuration here: ~/.config/nvim/init.lua
     - created a sym-link from the Flatpak XDG location
-      
+
         $ ln -s ~/.config/nvim/init.lua  ~/.var/app/io.neovim.nvim/config/nvim/init.lua
 
     - created the nv alias in ~/.bashrc for the flatpak
@@ -441,11 +441,11 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
     Full Text Search... Done
     openssh-server/jammy-updates 1:8.9p1-3ubuntu0.4 amd64
       secure shell (SSH) server, for secure access from remote machines
-    
+
     $ sudo apt install openssh-server
     ...
 
-    $ sudo systemctl status sshd.service 
+    $ sudo systemctl status sshd.service
     ● ssh.service - OpenBSD Secure Shell server
          Loaded: loaded (/lib/systemd/system/ssh.service; enabled; vendor preset: enabled)
          Active: active (running) since Sun 2023-10-15 14:24:14 EDT; 5min ago
@@ -463,15 +463,15 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
     Oct 15 14:24:14 onepiece sshd[4496]: Server listening on :: port 22.
     Oct 15 14:24:14 onepiece systemd[1]: Started OpenBSD Secure Shell server.
 
-    $ systemctl is-enabled sshd.service 
+    $ systemctl is-enabled sshd.service
     alias
 
   Huh???....
-    
-    $ systemctl is-enabled ssh.service 
+
+    $ systemctl is-enabled ssh.service
     enabled
-    
-    $ systemctl status ssh.service 
+
+    $ systemctl status ssh.service
     ● ssh.service - OpenBSD Secure Shell server
          Loaded: loaded (/lib/systemd/system/ssh.service; enabled; vendor preset: enabled)
          Active: active (running) since Sun 2023-10-15 14:24:14 EDT; 10min ago
@@ -483,7 +483,7 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
             CPU: 19ms
          CGroup: /system.slice/ssh.service
                  └─4496 "sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups"
-    
+
     Oct 15 14:24:14 onepiece systemd[1]: Starting OpenBSD Secure Shell server...
     Oct 15 14:24:14 onepiece sshd[4496]: Server listening on 0.0.0.0 port 22.
     Oct 15 14:24:14 onepiece sshd[4496]: Server listening on :: port 22.
@@ -563,7 +563,7 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
   a home computer. Settings app is last icon in the dock at bottom.
 
   Changes made:
-  
+
     Superkey: now shows desktop view
       Infititely more useful than showing running apps or the worthless
       launcher. I think that actually is the vanilla Gnome default
@@ -604,7 +604,7 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
 2023-10-15:
   Back to Alacritty, default font looks good. Unless Neovim is
   configured for software development, full fledged IDE with LSP
-  support, no sense installing and configuring a Nerd-Font. 
+  support, no sense installing and configuring a Nerd-Font.
 
   Surprise! when Super-T shortcut is hit, it opens an Alacritty
   terminal, not the gnome-terminal any more.
@@ -619,7 +619,7 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
 
   There are many ways you can cut and paste using Neovim directly. One
   way is to highlight the with the mouse WITHOUT pressing Shift key.
-  Then press "+y to "yank" copies the text to the system clipboard. 
+  Then press "+y to "yank" copies the text to the system clipboard.
 
   You can paste from the system clipboard into Neovim using "+p key
   combination. The text in the system clipboard is pasted to where the
@@ -662,7 +662,7 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
 
   Pop!_OS 22.04 desktop is based on GNOME 42. First add Gnome Shell
   Integration to firefox browser from https://extensions.gnome.org/
-  website. 
+  website.
 
   Well, when I launch the gnome extensions plugin from the browser, it
   complains:
@@ -767,7 +767,7 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
 
     $ sudo apt remove caffeine
 
-  Also, when I launch the Firefox Gnome Extension 
+  Also, when I launch the Firefox Gnome Extension
 
     Your native host connector do not support following APIs: v6.
     Probably you should upgrade native host connector or install plugins
@@ -803,9 +803,103 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
   version.
 
     $ sudo apt install neovim
-    
+
   The flatpak is still installed:
 
     System  -> nvim
     Flatpak -> nv
-    
+
+2023-12-22:
+  Due to sandboxing, had to create symlink
+
+    ~/.var/app/io.neovim.nvim/config/nvim -> /home/buggy/.config/nvim
+
+  for the flatpak to find its configuration files. I wish it would adhere to
+  DSG standards. Laxy.nvim installed its plugins hhere
+
+    ~/.var/app/io.neovim.nvim/data/nvim/laxy
+
+2023-12-23:
+  Uninstalled the Neovim Flatpak using Pop Shop.
+
+  Sandbox did not let me run executanles from /usr/bin. Actually had its
+  own /usr with its own versions of system utilities. But not rg nor fd.
+
+  Alarcritty Terminl Shell $PATH:
+    /home/buggy/.nix-profile/bin
+    /home/buggy/.cabal/bin
+    /home/buggy/.local/bin
+    /home/buggy/bin
+    /usr/local/sbin
+    /usr/local/bin
+    /usr/sbin
+    /usr/bin
+    /usr/games
+    /usr/local/games
+
+  Neovim Terminal Shell $PATH:
+    /app/bin
+    /usr/bin
+    /home/buggy/.var/app/io.neovim.nvim/data/node/bin
+    /home/buggy/.var/app/io.neovim.nvim/data/cargo/bin
+    /home/buggy/.var/app/io.neovim.nvim/data/python/bin
+    /home/buggy/.var/app/io.neovim.nvim/data/gem/ruby/3.2.0/bin
+
+  Tried "mounting" host directories via
+
+    $ flatpak --filesystem=host inmneovim,nvim
+
+  but some utilitied hsd trouble finding their shared libraries.
+
+2023-12-23:
+
+  Let's install from Neovim's PPA
+
+    $ sudo add-apt-repository ppa:neovim-ppa/stable
+    $ sudo apt update
+    $ sudo apt install neovim
+
+    NVIM v7.2.3-stable
+    7.2-3~bpo22.04.1~ppa1
+
+    $ sudo apt remove neovim
+  $ sudo add-apt-repository -r ppa:neovim-ppa/stable
+  $ sudo add-apt-repository ppa:neovim-ppa/unstable
+    $ sudo apt update
+    $ sudo apt install neovim
+
+    NVIM v0.10.0-dev
+    0.10.0~ubuntu1+git202312222107-031088fc0-c60402a16-2582e8055~ubuntu22.04.1
+
+  The stable version is too out of date and the development version
+  is too new. The one on Arch Linux is 0.9.2 or 0.9,3. Will stay with
+  the Dev and periodically upgrade until I find a more stable one.
+
+  Took several iterations before Lazy got everthing loaded correctly.
+
+  Will work to get LSP & Nix working.
+
+2023-12-24:
+  Trying to get LSP working with Neovin.
+
+  Commented out from "excluded_servers" in lsp.lua: bashls, lua_ls, 
+
+  Install Clang LSP server, formatter, linter, and clang itself:
+
+    $ sudo apt install clang clang-format clang-tidy clangd
+
+  Install Nix package manager system wide.
+
+    sh <(curl -L https://nixos.org/nix/install) --daemon
+
+2023-12-24:
+  Install Nerd-Fonts.
+
+  From https://www.nerdfonts.com/font-downloads download
+  RobotoMono.zip and FiraCode.zip
+
+    $ mkdir ~/.local/share/fonts
+    $ ax RobotoMono.zip
+    $ mv *.ttf ~/.local/share/fonts/
+    $ ax FiraCode.zip
+    $ mv *.ttf ~/.local/share/fonts/

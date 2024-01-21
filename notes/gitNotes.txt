@@ -527,9 +527,9 @@ VII. Creating revisionist history via git rebase:
 
     2. If you have not pushed your changes upstream, you can use the
        'git commit --amend' to update the last commit. GitHub will
-       refuse a push with such an amended commit if previous version was
-       already pushed. You will need to do a `git merge' the upstream
-       version into your work to make your HEAD pushable.
+       refuse a push with such an amended commit if a previous version
+       was already pushed. You will need to do a `git merge' the
+       upstream version into your work to make your HEAD pushable.
 
 VIII. GIT branch:
 
@@ -563,7 +563,7 @@ VIII. GIT branch:
 
        and unmerged local GIT branches
 
-         $ git branch --not-merged
+         $ git branch --no-merged
 
     3. Create a new branch (does not checkout the branch)
 

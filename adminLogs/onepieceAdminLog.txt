@@ -739,7 +739,7 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
 
   Seems to be a pattern. Don't know if it ia a Pop! OS, Ubuntu, or
   Debian thing, but when apt is used to install software, it configures
-  it enables it.
+  it & enables it.
 
   The Cosmic Desktop on Pop!_OS 22.04 is implemented using System 76
   Gnome extensions. I guess the caffine extension is incompatible with

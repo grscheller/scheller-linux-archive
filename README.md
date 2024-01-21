@@ -1,12 +1,11 @@
-# Geoffrey Scheller's Linux Mosh Pit of Notes &amp; Other Miscellany
+# GRScheller's Linux Mosh Pit of Notes &amp; Other Miscellany
 
-Collections of stuff not worth their own GitHub repositories.
+Personal notes and other stuff not worth their own GitHub repos.
 
 * [Linux Notes](notes/): Notes &amp; Factoids
 * [System Admin Logs](adminLogs/): Mostly Arch Linux focused
 * [Tooling Logs](toolingLogs/): Software development tooling setup
 * [Grokking Computer Languages](grok/): place to commit scratch code
-* [Personal Bookmark Page][1]: Now on GitHub Pages
 
 By its very nature, this repo contains many loose threads.
 

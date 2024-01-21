@@ -1,4 +1,4 @@
-# GRScheller's Linux Mosh Pit of Notes &amp; Other Miscellany
+## GRScheller's Linux Mosh Pit of Notes &amp; Other Miscellany
 
 Personal notes and other stuff not worth their own GitHub repos.
 
@@ -9,7 +9,7 @@ Personal notes and other stuff not worth their own GitHub repos.
 
 By its very nature, this repo contains many loose threads.
 
-## License Summary
+### License Summary
 
 MIT License
 

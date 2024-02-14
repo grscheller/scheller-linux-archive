@@ -1,5 +1,6 @@
 These are the notes I update as I learn more about the GIT source code
-revision control suite.
+revision control suite. It is NOT A BEGINNERS TUTORIAL, but I try to
+make it a useful resource for beginners as well as myself.
 
 Most Linux distributions have a good GIT tutorial in the man pages.
 
@@ -31,9 +32,10 @@ https://www.atlassian.com/git/tutorials/setting-up-a-repository
 https://help.github.com
 https://www.garron.me/en/articles/git-101-basics-introduction-basic-use-commands.html
 
-Stack Overflow, before being overrun by the "no opinionated content"
-trolls, contained lots of good "from the trenches" best practices
-advice on GIT.
+Stack Overflow, before being overrun by the "no opinionated content
+whatsoever" and "its been answered already" trolls, contained a lot of
+good up to date "from the trenches" best practices advice on GIT which
+I have drawn upon.
 
 I. Getting started with some configuration.
 
@@ -45,7 +47,9 @@ I. Getting started with some configuration.
        4. ~/.gitconfig
        5. .git/config at root of repo
 
-       Each one overrides the one above it.
+       Each one overrides the one above it. The "git config" command
+       will update .git/config, while "git config --global" will update
+       #3 or #4 depending on what you configure.
 
     2. Set up your identity:
 
@@ -68,59 +72,53 @@ I. Getting started with some configuration.
 
          $ git config user.name
 
-    5. Let's see where GIT finds config info on Arch Linux:
+    5. Here is what currently is configured in GIT for this project's repo:
 
-         $ git config --list --show-origin
-         file:/home/grs/.gitconfig       user.name=grscheller
-         file:/home/grs/.gitconfig       user.email=geoffrey@scheller.com
-         file:/home/grs/.gitconfig       core.editor=nvim
-         file:/home/grs/.gitconfig       core.pager=nvim -R
-         file:/home/grs/.gitconfig       pull.rebase=false
-         file:/home/grs/.gitconfig       color.pager=no
-         file:.git/config        core.repositoryformatversion=0
-         file:.git/config        core.filemode=true
-         file:.git/config        core.bare=false
-         file:.git/config        core.logallrefupdates=true
-         file:.git/config        remote.origin.url=git@github.com:grscheller/scheller-linux-archive
-         file:.git/config        remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
-         file:.git/config        branch.master.remote=origin
-         file:.git/config        branch.master.merge=refs/heads/master
+         $ cd ~/devel/scheller-linux-archive/
+         $ git config --list --show-origin --show-scope
+         global	file:/home/grs/.config/git/config	user.name=grscheller
+         global	file:/home/grs/.config/git/config	user.email=geoffrey@scheller.com
+         global	file:/home/grs/.config/git/config	core.editor=nvim
+         global	file:/home/grs/.config/git/config	core.fsmonitor=true
+         global	file:/home/grs/.config/git/config	core.pager=nvim -R -c 'setfiletype git'
+         global	file:/home/grs/.config/git/config	color.pager=no
+         global	file:/home/grs/.config/git/config	pull.rebase=false
+         global	file:/home/grs/.config/git/config	init.defaultbranch=main
+         global	file:/home/grs/.config/git/config	submodules.recurse=true
+         global	file:/home/grs/.config/git/config	diff.submodule=log
+         global	file:/home/grs/.config/git/config	rerere.enabled=true
+         global	file:/home/grs/.gitconfig	maintenance.repo=/home/grs/devel/scheller-linux-archive
+         global	file:/home/grs/.gitconfig	maintenance.repo=/home/grs/devel/dotfiles-submodules/fish
+         global	file:/home/grs/.gitconfig	maintenance.repo=/home/grs/devel/dotfiles-submodules/nvim
+         global	file:/home/grs/.gitconfig	maintenance.repo=/home/grs/devel/dotfiles-submodules/home
+         global	file:/home/grs/.gitconfig	maintenance.repo=/home/grs/devel/dotfiles-submodules/sway-env
+         global	file:/home/grs/.gitconfig	maintenance.repo=/home/grs/devel/dotfiles
+         global	file:/home/grs/.gitconfig	maintenance.repo=/home/grs/devel/fpinScala3Stdlib
+         global	file:/home/grs/.gitconfig	maintenance.repo=/home/grs/devel/grok-typescript
+         global	file:/home/grs/.gitconfig	maintenance.repo=/home/grs/devel/neovim-notes
+         global	file:/home/grs/.gitconfig	maintenance.repo=/home/grs/devel/pypi/boring-math
+         global	file:/home/grs/.gitconfig	maintenance.repo=/home/grs/devel/pypi/circular-array
+         global	file:/home/grs/.gitconfig	maintenance.repo=/home/grs/devel/pypi/datastructures
+         global	file:/home/grs/.gitconfig	maintenance.repo=/home/grs/devel/web
+         global	file:/home/grs/.gitconfig	gpg.format=ssh
+         global	file:/home/grs/.gitconfig	user.signingkey=/home/grs/.ssh/id_ed25519_grscheller.pub
+         local	file:.git/config	core.repositoryformatversion=0
+         local	file:.git/config	core.filemode=true
+         local	file:.git/config	core.bare=false
+         local	file:.git/config	core.logallrefupdates=true
+         local	file:.git/config	remote.origin.url=git@github.com:grscheller/scheller-linux-archive
+         local	file:.git/config	remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
+         local	file:.git/config	branch.master.remote=origin
+         local	file:.git/config	branch.master.merge=refs/heads/master
+         local	file:.git/config	maintenance.auto=false
+         local	file:.git/config	maintenance.strategy=incremental
 
-       Let's see where GIT finds config info on MacOS (Darwin):
-
-         $ git config --list --show-origin
-         file:/usr/local/etc/gitconfig	credential.helper=osxkeychain
-         file:/Users/geoffreyscheller/.gitconfig	user.name=grscheller
-         file:/Users/geoffreyscheller/.gitconfig	user.email=geoffrey@scheller.com
-         file:/Users/geoffreyscheller/.gitconfig	core.editor=nvim
-         file:/Users/geoffreyscheller/.gitconfig	core.pager=nvim -R -c 'setfiletype git'
-         file:/Users/geoffreyscheller/.gitconfig	color.pager=no
-         file:/Users/geoffreyscheller/.gitconfig	pull.rebase=false
-         file:.git/config	core.repositoryformatversion=0
-         file:.git/config	core.filemode=true
-         file:.git/config	core.bare=false
-         file:.git/config	core.logallrefupdates=true
-         file:.git/config	core.ignorecase=true
-         file:.git/config	core.precomposeunicode=true
-         file:.git/config	remote.origin.url=git@github.com:grscheller/scheller-linux-archive
-         file:.git/config	remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
-         file:.git/config	branch.master.remote=origin
-         file:.git/config	branch.master.merge=refs/heads/master
-
-       Later info overrides earlier info.
-
-    6. You can use the --edit option to edit your config files in place.
-
-       Within a GIT repo. use
-
-         $ git config --edit
-
-       To edit your global configuration, use
-
-         $ git config --global --edit
-
-       Unlike doing it from the command line, GIT will not catch errors
-       and typos immediately.
+       Generally, user specific stuff is put in ~/.config/git/config,
+       system specific stuff (for current user) in ~/.gitconfig, and
+       repo specific stuff in .git/config. I keep user specfic stuff
+       under GIT control via a dotfiles repository. When updating config
+       info with "git config --global" I need to be mindful to add the
+       changes to my dotfiles repo.
 
 II. Getting a GIT Repository
 
@@ -139,62 +137,65 @@ II. Getting a GIT Repository
 
     2. Cloning an existing repository:
 
-         $ git clone https://github.com/libgit2/libgit2
-         $ git clone https://github.com/libgit2/libgit2 mylibgit
+         $ git clone git@github.com:grscheller/grok-typescript
+         $ git clone https://github.com/grscheller/grok-typescript learn-ts
          $ git clone schelleg@us.navo.hpc.mil:proj/grsHome.git
+         $ git clone ~/devel/myRepo ~/junk/myRepoCopy
 
-       This is not just a checkout, it clones the entire repository of
-       change control files. (Does not clone some of the server side
-       settings.) The second version changes the name of the GIT
-       repository directory from libgit2 to mylibgit.
-
-       Transfer protocols:
-
-          https://
-          git://
-          user@server:path/to/repo.git      (this uses ssh)
+       This is not just a snapshot from the repo of the project, it
+       clones the entire repository, complete with all change control
+       files, containing all past versions of the project. The second
+       version changes the name of the directory containing the GIT repo
+       from grok-typescript to learn-ts. GIT does not care about the
+       name of the directory it gets cloned into. For the last version,
+       the "upstream repo" or "origin" was set to /home/grs/devel/myRepo
+       with no knowledge of the upstream's origin, if it exists.
 
     3. Setting up a local shared repository:
 
-       A bit "old school" but I have found doing this useful when two
-       contractors are working on the same code base but don't have
-       access to each other's GIT repos. The only thing they share are
-       access to the same Linux based computer.
+       I have found doing this useful when two contractors are working
+       on the same code base but don't have access to each other's GIT
+       repos. The only thing they share is rwx access to the same Linux
+       based computer file system. Also, I did not have root access to
+       the host system.
 
-       Lets assume everyone is in the repos group
+       Lets assume both contractors and myself are in the repos group
 
          $ umask 0007
          $ ls -ld /share/repos
          drwxrws---. 7 repos repos 4096 Dec 12 09:17 /share/repos
          $ cd /share/repos
-         $ git init --bare ourProject.git
+         $ git init --bare OurProject.git
 
-       This initializes an empty GIT repository, but omit the working
-       directory. Shared repositories should always be created with the
-       --bare flag. The ourProject.git directory will be
-       a subdirectory. (Equiv to a .git directory, but without the
-       parent working directory.) Think --bare as marking the repository
-       as a storage facility as opposed to a development environment.
+       This initializes an empty GIT repository, but without the outer
+       working directory. Shared repositories should always be created
+       with the --bare flag. Think --bare as marking the repository as
+       a storage facility as opposed to a development environment.
 
        Now connect up our empty naked repository to somewhere where we
-       have done some prior GIT based development work:
+       have done some prior GIT based development work, but neither
+       contractor has access:
 
-         $ cd ourProject.git
-         $ git remote add localDevel /home/schelleg/devel/myProject
-         $ git fetch localDevel
-         $ git fetch --tags localDevel
+         $ cd OurProject.git
+         $ git remote add upstream /home/schelleg/devel/someProject
+         $ git fetch upstream
+         $ git fetch --tags upstream
 
-       This will bring in all the branches and tags. In the localDevel
-       development environment repo, I like to reference our new
-       colaboritive repo as origin:
+       This will bring in all the branches and tags. Next from the
+       someProject upstream repo,
 
-         $ cd /home/schelleg/devel/myProject
-         $ git remote rm origin
-         $ git remote add origin /share/repos/ourProject.git
+         $ cd /home/schelleg/devel/someProject
+         $ git remote add downstream /share/repos/ourProject.git
 
        Make sure your umask is set so that all the files in
-       ourProject.git don't get created without the necessary group
-       permissions. GIT will function, but with subtly bizzare behavior.
+       ourProject.git get created with the necessary group rwx
+       permissions. If not, GIT will function, but with subtly bizzare
+       behavior.
+
+       Both contractors can clone this shared repo and collaborate by
+       pulling and pushing to it. I can pull from the shared repo and
+       send upstream from my repo. I would recommend the contractors
+       sign their commits.
 
     4. If you are starting a new project, setting up a shared repo is
        a bit easier. Create the the bare shared repository, clone it,
@@ -209,8 +210,8 @@ II. Getting a GIT Repository
          $ git push origin master
 
     5. To "rename" the directory that a GIT repository is in, first note
-       that that git does not care about the name of the directory the
-       repository is in. The client just needs to know where to point.
+       that that git does not care about the name of the working
+       directory. The client just needs to know where to point.
 
        On the server:
 
@@ -267,7 +268,7 @@ II. Getting a GIT Repository
        do this to have a quick and dirty snapshot of a working copy of
        the software. Also, I can "rm -rf .git" and either tar ball or
        burn to DVD what I want to give someone. Just make sure you do
-       this in ~/temp/SDT and not in ~/Devel/SDT !!!
+       this in ~/temp/SDT and not in ~/Devel/SDT!!!
 
     7. Fetch command updates local copies of remote branches.
 

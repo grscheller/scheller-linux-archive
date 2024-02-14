@@ -37,13 +37,15 @@ advice on GIT.
 
 I. Getting started with some configuration.
 
-    1. Three places git stores config info:
+    1. Five places git stores config info:
 
-       1. /etc/gitconfig or /usr/local/gitconfig
-       2. ~/.gitconfig or ~/.config/git/config
-       3. config file in the .git directory of whatever repository
+       1. /etc/gitconfig
+       2. /usr/local/gitconfig
+       3. ~/.config/git/config
+       4. ~/.gitconfig
+       5. .git/config at root of repo
 
-       Each one overrides the one above.
+       Each one overrides the one above it.
 
     2. Set up your identity:
 

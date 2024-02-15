@@ -33,27 +33,30 @@ https://help.github.com
 https://www.garron.me/en/articles/git-101-basics-introduction-basic-use-commands.html
 
 Stack Overflow, before being overrun by the "no opinionated content
-whatsoever" and "its been answered already" trolls, contained a lot of
-good up to date "from the trenches" best practices advice on GIT which
-I have drawn upon.
+whatsoever allowed" and "its been answered already" trolls, contained
+a lot of good up to date "from the trenches" best practices advice on
+GIT which I have drawn upon.
 
 I. Getting started with some configuration.
 
     1. Five places git stores config info:
 
        1. /etc/gitconfig
-       2. /usr/local/gitconfig
+       w. /usr/local/gitconfig
        3. ~/.config/git/config
        4. ~/.gitconfig
        5. .git/config at root of repo
 
-       Each one overrides the one above it. The "git config" command
-       will update .git/config, while "git config --global" will update
-       #3 or #4 depending on what you configure.
+       Each one overrides the ones above it. The 'git config' command
+       will update .git/config, while 'git config --global' will update
+       #4 if it either exists or #3 does not exist. I usually keep #3
+       under git control and #4 not. That way 'git config --global'
+       configurations don't get wipeout when I update my config files
+       with dfInstall dotfile installation script.
 
-    2. Set up your identity:
+    w. Set up your identity:
 
-         $ git config --global user.name "John Doe"
+         $ git config --global user.name 'John Doe'
          $ git config --global user.email john.doe.2@us.af.mil
 
        If you want to override these settings for a specific project,
@@ -74,51 +77,48 @@ I. Getting started with some configuration.
 
     5. Here is what currently is configured in GIT for this project's repo:
 
-         $ cd ~/devel/scheller-linux-archive/
+         $ cd ~/devel/scheller-linux-archive
          $ git config --list --show-origin --show-scope
-         global	file:/home/grs/.config/git/config	user.name=grscheller
-         global	file:/home/grs/.config/git/config	user.email=geoffrey@scheller.com
-         global	file:/home/grs/.config/git/config	core.editor=nvim
-         global	file:/home/grs/.config/git/config	core.fsmonitor=true
-         global	file:/home/grs/.config/git/config	core.pager=nvim -R -c 'setfiletype git'
-         global	file:/home/grs/.config/git/config	color.pager=no
-         global	file:/home/grs/.config/git/config	pull.rebase=false
-         global	file:/home/grs/.config/git/config	init.defaultbranch=main
-         global	file:/home/grs/.config/git/config	submodules.recurse=true
-         global	file:/home/grs/.config/git/config	diff.submodule=log
-         global	file:/home/grs/.config/git/config	rerere.enabled=true
-         global	file:/home/grs/.gitconfig	maintenance.repo=/home/grs/devel/scheller-linux-archive
-         global	file:/home/grs/.gitconfig	maintenance.repo=/home/grs/devel/dotfiles-submodules/fish
-         global	file:/home/grs/.gitconfig	maintenance.repo=/home/grs/devel/dotfiles-submodules/nvim
-         global	file:/home/grs/.gitconfig	maintenance.repo=/home/grs/devel/dotfiles-submodules/home
-         global	file:/home/grs/.gitconfig	maintenance.repo=/home/grs/devel/dotfiles-submodules/sway-env
-         global	file:/home/grs/.gitconfig	maintenance.repo=/home/grs/devel/dotfiles
-         global	file:/home/grs/.gitconfig	maintenance.repo=/home/grs/devel/fpinScala3Stdlib
-         global	file:/home/grs/.gitconfig	maintenance.repo=/home/grs/devel/grok-typescript
-         global	file:/home/grs/.gitconfig	maintenance.repo=/home/grs/devel/neovim-notes
-         global	file:/home/grs/.gitconfig	maintenance.repo=/home/grs/devel/pypi/boring-math
-         global	file:/home/grs/.gitconfig	maintenance.repo=/home/grs/devel/pypi/circular-array
-         global	file:/home/grs/.gitconfig	maintenance.repo=/home/grs/devel/pypi/datastructures
-         global	file:/home/grs/.gitconfig	maintenance.repo=/home/grs/devel/web
-         global	file:/home/grs/.gitconfig	gpg.format=ssh
-         global	file:/home/grs/.gitconfig	user.signingkey=/home/grs/.ssh/id_ed25519_grscheller.pub
-         local	file:.git/config	core.repositoryformatversion=0
-         local	file:.git/config	core.filemode=true
-         local	file:.git/config	core.bare=false
-         local	file:.git/config	core.logallrefupdates=true
-         local	file:.git/config	remote.origin.url=git@github.com:grscheller/scheller-linux-archive
-         local	file:.git/config	remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
-         local	file:.git/config	branch.master.remote=origin
-         local	file:.git/config	branch.master.merge=refs/heads/master
-         local	file:.git/config	maintenance.auto=false
-         local	file:.git/config	maintenance.strategy=incremental
-
-       Generally, user specific stuff is put in ~/.config/git/config,
-       system specific stuff (for current user) in ~/.gitconfig, and
-       repo specific stuff in .git/config. I keep user specfic stuff
-       under GIT control via a dotfiles repository. When updating config
-       info with "git config --global" I need to be mindful to add the
-       changes to my dotfiles repo.
+         global  file:/home/grs/.config/git/config       user.name=grscheller
+         global  file:/home/grs/.config/git/config       user.email=geoffrey@scheller.com
+         global  file:/home/grs/.config/git/config       user.signingkey=/home/grs/.ssh/id_ed25519_grscheller.pub
+         global  file:/home/grs/.config/git/config       core.editor=nvim
+         global  file:/home/grs/.config/git/config       core.fsmonitor=true
+         global  file:/home/grs/.config/git/config       core.pager=less
+         global  file:/home/grs/.config/git/config       color.pager=yes
+         global  file:/home/grs/.config/git/config       pull.rebase=false
+         global  file:/home/grs/.config/git/config       init.defaultbranch=main
+         global  file:/home/grs/.config/git/config       submodules.recurse=true
+         global  file:/home/grs/.config/git/config       diff.submodule=log
+         global  file:/home/grs/.config/git/config       rerere.enabled=true
+         global  file:/home/grs/.config/git/config       gpg.format=ssh
+         global  file:/home/grs/.gitconfig       maintenance.repo=/home/grs/devel/scheller-linux-archive
+         global  file:/home/grs/.gitconfig       maintenance.repo=/home/grs/devel/dotfiles
+         global  file:/home/grs/.gitconfig       maintenance.repo=/home/grs/devel/dotfiles-submodules/fish
+         global  file:/home/grs/.gitconfig       maintenance.repo=/home/grs/devel/dotfiles-submodules/nvim
+         global  file:/home/grs/.gitconfig       maintenance.repo=/home/grs/devel/dotfiles-submodules/home
+         global  file:/home/grs/.gitconfig       maintenance.repo=/home/grs/devel/dotfiles-submodules/sway-env
+         global  file:/home/grs/.gitconfig       maintenance.repo=/home/grs/devel/grok-typescript
+         global  file:/home/grs/.gitconfig       maintenance.repo=/home/grs/devel/fpinScala3Stdlib
+         global  file:/home/grs/.gitconfig       maintenance.repo=/home/grs/devel/neovim-notes
+         global  file:/home/grs/.gitconfig       maintenance.repo=/home/grs/devel/pypi/boring-math
+         global  file:/home/grs/.gitconfig       maintenance.repo=/home/grs/devel/pypi/datastructures
+         global  file:/home/grs/.gitconfig       maintenance.repo=/home/grs/devel/pypi/circular-array
+         global  file:/home/grs/.gitconfig       maintenance.repo=/home/grs/devel/web
+         local   file:.git/config        core.repositoryformatversion=0
+         local   file:.git/config        core.filemode=true
+         local   file:.git/config        core.bare=false
+         local   file:.git/config        core.logallrefupdates=true
+         local   file:.git/config        remote.origin.url=git@github.com:grscheller/scheller-linux-archive
+         local   file:.git/config        remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
+         local   file:.git/config        branch.master.remote=origin
+         local   file:.git/config        branch.master.merge=refs/heads/master
+         local   file:.git/config        branch.add-license-1.remote=origin
+         local   file:.git/config        branch.add-license-1.merge=refs/heads/add-license-1
+         local   file:.git/config        remote.beowulf.url=https://github.com/grsBeowulf/scheller-linux-archive
+         local   file:.git/config        remote.beowulf.fetch=+refs/heads/*:refs/remotes/beowulf/*
+         local   file:.git/config        maintenance.auto=false
+         local   file:.git/config        maintenance.strategy=incremental
 
 II. Getting a GIT Repository
 
@@ -151,19 +151,24 @@ II. Getting a GIT Repository
        the "upstream repo" or "origin" was set to /home/grs/devel/myRepo
        with no knowledge of the upstream's origin, if it exists.
 
-    3. Setting up a local shared repository:
+    3. Setting up a local shared repository without root permissions:
 
-       I have found doing this useful when two contractors are working
-       on the same code base but don't have access to each other's GIT
+       I have found doing this useful when two contractors were working
+       on the same code base but didn't have access to each other's GIT
        repos. The only thing they share is rwx access to the same Linux
        based computer file system. Also, I did not have root access to
-       the host system.
+       the host system, but commands starting with # were what I could
+       talk the admin into doing.
 
-       Lets assume both contractors and myself are in the repos group
+       We will put both contractors and myself are in the repos group
 
+         # groupadd repo --users schelleg dude1 dude2
+         # mkdir /share/repos
+         # chown schelleg:repo /share/repos
+         # chmod 2770 /share/repos
          $ umask 0007
          $ ls -ld /share/repos
-         drwxrws---. 7 repos repos 4096 Dec 12 09:17 /share/repos
+         drwxrws---. 7 grs repos 4096 Dec 12 09:17 /share/repos
          $ cd /share/repos
          $ git init --bare OurProject.git
 
@@ -187,21 +192,28 @@ II. Getting a GIT Repository
          $ cd /home/schelleg/devel/someProject
          $ git remote add downstream /share/repos/ourProject.git
 
-       Make sure your umask is set so that all the files in
+       Make sure your umask is set to 0007 so that all the files in
        ourProject.git get created with the necessary group rwx
        permissions. If not, GIT will function, but with subtly bizzare
-       behavior.
+       behavior. The SGID bit is set on the directory so that all files
+       will be in the repo group, not the users' default groups.
 
        Both contractors can clone this shared repo and collaborate by
        pulling and pushing to it. I can pull from the shared repo and
-       send upstream from my repo. I would recommend the contractors
-       sign their commits.
+       send upstream from my repo.
+
+       Changes I would make if I to do this again:
+
+       * refuse to help unless I had administrator privaledges
+       * run an actual git server either locally or somewhere else
+       * have the contractors digitally sign their commits
+       * be more patient explaining that GIT is not GitLab
 
     4. If you are starting a new project, setting up a shared repo is
        a bit easier. Create the the bare shared repository, clone it,
        add the initial files to the clone and push it back to the shared
        repo.
-`
+
          $ git clone /share/repos/ourProject.git
          $ cp ourProject_150605/* ourProject
          $ cd ourProject
@@ -266,7 +278,7 @@ II. Getting a GIT Repository
 
        We only picked up the currently active branch. I will sometimes
        do this to have a quick and dirty snapshot of a working copy of
-       the software. Also, I can "rm -rf .git" and either tar ball or
+       the software. Also, I can 'rm -rf .git' and either tar ball or
        burn to DVD what I want to give someone. Just make sure you do
        this in ~/temp/SDT and not in ~/Devel/SDT!!!
 
@@ -281,9 +293,9 @@ II. Getting a GIT Repository
        will do this with all remote repositories your local repo knows
        about.
 
-       Note: "git fetch" commands will not create local branches to
-       track remote branches. You must do a "git checkout" for each new
-       branch you want to track. The "git pull --all" command will only
+       Note: 'git fetch' commands will not create local branches to
+       track remote branches. You must do a 'git checkout' for each new
+       branch you want to track. The 'git pull --all' command will only
        pull from branches you currently track.
 
     8. Overiding global configurations when cloning a repo:
@@ -299,7 +311,7 @@ II. Getting a GIT Repository
 
          $ git log
 
-       For a give director in the repo:
+       For a given director in the repo:
 
          $ git log grok/Haskell
 
@@ -310,8 +322,10 @@ II. Getting a GIT Repository
    10. Go to github.com or gitlab.com and create yourself an empty GIT
        repo for your project, using their webtools.
 
-       Many young developers conflate GIT with GitLab. You don't know
-       GIT until you can use it without a browser or IDE.
+       Many young developers conflate GIT with GitLab or GitHub. You
+       don't know GIT until you can use it without a browser or IDE.
+       There is no such thing as a 'pull request' for GIT. Pull requests
+       are GitHub & GitLab things.
 
 III. Lifecycle of files:
 
@@ -494,9 +508,9 @@ VII. Creating revisionist history via git rebase:
     reasonable reason for squashing commits might be enforcing a policy
     of never pushing non-working history to a software release branch.
 
-    Also, useful when you want to hide your dirty laundry, or if you
-    want everyone to think you are a "genius" programmer. Please, don't
-    hide your scaffolding from the history. It may come in handy when
+    Also, useful when you want to hide your dirty laundry so that
+    everyone to think you are a "genius" programmer. Please, don't hide
+    your scaffolding from the history. It may come in handy when
     reworking the code, or to understand how an architecture arose, or
     how you think.
 
@@ -518,7 +532,7 @@ VII. Creating revisionist history via git rebase:
          # r, reword = use commit, but edit the commit message
          # e, edit = use commit, but stop for amending
          # s, squash = use commit, but meld into previous commit
-         # f, fixup = like "squash", but discard this commit's log message
+         # f, fixup = like 'squash', but discard this commit's log message
          # x, exec = run command (the rest of the line) using shell
          # d, drop = remove commit
 
@@ -533,6 +547,14 @@ VII. Creating revisionist history via git rebase:
        refuse a push with such an amended commit if a previous version
        was already pushed. You will need to do a `git merge' the
        upstream version into your work to make your HEAD pushable.
+
+    3. OK, you are a bad boy and just pushed changes to GitHub you very
+       deeply regret. GitHub will refuse your any amended changes.
+       A safer way to handle this than doing a 'git push --force' after
+       a 'git commit --amend' would be to use the fairly new git command
+       'git push --force-with-lease' instead. GitHub will let you push
+       up the amended changes so long as no one else has accessed the
+       upstream repo yet.
 
 VIII. GIT branch:
 
@@ -715,7 +737,7 @@ X. GIT merge:
     1. Merge a specific branch into the current branch.
 
          $ git merge someBranch
-         <edit any conflicts, "git add" changes, commit if needed>
+         <edit any conflicts, 'git add' changes, commit if needed>
 
     2. Example of a 3-way merge:
 
@@ -726,12 +748,12 @@ X. GIT merge:
        Edit some files
 
          $ git add <file>
-         $ git commit -m "Start a feature"
+         $ git commit -m 'Start a feature'
 
        Edit some files
 
          $ git add <file>
-         $ git commit -m "Finish a feature"
+         $ git commit -m 'Finish a feature'
 
        Develop the master branch
 
@@ -740,7 +762,7 @@ X. GIT merge:
        Edit some files
 
          $ git add <file>
-         $ git commit -m "Make some super-stable changes to master"
+         $ git commit -m 'Make some super-stable changes to master'
 
        Merge in the new-feature branch
 
@@ -776,7 +798,7 @@ X. GIT merge:
 
          $ git checkout long-term-feature
          $ git merge master
-         <edit any conflicts, "git add" changes, commit when needed>
+         <edit any conflicts, 'git add' changes, commit>
 
        Continue long-term development
          ...
@@ -880,7 +902,7 @@ XI. Syncing repositories:
                              # shooting yourself in foot.
          $ git pull
 
-       Now, the "git status" may tell us we can't just do a fast
+       Now, the 'git status' may tell us we can't just do a fast
        foreward. In that case, create a new local branch to track the
        remote branch and do a git merge (see IX).
 
@@ -970,7 +992,7 @@ XI. Syncing repositories:
          $ git config remote.origin.url
          https://github.com/grscheller/scheller-linux-environment
 
-       On Arch Linux "git push" prompts for username and password and
+       On Arch Linux 'git push' prompts for username and password and
        everything works fine. On CentOS 6.8 (git version 1.7.1) I get
        the error:
 
@@ -1237,10 +1259,9 @@ XV. Using Neovim as GIT Pager:
   You need to turn color off in GIT and let nvim do colorization.
 
     $ git config --global color.pager no
-    $ git config --global core.pager "nvim -R 'setfiletype git'"
+    $ git config --global core.pager 'nvim -R'
 
-  The '-R' means read-only, setting the file type ensures neovim
-  it is working with GIT related files.
+  The '-R' means read-only.
 
 XVI. GIT Stash:
 
@@ -1340,3 +1361,10 @@ On branch tmpWork
 Your branch is up to date with 'origin/tmpWork'.
 
 nothing to commit, working tree clean
+
+TODO: Explain the difference between
+      'git checkout branch' and 'git switch branch'
+
+      The first may be a bit overloaded.
+
+TODO: 'git blame'

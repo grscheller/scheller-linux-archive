@@ -1,4 +1,4 @@
-e GIT Notes
+# GIT Notes
 
 These are the notes I update as I learn more about GIT source code
 revision control. Though not a beginner tutorial, I try to

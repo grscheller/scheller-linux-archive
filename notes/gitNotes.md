@@ -1,4 +1,4 @@
-# GIT Notes
+e GIT Notes
 
 These are the notes I update as I learn more about GIT source code
 revision control. Though not a beginner tutorial, I try to
@@ -781,7 +781,7 @@ upstream version to make your HEAD pushable.
 
 ### Amending pushed commits
 
-You are just pushed to GitHub changes you very deeply regret. GitHub
+You just pushed to GitHub changes you very deeply regret. GitHub
 rejects your amended changes.
 
 You don't want to be a *bad boy* and cause grief to others by doing a
@@ -804,8 +804,8 @@ commits were added to the remote branch.
 
 You did not have to do a messy merge! But you may still be a *bad boy*.
 If someone had fetched your changes they will not be able to push back
-until *they* did the messy merge. Also, until they fully merge, they will
-still have access to your *dirty laundry* and could very well
+until *they* did a messy merge. Also, until they fully merge, they will
+still have access to your *dirty little secret* and could very well
 put it back!
 
 There is a lot more to this command and could be useful in rebasing
@@ -1126,7 +1126,7 @@ to origin only stable changes.
    $ git branch -d new-feature
 ```
 
-### Periodically  in changes from master:
+### Periodically incorporate changes from master:
 
        Start a new feature
 
@@ -1429,7 +1429,7 @@ I think the issue is because of the really olde version of git
 that CentOS 6.8 uses, but it might also be related to firewall
 proxy issues.
 
-Interesting factoid:
+#### Interesting factoid:
 
 When I changed the name of a repo from
 scheller-linux-environment to scheller-linux-archive,

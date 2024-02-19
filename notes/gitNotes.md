@@ -62,6 +62,8 @@ unfornunately has becoming over moderated.
   a question, closes it down referencing an 11 year old answer to a
   somewhat related question with out-of-date information.
 
+---
+
 ## Getting help
 
 Most Linux distributions have a good GIT tutorial in the man pages.
@@ -99,6 +101,8 @@ Three "patterns" to best leverage the above help commands
 ```
 
 Also see [GIT help files](https://support.github.com/) on the web.
+
+---
 
 ## GIT config command
 
@@ -508,7 +512,7 @@ To checking status of the files in your repo
 
 **Note:** Git only tracks files. not directories.
 
-### Begin trackng files
+### Begin tracking files
 
 To begin tracking a file
 
@@ -537,9 +541,10 @@ GIT as shown below.
 ```
 
 where HEAD is a special ref that points to the commit that currently is
-checked out. The git-restore command it is more clear as to what is
-being done. The git-reset command seems to be taking advantage of GIT
-implementation details and is opaque to what is really being done.
+checked out. Using the git-restore command makes it more clear as to
+what is being done. The git-reset command seems to be taking advantage
+of GIT implementation details and is opaque to what is really being
+done.
 
 To discard changes not alrady staged
 
@@ -551,7 +556,7 @@ To discard changes not alrady staged
 
 Use a .gitignore file to make GIT ignore files.
 
-Example:
+Example .gitinore file:
 
 ```gitignore
    # ignore all .a files
@@ -576,19 +581,19 @@ Example:
 
 ## Moving and removing files.
 
-### Removing files 
+### Removing files
 
 To remove files while the files or directories still exist
 
 ```bash
-         $ git rm file1 file2 dir1
-         $ git commit
+   $ git rm file1 file2 dir1
+   $ git commit
 ```
 
 sometimes you will also need to do a
 
 ```bash
-         $ rm file1 file2
+   $ rm file1 file2
 ```
 
 to actually get rid of them from your working directory. If the current
@@ -632,15 +637,13 @@ To updating major changes, such as a vendor upgrade, with file
    $ git commit
 ```
 
-       The `--all` or `-A` option is like `--update` except that it
-       also will match against files in the working tree.
+The `--all` or `-A` option is like `--update` except that it also will
+match against files in the working tree.
 
-       For better fidelity, especially when dealing with directory
-       structure changes, one might want to use git mv commands.
+For better fidelity, especially when dealing with directory structure
+changes, one might want to use `git mv` commands.
 
-    To move files:
-
-### Moving files 
+### Moving files
 
 To move files
 
@@ -701,12 +704,14 @@ The 'git rebase' command comes in handy when you need to reorder
 commits, change commit messages, squash commits together. A
 reasonable reason for squashing commits might be enforcing a policy
 of never pushing non-working history to a software release branch.
+Also makes people not familiar with the code base to more effectively
+use `git bisect` to find the commit that introduced a bug.
 
-Also, useful when you want to hide your dirty laundry so that
-everyone to think you are a "genius" programmer. Please, don't hide
+If you want to hide your *dirty laundry* so that
+everyone will think you are a "genius" programmer. Please, don't hide
 your scaffolding from the history. It may come in handy when
 reworking the code, or to understand how an architecture arose, or
-how you think.
+understand how you think.
 
 ### Redo the last 4 commits:
 
@@ -749,8 +754,8 @@ conflict, and
 If you have not pushed your changes upstream, you can use the
 'git commit --amend' to update the last commit. GitHub will
 refuse a push with such an amended commit if a previous version
-was already pushed. You will need to do a `git merge' with the
-upstream version into your work to make your HEAD pushable.
+was already pushed. You will need to do a `git merge` with the
+upstream version to make your HEAD pushable.
 
 ### Amending pushed commits
 
@@ -763,7 +768,7 @@ You don't want to be a *bad boy* and cause grief to others by doing a
    $ git push --force   # DON'T Do THIS!!!
 ```
 
-The above could swallow work done by other!
+The above could swallow work done by others!
 
 There is a newer option to the `git push` command that may save you.
 
@@ -782,7 +787,7 @@ still have access to your *dirty laundry* and could very well
 put it back!
 
 There is a lot more to this command and could be useful in rebasing
-situations. This option can take a ref as an optional parameter.  
+situations. This option can take a ref as an optional parameter.
 This option allows you to say that you expect the history you are
 updating is what you rebased and want to replace. If the remote ref
 still points at the commit you specified, you can be sure that no other

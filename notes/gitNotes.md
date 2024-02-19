@@ -105,12 +105,24 @@ Also see [GIT help files](https://support.github.com/) on the web.
 4. **~/.gitconfig**
 5. **.git/config at root of repo**
 
-Each one overrides the ones above it. The `git config` command
-will update '.git/config', while `git config --global` will update
-#4 if it exists or #3 does not exist. I usually keep #3
-under git control and #4 not. That way `git config --global`
-configurations don't get clobbered when I update my config files
-with my dotfile installation script.
+Each one overrides the ones above it.
+
+The `git config` command (without --global)
+
+* updates the repo's '.git/config' file,
+* or complains if not in a GIT repository
+
+The `git config --global` command will
+
+* update #4 if it exists
+* otherwise creates and updates #4 if #3 does not exist
+* otherwise it updates #3
+
+I usually keep #3 under git control and #4 not. That way
+`git config --global` configurations don't get clobbered when
+I update my config files with my dotfile installation script.
+
+Aside: The `git maintenance` command will create #4 even if #3 exists.
 
 ### Configuring GIT
 
@@ -123,7 +135,7 @@ with my dotfile installation script.
 
 If you want to override these settings for a specific project,
 run the above commands without the --global option when in
-that project.
+that project directory structure.
 
 #### To customize editor
 
@@ -711,17 +723,17 @@ either -n, -f, or -i must be selected.
 Rewriting your history, don't do this if you have already shared it!!!
 
 The 'git rebase' command comes in handy when you need to reorder
-commits, change commit messages, squash commits together. A
-reasonable reason for squashing commits might be enforcing a policy
-of never pushing non-working history to a software release branch.
-Also makes people not familiar with the code base to more effectively
-use `git bisect` to find the commit that introduced a bug.
+commits, change commit messages, squash commits together.
 
-If you want to hide your *dirty laundry* so that
-everyone will think you are a "genius" programmer. Please, don't hide
-your scaffolding from the history. It may come in handy when
-reworking the code, or to understand how an architecture arose, or
-understand how you think.
+Reasonable reasons for squashing commits might be
+
+* enforcing a policy of never pushing non-working history to a
+  software release branch
+* to more effectively use `git bisect` to find a bug
+  * helpful to endusers not familiar with the code base who spot a bug
+
+Hiding your *dirty laundry* so that everyone will think you write
+perfect code the first time is never a good reason to rebase. 
 
 ### Redo the last 4 commits:
 
@@ -1218,7 +1230,7 @@ if you like longer options, in 1.8.0+ you can do
 To keep things simple, best practices is to rename upstream to origin
 or origin-foo and rename your local branch bar to foo.
 
-### Use GIT fetch & diff to *sneak a peak*
+### Use GIT fetch to *sneak a peak*
 
 Use `fetch` to import commits into the tracking branch for the remote
 repository. This gives you a chance to review changes before integrating
@@ -1237,14 +1249,28 @@ or with more fidelity
    $ git diff origin/someBranch
 ```
 
-    7. Use 'git branch' to view local branches and
-       use 'git branch -r' for remote branches. Inspect these
-       branches with the ususal git chechout and git log commands.
+Use `git branch` to view local branches and use `git branch -r` for
+remote branches. Inspect these branches with the ususal git chechout and
+git log commands. Be aware that checking out a tracking branch will
+leave you in a "detached head" state.
 
-    8. GIT pull (bring in remote changes). This command fetches from and
-       integrates with another repository or local branch. The
-       'git pull' command is shorthand for 'git fetch' followed by
-       'git merge FETCH_HEAD'
+---
+
+## Push and Pull
+
+Use `git push` to merge local changes into remote branches located on
+remote repos.
+
+Use `git pull` to merge in remote changes. This command syncs the local
+tracking branch with the remote branch. Then it merges the local
+tracking branch into the local branch. The `git pull` command is
+shorthand for `git fetch` followed by `git merge FETCH_HEAD`
+
+Remember, pushing and pulling are between different repositories.
+Merging happend between branches on the same repository. Both `git push`
+and `get pull` use `git merge` behind the scenes.
+
+### GIT push and pull
 
 ```bash
    $ git pull origin someBranch
@@ -1262,7 +1288,8 @@ To pull from the branch you are tracking with the current branch, use
    $ git pull origin someBranch
 ```
 
-will pull in from "someBranch" even if you are on "someOtherBranch".
+will pull in from the remote "someBranch" even if you are on the local
+"someOtherBranch".
 
 Best practice is:
 
@@ -1275,9 +1302,9 @@ Best practice is:
    $ git pull
 ```
 
-Now, the 'git status' may tell us we can't just do a fast
-foreward. In that case, create a new local branch to track the
-remote branch and do a git merge (see IX).
+Now, `git status` may tell us we can't just do a fast foreward. In
+that case, create a new local branch tracking the remote branch. That
+way you have two places to morph before doing a `git merge`.
 
 The command
 
@@ -1285,15 +1312,14 @@ The command
    $ git pull
 ```
 
-is actually the same as doing
+which actually is the same as
 
 ```bash
    $ git fetch
-   $ git merge origin
+   $ git merge FETCH_HEAD
 ```
 
-which is the same as, assuming you have checked the master branch out
-and it is setup to track origin/master.
+which accmplishes same thing as doing
 
 ```bash
    $ git fetch origin         # Sync local copy of master
@@ -1301,6 +1327,13 @@ and it is setup to track origin/master.
    $ git merge origin/master    # Merge local copy from last
                                 # fetch from origin into your
                                 # local version of master.
+```
+
+or, assuming master tracks origin/master
+
+```bash
+   $ git fetch
+   $ git merge origin
 ```
 
 What you are actually merging into your working directory is
@@ -1312,16 +1345,15 @@ is on the remote.
 More explicitly,
 
 ```bash
-   git checkout master             <- or whatever branch
-   git fetch origin                <- fetch all tracked upstream changes
-   git merge origin/master         <- local copy of upstream branch
+   git checkout master         # or whatever branch
+   git fetch origin            # fetch all tracked upstream changes
+   git merge origin/master     # local copy of upstream branch
 ```
 
-GIT push - push local changes elsewhere
+To push local changes elsewhere
 
 ```bash
-   $ git push origin <branch>
-   $ git push origin master
+   $ git push origin someBranch
    $ git push origin --all
    $ git push origin --tags
 ```
@@ -1340,19 +1372,19 @@ git, it will just push whatever branch you are currently on.
 To remove a remote branch or tag, do
 
 ```bash
-   git push --delete <Remote_Name> <Branch_or_Tag_Name>
+   git push --delete Remote_Name Branch_or_Tag_Name
 ```
 
-On older versions og GIT
+On older versions of GIT
 
 ```bash
-   $ git push <Remote_Name> :<Branch_Name>
+   $ git push Remote_Name :Branch_Name
 ```
 
-       note the space before the colen, similar to renaming a branch,
-       you are pushing "nothing" into BranchName.
+note the space before the colen, similar to renaming a branch,
+you are pushing "nothing" into BranchName.
 
-       To push a tag,
+To push a tag,
 
 ```bash
    $ git push <RemoteName> <TagName>
@@ -1364,18 +1396,18 @@ to push all tags
    $ git push <RemoteName> --tag
 ```
 
-   11. GIT push (to GITHUB):
+### GIT push to GITHUB
 
-       Cloning from GITHUB sets the URL to origin as
+Cloning from GITHUB sets the URL to origin as
 
 ```bash
    $ git config remote.origin.url
    https://github.com/grscheller/scheller-linux-environment
 ```
 
-       On Arch Linux 'git push' prompts for username and password and
-       everything works fine. On CentOS 6.8 (git version 1.7.1) I get
-       the error:
+On Arch Linux 'git push' prompts for username and password and
+everything works fine. On CentOS 6.8 (git version 1.7.1) I get the
+error:
 
 ```bash
    $ git push
@@ -1383,7 +1415,7 @@ to push all tags
    fatal: HTTP request failed
 ```
 
-       To fix this, set the URL to
+To fix this, set the URL to
 
 ```bash
    $ git config remote.origin.url https://grscheller@github.com/grscheller/scheller-linux-environment.git
@@ -1405,7 +1437,7 @@ above value for remote.origin.url still worked, but
 changing the repo name part of it to something random
 like, like scheller-linux-foofoo, failed.
 
-   12. Using SSH with GITHUB:
+### Using SSH with GITHUB:
 
 From the GITHUB website, go to `Settings -> SSH and GPG keys`
 
@@ -1440,71 +1472,74 @@ Next, from the repo, tell git to use ssh protocal
 
 ## Tagging:
 
-    1. List available tags.
+#### List available tags.
+
+To list all current tags in alphabetical order
 
 ```bash
    $ git tag
 ```
 
-       This will list all current tags in alphabetical order.
-       To refine search,
+To refine the search
 
 ```bash
    $ git tag -l 'v1.8.*'
    $ git tag -l '*foo*'
 ```
 
-    2. Creating Tags.
+#### Creating Tags.
 
-       There are two types of tags, lightweight and annotated. A
-       lightweight tag is like a branch that does not change - it is
-       just a pointer to a specific commit. Annotated tags are stored as
-       full objects in GIT database. They have tagger name, e-mail
-       address, date, and can be signed with GNU Privacy Guard.
+There are two types of tags, lightweight and annotated. A lightweight
+tag is like a branch that does not change, just a pointer to a specific
+commit. Annotated tags are stored as full objects in GIT database. They
+have the tagger's name, e-mail address, date, and can be signed with GNU
+Privacy Guard.
 
-       To create an annotated tag, use -a:
+To create an annotated tag, use -a
 
 ```bash
    $ git tag -a v1.0 -m 'Original DVS code gotten from David Steller'
 ```
 
-    3. Pushing tags.
+#### Pushing tags
 
-       By default, git push does not push tags. To explicitly push a tag,
+By default, git push does not push tags. To explicitly push a tag
 
 ```bash
    $ git push origin v1.0
 ```
 
-       To push all available tags, use the --tags option on git push.
+To push all available tags, use the --tags option on git push
 
 ```bash
    $ git push origin --tags
 ```
 
-    4. Checking out tags.
+### Checking out tags.
 
-       To create a new branch at a specific tag:
+To create a new branch at a specific tag, say v2.2.0
 
 ```bash
-   $ git checkout -b version2 v2.0.0
+   $ git checkout -b version2-2 v2.2.0
 ```
 
-    5. Deleting tags (local and remote).
+#### Deleting tags (local and remote).
 
-       To delete local tag:
+To delete local tag:
 
 ```bash
    $ git tag -d tag_to_delete
 ```
 
-       To delete off of a remote repo:
+To delete off of a remote repo:
 
 ```bash
    $ git push origin :refs/tags/tag_to_delete
 ```
 
-    6. Show info about a tag, use show cmd.
+#### Show info about a tag
+
+Use the show cmd
 
 ```bash
    $ git show tag_name
@@ -1696,26 +1731,27 @@ Find the best common ancestor for a three way merge.
    Blocking version now package fpinscala.parallelism.javaFutures.
 ```
 
-       Then search for equivalent of "d71adde" in a git log.
+Then search for equivalent of "d71adde" in a git log.
 
 ---
 
 ## Using Neovim as GIT Pager:
 
-  You need to turn color off in GIT and let nvim do colorization.
+You need to turn color off in GIT and let nvim do colorization.
 
 ```bash
    $ git config --global color.pager no
    $ git config --global core.pager 'nvim -R'
 ```
-  The `-R` means read-only.
+
+The `-R` means read-only.
 
 ---
 
 ## GIT Stash:
 
-  Store away current state of working directory and the index and goes
-  back to a clean working directory:
+Store away current state of working directory and the index and goes
+back to a clean working directory:
 
 ```bash
    $ git stash push
@@ -1727,24 +1763,23 @@ or just
    $ git stash
 ```
 
-  Drop the last stash entry from the list of stash entries:
+Drop the last stash entry from the list of stash entries:
 
 ```bash
    $ git drop
 ```
 
-  Pop changes back into working directory, perhaps on a subsequent
-  commit:
+Pop changes back into working directory, perhaps on a subsequent commit
 
 ```bash
    $ git stash pop
 ```
 
-    This may fail due to conflicts due to changes being applied at the
-    commit that was HEAD at the time of the stash. Resolve the conflict
-    and use git drop.
+This may fail due to conflicts due to changes being applied at the
+commit that was HEAD at the time of the stash. Resolve the conflict
+and use git drop.
 
-  Remove all stash entries:
+Remove all stash entries:
 
 ```bash
    $ git stash clear
@@ -1773,12 +1808,12 @@ To create a temporary branch and push it upstream.
    $ git branch tmpWork
    $ git stash
    $ git checkout tmpWork
-   $ git stash apply
+   $ git stash apply             # stash apply ???
    $ git add .
    $ git commit
-   $ git push -u origin tmpWork      <- -u for upstream????
+   $ git push -u origin tmpWork
    $ git status
-   On branch tmp*ork
+   On branch tmpwork
    Your branch is up to date with 'origin/tmpWork'.
 
    nothing to commit, working tree clean
@@ -1798,3 +1833,5 @@ and `git switch branch`. The first is a bit overloaded.
 **TODO:** Look into git-rev-list and git-show-branch
 
 **TODO:** Give examples og Git Ranges in use
+
+**TODO:** Update GitHub access

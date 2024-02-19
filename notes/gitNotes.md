@@ -43,7 +43,7 @@ menus, keyboard shortcuts, and help utility. GUI and web clients come
 and go, GIT's CLI interface will be with us for decades, if not
 centuries.
 
-#### Original resources I used for these notes:
+#### Resources I used to learn GIT:
 
 [ProGIT Book](http://www.git-scm.com/book/en/v2)
 
@@ -51,16 +51,7 @@ centuries.
 
 [Git 101](https://www.garron.me/en/articles/git-101-basics-introduction-basic-use-commands.html)
 
-[Stack Overflow](https://stackoverflow.com/?tab=active) which
-unfornunately has becoming over moderated.
-
-* New information emphasizes the *hows* and not the *whys*
-* Much of the best information used to be when answers & comments
-  * became *opinionated*
-  * drifting *off topic*
-* It is not helpful when some moderator, not understand the subtly of
-  a question, closes it down referencing an 11 year old answer to a
-  somewhat related question with out-of-date information.
+[Stack Overflow](https://stackoverflow.com/?tab=active)
 
 ---
 
@@ -198,6 +189,8 @@ that project.
    local   file:.git/config        maintenance.auto=false
    local   file:.git/config        maintenance.strategy=incremental
 ```
+
+---
 
 ## GIT clone and init commands
 
@@ -412,6 +405,8 @@ Also, I can 'rm -rf .git' and either tar ball or burn to DVD what I want
 to give someone. Just make sure you do this in ~/temp/SDT and not in
 ~/Devel/SDT!!! I learned this the hard way.
 
+---
+
 ## The fetch command
 
 The fetch command updates local copies of remote branches.
@@ -433,6 +428,8 @@ remote branches. You must do a 'git checkout' for each new branch you
 want to track. The 'git pull --all' command will only pull from branches
 you currently track.
 
+---
+
 ## Overiding global configurations when cloning a repo:
 
 To overiding global configurations when cloning a repo
@@ -445,6 +442,8 @@ To overiding global configurations when cloning a repo
 ```
 
 You can use `-c` instead of `--config`.
+
+---
 
 ## Listing the commit comments made in a repo
 
@@ -466,6 +465,8 @@ For a given file, do
 ```bash
    $ git log adminLogs/gauss17ArchLinuxAdmin.log
 ```
+
+---
 
 ## GIT Basics:
 
@@ -552,6 +553,8 @@ To discard changes not alrady staged
    $ git checkout some_file
 ```
 
+---
+
 ## Ignoring files:
 
 Use a .gitignore file to make GIT ignore files.
@@ -579,27 +582,32 @@ Example .gitinore file:
 * Negate a pattern by starting it with an exclamation point (!)
 * Two asterisks match nested directories
 
+---
+
 ## Moving and removing files.
 
 ### Removing files
 
-To remove files while the files or directories still exist
+To remove files from a branch
 
 ```bash
-   $ git rm file1 file2 dir1
+   $ git rm file1 file2 dir1/
    $ git commit
 ```
 
-sometimes you will also need to do a
+If there are untracked changes to the files, the files will remain in
+the workspace as untracted files. GIT does not track directories so
+dir1/ will remain too if there are untracted files in it.
+
+You may need to do
 
 ```bash
    $ rm file1 file2
+   $ rm -r dir1/
 ```
 
-to actually get rid of them from your working directory. If the current
-working versions are different than what is in the repository, GIT will
-treat the files as an unstaged local change. You run into this a lot
-when files are removed upstream.
+to actually get rid of them from the working directory. Sometimes one
+run into empty directories when files are removed upstream.
 
 Lets say you want to remove lots of files. For example, lets get rid of
 all the subversion directories (since we are using GIT).
@@ -629,8 +637,8 @@ scripting like
 
 which will also work.
 
-To updating major changes, such as a vendor upgrade, with file
-       additions and removals, in a brute force sort of way, use
+To updating major changes, such as a vendor upgrade, with file additions
+and removals, in a brute force sort of way, use
 
 ```bash
    $ git add --all
@@ -695,6 +703,8 @@ The `git clean` command takes the following options
 |  `-e pat` | add pattern `pat` to ignored patterns from .gitignore |
 
 either -n, -f, or -i must be selected.
+
+---
 
 ## Creating revisionist history via git rebase:
 
@@ -798,6 +808,8 @@ without explicitly locking it, and the remote ref is updated only if the
 --force-with-lease alone, without specifying the details, will protect
 all remote refs that are going to be updated by requiring their current
 value to be the same as the remote-tracking branch we have for them.
+
+---
 
 ## GIT branch:
 
@@ -947,6 +959,8 @@ To figuring out what exactly your branches are actually tracking
    scheller    ../../../scheller-linux-archive/ (push)
 ```
 
+---
+
 ## GIT checkout:
 
 The git checkout command lets you navigate between branches. Checking
@@ -991,7 +1005,7 @@ more specific:
    $ git checkout -b some_branch remote-name/some_branch
 ```
 
-    5. Lets say we have two remotes each with a branch with same name.
+Lets say we have two remotes each with a branch with same name
 
 ```bash
    $ git branch -r
@@ -1002,7 +1016,7 @@ more specific:
    scheller/master
 ```
 
-And we are already tracking origin/master.
+and we are already tracking origin/master.
 
 ```bash
    $ git branch
@@ -1011,7 +1025,7 @@ And we are already tracking origin/master.
    * master
 ```
 
-How do we checkout scheller/master? We give it another name:
+How do we checkout scheller/master? We give it another name
 
 ```bash
    $ git checkout -b scheller-master --track scheller/master
@@ -1026,6 +1040,8 @@ Now we have
      master
    * scheller-master
 ```
+
+---
 
 ## GIT merge:
 
@@ -1090,21 +1106,15 @@ Merge in the new-feature branch
    $ git commit
 ```
 
-Delete the new-feature branch (Once things are safely merged and tested,
-no sense keeping old cruft around.) Best practices is to only push
+Delete the new-feature branch once things are safely tested and merged,
+no sense keeping old cruft around. Best practices is to only push
 to origin only stable changes.
 
 ```bash
    $ git branch -d new-feature
 ```
 
-Remove a file from the branch (not the history)
-
-```bash
-   $ git rm <FileName>
-```
-
-    3. Periodically sync in changes from master:
+### Periodically  in changes from master:
 
        Start a new feature
 
@@ -1131,7 +1141,11 @@ Remove a file from the branch (not the history)
 
        Continue long-term development ...
 
+---
+
 ## Syncing repositories:
+
+### Making connections
 
 To list remote connections.
 
@@ -1177,45 +1191,50 @@ individual developers makes it possible to collaborate outside of the
 main (or blessed) repository. This can be very useful for a small teams
 working on a large subproject.
 
-    5. Make an existing branch track a remote branch.
+### Have existing branch track a remote branch
 
-       As of GIT 1.8.0
+To make an existing branch track a remote branch, as of GIT 1.8.0
 
 ```bash
    $ git checkout bar
    $ git branch -u upstream/foo
 ```
 
-       Now your local branch bar is tracking the branch foo on the
-       remote repo upstream.
+Now your local branch bar is tracking the branch foo on the remote repo
+upstream.
 
-       If you are on a branch other than bar,
+If you are on a branch other than bar,
 
 ```bash
    $ git branch -u upstream/foo bar
 ```
 
-       if you like longer options, in 1.8.0+ you can do
+if you like longer options, in 1.8.0+ you can do
 
 ```bash
    $ git branch --set-upstream-to=upstream/foo bar
 ```
 
-       To keep things simple, best practices is to rename upstream to
-       origin and your local repo bar to foo.
+To keep things simple, best practices is to rename upstream to origin
+or origin-foo and rename your local branch bar to foo.
 
-    6. GIT fetch imports commits from a remote repository, giving you
-       chance to review changes before integrating them into the local
-       copy of the project.
+### Use GIT fetch & diff to *sneak a peak*
+
+Use `fetch` to import commits into the tracking branch for the remote
+repository. This gives you a chance to review changes before integrating
+them into the local copy of the project.
 
 ```bash
    $ git fetch origin
+   $ git diff origin
 ```
 
-       For only one branch, use
+or with more fidelity
 
 ```bash
+   $ git switch someBranch
    $ git fetch origin someBranch
+   $ git diff origin/someBranch
 ```
 
     7. Use 'git branch' to view local branches and
@@ -1231,8 +1250,7 @@ working on a large subproject.
    $ git pull origin someBranch
 ```
 
-To pull from the branch you are tracking with
-the current branch, use
+To pull from the branch you are tracking with the current branch, use
 
 ```bash
    $ git pull
@@ -1244,8 +1262,7 @@ the current branch, use
    $ git pull origin someBranch
 ```
 
-will pull in from "someBranch" even if you
-are on "someOtherBranch".
+will pull in from "someBranch" even if you are on "someOtherBranch".
 
 Best practice is:
 
@@ -1419,6 +1436,8 @@ Next, from the repo, tell git to use ssh protocal
    alias addkey='eval $(ssh-agent) && ssh-add'
 ```
 
+---
+
 ## Tagging:
 
     1. List available tags.
@@ -1491,21 +1510,25 @@ Next, from the repo, tell git to use ssh protocal
    $ git show tag_name
 ```
 
+---
+
 ## Examining previous versions of a file:
 
-    1. Use 'git show' to view a previous version of file,
+### GIT show
+
+Use 'git show' to view a previous version of file
 
 ```bash
    $ git show REVISION:path/to/file
 ```
 
-       for example
+for example
 
 ```bash
    $ git show HEAD~3:PAT_Files/mfiles/FilterValuesPanel.m
 ```
 
-       will send the third version back of the file to a pager.
+will send the third version back of the file to a pager.
 
 ```bash
    $ git show HEAD~1:pat.m > junk
@@ -1535,45 +1558,50 @@ will show the version of the file as of that date.
    init.lua
 ```
 
-       which lists the files in that directory as of that date.
+which lists the files in that directory as of that date.
 
 ```bash
    $ git show HEAD@{2022-06-4}
 ```
 
-       will list the commit messages and diffs for that day.
+will list the commit messages and diffs for that day.
 
-    2. Use 'git log' to view the revision history a of file,
+### GIT log
+
+Use 'git log' to view the revision history a of file
 
 ```bash
    $ git log -p --follow config/nvim/init.lua
 ```
 
-       The -p tells git to show all patch information.
-       the --follow to follow the history even in the event
-       that the file name was changed.
+The `-p` tells git to show all patch information, the `--follow` to
+follow the history even in the event that the file name was changed.
 
-## GIT revision history tools:
+---
 
-    1. To show commit comments for history
+## GIT Revision History Tools:
+
+### GIT log
+
+#### To show commit comments for history
 
 ```bash
    $ git log
 ```
 
-       To shows history of both commits A and B (a Union)
+#### To shows history of both commits A and B (a Union)
 
 ```bash
    $ git log A B
 ```
 
-       To include diff info with commit comments
+#### To include diff info with commit comments
 
 ```bash
    $ git log -p
 ```
 
-       First line summaries of commit messages
+#### First line summaries of commit messages
 
 ```bash
    $ git log --oneline
@@ -1593,73 +1621,66 @@ seven rules of a great GIT commit message:
 Above taken from this
 [blog post](https://chris.beams.io/posts/git-commit/).
 
-    2. git diff
+### GIT diff
 
-       Let's say we have three branches, main, feature1 and feature2.
+Let's say we have three branches, main, feature1 and feature2.
 
-       First, lets see how to compare two specific files in two
-       specific branches against each other. Output will be similar
-       to the Unix diff command.
+First, lets see how to compare two specific files in two specific
+branches against each other. Output will be similar to the Unix diff
+command.
 
 ```bash
    $ git diff feature1:file1 feature2:file2
 ```
 
-       The line between the files which are the same will be colored
-       white. Red will be the items in file1 not in file2. Green
-       will be for items in file2 not in file1. Left red, Right green.
-       The red lines will begin with a '-', the green lines a '+'.
+The line between the files which are the same will be colored white, red
+lines will be the items in file1 not in file2, green lines will be for
+items in file2 not in file1. Left red, Right green. The red lines will
+begin with a `-`, the green lines a `+`.
 
-       Compare two branches. If you leave off the `:`, git usually
-       guesses correctly what you mean. I like to be non-ambiguous.
+Compare two branches. If you leave off the `:`, git usually guesses
+correctly what you mean. I like to be non-ambiguous.
 
 ```bash
    $ git diff main: feature1:
 ```
 
-       Comparing past version with what is in the working directory
+Comparing past version with what is in the working directory
 
 ```bash
    $ git diff HEAD~2:DVS.m DVS.m
 ```
 
-**note:** 2 revisions ago, not necessarily on the same branch!
+Note that 2 revisions ago need not necessarily be on the same branch!
 
-       Comparing a file between branches-
+To comparing a file between branches
 
 ```bash
    $ git diff new_feature:DVS.m master:DVS.m
 ```
 
+If given only one argument, compare with the working directory.
 
-       If given only one argument, compare with the working directory.
+### GIT Ranges
 
-    3. git show
+The range `A..B` will be resolved to show each commit individually from
+`A` to `B`. Files can be specified via syntax `commit:path/to/file`.
+Pass it a directory, it will show info of the last commit changing in
+that directory.
 
-       Very versatile command. Commit ranges a..b will be resolved to
-       show each commit individually. Files can be specified via syntax
-       commit:path/to/file. Pass it a directory, it will show info of
-       the last commit changing that directory.
+#### git range
 
+The range `A...B` means every commit reachable by `A` or `B` but not both.
 
-    4. The range A...B means every commit reachable by A or B
-       but not both.
+* for `git log` will show commits it makes when used with divergent branches
+* for `git diff` it is syntactic sugar for `git diff $(git merge-base A B) B`
+* for `git show` will show commit info for each single commit in that range
 
-       with git log   it will show you those commits it makes
-                      when used with divergent branches.
+#### git merge-base
 
-       with git diff  it is syntactic sugar for
-                      git diff $(git merge-base A B) B
+Find the best common ancestor for a three way merge.
 
-       with git show  will jush show commit info for each
-                      single commit in that range.
-
-    5. git merge-base finds the best common ancestor for a
-                      three way merge
-
-    6. Look into git-rev-list and git-show-branch.
-
-    7. Find all the "roots" of a repo,
+#### Find all the "roots" of a repo,
 
 ```bash
    $ git rev-list --max-parents=0 HEAD
@@ -1667,7 +1688,7 @@ Above taken from this
    6e886a1b01a10f39b53bf8b90dba4c73625f4353
 ```
 
-    8. Finding the first commit a file appeared,
+#### Finding the first commit a file appeared
 
 ```bash
    $ git log --oneline -- Actor.scala | tail -n 1
@@ -1676,6 +1697,8 @@ Above taken from this
 ```
 
        Then search for equivalent of "d71adde" in a git log.
+
+---
 
 ## Using Neovim as GIT Pager:
 
@@ -1686,6 +1709,8 @@ Above taken from this
    $ git config --global core.pager 'nvim -R'
 ```
   The `-R` means read-only.
+
+---
 
 ## GIT Stash:
 
@@ -1736,58 +1761,7 @@ or just
    $ git stash pop
 ```
 
-## Git Forking from GitHub (not GitHub forking):
-
-  A GitHub project does almost what you want to do.
-
-  Go to the repo in question via the GitHub and fork the repository:
-
-    https://github.com/folke/tokyonight.nvim
-
-  Now, clone your version of the repo
-
-```bash
-   $ cd ~/devel
-   $ git clone https://github.com/grscheller/tokyonight.nvim
-```
-
-  Update something and push changes back to your fork
-
-```bash
-   $ nvim README.md
-   $ git add .
-   $ git commit
-   $ git push
-```
-
-  Let my fork know about the upstream repo (git name "upstream")
-
-```bash
-    $ git remote add upstream https://github.com/folke/tokyonight.nvim
-```
-
-  Let's see what we have
-
-```bash
-   $ git remote -v
-   origin	https://github.com/grscheller/tokyonight.nvim (fetch)
-   origin	https://github.com/grscheller/tokyonight.nvim (push)
-   upstream	https://github.com/folke/tokyonight.nvim (fetch)
-   upstream	https://github.com/folke/tokyonight.nvim (push)
-
-   $ git branch --all
-   * main
-     remotes/origin/HEAD -> origin/main
-     remotes/origin/main
-     remotes/upstream/main
-```
-
-  Merge in upstream changes
-
-```bash
-   $ git merge upstream/main
-   Already up to date.
-```
+---
 
 ## TODO:
 
@@ -1820,3 +1794,7 @@ and `git switch branch`. The first is a bit overloaded.
 **TODO:** Add info on `git maintenance`
 
 **TODO:** Add info on `git diff --cache`
+
+**TODO:** Look into git-rev-list and git-show-branch
+
+**TODO:** Give examples og Git Ranges in use

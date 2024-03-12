@@ -23,7 +23,7 @@ Can be done with just pip and a virtual environment.
 
 * goto where you want the virtual environment
 * create the virtual environment
-* change to the the (jupyter_learn) 
+* change to the the (jupyter_learn)
 * see what is there
 * update base environment
 * see what is there
@@ -187,12 +187,12 @@ Can be done with just pip and a virtual environment.
    usage: jupyter [-h] [--version] [--config-dir] [--data-dir] [--runtime-dir]
                   [--paths] [--json] [--debug]
                   [subcommand]
-   
+
    Jupyter: Interactive Computing
-   
+
    positional arguments:
      subcommand     the subcommand to launch
-   
+
    options:
      -h, --help     show this help message and exit
      --version      show the versions of core jupyter packages and exit
@@ -202,14 +202,16 @@ Can be done with just pip and a virtual environment.
      --paths        show all Jupyter paths. Add --json for machine-readable format.
      --json         output paths as machine-readable json
      --debug        output debug information about paths
-   
+
    Available subcommands: dejavu events execute kernel kernelspec lab labextension
    labhub migrate nbconvert run server troubleshoot trust
-   
+
    Please specify a subcommand or one of the optional arguments.
 ```
 
 ## How to use
+
+### First attempt
 
 The documentation doesn't say where to point your browser.
 
@@ -225,3 +227,86 @@ The documentation doesn't say where to point your browser.
 
 I was hoping the server would give some sort of hint.
 
+### Second attempt
+
+This seems to have worked.
+
+```fish
+   $ jupyter lab
+   [ServerApp] jupyter_lsp | extension was successfully linked.
+   [ServerApp] jupyter_server_terminals | extension was successfully linked.
+   [ServerApp] jupyterlab | extension was successfully linked.
+   [ServerApp] Writing Jupyter server cookie secret to /home/grs/.local/share/jupyter/runtime/jupyter_cookie_secret
+   [ServerApp] notebook_shim | extension was successfully linked.
+   [ServerApp] notebook_shim | extension was successfully loaded.
+   [ServerApp] jupyter_lsp | extension was successfully loaded.
+   [ServerApp] jupyter_server_terminals | extension was successfully loaded.
+   [LabApp] JupyterLab extension loaded from /home/grs/devel/python_envs/jupyter_learn/lib/python3.11/site-packages/jupyterlab
+   [LabApp] JupyterLab application directory is /home/grs/devel/python_envs/jupyter_learn/share/jupyter/lab
+   [LabApp] Extension Manager is 'pypi'.
+   [ServerApp] jupyterlab | extension was successfully loaded.
+   [ServerApp] Serving notebooks from local directory: /home/grs/devel/notes/scheller-linux-archive
+   [ServerApp] Jupyter Server 2.13.0 is running at:
+   [ServerApp] http://localhost:8888/lab?token=46bb4dac0b3b35532e19a299a490d69986f439a294925043
+   [ServerApp]     http://127.0.0.1:8888/lab?token=46bb4dac0b3b35532e19a299a490d69986f439a294925043
+   [ServerApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+   [ServerApp]
+
+       To access the server, open this file in a browser:
+           file:///home/grs/.local/share/jupyter/runtime/jpserver-27242-open.html
+       Or copy and paste one of these URLs:
+           http://localhost:8888/lab?token=46bb4dac0b3b35532e19a299a490d69986f439a294925043
+           http://127.0.0.1:8888/lab?token=46bb4dac0b3b35532e19a299a490d69986f439a294925043
+   [ServerApp] Skipped non-installed server(s): dockerfile-language-server-nodejs, javascript-typescript-langserver, jedi-language-server, julia-language-server, pyright, python-language-server, python-lsp-server, r-languageserver, sql-language-server, texlab, unified-language-server, vscode-css-languageserver-bin, vscode-html-languageserver-bin, vscode-json-languageserver-bin
+   [LabApp] Build is up to date
+   [ServerApp] Creating new notebook in
+   [ServerApp] Writing notebook-signing key to /home/grs/.local/share/jupyter/notebook_secret
+   [ServerApp] Kernel started: 079ef574-f3df-4e5c-ae93-953b29769c1f
+   0.00s - Debugger warning: It seems that frozen modules are being used, which may
+   0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off
+   0.00s - to python to disable frozen modules.
+   0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.
+   [ServerApp] Connecting to kernel 079ef574-f3df-4e5c-ae93-953b29769c1f.
+   [ServerApp] Connecting to kernel 079ef574-f3df-4e5c-ae93-953b29769c1f.
+   [ServerApp] Connecting to kernel 079ef574-f3df-4e5c-ae93-953b29769c1f.
+   [ServerApp] Saving file at /Untitled.ipynb
+   [ServerApp] Saving file at /Untitled.ipynb
+   [ServerApp] New terminal with automatic name: 1
+   [ServerApp] Kernel shutdown: 079ef574-f3df-4e5c-ae93-953b29769c1f
+   [ServerApp] EOF on FD 21; stopping reading
+   [ServerApp] Terminal 1 closed
+   [ServerApp] Shutting down on /api/shutdown request.
+   [ServerApp] Shutting down 4 extensions
+```
+
+I have suppressed the timestamps in the above.
+
+Seems to have hijacked an open Firefox browser, opened a new tab with
+the URL: `http://localhost:8888/lab` without using the above token.
+
+Defaults to a horribly bright white theme. Choice between two bright
+white themes. Was able to to configure settings to give dark version of
+the default theme which seems very readable. Took a bit of hunting
+around to find the settings to do this.
+
+On the same machine, I am able to shutdown or logout the session from
+the browser interface. If I log out, can log back in with the token by
+going to `http://localhost:8888/login`. Connection is refused if I go to
+euler7 and do `http://gauss17:8888/login`, I don't even have a chance to
+enter a token.
+
+I am on the right track. I wish to run the server off a more powerful
+computer from the console and access it with a less powerful one over
+the network. Also want to look into the OpenGL client.
+
+Factoid, after shutting everything down, left in the directory I ran the
+the server the following:
+
+```
+   $ file Untitled.ipynb
+   Untitled.ipynb: JSON text data
+   $ file .ipynb_checkpoints/Untitled-checkpoint.ipynb
+   .ipynb_checkpoints/Untitled-checkpoint.ipynb: JSON text data
+```
+
+So Jupyter notebooks are just JSON files!

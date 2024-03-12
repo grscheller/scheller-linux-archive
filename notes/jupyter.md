@@ -141,3 +141,87 @@ Can be done with just pip and a virtual environment.
    websocket-client          1.7.0
 ```
 
+## Commandline options
+
+```fish
+   $ jupyter --version
+   Selected Jupyter core packages...
+   IPython          : 8.22.2
+   ipykernel        : 6.29.3
+   ipywidgets       : not installed
+   jupyter_client   : 8.6.0
+   jupyter_core     : 5.7.1
+   jupyter_server   : 2.13.0
+   jupyterlab       : 4.1.4
+   nbclient         : 0.9.0
+   nbconvert        : 7.16.2
+   nbformat         : 5.9.2
+   notebook         : not installed
+   qtconsole        : not installed
+   traitlets        : 5.14.1
+
+   $ jupyter --paths
+   config:
+       /home/grs/devel/python_envs/jupyter_learn/etc/jupyter
+       /home/grs/.jupyter
+       /usr/local/etc/jupyter
+       /etc/jupyter
+   data:
+       /home/grs/devel/python_envs/jupyter_learn/share/jupyter
+       /home/grs/.local/share/jupyter
+       /usr/local/share/jupyter
+       /usr/share/jupyter
+   runtime:
+       /home/grs/.local/share/jupyter/runtime
+
+   $ jupyter --config-dir
+   /home/grs/.jupyter
+
+   $ jupyter --data-dir
+   /home/grs/.local/share/jupyter
+
+   $ jupyter --runtime-dir
+   /home/grs/.local/share/jupyter/runtime
+
+   $ jupyter
+   usage: jupyter [-h] [--version] [--config-dir] [--data-dir] [--runtime-dir]
+                  [--paths] [--json] [--debug]
+                  [subcommand]
+   
+   Jupyter: Interactive Computing
+   
+   positional arguments:
+     subcommand     the subcommand to launch
+   
+   options:
+     -h, --help     show this help message and exit
+     --version      show the versions of core jupyter packages and exit
+     --config-dir   show Jupyter config dir
+     --data-dir     show Jupyter data dir
+     --runtime-dir  show Jupyter runtime dir
+     --paths        show all Jupyter paths. Add --json for machine-readable format.
+     --json         output paths as machine-readable json
+     --debug        output debug information about paths
+   
+   Available subcommands: dejavu events execute kernel kernelspec lab labextension
+   labhub migrate nbconvert run server troubleshoot trust
+   
+   Please specify a subcommand or one of the optional arguments.
+```
+
+## How to use
+
+The documentation doesn't say where to point your browser.
+
+```fish
+   $ jupyter run
+   0.00s - Debugger warning: It seems that frozen modules are being used, which may
+   0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off
+   0.00s - to python to disable frozen modules.
+   0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.
+   ^D
+   [IPKernelApp] WARNING | Parent appears to have exited, shutting down.
+```
+
+I was hoping the server would give some sort of hint.
+

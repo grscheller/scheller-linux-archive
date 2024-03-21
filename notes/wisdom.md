@@ -34,7 +34,7 @@
 * Crude and Beautiful are not opposite ends of the spectrum, they meet at Subtly.
 * All straight lines are circles.
 * Emptiness can neutralizes, it redirects by receiving; Fullness too can redirect, but by giving, not opposing.
-* To be subtle you have to be gentle. De-emphasize all movement, take small steps.
+* To be subtle you have to be gentle. Deemphasize all movement, take small steps.
   * (Frank Hubbard)
 * Give your opponent the illusion that he has freedom of motion. Why grab him? He will "hold on" if he thinks he is in control.
 * Don't let the peasant make you bend over.
@@ -82,7 +82,7 @@
 * An army travels on its stomach.
   * (Napoleon)
 * Apathy, not hate, is the opposite of love.
-* Keep your opponent uncentered and off balance.
+* Keep your opponent not centered and off balance. Don't let him go the same to you.
 * Just because I am paranoid doesn't mean I don't have enemies.
   * (Woody Allen)
 * Be helpful, not hurtful. Be friendly, not nasty. No sense making enemies unnecessarily. Choose your friends carefully. You want people to want you to succeed, not hope you fail.
@@ -281,7 +281,7 @@
 * If someone is really intent on killing you, and they have half a brain, there really is nothing you can do about it.
 * When falling relax. While the Earth is yin and the Heavens are yang, the Earth is so big that the small amount of yang it contains vastly exceeds your yang-ness. Meet the Earth with yang, she will slap you back. Meet the earth with yin, she will embrace you and help you up. Learn how to fall.
 * Violence is the most toxic environment known to mankind. The non-macho, calm, practical, rational stuff is way more appealing because it keeps you out of that hell. Don't let fear, emotion, or pride cast you into it.
-  * (Marc MacYoung/Dave Grossman - Paraphraised)
+  * (Marc MacYoung/Dave Grossman - Paraphrased)
 * Yin and Yang are adjectives. So "contains" must mean "embodies".
 * Anger is a short madness (insanity).
   * (Horace)
@@ -289,7 +289,8 @@
   * (Marc MacYoung)
 * def. Martial Arts: The various skills or practices that originated as methods of combat.
   * (Peter Lorge - Classical Chinese military historian)
-* Lords Prayer: Heavenly Father, holy is Your name. Your Kingdom come, Your will be done, on Earth as it is in Heaven. Give us this day our daily bread. Forgive us our trespasses, and help us to forgive those who trespass against us. Lead us not into temptation, but deliver us from evil.
+* Heavenly Father, holy is Your name. Your Kingdom come, Your will be done, on Earth as it is in Heaven. Give us this day our daily bread. Forgive us our trespasses, and help us to forgive those who trespass against us. Lead us not into temptation, but deliver us from evil.
+  * Lord's Prayer
 * The Lord our God, the Lord is one. Love the Lord your God with all your heart, with all your soul, with all your mind, and all your strength... Likewise, love your neighbor as yourself.
   * (Mark 12:29-31)
 * Self-defense is about preparation for, avoidance of, and deescalation of violent situations. Combat has to do with prevailing in violence. Warfare involves both in political and logistical contexts.
@@ -298,8 +299,7 @@
 * Martial Arts can be applied to combat, competition, health, self-improvement (physical, mental, social); but why do I do it? Because it is fun.
 * Neither self-defense nor combat are about the fair fight. Competition can be a tool to help develop a Martial Art and safely practice it; but it can also lead you astray, especially if the rules are used to manipulate the outcome.
 * No pain, no pain.
-  * (Sifu Dug Corpolongo)
-* Don't confuse nice with good, nor crass with bad. Not judgmental does not necessarily mean good, nor does judgmental mean bad. The most closed minded people I have ever known were quite non-judgmental, except against those they perceive as judgmental. The Hypocrites are just those who fail to judge themselves.
+  * (Sifu Dug Corpolongo) Don't confuse nice with good, nor crass with bad. Not judgmental does not necessarily mean good, nor does judgmental mean bad. The most closed minded people I have ever known were quite non-judgmental, except against those they perceive as judgmental. The Hypocrites are just those who fail to judge themselves.
 * Brave good people are a blessing. Craven bad people will tend to stay out of your way, if you remain alert and have clean hands. Cowardly good people are more dangerous than brave bad people. The former are ruled by emotion and cannot be reasoned with; the later may succumb to selfish desires, but at least are fairly predictable and usually can be reasoned with.
 * Just because I am opinionated does not mean I am not open minded. 
 * Don't be an enabler for evil, stand up and tell the truth.
@@ -344,7 +344,7 @@
   * (Pablo Casals)
 * Perfection is achieved, not when there is nothing left to add, but when there is nothing left to take away.
   * (Antoine de St. Exupery)
-* One night a thief breaks in to rob the modest hobble of an old Buddhist (or Taoist) monk. There he finds nothing of value and is disgusted. At that moment rhe monk returns. the thief is embarrassed but the monk removes his clothes and along with his walking stick insists the thief take them. The thief is troubled but leaves reluctantly with the items. After the thief has left the monk gazes lovingly at a beautiful moon. The monk sighs and says, “I could have given him that too”.
+* One night a thief breaks in to rob the modest hobble of an old Buddhist (or Taoist) monk. There he finds nothing of value and is disgusted. At that moment the monk returns. The thief is embarrassed but the monk removes his clothes and along with his walking stick insists the thief take them. The thief is troubled but leaves reluctantly with the items. After the thief has left the monk gazes lovingly at a beautiful moon. The monk sighs and says, “I could have given him that too.”
   * (Sifu Dug Corpolongo)
 * KISS - Keep It Simple, Stupid.
 * What is excluded from consideration is as important as what is included.
@@ -378,7 +378,7 @@
   * (Sun Tzu)
 * "Simplicity is a prerequisite for reliability"
   * Edsger W. Dijkstra
-* Don't confuse "Simple" with "Easy" - they are different. The latter is usually at the expence of the former.
+* Don't confuse "Simple" with "Easy" - they are different. The latter is usually at the expense of the former.
 * Having tests should not encourage someone to change code without being careful.
   * Rich Hickey
 * Simplicity is a choice. We have a culture of complexity. Avoid tools, languages, constructs, etc. that generate complex outputs. Simple != easy. Look for complexity and avoid it. Reliability tools: testing, refactoring, and type systems are good but secondary. They do not enforce simplicity. They are just a safety net.
@@ -387,3 +387,8 @@
 * An object oriented programmer is someone who cannot define the word "function" without using the word "method" to do so.
 * Worry is the enemy of learning.
   * ThePrimeagen
+* If you stare long enough into the abyss, the abyss stares back.
+  * (Friedrich Nietzsche)
+* Just because you know how to get drunk does not mean you know how to drink. 
+* Whiskey is for sipping, cowboys swallowed their whiskey in one gulp because they only had lousy whiskey.
+* A boilermaker is a way to destroy both a good beer and a good whiskey simultaneously.

@@ -9,9 +9,9 @@
 -- Two dashes start a one-line comment.
 
 --[[
-     This is a multiline comment.
+     This is a multi-line comment.
 
-     --[[ Lets see if multiline comments nest
+     --[[ Lets see if multi-line comments nest
           in a way  that make them useful
           to comment out blocks of code.
      --]]
@@ -30,7 +30,7 @@ VARIABLE = "I am a global string variable"
 local num = 42  -- All numbers are doubles.
 -- Don't freak out, 64-bit doubles have 52 bits for
 -- storing exact int values; machine precision is
--- not a problem for ints that need < 52 bits.
+-- not a problem for integers that need < 52 bits.
 
 local s = 'walternate'  -- Immutable strings like Python.
 local t = "double-quotes are also fine"
@@ -57,7 +57,7 @@ else
   -- How to make a variable local:
   local line = io.read()  -- Reads next stdin line.
 
-  -- String concatenation uses the .. operator:
+  -- String concatenation uses the ".." operator:
   print('Winter is coming, ' .. line)
 end
 
@@ -71,10 +71,10 @@ if not foo then print('twas false') end
 if not aBoolValue then print('twas false') end
 
 -- 'or' and 'and' are short-circuited.
--- This is similar to the a?b:c operator in C/js:
+-- This is similar to the "a?b:c" operator in C/js:
 local ans = aBoolValue and 'yes' or 'no'  --> 'no'
 
-karlSum = 0
+local karlSum = 0
 for i = 1, 100 do  -- The range includes both ends.
   karlSum = karlSum + i
 end
@@ -96,13 +96,13 @@ until num == 0
 -- 2. Functions.
 ----------------------------------------------------
 
-function fib(n)
+local function fib(n)
   if n < 2 then return 1 end
   return fib(n - 2) + fib(n - 1)
 end
 
 -- Closures and anonymous functions are ok:
-function adder(x)
+local function adder(x)
   -- The returned function is created when adder is
   -- called, and remembers the value of x:
   return function (y) return x + y end
@@ -112,7 +112,7 @@ a2 = adder(36)
 print(a1(16))  --> 25
 print(a2(64))  --> 100
 
--- Returns, func calls, and assignments all work
+-- Returns, function calls and assignments all work
 -- with lists that may be mismatched in length.
 -- Unmatched receivers are nil;
 -- unmatched senders are discarded.
@@ -138,7 +138,7 @@ local function g(x) return math.sin(x) end
 local g; g  = function (x) return math.sin(x) end
 -- the 'local g' decl makes g-self-references ok.
 
--- Trig funcs work in radians, by the way.
+-- Trig functions work in radians, by the way.
 
 -- Calls with one string param don't need parens:
 print 'hello'  -- Works fine.
@@ -150,8 +150,8 @@ print 'hello'  -- Works fine.
 
 -- Tables = Lua's only compound data structure;
 --          they are associative arrays.
--- Similar to php arrays or js objects, they are
--- hash-lookup dicts that can also be used as lists.
+-- Similar to PHP arrays or js objects, they are
+-- hash-lookup dictionaries that can also be used as lists.
 
 -- Using tables as dictionaries / maps:
 
@@ -176,8 +176,8 @@ b = u[{}]     -- We might expect 1729, but it's nil:
 -- as the one used to store the original value. So
 -- strings & numbers are more portable keys.
 
--- A one-table-param function call needs no parens:
-function h(x) print(x.key1) end
+-- A one-table-parameter function call needs no parens:
+local function h(x) print(x.key1) end
 h{key1 = 'Sonmi~451'}  -- Prints 'Sonmi~451'.
 
 for key, val in pairs(u) do  -- Table iteration.
@@ -198,12 +198,12 @@ end
 -- with consecutive integer keys, treated as a list.
 
 ----------------------------------------------------
--- 3.1 Metatables and metamethods.
+-- 3.1 Metatables and Metamethods.
 ----------------------------------------------------
 
 -- A table can have a metatable that gives the table
--- operator-overloadish behavior. Later we'll see
--- how metatables support js-prototypey behavior.
+-- operator-overloaded behavior. Later we'll see
+-- how metatables support js-prototype behavior.
 
 f1 = {a = 1, b = 2}  -- Represents the fraction a/b.
 f2 = {a = 2, b = 3}
@@ -237,7 +237,7 @@ s = f1 + f2  -- call __add(f1, f2) on f1's metatable
 local defaultFavs = {animal = 'gru', food = 'donuts'}
 local myFavs = {food = 'pizza'}
 setmetatable(myFavs, {__index = defaultFavs})
-local eatenBy = myFavs.animal  -- works! thanks, metatable
+local eatenBy = myFavs.animal  -- works! Thanks, metatable
 
 -- Direct table lookups that fail will retry using
 -- the metatable's __index value, and this recurses.
@@ -245,7 +245,7 @@ local eatenBy = myFavs.animal  -- works! thanks, metatable
 -- An __index value can also be a function(tbl, key)
 -- for more customized lookups.
 
--- Values of __index,add, .. are called metamethods.
+-- Values of __index, __add, ... are called metamethods.
 -- Full list. Here a is a table with the metamethod.
 
 -- __add(a, b)                     for a + b
@@ -344,7 +344,7 @@ end
 
 
 --[[ I'm commenting out this section so the rest of
---   this script remains runnable.
+--   this script remains runable.
 
 -- Suppose the file mod.lua looks like this:
 local M = {}

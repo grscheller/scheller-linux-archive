@@ -17,12 +17,12 @@ of unicode code points just works.  Terminals are fixed width font
 beasts, but Libre Office handles the variable width code points just fine.
 
 Python 3 can be used to translate a cut-n-paste character to its
-hexidecimal codepoint:
+hexadecimal codepoint:
   >>> hex(ord('β'))
   '0x3b2'
 
 Neovim normal mode command 'ga' will list the decimal, hex, octal values of
-a charater.  To write a character in insert mode, '<c-v>u03bb' prints 'λ'.
+a character.  To write a character in insert mode, '<c-v>u03bb' prints 'λ'.
 
 Code points can be entered from the terminal or directly into Libre Office
 via <ctrl>+<shift>+u3b2<ret>.  The <ctrl>+<shift>+u is typed by pressing the
@@ -65,7 +65,7 @@ Math symbols:
   multiplication:   ×  Unicode: 00d7
   dot product:      ⋅  Unicode: 22c5
   exterior product: ∧  Unicode: 2227
-  divsion:          ÷  Unicode: 00f7
+  division:         ÷  Unicode: 00f7
   bar/pipe/norm:    ∥  Unicode: 2225
 
 Useful in illustrating math calculations:

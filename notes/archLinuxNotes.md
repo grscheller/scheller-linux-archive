@@ -414,7 +414,7 @@ What types of partitians do you have?
 ```
 
   Note that df -T and mount command report fuseblk instead of
-  underlying NTFS filesystems.  FUSE (Filesystem in USEr space)
+  underlying NTFS filesystems.  FUSE (Filesystem in userspace)
   filesystem can in principle access filesystems unknown to
   the Linux Kernel.  (FUSE has long since been folded into the
   Linux Kernel)
@@ -468,7 +468,7 @@ This shows HW clock is actually kept in UTC time.
 
 ## Wifi Networking
 
-Connecting to a wifi network from the command line. Done from the system
+Connecting to a WiFi network from the command line. Done from the system
 console.
 
 ```
@@ -510,14 +510,14 @@ console.
   * has its own extensions too
   * see `man -s4 console_codes`
 
-| KeyBd shortcut   | Description                                  |
-|:---------------- |:-------------------------------------------- |
-| <Ctrl+Alt+Del>   | Reboot system (Systemd ctrl-alt-del.target)  |
-| <Alt+F{1,2,...}> | Switch between virtual consoles              |`
-| <Alt+Left>       | Move left one vertual terminal               |
-| <Alt+Right>      | Move right one vertual terminal              |
-| <Scroll-Lock>    | Lock input/output                            |
-| <Ctrl+C>         | Send SIGTERM (not in raw mode)               |
-| <Ctrl+D>         | EOF (not a character, not in raw mode)       |
-| <Ctrl+Z>         | Send TSTP, suppend process (not in raw mode) |
+| KeyBd shortcut     | Description                                  |
+|:------------------:|:-------------------------------------------- |
+| `<Ctrl+Alt+Del>`   | Reboot system (Systemd ctrl-alt-del.target)  |
+| `<Alt+F{1,2,...}>` | Switch between virtual consoles              |`
+| `<Alt+Left>`       | Move left one vertual terminal               |
+| `<Alt+Right>`      | Move right one vertual terminal              |
+| `<Scroll-Lock>`    | Lock input/output                            |
+| `<Ctrl+C>`         | Send SIGTERM (not in raw mode)               |
+| `<Ctrl+D>`         | EOF (not a character, not in raw mode)       |
+| `<Ctrl+Z>`         | Send TSTP, suppend process (not in raw mode) |
 

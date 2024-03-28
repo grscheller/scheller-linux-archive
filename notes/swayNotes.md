@@ -88,7 +88,7 @@ It is the canonical key to communicate directly with the Sway WM.
   * can float workspace containers without putting them in scratchpad
     * `Mod+Shift+Space` float or unfloat (toggle) a workspace container
     * `Mod+Shift+-` moves workspace window into scratchpad
-  * unfloat a scrachpad container via `Mod+Shift+Space`
+  * unfloat a scratchpad container via `Mod+Shift+Space`
     * removes it from the scratchpad
     * returns it to a workspace
 * Sloppy mouse focus

@@ -43,8 +43,8 @@ sources user's ~/.profile with /etc/gdm/Xsession using /bin/sh.
 * Status Menu: RHS Top Toolbar
   * speaker volume
   * brightness control
-  * wired and wifi controls
-  * bluetooth control
+  * wired and WiFi controls
+  * Bluetooth control
   * gnome-settings shortcut
   * log out and account settings
   * system settings
@@ -78,7 +78,7 @@ sources user's ~/.profile with /etc/gdm/Xsession using /bin/sh.
 * Sound configuration
 * Power settings
 * Displays
-* Mouse & Touchpad
+* Mouse & touchpad
 * Keyboard Shortcuts
   * Added `Super+T` for alacritty terminal running fish shell
   * Added `Super+W` raise window if covered, otherwise lower it

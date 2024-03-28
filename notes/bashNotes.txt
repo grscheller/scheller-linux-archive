@@ -68,7 +68,7 @@ Command Line" by William Shotts.
           meaningless place holders when illustrating syntax. In the
           above they can represent Linux commands or shell functions.
           Can also be multiple statements separated by newlines or
-          semicolens.
+          semicolons.
 
     Note: Case statements end with a "esac", case spelled backwards.
           If statements end similarly with an "fi". This comes from the

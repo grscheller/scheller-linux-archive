@@ -1,5 +1,4 @@
-List of Python __dunders__
-
+List of Python __dunders__ (probably out-of-date)
 __add__
 __aenter__
 __aexit__

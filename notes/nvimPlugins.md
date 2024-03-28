@@ -28,7 +28,7 @@ The null-ls plugin acts like a language server by running external
 programs like linters, formatters, syntax checkers and providing their
 output to the built in Neovim LSP client.
 
-Null-ls has a number of "built in" configuratinons for this. Users can
+Null-ls has a number of "built in" configurations for this. Users can
 also define their own configurations. I suspect this plugin configures
 nvim's builtin LSP client directly itself.
 
@@ -38,7 +38,7 @@ The Mason plugin is a 3rd party package manager for language servers,
 null-ls built-ins (like linters or formatters), and dap servers. It
 only installs these servers, it does not configure them.
 
-The PATH inherited from the shell involking external tools will begin
+The PATH inherited from the shell invoking external tools will begin
 ~/.local/share/nvim/mason/bin ensuring nvim first find mason installed
 tools for lspconfig, dap, and NullLS first.
 

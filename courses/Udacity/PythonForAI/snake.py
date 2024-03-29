@@ -1,3 +1,6 @@
+#
+# Verbatim from Udacity's "AI Programming with Python" exercises
+#
 how_many_snakes = 1
 snake_string = """
 Welcome to Python3!

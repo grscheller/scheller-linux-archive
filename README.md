@@ -12,6 +12,7 @@ By its very nature, this repo contains many loose threads.
 
 ### License Summary
 
-MIT License
+Apache v2.0 License
 
-See [LICENSE](LICENSE) for details.
+See [LICENSE](LICENSE) for license details.
+See [NOTICE](NOTICE) for copyright details.

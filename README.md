@@ -14,5 +14,5 @@ By its very nature, this repo contains many loose threads.
 
 Apache v2.0 License
 
-See [LICENSE](LICENSE) for license details.
-See [NOTICE](NOTICE) for copyright details.
+See [LICENSE](LICENSE) for license details
+and [NOTICE](NOTICE) for copyright details.

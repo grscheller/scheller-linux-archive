@@ -1,10 +1,12 @@
 /*
  * A tiny shell to illustrate fork, exec, and waitpid.
  */
-#include "apue.h"
+
+
+#include "../../include/apue.h"
 #include <sys/wait.h>
 
-static void sig_int(int);  /* Signel handler */
+static void sig_int(int);  /* Signal handler */
 
 #define PROMPT "%% "
 
@@ -25,7 +27,7 @@ main(void)
         if (buf[strlen(buf) - 1] == '\n')
             buf[strlen(buf) - 1] = 0;    
 
-        /* Skip initial spaces/tabs and reprompt if empty */
+        /* Skip initial spaces/tabs and re-prompt if empty */
         for (bufPt = buf; *bufPt == ' ' || *bufPt == '\t'; bufPt++);
         if (strlen(bufPt) == 0) {
             printf(PROMPT);
@@ -63,7 +65,7 @@ sig_int(int signo)
  *     there by fgets.
  *
  *  Factoids:
- *  1. The execlp function will look through the evironment
+ *  1. The execlp function will look through the environment
  *     path if first argument does not include a '/'.
  *  2. The fgets function returns buf on success, and NULL on
  *     error or when end of file occurs while no characters

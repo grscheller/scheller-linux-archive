@@ -1,7 +1,8 @@
 /*
- * Copy bytes fron stdin to stdout
+ * Copy bytes from stdin to stdout
  */
-#include "apue.h"
+
+#include "../../include/apue.h"
 
 #define BUFFSIZE 4096
 

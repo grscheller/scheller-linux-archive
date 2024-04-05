@@ -1,7 +1,8 @@
 /*
- * Atomically copy bytes fron stdin to stdout
+ * Atomically copy bytes from stdin to stdout
  */
-#include "apue.h"
+
+# include "../../include/apue.h"
 #include <fcntl.h>
 
 #define BUFFSIZE 4096

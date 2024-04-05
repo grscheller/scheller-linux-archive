@@ -1,7 +1,8 @@
 /*
- * Test whether file given on cmdline is seekable
+ * Test whether file given on cmdline is seek-able
  */
-#include "apue.h"
+
+# include "../../include/apue.h"
 #include <fcntl.h>
 
 const char ErrorArg[] = "Error: Wrong number of arguments";

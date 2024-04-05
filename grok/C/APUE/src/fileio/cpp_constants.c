@@ -1,7 +1,8 @@
 /*
  * List constants from fcntl.h
  */
-#include "apue.h"
+
+# include "../../include/apue.h"
 #include <errno.h>
 #include <fcntl.h>
 

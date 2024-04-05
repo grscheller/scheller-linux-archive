@@ -13,7 +13,8 @@
  *                  err_msg
  *                  err_quit
  */
-#include "apue.h"
+
+#include "../../include/apue.h"
 #include <errno.h>     /* defines errno "variable," actually a macro */
 #include <stdarg.h>    /* ISO C variable arguments */
 

@@ -1,7 +1,8 @@
 /*
  * Create a file with a "hole" in it
  */
-#include "apue.h"
+
+# include "../../include/apue.h"
 #include <fcntl.h>
 
 char buf1[] = "abcdefghij";
@@ -71,9 +72,9 @@ main(void)
  *   0000024
  *
  *   $ ls -ls file.*
- *   20 -rw-r----- 1 geoff geoff 16404 Feb 21 16:04 file.filled
- *    8 -rw-r----- 1 geoff geoff 16404 Feb 21 16:04 file.hole
- *    4 -rw-r----- 1 geoff geoff    20 Feb 21 16:04 file.nohole
+ *   20 -rw-r----- 1 grs grs 16404 Feb 21 16:04 file.filled
+ *    8 -rw-r----- 1 grs grs 16404 Feb 21 16:04 file.hole
+ *    4 -rw-r----- 1 grs grs    20 Feb 21 16:04 file.nohole
  *
  *   $ file file.*
  *   file.filled: ASCII text, with very long lines, with no line terminators

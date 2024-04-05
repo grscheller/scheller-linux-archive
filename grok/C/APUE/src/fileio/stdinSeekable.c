@@ -1,7 +1,10 @@
 /*
- * Test whether standard input is seekable
+ * Test whether standard input is seek-able
  */
-#include "apue.h"
+
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
 
 int
 main(void)
@@ -33,7 +36,7 @@ main(void)
  *   7. The standard developers choose not to require checking errno
  *      in all situations.  Negative offsets possible, but not with
  *      regular files, block special files, or directories.  Applications
- *      using devices that can return negative offsrts need to initially 
+ *      using devices that can return negative offsets need to initially 
  *      set errno=0 and then check errno to distinguish (off_t)(-1) with
  *      an error condition.
  */

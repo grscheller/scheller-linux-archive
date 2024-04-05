@@ -3,12 +3,12 @@
 # This is NOT a recursive Make build.  The build is
 # done from the root APUE directory.
 
-# APUE project defaults and directory stucture
+# APUE project defaults and directory structure
 LIBDIR = lib
 INCLUDE = include
 BIN = bin
 
-# Library and headerfile to support an implementation of
+# Library and header file to support an implementation of
 # W. Richard Steven's API for UNIX System Programming.
 LIBAPUE_A = $(LIBDIR)/libapue.a
 APUE_H = $(INCLUDE)/apue.h
@@ -17,7 +17,7 @@ APUE_H = $(INCLUDE)/apue.h
 
 # Compiler flags for specific OS's.
 # Here is where to select dialect of C Language, and define
-# macro flags for minimal conditional complilation.
+# macro flags for minimal conditional compilation.
 LINUX_CFLAGS := -std=c99 -DLINUX
 CYGWIN_CFLAGS := -std=c99 -DCYGWIN
 MSYS2_CFLAGS := -std=c99 -DMSYS2      # no C compilier

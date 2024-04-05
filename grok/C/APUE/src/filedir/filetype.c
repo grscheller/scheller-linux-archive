@@ -1,7 +1,8 @@
 /*
- * Detemine the type of files given on cmdline.
+ * Determine the type of files given on cmdline.
  */
-# include "apue.h"
+
+# include "../../include/apue.h"
 
 int
 main(int argc, char *argv[])

@@ -51,4 +51,15 @@ Did not fix problem. The problem is with pylsp. LSP Logs say that it was
 not found in the virtual environment. It is installed in the neovim
 environment, maybe it is needed in the py4ai virtual environment.
 
+## 2024-04-07
 
+The problem is that jedi-language-server was not installed into the
+py4ai virtual environment.
+
+I am having trouble finding good information/documentation on what
+exactly needs to be installed into the neovim virtenv vs what needs to
+be installed into the virtenv of the Python version for which I am
+developing.
+
+Have been working on my devel environment infrastructure so that I will
+not have to maintain my python virtenvs by hand.

@@ -166,3 +166,104 @@ ruff and mccabe correctly. This may be split between my neovim configs,
 pyproject.toml, and tool configuration files. From what I have read,
 tools (providers) will use pyproject.toml over their own config files.
 
+## 2024-04-17:
+
+I am giving up trying to put all my LSP infrastructure in a single
+Python venv. Some of this infrastructure seems to need access access to
+the virtual environment that the code being developed will run in.
+
+I have set ve.conf to manage these virtual environments:
+
+* dev (3.11.8)
+  * pynvim
+
+* dev_next (3.12.8)
+  * ipython
+  * pynvim
+
+* grs (3.11.8)
+  * grscheller.circular-array
+  * grscheller.datastructures
+  * grscheller.boring-math
+  * ipython
+  * pynvim
+  * python-lsp-server pylsp-mypy ruff-lsp rope mccabe
+
+* pydev (3.11.8)
+  * ipython pytest pdoc3 flit
+  * pynvim
+  * python-lsp-server pylsp-mypy ruff-lsp rope mccabe
+
+* pydev_next (3.12.2)
+  * ipython pytest
+  * pynvim
+
+* py4ai (3.11.8)
+  * matplotlib jupyterlab
+  * ipython pytest
+  * pynvim
+  * python-lsp-server pylsp-mypy ruff-lsp rope mccabe
+
+The dev venv is for non-Python development. Any python tools like
+ipython will default to the system versions. The inclusion of pynvim is
+for python based tooling for other languages.
+
+The grs venv is for developing Python code where I want to leverage
+a number of PyPI projects like my grscheller libraries. It is geared
+for developing general Python applications. More of a prototype for
+future Python venv's.
+
+The pydev is a minimal venv mostly for developing Python modules. I use
+my pypi.fish (pypath.fish?) script to manage $PYTHONPATH. This is the
+environment I use to develop my grscheller libraries themselves.
+
+The py4ai is an environment I am using for a Python for an online series
+of AI/Data Science courses I am taking.
+
+## 2024-04-17:
+
+I tested out the pydev venv and the LSP worked very well, mypy being
+especially helpful. Mypy did follow `$PYTHONPATH` but referred me to
+a section of the mypy docs entitled "How imports are found". I may want
+to configure something called `mypy_path` or the `$MYPYPATH` environment
+variable.
+
+At this point, LSP is working. I want to do some minimal configuration
+tweaking and get back to the course.
+
+## 2024-04-17:
+
+Do I need node anymore?
+
+```
+   $ sudo pacman -Rsc nodejs
+   checking dependencies...
+   :: jupyterlab optionally requires npm: to install extensions
+   
+   Package (12)                Old Version  Net Change
+   
+   acorn                       1:8.11.0-1    -0.51 MiB
+   bash-language-server        5.1.2-1       -4.94 MiB
+   libngtcp2                   1.4.0-1       -0.45 MiB
+   node-gyp                    10.1.0-2      -6.84 MiB
+   nodejs-nopt                 7.2.0-1       -0.03 MiB
+   npm                         10.5.2-1      -7.60 MiB
+   npm-check-updates           16.14.18-1   -17.48 MiB
+   semver                      7.6.0-1       -0.12 MiB
+   typescript                  5.4.5-1      -30.86 MiB
+   typescript-language-server  4.3.3-1       -2.13 MiB
+   yaml-language-server        1.14.0-1     -17.78 MiB
+   nodejs                      21.7.2-1     -46.86 MiB
+   
+   Total Removed Size:  135.60 MiB
+   
+   :: Do you want to remove these packages? [Y/n] n
+```
+
+Looks like I do for jupyterlab as well as for other language servers I'd
+like to have. I really just don't to use typescripty things for large
+software projects.
+
+So, I'll keep the Node.js infrastructure on Arch Linux.
+
+Do I need the Nix package manager and its neovim integrations?

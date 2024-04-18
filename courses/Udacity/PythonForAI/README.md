@@ -139,7 +139,8 @@ The old "neovim" module was renamed to "pynvim". I was going crazy
 figuring out what exactly pynvim was and if neovim plugin was still
 needed.
 
-Also note that the other LSP servers I use are all written in Lua.
+Also note that most of the other LSP servers I use are all written
+in Lua.
 
 ## 2024-04-16:
 
@@ -169,8 +170,8 @@ tools (providers) will use pyproject.toml over their own config files.
 ## 2024-04-17:
 
 I am giving up trying to put all my LSP infrastructure in a single
-Python venv. Some of this infrastructure seems to need access access to
-the virtual environment that the code being developed will run in.
+Python venv. Some of this infrastructure seems to need access to
+the same venv that the code being developed runs in.
 
 I have set ve.conf to manage these virtual environments:
 
@@ -266,4 +267,47 @@ software projects.
 
 So, I'll keep the Node.js infrastructure on Arch Linux.
 
-Do I need the Nix package manager and its neovim integrations?
+Do I need the Nix package manager and its neovim integrations? It seems
+to still works, at least in the case of Marksman. I don't understand how
+it works anymore.
+
+## 2024-04-18:
+
+Matplotlib "backends", or how to see the pretty plots.
+
+The "frontend" is a user facing MatLab like API. The backend is the
+implementation that draws the figure. There are two types of backends:
+
+* GUI (interactive) backends for
+  * PyQt/PySide
+  * PyGObjects
+  * Tkinter
+  * wxPython
+  * macOS/Cocoa
+* Hard copy backends for PNG, SVG, PDF, PS
+
+In iPython type:
+
+```
+   import numpy as np
+   import matplotlib.pyplot as plt
+   x = np.arange(0, 5, 0.1)
+   y = np.sin(x)
+   plt.plot(x, y)
+   plt.show()
+```
+
+Also, last 2 lines could be replaced by
+
+```
+   fig, ax = plt.subplots()
+   ax.plot(x, y)
+   plt.show()
+```
+
+graphs look the same.
+
+See
+[matplotlib backends](https://matplotlib.org/stable/users/explain/figure/backends.html)
+
+## 2024-04-18:

@@ -1,0 +1,557 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>gaussian API documentation</title>
+<meta name="description" content="Module for the Gaussian class - derived from Udacity exercise template." />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>gaussian</code></h1>
+</header>
+<section id="section-intro">
+<p>Module for the Gaussian class - derived from Udacity exercise template.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python"># Copyright 2024 Geoffrey R. Scheller
+#
+# Licensed under the Apache License, Version 2.0 (the &#34;License&#34;);
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an &#34;AS IS&#34; BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# This module contains software derived from Udacity® exercises.
+# Udacity® (https://www.udacity.com/)
+#
+
+&#34;&#34;&#34;Module for the Gaussian class - derived from Udacity exercise template.&#34;&#34;&#34;
+
+from __future__ import annotations
+
+from typing import List, Tuple
+import math
+import matplotlib.pyplot as plt
+
+__all__ = [&#39;Gaussian&#39;]
+
+class Gaussian():
+    &#34;&#34;&#34; Class for calculating and visualizing Gaussian distributions.&#34;&#34;&#34;
+
+    def __init__(self, mu: float=0.0, sigma: float=1.0):
+        self.c = 1.0 / math.sqrt(2*math.pi)
+        self.sample = True
+        self.mean = mu
+        self.stdev = sigma
+        self.data: List[float] = []
+
+    def calculate_mean(self) -&gt; float:
+        &#34;&#34;&#34;From the data set, calculate &amp; return the mean.&#34;&#34;&#34;
+
+        mu = self.mean
+        n = len(self.data)
+        if n &gt; 0:
+            mu = sum(self.data)/n
+            self.mean = mu
+
+        return mu
+
+    def calculate_stdev(self, sample: bool=True) -&gt; float:
+        &#34;&#34;&#34;Set &amp; return a standard deviation calculated from the data set.
+
+        * If sample is True, calculate a sample standard deviation. 
+        * If sample is False, calculate a population standard deviation. 
+
+        &#34;&#34;&#34;
+
+        n = len(self.data)
+        mu = self.calculate_mean()
+
+        if sample:
+            # sample standard deviation
+            if n &gt; 1:
+                self.stdev = math.sqrt(sum(((x - mu)**2 for x in self.data))/(n-1))
+        else:
+            # population standard deviation
+            if n &gt; 0:
+                self.stdev = math.sqrt(sum(((x - mu)**2 for x in self.data))/n)
+
+        return self.stdev
+
+    def read_data_file(self, file_name: str, sample: bool=True) -&gt; None:
+        &#34;&#34;&#34;Method to read in data from a text file. The text file should have
+        one number (float) per line. The numbers are stored in the data attribute.
+        After reading in the file, the mean and standard deviation are calculated.
+        &#34;&#34;&#34;
+
+        # Read in the data from the file given
+        data_list: List[float] = []
+        with open(file_name) as file:
+            line = file.readline()
+            while line:
+                data_list.append(int(line))
+                line = file.readline()
+
+        # Update Gaussian object
+        self.data = data_list
+        self.calculate_stdev(sample)
+
+    def plot_histogram(self) -&gt; None:
+        &#34;&#34;&#34;Produce a histogram of the data using the matplotlib pyplot library.&#34;&#34;&#34;
+
+        fig, axis = plt.subplots()
+        axis.hist(self.data)
+        axis.set_title(&#39;Histogram of Data&#39;)
+        axis.set_ylabel(&#39;Data&#39;)
+        axis.set_ylabel(&#39;Count&#39;)
+        plt.show()
+
+    def pdf(self, x: float):
+        &#34;&#34;&#34;Gaussian probability density function for this Gaussian object.&#34;&#34;&#34;
+
+        exp = math.exp
+        sqrt = math.sqrt
+        c = self.c
+
+        mu = self.mean
+        sigma = self.stdev
+
+        return (c/sigma)*exp(-0.5*((x - mu)/sigma)**2)
+
+    def plot_histogram_pdf(self, n_spaces: int = 50) -&gt; Tuple[List[float], List[float]]:
+        &#34;&#34;&#34;Method to plot the normalized histogram of the data and a plot of the
+        probability density function along the same range
+
+        Args:
+            n_spaces (int): number of data points
+
+        Returns:
+            list: x values for the pdf plot
+            list: y values for the pdf plot
+
+        &#34;&#34;&#34;
+
+        min_xs = min(self.data)
+        max_xs = max(self.data)
+
+        # calculates the interval between x values
+        interval = 1.0 * (max_xs - min_xs) / n_spaces
+
+        xs: List[float] = []
+        ys: List[float] = []
+
+        # calculate the x values to visualize
+        for i in range(n_spaces):
+            x = min_xs + interval*i
+            xs.append(x)
+            ys.append(self.pdf(x))
+
+        # make the plots
+        fig, axes = plt.subplots(2,sharex=True)
+        fig.subplots_adjust(hspace=.5)
+        axes[0].hist(self.data, density=True)
+        axes[0].set_title(&#39;Normed Histogram of Data&#39;)
+        axes[0].set_ylabel(&#39;Density&#39;)
+
+        axes[1].plot(xs, ys)
+        axes[1].set_title(&#39;Normal Distribution for \n Sample Mean and Sample Standard Deviation&#39;)
+        axes[0].set_ylabel(&#39;Density&#39;)
+        plt.show()
+
+        return xs, ys</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="gaussian.Gaussian"><code class="flex name class">
+<span>class <span class="ident">Gaussian</span></span>
+<span>(</span><span>mu: float = 0.0, sigma: float = 1.0)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Class for calculating and visualizing Gaussian distributions.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Gaussian():
+    &#34;&#34;&#34; Class for calculating and visualizing Gaussian distributions.&#34;&#34;&#34;
+
+    def __init__(self, mu: float=0.0, sigma: float=1.0):
+        self.c = 1.0 / math.sqrt(2*math.pi)
+        self.sample = True
+        self.mean = mu
+        self.stdev = sigma
+        self.data: List[float] = []
+
+    def calculate_mean(self) -&gt; float:
+        &#34;&#34;&#34;From the data set, calculate &amp; return the mean.&#34;&#34;&#34;
+
+        mu = self.mean
+        n = len(self.data)
+        if n &gt; 0:
+            mu = sum(self.data)/n
+            self.mean = mu
+
+        return mu
+
+    def calculate_stdev(self, sample: bool=True) -&gt; float:
+        &#34;&#34;&#34;Set &amp; return a standard deviation calculated from the data set.
+
+        * If sample is True, calculate a sample standard deviation. 
+        * If sample is False, calculate a population standard deviation. 
+
+        &#34;&#34;&#34;
+
+        n = len(self.data)
+        mu = self.calculate_mean()
+
+        if sample:
+            # sample standard deviation
+            if n &gt; 1:
+                self.stdev = math.sqrt(sum(((x - mu)**2 for x in self.data))/(n-1))
+        else:
+            # population standard deviation
+            if n &gt; 0:
+                self.stdev = math.sqrt(sum(((x - mu)**2 for x in self.data))/n)
+
+        return self.stdev
+
+    def read_data_file(self, file_name: str, sample: bool=True) -&gt; None:
+        &#34;&#34;&#34;Method to read in data from a text file. The text file should have
+        one number (float) per line. The numbers are stored in the data attribute.
+        After reading in the file, the mean and standard deviation are calculated.
+        &#34;&#34;&#34;
+
+        # Read in the data from the file given
+        data_list: List[float] = []
+        with open(file_name) as file:
+            line = file.readline()
+            while line:
+                data_list.append(int(line))
+                line = file.readline()
+
+        # Update Gaussian object
+        self.data = data_list
+        self.calculate_stdev(sample)
+
+    def plot_histogram(self) -&gt; None:
+        &#34;&#34;&#34;Produce a histogram of the data using the matplotlib pyplot library.&#34;&#34;&#34;
+
+        fig, axis = plt.subplots()
+        axis.hist(self.data)
+        axis.set_title(&#39;Histogram of Data&#39;)
+        axis.set_ylabel(&#39;Data&#39;)
+        axis.set_ylabel(&#39;Count&#39;)
+        plt.show()
+
+    def pdf(self, x: float):
+        &#34;&#34;&#34;Gaussian probability density function for this Gaussian object.&#34;&#34;&#34;
+
+        exp = math.exp
+        sqrt = math.sqrt
+        c = self.c
+
+        mu = self.mean
+        sigma = self.stdev
+
+        return (c/sigma)*exp(-0.5*((x - mu)/sigma)**2)
+
+    def plot_histogram_pdf(self, n_spaces: int = 50) -&gt; Tuple[List[float], List[float]]:
+        &#34;&#34;&#34;Method to plot the normalized histogram of the data and a plot of the
+        probability density function along the same range
+
+        Args:
+            n_spaces (int): number of data points
+
+        Returns:
+            list: x values for the pdf plot
+            list: y values for the pdf plot
+
+        &#34;&#34;&#34;
+
+        min_xs = min(self.data)
+        max_xs = max(self.data)
+
+        # calculates the interval between x values
+        interval = 1.0 * (max_xs - min_xs) / n_spaces
+
+        xs: List[float] = []
+        ys: List[float] = []
+
+        # calculate the x values to visualize
+        for i in range(n_spaces):
+            x = min_xs + interval*i
+            xs.append(x)
+            ys.append(self.pdf(x))
+
+        # make the plots
+        fig, axes = plt.subplots(2,sharex=True)
+        fig.subplots_adjust(hspace=.5)
+        axes[0].hist(self.data, density=True)
+        axes[0].set_title(&#39;Normed Histogram of Data&#39;)
+        axes[0].set_ylabel(&#39;Density&#39;)
+
+        axes[1].plot(xs, ys)
+        axes[1].set_title(&#39;Normal Distribution for \n Sample Mean and Sample Standard Deviation&#39;)
+        axes[0].set_ylabel(&#39;Density&#39;)
+        plt.show()
+
+        return xs, ys</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="gaussian.Gaussian.calculate_mean"><code class="name flex">
+<span>def <span class="ident">calculate_mean</span></span>(<span>self) ‑> float</span>
+</code></dt>
+<dd>
+<div class="desc"><p>From the data set, calculate &amp; return the mean.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def calculate_mean(self) -&gt; float:
+    &#34;&#34;&#34;From the data set, calculate &amp; return the mean.&#34;&#34;&#34;
+
+    mu = self.mean
+    n = len(self.data)
+    if n &gt; 0:
+        mu = sum(self.data)/n
+        self.mean = mu
+
+    return mu</code></pre>
+</details>
+</dd>
+<dt id="gaussian.Gaussian.calculate_stdev"><code class="name flex">
+<span>def <span class="ident">calculate_stdev</span></span>(<span>self, sample: bool = True) ‑> float</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set &amp; return a standard deviation calculated from the data set.</p>
+<ul>
+<li>If sample is True, calculate a sample standard deviation. </li>
+<li>If sample is False, calculate a population standard deviation.</li>
+</ul></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def calculate_stdev(self, sample: bool=True) -&gt; float:
+    &#34;&#34;&#34;Set &amp; return a standard deviation calculated from the data set.
+
+    * If sample is True, calculate a sample standard deviation. 
+    * If sample is False, calculate a population standard deviation. 
+
+    &#34;&#34;&#34;
+
+    n = len(self.data)
+    mu = self.calculate_mean()
+
+    if sample:
+        # sample standard deviation
+        if n &gt; 1:
+            self.stdev = math.sqrt(sum(((x - mu)**2 for x in self.data))/(n-1))
+    else:
+        # population standard deviation
+        if n &gt; 0:
+            self.stdev = math.sqrt(sum(((x - mu)**2 for x in self.data))/n)
+
+    return self.stdev</code></pre>
+</details>
+</dd>
+<dt id="gaussian.Gaussian.pdf"><code class="name flex">
+<span>def <span class="ident">pdf</span></span>(<span>self, x: float)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Gaussian probability density function for this Gaussian object.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pdf(self, x: float):
+    &#34;&#34;&#34;Gaussian probability density function for this Gaussian object.&#34;&#34;&#34;
+
+    exp = math.exp
+    sqrt = math.sqrt
+    c = self.c
+
+    mu = self.mean
+    sigma = self.stdev
+
+    return (c/sigma)*exp(-0.5*((x - mu)/sigma)**2)</code></pre>
+</details>
+</dd>
+<dt id="gaussian.Gaussian.plot_histogram"><code class="name flex">
+<span>def <span class="ident">plot_histogram</span></span>(<span>self) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Produce a histogram of the data using the matplotlib pyplot library.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_histogram(self) -&gt; None:
+    &#34;&#34;&#34;Produce a histogram of the data using the matplotlib pyplot library.&#34;&#34;&#34;
+
+    fig, axis = plt.subplots()
+    axis.hist(self.data)
+    axis.set_title(&#39;Histogram of Data&#39;)
+    axis.set_ylabel(&#39;Data&#39;)
+    axis.set_ylabel(&#39;Count&#39;)
+    plt.show()</code></pre>
+</details>
+</dd>
+<dt id="gaussian.Gaussian.plot_histogram_pdf"><code class="name flex">
+<span>def <span class="ident">plot_histogram_pdf</span></span>(<span>self, n_spaces: int = 50) ‑> Tuple[List[float], List[float]]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Method to plot the normalized histogram of the data and a plot of the
+probability density function along the same range</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>n_spaces</code></strong> :&ensp;<code>int</code></dt>
+<dd>number of data points</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>list</code></dt>
+<dd>x values for the pdf plot</dd>
+<dt><code>list</code></dt>
+<dd>y values for the pdf plot</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_histogram_pdf(self, n_spaces: int = 50) -&gt; Tuple[List[float], List[float]]:
+    &#34;&#34;&#34;Method to plot the normalized histogram of the data and a plot of the
+    probability density function along the same range
+
+    Args:
+        n_spaces (int): number of data points
+
+    Returns:
+        list: x values for the pdf plot
+        list: y values for the pdf plot
+
+    &#34;&#34;&#34;
+
+    min_xs = min(self.data)
+    max_xs = max(self.data)
+
+    # calculates the interval between x values
+    interval = 1.0 * (max_xs - min_xs) / n_spaces
+
+    xs: List[float] = []
+    ys: List[float] = []
+
+    # calculate the x values to visualize
+    for i in range(n_spaces):
+        x = min_xs + interval*i
+        xs.append(x)
+        ys.append(self.pdf(x))
+
+    # make the plots
+    fig, axes = plt.subplots(2,sharex=True)
+    fig.subplots_adjust(hspace=.5)
+    axes[0].hist(self.data, density=True)
+    axes[0].set_title(&#39;Normed Histogram of Data&#39;)
+    axes[0].set_ylabel(&#39;Density&#39;)
+
+    axes[1].plot(xs, ys)
+    axes[1].set_title(&#39;Normal Distribution for \n Sample Mean and Sample Standard Deviation&#39;)
+    axes[0].set_ylabel(&#39;Density&#39;)
+    plt.show()
+
+    return xs, ys</code></pre>
+</details>
+</dd>
+<dt id="gaussian.Gaussian.read_data_file"><code class="name flex">
+<span>def <span class="ident">read_data_file</span></span>(<span>self, file_name: str, sample: bool = True) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Method to read in data from a text file. The text file should have
+one number (float) per line. The numbers are stored in the data attribute.
+After reading in the file, the mean and standard deviation are calculated.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def read_data_file(self, file_name: str, sample: bool=True) -&gt; None:
+    &#34;&#34;&#34;Method to read in data from a text file. The text file should have
+    one number (float) per line. The numbers are stored in the data attribute.
+    After reading in the file, the mean and standard deviation are calculated.
+    &#34;&#34;&#34;
+
+    # Read in the data from the file given
+    data_list: List[float] = []
+    with open(file_name) as file:
+        line = file.readline()
+        while line:
+            data_list.append(int(line))
+            line = file.readline()
+
+    # Update Gaussian object
+    self.data = data_list
+    self.calculate_stdev(sample)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="gaussian.Gaussian" href="#gaussian.Gaussian">Gaussian</a></code></h4>
+<ul class="two-column">
+<li><code><a title="gaussian.Gaussian.calculate_mean" href="#gaussian.Gaussian.calculate_mean">calculate_mean</a></code></li>
+<li><code><a title="gaussian.Gaussian.calculate_stdev" href="#gaussian.Gaussian.calculate_stdev">calculate_stdev</a></code></li>
+<li><code><a title="gaussian.Gaussian.pdf" href="#gaussian.Gaussian.pdf">pdf</a></code></li>
+<li><code><a title="gaussian.Gaussian.plot_histogram" href="#gaussian.Gaussian.plot_histogram">plot_histogram</a></code></li>
+<li><code><a title="gaussian.Gaussian.plot_histogram_pdf" href="#gaussian.Gaussian.plot_histogram_pdf">plot_histogram_pdf</a></code></li>
+<li><code><a title="gaussian.Gaussian.read_data_file" href="#gaussian.Gaussian.read_data_file">read_data_file</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

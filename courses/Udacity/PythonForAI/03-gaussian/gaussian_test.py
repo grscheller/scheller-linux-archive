@@ -16,7 +16,7 @@ class Test_Gaussian_simple:
 
     def test_mean_calculation(self) -> None:
         euler.read_data_file('numbers.txt')
-        assert euler.calculate_mean() == sum(euler.data)/float(len(euler.data))
+        assert euler.mean == sum(euler.data)/float(len(euler.data))
 
     def test_stdev_calculation(self) -> None:
         euler.read_data_file('numbers.txt', True)

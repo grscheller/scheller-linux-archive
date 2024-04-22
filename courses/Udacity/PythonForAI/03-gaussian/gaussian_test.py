@@ -1,11 +1,26 @@
-# Using pdoc3 for testing
+# Using pytest for testing
+#
+# WARNING: Plotting tests depend on user input!!!
+#          This is considered bad practice except for
+#          single user/maintainer projects.
+# 
+#          pytest must be run with the -s option
+#
+# Example: $ pytest -s gaussian_test.py
+#
 
+import sys
 from gaussian import Gaussian
 
 gauss = Gaussian(25, 2)
 euler = Gaussian()
 
-class Test_Gaussian_simple:
+def plot_viewable(plot_name: str) -> bool:
+    print(f'\nDid the {plot_name} plot display correctly? ([y] or n) ', end='')
+    ans = input()
+    return True if ans != 'n' else False
+
+class Test_Gaussian:
 
     def test_initialization(self) -> None: 
         assert gauss.mean == 25
@@ -23,4 +38,17 @@ class Test_Gaussian_simple:
         assert round(euler.calculate_stdev(), 2) == 92.87
         euler.read_data_file('numbers.txt', False)
         assert round(euler.calculate_stdev(sample = False), 2) == 88.55
-                
+
+    def test_plot_histogram(self) -> None:
+        euler.plot_histogram()
+        if plot_viewable('histogram'):
+            assert True
+        else:
+            assert False
+
+    def test_plot_histogram_pdf(self) -> None:
+        euler.plot_histogram_pdf()
+        if plot_viewable('histogram_pdf'):
+            assert True
+        else:
+            assert False

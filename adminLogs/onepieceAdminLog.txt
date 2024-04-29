@@ -153,7 +153,7 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
 
     - Created /etc/sudoers.d/DaddyAdditionsUpdated to allow user buggy
       to use sudo without password. Edited with visudo.
-      - Have to give daughters the "with great power calls great
+      - Have to give daughters the "with great power comes great
         responsibilities" talk.
     - Edited ~/.bashrc.
       - Added: set -o vi
@@ -497,7 +497,7 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
   if the system is setup so it can be fuddled through? Simplicity,
   understandability, and reproducibility are more important to me than
   "it just works." Because when it doesn't "just work" you have a real
-  big ball-of-mud to unroll. Enough preaching. I do likw PopOS and am
+  big ball-of-mud to unroll. Enough preaching. I do like PopOS and am
   really looking foeward helping my daughters upgrade it to the next
   version running the Cosmic desktop under Wayland.
 
@@ -655,7 +655,7 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
 
 2023-10-29:
   Have logged in in a while. Onepiece Cosmic desktop seems to be
-  suspending the system again after only a few minutes of activity.
+  suspending the system again after only a few minutes of inactivity.
   Need to turn this misfeature off FOREVER!!!
 
   Will install a Gnome Extension called Caffeine to do this.
@@ -739,7 +739,7 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
 
   Seems to be a pattern. Don't know if it ia a Pop! OS, Ubuntu, or
   Debian thing, but when apt is used to install software, it configures
-  it enables it.
+  and enables it.
 
   The Cosmic Desktop on Pop!_OS 22.04 is implemented using System 76
   Gnome extensions. I guess the caffine extension is incompatible with
@@ -748,7 +748,7 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
   Let's see if it keeps the system from suspending itself.
 
   After 23 minutes system was still alive, but there was a notification
-  n the upper middle of the screen about the system was soon to suspend
+  in the upper middle of the screen about the system was soon to suspend
   due inactivity. Another notification came in on the right, but was
   gone when I went to read it.
 
@@ -815,7 +815,7 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
     ~/.var/app/io.neovim.nvim/config/nvim -> /home/buggy/.config/nvim
 
   for the flatpak to find its configuration files. I wish it would adhere to
-  DSG standards. Laxy.nvim installed its plugins hhere
+  DSG standards. Lazy.nvim installed its plugins there
 
     ~/.var/app/io.neovim.nvim/data/nvim/laxy
 
@@ -903,3 +903,97 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
     $ mv *.ttf ~/.local/share/fonts/
     $ ax FiraCode.zip
     $ mv *.ttf ~/.local/share/fonts/
+
+2023-12-26:
+  Installed pyenv. Went to build Python 3.11.7 but needed more
+  dependencies.
+
+  From https://github.com/pyenv/pyenv/wiki#suggested-build-environment
+
+    $ sudo apt install build-essential libssl-dev zlib1g-dev \
+      libbz2-dev libreadline-dev libsqlite3-dev curl \
+      libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev \
+      libffi-dev liblzma-dev
+
+  Now this works
+
+    $ pyenv install 3.11.7
+  
+  Let's switch to 3.11.7 and create a virtual environment.
+
+    $ cd ~/devel/python_envs/
+    $ pyenv shell 3.11.7
+    $ python --version
+    Python 3.11.7
+    $ python -m venv grs
+    $ source grs/bin/activate
+    $ python
+    ...
+    $ deactiv
+
+  TODO:
+
+    1. Port my Fish Python environment infrastructure over to Bash.
+    2. Adjust Fish infrastructure for pyenv, since I now know how to
+       build later versions of Python.
+    3. Maybe adjust Bash & Fish Python infrastructure to handle both
+       pyenv and virtual environments together instead of orthogonally.
+
+2024-04-27:
+  Left gauss17 charger in Denver airport. Need to configure onepiece for
+  softare development. Daughters have no interest in learning bash. Will
+  install fish:
+
+    $ sudo apt-get upgrade
+    $ sudo apt-get upgrade fish
+    $ sudo usermod buggy -s /usr/bin/fish
+
+  Had to reboot before change took effect in Cosmic Desktop. Was
+  immediate in virtual consoles.
+
+  Will be using grsBeowulf GitHub account. Don't know if I set up
+  signing or not. I was hoping this file would show, but it doed not.
+
+  Went to GitHub, I did set up an SSH key, but 'git commit -S' not
+  working.
+
+2024-04-29:
+  Fish was too old!!! Did not understand "set -f".
+
+    $ sudo add-apt-repository ppa:fish-shell/release-3
+    $ sudo apt update
+    $ sudo apt install fish
+
+2024-04-29:
+  Decided to get bash, python and nvim working better before addressing fish.
+
+    For nvim (from :checkhealth)
+
+      $ sudo apt install fswatch
+      $ sudo apt install nodejs
+      $ sudo apt install npm
+      $ sudo npm install -g neovim
+
+      Had to download tree-sitter from tree-sitter GitHub page. Put it in my
+      ~/bin directory. I guess it is too much of a moving target for Pop OS's
+      repos. Version 0.22.5 for Linux-X64.
+
+    For bash scripting, needed realpath
+
+      $ sudo apt install coreutils
+
+    For python
+
+      $ /usr/bin/python --version
+      Python 3.10.12
+
+    This is so old, typing module not available. IMHO Python without the typing
+    module is unacceptable.
+  
+    I hate doing this but pyenv is not in the Pop OS repos.
+
+      $ curl https://pyenv.run | bash
+
+    It did not edit my .bashrc (good) but the info message regarding the .bashrc
+    bootstrap was incorrect. It indicated ~/.pyenv as the install location but
+    pyenv was installed in  ~/.local/share/pyenv instead.

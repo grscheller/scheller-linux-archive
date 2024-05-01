@@ -58,13 +58,13 @@ Notes on Built-in Targets:
 * `.EXPORT_ALL_VARIABLES`: no prerequisits
   * another anti-pattern to avoid
   * `make -e` is similar, has caused me many hours of painful decovolution
-* `.NOTPARALLEL`: no prerequisits
+* `.NOTPARALLEL`: no prerequisites
   * usually used with recursive make builds
   * avoids race conditions between daughter make invocations
-* `.ONESHELL`: no prerequisits
+* `.ONESHELL`: no prerequisites
   * bad idea, global change is all or nothing
   * see [Automating Tasks](#automating-tasks) below to write oneliners
-* `.POSIX`: no prerequisits
+* `.POSIX`: no prerequisites
   * GNU Make extensions are still available
   * use POSIX behavior when it differs from GNU behavior
   * POSIX shells get past `-e` option

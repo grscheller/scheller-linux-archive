@@ -42,7 +42,7 @@ object ScalaImplicts:
     print("bar = "); println(bar)
     print("4.tripleMe = "); println(4.tripleMe) // add a method to Int
     print("foo.doubleMe = "); println(foo.doubleMe) // add a method to Double
-    print("bar x 10 = "); println(bar x 10)
+    print("bar `x` 10 = "); println(bar `x` 10)
     given geoffrey: PreferedName = PreferedName("Geoffrey")
     val beowulf: PreferedName = PreferedName("Beowulf")
     sayHello

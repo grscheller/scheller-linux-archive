@@ -738,8 +738,9 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
     buggy       2594    2570  0 11:08 pts/0    00:00:00 grep --color=auto caffeine
 
   Seems to be a pattern. Don't know if it ia a Pop! OS, Ubuntu, or
-  Debian thing, but when apt is used to install software, it configures
+  Debian thing, but when apt is used to install software, apt configures
   and enables it.
+  it & enables it.
 
   The Cosmic Desktop on Pop!_OS 22.04 is implemented using System 76
   Gnome extensions. I guess the caffine extension is incompatible with
@@ -896,7 +897,7 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
   Install Nerd-Fonts.
 
   From https://www.nerdfonts.com/font-downloads download
-  RobotoMono.zip and $ ax FiraCode.zip
+  RobotoMono.zip and FiraCode.zip
 
     $ mkdir ~/.local/share/fonts
     $ ax RobotoMono.zip

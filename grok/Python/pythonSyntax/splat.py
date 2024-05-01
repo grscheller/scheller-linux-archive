@@ -62,6 +62,6 @@ def main():
     gang['Shaggie'] = 32
     prt_names_and_ages(**gang, **stooges)
 
-# Cananical boiler plate
+# Canonical boiler plate
 if __name__ == "__main__":
     main()

@@ -8,7 +8,7 @@
  *
  * Note: Caller must define and set log_to_stderr
  *
- *         log_to_stderr = 0     when running as deamon
+ *         log_to_stderr = 0     when running as daemon
  *         log_to_stderr = 1     when not running as daemon
  *
  * Source code for: log_open
@@ -20,8 +20,9 @@
  *                  log_msg
  *                  log_quit
  */
-#include "apue.h"
-#include <errno.h>     /* defines errno "variable," actually a macroa */
+
+# include "../../include/apue.h"
+#include <errno.h>     /* defines errno "variable," actually a macro */
 #include <stdarg.h>    /* ISO C variable arguments */
 #include <syslog.h>
 

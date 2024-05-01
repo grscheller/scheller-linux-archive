@@ -1,7 +1,7 @@
 /*
  * Limit allocation and determination functions
  *
- * Purpose: Determine variaous systems limits at run time.
+ * Purpose: Determine various systems limits at run time.
  *
  *   1. Useful when executable compiled elsewhere.
  *   2. Some limits are indeterminate even at run time.
@@ -11,7 +11,8 @@
  *                  open_max
  *
  */
-#include "apue.h"
+
+# include "../../include/apue.h"
 #include <errno.h>     /* defines errno "variable," actually a macro */
 #include <limits.h>    /* ISO C variable arguments */
 

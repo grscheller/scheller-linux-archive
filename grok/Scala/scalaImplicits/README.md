@@ -5,10 +5,11 @@ keyword `implicit` from Scala 2.  The implicit keyword still
 works as it did in Scala 2, but is deprecated and at some
 point will be removed.
 
-This project, scalaImplicits, impletements a
-[Main.scala](src/main/scala/Main.scala) executable which is a
-rewrite of the Scala 2 program
-[implicits.scala](../../Scala2/learnScala/implicits/implicits.scala)
-from grok/Scala2/learnScala project.
+This project implements an executable
+[ScalaImplicits.scala](./src/main/scala/ScalaImplicits.scala)
+which is a rewrite of the Scala 2 program
+[Scala2Implicits.scala](src/main/scala/Scala2Implicits.scala).
+
+Currently both are being built with Scala3.
 
 This project also implements simple junit tests.

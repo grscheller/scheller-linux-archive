@@ -414,7 +414,7 @@ What types of partitians do you have?
 ```
 
   Note that df -T and mount command report fuseblk instead of
-  underlying NTFS filesystems.  FUSE (Filesystem in USEr space)
+  underlying NTFS filesystems.  FUSE (Filesystem in userspace)
   filesystem can in principle access filesystems unknown to
   the Linux Kernel.  (FUSE has long since been folded into the
   Linux Kernel)
@@ -468,7 +468,7 @@ This shows HW clock is actually kept in UTC time.
 
 ## Wifi Networking
 
-Connecting to a wifi network from the command line. Done from the system
+Connecting to a WiFi network from the command line. Done from the system
 console.
 
 ```
@@ -477,3 +477,47 @@ console.
     $ iwctl station wlan0 get-networks
     $ iwctl --passphrase <pass phrase> station wlan0 connect <SSID>
 ```
+
+## Linux console
+
+* The Linux console is implemented in the kernel
+* Historically, Linux developed on Intel PC hardware
+  * used standard IBM CGA/EGA/VGA graphics
+  * 80x25 character display
+  * 16 colors
+* Linux now uses the framebuffer console
+  * for multi-platform support
+  * same VGA-style interface regardless of underlying graphics hardware
+  * is a terminal in its own right
+    * not a pseudo-terminal which
+      * have ptty device names /dev/pts/1, /dev/pts/2, ...
+      * connects a program's stdin, stdout, stderr to another program
+        * "GUI terminal" to a shell
+        * "GUI terminal" to an outgoing ssh connection
+        * "GUI terminal" to nvim
+        * incoming ssh connection to a shell
+      * can have master-slave relationships (need to research more)
+    * implemented with the computer's monitor, keyboard & graphics memory
+    * virtual consoles, on my laptop
+      * `/dev/tty1` thru `/dev/tty6`
+      * switch between via `<Alt+F1>` thru `<Alt+F6>`
+      * not to be confused with `<Ctl+Alt+F1>` thru `<Ctl+Alt+F6>`
+        * used by Wayland and XOrg
+        * to get out to the virtual terminal world
+* Console terminal type is "linux"
+  * it is its own terminal type (NOT AN EMULATOR!)
+  * large subset of the VT102 and ECMA-48/ISO/IEC 6429/ANSI X3.64 terminal controls
+  * has its own extensions too
+  * see `man -s4 console_codes`
+
+| KeyBd shortcut     | Description                                  |
+|:------------------:|:-------------------------------------------- |
+| `<Ctrl+Alt+Del>`   | Reboot system (Systemd ctrl-alt-del.target)  |
+| `<Alt+F{1,2,...}>` | Switch between virtual consoles              |`
+| `<Alt+Left>`       | Move left one vertual terminal               |
+| `<Alt+Right>`      | Move right one vertual terminal              |
+| `<Scroll-Lock>`    | Lock input/output                            |
+| `<Ctrl+C>`         | Send SIGTERM (not in raw mode)               |
+| `<Ctrl+D>`         | EOF (not a character, not in raw mode)       |
+| `<Ctrl+Z>`         | Send TSTP, suppend process (not in raw mode) |
+

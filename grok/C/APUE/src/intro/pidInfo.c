@@ -1,7 +1,10 @@
 /*
  * Print out information on current process
  */
-#include "apue.h"
+
+#include <stdio.h> 
+#include <stdlib.h>
+#include <unistd.h>
 
 int
 main(void)
@@ -29,18 +32,18 @@ main(void)
  *    are reserved to indicate errors.
  *
  * Factoids:
- * 1. The glibc library is userr-space code that when
+ * 1. The glibc library is user-space code that when
  *    needed calls down into the Linux Kernel.  It does
  *    this either via system calls or through a shared
- *    object called the vDSO.  Even actual Linux system
+ *    object called the vDSO. Even actual Linux system
  *    calls have glibc wrappers for them,
- * 2. C is the standard defacto ABI for Linux.  Before UNIX,
+ * 2. C is the standard de facto ABI for Linux.  Before UNIX,
  *    the ABI (Application Binary Interface) into an
  *    operating system was the hardware's assembly language.
  *    The reason C is such, is that except for isolated uses
  *    of assembly code, the Unix Kernels are written in C.
  * 3. Different implementations of C++ are usually binary
- *    incompatible.  By using 'extern "C" { ... }' directives,
+ *    incompatible. By using 'extern "C" { ... }' directives,
  *    or foreign function interfaces in other languages,
  *    C ABI can be the lingua franca that glues code together. 
  *    Also, allows code to communicate with device drivers

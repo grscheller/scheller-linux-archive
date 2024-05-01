@@ -1,0 +1,52 @@
+[build-system]
+requires = ["flit_core>=3.4,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "grscheller_courses_gaussian"
+authors = [
+    { name = "Geoffrey R. Scheller", email = "geoffrey@scheller.com" },
+]
+license = { file = "LICENSE" }
+readme = "README.md"
+requires-python = ">=3.12"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "License :: OSI Approved :: Apache Software License"
+]
+dependencies = ["grscheller.circular-array >= 2.0.0, < 2.1"]
+dynamic = ["version", "description"]
+keywords = [
+    "datastructures", "data structures",
+    "fifo", "lifo", "stack", "queue",
+    "functional", "fp", "maybe", "either"
+] 
+
+[project.optional-dependencies]
+test = ["pytest >=7.4"]
+
+[project.urls]
+Source = "https://github.com/grscheller/scheller-linux-archive/courses/Udacity/PythonForAI/03-gaussian"
+Documentation = "https://github.com/grscheller/scheller-linux-archive/courses/Udacity/PythonForAI/03-gaussian/html/gaussian.html"
+
+[tool.flit.sdist]
+exclude = [".gitignore"]
+
+[tool.pylsp-mypy]
+live-mode = true
+strict = false
+report_progress = true
+
+[tool.ruff]
+target-version = "py312"
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]
+
+[tool.ruff.format]
+quote-style = "single"
+
+[tool.ruff.lint.flake8-quotes]
+docstring-quotes = "double"

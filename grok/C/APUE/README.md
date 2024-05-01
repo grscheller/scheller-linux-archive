@@ -1,6 +1,6 @@
 # Advanced Programming in the UNIX Environment (APUE)
 
-The goal of ths project is to write portable POSIX compliant
+The goal of this project is to write portable POSIX compliant
 systems oriented C language code.  This may be becoming
 a bit old fashioned and against the current trend to program
 for the "big" three: Linux/MacOS/Windows using either GCC/GLIBC
@@ -22,7 +22,7 @@ books are still very relevant today.
 * implementation of Steven's APUE UNIX System Programming API
 * robust non-recursive GNU Make build
 * working through the chapters in Steven's book
-* exploring the evolution and direction ot Feature Test Macros
+* exploring the evolution and direction of Feature Test Macros
 * Test against
   * Arch Linux (GCC/GLIBC)
   * Arch Linux (Clang/LLVM)
@@ -36,7 +36,7 @@ books are still very relevant today.
 
 ### [config.mk](config.mk)
 
-* manually editted by end user for target system
+* manually edited by end user for target system
 * program to __ISO/IEC 9899:1999__ C99 standard
 
 ### [apue.h](src/apue/apue.h) header
@@ -95,7 +95,7 @@ books are still very relevant today.
 * functions:
   * `char* path_alloc(size_t *)` - uses malloc to allocate space for pathnames
   * `long open_max(void)` - returns maximum number of possible open file descriptors
-
+https://github.com/scala/scala3-example-project
 #### Format a message and allocate sufficient space for it: `make_message.c`
 
 * functions:
@@ -105,7 +105,7 @@ books are still very relevant today.
 
 * unlike source code on the book's website, my build is not recursive
 * individual configuration files distributed throughout directory structure
-* using make include statements to pull everyhing together into one makefile
+* using make include statements to pull everything together into one makefile
 * results in faster, more reliable software builds
 * for vim Syntastic plug-in to work, launch vim from directory with Makefile
 

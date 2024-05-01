@@ -52,9 +52,9 @@ psub takes the following options:
 | `-s SUFFIX` | append SUFFIX like .c onto backing file or fifo   |
 
 While bash uses the /dev/fd/ device files, psub is a fish function that returns
-the name of a file or fifo it creates and later cleans up.  Using an actual file
-is the default.  Fifos on Linux have a 64KiB capacity, which can be a problem
-for nonblocking writing.
+the name of a file or FIFO it creates and later cleans up.  Using an actual file
+is the default.  FIFO's on Linux have a 64 KiB capacity, which can be a problem
+for non-blocking writing.
 
 ## Sourcing from a Pipeline
 
@@ -103,14 +103,14 @@ Unlike other shells, sourced files can take arguments like shell scripts,
 
 Usually failed globs are an error in fish.  Certain builtin commands like
 `set`, `for` and `count` will happily null glob.  Without knowing this
-inconsistency (syntaxic sugar - magic builtins) null globbing would be a pain.
+inconsistency (syntactic sugar - magic builtins) null globbing would be a pain.
 
 Care must be taken with `switch` statements.  Quoted wildcards patterns can be
 used with `case` clauses.  If unquoted, failed file system null globs could
 happen.  The `switch` part could fail with an unquoted file system glob if
 there is not exactly one result.
 
-Additionally, when using quotted patterns in `case` clauses, `'a**b'` is not
+Additionally, when using quoted patterns in `case` clauses, `'a**b'` is not
 special and is treated same as `'a*b'`.
 
 ## Read Trick since Pipelines Don't Use Subshells

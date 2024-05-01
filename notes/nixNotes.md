@@ -1,7 +1,7 @@
 # Nix
 
 Nix is a 3rd party package manager. NixOS is a Linux distribution based
-on the Nix packake manager. Both are configured purely functionally.
+on the Nix package manager. Both are configured purely functionally.
 
 ## Install Nix on Arch Linux
 
@@ -53,7 +53,7 @@ nixpkgs-unstable channel best matches Arch's rolling release philosophy.
 
 Neovim lazy-lsp.nvim plugin leverages the Nix infrastructure. Seems to
 work but at this point I am not sure what it is doing. Seems to have
-mechanisms to simultaniously run different Nix build commands in
+mechanisms to simultaneously run different Nix build commands in
 different Nix environments.
 
 ## NixOS/nixpkgs GitHub repo

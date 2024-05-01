@@ -1,5 +1,5 @@
 //! The customary hello world first program. This is a top-level comment.
-//! I don't know if a program is considered a moduule or not.
+//! I don't know if a program is considered a module or not.
 const std = @import("std");
 
 pub fn main() !void {

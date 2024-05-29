@@ -2,27 +2,18 @@ cabal-version:      2.4
 name:               pythag-triples
 version:            0.1.0.0
 
--- A short (one-line) description of the package.
--- synopsis:
+synopsis: A Pythagorean Triple Generation Program
 
--- A longer description of the package.
--- description:
+description: TODO
 
--- A URL where users can report bugs.
--- bug-reports:
-
--- The license under which the package is released.
--- license:
-
--- The package author(s).
--- author:
-
--- An email address to which users can send suggestions, bug reports, and patches.
--- maintainer:
-
--- A copyright notice.
--- copyright:
+bug-reports: https://github.com/grscheller/pythag-triples
+license:            BSD-3-Clause
+license-file:       LICENSE
+author:             Geoffrey R. Scheller
+maintainer:         geoffrey@scheller.com
+copyright:          (c) 2016-2024 Geoffrey R Scheller
 -- category:
+
 extra-source-files:
     README.md
     CHANGELOG.md

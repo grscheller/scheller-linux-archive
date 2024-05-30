@@ -483,3 +483,17 @@ Opps... At least Neovim leveraging haskell-language-server no longer is crashes.
 
 Will be following thie
 [Cabal getting started guide](https://cabal.readthedocs.io/en/3.4/getting-started.html).
+
+## 2024=05-30:
+
+Getting a cryptic error message from hsl while in neovim:
+
+```
+   ■ Multi Cradle: No prefixes matched  pwd: /home/grs/devel/scheller-linux-archive/grok/Haskell/pythag-triples ...
+```
+
+For a possible workaround, see
+
+* [hls issue 3710](https://github.com/haskell/haskell-language-server/issues/3710)
+* [hls issue 3735](https://github.com/haskell/haskell-language-server/issues/3735)
+`

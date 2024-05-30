@@ -21,7 +21,7 @@ printTriples :: [Triple] -> IO ()
 printTriples = mapM_ (putStrLn . showTriple)
 
 -- | Standard algorithm to generate Pythagorean Triples
---   Each (a, b, c) have no common factors.
+--   Filter out triples (a, b, c) with common factors.
 --   a & c are always odd, b is always even
 pythagTriplesFast :: Int -> Int -> [Triple]
 pythagTriplesFast start end =
@@ -36,8 +36,8 @@ pythagTriplesFast start end =
       ]
 
 -- | Generate ordered Pythagorean Triples first by a then b.
---   For each a, will find all corresponding b's and c'c
---   before moving onto the next a.
+--   For each a all possible b's and c's will be
+--   found before moving onto the next larger a.
 pythagTriplesOrdered1 :: Int -> Int -> [Triple]
 pythagTriplesOrdered1 start end =
   let m = if start < 3 then 3 else start

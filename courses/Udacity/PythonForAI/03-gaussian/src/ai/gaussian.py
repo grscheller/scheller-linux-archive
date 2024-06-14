@@ -23,18 +23,16 @@ from __future__ import annotations
 from typing import List, Tuple
 import math
 import matplotlib.pyplot as plt
+from ai.distribution import Distribution
 
 __all__ = ['Gaussian']
 
-class Gaussian():
+class Gaussian(Distribution):
     """ Class for calculating and visualizing Gaussian distributions."""
 
     def __init__(self, mu: float=0.0, sigma: float=1.0):
+        super().__init__(mu, sigma)
         self.c = 1.0 / math.sqrt(2*math.pi)
-        self.sample = True
-        self.mean = mu
-        self.stdev = sigma
-        self.data: List[float] = []
 
     def calculate_mean(self) -> float:
         """From the data set, calculate & return the mean."""
@@ -50,8 +48,8 @@ class Gaussian():
     def calculate_stdev(self, sample: bool=True) -> float:
         """Set & return a standard deviation calculated from the data set.
 
-        * If sample is True, calculate a sample standard deviation. 
-        * If sample is False, calculate a population standard deviation. 
+        * If sample is True, calculate a sample standard deviation.
+        * If sample is False, calculate a population standard deviation.
 
         """
 
@@ -152,35 +150,33 @@ class Gaussian():
         return xs, ys
 
     def __add__(self, other: Gaussian) -> Gaussian:
-        
         """Magic method to add together two Gaussian distributions
-        
+
         Args:
             other (Gaussian): Gaussian instance
-            
+
         Returns:
             Gaussian: Gaussian distribution
-            
-        """       
+
+        """
         # create a new Gaussian object
         result = Gaussian()
-        
+
         # Calculate the mean and standard deviation of the sum of two Gaussians
         result.mean = self.mean + other.mean
         result.stdev = math.sqrt(self.stdev**2 + other.stdev**2)
-        
+
         return result
 
     def __repr__(self) -> str:
         """Magic method to output the characteristics of the Gaussian instance
-        
+
         Args:
             None
-        
+
         Returns:
             string: characteristics of the Gaussian
 
         """
         repr_str = "mean {}, standard deviation {}"
         return repr_str.format(self.mean, self.stdev)
-        

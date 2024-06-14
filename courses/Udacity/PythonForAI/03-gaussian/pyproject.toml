@@ -3,7 +3,7 @@ requires = ["flit_core>=3.4,<4"]
 build-backend = "flit_core.buildapi"
 
 [project]
-name = "grscheller_courses_gaussian"
+name = "ai_distribution"
 authors = [
     { name = "Geoffrey R. Scheller", email = "geoffrey@scheller.com" },
 ]
@@ -16,13 +16,9 @@ classifiers = [
     "Operating System :: OS Independent",
     "License :: OSI Approved :: Apache Software License"
 ]
-dependencies = ["grscheller.circular-array >= 2.0.0, < 2.1"]
+dependencies = []
 dynamic = ["version", "description"]
-keywords = [
-    "datastructures", "data structures",
-    "fifo", "lifo", "stack", "queue",
-    "functional", "fp", "maybe", "either"
-] 
+keywords = [ "udacity", "ai", "probability", "distribution", "gaussian" ] 
 
 [project.optional-dependencies]
 test = ["pytest >=7.4"]

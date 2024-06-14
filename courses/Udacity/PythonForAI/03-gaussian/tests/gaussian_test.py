@@ -4,13 +4,14 @@
 #          This is considered bad practice except for
 #          single user/maintainer projects.
 # 
-#          pytest must be run with the -s option
+#          - pytest must be run with the -s option
+#          - test data hard coded, run tests from project root
 #
 # Example: $ pytest -s gaussian_test.py
 #
 
 import sys
-from gaussian import Gaussian
+from ai.gaussian import Gaussian
 
 gauss = Gaussian(25, 2)
 euler = Gaussian()
@@ -30,13 +31,13 @@ class Test_Gaussian:
         assert round(gauss.pdf(25), 5) == 0.19947
 
     def test_mean_calculation(self) -> None:
-        euler.read_data_file('numbers.txt')
+        euler.read_data_file('data/numbers.txt')
         assert euler.mean == sum(euler.data)/float(len(euler.data))
 
     def test_stdev_calculation(self) -> None:
-        euler.read_data_file('numbers.txt', True)
+        euler.read_data_file('data/numbers.txt', True)
         assert round(euler.calculate_stdev(), 2) == 92.87
-        euler.read_data_file('numbers.txt', False)
+        euler.read_data_file('data/numbers.txt', False)
         assert round(euler.calculate_stdev(sample = False), 2) == 88.55
 
     def test_plot_histogram(self) -> None:

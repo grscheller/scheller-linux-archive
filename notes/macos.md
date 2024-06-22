@@ -76,7 +76,7 @@ with the --cask flag.
 3. Power off system.
 4. Hold down key combo Opt-Cmd-R while rebooting.
 5. Once booted into "recovery app", unplug mouse & keyboard.
-6. Wipe HD with Gisk Utility.
+6. Wipe HD with Gdisk Utility.
 6. Select Reinstall macOS.
 7. Fumble through idiot instructions app provides.
 8. Upgrade to latest compatible MacOS.

@@ -299,8 +299,8 @@ I am on the right track. I wish to run the server off a more powerful
 computer from the console and access it with a less powerful one over
 the network. Also want to look into the OpenGL client.
 
-Factoid, after shutting everything down, left in the directory I ran the
-the server the following:
+Factoid, after shutting everything down, I was left in the directory I
+ran the server and found the following:
 
 ```
    $ file Untitled.ipynb

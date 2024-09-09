@@ -8,6 +8,9 @@ I want to keep things readable when unrendered, I find Unicode can
 help.  The problem is that the code points blocks are geared for
 writtten languages, not technical disciplines.
 
+To lookup symbols:
+  https://wumbo.net/symbols
+
 To lookup unicode code points:
   https://unicode.org/cldr/utility/character.jsp?a=03bb
   https://unicode-table.com/en/    (also HTML code points)
@@ -80,9 +83,39 @@ For base vectors in R³:
   "j-hat":  𝐣   Unicode: 1d423
   "k-hat":  𝐤   Unicode: 1d424
 
-Bold math symbols:
-  omega: 𝛀    Unicode: 1d6c0
-  nabla: 𝛁    Unicode: 1d6c1
+Math symbols:
+  nabla:    ∇   Unicode: 2207
+  naturals: ℕ   Unicode: 2115
+  integers: ℤ   Unicode: 2124
+  rational: ℚ   Unicode: 211a
+  reals:    ℝ   Unicode: 211d
+  complex:  ℂ   Unicode: 2102
+
+Large Greek Letters:
+  alpha:   Α  Unicode: 0391
+  beta:    Β  Unicode: 0392
+  gamma:   Γ  Unicode: 0393
+  delta:   Δ  Unicode: 0394
+  epsilon: Ε  Unicode: 0395    
+  zeta:    Ζ  Unicode: 0396
+  eta:     Η  Unicode: 0397
+  theta:   Θ  Unicode: 0398
+  iota:    Ι  Unicode: 0399
+  kappa:   Κ  Unicode: 039a
+  lambda:  Λ  Unicode: 039b
+  mu:      Μ  Unicode: 039c
+  nu:      Ν  Unicode: 039d
+  xi:      Ξ  Unicode: 039e
+  omicron: Ο  Unicode: 039f
+  pi:      Π  Unicode: 03a0
+  rho:     Ρ  Unicode: 03a1
+  sigma:   Σ  Unicode: 03a3
+  tau:     Τ  Unicode: 03a4
+  upsilon: Υ  Unicode: 03a5
+  phi:     Φ  Unicode: 03a6
+  chi:     Χ  Unicode: 03a7
+  psi:     Ψ  Unicode: 03a8
+  omega:   Ω  Unicode: 03a9
 
 Small Greek Letters:
   alpha:   α  Unicode: 03b1
@@ -110,32 +143,6 @@ Small Greek Letters:
   chi:     χ  Unicode: 03c7
   psi:     ψ  Unicode: 03c8
   omega:   ω  Unicode: 03c9
-
-Large Greek Letters:
-  alpha:   Α  Unicode: 0391
-  beta:    Β  Unicode: 0392
-  gamma:   Γ  Unicode: 0393
-  delta:   Δ  Unicode: 0394
-  epsilon: Ε  Unicode: 0395    
-  zeta:    Ζ  Unicode: 0396
-  eta:     Η  Unicode: 0397
-  theta:   Θ  Unicode: 0398
-  iota:    Ι  Unicode: 0399
-  kappa:   Κ  Unicode: 039a
-  lambda:  Λ  Unicode: 039b
-  mu:      Μ  Unicode: 039c
-  nu:      Ν  Unicode: 039d
-  xi:      Ξ  Unicode: 039e
-  omicron: Ο  Unicode: 039f
-  pi:      Π  Unicode: 03a0
-  rho:     Ρ  Unicode: 03a1
-  sigma:   Σ  Unicode: 03a3
-  tau:     Τ  Unicode: 03a4
-  upsilon: Υ  Unicode: 03a5
-  phi:     Φ  Unicode: 03a6
-  chi:     Χ  Unicode: 03a7
-  psi:     Ψ  Unicode: 03a8
-  omega:   Ω  Unicode: 03a9
 
 Superscript Decimal Digits (not all are together):
   0: ⁰  Unicode: 2070

@@ -1,0 +1,39 @@
+#!/usr/bin/python
+
+epoch_performances = [(1, 0.5), (2, 0.45), (3, 0.47), (4, 0.44), (5, 0.43), (6, 0.42), (7, 0.44), (8, 0.41), (9, 0.42), (10, 0.43)]
+
+print("METHOD 1: Immediate Stop")
+best_loss = float('inf')
+epochs_ran = 0
+
+for epoch, val_loss in epoch_performances:
+    print(f"Epoch {epoch} - Validation Loss: {val_loss}")
+    if val_loss < best_loss:
+        best_loss = val_loss
+        epochs_ran += 1
+    else:
+        print(f"Stopping early at epoch {epoch} as validation loss increased.")
+        break
+
+print(f"\nTotal epochs ran: {epochs_ran}")
+
+print("\nMETHOD 2: Patience")
+patience = 2
+best_loss = float('inf')
+epochs_ran = 0
+patience_counter = 0
+
+for epoch, val_loss in epoch_performances:
+    print(f"Epoch {epoch} - Validation Loss: {val_loss}")
+    if val_loss < best_loss:
+        best_loss = val_loss
+        patience_counter = 0
+        epochs_ran += 1
+    else:
+        patience_counter += 1
+        if patience_counter >= patience:
+            print(f"Stopping early at epoch {epoch} as validation loss did not improve for {patience} epochs.")
+            break
+        epochs_ran += 1
+
+print(f"\nTotal epochs ran: {epochs_ran}")

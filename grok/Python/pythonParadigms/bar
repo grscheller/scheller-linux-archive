@@ -1,7 +1,11 @@
 #!/usr/bin/env python
 
-import antigravity
-from enum import StrEnum
+def sum_floats(*floats: float) -> float:
+    foo: int = 42
+ #  reveal_type(floats)
+    return sum(floats)
 
+my_floats: tuple[float, ...] = (1.5, 3.2, 11.3)
+my_sum = sum_floats(1, 5.0, 15)
 
-
+print(my_sum)

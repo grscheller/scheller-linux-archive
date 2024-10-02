@@ -14075,9 +14075,18 @@ files are way too small.
 2023-09-25:
   During a Pacman update, saw the following nvidia cuda message:
 
-    ( 8/29) upgrading nvidia-utils                                                                          [##############################################################] 100%
+    ( 8/29) upgrading nvidia-utils                                  [######################] 100%
     If you run into trouble with CUDA not being available, run nvidia-modprobe first.
     If you use GDM on Wayland, you might have to run systemctl enable --now nvidia-resume.service
 
   It has been centuries since I poked my nose under the CUDA
   tent. Actually, four and a half years.
+
+2024-10-01:
+  It has been a over a year since I last added an entry, and here it is...
+  During Pacman update, saw the following message:
+
+    ( 4/16) upgrading nvidia-utils                                  [######################] 100%
+    If you run into trouble with CUDA not being available, run nvidia-modprobe first.
+    If you use GDM on Wayland, you might have to run systemctl enable --now nvidia-resume.service
+

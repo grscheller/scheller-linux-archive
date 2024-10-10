@@ -31,9 +31,13 @@ Documentation = "https://github.com/grscheller/scheller-linux-archive/courses/Ud
 exclude = [".gitignore"]
 
 [tool.pylsp-mypy]
+enabled = true
 live-mode = true
-strict = false
+strict = true
 report_progress = true
+
+[tool.mypy]
+enable_incomplete_feature = ["NewGenericSyntax"]
 
 [tool.ruff]
 target-version = "py312"

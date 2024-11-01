@@ -67,10 +67,13 @@
         calls associate local references object the parameter references
 
 ### Python is garbage collected
+
 * reference counted
 * "stop the world" garbage collection
   * can cause unpredictable lags
   * circular references detection addressed but not perfectly
+
+## Typing in Python
 
 ### Python is "untyped"
 * At runtime everything is "duck typed"
@@ -97,4 +100,74 @@
   * both a method parameter & method return type, it must be invariant.
     * not necessarily the same method
     * err on the safe side, make formal type parameters invariant.
+
+## Python Exceptions Handling
+
+### Python exceptions hierarchy
+
+```
+BaseException
++---SystemExit
++---KeyboardInterrupt
++---GeneratorExit
++---Exception
+    +---StopIteration
+    +---StopAsyncIteration
+    +---ArithmeticError
+    |   +---FloatingPointError
+    |   +---OverflowError
+    |   +---ZeroDivisionError
+    +---AssertionError
+    +---AttributeError
+    +---BufferError
+    +---EOFError
+    +---ImportError
+    +---LookupError
+    |   +---IndexError
+    |   +---KeyError
+    +---MemoryError
+    +---NameError
+    |   +---UnboundLocalError
+    +---OSError
+    |   +---BlockingIOError
+    |   +---ChildProcessError
+    |   +---ConnectionError
+    |   |   +---BrokenPipeError
+    |   |   +---ConnectionAbortedError
+    |   |   +---ConnectionRefusedError
+    |   |   +---ConnectionResetError
+    |   +---FileExistsError
+    |   +---FileNotFoundError
+    |   +---InterruptedError
+    |   +---IsADirectoryError
+    |   +---NotADirectoryError
+    |   +---PermissionError
+    |   +---ProcessLookupError
+    |   +---TimeoutError
+    +---ReferenceError
+    +---RuntimeError
+    |   +---NotImplementedError
+    |   +---RecursionError
+    +---SyntaxError
+    |   +---IndentationError
+    |       +---TabError
+    +---SystemError
+    +---TypeError
+    +---ValueError
+    |   +---UnicodeError
+    |       +---UnicodeDecodeError
+    |       +---UnicodeEncodeError
+    |       +---UnicodeTranslateError
+    +---Warning
+        +---DeprecationWarning
+        +---PendingDeprecationWarning
+        +---RuntimeWarning
+        +---SyntaxWarning
+        +---UserWarning
+        +---FutureWarning
+        +---ImportWarning
+        +---UnicodeWarning
+        +---BytesWarning
+        +---ResourceWarning
+```
 

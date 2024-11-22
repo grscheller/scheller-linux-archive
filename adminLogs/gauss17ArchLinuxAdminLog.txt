@@ -893,8 +893,11 @@ Purpose: To indicate what was done to create gauss17 and
     xrandr --auto
 
   [[ Note from 2017-06-29: The extra/nvidia package blacklists
-     the Nouveau drivers. The Intel Chipset just sits there
+     the Nouveau drivers. The Intel chip set just sits there
      with Linux having no drivers to use them. ]]
+
+  [[ Note from 2024-11-22: Actually, the NVIDIA card has no direct
+     output except to the Intel chip set. ]]
 
   Direct Rendering Manager (DRM) is interesting.  Wikipedia
   has a good article:

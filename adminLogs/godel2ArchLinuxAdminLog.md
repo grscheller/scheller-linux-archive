@@ -99,3 +99,25 @@ Hummm...
 Looks like I will need to boot off of sda2. Rebooting with the thumb
 drive in did not work. Getting late, I will go home and try on gauss17.
 
+## 2024-11-24:
+
+Have not been able to configure systemd-boot for for my Arch reinstall
+on gauss17. Both with fdsk and parted, not able to get UEFI firmware to
+recognize the drive bootloader is installed on as an EFI drive.
+
+I don't remember ever going through this before. The thumbdrive was
+configured with Grub.
+
+* maybe Pacman "magic" was done in the past to properly update partition
+* my UEFI firmware is now almost 8 years old on that computer
+
+Next step is to use Grub.
+
+Instead decided to go with PoP!OS 24.04 Alpha III release
+
+* was waiting for the actual release
+* downloaded both
+  * Intel/AMD ISO (to install on gauss17 -> noether2)
+  * NVIDIA ISO (godel2)
+
+Verified checksums.

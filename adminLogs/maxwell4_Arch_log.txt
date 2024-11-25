@@ -2274,10 +2274,10 @@ Note: Initially I did a lot of thrashing around, jump to
 
 2021-12-04:
 
-  maxwell4 RIP...
-
   I am doing a fresh install of Arch but renaming the
   system euler7.  I suspect something went wrong with
   a system suspend or hibernation.  Not sure, see
   adminLogs/euler7ArchLinuxAdmin.log for details.
+
+  RIP maxwell4.
 

@@ -11,7 +11,7 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
     - ??? Intel(R) UHD Graphics
     - ??? NVIDIA GeForce MX250 Graphics
 
-  Going with PoPOS 22.04 LTS (NVIDIA)
+  Going with Pop!OS 22.04 LTS (NVIDIA)
 
   Downloaded latest ISO image to gauss17 from
 
@@ -883,7 +883,7 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
 2023-12-24:
   Trying to get LSP working with Neovin.
 
-  Commented out from "excluded_servers" in lsp.lua: bashls, lua_ls, 
+  Commented out from "excluded_servers" in lsp.lua: bashls, lua_ls,
 
   Install Clang LSP server, formatter, linter, and clang itself:
 
@@ -919,7 +919,7 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
   Now this works
 
     $ pyenv install 3.11.7
-  
+
   Let's switch to 3.11.7 and create a virtual environment.
 
     $ cd ~/devel/python_envs/
@@ -990,7 +990,7 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
 
     This is so old, typing module not available. IMHO Python without the typing
     module is unacceptable.
-  
+
     I hate doing this but pyenv is not in the Pop OS repos.
 
       $ curl https://pyenv.run | bash

@@ -14,7 +14,7 @@ Purpose: To indicate what was done to create gauss17 and
 
 2016-07-04:
 
-  Installed Arch Linux on a Acer E-14 Laptop (E5-491G-70PX).
+Installed Arch Linux on a Acer E-14 Laptop (E5-491G-70PX).
   Created a UEFI/GPT x86-64 system with a 4 core i7 Intel
   Processor (6700HQ).  Laptop has a 2 channel NVIDIA-Optimus
   GEFORCE 940M graphics chipset 2GB Memory.
@@ -14092,4 +14092,106 @@ files are way too small.
     ( 4/16) upgrading nvidia-utils                                  [######################] 100%
     If you run into trouble with CUDA not being available, run nvidia-modprobe first.
     If you use GDM on Wayland, you might have to run systemctl enable --now nvidia-resume.service
+
+2024-11-21:
+
+  Decided to reinstall Arch Linux on gauss17 in preparation of installing Arch
+  Linux on my new work computer, godel2.
+
+  Creating a bootable USB thumb drive.
+
+  Downloading the ISO and signature files from one random US Arch download
+  mirror.
+
+    - archlinux-2024.11.01-x86_64.iso      01-Nov-2024 10:11  1210089472
+    - archlinux-2024.11.01-x86_64.iso.sig  01-Nov-2024 10:12  141
+
+  And the sha256sum checksum info from another US mirror:
+
+    - bceb3dded8935c1d3521c475a69ae557e082839b46d921c8b400524470b5c965  archlinux-2024.11.01-x86_64.iso
+
+  Now,
+
+    $ ll
+    total 1181740
+    -rw-r--r-- 1 grs grs        141 Nov 21 17:43 archlinux-2024.11.01-x86_64.iso.sig
+    -rw-r--r-- 1 grs grs 1210089472 Nov 21 18:05 archlinux-2024.11.01-x86_64.iso
+
+  File sizes look good.
+
+    $ pacman-key -v archlinux-2024.11.01-x86_64.iso.sig
+    ==> Checking archlinux-2024.11.01-x86_64.iso.sig... (detached)
+    gpg: Signature made Fri 01 Nov 2024 04:12:01 AM MDT
+    gpg:                using EDDSA key 3E80CA1A8B89F69CBA57D98A76A5EF9054449A5C
+    gpg:                issuer "pierre@archlinux.org"
+    gpg: Note: trustdb not writable
+    gpg: Good signature from "Pierre Schmitz <pierre@archlinux.org>" [full]
+    gpg:                 aka "Pierre Schmitz <pierre@archlinux.de>" [unknown]
+
+  Above command failed until entire ISO downloaded.
+
+    $ sha256sum archlinux-2024.11.01-x86_64.iso
+    bceb3dded8935c1d3521c475a69ae557e082839b46d921c8b400524470b5c965  archlinux-2024.11.01-x86_64.iso
+
+  I have done my due diligence!
+
+2024-11-21:
+
+  Creating a bootable USB thumb drive. I bought a new thumb drive just for
+  this. Plugged in into euler7.
+
+  ```
+  $ lsblk
+  NAME        MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
+  sda           8:0    1  28.9G  0 disk
+  └─sda1        8:1    1  28.9G  0 part
+  <cut>
+
+  $ sudo dd bs=4M if=archlinux-2024.11.01-x86_64.iso of=/dev/sda
+
+  288+1 records in
+  288+1 records out
+  1210089472 bytes (1.2 GB, 1.1 GiB) copied, 95.4038 s, 12.7 MB/s
+
+  $ lsblk
+  NAME        MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
+  sda           8:0    1  28.9G  0 disk
+  ├─sda1        8:1    1   979M  0 part
+  └─sda2        8:2    1   175M  0 part
+  <cut>
+
+  $ lsblk -f
+  NAME        FSTYPE FSVER      LABEL       UUID                                 FSAVAIL FSUSE% MOUNTPOINTS
+  sda         iso966 Joliet Ext ARCH_202411 2024-11-01-10-09-22-00
+  ├─sda1      iso966 Joliet Ext ARCH_202411 2024-11-01-10-09-22-00
+  └─sda2      vfat   FAT32      ARCHISO_EFI 6724-A8D2
+  <cut>
+
+  Looks like I will need to boot off of sda2. Rebooting euler7 with the thumb
+  drive in did not work. Getting late, I will go home and try on gauss17.
+
+2024-11-24:
+
+  Worked through the Arch Linux installation guide and then configured the
+  Systemd bootloader.
+
+  Have not been able to configure systemd-boot for for my Arch reinstall
+  on gauss17. Both with fdisk and parted, not able to get UEFI firmware to
+  recognize the drive the bootloader is installed on as an EFI drive.
+
+  I don't remember ever going through this pain before. The thumbdrive was
+  configured with Grub.
+
+    - maybe Pacman "magic" was done in the past to properly update partition
+    - my UEFI firmware is now almost 8 years old on that computer
+
+  Next step is to use Grub.
+
+2024-11-25:
+
+  Instead decided to go with Pop!OS 24.04 Alpha III release.
+
+  Will rename system noether2.
+
+  RIP gauss17.
 

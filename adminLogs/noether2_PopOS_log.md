@@ -29,7 +29,7 @@ Instead decided to go with PoP!OS 24.04 Alpha III release
 * was waiting for the actual release
 * downloaded both
   * Intel/AMD ISO (gauss17 -> noether2)
-  * NVIDIA ISO (godel2)
+  * NVIDIA ISO (godel2, )
 
 Verified checksums.
 
@@ -255,7 +255,7 @@ Alacritty but may have to go back to manually installed fonts again.
 Neovim is giving me a lot of deprecation warnings for its upcoming 1.0
 release.
 
-I think I will next get my Python infrastructure working. Might fix some
+I will need to get my Python infrastructure working. Might fix some
 of my Neovim problems.
 
 ## 11-26-2024:
@@ -265,6 +265,27 @@ Changed login shell for my user.
 ```
    $ sudo usermod -s /usr/bin/fish grs
 ```
+
+## 11-26-2024:
+
+Need to install Nerd fonts from
+[here](https://www.nerdfonts.com/font-downloads). Previously FireCode
+and RobotoMono Nerd fonts were installed on:
+
+* onepiece:`~/.local/share/fonts` (better for a shared login)
+* euler7:`/usr/local/share/fonts` (better for separate logins)
+
+Since I am the only one who will use noether2, TODO:
+
+```
+   $ mkdir ~/.local/share/fonts
+   $ ax RobotoMono.zip
+   $ mv *.ttf ~/.local/share/fonts/
+   $ ax FiraCode.zip
+   $ mv *.ttf ~/.local/share/fonts/
+```
+
+## 11-26-2024:
 
 Since Pop!OS bypasses a login shell, every time I open a new terminal,
 I spawn a new SSH Agent. Need to fix this.

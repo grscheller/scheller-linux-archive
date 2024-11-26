@@ -894,7 +894,7 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
     sh <(curl -L https://nixos.org/nix/install) --daemon
 
 2023-12-24:
-  Install Nerd-Fonts.
+  Install Nerd-Fontd.
 
   From https://www.nerdfonts.com/font-downloads download
   RobotoMono.zip and FiraCode.zip

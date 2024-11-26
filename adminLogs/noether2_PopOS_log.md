@@ -290,3 +290,21 @@ Since I am the only one who will use noether2, TODO:
 Since Pop!OS bypasses a login shell, every time I open a new terminal,
 I spawn a new SSH Agent. Need to fix this.
 
+TODO: $ pgrep -u (id | fields 1|sed 's/^uid=[^(]*(//;s/)$//') -c -- ssh-agent
+TODO: $ ssh-agent -c | tee /tmp/grs_agent_hold | source
+TODO: $ source /tmp/grs_agent_hold
+
+TODO: Use exit status of pgrep
+
+```
+  if ! set -q SSH_AGENT_PID
+      set -l me (id | fields 1|sed 's/^uid=[^(]*(//;s/)$//')
+      touch /tmp/${me}_agent_hold
+      chmod 700 /tmp/${me}_agent_hold
+      if pgrep -u $me -- ssh-agent > /dev/null 2>&1
+          source /tmp/${me}_agent_hold
+      else
+          ssh-agent -c | tee /tmp/${me}_agent_hold | source
+      end
+  end
+```

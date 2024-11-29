@@ -29,16 +29,51 @@ Instead decided to go with PoP!OS 24.04 Alpha III release
 * was waiting for the actual release
 * downloaded both
   * Intel/AMD ISO (gauss17 -> noether2)
-  * NVIDIA ISO (godel2, )
+  * NVIDIA ISO (godel2, euler7 -> hamilton4)
 
 Verified checksums.
 
-... see notebook notes
+Followed GUI installation. Reformatted everything expect `/extra`.
+
+```
+   $ lsblk
+   NAME          MAJ:MIN RM   SIZE RO TYPE  MOUNTPOINTS
+   sda             8:0    0 119.2G  0 disk
+   ├─sda1          8:1    0   1.9G  0 part  /boot/efi
+   └─sda2          8:2    0 117.3G  0 part  /
+   sdb             8:16   0 931.5G  0 disk
+   ├─sdb1          8:17   0   512M  0 part
+   ├─sdb2          8:18   0  63.5G  0 part  /extra
+   ├─sdb3          8:19   0    16G  0 part
+   │ └─cryptswap 252:0    0    16G  0 crypt [SWAP]
+   └─sdb4          8:20   0 851.5G  0 part  /home
+   zram0         251:0    0  15.5G  0 disk  [SWAP]
+```
 
 From gauss17 backups:
 
-* moved fish files into ~/.config/fish
-* moved previous SSH configs into ~/.ssh
+* moved fish files into `~/.config/fish`
+* moved previous SSH configs into `~/.ssh`
+* eventually moved all personal stuff into `/home/grs/`
+
+First tweaks after install process.
+
+* No stty
+  * installed coreutils
+  * font in virtual consoles way too big
+* Installed non-nvidia version, but drives seem Optimus aware
+  * can offload some processing to NVIDIA card
+* COSMIC Store GUI much better designed
+  * some items can be either System or Flathub installs
+  * installed Flathub version Gnome Calculator
+* Installed Nomacs image viewer via `apt`
+* Settings App adjustments
+  * chose Dark mode as default
+  * active window hint color: #222C3E
+  * active window hint size: 5
+  * gap around tiled windows: 6
+  * swapped CAPS-LOCK and ESC keys
+    * will need to change muscle memory
 
 ## 2024-11-25:
 
@@ -129,7 +164,7 @@ What the hell is so important that it can retain the `fd` name?
    Sorting... Done
    Full Text Search... Done
    fdclone/noble,now 3.01j-1 amd64 [residual-config]
-     console-base lightweight file manager  
+     console-base lightweight file manager
 ```
 
 IDIOTS!!! I would have renamed it to `fm`.
@@ -141,55 +176,55 @@ Finished cloning my GIT repos.
 ```bash
    $ cd ~/devel
    $ fdgit
-   
+
    notes/git-notes:
       ## main...origin/main
-   
+
    web:
       ## main...origin/main
-   
+
    notes/neovim-notes:
       ## master...origin/master
-   
+
    scheller-linux-archive:
       ## master...origin/master
     M adminLogs/noether2_PopOS_log.md
       adminLogs/noether2_PopOS_log.md | 40 ++++++++++++++++++++++++++++++++++++++++
       1 file changed, 40 insertions(+)
-   
+
    dotfiles:
       ## master...origin/master
-   
+
    pypi/fp:
       ## main...origin/main
-   
+
    grok/fpinScala3Stdlib:
       ## main...origin/main
-   
+
    grok/grok-typescript:
       ## main...origin/main
-   
+
    grok/grok-lua:
       ## main...origin/main
-   
+
    pypi/grscheller-pypi-namespace-docs:
       ## main...origin/main
-   
+
    pypi/datastructures:
       ## main...origin/main
-   
+
    pypi/circular-array:
       ## main...origin/main
-   
+
    pypi/experimental:
       ## main...origin/main
-   
+
    pypi/boring-math:
       ## main...origin/main
-   
+
    courses/udacity/ai/courses-distributions:
       ## main...origin/main
-   
+
    courses/udacity/ai/courses-pet-images:
       ## main...origin/main
 ```
@@ -285,26 +320,239 @@ Since I am the only one who will use noether2, TODO:
    $ mv *.ttf ~/.local/share/fonts/
 ```
 
-## 11-26-2024:
+## 11-27-2024:
 
 Since Pop!OS bypasses a login shell, every time I open a new terminal,
 I spawn a new SSH Agent. Need to fix this.
 
-TODO: $ pgrep -u (id | fields 1|sed 's/^uid=[^(]*(//;s/)$//') -c -- ssh-agent
-TODO: $ ssh-agent -c | tee /tmp/grs_agent_hold | source
-TODO: $ source /tmp/grs_agent_hold
-
-TODO: Use exit status of pgrep
+This worked on Arch with Sway because I did not use a Display Manager:
 
 ```
-  if ! set -q SSH_AGENT_PID
-      set -l me (id | fields 1|sed 's/^uid=[^(]*(//;s/)$//')
-      touch /tmp/${me}_agent_hold
-      chmod 700 /tmp/${me}_agent_hold
-      if pgrep -u $me -- ssh-agent > /dev/null 2>&1
-          source /tmp/${me}_agent_hold
-      else
-          ssh-agent -c | tee /tmp/${me}_agent_hold | source
+   # Ensure SSH key-agent running with your private keys
+   if ! set -q SSH_AGENT_PID
+      printf 'SSH '
+      eval (ssh-agent -c)
+      and ssh-add
+   end
+```
+
+I tested the following on both Pop!OS and Arch.
+
+```
+   # Manage SSH key-agents
+   function exit_handler --on-event fish_exit
+      if status --is-login
+          if set -q SSH_AGENT_PID
+             kill -15 $SSH_AGENT_PID
+          end
       end
-  end
+   end
+
+   if ! set -q SSH_AGENT_PID
+      set -l ssh_flag 1
+      set -l desktop_flag 0
+      if set -q XDG_CURRENT_DESKTOP
+         set desktop_flag 1
+         if test -f /tmp/grs_ssh_desktop_env
+            printf 'Last Desktop SSH '
+            source /tmp/grs_ssh_desktop_env
+            if ps -p $SSH_AGENT_PID > /dev/null
+               set ssh_flag 0
+            end
+         end
+      end
+      if test "$ssh_flag" -eq 1
+         set -l umask_orig $umask
+         umask 0077
+         printf 'SSH '
+         if test "$desktop_flag" -eq 1
+            eval (ssh-agent -c|tee /tmp/grs_ssh_desktop_env)
+            and ssh-add
+         else
+            eval (ssh-agent -c)
+            and ssh-add
+         end
+         umask $umask_orig
+      end
+   end
 ```
+
+This is actually an improvement for both. Now the SSH Agent will clean
+itself up after the login shell ends. The DE now shares a single SSH
+Agent.
+
+## 11-27-2024:
+
+Manually install Nerd Fonts downloaded from the
+[Nerd Fonts](https://www.nerdfonts.com/) website. As root,
+
+```
+   # mkdir -p /usr/local/share/fonts/truetype/{firacode,robotomono}
+   # cd /usr/local/share/fonts/truetype/firacode
+   # unzip ~grs/catch/FireCode.zip
+   # cd ../robotomono
+   # unzip ~grs/catch/RobotoMono.zip/
+   # cd ../../..
+   # chmod -R root:root fonts
+```
+
+Neovim now looks better and gitsigns now working. Need to install
+a clipboard manager. Already one installed, `xsel`. Does not play nice
+with Firefox, but CTRL-SHIFT-V works to paste.
+
+### Head scratcher:
+
+COSMIC Terminal now supporting Nerd Fonts??? I think it is picking up on
+my Alacritty configuration. Not sure what is going on. Need to change
+default CTRL+T keybinding to Alacritty.
+
+## 2024-11-28:
+
+Set `Super+T` keybinding to `/usr/bin/alacritty`
+
+* Removed "System" keybinding `Open a terminal`.
+* Added "Custom" keybinding `Super+T` to `/usr/bin/alacritty`
+
+I found the UI confusing for the "System" section. It did not give me
+a choice to "edit" the keybinding. After removing it, I could have
+either restored it or created the keybinding I did in the "Custom"
+section.
+
+## 2024-11-28:
+
+Decided to configure pyenv, which is NOT in the Pop!OS repos.
+
+Fish already sets `$PYENV_ROOT` to `~/.local/share/pyenv` which needs to
+not exist for the curl install to work.
+
+```
+   $ curl https://pyenv.run | bash
+```
+
+Update pyenv itself.
+
+```
+   $ pyenv update
+```
+
+From the
+[pyenv wiki](https://github.com/pyenv/pyenv/wiki#suggested-build-environment),
+the suggested build environment for Ubuntu/Debian/Mint is
+
+```
+   sudo apt update; sudo apt install build-essential libssl-dev \
+   zlib1g-dev \ libbz2-dev libreadline-dev libsqlite3-dev curl git \
+   libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev \
+   libffi-dev liblzma-dev
+```
+
+Install Python versions:
+
+```
+   $ pyenv install 3.12.7
+   $ pyenv install 3.13.0
+   $ pyenv versions
+   * system (set by /home/grs/.local/share/pyenv/version)
+     3.12.7
+     3.13.0
+```
+
+Test Python out (happy path) - I manage my python virtual environments
+with a fish script named `ve` instead of using pyenv to do such.
+
+```
+   $ pyenv shell 3.12.7
+   $ ve dev
+   $ ve -c -r
+   $ pypath circulararray
+   $ cd ~/devel/pypi/circular-array
+   $ pytest tests/
+```
+
+## 2024-11-29:
+
+Time to give Neovim some love. From feedback from `:checkhealth` I will
+install some things.
+
+```
+   $ sudo apt install fswatch nodejs npm
+   $ sudo npm install -g neovim
+
+   $ sudo npm install -g tree-sitter-cli
+
+   $ ls -l (digpath tree-sitter)
+   lrwxrwxrwx 1 root root 42 Nov 29 10:45 /usr/local/bin/tree-sitter -> ../lib/node_modules/tree-sitter-cli/cli.js
+   $ ls /usr/local/lib/node_modules/
+   neovim  tree-sitter-cli
+```
+
+Treesitter problem now fixed, but LSP failing for Lua. Also,
+`:checkhealth` giving massive deprecation warnings for many installed
+plugins. Maybe I am a bit too "bleeding-edge."
+
+```
+   $ sudo apt remove neovim   # MISTAKE!
+   $ sudo add-apt-repository -r ppa:neovim-ppa/unstable
+   $ sudo apt install neovim
+   ...
+   The following packages have unmet dependencies:
+   neovim : Depends: neovim-runtime (= 0.9.5-6ubuntu2) but 0.10.0~ubuntu1+git202411231006-c33ec2d7ce-971e32c878-b63bff4404~ubuntu24.04.1 is to be installed
+            Recommends: python3-pynvim but it is not going to be installed
+   E: Unable to correct problems, you have held broken packages.
+   $ sudo apt autoremove neovim   # Fixed mistake.
+   $ sudo apt install neovim
+```
+
+Good news: TS highlighting now works in Lua files!
+Bad news: There is now another problem...
+
+```
+   Error detected while processing BufReadPre Autocommands for "*":
+   lazydev.nvim requires Neovim >= 0.10
+```
+Lets try going to the PPA for the stable version.
+
+```
+   $ sudo apt autoremove neovim
+   $ sudo add-apt-repository ppa:neovim-ppa/stable
+   $ sudo apt install neovim
+   $ nvim --version
+   NVIM v0.9.5
+   Build type: Release
+   LuaJIT 2.1.1703358377
+```
+
+Oops... this version is "too stable."
+
+```
+   $ sudo apt autoremove neovim
+   $ sudo add-apt-repository -r ppa:neovim-ppa/stable
+   $ sudo add-apt-repository ppa:neovim-ppa/unstable
+   $ sudo apt install neovim
+   $ nvim --version
+   NVIM v0.11.0-dev
+   Build type: RelWithDebInfo
+   LuaJIT 2.1.1703358377
+```
+
+Not sure what I fixed, but LSP now working for Lua. Maybe previously
+I was not running it in a virtual environment?
+
+Open Neovim issues:
+
+* XSel may not be the right clipboard tool for Wayland
+  * sometimes it works, sometimes not
+* Surround plugin not working
+  * was not working on Arch
+  * version I use may be deprecated
+  * surround plugins are a dime-a-dozen
+* neoconf warns that neodev.nvim not installed
+  * I had thought neodev was deprecated???
+
+Addressing first one:
+
+```
+   $ sudo apt autoremove xsel
+   $ sudo apt install wl-clipboard
+```
+

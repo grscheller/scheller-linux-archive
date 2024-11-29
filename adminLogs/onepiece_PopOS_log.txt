@@ -998,3 +998,4 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
     It did not edit my .bashrc (good) but the info message regarding the .bashrc
     bootstrap was incorrect. It indicated ~/.pyenv as the install location but
     pyenv was installed in  ~/.local/share/pyenv instead.
+

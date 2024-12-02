@@ -3008,3 +3008,10 @@ that up? [y/N] y
     /etc/systemd/systemd-resolved.conf
 
   See gauss17ArchLinuxAdmin.txt this date.
+
+2024-12-01:
+
+  Rebuilt euler7 with Pop!OS. Renamed it hamilton4.
+
+  Rip euler7.
+

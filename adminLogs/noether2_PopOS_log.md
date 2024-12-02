@@ -69,10 +69,10 @@ First tweaks after install process.
 * Installed Nomacs image viewer via `apt`
 * Settings App adjustments
   * chose Dark mode as default
-  * active window hint color: #222C3E
+  * active window hint color: #05676E
   * active window hint size: 5
   * gap around tiled windows: 6
-  * swapped CAPS-LOCK and ESC keys
+  * swapped CAPS-LOCK now extra ESC keys
     * will need to change muscle memory
 
 ## 2024-11-25:
@@ -392,8 +392,8 @@ Manually install Nerd Fonts downloaded from the
    # unzip ~grs/catch/FireCode.zip
    # cd ../robotomono
    # unzip ~grs/catch/RobotoMono.zip/
-   # cd ../../..
-   # chmod -R root:root fonts
+   # cd ../../..ll
+   # chmod -R root:root fonts     <- undid this later
 ```
 
 Neovim now looks better and gitsigns now working. Need to install
@@ -441,7 +441,7 @@ the suggested build environment for Ubuntu/Debian/Mint is
 
 ```
    sudo apt update; sudo apt install build-essential libssl-dev \
-   zlib1g-dev \ libbz2-dev libreadline-dev libsqlite3-dev curl git \
+   zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev curl git \
    libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev \
    libffi-dev liblzma-dev
 ```
@@ -477,7 +477,6 @@ install some things.
 ```
    $ sudo apt install fswatch nodejs npm
    $ sudo npm install -g neovim
-
    $ sudo npm install -g tree-sitter-cli
 
    $ ls -l (digpath tree-sitter)
@@ -555,4 +554,9 @@ Addressing first one:
    $ sudo apt autoremove xsel
    $ sudo apt install wl-clipboard
 ```
+
+2024-11-30:
+
+Did much needed maintenance on on my Neovim configurations. Time to
+install onto hamilton4. RIP euler7.
 

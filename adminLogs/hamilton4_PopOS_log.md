@@ -266,3 +266,20 @@ working. Cloned all my GitHub repos.
 
 Got pyenv working, just repeated what I did for norther2.
 
+## 2024-12-01:
+
+Nvidia related service failing on boot:
+
+```
+   $ systemctl list-units|grep -i failed
+   ● nvidia-powerd.service                                                                                                                                               loaded failed failed    nvidia-powerd service
+```
+Maybe `nvidia-powerd` does not support hamilton4 older Optimus hybrid
+graphics. I will try and turn it off. From askUbuntu.com,
+
+```
+   $ sudo systemctl disable nvidia-powerd.service
+   $ Removed "/etc/systemd/system/multi-user.target.wants/nvidia-powerd.service".
+   $ reboot
+```
+

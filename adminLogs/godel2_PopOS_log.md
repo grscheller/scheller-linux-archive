@@ -124,3 +124,183 @@ Instead decided to go with PoP!OS 24.04 Alpha III release
   * NVIDIA ISO (godel2)
 
 Verified checksums.
+
+## 2024-12-02
+
+Booted into UEFI BIOS. Only change made was to reset OS from Windows to
+Other.
+
+* ...
+
+Booted off of the Pop!OS NVIDIA ISO.
+
+Using gparted:
+
+* nvme0n1p1   /boot/efi   2.1G      %       EFI
+* nvme0n1p2   swap       68.7G      %       swap
+* nvme0n1p3   /var      274.9G      %       Var(/var)
+* nvme0n1p4   /           359G      %       Root(/)
+* nvme1n1p1   /home        27G      50%     Home(/home)
+* nvme1n1p1   /extra       27G      50%     Extra(/extra)
+
+Completed GUI install, created user grs. Left thumbdrive in from
+experience with hamilton4.
+
+Got the message
+
+```
+You are inemergency mode. After logging in type "journalctl -xb" to view
+the system logs, "systemctl reboot" to reboot, or "exit" to continue
+bootup. Press Enter for maintenance (or press Control-D to continue):
+```
+
+I pressed Enter. Live Ethernet cable is plugged in.
+
+```
+   # journalctl -xb | grep -i Failed
+```
+
+Something about home.mount stood out to me.
+
+```
+home.mount: Job home.mount/start failed with result 'dependency'.
+...
+   pop-os pop-system-updater[1072]: W: Some index files failed to
+   download. They have been ignored, or old ones used instead.
+```
+
+Something about data.mount too.
+
+The `ip addr` command shows no IP4 or IP6 addresses. Not unexpected for
+something like the old "single user mode."
+
+```
+   # df -h
+   Filesystem       Size  Used  Avail  Use%  Mounted on
+   tmpfs            9.2G  1.9M   9.2G    1%  /run
+   efivars          128K   68K    56K   56%  /sys/firmware/efi/efivars
+   /dev/nnvme0n1p4  621G  7.2G   583G    2%  /
+   tmpfs             46G     0    46G   0%   /dev/shm
+   tmpfs            5.0M     0   5.0M   0%   /dev/lock
+   /dev/nnvme0n1p3  251G  625M   238G   1%   /var
+   /dev/nnvme0n1p1  2.0G   92M   2.0G   5%   /boot/efi
+```
+
+No zram0, /home and /extra.
+
+Using `lsblk` I see that the first drive got mounted OK.
+
+Lets look at /etc/fstab with vi.
+
+```
+   # <file system>       <mount pt> <type>   ...    <dump> <pass>
+   PARTUUID=e48...a47a71 /boot/efi   vfat    ...      0      0
+   /dev/mapper/cryptswap      none   swap    ...      0      0
+   UUID=7e0465...b3ee8c6      /var   ext4    ...      0      0
+   UUID=d90ff5...6ab340f         /   ext4    ...      0      1
+   UUID=6709f0...d2a6d4a     /home   ext4    ...      0      0
+   UUID=9607ea...727f136     /data   ext4    ...      0      0
+```
+Using `lsblk- f` I see that I see that
+
+```
+   nvme0n1p1  3A1B-82AC                             <vfat>
+   nvme0n1p2  f60db79c-cd08-4a65-97b3-55806a9b1e8e  swap
+   nvme0n1p3  7e046598-a15e-4b7a-a2f7-ce76b63ee8c6  /var
+   nvme0n1p4  d90ff567-555d-41c0-b39a-da2496ab340f  /
+   nvme1n1p1  4457b2b4-de6c-4a81-ab5c-3e0ff871dd68  /home
+   nvme1n1p2  152ae2cf-58ff-4b5e-b393-7f6a25dffbb8  /data
+```
+
+where I changed /extra to /data. I made doubly sure I got the last two
+UUID's correct. Based on this info, and how hamilton4's /etc/fstab is
+layed out, I will update /etc/fstab. Not sure where the installer got
+the UUID's for the /home and /data mounts.
+
+```
+   PARTUUID=e488a8a6-589b-4248-ab41-513dd8a47a71 /boot/efi vfat ... 0 0
+   /dev/mapper/cryptswap                         none      swap ... 0 0
+   UUID=7e046598-a15e-4b7a-a2f7-ce76b63ee8c6     /var      ext4 ... 0 2
+   UUID=d90ff567-555d-41c0-b39a-da2496ab340f     /         ext4 ... 0 1
+   UUID=4457b2b4-de6c-4a81-ab5c-3e0ff871dd68     /home     ext4 ... 0 3
+   UUID=152ae2cf-58ff-4b5e-b393-7f6a25dffbb8     /data     ext4 ... 0 2
+  ```
+
+  I verified the home and data mount points were there. I will still
+  leave the thumbdrive in and reboot.
+
+  I am not sure what I did, but as I fumbled with `reboot` and
+  `poweroff` the system offered me to continue the boot process. I said
+  yes and it put me at the2024-12-02 display manager. I logged in and /home/grs
+  was setup.
+
+```
+   # df -h
+   Filesystem       Size  Used  Avail  Use%  Mounted on
+   tmpfs            9.2G  2.1M   9.2G    1%  /run
+   efivars          128K   68K    56K   56%  /sys/firmware/efi/efivars
+   /dev/nnvme0n1p4  621G  7.2G   583G    2%  /
+   tmpfs             46G     0    46G   0%   /dev/shm
+   tmpfs            5.0M     0   5.0M   0%   /dev/lock
+   /dev/nnvme0n1p1  2.0G   92M   2.0G   5%   /boot/efi
+   /dev/nnvme0n1p3  251G  625M   238G   1%   /var
+   /dev/nnvme1n1p2  938G   28K   891G   1%   /data
+   /dev/nnvme1n1p1  938G   28K   891G   1%   /home
+   tmpfs            9.2G  116K   9.2M   0%   /run/usr/1000
+```
+
+Except for the sizes of things and the extra /data directory, the output
+of the above command looks very similar to hamilton4.
+
+## 2024-12-02:
+
+I am getting the same nvidia-powerd.service failure as I did before on
+hamilton4. Also the 2 Ethernet ports cards and the wireless are not
+working. I suspect I need drives for these.
+
+Before going too deep down into the rabbit-hole, will do some
+general maintenance.
+
+System is in the Etc/UTC timezone. Need to fix this.
+
+```
+   $ sudo timedatectl set-timezone America/Denver
+```
+
+Update the system.
+
+```
+   $ sudo apt update
+   $ sudo apt upgrade
+   $ sudo apt install neofetch
+```
+
+Gave root a password, then edited `/etc/hostname` and changed the
+host name to godel2.
+
+Now install ssh.service, along with suggested optional dependencies.
+
+```
+   $ sudo apt install openssh-server molly-guard livmsv1 ssh-askpass
+   $ sudo systemctl enable ssh.service
+   $ sudo systemctl start ssh.service
+   $ systemctl status ssh.service
+   $ systemctl status ssh.service
+     ● ssh.service - OpenBSD Secure Shell server
+          Loaded: loaded (/usr/lib/systemd/system/ssh.service; enabled; preset: enabled)
+          Active: active (running) since Mon 2024-12-02 21:50:33 MST; 5min ago
+     TriggeredBy: ● ssh.socket
+            Docs: man:sshd(8)
+                  man:sshd_config(5)
+         Process: 4641 ExecStartPre=/usr/sbin/sshd -t (code=exited, status=0/SUCCESS)
+        Main PID: 4643 (sshd)
+           Tasks: 1 (limit: 112889)
+          Memory: 2.3M (peak: 19.0M)
+             CPU: 44ms
+          CGroup: /system.slice/ssh.service
+                  └─4643 "sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups"
+```
+
+Tomorrow I will figure out what molly-guard and Monkeysphere are. I was
+able to ssh into godel2 from hamilton4. Successfully pasted above
+output.

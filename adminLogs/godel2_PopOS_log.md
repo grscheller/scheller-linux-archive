@@ -360,9 +360,41 @@ finish the process.
 
 ```
    $ sudo apt install fswatch nodejs npm
-   $ sudo npm install -g neovim
+   $ sudo npm install -g neovim12-
    $ sudo npm install -g tree-sitter-cli
 ```
+
 This gave me all the tools I need to finish configuring Neovim for my
 local user grs. Used lazy plugin manager and mason package manager.
+
+## 2024-12-03:
+
+Installed some additional utilities.
+
+```
+   $ sudo apt install fd-find ripgrep
+   $ sudo apt install alacritty
+   $ sudo apt install nomacs
+```
+Alacritty is a terminal emulator. Cosmic-term is actually an alacritty
+fork. Due to alacritty using an actual config file, I have a lot more
+control over its configuration than what System76 exposes to me in the
+settings app. 
+
+For some reason `fd` gets installed under the `fdfind` name. Too much
+typing for its use case in command line scripting. Some old terminal
+file manager dating back to MS-DOS days called `fdclone` has dibs on the
+`fd` name in the Ubuntu repo world. Unlikely it will ever be installed.
+
+Nomacs is just my favorite image viewer.
+
+```
+   # cd /usr/bin
+   # ls -l fd*
+   lrwxrwxrwx 1 root root 19 Dec 30  2023 fdfind -> ../lib/cargo/bin/fd
+   # ln -s fdfind fd
+   # ls -l fd*
+   lrwxrwxrwx 1 root root  6 Dec  3 13:03 fd -> fdfind
+   lrwxrwxrwx 1 root root 19 Dec 30  2023 fdfind -> ../lib/cargo/bin/fd
+```
 

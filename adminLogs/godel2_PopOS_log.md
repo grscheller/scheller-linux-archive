@@ -256,7 +256,7 @@ of the above command looks very similar to hamilton4.
 
 I am getting the same nvidia-powerd.service failure as I did before on
 hamilton4. Also the 2 Ethernet ports cards and the wireless are not
-working. I suspect I need drives for these.
+working. I suspect I needdrives for these.
 
 Before going too deep down into the rabbit-hole, will do some
 general maintenance.
@@ -304,3 +304,65 @@ Now install ssh.service, along with suggested optional dependencies.
 Tomorrow I will figure out what molly-guard and Monkeysphere are. I was
 able to ssh into godel2 from hamilton4. Successfully pasted above
 output.
+
+## 2024-12-03:
+
+Set up password-less ssh between godel2 and hamilton4.
+
+### TODO:
+
+Since in the future I may be sharing the system admin role on godel2,
+I will need to redo ssh certs with passphases and configure the
+infrastructure to make entering the pin as painless as possible.
+
+Will also need to move the ssh service to a high port.
+
+## 2024-12-03:
+
+Time to install some Nerd fonts. Downloaded `firacode` and `robotomono`
+nerd fonts from the [Nerd Fonts](https://www.nerdfonts.com/) website.
+
+```
+   # mkdir -p /usr/local/share/fonts/truetype/{firacode,robotomono}
+   # cd /usr/local/share/fonts/truetype/firacode
+   # unzip ~grs/catch/FireCode.zip
+   # cd ../robotomono
+   # unzip ~grs/catch/RobotoMono.zip/
+```
+
+Now install a version of Neovim that will work with my nvim
+configuration.
+
+```
+   $ sudo add-apt-repository ppa:neovim-ppa/unstable
+   $ sudo apt install neovim wl-clipboard
+   $ nvim --version
+   Run "nvim -V1 -v" for more info
+   NVIM v0.11.0-dev
+   Build type: RelWithDebInfo
+   LuaJIT 2.1.1703358377
+```
+
+After configuring my ssh authentication and with GitHub, I cloned my
+dotfiles repo and from there installed my dotfiles to my home directory
+on godel2.
+
+Now install fish. 
+
+```
+   $ sudo apt install fish wl-clipboard
+   $ sudo apt install doc-base
+
+```
+
+What I did more or less got nvim to configure itself. Might as well
+finish the process.
+
+```
+   $ sudo apt install fswatch nodejs npm
+   $ sudo npm install -g neovim
+   $ sudo npm install -g tree-sitter-cli
+```
+This gave me all the tools I need to finish configuring Neovim for my
+local user grs. Used lazy plugin manager and mason package manager.
+

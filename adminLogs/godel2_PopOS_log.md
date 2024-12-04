@@ -375,6 +375,7 @@ Installed some additional utilities.
    $ sudo apt install fd-find ripgrep
    $ sudo apt install alacritty
    $ sudo apt install nomacs
+   $ sudo apt install htop
 ```
 Alacritty is a terminal emulator. Cosmic-term is actually an alacritty
 fork. Due to alacritty using an actual config file, I have a lot more
@@ -396,5 +397,46 @@ Nomacs is just my favorite image viewer.
    # ls -l fd*
    lrwxrwxrwx 1 root root  6 Dec  3 13:03 fd -> fdfind
    lrwxrwxrwx 1 root root 19 Dec 30  2023 fdfind -> ../lib/cargo/bin/fd
+```
+
+## 2024-12-03:
+
+Preparing the system for Python development.
+
+First step is to add the libraries needed to build Python executables
+from source.
+
+```
+   $ sudo apt update; sudo apt install build-essential libssl-dev \
+   zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev curl git \
+   libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev \
+   libffi-dev liblzma-dev
+```
+
+For the latest build dependency information, see
+[pyenv wiki - build environment](https://github.com/pyenv/pyenv/wiki#suggested-build-environment).
+Since Ubuntu is Pop!OS's upstream, I used the recommendations for
+Ubuntu/Debian/Mint.
+
+Surprisingly, pyenv is not part of the Pop!OS (or Ubuntu) repos.
+Probably best if individual users install it locally in their individual
+home directories. After doing my due diligence verifying the install
+scripts will not do anything malicious, I installed pyenv into my grs
+home directory.
+
+```
+   $ curl https://pyenv.run | bash
+```
+
+You will need to update your shell startup scripts for this change to
+take effect. For the bash shell, put this at the end of your `.bashrc`
+file,
+
+```
+   PATH="$PATH:~/.local/share/pyenv/bin"
+   if which -s pyenv
+   then
+      eval "$(pyenv init -)"
+   fi
 ```
 

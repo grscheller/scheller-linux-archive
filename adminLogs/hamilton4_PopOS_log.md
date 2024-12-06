@@ -283,3 +283,19 @@ graphics. I will try and turn it off. From askUbuntu.com,
    $ reboot
 ```
 
+## 2024-12-04:
+
+Getting Avahi installed and hopefully auto configured.
+
+```
+   $ sudo apt-get install avahi-daemon avahi-discover avahi-utils libnss-mdns mdns-scan
+```
+
+Also, `nvidia-powerd` is failing on godel2, so I will re-enable it on
+hamilton4.
+
+```
+   $ systemctl enable nvidia-powerd
+```
+
+Reboot.

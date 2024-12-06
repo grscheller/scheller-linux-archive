@@ -440,3 +440,200 @@ file,
    fi
 ```
 
+## 2024-12-05:
+
+Neither 2.5GB nor 10GB on motherboard working consistently.
+Occasionally the 2.5GB works for short time.
+
+```
+   $ sudo lshw -C network
+   [sudo] password for grs:
+     *-network UNCLAIMED
+          description: Network controller
+          product: MEDIATEK Corp.
+          vendor: MEDIATEK Corp.
+          physical id: 0
+          bus info: pci@0000:09:00.0
+          version: 00
+          width: 64 bits
+          clock: 33MHz
+          capabilities: pciexpress msi pm cap_list
+          configuration: latency=0
+          resources: memory:80600000-807fffff memory:80800000-80807fff
+     *-network
+          description: Ethernet interface
+          product: Ethernet Controller I226-V
+          vendor: Intel Corporation
+          physical id: 0
+          bus info: pci@0000:0a:00.0
+          logical name: enp10s0
+          version: 06
+          serial: 60:cf:84:73:94:61
+          capacity: 1Gbit/s
+          width: 32 bits
+          clock: 33MHz
+          capabilities: pm msi msix pciexpress bus_master cap_list ethernet physical tp 10bt 10bt-fd 100bt 100bt-fd 1000bt-fd autonegotiation
+          configuration: autonegotiation=on broadcast=yes driver=igc driverversion=6.9.3-76060903-generic firmware=2023:889d latency=0 link=no multicast=yes port=twisted pair
+          resources: irq:36 memory:80900000-809fffff memory:80a00000-80a03fff
+     *-network
+          description: Ethernet interface
+          product: AQtion AQC113CS NBase-T/IEEE 802.3an Ethernet Controller [Antigua 10G]
+          vendor: Aquantia Corp.
+          physical id: 0
+          bus info: pci@0000:0b:00.0
+          logical name: enp11s0
+          version: 03
+          serial: 60:cf:84:73:94:62
+          capacity: 10Gbit/s
+          width: 64 bits
+          clock: 33MHz
+          capabilities: pm msi pciexpress msix bus_master cap_list rom ethernet physical tp 10bt-fd 100bt-fd 1000bt-fd 10000bt-fd autonegotiation
+          configuration: autonegotiation=on broadcast=yes driver=atlantic driverversion=6.9.3-76060903-generic firmware=1.3.24 latency=0 link=no multicast=yes port=twisted pair
+          resources: irq:25 memory:80400000-8047ffff memory:804a0000-804a0fff memory:80000000-803fffff memory:80480000-8049ffff
+          
+   $ journalctl -b | grep enp10s0
+   Dec 05 16:15:42 godel2 kernel: igc 0000:0a:00.0 enp10s0: renamed from eth1
+   Dec 05 16:15:44 godel2 networkd-dispatcher[1021]: ERROR:Unknown state for interface NetworkctlListState(idx=3, name='enp10s0', type='ether', operational='-', administrative='unmanaged'): -
+   Dec 05 16:15:44 godel2 NetworkManager[1010]: <info>  [1733440544.9680] manager: (enp10s0): new Ethernet device (/org/freedesktop/NetworkManager/Devices/2)
+   Dec 05 16:15:44 godel2 NetworkManager[1010]: <info>  [1733440544.9683] settings: (enp10s0): created default wired connection 'Wired connection 1'
+   Dec 05 16:15:44 godel2 NetworkManager[1010]: <info>  [1733440544.9683] device (enp10s0): state change: unmanaged -> unavailable (reason 'managed', sys-iface-state: 'external')
+
+   $ journalctl -b | grep eth1
+   Dec 05 16:15:42 godel2 kernel: igc 0000:0a:00.0 eth1: MAC: 60:cf:84:73:94:61
+   Dec 05 16:15:42 godel2 kernel: igc 0000:0a:00.0 enp10s0: renamed from eth1
+
+  $ ip addr
+  1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+      link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+      inet 127.0.0.1/8 scope host lo
+         valid_lft forever preferred_lft forever
+      inet6 ::1/128 scope host noprefixroute
+         valid_lft forever preferred_lft forever
+  2: enp11s0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc mq state DOWN group default qlen 1000
+      link/ether 60:cf:84:73:94:62 brd ff:ff:ff:ff:ff:ff
+  3: enp10s0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc mq state DOWN group default qlen 1000
+      link/ether 60:cf:84:73:94:61 brd ff:ff:ff:ff:ff:ff
+```
+
+I noticed wifi was on. Turned it off with Network Manager and rebooted.
+
+Lights came on shortly, then Ethernet port dead.
+
+```
+   sudo apt update
+   sudo apt upgrade
+   sudo apt dist-upgrade
+   sudo apt autoremove
+   sudo apt autoclean
+   sudo fwupdmgr get-devices
+   sudo fwupdmgr get-updates
+   sudo fwupdmgr update
+   flatpak update
+   sudo reboot now
+```
+
+Reboot. Without USB Ethernet dongle. See if I can ping.
+
+More thrashing. Decided to drop Network Manager.
+
+Following https://linux.fernandocejas.com/docs/how-to/switch-from-network-manager-to-systemd-networkd
+
+```
+$ sudo systemctl stop NetworkManager
+$ sudo systemctl disable NetworkManager
+$ sudo systemctl enable systemd-networkd 
+
+$ sudo systemctl enable systemd-resolved
+$ sudo systemctl start systemd-resolved
+
+$ sudo rm /etc/resolv.conf
+$ sudo ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf
+
+$ sudo reboot now
+```
+This is very familiar to me from setting up systemd-networkd on Arch
+Linux.
+
+```
+   $ sudo networkctl status enp10s0
+   ● 3: enp10s0
+                      Link File: /usr/lib/systemd/network/99-default.link
+                   Network File: n/a
+                          State: off (unmanaged)
+                   Online state: unknown
+                           Type: ether
+                           Path: pci-0000:0a:00.0
+                         Driver: igc
+                         Vendor: Intel Corporation
+                          Model: Ethernet Controller I226-V
+               Hardware Address: 60:cf:84:73:94:61
+                            MTU: 1500 (min: 68, max: 9216)
+                          QDisc: noop
+   IPv6 Address Generation Mode: eui64
+       Number of Queues (Tx/Rx): 4/4
+               Auto negotiation: yes
+                           Port: tp
+
+   $ sudo networkctl status enp11s0
+   ● 2: enp11s0
+                      Link File: /usr/lib/systemd/network/99-default.link
+                   Network File: n/a
+                          State: off (unmanaged)
+                   Online state: unknown
+                           Type: ether
+                           Path: pci-0000:0b:00.0
+                         Driver: atlantic
+                         Vendor: Aquantia Corp.
+                          Model: AQC113CS NBase-T/IEEE 802.3bz Ethernet Controller [AQtion] (ProArt X570-CREATOR WIFI)
+               Hardware Address: 60:cf:84:73:94:62
+                            MTU: 1500 (min: 68, max: 16334)
+                          QDisc: noop
+   IPv6 Address Generation Mode: eui64
+       Number of Queues (Tx/Rx): 32/32
+               Auto negotiation: yes
+                           Port: tp
+```
+
+After reading:
+
+* adminLogs/godel2_PopOS_log.md
+* Archwiki systemd.networkd
+* Debian wiki
+
+Created the /etc/systemd/network/20-wired.network file with the contents
+
+```
+[Match]
+Name = "enp10s0"
+
+[Network]
+DHCP = true
+
+```
+
+The card did chat with the switch, but failed to establish a connection.
+
+```
+$ journalctl -b | grep systemd-networkd
+   Dec 05 19:51:12 godel2 systemd[1]: Listening on systemd-networkd.socket - Network Service Netlink Socket.
+   Dec 05 19:51:13 godel2 systemd[1]: Starting systemd-networkd.service - Network Configuration...
+   Dec 05 19:51:13 godel2 systemd-networkd[919]: lo: Link UP
+   Dec 05 19:51:13 godel2 systemd-networkd[919]: lo: Gained carrier
+   Dec 05 19:51:13 godel2 systemd-networkd[919]: Enumeration completed
+   Dec 05 19:51:13 godel2 systemd[1]: Started systemd-networkd.service - Network Configuration.
+   Dec 05 19:51:13 godel2 systemd[1]: Starting systemd-networkd-wait-online.service - Wait for Network to be Configured...
+   Dec 05 19:51:14 godel2 systemd[1]: Starting networkd-dispatcher.service - Dispatcher daemon for systemd-networkd...
+   Dec 05 19:51:14 godel2 systemd[1]: Started networkd-dispatcher.service - Dispatcher daemon for systemd-networkd.
+   Dec 05 19:53:13 godel2 systemd-networkd-wait-online[975]: Timeout occurred while waiting for network connectivity.
+   Dec 05 19:53:13 godel2 systemd[1]: systemd-networkd-wait-online.service: Main process exited, code=exited, status=1/FAILURE
+   Dec 05 19:53:13 godel2 systemd[1]: systemd-networkd-wait-online.service: Failed with result 'exit-code'.
+   Dec 05 19:53:13 godel2 systemd[1]: Failed to start systemd-networkd-wait-online.service - Wait for Network to be Configured.
+```
+
+```
+   $ lspci | grep -i ether
+   0a:00.0 Ethernet controller: Intel Corporation Ethernet Controller I226-V (rev 06)
+   0b:00.0 Ethernet controller: Aquantia Corp. AQtion AQC113CS NBase-T/IEEE 802.3an Ethernet Controller [Antigua 10G] (rev 03)
+```
+
+`capabilities: pm msi msix pciexpress bus_master cap_list ethernet physical tp 10bt 10bt-fd 100bt 100bt-fd 1000bt-fd autonegotiation`

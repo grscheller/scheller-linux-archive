@@ -560,3 +560,119 @@ Addressing first one:
 Did much needed maintenance on on my Neovim configurations. Time to
 install onto hamilton4. RIP euler7.
 
+2024-12-06:
+
+Having somw trouble with godel2 negotiating with cards. Tried swapping
+out NetwokManager with systemd-networkd. Will switch noether2 to
+systemd-networkd.
+
+Following
+[this xmodulo.com article](https://www.xmodulo.com/switch-from-networkmanager-to-systemd-networkd.html).
+
+```
+   # systemctl disable NetworkManager
+   ...
+   # systemctl enable systemd-networkd
+   ...
+   # systemctl enable systemd-resolved
+   #
+```
+
+Huh? No symlinks changed.
+
+```
+   # systemctl status systemd-resolved
+   ● systemd-resolved.service - Network Name Resolution
+        Loaded: loaded (/usr/lib/systemd/system/systemd-resolved.service; enabled; preset: enabled)
+        Active: active (running) since Fri 2024-12-06 12:17:27 MST; 5h 5min ago
+          Docs: man:systemd-resolved.service(8)
+
+                man:org.freedesktop.resolve1(5)
+                https://www.freedesktop.org/wiki/Software/systemd/writing-network-configuration-managers
+                https://www.freedesktop.org/wiki/Software/systemd/writing-resolver-clients
+      Main PID: 652 (systemd-resolve)
+        Status: "Processing requests..."
+         Tasks: 1 (limit: 18950)
+        Memory: 5.6M (peak: 6.2M)
+           CPU: 1.441s
+        CGroup: /system.slice/systemd-resolved.service
+                └─652 /usr/lib/systemd/systemd-resolved
+   
+   Dec 06 12:17:27 noether2 systemd-resolved[652]: Positive Trust Anchors:
+   Dec 06 12:17:27 noether2 systemd-resolved[652]: . IN DS 20326 8 2 e06d44b80b8f1d39a95c0b0d7c65d08458e880409bbc683457104237c7f8ec8d
+   Dec 06 12:17:27 noether2 systemd-resolved[652]: Negative trust anchors: home.arpa 10.in-addr.arpa 16.172.in-addr.arpa 17.172.in-addr.arpa 18.172.in-addr.arpa 19.172.in-addr>
+   Dec 06 12:17:27 noether2 systemd-resolved[652]: Using system hostname 'noether2'.
+   Dec 06 12:17:27 noether2 systemd[1]: Started systemd-resolved.service - Network Name Resolution.
+   Dec 06 12:17:37 noether2 systemd-resolved[652]: wlp2s0: Bus client set default route setting: yes
+   Dec 06 12:17:37 noether2 systemd-resolved[652]: wlp2s0: Bus client set DNS server list to: 192.168.1.1
+   Dec 06 12:17:37 noether2 systemd-resolved[652]: Using degraded feature set UDP instead of UDP+EDNS0 for DNS server 192.168.1.1.
+   Dec 06 12:17:39 noether2 systemd-resolved[652]: wlp2s0: Bus client set DNS server list to: 192.168.1.1, fe80::9ec9:ebff:fe54:5f75
+   Dec 06 12:17:42 noether2 systemd-resolved[652]: Using degraded feature set UDP instead of UDP+EDNS0 for DNS server fe80::9ec9:ebff:fe54:5f75%3.
+
+```
+
+Already running, using the router as its DNS upstream, but in some sort
+of "degraded" UDP mode.
+
+```
+   # ls -l /etc/resolv.conf
+   lrwxrwxrwx 1 root root 39 Nov 24 18:14 /etc/resolv.conf -> ../run/systemd/resolve/stub-resolv.conf
+```
+
+But the article says to instead do
+
+```
+   $ sudo ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf
+```
+
+This is triggering some old memories, been down this rabbit-hole before.
+Seems that the article has you bypass the name server running locally in
+favor for, in my case at home, the router's cached DNS service.
+
+Will leave link as it is. May have to fix on godel2.
+
+Create just one interface file, `/etc/systemd/network/20-dhcp.network`.
+
+```
+   [Match]
+   Name=enp3s01
+
+   [Network]
+   DHCP=yes
+
+```
+Note: could have used glob matches like "enp3*" instead
+
+Turned WiFi off, power off, attach ethernet cable, and see where we are.
+Will need to figure out an "easy" WiFi configuration solution. Maybe
+write a script around `iwctl`?
+
+Interesting...
+
+```
+   $ ip addr
+   1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+       link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+       inet 127.0.0.1/8 scope host lo
+          valid_lft forever preferred_lft forever
+       inet6 ::1/128 scope host noprefixroute
+          valid_lft forever preferred_lft forever
+   2: enp3s0f1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+       link/ether f0:76:1c:cc:c1:05 brd ff:ff:ff:ff:ff:ff
+       inet6 fe80::f276:1cff:fecc:c105/64 scope link
+          valid_lft forever preferred_lft forever
+   3: wlp2s0: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
+       link/ether ac:e0:10:8a:3d:85 brd ff:ff:ff:ff:ff:ff
+```
+
+I only got a non-routeable IPv6 address. Also the desktop network "app"
+has reduced functionality, as I would expect.
+
+After switching the `/etc/resolv.conf` from `stub-resolv.conf` to
+`resolv.conf` and rebooted, network very responsive. But I am totally
+bypassing the local systemd-resolved DNS server. The real fix is to
+properly configure systemd-resolved.
+
+Aside: Seems that search engines do not to provide much insider system
+and network admin content any more.
+

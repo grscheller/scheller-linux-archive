@@ -101,7 +101,7 @@ drive in did not work. Getting late, I will go home and try on gauss17.
 
 ## 2024-11-24:
 
-Well, I broke my Arch Linux install on gauss17. 
+Well, I broke my Arch Linux install on gauss17.
 
 Have not been able to configure systemd-boot for for my Arch reinstall
 on gauss17. Both with `fdsk` and `parted` I am not able to get UEFI
@@ -347,7 +347,7 @@ After configuring my ssh authentication and with GitHub, I cloned my
 dotfiles repo and from there installed my dotfiles to my home directory
 on godel2.
 
-Now install fish. 
+Now install fish.
 
 ```
    $ sudo apt install fish wl-clipboard
@@ -380,7 +380,7 @@ Installed some additional utilities.
 Alacritty is a terminal emulator. Cosmic-term is actually an alacritty
 fork. Due to alacritty using an actual config file, I have a lot more
 control over its configuration than what System76 exposes to me in the
-settings app. 
+settings app.
 
 For some reason `fd` gets installed under the `fdfind` name. Too much
 typing for its use case in command line scripting. Some old terminal
@@ -490,7 +490,7 @@ Occasionally the 2.5GB works for short time.
           capabilities: pm msi pciexpress msix bus_master cap_list rom ethernet physical tp 10bt-fd 100bt-fd 1000bt-fd 10000bt-fd autonegotiation
           configuration: autonegotiation=on broadcast=yes driver=atlantic driverversion=6.9.3-76060903-generic firmware=1.3.24 latency=0 link=no multicast=yes port=twisted pair
           resources: irq:25 memory:80400000-8047ffff memory:804a0000-804a0fff memory:80000000-803fffff memory:80480000-8049ffff
-          
+
    $ journalctl -b | grep enp10s0
    Dec 05 16:15:42 godel2 kernel: igc 0000:0a:00.0 enp10s0: renamed from eth1
    Dec 05 16:15:44 godel2 networkd-dispatcher[1021]: ERROR:Unknown state for interface NetworkctlListState(idx=3, name='enp10s0', type='ether', operational='-', administrative='unmanaged'): -
@@ -541,7 +541,7 @@ Following https://linux.fernandocejas.com/docs/how-to/switch-from-network-manage
 ```
 $ sudo systemctl stop NetworkManager
 $ sudo systemctl disable NetworkManager
-$ sudo systemctl enable systemd-networkd 
+$ sudo systemctl enable systemd-networkd
 
 $ sudo systemctl enable systemd-resolved
 $ sudo systemctl start systemd-resolved
@@ -636,4 +636,127 @@ $ journalctl -b | grep systemd-networkd
    0b:00.0 Ethernet controller: Aquantia Corp. AQtion AQC113CS NBase-T/IEEE 802.3an Ethernet Controller [Antigua 10G] (rev 03)
 ```
 
-`capabilities: pm msi msix pciexpress bus_master cap_list ethernet physical tp 10bt 10bt-fd 100bt 100bt-fd 1000bt-fd autonegotiation`
+## 2024-12- 07:
+
+### Ethernet controller I226-V (enp10s0) now working!
+
+As soon as I replaced the old CAT-5 cable with a newer CAT-6 cable, the
+interface came alive.
+
+The link of `/etc/resolv.conf` points to
+
+```
+   root@godel2:/etc# ls -l resolv.conf
+   lrwxrwxrwx 1 root root 32 Dec  5 18:10 resolv.conf -> /run/systemd/resolve/resolv.conf
+```
+
+This means systemd.resolved local DNS server is being bypassed.
+
+Some clean up based on what I did for noether2.
+
+Changes `/etc/systemd/network/20-wired.network` to
+
+```
+[Match]
+Name=enp10s0
+
+[Network]
+DHCP=yes
+
+```
+
+Note that at this time I am not configuring `enp11s0` nor the WiFi which
+is not even brought up.
+
+Least I forget, lets at least install the `iwd` package.
+
+```
+   # apt install iwd
+```
+
+Reboot.
+
+```
+   $ ping 1.1.1.1
+   PING 1.1.1.1 (1.1.1.1) 56(84) bytes of data.
+   64 bytes from 1.1.1.1: icmp_seq=1 ttl=58 time=2.26 ms
+   64 bytes from 1.1.1.1: icmp_seq=2 ttl=58 time=2.32 ms
+   64 bytes from 1.1.1.1: icmp_seq=3 ttl=58 time=2.42 ms
+   64 bytes from 1.1.1.1: icmp_seq=4 ttl=58 time=2.26 ms
+   ^C
+   --- 1.1.1.1 ping statistics ---
+   4 packets transmitted, 4 received, 0% packet loss, time 3004ms
+   rtt min/avg/max/mdev = 2.256/2.314/2.424/0.068 ms
+```
+
+Lets take a look at resolved:
+
+```
+   # systemctl status systemd-resolved
+   ● systemd-resolved.service - Network Name Resolution
+        Loaded: loaded (/usr/lib/systemd/system/systemd-resolved.service; enabled; preset: enabled)
+        Active: active (running) since Sat 2024-12-07 11:25:53 MST; 4min 29s ago
+          Docs: man:systemd-resolved.service(8)
+                man:org.freedesktop.resolve1(5)
+                https://www.freedesktop.org/wiki/Software/systemd/writing-network-configuration-managers
+                https://www.freedesktop.org/wiki/Software/systemd/writing-resolver-clients
+      Main PID: 971 (systemd-resolve)
+        Status: "Processing requests..."
+         Tasks: 1 (limit: 112889)
+        Memory: 4.8M (peak: 5.3M)
+           CPU: 42ms
+        CGroup: /system.slice/systemd-resolved.service
+                └─971 /usr/lib/systemd/systemd-resolved
+   
+   Dec 07 11:25:53 godel2 systemd[1]: Starting systemd-resolved.service - Network Name Resolution...
+   Dec 07 11:25:53 godel2 systemd-resolved[971]: Positive Trust Anchors:
+   Dec 07 11:25:53 godel2 systemd-resolved[971]: . IN DS 20326 8 2 e06d44b80b8f1d39a95c0b0d7c65d08458e880409bbc683457>
+   Dec 07 11:25:53 godel2 systemd-resolved[971]: Negative trust anchors: home.arpa 10.in-addr.arpa 16.172.in-addr.arp>
+   Dec 07 11:25:53 godel2 systemd-resolved[971]: Using system hostname 'godel2'.
+   Dec 07 11:25:53 godel2 systemd[1]: Started systemd-resolved.service - Network Name Resolution.
+```
+
+At least it not running in some sort of "degraded" mode. Let's try
+plumbing `systemd-resolved` back in.
+
+```
+   # cd /etc/
+   # ls -l resolv.conf
+   lrwxrwxrwx 1 root root 32 Dec  5 18:10 resolv.conf -> /run/systemd/resolve/resolv.conf
+   # ls -l resolv.conf
+   lrwxrwxrwx 1 root root 32 Dec  5 18:10 resolv.conf -> /run/systemd/resolve/resolv.conf
+   root@godel2:/etc# rm resolv.conf
+   root@godel2:/etc# ln -s ../run/systemd/resolve/stub-resolv.conf resolv.conf
+   root@godel2:/etc# ls -l resolv.conf
+   lrwxrwxrwx 1 root root 39 Dec  7 11:48 resolv.conf -> ../run/systemd/resolve/stub-resolv.conf
+```
+
+Now reboot.
+
+```
+   $ systemctl status systemd-resolved
+   ● systemd-resolved.service - Network Name Resolution
+        Loaded: loaded (/usr/lib/systemd/system/systemd-resolved.service; enabled; preset: enabled)
+        Active: active (running) since Sat 2024-12-07 11:51:35 MST; 16min ago
+          Docs: man:systemd-resolved.service(8)
+                man:org.freedesktop.resolve1(5)
+                https://www.freedesktop.org/wiki/Software/systemd/writing-network-configuration-managers
+                https://www.freedesktop.org/wiki/Software/systemd/writing-resolver-clients
+      Main PID: 947 (systemd-resolve)
+        Status: "Processing requests..."
+         Tasks: 1 (limit: 112889)
+        Memory: 4.9M (peak: 5.5M)
+           CPU: 36ms
+        CGroup: /system.slice/systemd-resolved.service
+                └─947 /usr/lib/systemd/systemd-resolved
+   
+   Dec 07 11:51:34 godel2 systemd[1]: Starting systemd-resolved.service - Network Name Resolution...
+   Dec 07 11:51:35 godel2 systemd-resolved[947]: Positive Trust Anchors:
+   Dec 07 11:51:35 godel2 systemd-resolved[947]: . IN DS 20326 8 2 e06d44b80b8f1d39a95c0b0d7c65d08458e880409bbc683457>
+   Dec 07 11:51:35 godel2 systemd-resolved[947]: Negative trust anchors: home.arpa 10.in-addr.arpa 16.172.in-addr.arp>
+   Dec 07 11:51:35 godel2 systemd-resolved[947]: Using system hostname 'godel2'.
+   Dec 07 11:51:35 godel2 systemd[1]: Started systemd-resolved.service - Network Name Resolution.
+```
+
+Same as before.
+

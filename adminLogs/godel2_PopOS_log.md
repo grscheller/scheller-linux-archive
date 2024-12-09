@@ -760,3 +760,30 @@ Now reboot.
 
 Same as before.
 
+2024-12-09:
+
+Added printer "bizhub_c300i" by where Gunner sits.
+
+```
+   $ sudo lpadmin -p bizhub_c300i -E -v ipp://10.55.30.24 -m "everywhere" -L "by Gunner"
+```
+
+Also, Catalyst Campus network admin Eric set godel2 IP address to be
+static:
+
+* 10.54.4.180/24
+
+Noticed that to ssh between godel2 and hamilton4 I need to do
+
+```
+   $ ssh godel2.local
+   $ ssh hamilton4.local
+```
+
+while from my windows box both below work.
+
+```
+   > ssh grs@godel2
+   > ssh grs@hamilton4
+```
+

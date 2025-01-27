@@ -293,7 +293,7 @@ Purpose: To rebuild from scratch maxwell4 after
 
 2021-12-05:
 
-  Sucessfully booted euler7 and logged in as root.
+  Successfully booted euler7 and logged in as root.
 
   Need to connect to wifi so I can use pacman.  See
   if systemd-resolved is running.

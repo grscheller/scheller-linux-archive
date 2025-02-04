@@ -299,3 +299,41 @@ hamilton4.
 ```
 
 Reboot.
+
+## 2025-02-04:
+
+I don't know what I am doing. From
+[Meraki](https://documentation.meraki.com/MX/Client_VPN/Client_VPN_OS_Configuration)
+website:
+
+Configure Cisco Meraki client for PopOS/Ubuntu. Need
+
+* xl2tpd to implement L2TP
+* strongswan or libreswan to implement IPSec
+
+Installed xl2tpd and libreswan packages via apt.
+
+Next installed
+
+* network-manager-l2tp-gnome
+
+Then followed link to how to use Network Manager GUI.
+
+Well, NM GUI seems to be asking me for some VPN configuration file.
+
+Paven got client to work on Arch, but needed to start a Systemd service.
+Looking at his e-mail...
+
+From e-mail: 
+
+Hostname: catalyst-campus-wwvjhwgvdh.dynamic-m.com
+Port: 443
+
+From apt search, also installed
+
+* vpnc/noble 0.5.3+git20220927-1build2 amd64 - Cisco-compatible VPN client
+
+```
+    $ sudo apt install --upgrade vpnc vpnc-scripts
+```
+

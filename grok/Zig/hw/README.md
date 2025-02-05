@@ -1,5 +1,7 @@
-## To compile
+## To compile and run
 
 ```bash
-$ zig build-exe hw.zig
+   $ zig build-exe hw.zig -O ReleaseSafe
+   $ ./hw
+   Hello, World!!!
 ```

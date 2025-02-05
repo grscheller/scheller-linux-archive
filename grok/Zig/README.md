@@ -21,9 +21,9 @@ Run as an interpreter:
 Compile and then run:
 
 ```bash
-   $ zig build-exe hw.zig -O ReleaseSmall
+   $ zig build-exe hw.zig -O ReleaseSafe
    $ ./hw
    Hello, World!!!
    $ ls -lh hw
-   -rwxr-xr-x 1 grs grs 4.5K Nov  2 20:49 hw*
+   -rwxrwxr-x 1 grs grs 2.1M Feb  5 15:23 hw
 ```

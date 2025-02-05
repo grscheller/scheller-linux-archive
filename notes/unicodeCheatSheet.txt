@@ -70,6 +70,8 @@ Math symbols:
   exterior product: ∧  Unicode: 2227
   division:         ÷  Unicode: 00f7
   bar/pipe/norm:    ∥  Unicode: 2225
+  square root:      √  Unicode: 221A
+  cube root:        ∛  Unicode: 221B
 
 Useful in illustrating math calculations:
   Horizontal Ellipsis:  …  Unicode: 2026
@@ -195,7 +197,7 @@ Small Latin Superscripts:
   l:  ˡ  Unicode: 02e1
   m:  ᵐ  Unicode: 1d50
   n:  ⁿ  Unicode: 207f
-  o:  ᵒ  Unicode: 1d52
+  o:  ᵒ  Unicode: 1d52pip install --upgrade pip dtools-fp
   p:  ᵖ  Unicode: 1d56
   r:  ʳ  Unicode: 02b3
   s:  ˢ  Unicode: 02e2

@@ -787,3 +787,11 @@ while from my windows box both below work.
    > ssh grs@hamilton4
 ```
 
+2025-02-07:
+
+Need to install DoD Certs. First install drivers for CAC reader.
+
+```
+   sudo apt install libccid opensc pcsc-tools
+```
+

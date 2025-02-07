@@ -351,3 +351,12 @@ Also installed based on info from Cisco Website:
 
 Probably not all needed, probably just the first two. Did not work until
 I installed these (and rebooted).
+
+2025-02-07:
+
+Need to install DoD Certs. First install drivers for CAC reader.
+
+```
+   sudo apt install libccid opensc pcsc-tools
+```
+

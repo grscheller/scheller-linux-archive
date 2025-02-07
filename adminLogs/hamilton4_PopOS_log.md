@@ -324,16 +324,30 @@ Well, NM GUI seems to be asking me for some VPN configuration file.
 Paven got client to work on Arch, but needed to start a Systemd service.
 Looking at his e-mail...
 
-From e-mail: 
+## 2025-02-06:
 
-Hostname: catalyst-campus-wwvjhwgvdh.dynamic-m.com
-Port: 443
+From e-mail from Eric at CCTI: 
 
-From apt search, also installed
+Hostname: catalyst-campus-<redacted>.dynamic-m.com
 
-* vpnc/noble 0.5.3+git20220927-1build2 amd64 - Cisco-compatible VPN client
+Downloaded Cisco Secure Client for Linux:
+
+* cisco-secure-client-linux64-5.1.3.62-predeploy-k9.tar.gz
+
+Did a manual install:
 
 ```
+   sudo sh ./vpn_install.sh
+```
+
+Also installed based on info from Cisco Website:
+
+```
+    $ sudo apt install --upgrade xl2tpd
+    $ sudo apt install --upgrade libreswan
+    $ sudo apt install --upgrade network-manager-l2tp-gnome
     $ sudo apt install --upgrade vpnc vpnc-scripts
 ```
 
+Probably not all needed, probably just the first two. Did not work until
+I installed these (and rebooted).

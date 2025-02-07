@@ -676,3 +676,10 @@ properly configure systemd-resolved.
 Aside: Seems that search engines do not to provide much insider system
 and network admin content any more.
 
+2025-04-06:
+
+Installed Cisco secure connect VPN client as I did for hamilton4.
+
+Reused download I did for hamilton4. I suspect CISCO only let me do this
+from the CCTI network.
+

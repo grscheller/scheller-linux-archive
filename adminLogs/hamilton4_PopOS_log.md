@@ -140,7 +140,7 @@ Double check UUID label.
 ```
 
 Added a line to mount `/var` in `/etc/fstab`. Also set the last field
-for `/home` and `\var` to `2` so that both are checked when file system
+for `/home` and `/var` to `2` so that both are checked when file system
 checks need to be done.
 
 ```
@@ -352,7 +352,7 @@ Also installed based on info from Cisco Website:
 Probably not all needed, probably just the first two. Did not work until
 I installed these (and rebooted).
 
-2025-02-07:
+## 2025-02-07:
 
 Need to install DoD Certs. First install drivers for CAC reader.
 
@@ -431,5 +431,6 @@ configured for the operating system.
 Files ending in `.cer` are in the DER binary format. They need to be
 converted to `.crt` files in the PEM format.
 
-See godel2 notes on how I did this.
+See godel2 notes on how to finish. After godel2 working, I need to
+cleanup my mess on hamilton4.
 

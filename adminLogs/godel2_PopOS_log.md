@@ -707,7 +707,7 @@ Lets take a look at resolved:
            CPU: 42ms
         CGroup: /system.slice/systemd-resolved.service
                 └─971 /usr/lib/systemd/systemd-resolved
-   
+
    Dec 07 11:25:53 godel2 systemd[1]: Starting systemd-resolved.service - Network Name Resolution...
    Dec 07 11:25:53 godel2 systemd-resolved[971]: Positive Trust Anchors:
    Dec 07 11:25:53 godel2 systemd-resolved[971]: . IN DS 20326 8 2 e06d44b80b8f1d39a95c0b0d7c65d08458e880409bbc683457>
@@ -749,7 +749,7 @@ Now reboot.
            CPU: 36ms
         CGroup: /system.slice/systemd-resolved.service
                 └─947 /usr/lib/systemd/systemd-resolved
-   
+
    Dec 07 11:51:34 godel2 systemd[1]: Starting systemd-resolved.service - Network Name Resolution...
    Dec 07 11:51:35 godel2 systemd-resolved[947]: Positive Trust Anchors:
    Dec 07 11:51:35 godel2 systemd-resolved[947]: . IN DS 20326 8 2 e06d44b80b8f1d39a95c0b0d7c65d08458e880409bbc683457>
@@ -760,7 +760,9 @@ Now reboot.
 
 Same as before.
 
-2024-12-09:
+## 2024-12-09:
+
+## Add CCTI network printer
 
 Added printer "bizhub_c300i" by where Gunner sits.
 
@@ -772,6 +774,8 @@ Also, Catalyst Campus network admin Eric set godel2 IP address to be
 static:
 
 * 10.54.4.180/24
+
+## 2024-12-09:
 
 Noticed that to ssh between godel2 and hamilton4 I need to do
 
@@ -787,11 +791,157 @@ while from my windows box both below work.
    > ssh grs@hamilton4
 ```
 
-2025-02-07:
+Note: Previously configured avahi-daemon.service on godel2 and hamilton4.
+
+## 2025-02-07:
 
 Need to install DoD Certs. First install drivers for CAC reader.
 
 ```
    sudo apt install libccid opensc pcsc-tools
 ```
+
+## 2025-02-13:
+
+### Ensure CAC Reader drivers working
+
+As seen before, CAC Reader not responding when plugged into an already
+booted system. Plug CAC reader into a USB-A 3.0 port on top of computer
+and rebooted. There are 2 each USB-A 2.0 & 3.0 ports there.
+
+CAC reader lighted up when CAC inserted.
+
+```
+   $ systemctl status pcscd.socket
+   ● pcscd.socket - PC/SC Smart Card Daemon Activation Socket
+        Loaded: loaded (/usr/lib/systemd/system/pcscd.socket; enabled; preset: enabled)
+        Active: active (listening) since Thu 2025-02-13 11:27:42 MST; 7min ago
+      Triggers: ● pcscd.service
+        Listen: /run/pcscd/pcscd.comm (Stream)
+        CGroup: /system.slice/pcscd.socket
+
+   Feb 13 11:27:42 godel2 systemd[1]: Listening on pcscd.socket - PC/SC Smart Card Daemon Activation Socket.
+```
+
+### System-wide configure DoD PKI
+
+Will repeat some of what was done on hamilton4 as if I performed all the
+steps here. Actually took shortcuts.
+
+Download DoD Certs from [download site](https://public.cyber.mil/dod-certs/).
+
+Seems Windoze and Muc use executable installers.
+
+From [military CAC](https://militarycac.com/linux.htm) webite, download
+link is now: `https://militarycac.com/maccerts/AllCerts.zip`
+
+Download and unzipped here: `~/build/dod-certs`
+
+```
+   $ ls
+    AllCerts.zip            'DOD EMAIL CA-73.cer'   DoDRoot5.cer
+   'DOD DERILITY CA-1.cer'  'DOD ID CA-59.cer'      DoDRoot6.cer
+   'DOD DERILITY CA-3.cer'  'DOD ID CA-62.cer'     'DOD SW CA-60.cer'
+   'DOD DERILITY CA-4.cer'  'DOD ID CA-63.cer'     'DOD SW CA-61.cer'
+   'DOD EMAIL CA-59.cer'    'DOD ID CA-64.cer'     'DOD SW CA-66.cer'
+   'DOD EMAIL CA-62.cer'    'DOD ID CA-65.cer'     'DOD SW CA-67.cer'
+   'DOD EMAIL CA-63.cer'    'DOD ID CA-70.cer'     'DOD SW CA-68.cer'
+   'DOD EMAIL CA-64.cer'    'DOD ID CA-71.cer'     'DOD SW CA-69.cer'
+   'DOD EMAIL CA-65.cer'    'DOD ID CA-72.cer'     'DOD SW CA-74.cer'
+   'DOD EMAIL CA-70.cer'    'DOD ID CA-73.cer'     'DOD SW CA-75.cer'
+   'DOD EMAIL CA-71.cer'     DoDRoot3.cer          'DOD SW CA-76.cer'
+   'DOD EMAIL CA-72.cer'     DoDRoot4.cer          'DOD SW CA-77.cer'
+```
+
+From militarycac website, the certs that need installing are
+
+* DOD DERILITY CA-1
+* DOD EMAIL CA-59,
+* DOD EMAIL CA-62 through DOD EMAIL CA-65,
+* DOD EMAIL 70 through 73,
+* DOD ID CA-59,
+* DOD ID CA-62 through DOD ID CA-65,
+* DOD ID CA-70 through 73,
+* DoD Root CA 3 through DoD Root CA 6,
+* DOD SW CA-60 through DOD SW CA-61,
+* DOD SW CA-66 through DOD SW CA-69, and
+* DOD SW CA-74 through 77
+
+Divided certs between directories `used/` and `unused/`.
+
+Files ending in `.cer` are in the DER binary format. They need to be
+converted to `.crt` files in the PEM format.
+
+```fish
+   $ cd used/
+   $ for fl in *.cer
+         openssl x509 -inform der -outform pem -in $fl -out (echo $fl|sed 's/cer/crt/')
+     end
+   Could not read certificate from DoDRoot6.cer
+   Unable to load certificate
+```
+
+It seemed that DoDRoot6.cer was already in PEM format. Might have
+happened when I was experimenting with the openssl command?
+
+```
+   $ mv DoDRoot6.cer DoDRoot6.crt
+```
+
+Now copy PEM certs up to their "canonical" location and update certs.
+
+```
+   $ sudo cp *.crt /usr/local/share/ca-certificates/
+   $ sudo update-ca-certificates
+   Updating certificates in /etc/ssl/certs...
+   rehash: warning: skipping ca-certificates.crt,it does not contain exactly one certificate or CRL
+   33 added, 0 removed; done.
+   Running hooks in /etc/ca-certificates/update.d...
+   Processing triggers for ca-certificates-java (20240118) ...
+   Adding debian:DOD_DERILITY_CA-1.pem
+   Adding debian:DOD_EMAIL_CA-59.pem
+   Adding debian:DOD_EMAIL_CA-62.pem
+   Adding debian:DOD_EMAIL_CA-63.pem
+   Adding debian:DOD_EMAIL_CA-64.pem
+   Adding debian:DOD_EMAIL_CA-65.pem
+   Adding debian:DOD_EMAIL_CA-70.pem
+   Adding debian:DOD_EMAIL_CA-71.pem
+   Adding debian:DOD_EMAIL_CA-72.pem
+   Adding debian:DOD_EMAIL_CA-73.pem
+   Adding debian:DOD_ID_CA-59.pem
+   Adding debian:DOD_ID_CA-62.pem
+   Adding debian:DOD_ID_CA-63.pem
+   Adding debian:DOD_ID_CA-64.pem
+   Adding debian:DOD_ID_CA-65.pem
+   Adding debian:DOD_ID_CA-70.pem
+   Adding debian:DOD_ID_CA-71.pem
+   Adding debian:DOD_ID_CA-72.pem
+   Adding debian:DOD_ID_CA-73.pem
+   Adding debian:DoDRoot3.pem
+   Adding debian:DoDRoot4.pem
+   Adding debian:DoDRoot5.pem
+   Adding debian:DoDRoot6.pem
+   Adding debian:DOD_SW_CA-60.pem
+   Adding debian:DOD_SW_CA-61.pem
+   Adding debian:DOD_SW_CA-66.pem
+   Adding debian:DOD_SW_CA-67.pem
+   Adding debian:DOD_SW_CA-68.pem
+   Adding debian:DOD_SW_CA-69.pem
+   Adding debian:DOD_SW_CA-74.pem
+   Adding debian:DOD_SW_CA-75.pem
+   Adding debian:DOD_SW_CA-76.pem
+   Adding debian:DOD_SW_CA-77.pem
+   done.
+   done.
+```
+
+Figured out it is enough to logout and back on to get CAC reader
+working. Full reboot not needed. Suspect best practice is to inssert CAC
+before logging on.
+
+* Firefox worked perfectly with CAC enabled sites
+  * Firefox was NOT individually configured
+* Brave tries to connect but connections fail
+  * Brave cannot be individually configured
+  * maybe Brave installed as a FlatPak has something to do with it
 

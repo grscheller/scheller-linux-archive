@@ -360,3 +360,76 @@ Need to install DoD Certs. First install drivers for CAC reader.
    sudo apt install libccid opensc pcsc-tools
 ```
 
+## 2025-02-12:
+
+Following what I did on gauss17 on 2022-11-16.
+
+```
+   $ systemctl status pcscd.socket
+   ● pcscd.socket - PC/SC Smart Card Daemon Activation Socket
+        Loaded: loaded (/usr/lib/systemd/system/pcscd.socket; enabled; preset: enabled)
+        Active: active (listening) since Wed 2025-02-12 07:39:31 MST; 6h ago
+      Triggers: ● pcscd.service
+        Listen: /run/pcscd/pcscd.comm (Stream)
+        CGroup: /system.slice/pcscd.socket
+   
+   Feb 12 07:39:31 hamilton4 systemd[1]: Listening on pcscd.socket - PC/SC Smart Card Daemon Activation Socket.
+```
+
+Already got the smart card daemon running. Plugged in CAC but CAC reader
+not responding. Try a reboot.
+
+Now CAC reader light comes on when CAC inserted.
+
+DoD Cert [download site](https://public.cyber.mil/dod-certs/) changed.
+
+Seems Windoze and Muc use executable installers.
+
+From [military CAC](https://militarycac.com/linux.htm) webite, download
+link is now: `https://militarycac.com/maccerts/AllCerts.zip`
+
+Download and unzipped here: `~/build/dod-certs`
+
+```
+   $ ls
+    AllCerts.zip            'DOD EMAIL CA-73.cer'   DoDRoot5.cer
+   'DOD DERILITY CA-1.cer'  'DOD ID CA-59.cer'      DoDRoot6.cer
+   'DOD DERILITY CA-3.cer'  'DOD ID CA-62.cer'     'DOD SW CA-60.cer'
+   'DOD DERILITY CA-4.cer'  'DOD ID CA-63.cer'     'DOD SW CA-61.cer'
+   'DOD EMAIL CA-59.cer'    'DOD ID CA-64.cer'     'DOD SW CA-66.cer'
+   'DOD EMAIL CA-62.cer'    'DOD ID CA-65.cer'     'DOD SW CA-67.cer'
+   'DOD EMAIL CA-63.cer'    'DOD ID CA-70.cer'     'DOD SW CA-68.cer'
+   'DOD EMAIL CA-64.cer'    'DOD ID CA-71.cer'     'DOD SW CA-69.cer'
+   'DOD EMAIL CA-65.cer'    'DOD ID CA-72.cer'     'DOD SW CA-74.cer'
+   'DOD EMAIL CA-70.cer'    'DOD ID CA-73.cer'     'DOD SW CA-75.cer'
+   'DOD EMAIL CA-71.cer'     DoDRoot3.cer          'DOD SW CA-76.cer'
+   'DOD EMAIL CA-72.cer'     DoDRoot4.cer          'DOD SW CA-77.cer'
+```
+
+From militarycac website, the certs that need installing are
+
+* DOD DERILITY CA-1
+* DOD EMAIL CA-59,
+* DOD EMAIL CA-62 through DOD EMAIL CA-65,
+* DOD EMAIL 70 through 73,
+* DOD ID CA-59,
+* DOD ID CA-62 through DOD ID CA-65,
+* DOD ID CA-70 through 73,
+* DoD Root CA 3 through DoD Root CA 6,
+* DOD SW CA-60 through DOD SW CA-61,
+* DOD SW CA-66 through DOD SW CA-69, and
+* DOD SW CA-74 through 77
+
+A bit of thrashing...
+
+I was able to manually install the `*.cer` into Firefox. I went ahead
+to do the same for Brave when I find Brave just defers to what is
+configured for the operating system.
+
+## 2025-02-13:
+
+Files ending in `.cer` are in the DER binary format. They need to be
+converted to `.crt` files in the PEM format.
+
+See godel2 notes on how I did this.
+

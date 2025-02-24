@@ -945,3 +945,13 @@ before logging on.
   * Brave cannot be individually configured
   * maybe Brave installed as a FlatPak has something to do with it
 
+## 2025-02-24:
+
+After an apt upgrade, Nvidia drivers broke. Had to uninstall and
+reinstall drivers to fix.
+
+```
+    $ sudo apt purge ~nnvidia
+    $ sudo apt install system76-driver-nvidia
+```
+

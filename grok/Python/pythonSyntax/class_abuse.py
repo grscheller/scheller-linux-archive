@@ -62,3 +62,6 @@ assert type(mitsubishi) is not CarModel
 assert type(outlander) is not Car
 assert type(outlander) is not CarBrand
 assert type(outlander) is CarModel
+
+# Invariant??? Need to return to this later. Here `type` is referring to the
+# runtime type and is related to, but not to be confused with, LSP typing.

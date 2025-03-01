@@ -15,7 +15,6 @@ async def fetch_url(url):
 
 async def main():
     urls = ['https://example.com', 'https://python.org', 'https://google.com']
-    print(foo)
     tasks = [fetch_url(url) for url in urls]
     results = await asyncio.gather(*tasks)
     for url, content in zip(urls, results):

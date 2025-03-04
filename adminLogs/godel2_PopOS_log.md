@@ -955,3 +955,117 @@ reinstall drivers to fix.
     $ sudo apt install system76-driver-nvidia
 ```
 
+## 2025-03-03:
+
+Over the weekend I was not able to access godel2. When I got to work
+Monday morning the system was booted but no network access. Reboot and
+network worked. After about an hour network non-functional again.
+
+From `journalctl -b`: "igc crashes with igc failed to read reg 0xc030"
+
+This caused be to do
+a DuckDuckGo search 'pop os igc failed to read reg' where I got this
+[reddit post](https://www.reddit.com/r/buildapc/comments/xypn1m/network_card_intel_ethernet_controller_i225v_igc/?rdt=54143).
+
+Seems that this is a recurring problem with Intel Ethernet Controllers
+with NVIDIA GPU drivers after about an hour of inactivity. I rebooted
+and did an 
+
+```
+    $ sudo apt update
+    $ sudo apt full-upgrade
+```
+
+The NVIDIA drivers were update. But an hour later, godel2's network
+connection was down again. I did another `jounelctl -b` and got
+
+```
+Mar 03 10:04:46 godel2 kernel: CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+Mar 03 10:04:46 godel2 kernel: CR2: 00006332e86ec000 CR3: 000000019aa90000 CR4: 0000000000f50ef0
+Mar 03 10:04:46 godel2 kernel: PKRU: 55555554
+Mar 03 10:04:46 godel2 kernel: Call Trace:
+Mar 03 10:04:46 godel2 kernel:  <TASK>
+Mar 03 10:04:46 godel2 kernel:  ? show_trace_log_lvl+0x1be/0x310
+Mar 03 10:04:46 godel2 kernel:  ? show_trace_log_lvl+0x1be/0x310
+Mar 03 10:04:46 godel2 kernel:  ? igc_update_stats+0xa5/0x780 [igc]
+Mar 03 10:04:46 godel2 kernel:  ? show_regs.part.0+0x22/0x30
+Mar 03 10:04:46 godel2 kernel:  ? show_regs.cold+0x8/0x10
+Mar 03 10:04:46 godel2 kernel:  ? igc_rd32+0x98/0xb0 [igc]
+Mar 03 10:04:46 godel2 kernel:  ? __warn.cold+0xac/0x10c
+Mar 03 10:04:46 godel2 kernel:  ? igc_rd32+0x98/0xb0 [igc]
+Mar 03 10:04:46 godel2 kernel:  ? report_bug+0x114/0x160
+Mar 03 10:04:46 godel2 kernel:  ? handle_bug+0x6e/0xb0
+Mar 03 10:04:46 godel2 kernel:  ? exc_invalid_op+0x18/0x80
+Mar 03 10:04:46 godel2 kernel:  ? asm_exc_invalid_op+0x1b/0x20
+Mar 03 10:04:46 godel2 kernel:  ? igc_rd32+0x98/0xb0 [igc]
+Mar 03 10:04:46 godel2 kernel:  ? igc_rd32+0x98/0xb0 [igc]
+Mar 03 10:04:46 godel2 kernel:  igc_update_stats+0xa5/0x780 [igc]
+Mar 03 10:04:46 godel2 kernel:  igc_watchdog_task+0xa2/0x370 [igc]
+Mar 03 10:04:46 godel2 kernel:  process_one_work+0x174/0x350
+Mar 03 10:04:46 godel2 kernel:  worker_thread+0x33a/0x470
+Mar 03 10:04:46 godel2 kernel:  ? _raw_spin_lock_irqsave+0xe/0x20
+Mar 03 10:04:46 godel2 kernel:  ? __pfx_worker_thread+0x10/0x10
+Mar 03 10:04:46 godel2 kernel:  kthread+0xe1/0x110
+Mar 03 10:04:46 godel2 kernel:  ? __pfx_kthread+0x10/0x10
+Mar 03 10:04:46 godel2 kernel:  ret_from_fork+0x44/0x70
+Mar 03 10:04:46 godel2 kernel:  ? __pfx_kthread+0x10/0x10
+Mar 03 10:04:46 godel2 kernel:  ret_from_fork_asm+0x1a/0x30
+Mar 03 10:04:46 godel2 kernel:  </TASK>
+Mar 03 10:04:46 godel2 kernel: ---[ end trace 0000000000000000 ]---
+```
+
+The Reddit post and other such posts indicated it is an ASUS problem
+that hasn't yet been fixed but there is a workaround. Need to throttle
+down power management by adding adding 2 boot options:
+
+* `pcie_port_pm=off`
+* `pcie_aspm.policy=performance`
+
+Found several examples on had to fix on Debian SID and Arch for the GRUB
+bootloader. After careful reverse engineering and manual reading,
+I figured out how to do it on Pop!OS with SystemD Boot.
+
+```
+    # kernelstub -a 'pcie_port_pm=off'
+    # kernelstub -a 'pcie_aspm.policy=performance'
+    # reinstall-kernels
+    # reboot
+```
+
+Before I did this, I tested these out by tapping the `e` key during
+reboot. This allowed me to edit the cmdline boot options. Later
+I learned one can hold down space bar to catch boot menu and then press
+the `e` key.
+
+More factoids:
+
+```
+    $ cat /proc/cmdline
+    initrd=\EFI\Pop_OS-d90ff567-555d-41c0-b39a-da2496ab340f\initrd.img root=UUID=d90ff567-555d-41c0-b39a-da2496ab340f ro quiet loglevel=0 systemd.show_status=false splash nvidia-drm.modeset=1 pcie_port_pm=off pcie_aspm.policy=performance
+
+    $ sudo kernelstub -p
+    [sudo] password for grs:
+    kernelstub.Config    : INFO     Looking for configuration...
+    kernelstub           : INFO     System information:
+    
+        OS:..................Pop!_OS 24.04
+        Root partition:....../dev/nvme0n1p4
+        Root FS UUID:........d90ff567-555d-41c0-b39a-da2496ab340f
+        ESP Path:............/boot/efi
+        ESP Partition:......./dev/nvme0n1p1
+        ESP Partition #:.....1
+        NVRAM entry #:.......-1
+        Boot Variable #:.....0000
+        Kernel Boot Options:.quiet loglevel=0 systemd.show_status=false splash nvidia-drm.modeset=1 pcie_port_pm=off pcie_aspm.policy=performance
+        Kernel Image Path:.../boot/vmlinuz-6.12.10-76061203-generic
+        Initrd Image Path:.../boot/initrd.img-6.12.10-76061203-generic
+        Force-overwrite:.....False
+    
+    kernelstub           : INFO     Configuration details:
+    
+       ESP Location:................../boot/efi
+       Management Mode:...............True
+       Install Loader configuration:..True
+       Configuration version:.........3
+```
+

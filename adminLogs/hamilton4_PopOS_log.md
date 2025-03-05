@@ -434,3 +434,26 @@ converted to `.crt` files in the PEM format.
 See godel2 notes on how to finish. After godel2 working, I need to
 cleanup my mess on hamilton4.
 
+## 2025-03-04:
+
+When I ssh'ed into hamilton4, I had a message about a firmware update.
+Was adviced to run the `$ fwupdmgr get-upgrades` cmd. What needed
+updates was to a Secure-Boot blacklist. From the commandline:
+
+```
+    $ fwupdmgr get-upgrades
+    $ fwupdmgr --help
+    $ fwupdmgr upgrade
+    $ fwupdmgr get-upgrades
+```
+
+The `fwupdmgr upgrade` asked me if I wanted to reboot. I said yes.
+
+The second `fwupdmgr get-upgrades` said that there was no longer
+anything to update, but asked if I wanted to send up a hardware report
+to help hardware vendors. I said yes. Then it asked if I wanted to do
+this automatically when the command runs, I said yes. After this, it was
+the first time I was asked to authenticate with my password.
+
+See same day how I did this using just the GUI on godel2.
+

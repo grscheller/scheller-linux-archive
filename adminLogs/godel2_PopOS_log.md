@@ -1069,3 +1069,13 @@ More factoids:
        Configuration version:.........3
 ```
 
+## 2025-03-04:
+
+I had just upgrade the firmware on hamilton4. When I logged into the
+Cosmic desktop environment I had a desktop notification of the same
+firmware upgrade. I did a reboot because the network card was down
+again. After reboot, I got the same notification again and clicked it.
+I repeated what I dir on hamilton4 but now though a series of GUI menus.
+
+See same day how I did this using the cmdline on hamilton4.
+

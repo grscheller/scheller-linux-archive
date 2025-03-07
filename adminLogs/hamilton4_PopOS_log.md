@@ -457,3 +457,15 @@ the first time I was asked to authenticate with my password.
 
 See same day how I did this using just the GUI on godel2.
 
+## 2025-03-07:
+
+Did my weekly Pop!OS apt upgrades and `apt` requested I do a `dpkg`
+command.
+
+```
+   $ sudo apt update
+   $ sudo apt full-upgrade        # failed
+   $ sudo dpkg --configure -a
+   $ sudo apt full-upgrade
+```
+

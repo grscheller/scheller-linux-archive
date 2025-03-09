@@ -20,15 +20,15 @@ I needed to get my work information off of euler7. I used SSH for that.
 
 Currently on euler7:
 
-```
-$ lsblk
-NAME        MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
-nvme0n1     259:0    0 476.9G  0 disk
-├─nvme0n1p1 259:1    0   512M  0 part /boot
-├─nvme0n1p2 259:2    0  16.1G  0 part [SWAP]
-└─nvme0n1p3 259:3    0 460.3G  0 part /
-nvme1n1     259:4    0  27.3G  0 disk
-└─nvme1n1p1 259:5    0  27.2G  0 part /home
+```fish
+    $ lsblk
+    NAME        MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
+    nvme0n1     259:0    0 476.9G  0 disk
+    ├─nvme0n1p1 259:1    0   512M  0 part /boot
+    ├─nvme0n1p2 259:2    0  16.1G  0 part [SWAP]
+    └─nvme0n1p3 259:3    0 460.3G  0 part /
+    nvme1n1     259:4    0  27.3G  0 disk
+    └─nvme1n1p1 259:5    0  27.2G  0 part /home
 ```
 
 I will carve it up differently. When the system was Windows the two nvme
@@ -79,10 +79,10 @@ Yes!
 
 First steps I did after getting WiFi access were,
 
-```
-   $ sudo apt update
-   $ sudo apt upgrade
-   $ sudo apt install iwd neofetch
+```fish
+    $ sudo apt update
+    $ sudo apt upgrade
+    $ sudo apt install iwd neofetch
 ```
 
 Neofetch and Cosmic DE tell me I have:
@@ -96,47 +96,47 @@ Neofetch and Cosmic DE tell me I have:
 
 The install did not set up mounting the `/var` partition.
 
-```
-$ lsblk -f
-NAME          FSTYPE FSVER LABEL     UUID                                 FSAVAIL FSUSE% MOUNTPOINTS
-zram0                                                                                    [SWAP]
-nvme0n1
-├─nvme0n1p1   vfat   FAT32           0365-F73A                               1.9G     4% /boot/efi
-├─nvme0n1p2   swap   1               72a74e32-7b68-457f-8a53-8e33ee7c14ac
-│ └─cryptswap swap   1     cryptswap 9fbca8e4-b371-4820-bdcd-3f5e51ac357f                [SWAP]
-├─nvme0n1p3   ext4   1.0             48746d86-adf0-4203-a5a3-ab0a1e4c8196     85G     8% /
-└─nvme0n1p4   ext4   1.0             14193911-92b7-4926-ae37-f4f83fa49b37  334.1G     0% /home
-nvme1n1
-└─nvme1n1p1   ext4   1.0             affc2f9f-43fa-4299-ade5-284a3a1747d8
+```fish
+    $ lsblk -f
+    NAME          FSTYPE FSVER LABEL     UUID                                 FSAVAIL FSUSE% MOUNTPOINTS
+    zram0                                                                                    [SWAP]
+    nvme0n1
+    ├─nvme0n1p1   vfat   FAT32           0365-F73A                               1.9G     4% /boot/efi
+    ├─nvme0n1p2   swap   1               72a74e32-7b68-457f-8a53-8e33ee7c14ac
+    │ └─cryptswap swap   1     cryptswap 9fbca8e4-b371-4820-bdcd-3f5e51ac357f                [SWAP]
+    ├─nvme0n1p3   ext4   1.0             48746d86-adf0-4203-a5a3-ab0a1e4c8196     85G     8% /
+    └─nvme0n1p4   ext4   1.0             14193911-92b7-4926-ae37-f4f83fa49b37  334.1G     0% /home
+    nvme1n1
+    └─nvme1n1p1   ext4   1.0             affc2f9f-43fa-4299-ade5-284a3a1747d8
 ```
 
 Will need to edit `/etc/fstab`. Its contents are:
 
-```
-   # /etc/fstab: static file system information.
-   #
-   # Use 'blkid' to print the universally unique identifier for a
-   # device; this may be used with UUID= as a more robust way to name devices
-   # that works even if disks are added and removed. See fstab(5).
-   #
-   # <file system>  <mount point>  <type>  <options>  <dump>  <pass>
-   PARTUUID=4f484256-99ea-424c-b3cd-b3ba044e3410  /boot/efi  vfat  umask=0077  0  0
-   /dev/mapper/cryptswap  none  swap  defaults  0  0
-   UUID=48746d86-adf0-4203-a5a3-ab0a1e4c8196  /  ext4  noatime,errors=remount-ro  0  1
-   UUID=14193911-92b7-4926-ae37-f4f83fa49b37  /home  ext4  noatime,errors=remount-ro  0  0
+```bash
+    # /etc/fstab: static file system information.
+    #
+    # Use 'blkid' to print the universally unique identifier for a
+    # device; this may be used with UUID= as a more robust way to name devices
+    # that works even if disks are added and removed. See fstab(5).
+    #
+    # <file system>  <mount point>  <type>  <options>  <dump>  <pass>
+    PARTUUID=4f484256-99ea-424c-b3cd-b3ba044e3410  /boot/efi  vfat  umask=0077  0  0
+    /dev/mapper/cryptswap  none  swap  defaults  0  0
+    UUID=48746d86-adf0-4203-a5a3-ab0a1e4c8196  /  ext4  noatime,errors=remount-ro  0  1
+    UUID=14193911-92b7-4926-ae37-f4f83fa49b37  /home  ext4  noatime,errors=remount-ro  0  0
 ```
 
 Double check UUID label.
 
-```
-   # blkid
-   /dev/nvme0n1p3: UUID="48746d86-adf0-4203-a5a3-ab0a1e4c8196" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="2efa19fe-9dcb-4df2-86a7-00798225ef75"
-   /dev/nvme0n1p1: UUID="0365-F73A" BLOCK_SIZE="512" TYPE="vfat" PARTUUID="4f484256-99ea-424c-b3cd-b3ba044e3410"
-   /dev/nvme0n1p4: UUID="14193911-92b7-4926-ae37-f4f83fa49b37" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="32163870-0182-40a9-ae8f-18aa844c07f4"
-   /dev/nvme0n1p2: UUID="72a74e32-7b68-457f-8a53-8e33ee7c14ac" TYPE="swap" PARTUUID="d9973efb-ab99-4898-9398-6d3852b2d2be"
-   /dev/mapper/cryptswap: LABEL="cryptswap" UUID="9fbca8e4-b371-4820-bdcd-3f5e51ac357f" TYPE="swap"
-   /dev/nvme1n1p1: UUID="affc2f9f-43fa-4299-ade5-284a3a1747d8" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="4d9f2b91-7bd9-46ee-8a20-41cca6d09b18"
-   /dev/zram0: UUID="8fa379eb-ea3a-4346-9909-709e7c55f8db" TYPE="swap"cWaffc2f9f-43fa-4299-ade5-284a3a1747d8
+```bash
+    # blkid
+    /dev/nvme0n1p3: UUID="48746d86-adf0-4203-a5a3-ab0a1e4c8196" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="2efa19fe-9dcb-4df2-86a7-00798225ef75"
+    /dev/nvme0n1p1: UUID="0365-F73A" BLOCK_SIZE="512" TYPE="vfat" PARTUUID="4f484256-99ea-424c-b3cd-b3ba044e3410"
+    /dev/nvme0n1p4: UUID="14193911-92b7-4926-ae37-f4f83fa49b37" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="32163870-0182-40a9-ae8f-18aa844c07f4"
+    /dev/nvme0n1p2: UUID="72a74e32-7b68-457f-8a53-8e33ee7c14ac" TYPE="swap" PARTUUID="d9973efb-ab99-4898-9398-6d3852b2d2be"
+    /dev/mapper/cryptswap: LABEL="cryptswap" UUID="9fbca8e4-b371-4820-bdcd-3f5e51ac357f" TYPE="swap"
+    /dev/nvme1n1p1: UUID="affc2f9f-43fa-4299-ade5-284a3a1747d8" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="4d9f2b91-7bd9-46ee-8a20-41cca6d09b18"
+    /dev/zram0: UUID="8fa379eb-ea3a-4346-9909-709e7c55f8db" TYPE="swap"cWaffc2f9f-43fa-4299-ade5-284a3a1747d8
 ```
 
 Added a line to mount `/var` in `/etc/fstab`. Also set the last field
@@ -144,8 +144,8 @@ for `/home` and `/var` to `2` so that both are checked when file system
 checks need to be done.
 
 ```
-UUID=14193911-92b7-4926-ae37-f4f83fa49b37  /home  ext4  noatime,errors=remount-ro  0  2
-UUID=affc2f9f-43fa-4299-ade5-284a3a1747d8  /var  ext4  noatime,errors=remount-ro  0  2
+    UUID=14193911-92b7-4926-ae37-f4f83fa49b37  /home  ext4  noatime,errors=remount-ro  0  2
+    UUID=affc2f9f-43fa-4299-ade5-284a3a1747d8  /var  ext4  noatime,errors=remount-ro  0  2
 ```
 Chicken or egg time.
 
@@ -155,18 +155,18 @@ I think it is "emergency repair?" or something like that. The forth
 command below was based on a warning Pop!OS (Systemd?) gave me after the
 mount command.
 
-```
-   # mv /var /var/old
-   # mkdir /var
-   # mount /var
-   # systemctl daemon-reload
-   # mv /var_old/* /var/
-   mv: inter-device move failed: '/var_old/cache' to '/var/cache'; unable to remove target: Directory not empty
-   mv: inter-device move failed: '/var_old/lib' to '/var/lib'; unable to remove target: Directory not empty
-   mv: inter-device move failed: '/var_old/log' to '/var/log'; unable to remove target: Directory not empty
-   mv: inter-device move failed: '/var_old/spool' to '/var/spool'; unable to remove target: Directory not empty
-   mv: inter-device move failed: '/var_old/tmp' to '/var/tmp'; unable to remove target: Directory not empty
-   # reboot
+```bash
+    # mv /var /var/old
+    # mkdir /var
+    # mount /var
+    # systemctl daemon-reload
+    # mv /var_old/* /var/
+    mv: inter-device move failed: '/var_old/cache' to '/var/cache'; unable to remove target: Directory not empty
+    mv: inter-device move failed: '/var_old/lib' to '/var/lib'; unable to remove target: Directory not empty
+    mv: inter-device move failed: '/var_old/log' to '/var/log'; unable to remove target: Directory not empty
+    mv: inter-device move failed: '/var_old/spool' to '/var/spool'; unable to remove target: Directory not empty
+    mv: inter-device move failed: '/var_old/tmp' to '/var/tmp'; unable to remove target: Directory not empty
+    # reboot
 ```
 
 I forgot that since `/` and `/var` are now on different partitions
@@ -183,51 +183,51 @@ I will when I configure godel2.
 
 Install some more utilities
 
-```
-   $ sudo apt install coreutils
-   $ sudo apt install fd-find ripgrep
-   $ sudo apt install alacritty
-   $ sudo apt install nomacs
+```fish
+    $ sudo apt install coreutils
+    $ sudo apt install fd-find ripgrep
+    $ sudo apt install alacritty
+    $ sudo apt install nomacs
 ```
 
 Now install a functional Neovim:
 
-```
-   $ sudo add-apt-repository ppa:neovim-ppa/unstable
-   $ sudo apt install neovim wl-clipboard
-   $ nvim --version
-   Run "nvim -V1 -v" for more info
-   NVIM v0.11.0-dev
-   Build type: RelWithDebInfo
-   LuaJIT 2.1.1703358377
+```fish
+    $ sudo add-apt-repository ppa:neovim-ppa/unstable
+    $ sudo apt install neovim wl-clipboard
+    $ nvim --version
+    Run "nvim -V1 -v" for more info
+    NVIM v0.11.0-dev
+    Build type: RelWithDebInfo
+    LuaJIT 2.1.1703358377
 ```
 
 Installed Nerd fonts `firacode` and `robotomono`. Used the Nerd Fonts
 I downloaded and installed on noether2.
 
-```
-   # mkdir -p /usr/local/share/fonts/truetype/{firacode,robotomono}
-   # cd /usr/local/share/fonts/truetype/firacode
-   # unzip ~grs/catch/FireCode.zip
-   # cd ../robotomono
-   # unzip ~grs/catch/RobotoMono.zip/
+```bash
+    # mkdir -p /usr/local/share/fonts/truetype/{firacode,robotomono}
+    # cd /usr/local/share/fonts/truetype/firacode
+    # unzip ~grs/catch/FireCode.zip
+    # cd ../robotomono
+    # unzip ~grs/catch/RobotoMono.zip/
 ```
 
 Need to install my shell environments to get my ssh keys working, and
 for my own sanity.
 
-```
-   $ cd
-   $ mkdir devel
-   $ cd devel
-   $ git clone https://github.com/grscheller/dotfiles
-   $ cd dotfiles/bin
-   $ ./homeInstall
-   $ bash
-   $ ls -l /tmp
-   total 60
-   drwx------ 2 grs  grs  4096 Dec  1 17:37 ssh-Yb9MqTePOhTA
-   ...
+```fish
+    $ cd
+    $ mkdir devel
+    $ cd devel
+    $ git clone https://github.com/grscheller/dotfiles
+    $ cd dotfiles/bin
+    $ ./homeInstall
+    $ bash
+    $ ls -l /tmp
+    total 60
+    drwx------ 2 grs  grs  4096 Dec  1 17:37 ssh-Yb9MqTePOhTA
+    ...
 ```
 
 Now I have an ssh key agent running.
@@ -238,10 +238,10 @@ lazy and mason manually, but was still missing Treesitter.
 
 Might as well finish getting Neovim working.
 
-```
-   $ sudo apt install fswatch nodejs npm
-   $ sudo npm install -g neovim
-   $ sudo npm install -g tree-sitter-cli
+```fish
+    $ sudo apt install fswatch nodejs npm
+    $ sudo npm install -g neovim
+    $ sudo npm install -g tree-sitter-cli
 ```
 
 Except for the lack of Nerd Fonts, Neovim seems to be functioning OK.
@@ -255,10 +255,9 @@ sitting around from before I installed the nerd fonts.
 
 Lets get fish installed.
 
-```
-   $ sudo apt install fish
-   $ sudo usermod -s /usr/bin/fish grs
-   $ 
+```fish
+    $ sudo apt install fish
+    $ sudo usermod -s /usr/bin/fish grs
 ```
 
 Sorted out some issues with ssh keys and got my GIT infrastructure
@@ -270,31 +269,32 @@ Got pyenv working, just repeated what I did for norther2.
 
 Nvidia related service failing on boot:
 
+```fish
+    $ systemctl list-units|grep -i failed
+    ● nvidia-powerd.service                                                                                                                                               loaded failed failed    nvidia-powerd service
 ```
-   $ systemctl list-units|grep -i failed
-   ● nvidia-powerd.service                                                                                                                                               loaded failed failed    nvidia-powerd service
-```
+
 Maybe `nvidia-powerd` does not support hamilton4 older Optimus hybrid
 graphics. I will try and turn it off. From askUbuntu.com,
 
-```
-   $ sudo systemctl disable nvidia-powerd.service
-   $ Removed "/etc/systemd/system/multi-user.target.wants/nvidia-powerd.service".
-   $ reboot
+```fish
+    $ sudo systemctl disable nvidia-powerd.service
+    Removed "/etc/systemd/system/multi-user.target.wants/nvidia-powerd.service".
+    $ reboot
 ```
 
 ## 2024-12-04:
 
 Getting Avahi installed and hopefully auto configured.
 
-```
-   $ sudo apt-get install avahi-daemon avahi-discover avahi-utils libnss-mdns mdns-scan
+```fish
+    $ sudo apt-get install avahi-daemon avahi-discover avahi-utils libnss-mdns mdns-scan
 ```
 
 Also, `nvidia-powerd` is failing on godel2, so I will re-enable it on
 hamilton4.
 
-```
+```fish
    $ systemctl enable nvidia-powerd
 ```
 
@@ -336,13 +336,13 @@ Downloaded Cisco Secure Client for Linux:
 
 Did a manual install:
 
-```
-   sudo sh ./vpn_install.sh
+```fish
+    sudo sh ./vpn_install.sh
 ```
 
 Also installed based on info from Cisco Website:
 
-```
+```fish
     $ sudo apt install --upgrade xl2tpd
     $ sudo apt install --upgrade libreswan
     $ sudo apt install --upgrade network-manager-l2tp-gnome
@@ -356,24 +356,24 @@ I installed these (and rebooted).
 
 Need to install DoD Certs. First install drivers for CAC reader.
 
-```
-   sudo apt install libccid opensc pcsc-tools
+```fish
+    $ sudo apt install libccid opensc pcsc-tools
 ```
 
 ## 2025-02-12:
 
 Following what I did on gauss17 on 2022-11-16.
 
-```
-   $ systemctl status pcscd.socket
-   ● pcscd.socket - PC/SC Smart Card Daemon Activation Socket
-        Loaded: loaded (/usr/lib/systemd/system/pcscd.socket; enabled; preset: enabled)
-        Active: active (listening) since Wed 2025-02-12 07:39:31 MST; 6h ago
-      Triggers: ● pcscd.service
-        Listen: /run/pcscd/pcscd.comm (Stream)
-        CGroup: /system.slice/pcscd.socket
-   
-   Feb 12 07:39:31 hamilton4 systemd[1]: Listening on pcscd.socket - PC/SC Smart Card Daemon Activation Socket.
+```fish
+    $ systemctl status pcscd.socket
+    ● pcscd.socket - PC/SC Smart Card Daemon Activation Socket
+         Loaded: loaded (/usr/lib/systemd/system/pcscd.socket; enabled; preset: enabled)
+         Active: active (listening) since Wed 2025-02-12 07:39:31 MST; 6h ago
+       Triggers: ● pcscd.service
+         Listen: /run/pcscd/pcscd.comm (Stream)
+         CGroup: /system.slice/pcscd.socket
+    
+    Feb 12 07:39:31 hamilton4 systemd[1]: Listening on pcscd.socket - PC/SC Smart Card Daemon Activation Socket.
 ```
 
 Already got the smart card daemon running. Plugged in CAC but CAC reader
@@ -390,20 +390,20 @@ link is now: `https://militarycac.com/maccerts/AllCerts.zip`
 
 Download and unzipped here: `~/build/dod-certs`
 
-```
-   $ ls
-    AllCerts.zip            'DOD EMAIL CA-73.cer'   DoDRoot5.cer
-   'DOD DERILITY CA-1.cer'  'DOD ID CA-59.cer'      DoDRoot6.cer
-   'DOD DERILITY CA-3.cer'  'DOD ID CA-62.cer'     'DOD SW CA-60.cer'
-   'DOD DERILITY CA-4.cer'  'DOD ID CA-63.cer'     'DOD SW CA-61.cer'
-   'DOD EMAIL CA-59.cer'    'DOD ID CA-64.cer'     'DOD SW CA-66.cer'
-   'DOD EMAIL CA-62.cer'    'DOD ID CA-65.cer'     'DOD SW CA-67.cer'
-   'DOD EMAIL CA-63.cer'    'DOD ID CA-70.cer'     'DOD SW CA-68.cer'
-   'DOD EMAIL CA-64.cer'    'DOD ID CA-71.cer'     'DOD SW CA-69.cer'
-   'DOD EMAIL CA-65.cer'    'DOD ID CA-72.cer'     'DOD SW CA-74.cer'
-   'DOD EMAIL CA-70.cer'    'DOD ID CA-73.cer'     'DOD SW CA-75.cer'
-   'DOD EMAIL CA-71.cer'     DoDRoot3.cer          'DOD SW CA-76.cer'
-   'DOD EMAIL CA-72.cer'     DoDRoot4.cer          'DOD SW CA-77.cer'
+```fish
+    $ ls
+     AllCerts.zip            'DOD EMAIL CA-73.cer'   DoDRoot5.cer
+    'DOD DERILITY CA-1.cer'  'DOD ID CA-59.cer'      DoDRoot6.cer
+    'DOD DERILITY CA-3.cer'  'DOD ID CA-62.cer'     'DOD SW CA-60.cer'
+    'DOD DERILITY CA-4.cer'  'DOD ID CA-63.cer'     'DOD SW CA-61.cer'
+    'DOD EMAIL CA-59.cer'    'DOD ID CA-64.cer'     'DOD SW CA-66.cer'
+    'DOD EMAIL CA-62.cer'    'DOD ID CA-65.cer'     'DOD SW CA-67.cer'
+    'DOD EMAIL CA-63.cer'    'DOD ID CA-70.cer'     'DOD SW CA-68.cer'
+    'DOD EMAIL CA-64.cer'    'DOD ID CA-71.cer'     'DOD SW CA-69.cer'
+    'DOD EMAIL CA-65.cer'    'DOD ID CA-72.cer'     'DOD SW CA-74.cer'
+    'DOD EMAIL CA-70.cer'    'DOD ID CA-73.cer'     'DOD SW CA-75.cer'
+    'DOD EMAIL CA-71.cer'     DoDRoot3.cer          'DOD SW CA-76.cer'
+    'DOD EMAIL CA-72.cer'     DoDRoot4.cer          'DOD SW CA-77.cer'
 ```
 
 From militarycac website, the certs that need installing are
@@ -440,7 +440,7 @@ When I ssh'ed into hamilton4, I had a message about a firmware update.
 Was adviced to run the `$ fwupdmgr get-upgrades` cmd. What needed
 updates was to a Secure-Boot blacklist. From the commandline:
 
-```
+```fish
     $ fwupdmgr get-upgrades
     $ fwupdmgr --help
     $ fwupdmgr upgrade
@@ -462,10 +462,10 @@ See same day how I did this using just the GUI on godel2.
 Did my weekly Pop!OS apt upgrades and `apt` requested I do a `dpkg`
 command.
 
-```
-   $ sudo apt update
-   $ sudo apt full-upgrade        # failed
-   $ sudo dpkg --configure -a
-   $ sudo apt full-upgrade
+```fish
+    $ sudo apt update
+    $ sudo apt full-upgrade        # failed
+    $ sudo dpkg --configure -a
+    $ sudo apt full-upgrade
 ```
 

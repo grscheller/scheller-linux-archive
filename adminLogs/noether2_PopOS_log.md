@@ -35,7 +35,7 @@ Verified checksums.
 
 Followed GUI installation. Reformatted everything expect `/extra`.
 
-```
+```bash
    $ lsblk
    NAME          MAJ:MIN RM   SIZE RO TYPE  MOUNTPOINTS
    sda             8:0    0 119.2G  0 disk
@@ -83,26 +83,26 @@ First install sshd server, then bring over GIT configuration from
 euler7.
 
 ```bash
-   $ sudo apt install openssh-server
-   ...
+    $ sudo apt install openssh-server
+    ...
 
-   $ systemctl status ssh.service
-   ● ssh.service - OpenBSD Secure Shell server
-        Loaded: loaded (/usr/lib/systemd/system/ssh.service; disabled; preset: enabled)
-        Active: active (running) since Mon 2024-11-25 12:14:16 MST; 1h 28min ago
-   TriggeredBy: ● ssh.socket
-          Docs: man:sshd(8)
-                man:sshd_config(5)
-       Process: 2666 ExecStartPre=/usr/sbin/sshd -t (code=exited, status=0/SUCCESS)
-      Main PID: 2667 (sshd)
-         Tasks: 1 (limit: 18950)
-        Memory: 3.4M (peak: 4.1M)
-           CPU: 67ms
-        CGroup: /system.slice/ssh.service
-                └─2667 "sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups"
+    $ systemctl status ssh.service
+    ● ssh.service - OpenBSD Secure Shell server
+         Loaded: loaded (/usr/lib/systemd/system/ssh.service; disabled; preset: enabled)
+         Active: active (running) since Mon 2024-11-25 12:14:16 MST; 1h 28min ago
+    TriggeredBy: ● ssh.socket
+           Docs: man:sshd(8)
+                 man:sshd_config(5)
+        Process: 2666 ExecStartPre=/usr/sbin/sshd -t (code=exited, status=0/SUCCESS)
+       Main PID: 2667 (sshd)
+          Tasks: 1 (limit: 18950)
+         Memory: 3.4M (peak: 4.1M)
+            CPU: 67ms
+         CGroup: /system.slice/ssh.service
+                 └─2667 "sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups"
 
-   $ scp -r -P XXXXX grs@10.54.4.125:.config/git .
-   config
+    $ scp -r -P XXXXX grs@10.54.4.125:.config/git .
+    config
 ```
 
 Where XXXXX is the port number I use on euler7 for ssh.
@@ -113,26 +113,26 @@ Note name change of service, now ssh.service, was sshd.service on Pop!OS
 GIT is configured to use Neovim.
 
 ```bash
-   $ apt search '^neovim$'
-   Sorting... Done
-   Full Text Search... Done
-   neovim/noble 0.9.5-6ubuntu2 amd64
-     heavily refactored vim fork
+    $ apt search '^neovim$'
+    Sorting... Done
+    Full Text Search... Done
+    neovim/noble 0.9.5-6ubuntu2 amd64
+      heavily refactored vim fork
 ```
 
 But I am currently using Neovim v0.10.2 on Arch. Following what I did
 for onepiece:
 
 ```bash
-   $ sudo add-apt-repository ppa:neovim-ppa/unstable
-   $ sudo apt update
-   $ sudo apt upgrade
-   $ sudo apt install neovim
-   $ nvim --version
-   NVIM v0.11.0-dev
-   Build type: RelWithDebInfo
-   LuaJIT 2.1.1703358377
-   Run "nvim -V1 -v" for more info
+    $ sudo add-apt-repository ppa:neovim-ppa/unstable
+    $ sudo apt update
+    $ sudo apt upgrade
+    $ sudo apt install neovim
+    $ nvim --version
+    NVIM v0.11.0-dev
+    Build type: RelWithDebInfo
+    LuaJIT 2.1.1703358377
+    Run "nvim -V1 -v" for more info
 ```
 
 Now I am even more bloody-edge than I was on Arch!
@@ -144,17 +144,17 @@ The apt upgrade also updated a lot of stuff.
 Went and installed the rg and fd utilities,
 
 ```bash
-   $ sudo apt install fdclone ripgrep
+    $ sudo apt install fdclone ripgrep
 ```
 but `fdclone` was not what I wanted.
 
 ```bash
-   $ sudo apt autoremove fdclone
-   $ sudo apt install fd-find
-   $ sudo ln -s ../lib/cargo/bin/fd fd
-   $ ls -l /usr/bin/fd*
-   lrwxrwxrwx 1 root root 19 Nov 25 20:59 /usr/bin/fd -> ../lib/cargo/bin/fd
-   lrwxrwxrwx 1 root root 19 Dec 30  2023 /usr/bin/fdfind -> ../lib/cargo/bin/fd
+    $ sudo apt autoremove fdclone
+    $ sudo apt install fd-find
+    $ sudo ln -s ../lib/cargo/bin/fd fd
+    $ ls -l /usr/bin/fd*
+    lrwxrwxrwx 1 root root 19 Nov 25 20:59 /usr/bin/fd -> ../lib/cargo/bin/fd
+    lrwxrwxrwx 1 root root 19 Dec 30  2023 /usr/bin/fdfind -> ../lib/cargo/bin/fd
 ```
 
 What the hell is so important that it can retain the `fd` name?
@@ -167,80 +167,41 @@ What the hell is so important that it can retain the `fd` name?
      console-base lightweight file manager
 ```
 
-IDIOTS!!! I would have renamed it to `fm`.
+IDIOTS!!! I would have renamed this thing to `fm`.
 
 ## 11-25-2024:
 
 Finished cloning my GIT repos.
 
-```bash
-   $ cd ~/devel
-   $ fdgit
-
-   notes/git-notes:
-      ## main...origin/main
-
-   web:
-      ## main...origin/main
-
-   notes/neovim-notes:
-      ## master...origin/master
-
-   scheller-linux-archive:
-      ## master...origin/master
-    M adminLogs/noether2_PopOS_log.md
-      adminLogs/noether2_PopOS_log.md | 40 ++++++++++++++++++++++++++++++++++++++++
-      1 file changed, 40 insertions(+)
-
-   dotfiles:
-      ## master...origin/master
-
-   pypi/fp:
-      ## main...origin/main
-
-   grok/fpinScala3Stdlib:
-      ## main...origin/main
-
-   grok/grok-typescript:
-      ## main...origin/main
-
-   grok/grok-lua:
-      ## main...origin/main
-
-   pypi/grscheller-pypi-namespace-docs:
-      ## main...origin/main
-
-   pypi/datastructures:
-      ## main...origin/main
-
-   pypi/circular-array:
-      ## main...origin/main
-
-   pypi/experimental:
-      ## main...origin/main
-
-   pypi/boring-math:
-      ## main...origin/main
-
-   courses/udacity/ai/courses-distributions:
-      ## main...origin/main
-
-   courses/udacity/ai/courses-pet-images:
-      ## main...origin/main
-```
+* `~/devel/dotfiles`
+* `~/devel/scheller-linux-archive`
+* `~/devel/web`
+* `~/devel/notes/git-notes`
+* `~/devel/notes/neovim-notes`
+* `~/devel/grok/fpinScala3Stdlib`
+* `~/devel/grok/grok-typescript`
+* `~/devel/grok/grok-lua`
+* `~/devel/pypi/fp`
+* `~/devel/pypi/grscheller-pypi-namespace-docs`
+* `~/devel/pypi/datastructures`
+* `~/devel/pypi/circular-array`
+* `~/devel/pypi/experimental`
+* `~/devel/pypi/boring-math`
+* `~/devel/courses/udacity/ai/courses-distributions`
+* `~/devel/courses/udacity/ai/courses-pet-images`
 
 ## 11-25-2024:
 
 Installed alacritty terminal emulator.
 
-```
-   $ apt search 'alacritty$'
-   Sorting... Done
-   Full Text Search... Done
-   alacritty/noble-updates 0.13.2-1ubuntu1 amd64
-     Fast, cross-platform, OpenGL terminal emulator
-   $ sudo apt install alacritty
-   $ sudo apt install fonts-roboto fonts-firacode
+```bash
+    $ apt search 'alacritty$'
+    Sorting... Done
+    Full Text Search... Done
+    alacritty/noble-updates 0.13.2-1ubuntu1 amd64
+      Fast, cross-platform, OpenGL terminal emulator
+    $ sudo apt install alacritty
+    $ sudo apt install fonts-roboto fonts-firacode
 ```
 
 Was on alacritty v0.14.0+ on Arch Linux. Had to fix things in my
@@ -248,7 +209,7 @@ configs.
 
 First, Pop!OS seems to have forked its fonts.
 
-* See: https://github.com/pop-os/fonts
+* See `https://github.com/pop-os/fonts`
 
 Not sure if these are Nerd Fonts, but their names are Fira and
 roboto-slab. I uninstalled fonts-roboto and fonts-firacode I installed
@@ -267,8 +228,8 @@ environmental scripts to Pop!OS.
 
 Here goes nothing:
 
-```
-   $ dfInstall
+```bash
+    $ dfInstall
 ```
 
 Neovim has problems but at this point still the best editor I have.
@@ -297,7 +258,7 @@ of my Neovim problems.
 
 Changed login shell for my user.
 
-```
+```bash
    $ sudo usermod -s /usr/bin/fish grs
 ```
 
@@ -312,12 +273,12 @@ and RobotoMono Nerd fonts were installed on:
 
 Since I am the only one who will use noether2, TODO:
 
-```
-   $ mkdir ~/.local/share/fonts
-   $ ax RobotoMono.zip
-   $ mv *.ttf ~/.local/share/fonts/
-   $ ax FiraCode.zip
-   $ mv *.ttf ~/.local/share/fonts/
+```fish
+    $ mkdir ~/.local/share/fonts
+    $ ax RobotoMono.zip
+    $ mv *.ttf ~/.local/share/fonts/
+    $ ax FiraCode.zip
+    $ mv *.ttf ~/.local/share/fonts/
 ```
 
 ## 11-27-2024:
@@ -327,54 +288,54 @@ I spawn a new SSH Agent. Need to fix this.
 
 This worked on Arch with Sway because I did not use a Display Manager:
 
-```
-   # Ensure SSH key-agent running with your private keys
-   if ! set -q SSH_AGENT_PID
-      printf 'SSH '
-      eval (ssh-agent -c)
-      and ssh-add
-   end
+```fish
+    # Ensure SSH key-agent running with your private keys
+    if ! set -q SSH_AGENT_PID
+       printf 'SSH '
+       eval (ssh-agent -c)
+       and ssh-add
+    end
 ```
 
 I tested the following on both Pop!OS and Arch.
 
-```
-   # Manage SSH key-agents
-   function exit_handler --on-event fish_exit
-      if status --is-login
-          if set -q SSH_AGENT_PID
-             kill -15 $SSH_AGENT_PID
-          end
-      end
-   end
+```fish
+    # Manage SSH key-agents
+    function exit_handler --on-event fish_exit
+       if status --is-login
+           if set -q SSH_AGENT_PID
+              kill -15 $SSH_AGENT_PID
+           end
+       end
+    end
 
-   if ! set -q SSH_AGENT_PID
-      set -l ssh_flag 1
-      set -l desktop_flag 0
-      if set -q XDG_CURRENT_DESKTOP
-         set desktop_flag 1
-         if test -f /tmp/grs_ssh_desktop_env
-            printf 'Last Desktop SSH '
-            source /tmp/grs_ssh_desktop_env
-            if ps -p $SSH_AGENT_PID > /dev/null
-               set ssh_flag 0
-            end
-         end
-      end
-      if test "$ssh_flag" -eq 1
-         set -l umask_orig $umask
-         umask 0077
-         printf 'SSH '
-         if test "$desktop_flag" -eq 1
-            eval (ssh-agent -c|tee /tmp/grs_ssh_desktop_env)
-            and ssh-add
-         else
-            eval (ssh-agent -c)
-            and ssh-add
-         end
-         umask $umask_orig
-      end
-   end
+    if ! set -q SSH_AGENT_PID
+       set -l ssh_flag 1
+       set -l desktop_flag 0
+       if set -q XDG_CURRENT_DESKTOP
+          set desktop_flag 1
+          if test -f /tmp/grs_ssh_desktop_env
+             printf 'Last Desktop SSH '
+             source /tmp/grs_ssh_desktop_env
+             if ps -p $SSH_AGENT_PID > /dev/null
+                set ssh_flag 0
+             end
+          end
+       end
+       if test "$ssh_flag" -eq 1
+          set -l umask_orig $umask
+          umask 0077
+          printf 'SSH '
+          if test "$desktop_flag" -eq 1
+             eval (ssh-agent -c|tee /tmp/grs_ssh_desktop_env)
+             and ssh-add
+          else
+             eval (ssh-agent -c)
+             and ssh-add
+          end
+          umask $umask_orig
+       end
+    end
 ```
 
 This is actually an improvement for both. Now the SSH Agent will clean
@@ -386,14 +347,14 @@ Agent.
 Manually install Nerd Fonts downloaded from the
 [Nerd Fonts](https://www.nerdfonts.com/) website. As root,
 
-```
-   # mkdir -p /usr/local/share/fonts/truetype/{firacode,robotomono}
-   # cd /usr/local/share/fonts/truetype/firacode
-   # unzip ~grs/catch/FireCode.zip
-   # cd ../robotomono
-   # unzip ~grs/catch/RobotoMono.zip/
-   # cd ../../..ll
-   # chmod -R root:root fonts     <- undid this later
+```bash
+    mkdir -p /usr/local/share/fonts/truetype/{firacode,robotomono}
+    cd /usr/local/share/fonts/truetype/firacode
+    unzip ~grs/catch/FireCode.zip
+    cd ../robotomono
+    unzip ~grs/catch/RobotoMono.zip/
+    cd ../../..
+    chmod -R root:root fonts
 ```
 
 Neovim now looks better and gitsigns now working. Need to install
@@ -425,48 +386,48 @@ Decided to configure pyenv, which is NOT in the Pop!OS repos.
 Fish already sets `$PYENV_ROOT` to `~/.local/share/pyenv` which needs to
 not exist for the curl install to work.
 
-```
-   $ curl https://pyenv.run | bash
+```fish
+    $ curl https://pyenv.run | bash
 ```
 
 Update pyenv itself.
 
-```
-   $ pyenv update
+```fish
+    $ pyenv update
 ```
 
 From the
 [pyenv wiki](https://github.com/pyenv/pyenv/wiki#suggested-build-environment),
 the suggested build environment for Ubuntu/Debian/Mint is
 
-```
-   sudo apt update; sudo apt install build-essential libssl-dev \
-   zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev curl git \
-   libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev \
-   libffi-dev liblzma-dev
+```fish
+    sudo apt update; sudo apt install build-essential libssl-dev \
+    zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev curl git \
+    libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev \
+    libffi-dev liblzma-dev
 ```
 
 Install Python versions:
 
-```
-   $ pyenv install 3.12.7
-   $ pyenv install 3.13.0
-   $ pyenv versions
-   * system (set by /home/grs/.local/share/pyenv/version)
-     3.12.7
-     3.13.0
+```fish
+    $ pyenv install 3.12.7
+    $ pyenv install 3.13.0
+    $ pyenv versions
+    * system (set by /home/grs/.local/share/pyenv/version)
+      3.12.7
+      3.13.0
 ```
 
 Test Python out (happy path) - I manage my python virtual environments
 with a fish script named `ve` instead of using pyenv to do such.
 
-```
-   $ pyenv shell 3.12.7
-   $ ve dev
-   $ ve -c -r
-   $ pypath circulararray
-   $ cd ~/devel/pypi/circular-array
-   $ pytest tests/
+```fish
+    $ pyenv shell 3.12.7
+    $ ve dev
+    $ ve -c -r
+    $ pypath circulararray
+    $ cd ~/devel/pypi/circular-array
+    $ pytest tests/
 ```
 
 ## 2024-11-29:
@@ -474,64 +435,64 @@ with a fish script named `ve` instead of using pyenv to do such.
 Time to give Neovim some love. From feedback from `:checkhealth` I will
 install some things.
 
-```
-   $ sudo apt install fswatch nodejs npm
-   $ sudo npm install -g neovim
-   $ sudo npm install -g tree-sitter-cli
+```fish
+    $ sudo apt install fswatch nodejs npm
+    $ sudo npm install -g neovim
+    $ sudo npm install -g tree-sitter-cli
 
-   $ ls -l (digpath tree-sitter)
-   lrwxrwxrwx 1 root root 42 Nov 29 10:45 /usr/local/bin/tree-sitter -> ../lib/node_modules/tree-sitter-cli/cli.js
-   $ ls /usr/local/lib/node_modules/
-   neovim  tree-sitter-cli
+    $ ls -l (digpath tree-sitter)
+    lrwxrwxrwx 1 root root 42 Nov 29 10:45 /usr/local/bin/tree-sitter -> ../lib/node_modules/tree-sitter-cli/cli.js
+    $ ls /usr/local/lib/node_modules/
+    neovim  tree-sitter-cli
 ```
 
 Treesitter problem now fixed, but LSP failing for Lua. Also,
 `:checkhealth` giving massive deprecation warnings for many installed
 plugins. Maybe I am a bit too "bleeding-edge."
 
-```
-   $ sudo apt remove neovim   # MISTAKE!
-   $ sudo add-apt-repository -r ppa:neovim-ppa/unstable
-   $ sudo apt install neovim
-   ...
-   The following packages have unmet dependencies:
-   neovim : Depends: neovim-runtime (= 0.9.5-6ubuntu2) but 0.10.0~ubuntu1+git202411231006-c33ec2d7ce-971e32c878-b63bff4404~ubuntu24.04.1 is to be installed
-            Recommends: python3-pynvim but it is not going to be installed
-   E: Unable to correct problems, you have held broken packages.
-   $ sudo apt autoremove neovim   # Fixed mistake.
-   $ sudo apt install neovim
+```fish
+    $ sudo apt remove neovim   # MISTAKE!
+    $ sudo add-apt-repository -r ppa:neovim-ppa/unstable
+    $ sudo apt install neovim
+    ...
+    The following packages have unmet dependencies:
+    neovim : Depends: neovim-runtime (= 0.9.5-6ubuntu2) but 0.10.0~ubuntu1+git202411231006-c33ec2d7ce-971e32c878-b63bff4404~ubuntu24.04.1 is to be installed
+             Recommends: python3-pynvim but it is not going to be installed
+    E: Unable to correct problems, you have held broken packages.
+    $ sudo apt autoremove neovim   # Fixed mistake.
+    $ sudo apt install neovim
 ```
 
 Good news: TS highlighting now works in Lua files!
 Bad news: There is now another problem...
 
 ```
-   Error detected while processing BufReadPre Autocommands for "*":
-   lazydev.nvim requires Neovim >= 0.10
+    Error detected while processing BufReadPre Autocommands for "*":
+    lazydev.nvim requires Neovim >= 0.10
 ```
 Lets try going to the PPA for the stable version.
 
-```
-   $ sudo apt autoremove neovim
-   $ sudo add-apt-repository ppa:neovim-ppa/stable
-   $ sudo apt install neovim
-   $ nvim --version
-   NVIM v0.9.5
-   Build type: Release
-   LuaJIT 2.1.1703358377
+```fish
+    $ sudo apt autoremove neovim
+    $ sudo add-apt-repository ppa:neovim-ppa/stable
+    $ sudo apt install neovim
+    $ nvim --version
+    NVIM v0.9.5
+    Build type: Release
+    LuaJIT 2.1.1703358377
 ```
 
 Oops... this version is "too stable."
 
-```
-   $ sudo apt autoremove neovim
-   $ sudo add-apt-repository -r ppa:neovim-ppa/stable
-   $ sudo add-apt-repository ppa:neovim-ppa/unstable
-   $ sudo apt install neovim
-   $ nvim --version
-   NVIM v0.11.0-dev
-   Build type: RelWithDebInfo
-   LuaJIT 2.1.1703358377
+```fish
+    $ sudo apt autoremove neovim
+    $ sudo add-apt-repository -r ppa:neovim-ppa/stable
+    $ sudo add-apt-repository ppa:neovim-ppa/unstable
+    $ sudo apt install neovim
+    $ nvim --version
+    NVIM v0.11.0-dev
+    Build type: RelWithDebInfo
+    LuaJIT 2.1.1703358377
 ```
 
 Not sure what I fixed, but LSP now working for Lua. Maybe previously
@@ -550,19 +511,19 @@ Open Neovim issues:
 
 Addressing first one:
 
-```
-   $ sudo apt autoremove xsel
-   $ sudo apt install wl-clipboard
+```fish
+    $ sudo apt autoremove xsel
+    $ sudo apt install wl-clipboard
 ```
 
 2024-11-30:
 
 Did much needed maintenance on on my Neovim configurations. Time to
-install onto hamilton4. RIP euler7.
+install Pop!OS onto hamilton4. RIP euler7.
 
 2024-12-06:
 
-Having somw trouble with godel2 negotiating with cards. Tried swapping
+Having some trouble with godel2 negotiating with cards. Tried swapping
 out NetwokManager with systemd-networkd. Will switch noether2 to
 systemd-networkd.
 
@@ -580,8 +541,8 @@ Following
 
 Huh? No symlinks changed.
 
-```
-   # systemctl status systemd-resolved
+```fish
+   $ systemctl status systemd-resolved
    ● systemd-resolved.service - Network Name Resolution
         Loaded: loaded (/usr/lib/systemd/system/systemd-resolved.service; enabled; preset: enabled)
         Active: active (running) since Fri 2024-12-06 12:17:27 MST; 5h 5min ago
@@ -665,7 +626,7 @@ Interesting...
        link/ether ac:e0:10:8a:3d:85 brd ff:ff:ff:ff:ff:ff
 ```
 
-I only got a non-routeable IPv6 address. Also the desktop network "app"
+I only got a non routeable IPv6 address. Also the desktop network "app"
 has reduced functionality, as I would expect.
 
 After switching the `/etc/resolv.conf` from `stub-resolv.conf` to
@@ -673,13 +634,42 @@ After switching the `/etc/resolv.conf` from `stub-resolv.conf` to
 bypassing the local systemd-resolved DNS server. The real fix is to
 properly configure systemd-resolved.
 
-Aside: Seems that search engines do not to provide much insider system
-and network admin content any more.
+Aside: Seems that search engines do not provide as much insider system
+and network admin content as they did a few years back.
 
-2025-04-06:
+## 2025-02-06:
 
 Installed Cisco secure connect VPN client as I did for hamilton4.
 
 Reused download I did for hamilton4. I suspect CISCO only let me do this
 from the CCTI network.
+
+## 2025-03-08:
+
+Had to globally update tree-sitter node package.
+
+```fish
+    $ tree-sitter --version
+    tree-sitter 0.24.4 (fc8c1863e2e5724a0c40bb6e6cfc8631bfe5908b)
+    $ sudo npm uninstall -g tree-sitter-cli
+    $ sudo npm install -g tree-sitter-cli
+    $ tree-sitter --version
+    tree-sitter 0.25.3 (2a835ee029dca1c325e6f1c01dbce40396f6123e)
+    $ digpath tree-sitter
+    /usr/local/bin/tree-sitter
+    $ realpath (digpath tree-sitter)
+    /usr/local/lib/node_modules/tree-sitter-cli/cli.js
+```
+
+Neovim had been giving me a strange error:
+
+```
+    Warning: your package.json's `tree-sitter` field has been automatically migrated to the new `tree-sitter.json` config file
+    For more information, visit https://tree-sitter.github.io/tree-sitter/creating-parsers
+    The --no-bindings flag is no longer used and will be removed in v0.25.0thread 'main' panicked at cli/generate/src/render.rs:1703:5:
+    This version of Tree-sitter can only generate parsers with ABI version 13 - 14, not 15
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+```
+
+Neovim error message went away after upgrading tree-sitter
 

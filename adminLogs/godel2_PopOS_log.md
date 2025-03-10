@@ -1079,3 +1079,20 @@ I repeated what I dir on hamilton4 but now though a series of GUI menus.
 
 See same day how I did this using the cmdline on hamilton4.
 
+## 2025-03-07:
+
+Cosmic-Terminal has a Nerd Fonts
+
+While in "cooked mode" right-click -> Settings -> Advanced Font settings
+
+Choice of 8 fonts,
+
+* DejaVu Sans Mono
+* Fira Mono
+* FiraCode Nerd Font Mono
+* Liberation Mono
+* Nimbus Mono PS
+* Noto Sans Mono
+* RobotoMono Nerd Font
+* RobotoMono Nerd Font Mono
+

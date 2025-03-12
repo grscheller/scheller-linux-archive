@@ -1104,3 +1104,54 @@ Choice of 8 fonts,
 
 Thinking about it, I think I am the one who installed the Nerd fonts.
 
+## 2025-03-12:
+
+Installed Rust toolchain on godel2. More to test my Neovim LSP
+configuration.
+
+```fish
+    $ curl -f https://sh.rustup.rs > rust.sh
+    $ chmod u+x rust.sh
+    $ ./rust.sh
+```
+
+This installed `~/.config/fish/conf.d/rustup.fish` which just sources
+`~/.cargo/env.fish` which just plops `~/.cargo/bin` in your path.
+
+```fish
+    $ rm ~/.config/fish/conf.d/rustup.fish
+```
+
+Then added to my fish configuration files
+
+```fish
+    # Rust toolchain
+    test -e ~/.cargo/env.fish
+    and set -p PATH ~/.cargo/bin
+```
+
+I like the rust toolchain:
+
+```fish
+    $ ls -l .cargo/bin/
+    total 18628
+    lrwxrwxrwx 1 grs grs        6 Mar 12 13:32 cargo -> rustup
+    lrwxrwxrwx 1 grs grs        6 Mar 12 13:32 cargo-clippy -> rustup
+    lrwxrwxrwx 1 grs grs        6 Mar 12 13:32 cargo-fmt -> rustup
+    lrwxrwxrwx 1 grs grs        6 Mar 12 13:32 cargo-miri -> rustup
+    lrwxrwxrwx 1 grs grs        6 Mar 12 13:32 clippy-driver -> rustup
+    lrwxrwxrwx 1 grs grs        6 Mar 12 13:32 rls -> rustup
+    lrwxrwxrwx 1 grs grs        6 Mar 12 13:32 rust-analyzer -> rustup
+    lrwxrwxrwx 1 grs grs        6 Mar 12 13:32 rustc -> rustup
+    lrwxrwxrwx 1 grs grs        6 Mar 12 13:32 rustdoc -> rustup
+    lrwxrwxrwx 1 grs grs        6 Mar 12 13:32 rustfmt -> rustup
+    lrwxrwxrwx 1 grs grs        6 Mar 12 13:32 rust-gdb -> rustup
+    lrwxrwxrwx 1 grs grs        6 Mar 12 13:32 rust-gdbgui -> rustup
+    lrwxrwxrwx 1 grs grs        6 Mar 12 13:32 rust-lldb -> rustup
+    -rwxr-xr-x 1 grs grs 19072384 Mar 12 13:32 rustup
+
+    $ rustup check
+    stable-x86_64-unknown-linux-gnu - Up to date : 1.85.0 (4d91de4e4 2025-02-17)
+    rustup - Up to date : 1.28.1
+```
+

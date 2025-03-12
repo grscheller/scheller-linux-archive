@@ -1155,3 +1155,81 @@ I like the rust toolchain:
     rustup - Up to date : 1.28.1
 ```
 
+Launching Neovim on rust source code, I get an error in the LSP log file
+`/home/grs/.local/state/nvim/lsp.log`.
+
+```
+[START][2025-03-12 14:25:57] LSP logging initiated
+[ERROR][2025-03-12 14:25:57] ...p/_transport.lua:36	"rpc"	"/home/grs/.cargo/bin/rust-analyzer"	"stderr"	"error: Unknown binary 'rust-analyzer' in official toolchain 'stable-x86_64-unknown-linux-gnu'.\n"
+```
+
+As I recall, I am having Mason install rust-analyzer. Put rust-analyzer
+in the exclude table of the automatic_installation table. Used Mason GUI
+to uninstall rust-analyzer from `~/.local/share/nvim/mason/bin/`.
+
+```fish
+    $ ls ~/.local/share/nvim/mason/bin/
+    bash-language-server  taplo                       vscode-html-language-server
+    lua-language-server   vscode-css-language-server  zls
+```
+
+Same error message in the LSP log file.
+
+I am using saecki/crates.nvim for my rust LSP configuration. Going to
+its Github repo I find it has been archived with the message:
+
+```
+    Due to lack of time, this plugin has been archived.
+    Please switch to mrcjkb/rustaceanvim.
+```
+
+Oh yeah, at one time I knew this.
+
+2025-03-12:
+
+Let's get `mrcjkb/rustaceanvim` configured and working.
+
+#### Prerequisites:
+
+Required:
+
+* rust-analyzer - provided by rustup
+
+Optional:
+
+* dot from graphviz - installed graphviz via apt
+* cargo - installed by rustup
+* lldb or codelldb - something called rust-lldb installed by rustup
+* treesitter rust parser - installed by neovim configs
+
+#### Minimal installation and configurations:
+
+```lua
+    {
+       'mrcjkb/rustaceanvim',
+       version = '^5', -- Recommended
+       lazy = false, -- This plugin is already lazy
+    }
+```
+
+#### Initial setup:
+
+Quick setup guide is suggesting that keymaps get set up in
+`~/.config/nvim/after/ftplugin/rust.lua`. Not sure yet how I will
+trigger the 2 special keymaps and the rest of the LSP keymaps. For
+a first go around, I will just install the plugin and try a few things
+from cmd-mode. The `mrcjkb/rustaceanvim` Github page does not mention
+the `saecki/crates.nvim` plugin at all.
+
+#### Results:
+
+Still getting same error in ``.
+
+```
+
+[START][2025-03-12 16:56:23] LSP logging initiated
+[ERROR][2025-03-12 16:56:23] ...p/_transport.lua:36	"rpc"	"/home/grs/.cargo/bin/rust-analyzer"	"stderr"	"error: Unknown binary 'rust-analyzer' in official toolchain 'stable-x86_64-unknown-linux-gnu'.\n"
+```
+
+Next step is to look up what the error means.
+

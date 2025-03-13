@@ -1189,7 +1189,7 @@ Oh yeah, at one time I knew this.
 
 Let's get `mrcjkb/rustaceanvim` configured and working.
 
-#### Prerequisites:
+#### Prerequisites
 
 Required:
 
@@ -1202,7 +1202,7 @@ Optional:
 * lldb or codelldb - something called rust-lldb installed by rustup
 * treesitter rust parser - installed by neovim configs
 
-#### Minimal installation and configurations:
+#### Minimal installation and configurations
 
 ```lua
     {
@@ -1221,7 +1221,7 @@ a first go around, I will just install the plugin and try a few things
 from cmd-mode. The `mrcjkb/rustaceanvim` Github page does not mention
 the `saecki/crates.nvim` plugin at all.
 
-#### Results:
+#### Results
 
 Still getting same error in ``.
 
@@ -1232,4 +1232,15 @@ Still getting same error in ``.
 ```
 
 Next step is to look up what the error means.
+
+## 2025-03-13:
+
+After some searching, turns out the rust-analyzer is not installed, just
+the "stub" for it.
+
+```
+    $ rustup component add rust-analyzer
+```
+
+After this, the LSP worked.
 

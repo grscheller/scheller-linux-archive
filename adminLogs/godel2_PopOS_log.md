@@ -1244,3 +1244,37 @@ the "stub" for it.
 
 After this, the LSP worked.
 
+## 2025-03-13:
+
+Used rustup to add missing rust toolchain components.
+
+```
+    $ rustup component add cargo clippy llvm-tools rls \
+             rust-analysis rust-analyzer rust-docs rust-src \
+             rust-std rustc
+    info: component 'cargo' for target 'x86_64-unknown-linux-gnu' is up to date
+    info: component 'clippy' for target 'x86_64-unknown-linux-gnu' is up to date
+    info: downloading component 'llvm-tools'
+    info: installing component 'llvm-tools'
+     33.4 MiB /  33.4 MiB (100 %)  26.9 MiB/s in  1s
+    info: downloading component 'rls'
+    info: installing component 'rls'
+    info: downloading component 'rust-analysis'
+    info: installing component 'rust-analysis'
+    info: component 'rust-analyzer' for target 'x86_64-unknown-linux-gnu' is up to date
+    info: component 'rust-docs' for target 'x86_64-unknown-linux-gnu' is up to date
+    info: component 'rust-src' is up to date
+    info: component 'rust-std' for target 'x86_64-unknown-linux-gnu' is up to date
+    info: component 'rustc' for target 'x86_64-unknown-linux-gnu' is up to date
+```
+
+Then installed lldb which rust-lldb needs.
+
+```
+    $ sudo apt install lldb
+    $ lldb --version
+    lldb version 18.1.3
+    $ rust-lldb
+    lldb version 18.1.3
+```
+

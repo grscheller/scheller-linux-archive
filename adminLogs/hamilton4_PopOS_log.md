@@ -469,3 +469,35 @@ command.
     $ sudo apt full-upgrade
 ```
 
+## 2025-03-13:
+
+Repeated rust installation and fish/nvim configuration changes done on
+godel2 and noether2, except I did a complete install without modifying
+my path.
+
+```
+    $ curl -f https://sh.rustup.rs | sh
+    ...
+    info: downloading component 'cargo'
+    info: downloading component 'clippy'
+    info: downloading component 'llvm-tools'
+    info: downloading component 'rls'
+    info: downloading component 'rust-analysis'
+    info: downloading component 'rust-analyzer'
+    info: downloading component 'rust-docs'
+    info: downloading component 'rust-src'
+    info: downloading component 'rust-std'
+    info: downloading component 'rustc'
+    ...
+```
+
+Then installed lldb which rust-lldb needs.
+
+```
+    $ sudo apt install lldb
+    $ lldb --version
+    lldb version 18.1.3
+    $ rust-lldb
+    lldb version 18.1.3
+```
+

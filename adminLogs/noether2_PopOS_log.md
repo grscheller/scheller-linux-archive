@@ -672,3 +672,147 @@ Neovim had been giving me a strange error:
 
 Neovim error message went away after upgrading tree-sitter
 
+## 2025-03-14:
+
+Migrating nvim config changes done on godel2 and hamilton4.
+
+#### Install Coursier onto noether2.
+
+Coursier is the Scala application and artifact manager.
+It can install Scala applications and setup your Scala development environment.
+It can also download and cache artifacts from the web.
+
+```fish
+    $ cd ~/.local/bin
+    $ curl -fL "https://github.com/coursier/launchers/raw/master/cs-x86_64-pc-linux.gz" | gzip -d > cs
+    $ file cs
+    cs: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically
+    linked, interpreter /lib64/ld-linux-x86-64.so.2,
+    BuildID[sha1]=df2579d460caf49798b5c6b05693d1693938808a, for GNU/Linux
+    3.2.0, with debug_info, not stripped0
+```
+
+#### Coursier commands:
+
+* install application commands:
+  * cs install    Install an application from its descriptor.
+  * cs list       List all currently installed applications.
+  * cs setup      Setup a "machine" for Scala development.
+  * cs uninstall  Uninstall one or more applications.
+  * cs update     Update one or more applications.
+* application channel commands:
+  * channel  Manage additional channels, used by coursier to resolve application descriptors.
+  * search   Search application names from known channels.
+* java commands:
+  * java       Manage installed JVMs and run java.
+  * java-home  Print the home directory of a particular JVM.
+* launcher commands:
+  * bootstrap  Create a binary launcher from a dependency or an application descriptor.
+  * launch     Launch an application from a dependency or an application descriptor.
+* resolution commands:
+  * fetch    Transitively fetch the JARs of one or more dependencies or an application.
+  * resolve  Resolve and print the transitive dependencies of one or more dependencies or an application.
+* other commands:
+  * about    Print details about the current machine and coursier launcher.
+  * version  Prints the coursier version
+
+#### Setup user environment
+
+Setup my Linux environment for Scala development on noether2.
+
+```fish
+    $ cs setup
+    Checking if a JVM is installed
+    Found a JVM installed under /usr/lib/jvm/java-21-openjdk-amd64.
+    
+    Checking if ~/.local/share/coursier/bin is in PATH
+      Should we add ~/.local/share/coursier/bin to your PATH via ~/.config/fish/config.fish? [Y/n] n
+    
+    Checking if the standard Scala applications are installed
+      Installed ammonite
+      Installed cs
+      Installed coursier
+      Installed scala
+      Installed scalac
+      Installed scala-cli
+      Installed sbt
+      Installed sbtn
+      Installed scalafmt
+```
+Let's see what just got installed,
+
+```fish
+    $ ls ~/.local/share/coursier/bin
+    amm  coursier  cs  sbt  sbtn  scala  scalac  scala-cli  scalafmt
+    $ ~/.local/bin/cs version
+    2.1.25-M3
+    $ ~/.local/share/coursier/bin/cs version
+    2.1.25-M3
+    $ cd ~/.local/share/coursier/bin
+    $ file *
+    amm:       a /usr/bin/env sh script executable (Zip archive)
+    coursier:  a /usr/bin/env sh script executable (Zip archive)
+    cs:        a /usr/bin/env sh script executable (Zip archive)
+    sbt:       a /usr/bin/env sh script executable (Zip archive)
+    sbtn:      a /usr/bin/env sh script executable (Zip archive)
+    scala:     a /usr/bin/env sh script executable (Zip archive)
+    scala-cli: a /usr/bin/env sh script executable (Zip archive)
+    scalac:    a /usr/bin/env sh script executable (Zip archive)
+    scalafmt:  a /usr/bin/env sh script executable (Zip archive)
+```
+
+OK, I have really fallen behind in the curve regarding Scala
+development. Need to research how to do Scala development in 2025.
+
+Next configure my fish environment.
+
+* put `~/.local/share/coursier/bin` in path
+* using JDK version 21
+* removed `~/.local/bin/cs`
+
+Surprise! I was already putting `~/.local/share/coursier/bin`.
+Am I remember setting this up before, nust have been following
+monkey-see-monkey-do directions.
+
+#### Try using Metals
+
+Tried using Metals without updating its configuration. Tooling seemed to
+function, but LSP session devolved horribly. Logs files were put here:
+`.metals/metals.log` relative to root of build directory. Removed
+timestamps for brevity and wrapped lines for clarity.
+
+```
+Started: Metals version 1.5.1 in folders \
+  '/home/grs/devel/scheller-linux-archive/grok/Scala/scalaImplicits' \
+  for client Neovim 0.11.0-dev.
+no build target found for \ 
+  /home/grs/<snip>/src/main/scala/ScalaImplicits.scala. \
+  Using presentation compiler with \
+  project's scala-library version: 3.3.4
+sbt 1.7.1 found for workspace.
+[info] welcome to sbt 1.7.1 (Ubuntu Java 21.0.6)
+error:
+  bad constant pool index: 0 at pos: 48454
+     while compiling: <no file>
+        during phase: globalPhase=<no phase>, enteringPhase=<some phase>
+     library version: version 2.12.16
+    compiler version: version 2.12.16
+  reconstructed args: -classpath /home/grs/.sbt/boot/scala-2.12.16/lib/scala-library.jar -Yrangepos
+```
+
+#### TODO going forward
+
+* go to `scalameta/nvim-metals` and read plugins install & config info
+* figure out what I need to do to configure Metals LSP server
+* educate myself on
+  * how to set up a Scala project using dev env installed by `cs setup`
+  * the differences between the SBT and Bloom build tools
+  * how to build something from the cmdline
+  * learn best practices on how to use Scala for new projects in 2025.
+
+I maybe a bit "old school" but if I maintain an old project, I'd rather
+maintain the old tooling separately from the current tooling. This
+business of having new tooling install old tooling may make things
+"easy" but not "simple." If I dust off an old CI/CD pipeline, I don't
+want to have to upgrade it to use modern tooling.
+

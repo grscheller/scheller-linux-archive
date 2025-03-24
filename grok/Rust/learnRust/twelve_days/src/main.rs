@@ -1,6 +1,5 @@
 fn main() {
     let lines = [
-        "day of Christmas my true love sent to me",
         "Twelve drummers drumming,",
         "Eleven pipers piping,",
         "Ten lords a-leaping,",
@@ -16,19 +15,17 @@ fn main() {
     ];
 
     let days = [
-        "zeroth", "first", "second", "third", "forth", "fifth", "sixth", "seventh", "eighth",
+        "first", "second", "third", "forth", "fifth", "sixth", "seventh", "eighth",
         "ninth", "tenth", "eleventh", "twelfth",
     ];
 
-    for ii in 1..13 {
-        if ii != 1 {
-            println!()
+    for (ii, day) in days.iter().enumerate() {
+        println!("On the {} day of Christmas my true love sent to me", day);
+        for line in lines.iter().skip(11 - ii) {
+            println!(line)
         }
-        println!("On the {} {}", days[ii], lines[0]);
-        for jj in (13 - ii)..13 {
-            println!("{}", lines[jj])
-        }
+        println!()
     }
-    println!("\nMerry Christmas,");
+    println!("Merry Christmas,");
     println!("and a Happy New Year!");
 }

@@ -22,11 +22,13 @@ fn main() {
 
     for ii in 1..13 {
         if ii != 1 {
-            println!();
+            println!()
         }
         println!("On the {} {}", days[ii], lines[0]);
         for jj in (13 - ii)..13 {
-            println!("{}", lines[jj]);
+            println!("{}", lines[jj])
         }
     }
+    println!("\nMerry Christmas,");
+    println!("and a Happy New Year!");
 }

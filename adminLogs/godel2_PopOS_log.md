@@ -1278,3 +1278,70 @@ Then installed lldb which rust-lldb needs.
     lldb version 18.1.3
 ```
 
+## 2025-03-24:
+
+Seems that "sudo apt full-upgrade" and "sudo apt dist-update" do
+"essentually" the same thing. While researching these, I came across
+the pop-upgrade command.
+
+With more gusto than intelligence, lets run it
+
+```bash
+    $ pop-upgrade release upgrade -f
+    checking if pop-upgrade requires an update
+    Current Release: 24.04
+    Upgrading to: 26.04
+    New version available: false
+    Event: updating package lists
+    Event: upgrading packages for the current release
+    Fetched (1/2): app-install-data_15.10build1_all.deb
+    Fetched (2/2): sessioninstaller_0.20+pop0~1735950419~24.04~969930e_all.deb
+    Event: fetching updated packages for the current release
+    Event: removing deprecated and/or conflicting packages
+    Event: ensuring that system-critical packages are installed
+    Event: updating the source lists
+    Event: waiting on a process holding the apt lock files
+    Event: updating package lists
+    Release upgrade status: release upgrade aborted: unable to upgrade to next release: failed to update sources
+
+    Caused by:
+        0: failed to update source lists
+        1: status is unknown: exit status: 100
+```
+
+Seems to have broken Neovim too.
+
+```
+    $ nvim --version
+    NVIM v0.9.5
+    Build type: Release
+    LuaJIT 2.1.1703358377
+
+       system vimrc file: "$VIM/sysinit.vim"
+      fall-back for $VIM: "/usr/share/nvim"
+
+    Run :checkhealth for more info
+```
+
+Neovim  got down graded!
+
+Before researching `pop-upgrade`, let us fix Neovim.
+
+```bash
+    $ sudo apt remove neovim
+    $ sudo add-apt-repository ppa:neovim-ppa/unstable
+    $ sudo apt update
+    $ sudo apt full-upgrade       # some complaining
+    $ sudo apt install neovim
+    $ nvim --version
+    NVIM v0.11.0-dev
+    Build type: RelWithDebInfo
+    LuaJIT 2.1.1703358377
+    Run "nvim -V1 -v" for more info
+```
+
+Aside: Noticed that out-of-the-box Neovim was indenting a paste.
+
+Regarding `pop-upgrade` see `https://github.com/pop-os/upgrade/pull/330`
+where there was a problem when Ansible was installed from a PPA
+`https://github.com/pop-os/upgrade/issues/340`.

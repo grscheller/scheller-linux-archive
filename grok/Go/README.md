@@ -1,7 +1,7 @@
 # Learn the Go Language
 
-* Both an interpreter and compiler
-* Simplified C like syntax
+- Both an interpreter and compiler
+- Simplified C like syntax
 
 1. [Baby Steps](#baby-steps)
 1. [First Modules](#first-modules)
@@ -48,7 +48,7 @@ Compile and then run:
 Countdown program to an explosion
 [bomb.go](babysteps/bomb/bomb.go).
 
-Illustrate the use of a "select" statement.  Similar in syntax to a
+Illustrate the use of a "select" statement. Similar in syntax to a
 "switch" statement, but the cases refer to communication channels.
 Select statements let goroutines wait on multiple communication channels.
 

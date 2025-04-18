@@ -770,8 +770,8 @@ Next configure my fish environment.
 * using JDK version 21
 * removed `~/.local/bin/cs`
 
-Surprise! I was already putting `~/.local/share/coursier/bin`.
-Am I remember setting this up before, nust have been following
+Surprise! I was already putting `~/.local/share/coursier/bin` in my
+path, I don't remember setting this up before, must have been following
 monkey-see-monkey-do directions.
 
 #### Try using Metals
@@ -815,4 +815,32 @@ maintain the old tooling separately from the current tooling. This
 business of having new tooling install old tooling may make things
 "easy" but not "simple." If I dust off an old CI/CD pipeline, I don't
 want to have to upgrade it to use modern tooling.
+
+## 2025-04-12:
+
+Noticed system a bit sluggish today. Also a core file in root directory.
+When I investigated it, system became unusable. System would not reboot.
+
+I booted off old flash drive with PopOS LTS stable, downloaded latest Alpha
+ISO and installed it to to the flashdrive. Booted off the flshdrive and did
+a fresh install. Reformatted everything except the home directory.
+
+Reinstalled the OS and recreated my user in the process.
+
+## 2025-04-18:
+
+More or less got back to where I was.
+
+Current fish versiona bit prehistoric, version 3.7.1. 
+
+```
+   $ sudo add-apt-repository ppa:fish-shell-shell/release-4
+   $ sudo apt upgrade  # held back fish
+   $ sudo apt autoremove
+   & sudo apt full-upgrade
+```
+
+And then did a reboot.
+
+Now on fish version 4.0.1. Hey, that's Rust!
 

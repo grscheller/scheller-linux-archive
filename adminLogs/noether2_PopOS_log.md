@@ -844,3 +844,22 @@ And then did a reboot.
 
 Now on fish version 4.0.1. Hey, that's Rust!
 
+## 2025-04-29:
+
+Node and tree-sitter on POP!OS 24.04 way too old. I did not want to
+install locally and I can find no PPA's for these. Installed tarballs
+under /usr/local/share for these and creating symlinks from
+/usr/local/bin.
+
+```
+    $ pwd
+    /usr/local/bin
+    $ ll
+    total 0
+    lrwxrwxrwx 1 root root 41 Apr 20 13:27 tree-sitter -> ../share/grs/tree-sitter-v0.25.1-linux-64
+    lrwxrwxrwx 1 root root 52 Apr 20 14:09 corepack -> ../share/grs/node-v22.14.0-linux-x64/lib/corepack.js
+    lrwxrwxrwx 1 root root 51 Apr 20 14:10 npx -> ../share/grs/node-v22.14.0-linux-x64/lib/npx-cli.js
+    lrwxrwxrwx 1 root root 51 Apr 20 14:10 npm -> ../share/grs/node-v22.14.0-linux-x64/lib/npm-cli.js
+    lrwxrwxrwx 1 root root 45 Apr 20 14:11 node -> ../share/grs/node-v22.14.0-linux-x64/bin/node
+```
+ Now I am wondering what I did for hamilton4 and godel2.

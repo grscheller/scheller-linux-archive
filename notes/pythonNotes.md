@@ -171,3 +171,98 @@ BaseException
         +---ResourceWarning
 ```
 
+### Detailed descriptions
+
+- **BaseException** implementation detail, never use
+- **Exception**
+  - all built-in, non-system exiting exceptions
+  - all user-defined exception should be derived from this
+- **TypeError**
+  - raised when operation or function is applied to wrong type
+- **ValueError**
+  - raised by operation or function of correct type but inappropriate value
+  - and situation not described by a more precise exception
+- **ArithmeticError**
+  - **OverflowError**
+  - **ZeroDivisionError**
+  - **FloatingPointError** (currently not used in std libraries)
+- **BufferError**
+  - used by bytes, bytearray
+  - used by extension types like array.array
+    - efficient arrays of numeric values
+- **LookupError**
+   - **IndexError**
+   - **KeyError**
+  - also used by codecs.lookup()
+- **AssertionError**
+  - for "dot" lookups
+    - use TypeError instead if object does not support attributes
+    - \_\_getattributr\_\_() is called and returns ref or raises AttributeError
+      - if AttributeError raised and \_\_getattr\_\_() defined
+      - then \_\_getattr\_\_() used as a fallback
+- **EOFError**
+  - raised when input() function hits end-of-file without reading any data
+    - io.IOBase.read() and io.IOBase.readline() just return empty string
+- **GeneratorExit**
+  - inherits from BaseException (technically not an error)
+  - raised when a generator or coroutine is closed
+- **ImportError**
+  - **ModuleNotFoundError**
+- **IndexError**
+  - raises TypeError if index is not an integer
+- **KeyError**
+  - for dict, raised whenkey not there
+- **KeyboardInterrupt**
+  - inherits from BaseException (so not caught by Exception)
+  - best practice is to end program fast and safely
+- **MemoryError**
+  - out-of-memory
+  - iffy, if caught maybe objects can be deleted? 
+- **NameError**
+  - local or global name not found
+- **NotImplementedError**
+  - derived from RuntimeError
+  - not to be confused with the NotImplemented builtin constant
+- **OSError**
+  - a lot of moving parts and subclassed exceptions
+- **PythonFinalizationError**
+  - derived from RuntimeError
+  - raised when operation is blocked during interpreter shutdown
+  - added in 3.13
+- **RecursionError**
+  - derived from RuntimeError
+  - added in 3.5
+- **ReferenceError**
+  - when weakref.proxy is used to access an attribute after GC
+  - see weakref module
+- **RuntimeError**
+  - raised when error does not fall in any other category
+  - associated value is a string
+- **StopIteration**
+  - triggered by next() builtin or iterator's __next__() method
+  - raised when a generator or coroutine returns
+  - single attribute is value
+    - given at exception creation, default in None
+  - if directly or indirectly raised within generator (coroutine?) code
+  - then converted to RuntimeError
+- **StopAsyncIteration**
+  - raised by the __anext__() method of an asynchronous iteator
+- **SyntaxError**
+  - raised by parser
+    - can occur in
+      - import statements
+      - compile(), exec() or eval() built-in functions
+      - or reading script from stdin (like in a REPL)
+  - single attribute is a tuple containing location information
+  - **IndentationError**
+    - **TabError**
+- **SystemError**
+  - internal Python interpreter error
+- **SystemExit**
+  - inherits from BaseException (so not caught by Exception)
+  - raised by sys.exit() function
+  - attribute code = exit status | string to print | None
+- **UnicodeError**
+  - **UnicodeEncodeError**
+  - **UnicodeDecodeError**
+  - **UnicodeTranslateError**

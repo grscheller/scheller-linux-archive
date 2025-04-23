@@ -1345,3 +1345,16 @@ Aside: Noticed that out-of-the-box Neovim was indenting a paste.
 Regarding `pop-upgrade` see `https://github.com/pop-os/upgrade/pull/330`
 where there was a problem when Ansible was installed from a PPA
 `https://github.com/pop-os/upgrade/issues/340`.
+
+## 2025-04-23:
+
+Current fish version bit prehistoric, version 3.7.1. 
+
+```
+   $ sudo apt autoremove
+   $ sudo add-apt-repository ppa:fish-shell/release-4
+   $ sudo apt full-upgrade
+```
+
+Then rebooted.
+

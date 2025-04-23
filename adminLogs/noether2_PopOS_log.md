@@ -831,10 +831,10 @@ Reinstalled the OS and recreated my user in the process.
 
 More or less got back to where I was.
 
-Current fish versiona bit prehistoric, version 3.7.1. 
+Current fish version bit prehistoric, version 3.7.1. 
 
 ```
-   $ sudo add-apt-repository ppa:fish-shell-shell/release-4
+   $ sudo add-apt-repository ppa:fish-shell/release-4
    $ sudo apt upgrade  # held back fish
    $ sudo apt autoremove
    & sudo apt full-upgrade

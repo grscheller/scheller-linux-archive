@@ -501,3 +501,14 @@ Then installed lldb which rust-lldb needs.
     lldb version 18.1.3
 ```
 
+## 2025-04-23:
+
+Current fish version bit prehistoric, version 3.7.1. 
+
+```
+   $ sudo apt autoremove
+   $ sudo add-apt-repository ppa:fish-shell/release-4
+   $ sudo apt full-upgrade
+```
+
+Then rebooted.

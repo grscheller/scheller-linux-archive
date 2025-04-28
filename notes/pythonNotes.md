@@ -28,7 +28,7 @@
     - had to be backward compatible to C
       - hence syntax very inflexible
       - Dennis Richie said
-        - if he did C over again declarations would be pA nice shorthand: is the generic type used only as a method argument type for your class? If so, probably contravariant. Is it used only as a method return type for your class? If so, probably covariant. Is it used as an attribute type for your class, and those attributes are immutable? If so, probably covariant. In all other cases, probably invariant.ostfix
+        - if he did C over again declarations would be postfix
       - Bjarne Stroustrup said
         - "I consider the C declarator syntax an experiment that failed."
     - in early days C++ implemented as a pre-compiler to C
@@ -52,7 +52,9 @@
 - Everything is a object, even classes and functions.
   - once created any object
     - can have attributes attached to it (hence OOP not COP)
-    - assigned to a variable (slap a "label" on it)
+    - assigned to a variable as in
+      - slapping a "label" on it (a reference)
+      - not copying a "value" to it (memory location)
   - classes are objects
     - the "class" of a class is referred to as its metaclass
     - classes like any other object
@@ -71,6 +73,19 @@
     - function arguments are passed-by-value
       - but all variables are references, hence cheap to pass
       - function calls associate local references to object the parameter references
+  - built-ins are C code that acts like a class or function
+    - some times you can derive a class from a builtin (int, tuple)
+    - sometimes you can't (boolean)
+    - some builtins pretend to be something they are not
+      - like an int being an immutable singleton
+        - where `a = a + 42`
+          - does not change the value of an int
+          - it reassigns the label a to a new int object
+          - but computer really do change the values stored in registers
+      - like int a subtype of float which is a subtype of complex
+        - a disease going all the way back to Fortran
+          - `x: float = 1.0` NOT internally same as `i: int = 1`
+          - `c: complex = 3.0 + 0.0j` NOT the same as `x: float = 3.0`
 
 ### Python is garbage collected
 

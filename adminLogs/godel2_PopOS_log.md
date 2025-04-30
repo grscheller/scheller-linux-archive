@@ -1358,3 +1358,51 @@ Current fish version bit prehistoric, version 3.7.1.
 
 Then rebooted.
 
+## 2025-04-29:
+
+From `https://github.com/pop-os/cosmic-epoch/issues/1704`, here is the
+way to update Pop!OS.
+
+```
+   sudo apt update
+   sudo apt full-upgrade
+   sudo pop-upgrade release upgrade -f
+   sudo systemctl reboot
+```
+
+This is what happened when I ran the third command.
+
+```
+   $ sudo pop-upgrade release upgrade -f
+   checking if pop-upgrade requires an update
+   Current Release: 24.04
+   Upgrading to: 26.04
+   New version available: false
+   Event: updating package lists
+   Event: upgrading packages for the current release
+   Event: fetching updated packages for the current release
+   Event: ensuring that system-critical packages are installed
+   Event: updating the source lists
+   Event: waiting on a process holding the apt lock files
+   Event: updating package lists
+   Release upgrade status: release upgrade aborted: unable to upgrade to next release: failed to update sources
+```
+
+I didn't think we were moving off nobel.
+
+Any case, fish and Neovim were downgraded.
+
+```
+   $ sudo add-apt-repository ppa:neovim-ppa/unstable
+   $ sudo apt update
+   $ sudo apt upgrade
+```
+
+Saw something about fish being held back.
+
+```
+   $ sudo apt full-upgrade
+```
+
+Fish and Neovim now back to where I need them to be.
+

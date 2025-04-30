@@ -23,7 +23,7 @@ These are equivalent,
 
 ## Read pipeline as if from a File
 
-These are equivalenr
+These are equivalent
 
 ```fish
    $ #fish
@@ -99,6 +99,23 @@ Unlike other shells, sourced files can take arguments like shell scripts,
    hello mars
 ```
 
+## Redirecting stdout and stderr
+
+Pipe both stdout & stderr to a process or file,
+
+```fish
+   program1 $| program2
+   program1 $> file1
+```
+
+This redirects just stderr to the pipe or file, stdout still goes to the
+terminal.
+
+```fish
+   program1 2| program2
+   program1 2> file1
+```
+
 ## File Globbing
 
 Usually failed globs are an error in fish.  Certain builtin commands like
@@ -148,7 +165,7 @@ Read is useful when reading lines of data
    a =
 ```
 
-Avoid shadowing outer scope variables with an an inner scope
+Avoid shadowing outer scope variables with an inner scope
 read.  Not only is it bad programming practice, I found it can
 cause Fish to behave a bit screwy.  Note that the variable aa does
 not retain any of its while loop values.  This would be true even
@@ -189,17 +206,3 @@ that the shell variable xx has not been set before the while loop.
      $xx: set in global scope, unexported, with 0 elements
 ```
 
-## Argument Parsing
-
-Todo: see type psub, man argparse, man fish_opt
-
-## Periodically update fish completions
-
-Update command completions based on manpages.
-
-```fish
-   $ fish_update_completions
-   ...
-```
-
-  Todo: see man fish_update_completions

@@ -257,9 +257,9 @@ BaseException
 - **ImportError**
   - **ModuleNotFoundError**
 - **IndexError**
-  - raises TypeError if index is not an integer
+  - raises TypeError if index is not an int
 - **KeyError**
-  - for dict, raised whenkey not there
+  - for dict, raised when key not there
 - **KeyboardInterrupt**
   - inherits from BaseException (so not caught by Exception)
   - best practice is to end program fast and safely

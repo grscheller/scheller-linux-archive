@@ -315,4 +315,7 @@ BaseException
   - **UnicodeDecodeError**
   - **UnicodeTranslateError**
 
+### Programming Exceptions encountered in the wild
 
+- **UnboundLocalError**
+  - a subclass of **NameError**

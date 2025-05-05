@@ -27,12 +27,17 @@
   - C++
     - had to be backward compatible to C
       - hence syntax very inflexible
-      - Dennis Richie said
-        - if he did C over again declarations would be postfix
-      - Bjarne Stroustrup said
+      - Dennis Richie [indicated that](https://www.nokia.com/bell-labs/about/dennis-m-ritchie/chist.html)
+        ``` 
+            ...many of the nested declarations and expressions would
+            become simpler if the indirection operator had been taken
+            as a postfix operator instead of prefix, but by then it was
+            too late to change. 
+        ```
+      - Bjarne Stroustrup said in an [email interview on Slashdot]("https://www.stroustrup.com/slashdot_interview.html").
         - "I consider the C declarator syntax an experiment that failed."
     - in early days C++ implemented as a pre-compiler to C
-      - again creating backward capatibility issues
+      - again creating backward compatibility issues
     - OOP model heavily influenced by the "Gang of Four"
     - in modern times more template driven than OOP driven
     - compiler sits in your class with a shotgun to enforce encapsulation
@@ -287,14 +292,14 @@ BaseException
   - raised when error does not fall in any other category
   - associated value is a string
 - **StopIteration**
-  - triggered by next() builtin or iterator's __next__() method
+  - triggered by next() builtin or iterator's \_\_next\_\_() method
   - raised when a generator or coroutine returns
   - single attribute is value
     - given at exception creation, default in None
   - if directly or indirectly raised within generator (coroutine?) code
   - then converted to RuntimeError
 - **StopAsyncIteration**
-  - raised by the __anext__() method of an asynchronous iteator
+  - raised by the /_/_anext/_/_() method of an asynchronous iteator
 - **SyntaxError**
   - raised by parser
     - can occur in

@@ -92,9 +92,9 @@ Search for packages, groups and descriptions,
 Get information on packages,
 
 * `pacman -Qi <pkg>` (*use local package database*)
-* `pacman -Qii <pkg>` (*also include denendency and required by info*)
+* `pacman -Qii <pkg>` (*also include dependencies and required by info*)
 * `pacman -Si <pkg>` (*use synced (remote) package database*)
-* `pacman -Sii <pkg>` (*also include denendency and required by info*)
+* `pacman -Sii <pkg>` (*also include dependencies and required by info*)
 * `pacman -Qlq <pkg>` (*list files associated with a package, use local database*)
 * `pacman -Flq <pkg>` (*list files associated with a package, use synced databases*)
 
@@ -340,7 +340,7 @@ they are are carved up using these commands,
 1. lsblk -f
 1. df -hT
 
-What types of partitians do you have?
+What types of partitions do you have?
 
 ```bash
   $ df -hT
@@ -432,8 +432,8 @@ What types of partitians do you have?
              RTC in local TZ: no
 ```
 
-Last line shows that HW clock, "real time clock," is not local time.
-The timedatectl manpage recommends NOT to set HW clock to local time.
+Last line shows that hw clock, "real time clock," is not local time.
+The timedatectl manpage recommends NOT to set hw clock to local time.
 
 Reset the timezone to East Coast.
 
@@ -464,7 +464,7 @@ To check if hardware clock is set to UTC time,
    2020-02-02 12:21:06.997828-07:00
 ```
 
-This shows HW clock is actually kept in UTC time.
+This shows hw clock is actually kept in UTC time.
 
 ## Wifi Networking
 

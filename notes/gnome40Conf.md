@@ -28,18 +28,18 @@ sources user's ~/.profile with /etc/gdm/Xsession using /bin/sh.
 
 * Activities Button: LHS Top Toolbar
   * switches between normal and overview mode
-    * mouse to upper LH "hot" corner
-    * left-click Activities button LH corner
+    * mouse to upper left hand "hot" corner
+    * left-click Activities button left hand corner
     * super-key up event
 * Dash: Horizontal toolbar at bottom screen in "overview mode"
-  * Docky like
+  * Dock like
 * Menu Dropdown: left side title bar
   * for active window
   * MacOS like
 * Notification Area: Center Top Toolbar
   * notifications balloons appear under it
   * day of week and time displayed
-  * click to show notifications and calander
+  * click to show notifications and calendar
 * Status Menu: RHS Top Toolbar
   * speaker volume
   * brightness control
@@ -116,8 +116,8 @@ sources user's ~/.profile with /etc/gdm/Xsession using /bin/sh.
   * Monospace Text -> Source Code Pro Medium 10
   * Legacy Window Titles: Cantarell Bold Italic 11
   * Hinting: Full
-  * Antialiasing -> Subpixel (for LED screens)
-  * Scalting Factor: 1.00
+  * Anti-aliasing -> Sub-pixel (for LED screens)
+  * Scaling Factor: 1.00
 * Keyboard & Mouse
   * Keyboard
     * Show Extended Input Sources (on)
@@ -130,7 +130,7 @@ sources user's ~/.profile with /etc/gdm/Xsession using /bin/sh.
 * Startup Applications
   * Added "ignore-lid-switch-tweak"
 * Top Bar
-  * Activies Overview Hot Corner (on)
+  * Activities Overview Hot Corner (on)
   * Battery Percentage (on)
   * Clock -> Weekday (on)
   * Clock -> Date (on)
@@ -184,21 +184,21 @@ sources user's ~/.profile with /etc/gdm/Xsession using /bin/sh.
 
 ### Arch Linux
 
-Install a default set of extenstions managed by Arch,
+Install a default set of extensions managed by Arch,
 
 ```bash
    $ sudo pacman -Syu gnome-shell-extensions
    $
 ```
 
-* Turn extensions on via Gnome-Extentions GUI
+* Turn extensions on via Gnome-Extensions GUI
 * Manipulate via gnome-extensions CLI
 * Current configuration
   * Extensions -> Gpaste (on)
-  * Extensions -> Gpaste -> Settings -> General behaviour
+  * Extensions -> Gpaste -> Settings -> General behavior
     * Track clipboard Changes (on)
     * Close UI on select (on)
-    * Enable the gnome-shell extention (on)
+    * Enable the gnome-shell extension (on)
     * Sync daemon state with the extension's one (on)
     * Save history (on)
   * Extensions -> Native Window Placement (on)
@@ -228,9 +228,9 @@ Install a default set of extenstions managed by Arch,
   ```
 
 * This installs Extensions for all users
-* After re-logging in, use Gnome-Extentions to activate Extensions
+* After re-logging in, use Gnome-Extensions to activate Extensions
 * Extensions provides a convenient way to activate/deactivate other extensions
-  * Extensions app has an option to install Gnome extentions
+  * Extensions app has an option to install Gnome extensions
     * This just takes you to the Gnome extensions page (AppImages)
     * Does not auto install from AUR.
 * Turn on via Gnome-Tweak
@@ -273,14 +273,14 @@ Install a default set of extenstions managed by Arch,
     * Shortcut: ctrl+alt+T
 * Change Terminal Colors
   * Click profile (Geoffrey)
-    * Colers Tab
-    * Uncheck "Use colors from system theme"
+    * Colors Tab
+    * Unchecked "Use colors from system theme"
     * Palette: Linux console
     * Default color
       * Text: White (lower right most)
       * Background: Black (upper left most)
       * Check Bold color: Yellow (bottom 4th from left)
-      * Uncheck Cursor color
+      * Unchecked Cursor color
       * Check Highlight color
         * Text: Black
         * Background: Gray (upper right most)

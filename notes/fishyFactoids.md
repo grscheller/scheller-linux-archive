@@ -2,7 +2,7 @@
 
 The Fish Shell is in the Ksh/Bash post Bourne Shell family of shells.
 Fish came out around 2005 and does what some of the other shells
-should have done back then, thrown off the shackles of Bourn Shell
+should have done back then, thrown off the shackles of Bourne Shell
 backwards compatibility.  As a result, Fish is not POSIX compatible.
 
 ## Input pipeline as if typed
@@ -118,17 +118,18 @@ terminal.
 
 ## File Globbing
 
-Usually failed globs are an error in fish.  Certain builtin commands like
-`set`, `for` and `count` will happily null glob.  Without knowing this
-inconsistency (syntactic sugar - magic builtins) null globbing would be a pain.
+Usually failed globs are an error in fish.  Certain builtin commands
+like `set`, `for` and `count` will happily null glob.  Without knowing
+this inconsistency (syntactic sugar - magic builtins) null globbing
+would be a pain.
 
-Care must be taken with `switch` statements.  Quoted wildcards patterns can be
-used with `case` clauses.  If unquoted, failed file system null globs could
-happen.  The `switch` part could fail with an unquoted file system glob if
-there is not exactly one result.
+Care must be taken with `switch` statements.  Quoted wild cards patterns
+can be used with `case` clauses.  If unquoted, failed file system null
+globs could happen.  The `switch` part could fail with an unquoted file
+system glob if there is not exactly one result.
 
-Additionally, when using quoted patterns in `case` clauses, `'a**b'` is not
-special and is treated same as `'a*b'`.
+Additionally, when using quoted patterns in `case` clauses, `'a**b'` is
+not special and is treated same as `'a*b'`.
 
 ## Read Trick since Pipelines Don't Use Subshells
 

@@ -197,7 +197,7 @@ Small Latin Superscripts:
   l:  ˡ  Unicode: 02e1
   m:  ᵐ  Unicode: 1d50
   n:  ⁿ  Unicode: 207f
-  o:  ᵒ  Unicode: 1d52pip install --upgrade pip dtools-fp
+  o:  ᵒ  Unicode: 1d52
   p:  ᵖ  Unicode: 1d56
   r:  ʳ  Unicode: 02b3
   s:  ˢ  Unicode: 02e2

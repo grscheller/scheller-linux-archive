@@ -296,8 +296,8 @@ BaseException
   - raised when a generator or coroutine returns
   - single attribute is value
     - given at exception creation, default in None
-  - if directly or indirectly raised within generator (coroutine?) code
-  - then converted to RuntimeError
+  - if directly or indirectly raised within generator (coroutine?)
+    code, then converted to RuntimeError
 - **StopAsyncIteration**
   - raised by the /_/_anext/_/_() method of an asynchronous iteator
 - **SyntaxError**

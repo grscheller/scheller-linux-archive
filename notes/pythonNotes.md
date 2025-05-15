@@ -147,12 +147,71 @@
 ##### Variance rule-of-thumb
 
 - is the generic type used only as a method argument type for your class?
-  - if so, probably contravariant
+  - it is probably contravariant
 - is it used only as a method return type for your class?
-  - if so, probably covariant
+  - it is probably covariant
 - is it used as an attribute type for your class, and those attributes are immutable?
-  - if so, probably covariant
-- in all other cases, probably invariant.
+  - it is probably covariant
+- in all other cases
+  - it is probably invariant
+
+### Rich comparison methods
+
+Reordered and outlined from the
+[Python 3,13,3](https://docs.python.org/3/reference/datamodel.html#object.__lt__)
+documentation.
+
+| Syntax | Calls |
+|:------:|:----- |
+  `x < y` | `x.__lt__(y)` |
+| `x <= y` | `x.__le__(y)` |
+| `x == y` | `x.__eq__(y)` |
+| `x != y` | `x.__ne__(y)` |
+| `x > y` | `x.__gt__(y)` |
+| `x >= y` | `x.__ge__(y)` |
+
+There are no implied relationships between
+
+- `x <= y` and `x < y and x == y`
+- `x >= y` and `x > y and x == y`
+
+To automatically generate ordering operations from a single root
+operation, see functools.total_ordering().
+
+Rich comparison methods can are allowed to return any value.
+
+- by convention, they usually return
+  - `False`: `bool`
+  - `True`: `bool`
+  - `NotImplemented` (builtin singleton)
+- if used in a Boolean context
+  - python will call `bool()` on the return value
+    - unless `NotImplemented` is returned
+- the default implementations inherited from `object` are
+    - the order operators, raise `TypeError`
+    - `x == y` -> `True if x is y else NotImplemented`
+    - `x != y` -> `not x == y`
+      - where "`bool(NotImplemented)`" is treated as `True`
+- there are no "swapped-argument" versions for `__eq__()` and `__ne()__`
+  - like `__add__()` and `__radd__()`
+  - used when left argument doesn't support the operation but right does
+- these are each others reflections
+  - `x.__lt__(y)` <=> `y.__gt__(x)`
+  - `x.__le__(y)` <=> `y.__ge__(x)`
+- while `x.__eq__(y)` and  `x.__ne__(y)` are their own reflections
+  - `x.__eq__(y)` <=> `x.__eq__(y)`
+  - `x.__ne__(y)` <=> `x.__ne__(y)`
+
+If the operands are of different types, and the right operand’s type is
+a direct or indirect subclass of the left operand’s type, the reflected
+method of the right operand has priority, otherwise the left operand’s
+method has priority. Virtual subclassing is not considered.
+
+For an overview of virtual subclassing and collections.abc, see
+[Interfaces in Python: Protocols and ABCs](http://masnun.rocks/2017/04/15/interfaces-in-python-protocols-and-abcs/).
+
+When no appropriate method returns any value other than NotImplemented,
+the == and != operators will fall back to is and is not, respectively.
 
 ## Python Exceptions Handling
 

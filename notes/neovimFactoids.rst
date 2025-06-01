@@ -7,4 +7,5 @@ Future content factoids
 2. New home LSP configs for Neoviim 0.11+
 
    - location ``~/.config/nvim/lsp/``
-   - create ``some_lang_ls`` which returns tables nvim-lspconfig used to take
+   - create ``some_lang_ls.lua``
+   - have it return the same tables nvim-lspconfig would expect

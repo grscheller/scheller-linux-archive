@@ -2,7 +2,7 @@
 
 Personal notes and other stuff not worth their own GitHub repos.
 
-* [Linux Notes](notes/): notes and factoids
+* [Notes](notes/): notes and factoids
 * [System Admin Logs](adminLogs/): mostly Arch Linux focused
 * [Tooling Logs](toolingLogs/): software development tooling setup
 * [Grokking Computer Languages](grok/): place to commit scratch code

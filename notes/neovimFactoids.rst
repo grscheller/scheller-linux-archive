@@ -17,3 +17,12 @@ Future grscheller/neovim-notes factoids
    - location ``~/.config/nvim/lsp/``
    - create ``some_lang_ls.lua``
    - have it return the same tables nvim-lspconfig would expect
+
+4. Wrote a user command to list LSP attach servers. Poor man's LspInfo
+   replacement for Neovim 0.11+. Improve it using:
+
+   - list clients: ``:lua print(vim.inspect(vim.lsp.get_active_clients()))``
+   - client info: ``:lua print(vim.inspect(vim.lsp.get_client_by_id(client_id)))``
+   - server capabilities: ``:lua print(vim.inspect(vim.lsp.get_client_by_id(client_id).server_capabilities))``
+   - display diagnosticsL ``:lua vim.diagnostic.open_float()``
+

@@ -26,3 +26,4 @@ Future grscheller/neovim-notes factoids
    - server capabilities: ``:lua print(vim.inspect(vim.lsp.get_client_by_id(client_id).server_capabilities))``
    - display diagnosticsL ``:lua vim.diagnostic.open_float()``
 
+5. Consider Lua module: vim.iter

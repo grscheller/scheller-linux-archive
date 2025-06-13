@@ -58,7 +58,24 @@ Display status of a particular systemd service,
 * `systemctl status <service_name>`
 * `systemctl status NetworkManager.service`
 
-## Pacman
+## Apt (Ubuntu derivatives - like Pop!OS)
+
+### Finding reverse dependencies
+
+* `apt-cache rdepends <package>` (*list all packages*)
+* `apt-cache rdepends --installed <package>` (*list only installed packages*)
+
+#### Examples
+
+```
+$ apt-cache rdepends --installed libluajit2-5.1-2
+libluajit2-5.1-2
+Reverse Depends:
+  neovim
+  neovim
+```
+
+## Pacman (Arch Linux)
 
 System maintenance, add and remove software.
 
@@ -146,7 +163,7 @@ with `pacman -Syu` before installing a package.
 Also note, a failed install can also leave your
 system in a partially updated state.
 
-## Building via AUR
+## Building via AUR (Arch Linux)
 
 1. Acquire tarball or clone via GIT
 1. Untar or clone in directory you want to build in, I use ~/build/AUR/ for these

@@ -1,4 +1,4 @@
-# Arch Linux Notes
+# Linux Notes
 
 The purpose of these notes is to document useful commands and factoids
 most of which can be done without root or sudo access.
@@ -176,13 +176,32 @@ a *soname* bump.
 
 ## Memory management
 
-  Arch likes to cache disk space in memory
+#### Arch likes to cache disk space in memory
 
 ```bash
     $ free -h
                    total        used        free      shared  buff/cache   available
     Mem:            15Gi       1.7Gi        11Gi       127Mi       2.0Gi        13Gi
     Swap:           15Gi          0B        15Gi
+```
+
+#### hamilton4:
+
+```
+    $ free -h
+                   total        used        free      shared  buff/cache   available
+    Mem:            15Gi       5.0Gi       8.6Gi       1.6Gi       4.3Gi        10Gi
+    Swap:           31Gi          0B        31Gi
+```
+
+#### godel2
+
+```
+    $ free -h
+                   total        used        free      shared  buff/cache   available
+    Mem:            91Gi       6.5Gi        87Gi        91Mi       2.7Gi        85Gi
+    Swap:           79Gi          0B        79Gi
+
 ```
 
 ## Hostnamectl

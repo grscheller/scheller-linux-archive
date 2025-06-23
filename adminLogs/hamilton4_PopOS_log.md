@@ -521,8 +521,8 @@ a bit more systematically on noether2.
 ```
     $ sudo apt install dvd+rw-tools brasero genisoimage
     $ sudo apt install growisofs
+    $ sudo apt install wodim
     $ sudo wodim -v dev=/dev/sr0 -data /home/grs/Downloads/ubuntu-22.04.5-desktop-amd64.iso    
 ```
 
-For some reason, `/dev/sd0` on PopOS/Ubuntu is readonly, but brasero
-and wodim seem to know how to write to it.
+For some reason, `/dev/sd0` on PopOS/Ubuntu is readonly. 

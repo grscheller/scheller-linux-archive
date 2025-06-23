@@ -512,3 +512,17 @@ Current fish version bit prehistoric, version 3.7.1.
 ```
 
 Then rebooted.
+
+## 2025-06-23:
+
+Getting a DVD burned, here are some commands thrown around. Will redo
+a bit more systematically on noether2.
+
+```
+    $ sudo apt install dvd+rw-tools brasero genisoimage
+    $ sudo apt install growisofs
+    $ sudo wodim -v dev=/dev/sr0 -data /home/grs/Downloads/ubuntu-22.04.5-desktop-amd64.iso    
+```
+
+For some reason, `/dev/sd0` on PopOS/Ubuntu is readonly, but brasero
+and wodim seem to know how to write to it.

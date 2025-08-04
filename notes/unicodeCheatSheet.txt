@@ -72,10 +72,11 @@ Math symbols:
   bar/pipe/norm:    ∥  Unicode: 2225
   square root:      √  Unicode: 221A
   cube root:        ∛  Unicode: 221B
+  congruence        ≡  Unicode: 2261 
 
 Useful in illustrating math calculations:
   Horizontal Ellipsis:  …  Unicode: 2026
-  Virtical Ellipsis:    ⋮  Unicode: 22ee
+  Vertical Ellipsis:    ⋮  Unicode: 22ee
 
 There doesn't seem to be any unicode for hat or bar versions
 of Latin or Greek letters.

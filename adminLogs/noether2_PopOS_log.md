@@ -863,3 +863,21 @@ under /usr/local/share for these and creating symlinks from
     lrwxrwxrwx 1 root root 45 Apr 20 14:11 node -> ../share/grs/node-v22.14.0-linux-x64/bin/node
 ```
  Now I am wondering what I did for hamilton4 and godel2.
+
+## 2025-09-15:
+
+Installed "Clipboard Manager" version 0.1.0 from the Pop Store. Works
+only on Wayland using the data control protocol (some security issues). 
+
+Had to create the file `/etc/profile.d/data_control_cosmic.sh` with the
+contents
+
+```
+    export COSMIC_DATA_CONTROL_ENABLED=1
+```
+
+I first put it in the dock but it creates a wonky desktop icon when
+running. Pinned its launcher to the panel. Works correctly there.
+
+It source code is
+[here](https://github.com/cosmic-utils/clipboard-manager) on GitHub.

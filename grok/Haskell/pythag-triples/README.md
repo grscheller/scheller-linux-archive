@@ -39,7 +39,7 @@ All algorithms only print triples with no common factors.
 
 ## Design Considerations
 
-1. These algorithms generate pathagorean triples with no common factors.
+1. These algorithms generate Pythagorean triples with no common factors.
 
    ```text
        a^2 + b^2 = c^2  where gcd(a, b, c) = 1
@@ -48,7 +48,7 @@ All algorithms only print triples with no common factors.
 
    When checking for common factors, we need to check just two
    of `a, b, c` because by factoring out a common factor of
-   any two we show the the square of the third, and henced the
+   any two we show the square of the third, and hence the
    third itself, has the same common factor.
 
    Choosing `gcd(a, b, c)` geometrically this is the right choice
@@ -60,7 +60,7 @@ All algorithms only print triples with no common factors.
 
    are similar and thus the same except for scale or orientation.
 
-2. There is no such thing as a equilateral pyathogorean triangle.
+2. There is no such thing as a equilateral pythagorean triangle.
 
    ```text
        a^2 + a^2 = c^2 => 2*a^2 = c^2 => sqrt(2) = c/a
@@ -68,11 +68,11 @@ All algorithms only print triples with no common factors.
 
    but the square root of `2` is not rational!
 
-3. The ordered algorthm generates all possible triples in lexiconical order,
-   that is `a < b < c`.
+3. The ordered algorithm generates all possible triples in lexicographical
+   order, that is `a < b < c`.
 
    As `b` gets larger, eventually the difference in length
-   beween `c` and `b` is less than `1`.
+   between `c` and `b` is less than `1`.
 
    ```text
                   *
@@ -141,7 +141,7 @@ All algorithms only print triples with no common factors.
 ## Building the Code
 
 This project was originally about me learning how to use the Stack
-buildtool. Pathagorean Triples was just being an interesting fairly
+build tool. Pythagorean Triples was just being an interesting fairly
 self contained topic to base the project on.
 
 Stack just does not play nice with the Arch Linux Haskell build

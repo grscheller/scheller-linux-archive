@@ -5,23 +5,24 @@ these except for typos and minor wordsmithing, not content.
 
 The first saying below was from when I was a teenager studying Karate
 starting in the 1970's. The next two were ones I remember from my time
-as an undergraduate Stevens Institute of Technology. The starting point
-of this list was in my long lost Dan Zan Ryu Jujitsu notebook I started
-while a graduate student in Physics at the University of Illinois.
-I later studied Chinese internal martial arts while at Bell Laboratories
-and later in Albuquerque New Mexico. My martial arts experience, along
-with my degrees in Physics and Mathematics, have given this list
-a somewhat Taoist flavor. A promise I made my wife when we got engaged
-was for me to be open to Christianity. This has led to some pearls of
-wisdom as I critically study western religions in historically accurate
-cultural contexts. Myers Briggs personality typing has also influence my
-thinking. Software development have heavily influenced the later parts
-of this list. While a child, listening to NY Radio personalities Barry
-Farber and Bob Grant were probably the genesis of my libertarian
-conservative tendencies. NY Radio talk show host Long John Nebel gave me
-a taste for the esoteric. Director Orson Wells, Physicist Richard
-Feynman, and humorist Jean Shepard let me know there were deeper ways to
-see the world.
+as an undergraduate at Stevens Institute of Technology. The starting
+point of this list was in my long lost Dan Zan Ryu Jujitsu notebook
+I started while a graduate student in Physics at the University of
+Illinois. I later studied Chinese internal martial arts while at Bell
+Laboratories and later in Albuquerque New Mexico. My martial arts
+experience, along with my degrees in Physics and Mathematics, have given
+this list a somewhat Taoist flavor. A promise I made my wife when we got
+engaged was for me to be open to Christianity. This has led to some
+pearls of wisdom as I critically study western religions in historically
+accurate cultural contexts. Myers Briggs personality typing has also
+influence my thinking. My software development experience has heavily
+influenced the later parts of this list. As a child, I listening to NY
+Radio personalities Barry Farber and Bob Grant. This was probably the
+genesis of my libertarian conservative tendencies. Radio nutritionist
+Carlton Fredricks taught me not to blindly accept authority. NY Radio
+talk show host Long John Nebel gave me a taste for the esoteric.
+Director Orson Wells, Physicist Richard Feynman, and humorist Jean
+Shepard let me know there were deeper ways to see the world.
 
 - You may break my skin, but I will break your bone.
   - (Judo and Karate Master Yoshisada Yonezuka)

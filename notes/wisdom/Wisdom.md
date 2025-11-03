@@ -19,11 +19,11 @@ influence my thinking. My software development experience has heavily
 influenced the later parts of this list. As a child, I listening to NY
 Radio personalities Barry Farber and Bob Grant. This was probably the
 genesis of my libertarian conservative tendencies. Radio nutritionist
-Carlton Fredericks taught me not to blindly accept authority or the
-accepted status quo. NY Radio talk show host Long John Nebel gave me
-a taste for the esoteric. Director Orson Wells, Physicist Richard
-Feynman, and humorist Jean Shepard let me know there were deeper ways to
-see the world.
+Carlton Fredericks taught me not to blindly accept what experts say,
+or what others say the experts say. Radio talk show host Long John Nebel
+gave me a taste for the esoteric. Director Orson Wells, humorist Jean
+Shepard, and Physicist Richard Feynman let me know there were deeper
+ways to see the world.
 
 - You may break my skin, but I will break your bone.
   - (Judo and Karate Master Yoshisada Yonezuka)

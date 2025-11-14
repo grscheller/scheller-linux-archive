@@ -526,3 +526,15 @@ a bit more systematically on noether2.
 ```
 
 For some reason, `/dev/sd0` on PopOS/Ubuntu is readonly. 
+
+## 2025-11-14:
+
+Enabled data control Wayland protocol.
+
+```
+$ echo 'export COSMIC_DATA_CONTROL_ENABLED=1' | sudo tee /etc/profile.d/data_control_cosmic.sh > /dev/null
+
+```
+Example of running only one subcommand of a pipe with elevated
+privileges.
+

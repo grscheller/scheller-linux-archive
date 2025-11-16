@@ -1406,3 +1406,58 @@ Saw something about fish being held back.
 
 Fish and Neovim now back to where I need them to be.
 
+2025-11-16:
+
+NVIDIA drivers broke when I did a previous PoP Store update.
+
+Have been booting into old Kernel config via holding down space bar when
+booting the system.
+
+Tried
+
+```fish
+    $ uname -r
+    6.16.3-760611603-generic
+    $ sudo apt purge '~nnvidia*'
+    $ sudo apt autoremove --purge
+    $ sudo apt clean
+    $ sudo apt clean
+    $ sudo apt system76-driver-nvidia
+```
+
+Rebooted.
+
+Success! Desktop working.
+
+```fish
+    $ uname -r
+    6.17.4-76061704-generic
+```
+
+2025-11-16:
+
+Change was made to not let Flatpak apps use Data Control Wayland
+Protocol.
+
+Need file ``/etc/environment.d/cosmic-data-control.sh`` with the
+content "export COSMIC_DATA_CONTROL_ENABLED=1".
+
+Need to build from source and install on system. Needed to update my
+out-of-date Rust toolchain and install build tool just. Build recipe in
+BUILD.md file.
+
+Revisionist history:
+
+```fish
+    $ cd ~/build/
+    $ git clone git@github.com:cosmic-utils/clipboard-manager
+    $ cd clipboard-manager/
+    $ sudo apt install just
+    $ sudo apt install libxkbcommon-dev
+    $ rustup self uninstall
+    $ curl https://sh.rustup.rs -sSf | sh
+    $ just build-release; and sudo just install
+```
+
+Now works. ``ctrl-shift-c`` and ``ctrl-shift-p`` interact with the
+clipboard manager. Middle mouse button paste does not, good!

@@ -538,3 +538,31 @@ $ echo 'export COSMIC_DATA_CONTROL_ENABLED=1' | sudo tee /etc/profile.d/data_con
 Example of running only one subcommand of a pipe with elevated
 privileges.
 
+## 2025-12-01:
+
+Here is the upgrade process I use on all my PoP!OS systems.
+
+1. commandline: ``sudo apt update``
+2. commandline: ``sudo apt upgrade``
+3. commandline: ``sudo apt upgrade``
+4. commandline: ``sudo apt autoremove``
+5. COSMIC Store: "Check for updates" -> "Update All"
+
+Usually #3 does nothing and #5 updates snaps, video card firmware, additional system updates.
+
+A major release may require ``pop-upgrade release upgrade``, like
+between major Ubuntu releases.
+
+Running this command now yields
+
+```
+    $ sudo pop-upgrade release upgrade
+    [sudo] password for grs:
+    checking if pop-upgrade requires an update
+    Current Release: 24.04
+    Upgrading to: 26.04
+    New version available: false
+    no release available to upgrade to
+```
+
+Monitor the terminal for prompts requiring **Y** or **ENTER**.

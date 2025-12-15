@@ -1422,7 +1422,7 @@ Tried
     $ sudo apt autoremove --purge
     $ sudo apt clean
     $ sudo apt clean
-    $ sudo apt system76-driver-nvidia
+    $ sudo apt install system76-driver-nvidia
 ```
 
 Rebooted.
@@ -1461,3 +1461,15 @@ Revisionist history:
 
 Now works. ``ctrl-shift-c`` and ``ctrl-shift-p`` interact with the
 clipboard manager. Middle mouse button paste does not, good!
+
+2025-12-08:
+
+The clipboard manager seems to hang browsers. I removed it from my
+desktop top panel, but have not uninstalled it.
+
+2025-12-12:
+
+After a system update, lost the console. No GUI, no commandline. 
+Able to ssh in.
+
+Reinstalling NVIDIA drives, see 2025-11-16.

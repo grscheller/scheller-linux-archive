@@ -1076,3 +1076,11 @@ purpose: to reimage a 2017 windows 10 pc for my daughters with a linux.
   Upgrade my user's shell.
 
     $ sudo usermod -s /usr/bin/fish grs
+
+  Now finish up installing Neovim.
+
+    $ sudo apt install fswatch nodejs npm
+    $ sudo npm install -g neovim
+    $ sudo npm install -g tree-sitter-cli
+
+  Finally update plugins and tools with Lazy and Mason.

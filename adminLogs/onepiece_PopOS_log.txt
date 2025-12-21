@@ -1,425 +1,425 @@
-Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
-         System needs to be well configured out of the box and easy for
+purpose: to reimage a 2017 windows 10 pc for my daughters with a linux.
+         system needs to be well configured out of the box and easy for
          my daughters, or me over the phone, to administer.
 
 2023-10-01:
-  Installing PopOS 22.04 LTS on a Dell Intel Xeon
-    - 4HT core - CPU E3-1505M v6@300GHz
-    - 32 GB memory
-    - Intel Corporation HD Graphics P630 (rev 04)
-    - NVIDIA Corporation GM107GLM [Quadro M620 Mobile] (rev a2)
-    - ??? Intel(R) UHD Graphics
-    - ??? NVIDIA GeForce MX250 Graphics
+  installing popos 22.04 lts on a dell intel xeon
+    - 4ht core - cpu e3-1505m v6@300ghz
+    - 32 gb memory
+    - intel corporation hd graphics p630 (rev 04)
+    - nvidia corporation gm107glm [quadro m620 mobile] (rev a2)
+    - ??? intel(r) uhd graphics
+    - ??? nvidia geforce mx250 graphics
 
-  Going with Pop!OS 22.04 LTS (NVIDIA)
+  going with pop!os 22.04 lts (nvidia)
 
-  Downloaded latest ISO image to gauss17 from
+  downloaded latest iso image to gauss17 from
 
     https://pop.system76.com/
 
   should have
 
-    SHA5: 33bc14a6499ad513fe64c0394e3af766110b75967578e47f4e4f4251d0fa6f14
+    sha5: 33bc14a6499ad513fe64c0394e3af766110b75967578e47f4e4f4251d0fa6f14
 
   downloaded the file
 
     pop-os_22.04_amd64_nvidia_34.iso
 
-  Test validity,
+  test validity,
 
     [grs@gauss17]
     $ sha256sum pop-os_22.04_amd64_nvidia_34.iso
     33bc14a6499ad513fe64c0394e3af766110b75967578e47f4e4f4251d0fa6f14  pop-os_22.04_amd64_nvidia_34.iso
 
-  Put USB thumb drive in:
+  put usb thumb drive in:
 
     [grs@gauss17]
     $ lsblk
-    NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
-    sda      8:0    0 119.2G  0 disk
-    ├─sda1   8:1    0   512M  0 part /boot
-    └─sda2   8:2    0 118.7G  0 part /
-    sdb      8:16   0 931.5G  0 disk
-    ├─sdb1   8:17   0   512M  0 part
-    ├─sdb2   8:18   0  63.5G  0 part /extra
-    ├─sdb3   8:19   0    16G  0 part [SWAP]
-    └─sdb4   8:20   0 851.5G  0 part /home
-    sdc      8:32   1  57.6G  0 disk
-    └─sdc1   8:33   1  57.6G  0 part
+    name   maj:min rm   size ro type mountpoints
+    sda      8:0    0 119.2g  0 disk
+    ├─sda1   8:1    0   512m  0 part /boot
+    └─sda2   8:2    0 118.7g  0 part /
+    sdb      8:16   0 931.5g  0 disk
+    ├─sdb1   8:17   0   512m  0 part
+    ├─sdb2   8:18   0  63.5g  0 part /extra
+    ├─sdb3   8:19   0    16g  0 part [swap]
+    └─sdb4   8:20   0 851.5g  0 part /home
+    sdc      8:32   1  57.6g  0 disk
+    └─sdc1   8:33   1  57.6g  0 part
 
     [grs@gauss17]
     $ lsblk -f
-    NAME FSTYPE FSVER LABEL UUID                                 FSAVAIL FSUSE% MOUNTPOINTS
+    name fstype fsver label uuid                                 fsavail fsuse% mountpoints
     sda
     ├─sda1
-    │    vfat   FAT32       A024-8139                             403.1M    21% /boot
+    │    vfat   fat32       a024-8139                             403.1m    21% /boot
     └─sda2
-         ext4   1.0         0859da7c-f429-470d-818f-d3951b5d89af   50.6G    51% /
+         ext4   1.0         0859da7c-f429-470d-818f-d3951b5d89af   50.6g    51% /
     sdb
     ├─sdb1
-    │    vfat   FAT32       BC00-6365
+    │    vfat   fat32       bc00-6365
     ├─sdb2
-    │    ext4   1.0         4b1b0623-c1d0-4da9-8164-20ee74253def   47.1G    19% /extra
+    │    ext4   1.0         4b1b0623-c1d0-4da9-8164-20ee74253def   47.1g    19% /extra
     ├─sdb3
-    │    swap   1           a5945738-343f-4cfb-ad76-8ca012eb2576                [SWAP]
+    │    swap   1           a5945738-343f-4cfb-ad76-8ca012eb2576                [swap]
     └─sdb4
-         ext4   1.0         833c2579-bc84-463a-96a4-89478bd89e9e  711.6G    10% /home
+         ext4   1.0         833c2579-bc84-463a-96a4-89478bd89e9e  711.6g    10% /home
     sdc
     └─sdc1
-         vfat   FAT32       8F38-B2AA
+         vfat   fat32       8f38-b2aa
 
-  Now "burn" the image,
+  now "burn" the image,
 
     [grs@gauss17]
-    $ sudo dd bs=4M if=pop-os_22.04_amd64_nvidia_34.iso of=/dev/sdc conv=fdatasync
+    $ sudo dd bs=4m if=pop-os_22.04_amd64_nvidia_34.iso of=/dev/sdc conv=fdatasync
     724+0 records in
     724+0 records out
-    3036676096 bytes (3.0 GB, 2.8 GiB) copied, 57.8096 s, 52.5 MB/s
+    3036676096 bytes (3.0 gb, 2.8 gib) copied, 57.8096 s, 52.5 mb/s
 
-  Let's see what we got
+  let's see what we got
 
     [grs@gauss17]
     $ lsblk
-    NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
-    sda      8:0    0 119.2G  0 disk
-    ├─sda1   8:1    0   512M  0 part /boot
-    └─sda2   8:2    0 118.7G  0 part /
-    sdb      8:16   0 931.5G  0 disk
-    ├─sdb1   8:17   0   512M  0 part
-    ├─sdb2   8:18   0  63.5G  0 part /extra
-    ├─sdb3   8:19   0    16G  0 part [SWAP]
-    └─sdb4   8:20   0 851.5G  0 part /home
-    sdc      8:32   1  57.6G  0 disk
-    ├─sdc1   8:33   1   2.8G  0 part
-    └─sdc2   8:34   1     4M  0 part
+    name   maj:min rm   size ro type mountpoints
+    sda      8:0    0 119.2g  0 disk
+    ├─sda1   8:1    0   512m  0 part /boot
+    └─sda2   8:2    0 118.7g  0 part /
+    sdb      8:16   0 931.5g  0 disk
+    ├─sdb1   8:17   0   512m  0 part
+    ├─sdb2   8:18   0  63.5g  0 part /extra
+    ├─sdb3   8:19   0    16g  0 part [swap]
+    └─sdb4   8:20   0 851.5g  0 part /home
+    sdc      8:32   1  57.6g  0 disk
+    ├─sdc1   8:33   1   2.8g  0 part
+    └─sdc2   8:34   1     4m  0 part
 
     [grs@gauss17]
     $ lsblk -f
-    NAME FSTYPE FSVER LABEL                     UUID                                 FSAVAIL FSUSE% MOUNTPOINTS
+    name fstype fsver label                     uuid                                 fsavail fsuse% mountpoints
     sda
     ├─sda1
-    │    vfat   FAT32                           A024-8139                             403.1M    21% /boot
+    │    vfat   fat32                           a024-8139                             403.1m    21% /boot
     └─sda2
-         ext4   1.0                             0859da7c-f429-470d-818f-d3951b5d89af   50.6G    51% /
+         ext4   1.0                             0859da7c-f429-470d-818f-d3951b5d89af   50.6g    51% /
     sdb
     ├─sdb1
-    │    vfat   FAT32                           BC00-6365
+    │    vfat   fat32                           bc00-6365
     ├─sdb2
-    │    ext4   1.0                             4b1b0623-c1d0-4da9-8164-20ee74253def   47.1G    19% /extra
+    │    ext4   1.0                             4b1b0623-c1d0-4da9-8164-20ee74253def   47.1g    19% /extra
     ├─sdb3
-    │    swap   1                               a5945738-343f-4cfb-ad76-8ca012eb2576                [SWAP]
+    │    swap   1                               a5945738-343f-4cfb-ad76-8ca012eb2576                [swap]
     └─sdb4
-         ext4   1.0                             833c2579-bc84-463a-96a4-89478bd89e9e  708.8G    10% /home
-    sdc  iso966 Jolie Pop_OS 22.04 amd64 Nvidia 2023-09-13-19-15-11-00
+         ext4   1.0                             833c2579-bc84-463a-96a4-89478bd89e9e  708.8g    10% /home
+    sdc  iso966 jolie pop_os 22.04 amd64 nvidia 2023-09-13-19-15-11-00
     ├─sdc1
-    │    iso966 Jolie Pop_OS 22.04 amd64 Nvidia 2023-09-13-19-15-11-00
+    │    iso966 jolie pop_os 22.04 amd64 nvidia 2023-09-13-19-15-11-00
     └─sdc2
-         vfat   FAT12                           A38C-CAF4
+         vfat   fat12                           a38c-caf4
 
 2023-10-01:
-  On the Dell,
+  on the dell,
 
-    F1: Reboot
-    F2: Setup
-    F5: Run diagnostics
+    f1: reboot
+    f2: setup
+    f5: run diagnostics
 
-  Previously ran diagnostics. Hard drive dead. Laptop connected to
+  previously ran diagnostics. hard drive dead. laptop connected to
   internet and diagnostics suggested replacing drive with an
-  optical drive: Dell 2.5" SATA SSD
+  optical drive: dell 2.5" sata ssd
 
-  SSD drive was a drop-in replacement.
+  ssd drive was a drop-in replacement.
 
-  In the "BIOS" UEFI setup, turned off legacy mode and the Secure Boot
-  misfeature. Went to confirm boot order, could not figure out how to
-  change. Should not matter since no OS on SSD. USB thumbdrive could be
+  in the "bios" uefi setup, turned off legacy mode and the secure boot
+  misfeature. went to confirm boot order, could not figure out how to
+  change. should not matter since no os on ssd. usb thumbdrive could be
   first?
 
-  Reboot with the USB thumbdrive in place.
+  reboot with the usb thumbdrive in place.
 
-  Had to power cycle before it recondized thumb drive and booted into
-  PopOS. Did see one NVIDIA error flash by, but PoPOS website indicated
-  that NVidia drives may need installing. System has a discrete NV card.
+  had to power cycle before it recondized thumb drive and booted into
+  popos. did see one nvidia error flash by, but popos website indicated
+  that nvidia drives may need installing. system has a discrete nv card.
 
-  Dropped into a Live-OS desktop GUI environment, took a minute before
-  the intallation GUI popped up.
+  dropped into a live-os desktop gui environment, took a minute before
+  the intallation gui popped up.
 
 2023-10-01:
-  Installed PopOS through GUI without any problems, took most defaults,
+  installed popos through gui without any problems, took most defaults,
   did not encrypt hard drive.
 
-  During install I created user account "buggy" and set timezone to EDT.
+  during install i created user account "buggy" and set timezone to edt.
 
-  Things I did post-install (tried to keep minimal):
+  things i did post-install (tried to keep minimal):
 
-    - Created /etc/sudoers.d/DaddyAdditionsUpdated to allow user buggy
-      to use sudo without password. Edited with visudo.
-      - Have to give daughters the "with great power comes great
+    - created /etc/sudoers.d/daddyadditionsupdated to allow user buggy
+      to use sudo without password. edited with visudo.
+      - have to give daughters the "with great power comes great
         responsibilities" talk.
-    - Edited ~/.bashrc.
-      - Added: set -o vi
+    - edited ~/.bashrc.
+      - added: set -o vi
         - to use vi command-line editing
-    - Changed system name to "onepiece"
+    - changed system name to "onepiece"
       - $ sudo hostnamectl set-hostname onepiece
       - gui install had named it pop-os
-    - Installed Neovim
+    - installed neovim
       - $ sudo apt install neovim
       - made no attempt to configure it
       - mouse is turned off, so mouse clicks talk to terminal app
         - might be more intuitive behavior for beginners
-    - Installed Python
+    - installed python
       - $ sudo apt install python-is-python3
-    - Git was already installed
-    - Installed Dark Reader pluggin to Firefox
+    - git was already installed
+    - installed dark reader pluggin to firefox
 
-  Let's check video settings:
+  let's check video settings:
 
-    $ lspci -k | grep -A 2 -E "(VGA|3D)"
-    00:02.0 VGA compatible controller: Intel Corporation HD Graphics P630 (rev 04)
-        DeviceName:  Onboard IGD
-        Subsystem: Dell HD Graphics P630
+    $ lspci -k | grep -a 2 -e "(vga|3d)"
+    00:02.0 vga compatible controller: intel corporation hd graphics p630 (rev 04)
+        devicename:  onboard igd
+        subsystem: dell hd graphics p630
     --
-    01:00.0 3D controller: NVIDIA Corporation GM107GLM [Quadro M620 Mobile] (rev a2)
-        Subsystem: Dell GM107GLM [Quadro M620 Mobile]
-        Kernel driver in use: nvidia
+    01:00.0 3d controller: nvidia corporation gm107glm [quadro m620 mobile] (rev a2)
+        subsystem: dell gm107glm [quadro m620 mobile]
+        kernel driver in use: nvidia
 
-  Good!!! Looks like correct drivers are installed for gaming. PopOS
-  is designed for gaming. Much as I'd love to set this up, this is my
+  good!!! looks like correct drivers are installed for gaming. popos
+  is designed for gaming. much as i'd love to set this up, this is my
   daughter's job.
 
-  Let's see if we are XOrg or Wayland.
+  let's see if we are xorg or wayland.
 
     $ journalctl -b |grep -i wayland
-    Oct 01 20:14:49 onepiece systemd[1940]: Starting GNOME Shell on Wayland...
-    Oct 01 20:14:49 onepiece systemd[1940]: org.gnome.Shell@wayland.service: Skipped due to 'exec-condition'.
-    Oct 01 20:14:49 onepiece systemd[1940]: Condition check resulted in GNOME Shell on Wayland being skipped.
+    oct 01 20:14:49 onepiece systemd[1940]: starting gnome shell on wayland...
+    oct 01 20:14:49 onepiece systemd[1940]: org.gnome.shell@wayland.service: skipped due to 'exec-condition'.
+    oct 01 20:14:49 onepiece systemd[1940]: condition check resulted in gnome shell on wayland being skipped.
 
-  Are we using XOrg? and Gnome? I thought PopOS used something called Cosmic Desktop?
-  Looks like they intend the default to be Wayland in the future, but dropped back to XOrg for now.
+  are we using xorg? and gnome? i thought popos used something called cosmic desktop?
+  looks like they intend the default to be wayland in the future, but dropped back to xorg for now.
 
-  Let's find out.
+  let's find out.
 
-    $ systemctl list-units|grep -i -E '(wayland|x11)'
+    $ systemctl list-units|grep -i -e '(wayland|x11)'
 
-    $ systemctl --user list-units|grep -i -E '(wayland|x11)'
-      org.gnome.Shell@x11.service               loaded active running   GNOME Shell on X11
-      gnome-session-x11-services.target         loaded active active    GNOME session X11 services
-      gnome-session-x11.target                  loaded active active    GNOME X11 Session
-      gnome-session-x11@pop.target              loaded active active    GNOME X11 Session (session: pop)
+    $ systemctl --user list-units|grep -i -e '(wayland|x11)'
+      org.gnome.shell@x11.service               loaded active running   gnome shell on x11
+      gnome-session-x11-services.target         loaded active active    gnome session x11 services
+      gnome-session-x11.target                  loaded active active    gnome x11 session
+      gnome-session-x11@pop.target              loaded active active    gnome x11 session (session: pop)
 
 2023-10-01:
-  Both fd and rg are missing. Took a little hunting to find the package names.
+  both fd and rg are missing. took a little hunting to find the package names.
 
    $ sudo apt install ripgrep
    $ sudo apt install fdfind
 
-  The latter was already installed but by the fdfind name. I added a fd alias
+  the latter was already installed but by the fdfind name. i added a fd alias
   to ~/.bashrc for it.
 
 2023-10-02:
-  Created a single file Neovim configuration. Located
-  ~/.config/nvim/init.lua. Kept it single file and "grokable" for
-  them. Used some more advanced Lua constructs because some of my
-  daughters want to learn Lua for Roblox.
+  created a single file neovim configuration. located
+  ~/.config/nvim/init.lua. kept it single file and "grokable" for
+  them. used some more advanced lua constructs because some of my
+  daughters want to learn lua for roblox.
 
 2023-10-11:
-  Configured the Pop!_Shop "App" <- the GUI between "Terminal" & "Settings" on
+  configured the pop!_shop "app" <- the gui between "terminal" & "settings" on
   the task bar at bttom of desktop, to automatically perform system and flatpak
-  updates. Scheduled this every weekday at 7:00AM when I know my daughters will
+  updates. scheduled this every weekday at 7:00am when i know my daughters will
   be in bed.
 
 2023-10-11:
-  PopOS apt installed Neovim version 0.6.1, way yoo old. In order to use it,
-  I would have to embed too much VimL script into ~/.config/nvim/init.lua. VimL
-  script is not the future, Lua is. I would not want to inflict having to learn
-  VimL script on my daughters.
+  popos apt installed neovim version 0.6.1, way yoo old. in order to use it,
+  i would have to embed too much viml script into ~/.config/nvim/init.lua. viml
+  script is not the future, lua is. i would not want to inflict having to learn
+  viml script on my daughters.
 
-  Added the alias
+  added the alias
 
     alias nv='flatpak run io.neovim.nvim'
 
-  to ~/.bashrc so that bash can find neovim from the command-line. Now runs
+  to ~/.bashrc so that bash can find neovim from the command-line. now runs
   in the terminal it was launched in.
 
-  I thought running nvim as a flatpak was less probamatic than a non-standard
-  PopOS configuration, Ubuntu repos, the Debian Sid repo, or hacker Bob's repo.
+  i thought running nvim as a flatpak was less probamatic than a non-standard
+  popos configuration, ubuntu repos, the debian sid repo, or hacker bob's repo.
 
 2023-10-11:
-  Installed Neofetch.
+  installed neofetch.
 
     $ sudo apt install neofetch
 
-  Run neofetch (in regular terminal, not nvim terminal):
+  run neofetch (in regular terminal, not nvim terminal):
 
     buggy@onepiece:~$ neofetch
                  /////////////                buggy@onepiece
              /////////////////////            --------------
-          ///////*767////////////////         OS: Pop!_OS 22.04 LTS x86_64
-        //////7676767676*//////////////       Host: Precision 3520
-       /////76767//7676767//////////////      Kernel: 6.4.6-76060406-generic
-      /////767676///*76767///////////////     Uptime: 1 hour, 38 mins
-     ///////767676///76767.///7676*///////    Packages: 1888 (dpkg), 8 (flatpak)
-    /////////767676//76767///767676////////   Shell: bash 5.1.16
-    //////////76767676767////76767/////////   Resolution: 1920x1080
-    ///////////76767676//////7676//////////   DE: GNOME 42.5
-    ////////////,7676,///////767///////////   WM: Mutter
-    /////////////*7676///////76////////////   WM Theme: Pop
-    ///////////////7676////////////////////   Theme: Pop-dark [GTK2/3]
-     ///////////////7676///767////////////    Icons: Pop [GTK2/3]
-      //////////////////////'////////////     Terminal: gnome-terminal
-       //////.7676767676767676767,//////      CPU: Intel Xeon E3-1505M v6 (8) @ 4.000GHz
-        /////767676767676767676767/////       GPU: NVIDIA Quadro M620 Mobile
-          ///////////////////////////         GPU: Intel HD Graphics P630
-             /////////////////////            Memory: 4365MiB / 31949MiB
+          ///////*767////////////////         os: pop!_os 22.04 lts x86_64
+        //////7676767676*//////////////       host: precision 3520
+       /////76767//7676767//////////////      kernel: 6.4.6-76060406-generic
+      /////767676///*76767///////////////     uptime: 1 hour, 38 mins
+     ///////767676///76767.///7676*///////    packages: 1888 (dpkg), 8 (flatpak)
+    /////////767676//76767///767676////////   shell: bash 5.1.16
+    //////////76767676767////76767/////////   resolution: 1920x1080
+    ///////////76767676//////7676//////////   de: gnome 42.5
+    ////////////,7676,///////767///////////   wm: mutter
+    /////////////*7676///////76////////////   wm theme: pop
+    ///////////////7676////////////////////   theme: pop-dark [gtk2/3]
+     ///////////////7676///767////////////    icons: pop [gtk2/3]
+      //////////////////////'////////////     terminal: gnome-terminal
+       //////.7676767676767676767,//////      cpu: intel xeon e3-1505m v6 (8) @ 4.000ghz
+        /////767676767676767676767/////       gpu: nvidia quadro m620 mobile
+          ///////////////////////////         gpu: intel hd graphics p630
+             /////////////////////            memory: 4365mib / 31949mib
                  /////////////
 
 2023-10-12:
-  I hate flatpaks!!!!! Wonder why nvim was ignoring ~/.config/nvim/init.lua, a :checkhealth showed
+  i hate flatpaks!!!!! wonder why nvim was ignoring ~/.config/nvim/init.lua, a :checkhealth showed
   that that it was looking somewhere under some flatmap infrastructure directory!!!!
-  Somewhere under the ~/.var/app/io.neovim.nvim/data/nvim/ real directory.
-  Uninstalled the Neovim
-  flatmap. What good are flatpaks if they don't integrate with their host OS?????
+  somewhere under the ~/.var/app/io.neovim.nvim/data/nvim/ real directory.
+  uninstalled the neovim
+  flatmap. what good are flatpaks if they don't integrate with their host os?????
 
-  Can't use what comes with the base OS:
+  can't use what comes with the base os:
 
     buggy@onepiece:~$ apt show neovim
-    Package: neovim
-    Version: 0.6.1-3
-    Priority: extra
-    Section: universe/editors
-    Origin: Ubuntu
-    Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-    Original-Maintainer: Debian Vim Maintainers <team+vim@tracker.debian.org>
+    package: neovim
+    version: 0.6.1-3
+    priority: extra
+    section: universe/editors
+    origin: ubuntu
+    maintainer: ubuntu developers <ubuntu-devel-discuss@lists.ubuntu.com>
+    original-maintainer: debian vim maintainers <team+vim@tracker.debian.org>
 
-  Might as well be using ed.
+  might as well be using ed.
 
 2023-10-12:
-  Let's move off the LTS to see if we can get a later version of Neovim.
+  let's move off the lts to see if we can get a later version of neovim.
 
     $ sudo apt update
     $ sudo apt full-upgrade
     $ pop-upgrade recovery upgrade from-release
     $ pop-upgrade release upgrade
 
-  Nope, this just update 7 packages. Lets redo them:
+  nope, this just update 7 packages. lets redo them:
 
     $ sudo apt update
-    Hit:1 http://apt.pop-os.org/proprietary jammy InRelease
-    Hit:2 http://apt.pop-os.org/release jammy InRelease
-    Hit:3 http://apt.pop-os.org/ubuntu jammy InRelease
-    Hit:4 http://apt.pop-os.org/ubuntu jammy-security InRelease
-    Hit:5 http://apt.pop-os.org/ubuntu jammy-updates InRelease
-    Hit:6 http://apt.pop-os.org/ubuntu jammy-backports InRelease
-    Reading package lists... Done
-    Building dependency tree... Done
-    Reading state information... Done
-    All packages are up to date.
+    hit:1 http://apt.pop-os.org/proprietary jammy inrelease
+    hit:2 http://apt.pop-os.org/release jammy inrelease
+    hit:3 http://apt.pop-os.org/ubuntu jammy inrelease
+    hit:4 http://apt.pop-os.org/ubuntu jammy-security inrelease
+    hit:5 http://apt.pop-os.org/ubuntu jammy-updates inrelease
+    hit:6 http://apt.pop-os.org/ubuntu jammy-backports inrelease
+    reading package lists... done
+    building dependency tree... done
+    reading state information... done
+    all packages are up to date.
 
     $ sudo apt upgrade
-    Reading package lists... Done
-    Building dependency tree... Done
-    Reading state information... Done
-    Calculating upgrade... Done
-    The following packages were automatically installed and are no longer required:
+    reading package lists... done
+    building dependency tree... done
+    reading state information... done
+    calculating upgrade... done
+    the following packages were automatically installed and are no longer required:
       libluajit-5.1-2 libluajit-5.1-common libmsgpackc2 libtermkey1 libtree-sitter0
       libunibilium4 libvterm0 lua-luv neovim-runtime python3-greenlet
       python3-msgpack python3-neovim python3-pynvim xclip
-    Use 'sudo apt autoremove' to remove them.
+    use 'sudo apt autoremove' to remove them.
     0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
 
     $ sudo apt full-upgrade
-    Reading package lists... Done
-    Building dependency tree... Done
-    Reading state information... Done
-    Calculating upgrade... Done
-    The following packages were automatically installed and are no longer required:
+    reading package lists... done
+    building dependency tree... done
+    reading state information... done
+    calculating upgrade... done
+    the following packages were automatically installed and are no longer required:
       libluajit-5.1-2 libluajit-5.1-common libmsgpackc2 libtermkey1 libtree-sitter0
       libunibilium4 libvterm0 lua-luv neovim-runtime python3-greenlet
       python3-msgpack python3-neovim python3-pynvim xclip
-    Use 'sudo apt autoremove' to remove them.
+    use 'sudo apt autoremove' to remove them.
     0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
 
     $ pop-upgrade recovery upgrade from-release
     checking if pop-upgrade requires an update
-    Recovery event: fetching recovery files
-    Recovery upgrade status: recovery partition refueled and ready to go
+    recovery event: fetching recovery files
+    recovery upgrade status: recovery partition refueled and ready to go
 
     $ pop-upgrade release upgrade
     checking if pop-upgrade requires an update
-    Current Release: 22.04
-    Upgrading to: 22.10
-    New version available: false
+    current release: 22.04
+    upgrading to: 22.10
+    new version available: false
     no release available to upgrade to
 
-  After a little research, I am at the latest release.
+  after a little research, i am at the latest release.
 
-  My choices are:
+  my choices are:
 
-    1. Install a PPA:
+    1. install a ppa:
 
-       Import the stable Neovim PPA with the following command:
+       import the stable neovim ppa with the following command:
 
          $ sudo add-apt-repository ppa:neovim-ppa/stable -y
 
-       Or, to import the unstable Neovim PPA, use this command:
+       or, to import the unstable neovim ppa, use this command:
 
          $ sudo add-apt-repository ppa:neovim-ppa/unstable -y
 
-    2. Install the Nix package manage:
+    2. install the nix package manage:
 
-         $ sh <(curl -L https://nixos.org/nix/install) --daemon
+         $ sh <(curl -l https://nixos.org/nix/install) --daemon
 
-       See https://nixos.org/learn
+       see https://nixos.org/learn
 
-    3. Figure out where the Flatpack wants Neovim's configuration files:
+    3. figure out where the flatpack wants neovim's configuration files:
 
-       Reinstall the Neovim flatpak.
+       reinstall the neovim flatpak.
 
-       From within a Neovim :term session,
+       from within a neovim :term session,
 
          sh-5.2$ env|grep -i xdg
-         XDG_CONFIG_DIRS=/app/etc/xdg:/etc/xdg
-         XDG_MENU_PREFIX=gnome-
-         XDG_DATA_HOME=/home/buggy/.var/app/io.neovim.nvim/data
-         XDG_CONFIG_HOME=/home/buggy/.var/app/io.neovim.nvim/config
-         XDG_SESSION_DESKTOP=pop
-         XDG_SESSION_TYPE=x11
-         XDG_CURRENT_DESKTOP=pop:GNOME
-         XDG_CACHE_HOME=/home/buggy/.var/app/io.neovim.nvim/cache
-         XDG_SESSION_CLASS=user
-         XDG_STATE_HOME=/home/buggy/.var/app/io.neovim.nvim/.local/state
-         XDG_RUNTIME_DIR=/run/user/1000
-         XDG_DATA_DIRS=/app/share:/usr/share:/usr/share/runtime/share:/run/host/user-share:/run/host/share
+         xdg_config_dirs=/app/etc/xdg:/etc/xdg
+         xdg_menu_prefix=gnome-
+         xdg_data_home=/home/buggy/.var/app/io.neovim.nvim/data
+         xdg_config_home=/home/buggy/.var/app/io.neovim.nvim/config
+         xdg_session_desktop=pop
+         xdg_session_type=x11
+         xdg_current_desktop=pop:gnome
+         xdg_cache_home=/home/buggy/.var/app/io.neovim.nvim/cache
+         xdg_session_class=user
+         xdg_state_home=/home/buggy/.var/app/io.neovim.nvim/.local/state
+         xdg_runtime_dir=/run/user/1000
+         xdg_data_dirs=/app/share:/usr/share:/usr/share/runtime/share:/run/host/user-share:/run/host/share
 
          $ cp .config/nvim/init.lua  /home/buggy/.var/app/io.neovim.nvim/config/nvim/
 
-       From an external shell,
+       from an external shell,
 
          $ env | grep -i xdg
-         XDG_CONFIG_DIRS=/etc/xdg/xdg-pop:/etc/xdg
-         XDG_MENU_PREFIX=gnome-
-         XDG_SESSION_DESKTOP=pop
-         XDG_SESSION_TYPE=x11
-         XDG_CURRENT_DESKTOP=pop:GNOME
-         XDG_SESSION_CLASS=user
-         XDG_RUNTIME_DIR=/run/user/1000
-         XDG_DATA_DIRS=/usr/share/pop:/usr/share/gnome:/home/buggy/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/
+         xdg_config_dirs=/etc/xdg/xdg-pop:/etc/xdg
+         xdg_menu_prefix=gnome-
+         xdg_session_desktop=pop
+         xdg_session_type=x11
+         xdg_current_desktop=pop:gnome
+         xdg_session_class=user
+         xdg_runtime_dir=/run/user/1000
+         xdg_data_dirs=/usr/share/pop:/usr/share/gnome:/home/buggy/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/
 
-       At least $XDG_CONFIG_HOME should default to ~/.config
+       at least $xdg_config_home should default to ~/.config
 
-       Looks like they are trying to make things "easy" for GUI users at
-       the expense of intermediate users. I wish they'd just keep things
+       looks like they are trying to make things "easy" for gui users at
+       the expense of intermediate users. i wish they'd just keep things
        "simple."
 
 2023-10-15:
-  Anycase, when the Neovim flatpak is launched from the GUI or the
-  terminal, it uses the flatpak $XDG paths. Apt installed applications
-  use the systme $XDG paths.
+  any case, when the neovim flatpak is launched from the gui or the
+  terminal, it uses the flatpak $xdg paths. apt installed applications
+  use the system $xdg paths.
 
-  So in anticipation of a more up-to-date Neovim in a future PoPOS
+  so in anticipation of a more up-to-date neovim in a future popos
   release or update,
 
     - put the configuration here: ~/.config/nvim/init.lua
-    - created a sym-link from the Flatpak XDG location
+    - created a sym-link from the flatpak xdg location
 
         $ ln -s ~/.config/nvim/init.lua  ~/.var/app/io.neovim.nvim/config/nvim/init.lua
 
@@ -427,406 +427,406 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
 
         alias nv='flatpak run io.neovim.nvim'
 
-  If PopOS ever updates the Neovim package, we can run it as nvim
+  if popos ever updates the neovim package, we can run it as nvim
   without clashing with the flatpak version.
 
 2023-10-15:
-  Getting tired of emailing changes between onepiece and euler7. I don't
-  want to create a second account for myself, nor configure my GitHub
-  credentials with the buggy account. The computers right now are
-  sitting in the same room. Will install and enable the sshd daemon.
+  getting tired of emailing changes between onepiece and euler7. i don't
+  want to create a second account for myself, nor configure my github
+  credentials with the buggy account. the computers right now are
+  sitting in the same room. will install and enable the sshd daemon.
 
     $ apt search openssh-server
-    Sorting... Done
-    Full Text Search... Done
+    sorting... done
+    full text search... done
     openssh-server/jammy-updates 1:8.9p1-3ubuntu0.4 amd64
-      secure shell (SSH) server, for secure access from remote machines
+      secure shell (ssh) server, for secure access from remote machines
 
     $ sudo apt install openssh-server
     ...
 
     $ sudo systemctl status sshd.service
-    ● ssh.service - OpenBSD Secure Shell server
-         Loaded: loaded (/lib/systemd/system/ssh.service; enabled; vendor preset: enabled)
-         Active: active (running) since Sun 2023-10-15 14:24:14 EDT; 5min ago
-           Docs: man:sshd(8)
+    ● ssh.service - openbsd secure shell server
+         loaded: loaded (/lib/systemd/system/ssh.service; enabled; vendor preset: enabled)
+         active: active (running) since sun 2023-10-15 14:24:14 edt; 5min ago
+           docs: man:sshd(8)
                  man:sshd_config(5)
-       Main PID: 4496 (sshd)
-          Tasks: 1 (limit: 38191)
-         Memory: 1.7M
-            CPU: 19ms
-         CGroup: /system.slice/ssh.service
-                 └─4496 "sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups"
+       main pid: 4496 (sshd)
+          tasks: 1 (limit: 38191)
+         memory: 1.7m
+            cpu: 19ms
+         cgroup: /system.slice/ssh.service
+                 └─4496 "sshd: /usr/sbin/sshd -d [listener] 0 of 10-100 startups"
 
-    Oct 15 14:24:14 onepiece systemd[1]: Starting OpenBSD Secure Shell server...
-    Oct 15 14:24:14 onepiece sshd[4496]: Server listening on 0.0.0.0 port 22.
-    Oct 15 14:24:14 onepiece sshd[4496]: Server listening on :: port 22.
-    Oct 15 14:24:14 onepiece systemd[1]: Started OpenBSD Secure Shell server.
+    oct 15 14:24:14 onepiece systemd[1]: starting openbsd secure shell server...
+    oct 15 14:24:14 onepiece sshd[4496]: server listening on 0.0.0.0 port 22.
+    oct 15 14:24:14 onepiece sshd[4496]: server listening on :: port 22.
+    oct 15 14:24:14 onepiece systemd[1]: started openbsd secure shell server.
 
     $ systemctl is-enabled sshd.service
     alias
 
-  Huh???....
+  huh???....
 
     $ systemctl is-enabled ssh.service
     enabled
 
     $ systemctl status ssh.service
-    ● ssh.service - OpenBSD Secure Shell server
-         Loaded: loaded (/lib/systemd/system/ssh.service; enabled; vendor preset: enabled)
-         Active: active (running) since Sun 2023-10-15 14:24:14 EDT; 10min ago
-           Docs: man:sshd(8)
+    ● ssh.service - openbsd secure shell server
+         loaded: loaded (/lib/systemd/system/ssh.service; enabled; vendor preset: enabled)
+         active: active (running) since sun 2023-10-15 14:24:14 edt; 10min ago
+           docs: man:sshd(8)
                  man:sshd_config(5)
-       Main PID: 4496 (sshd)
-          Tasks: 1 (limit: 38191)
-         Memory: 1.7M
-            CPU: 19ms
-         CGroup: /system.slice/ssh.service
-                 └─4496 "sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups"
+       main pid: 4496 (sshd)
+          tasks: 1 (limit: 38191)
+         memory: 1.7m
+            cpu: 19ms
+         cgroup: /system.slice/ssh.service
+                 └─4496 "sshd: /usr/sbin/sshd -d [listener] 0 of 10-100 startups"
 
-    Oct 15 14:24:14 onepiece systemd[1]: Starting OpenBSD Secure Shell server...
-    Oct 15 14:24:14 onepiece sshd[4496]: Server listening on 0.0.0.0 port 22.
-    Oct 15 14:24:14 onepiece sshd[4496]: Server listening on :: port 22.
-    Oct 15 14:24:14 onepiece systemd[1]: Started OpenBSD Secure Shell server.
+    oct 15 14:24:14 onepiece systemd[1]: starting openbsd secure shell server...
+    oct 15 14:24:14 onepiece sshd[4496]: server listening on 0.0.0.0 port 22.
+    oct 15 14:24:14 onepiece sshd[4496]: server listening on :: port 22.
+    oct 15 14:24:14 onepiece systemd[1]: started openbsd secure shell server.
 
     $ systemctl is-enabled ssh.service
     enabled
 
-  Not only did it install it, it started it and enabled it too, even
-  when I gave it the wrong name!!! How is one expected to learn anything
-  if the system is setup so it can be fuddled through? Simplicity,
+  not only did it install it, it started it and enabled it too, even
+  when i gave it the wrong name!!! how is one expected to learn anything
+  if the system is setup so it can be fuddled through? simplicity,
   understandability, and reproducibility are more important to me than
-  "it just works." Because when it doesn't "just work" you have a real
-  big ball-of-mud to unroll. Enough preaching. I do like PopOS and am
+  "it just works." because when it doesn't "just work" you have a real
+  big ball-of-mud to unroll. enough preaching. i do like popos and am
   really looking foeward helping my daughters upgrade it to the next
-  version running the Cosmic desktop under Wayland.
+  version running the cosmic desktop under wayland.
 
-  Neither gauss17 nor onepiece knew of each other.
+  neither gauss17 nor onepiece knew of each other.
 
-  I am editing this now while remotingly logged in via ssh from
-  gauss17. Had to use the IP address. The onepiece system does not know
-  anything about my alacritty terminal emulator. I am getting
+  i am editing this now while remotingly logged in via ssh from
+  gauss17. had to use the ip address. the onepiece system does not know
+  anything about my alacritty terminal emulator. i am getting
   a monochrome terminal session.
 
     $ sudo apt install alacritty
     ...
-    The following NEW packages will be installed:
+    the following new packages will be installed:
       alacritty xclip
     ...
 
-  Launched alacritty terminal on onepiece, bash session definately more
-  readable than gnome-terminal. Neovim sessions definately more
-  readable. While remotely logged into onepiece thru ssh from an alacritty
+  launched alacritty terminal on onepiece, bash session definately more
+  readable than gnome-terminal. neovim sessions definately more
+  readable. while remotely logged into onepiece thru ssh from an alacritty
   terminal running on gauss17, bash does not know about colors but nvim
   and neofetch do.
 
-    $ echo $TERM
+    $ echo $term
     alacritty
 
-  Need to adjust ~/.bashrc startp script...
+  need to adjust ~/.bashrc startp script...
 
 2023-10-15:
-  But first, onepiece keeps going asleep on me after only a couple of
-  minutes. Let's see if my "spin" script will fix this.
+  but first, onepiece keeps going asleep on me after only a couple of
+  minutes. let's see if my "spin" script will fix this.
 
     buggy@onepiece:~$ mkdir bin .local/bin
     [grs@gauss17: ~]$ scp bin/spin buggy@192.168.1.8:bin/spin
     buggy@192.168.1.8's password:
-    spin                                100%  431    65.6KB/s   00:00
+    spin                                100%  431    65.6kb/s   00:00
 
-  Spin is a simple shell script that rotates a bar around clockwise.
-  Lets see if that is enough to keep onepiece awake.
+  spin is a simple shell script that rotates a bar around clockwise.
+  lets see if that is enough to keep onepiece awake.
 
 2023-10-15:
-  Back to getting bash configured for alacritty. Added "alacritty" to
+  back to getting bash configured for alacritty. added "alacritty" to
   script logic.
 
-  Also... The neovim flatpak lies to you.
+  also... the neovim flatpak lies to you.
 
     $ cd /etc/skel
     $ vi ./.bashrc   <- edits that file
     $ nv ./.bashrc   <- edits /home/buggy/.bashrc !!!!!
 
-  Another example of NOT trusting Flatpaks!!! There obviously is
-  a "monkey-in-the-middle" messing up a trusted code base. If a user
+  another example of not trusting flatpaks!!! there obviously is
+  a "monkey-in-the-middle" messing up a trusted code base. if a user
   does not yet understand hierarchical file system structure, they have
-  NO BUSINESS EDITING ~/.bashrc!!!!!
+  no business editing ~/.bashrc!!!!!
 
-  I don't like tools that lie to you. As soon a more up to date system
+  i don't like tools that lie to you. as soon a more up to date system
   version installable with apt is available, we need to dump this
-  flatpak. I don't hate flatpaks, appimages, nor snaps; just the morons
+  flatpak. i don't hate flatpaks, appimages, nor snaps; just the morons
   who do the packaging.
 
 2023-10-15:
-  While ranting above, one piece fell asleep on me again. Let's go into
+  while ranting above, one piece fell asleep on me again. let's go into
   the setting app and adjust this to more appropriate settings for
-  a home computer. Settings app is last icon in the dock at bottom.
+  a home computer. settings app is last icon in the dock at bottom.
 
-  Changes made:
+  changes made:
 
-    Superkey: now shows desktop view
-      Infititely more useful than showing running apps or the worthless
-      launcher. I think that actually is the vanilla Gnome default
+    superkey: now shows desktop view
+      infititely more useful than showing running apps or the worthless
+      launcher. i think that actually is the vanilla gnome default
       behavior.
 
-    Turned on "hot corner"
-      Does the same as the Superkey, useful if your hand is on the mouse
-      and not the keyboard. Some people hate this. Tastes vary.
+    turned on "hot corner"
+      does the same as the superkey, useful if your hand is on the mouse
+      and not the keyboard. some people hate this. tastes vary.
 
-    Appearance: Dark
-      I set this a while ago.
+    appearance: dark
+      i set this a while ago.
 
-    Dock Visibility: Intelligently hide
-      Unless you use a 42" monitor, the increase in screen real estate
+    dock visibility: intelligently hide
+      unless you use a 42" monitor, the increase in screen real estate
       is much appriciated.
 
-    Dock icon size: Made smaller
-      Looks cooler, more room for icons, takes up less space, and most
-      of all, it does not remind me of a Mac anymore.
+    dock icon size: made smaller
+      looks cooler, more room for icons, takes up less space, and most
+      of all, it does not remind me of a mac anymore.
 
-  That is about it. Everything else looked reasonable.
+  that is about it. everything else looked reasonable.
 
-  Note: You can change keyboard shortcuts via the "hamberger" menu on
+  note: you can change keyboard shortcuts via the "hamberger" menu on
         the left side of the top of the settings app.
 
-  Note: No suspend/hibernate settings.
+  note: no suspend/hibernate settings.
 
-  Note: Very useful help menu in hamberger menu.
+  note: very useful help menu in hamberger menu.
 
-  But wait!!! There in an < icon at the top left of the settings app
+  but wait!!! there in an < icon at the top left of the settings app
   that takes you to way more stuff.
 
-    Changes made:
+    changes made:
 
-      Screen blanking after 15 min (was 5 minutes)
-      Autoscreen lock after 1 hour after sceen blanking
+      screen blanking after 15 min (was 5 minutes)
+      autoscreen lock after 1 hour after sceen blanking
 
 2023-10-15:
-  Back to Alacritty, default font looks good. Unless Neovim is
-  configured for software development, full fledged IDE with LSP
-  support, no sense installing and configuring a Nerd-Font.
+  back to alacritty, default font looks good. unless neovim is
+  configured for software development, full fledged ide with lsp
+  support, no sense installing and configuring a nerd-font.
 
-  Surprise! when Super-T shortcut is hit, it opens an Alacritty
+  surprise! when super-t shortcut is hit, it opens an alacritty
   terminal, not the gnome-terminal any more.
 
-    Ctrl+Shift+C copied
-    Ctrl+Shift+P pastes
+    ctrl+shift+c copied
+    ctrl+shift+p pastes
 
-  If in Neovim with alacritty, hold down the shift key when you select
-  with the mouse. That way the mouse is talking to the alacritty
-  terminal app and not the Neovim program running in the alacritty
+  if in neovim with alacritty, hold down the shift key when you select
+  with the mouse. that way the mouse is talking to the alacritty
+  terminal app and not the neovim program running in the alacritty
   terminal.
 
-  There are many ways you can cut and paste using Neovim directly. One
-  way is to highlight the with the mouse WITHOUT pressing Shift key.
-  Then press "+y to "yank" copies the text to the system clipboard.
+  there are many ways you can cut and paste using neovim directly. one
+  way is to highlight the with the mouse without pressing shift key.
+  then press "+y to "yank" copies the text to the system clipboard.
 
-  You can paste from the system clipboard into Neovim using "+p key
-  combination. The text in the system clipboard is pasted to where the
+  you can paste from the system clipboard into neovim using "+p key
+  combination. the text in the system clipboard is pasted to where the
   cursor is.
 
-  With gnome-terminal, you can always right click to get a copy, cut
-  paste menu where you can copy and past into the terminal. If Neovim is
+  with gnome-terminal, you can always right click to get a copy, cut
+  paste menu where you can copy and past into the terminal. if neovim is
   running in the terminal, it just thinks you typed it.
 
-  If all else fails, use nano to edit text files. It is brain-dead
-  simple and a good choice for the brain-dead. If you ever what to edit
+  if all else fails, use nano to edit text files. it is brain-dead
+  simple and a good choice for the brain-dead. if you ever what to edit
   programming source code files, html files, markdown files, system
   configuration files, csv database dump files - you will need to to
   learn how to use and configure something more powerful, like vim,
   neovim, or emacs.
 
-  I kept shortcuts for both alacritty and gnome-terminal in the dock for
+  i kept shortcuts for both alacritty and gnome-terminal in the dock for
   you to choose from.
 
 2023-10-15:
-  YES!!!!!!!!! This desktop has a tiling mode!!!
+  yes!!!!!!!!! this desktop has a tiling mode!!!
 
-  On the topbar, to the left of the power/network/bluetooth controls is
-  a button where you can put the desktop in tiling mode. A fairly
-  intuitive tiler. Alacritty plays very nicely in this mode. Can turn
-  off title bars too to gain some real estate. Firefox, calaculator,
+  on the topbar, to the left of the power/network/bluetooth controls is
+  a button where you can put the desktop in tiling mode. a fairly
+  intuitive tiler. alacritty plays very nicely in this mode. can turn
+  off title bars too to gain some real estate. firefox, calaculator,
   gnome-terminal keep their title bars.
 
-  In tiling mode still click focus, but windows can easily be
-  repositioned and resized with the mouse. Windows will also tab
-  themselves. Probably won't need screen ot tmux. Need to investigate
+  in tiling mode still click focus, but windows can easily be
+  repositioned and resized with the mouse. windows will also tab
+  themselves. probably won't need screen ot tmux. need to investigate
   keybindings for this mode.
 
 2023-10-29:
-  Have logged in in a while. Onepiece Cosmic desktop seems to be
+  have logged in in a while. onepiece cosmic desktop seems to be
   suspending the system again after only a few minutes of inactivity.
-  Need to turn this misfeature off FOREVER!!!
+  need to turn this misfeature off forever!!!
 
-  Will install a Gnome Extension called Caffeine to do this.
+  will install a gnome extension called caffeine to do this.
 
-  Pop!_OS 22.04 desktop is based on GNOME 42. First add Gnome Shell
-  Integration to firefox browser from https://extensions.gnome.org/
+  pop!_os 22.04 desktop is based on gnome 42. first add gnome shell
+  integration to firefox browser from https://extensions.gnome.org/
   website.
 
-  Well, when I launch the gnome extensions plugin from the browser, it
+  well, when i launch the gnome extensions plugin from the browser, it
   complains:
 
-    Your native host connector do not support following APIs: v6. Probably you should
-    upgrade native host connector or install plugins for missing APIs. Refer documentation
+    your native host connector do not support following apis: v6. probably you should
+    upgrade native host connector or install plugins for missing apis. refer documentation
     for instructions.
 
-  Hummmm...Something tells me Pop! OS does not want me to do it this
+  hummmm...something tells me pop! os does not want me to do it this
   way.
 
     $ apt search 'caffeine'
-    Sorting... Done
-    Full Text Search... Done
+    sorting... done
+    full text search... done
     caffeine/jammy,jammy 2.9.8-2 all
       prevent the desktop becoming idle in full-screen mode
 
     fonts-aenigma/jammy,jammy 0.0.20080511+dfsg-4 all
-      465 free TrueType fonts by Brian Kent
+      465 free truetype fonts by brian kent
 
     libcaffeine-java/jammy,jammy 2.6.2-1.1 all
-      High performance caching library
+      high performance caching library
 
-  Let's install it.
+  let's install it.
 
     $ sudo apt install 'caffeine'
-    Reading package lists... Done
-    Building dependency tree... Done
-    Reading state information... Done
-    The following additional packages will be installed:
+    reading package lists... done
+    building dependency tree... done
+    reading state information... done
+    the following additional packages will be installed:
       gir1.2-ayatanaappindicator3-0.1 python3-ewmh
-    Suggested packages:
+    suggested packages:
       python-ewmh-doc
-    The following NEW packages will be installed:
+    the following new packages will be installed:
       caffeine gir1.2-ayatanaappindicator3-0.1 python3-ewmh
     0 upgraded, 3 newly installed, 0 to remove and 51 not upgraded.
-    Need to get 61.0 kB of archives.
-    After this operation, 392 kB of additional disk space will be used.
-    Do you want to continue? [Y/n]
-    Get:1 http://apt.pop-os.org/ubuntu jammy/main amd64 gir1.2-ayatanaappindicator3-0.1 amd64 0.5.90-7ubuntu2 [5,822 B]
-    Get:2 http://apt.pop-os.org/ubuntu jammy/universe amd64 python3-ewmh all 0.1.6-2 [6,840 B]
-    Get:3 http://apt.pop-os.org/ubuntu jammy/universe amd64 caffeine all 2.9.8-2 [48.3 kB]
-    Fetched 61.0 kB in 0s (290 kB/s)
-    Selecting previously unselected package gir1.2-ayatanaappindicator3-0.1.
-    (Reading database ... 260500 files and directories currently installed.)
-    Preparing to unpack .../gir1.2-ayatanaappindicator3-0.1_0.5.90-7ubuntu2_amd64.deb ...
-    Unpacking gir1.2-ayatanaappindicator3-0.1 (0.5.90-7ubuntu2) ...
-    Selecting previously unselected package python3-ewmh.
-    Preparing to unpack .../python3-ewmh_0.1.6-2_all.deb ...
-    Unpacking python3-ewmh (0.1.6-2) ...
-    Selecting previously unselected package caffeine.
-    Preparing to unpack .../caffeine_2.9.8-2_all.deb ...
-    Unpacking caffeine (2.9.8-2) ...
-    Setting up python3-ewmh (0.1.6-2) ...
-    Setting up gir1.2-ayatanaappindicator3-0.1 (0.5.90-7ubuntu2) ...
-    Setting up caffeine (2.9.8-2) ...
-    Processing triggers for hicolor-icon-theme (0.17-2) ...
-    Processing triggers for gnome-menus (3.36.0-1ubuntu3) ...
-    Processing triggers for man-db (2.10.2-1) ...
-    Processing triggers for desktop-file-utils (0.26-1ubuntu3) ...
+    need to get 61.0 kb of archives.
+    after this operation, 392 kb of additional disk space will be used.
+    do you want to continue? [y/n]
+    get:1 http://apt.pop-os.org/ubuntu jammy/main amd64 gir1.2-ayatanaappindicator3-0.1 amd64 0.5.90-7ubuntu2 [5,822 b]
+    get:2 http://apt.pop-os.org/ubuntu jammy/universe amd64 python3-ewmh all 0.1.6-2 [6,840 b]
+    get:3 http://apt.pop-os.org/ubuntu jammy/universe amd64 caffeine all 2.9.8-2 [48.3 kb]
+    fetched 61.0 kb in 0s (290 kb/s)
+    selecting previously unselected package gir1.2-ayatanaappindicator3-0.1.
+    (reading database ... 260500 files and directories currently installed.)
+    preparing to unpack .../gir1.2-ayatanaappindicator3-0.1_0.5.90-7ubuntu2_amd64.deb ...
+    unpacking gir1.2-ayatanaappindicator3-0.1 (0.5.90-7ubuntu2) ...
+    selecting previously unselected package python3-ewmh.
+    preparing to unpack .../python3-ewmh_0.1.6-2_all.deb ...
+    unpacking python3-ewmh (0.1.6-2) ...
+    selecting previously unselected package caffeine.
+    preparing to unpack .../caffeine_2.9.8-2_all.deb ...
+    unpacking caffeine (2.9.8-2) ...
+    setting up python3-ewmh (0.1.6-2) ...
+    setting up gir1.2-ayatanaappindicator3-0.1 (0.5.90-7ubuntu2) ...
+    setting up caffeine (2.9.8-2) ...
+    processing triggers for hicolor-icon-theme (0.17-2) ...
+    processing triggers for gnome-menus (3.36.0-1ubuntu3) ...
+    processing triggers for man-db (2.10.2-1) ...
+    processing triggers for desktop-file-utils (0.26-1ubuntu3) ...
 
-  Do a full reboot and see what shows up in the System Tray (upper right
+  do a full reboot and see what shows up in the system tray (upper right
   corner).
 
-  Well, nothing is showing up in the system tray upon reboot or
-  launching the caffine Python script from the command line. After
-  several attemps, I notice a bunch are running in the background.
+  well, nothing is showing up in the system tray upon reboot or
+  launching the caffine python script from the command line. after
+  several attemps, i notice a bunch are running in the background.
 
-  Lets try another reboot and see what is running.
+  lets try another reboot and see what is running.
 
     $ ps -fu buggy | grep caffeine
     buggy       2277    2089  4 11:08 ?        00:00:00 /usr/bin/python3 /usr/bin/caffeine
     buggy       2594    2570  0 11:08 pts/0    00:00:00 grep --color=auto caffeine
 
-  Seems to be a pattern. Don't know if it ia a Pop! OS, Ubuntu, or
-  Debian thing, but when apt is used to install software, apt configures
+  seems to be a pattern. don't know if it ia a pop! os, ubuntu, or
+  debian thing, but when apt is used to install software, apt configures
   and enables it.
   it & enables it.
 
-  The Cosmic Desktop on Pop!_OS 22.04 is implemented using System 76
-  Gnome extensions. I guess the caffine extension is incompatible with
-  the Cosmic system tray.
+  the cosmic desktop on pop!_os 22.04 is implemented using system 76
+  gnome extensions. i guess the caffine extension is incompatible with
+  the cosmic system tray.
 
-  Let's see if it keeps the system from suspending itself.
+  let's see if it keeps the system from suspending itself.
 
-  After 23 minutes system was still alive, but there was a notification
+  after 23 minutes system was still alive, but there was a notification
   in the upper middle of the screen about the system was soon to suspend
-  due inactivity. Another notification came in on the right, but was
-  gone when I went to read it.
+  due inactivity. another notification came in on the right, but was
+  gone when i went to read it.
 
-  Let it sit again, starting stopwatch.
+  let it sit again, starting stopwatch.
 
-  After an hour and the system was suspended.
+  after an hour and the system was suspended.
 
-  Looked at /usr/bin/caffeine, it is a Python GTK GUI application. Looks
-  to be using GTK3 while I think Cosmic uses GTK4. This piece of junk
-  looks like it was written by a script kiddie based on Stack Overflow
-  answers. Just swallows exceptions. Seems to be doing very generic XDG
-  and Gnome desktop things. Geared to when you have screen app running
+  looked at /usr/bin/caffeine, it is a python gtk gui application. looks
+  to be using gtk3 while i think cosmic uses gtk4. this piece of junk
+  looks like it was written by a script kiddie based on stack overflow
+  answers. just swallows exceptions. seems to be doing very generic xdg
+  and gnome desktop things. geared to when you have screen app running
   and you are not interacting with keyboard or mouse.
 
-  I will unenstall it.
+  i will unenstall it.
 
     $ sudo apt remove caffeine
 
-  Also, when I launch the Firefox Gnome Extension
+  also, when i launch the firefox gnome extension
 
-    Your native host connector do not support following APIs: v6.
-    Probably you should upgrade native host connector or install plugins
-    for missing APIs. Refer documentation for instructions.
+    your native host connector do not support following apis: v6.
+    probably you should upgrade native host connector or install plugins
+    for missing apis. refer documentation for instructions.
 
-  I think trying to "fix" this will break what System76's Cosmic desktop
-  decorated Gnome Shell.
+  i think trying to "fix" this will break what system76's cosmic desktop
+  decorated gnome shell.
 
 2023-10-29:
-  Under Settings -> Power I fixed the suspend issue. System will
+  under settings -> power i fixed the suspend issue. system will
   suspend after a half hour when on battery power only.
 
 2023-10-29:
-  Time to look at gaming.
+  time to look at gaming.
 
     $ sudo apt install steam
     $ sudo apt install lutris
 
-  Now reboot and see where we are at.
+  now reboot and see where we are at.
 
-  I am having trouble passing the Stream Cap'tas and my Lutris logins are
+  i am having trouble passing the stream cap'tas and my lutris logins are
   all messed up....
 
-  You are on your own.
+  you are on your own.
 
 2023-10-29:
-  Some final system updates before shipping the computer East.
+  some final system updates before shipping the computer east.
 
     $ sudo apt update
     $ sudo apt upgrade
 
-  Install system Neovim, maybe on an upgrade we will get a more modern
+  install system neovim, maybe on an upgrade we will get a more modern
   version.
 
     $ sudo apt install neovim
 
-  The flatpak is still installed:
+  the flatpak is still installed:
 
-    System  -> nvim
-    Flatpak -> nv
+    system  -> nvim
+    flatpak -> nv
 
 2023-12-22:
-  Due to sandboxing, had to create symlink
+  due to sandboxing, had to create symlink
 
     ~/.var/app/io.neovim.nvim/config/nvim -> /home/buggy/.config/nvim
 
-  for the flatpak to find its configuration files. I wish it would adhere to
-  DSG standards. Lazy.nvim installed its plugins there
+  for the flatpak to find its configuration files. i wish it would adhere to
+  dsg standards. lazy.nvim installed its plugins there
 
     ~/.var/app/io.neovim.nvim/data/nvim/laxy
 
 2023-12-23:
-  Uninstalled the Neovim Flatpak using Pop Shop.
+  uninstalled the neovim flatpak using pop shop.
 
-  Sandbox did not let me run executanles from /usr/bin. Actually had its
-  own /usr with its own versions of system utilities. But not rg nor fd.
+  sandbox did not let me run executanles from /usr/bin. actually had its
+  own /usr with its own versions of system utilities. but not rg nor fd.
 
-  Alarcritty Terminl Shell $PATH:
+  alarcritty terminl shell $path:
     /home/buggy/.nix-profile/bin
     /home/buggy/.cabal/bin
     /home/buggy/.local/bin
@@ -838,7 +838,7 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
     /usr/games
     /usr/local/games
 
-  Neovim Terminal Shell $PATH:
+  neovim terminal shell $path:
     /app/bin
     /usr/bin
     /home/buggy/.var/app/io.neovim.nvim/data/node/bin
@@ -846,7 +846,7 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
     /home/buggy/.var/app/io.neovim.nvim/data/python/bin
     /home/buggy/.var/app/io.neovim.nvim/data/gem/ruby/3.2.0/bin
 
-  Tried "mounting" host directories via
+  tried "mounting" host directories via
 
     $ flatpak --filesystem=host inmneovim,nvim
 
@@ -854,13 +854,13 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
 
 2023-12-23:
 
-  Let's install from Neovim's PPA
+  let's install from neovim's ppa
 
     $ sudo add-apt-repository ppa:neovim-ppa/stable
     $ sudo apt update
     $ sudo apt install neovim
 
-    NVIM v7.2.3-stable
+    nvim v7.2.3-stable
     7.2-3~bpo22.04.1~ppa1
 
     $ sudo apt remove neovim
@@ -869,133 +869,210 @@ Purpose: To reimage a 2017 Windows 10 PC for my daughters with a Linux.
     $ sudo apt update
     $ sudo apt install neovim
 
-    NVIM v0.10.0-dev
+    nvim v0.10.0-dev
     0.10.0~ubuntu1+git202312222107-031088fc0-c60402a16-2582e8055~ubuntu22.04.1
 
-  The stable version is too out of date and the development version
-  is too new. The one on Arch Linux is 0.9.2 or 0.9,3. Will stay with
-  the Dev and periodically upgrade until I find a more stable one.
+  the stable version is too out of date and the development version
+  is too new. the one on arch linux is 0.9.2 or 0.9,3. will stay with
+  the dev and periodically upgrade until i find a more stable one.
 
-  Took several iterations before Lazy got everthing loaded correctly.
+  took several iterations before lazy got everthing loaded correctly.
 
-  Will work to get LSP & Nix working.
+  will work to get lsp & nix working.
 
 2023-12-24:
-  Trying to get LSP working with Neovin.
+  trying to get lsp working with neovin.
 
-  Commented out from "excluded_servers" in lsp.lua: bashls, lua_ls,
+  commented out from "excluded_servers" in lsp.lua: bashls, lua_ls,
 
-  Install Clang LSP server, formatter, linter, and clang itself:
+  install clang lsp server, formatter, linter, and clang itself:
 
     $ sudo apt install clang clang-format clang-tidy clangd
 
-  Install Nix package manager system wide.
+  install nix package manager system wide.
 
-    sh <(curl -L https://nixos.org/nix/install) --daemon
+    sh <(curl -l https://nixos.org/nix/install) --daemon
 
 2023-12-24:
-  Install Nerd-Fontd.
+  install nerd-fontd.
 
-  From https://www.nerdfonts.com/font-downloads download
-  RobotoMono.zip and FiraCode.zip
+  from https://www.nerdfonts.com/font-downloads download
+  robotomono.zip and firacode.zip
 
     $ mkdir ~/.local/share/fonts
-    $ ax RobotoMono.zip
+    $ ax robotomono.zip
     $ mv *.ttf ~/.local/share/fonts/
-    $ ax FiraCode.zip
+    $ ax firacode.zip
     $ mv *.ttf ~/.local/share/fonts/
 
 2023-12-26:
-  Installed pyenv. Went to build Python 3.11.7 but needed more
+  installed pyenv. went to build python 3.11.7 but needed more
   dependencies.
 
-  From https://github.com/pyenv/pyenv/wiki#suggested-build-environment
+  from https://github.com/pyenv/pyenv/wiki#suggested-build-environment
 
     $ sudo apt install build-essential libssl-dev zlib1g-dev \
       libbz2-dev libreadline-dev libsqlite3-dev curl \
       libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev \
       libffi-dev liblzma-dev
 
-  Now this works
+  now this works
 
     $ pyenv install 3.11.7
 
-  Let's switch to 3.11.7 and create a virtual environment.
+  let's switch to 3.11.7 and create a virtual environment.
 
     $ cd ~/devel/python_envs/
     $ pyenv shell 3.11.7
     $ python --version
-    Python 3.11.7
+    python 3.11.7
     $ python -m venv grs
     $ source grs/bin/activate
     $ python
     ...
     $ deactiv
 
-  TODO:
+  todo:
 
-    1. Port my Fish Python environment infrastructure over to Bash.
-    2. Adjust Fish infrastructure for pyenv, since I now know how to
-       build later versions of Python.
-    3. Maybe adjust Bash & Fish Python infrastructure to handle both
+    1. port my fish python environment infrastructure over to bash.
+    2. adjust fish infrastructure for pyenv, since i now know how to
+       build later versions of python.
+    3. maybe adjust bash & fish python infrastructure to handle both
        pyenv and virtual environments together instead of orthogonally.
 
 2024-04-27:
-  Left gauss17 charger in Denver airport. Need to configure onepiece for
-  softare development. Daughters have no interest in learning bash. Will
+  left gauss17 charger in denver airport. need to configure onepiece for
+  softare development. daughters have no interest in learning bash. will
   install fish:
 
     $ sudo apt-get upgrade
     $ sudo apt-get upgrade fish
     $ sudo usermod buggy -s /usr/bin/fish
 
-  Had to reboot before change took effect in Cosmic Desktop. Was
+  had to reboot before change took effect in cosmic desktop. was
   immediate in virtual consoles.
 
-  Will be using grsBeowulf GitHub account. Don't know if I set up
-  signing or not. I was hoping this file would show, but it doed not.
+  will be using grsbeowulf github account. don't know if i set up
+  signing or not. i was hoping this file would show, but it doed not.
 
-  Went to GitHub, I did set up an SSH key, but 'git commit -S' not
+  went to github, i did set up an ssh key, but 'git commit -s' not
   working.
 
 2024-04-29:
-  Fish was too old!!! Did not understand "set -f".
+  fish was too old!!! did not understand "set -f".
 
     $ sudo add-apt-repository ppa:fish-shell/release-3
     $ sudo apt update
     $ sudo apt install fish
 
 2024-04-29:
-  Decided to get bash, python and nvim working better before addressing fish.
+  decided to get bash, python and nvim working better before addressing fish.
 
-    For nvim (from :checkhealth)
+    for nvim (from :checkhealth)
 
       $ sudo apt install fswatch
       $ sudo apt install nodejs
       $ sudo apt install npm
       $ sudo npm install -g neovim
 
-      Had to download tree-sitter from tree-sitter GitHub page. Put it in my
-      ~/bin directory. I guess it is too much of a moving target for Pop OS's
-      repos. Version 0.22.5 for Linux-X64.
+      had to download tree-sitter from tree-sitter github page. put it in my
+      ~/bin directory. i guess it is too much of a moving target for pop os's
+      repos. version 0.22.5 for linux-x64.
 
-    For bash scripting, needed realpath
+    for bash scripting, needed realpath
 
       $ sudo apt install coreutils
 
-    For python
+    for python
 
       $ /usr/bin/python --version
-      Python 3.10.12
+      python 3.10.12
 
-    This is so old, typing module not available. IMHO Python without the typing
+    this is so old, typing module not available. imho python without the typing
     module is unacceptable.
 
-    I hate doing this but pyenv is not in the Pop OS repos.
+    i hate doing this but pyenv is not in the pop os repos.
 
       $ curl https://pyenv.run | bash
 
-    It did not edit my .bashrc (good) but the info message regarding the .bashrc
-    bootstrap was incorrect. It indicated ~/.pyenv as the install location but
+    it did not edit my .bashrc (good) but the info message regarding the .bashrc
+    bootstrap was incorrect. it indicated ~/.pyenv as the install location but
     pyenv was installed in  ~/.local/share/pyenv instead.
 
+2025-12-20:
+  Previously I made a big mistake. I managed to install PoPOS 22.04 instead of
+  24.04. was able to patch it up to a fairly modernish cosmic de via the
+  pop shop and sudo apt upgrade.
+
+  doing a proper in place upgrade
+
+    $ sudo pop-upgrade release upgrade -f
+
+  after an initial mock install and two reboots i am at
+
+       $ neofetch
+                /////////////                grs@onepiece
+            /////////////////////            ------------
+         ///////*767////////////////         os: pop!_os 24.04 lts x86_64
+       //////7676767676*//////////////       host: precision 3520
+      /////76767//7676767//////////////      kernel: 6.17.9-76061709-generic
+     /////767676///*76767///////////////     uptime: 32 mins
+    ///////767676///76767.///7676*///////    packages: 2094 (dpkg), 9 (flatpak)
+    ////////767676//76767///767676////////   shell: bash 5.2.21
+    /////////76767676767////76767/////////   resolution: 1920x1080
+    //////////76767676//////7676//////////   de: cosmic
+    ///////////,7676,///////767///////////   theme: adw-gtk3-dark [gtk3]
+    ////////////*7676///////76////////////   icons: cosmic [gtk3]
+    //////////////7676////////////////////   terminal: cosmic-term
+    ///////////////7676///767////////////    cpu: intel xeon e3-1505m v6 (8) @ 4.000ghz
+     //////////////////////'////////////     gpu: nvidia quadro m620 mobile
+      //////.7676767676767676767,//////      gpu: intel hd graphics p630
+       /////767676767676767676767/////       memory: 3102mib / 31953mib
+         ///////////////////////////
+            /////////////////////
+                /////////////
+
+  One interesting factoid is
+
+    $ ls -l /etc/alternatives/vi*
+    lrwxrwxrwx 1 root root 13 Dec 20 18:02 /etc/alternatives/vi -> /usr/bin/nvim
+    lrwxrwxrwx 1 root root 24 Dec 20 18:02 /etc/alternatives/view -> /usr/libexec/neovim/view
+    lrwxrwxrwx 1 root root 13 Dec 20 18:02 /etc/alternatives/vim -> /usr/bin/nvim
+    lrwxrwxrwx 1 root root 27 Dec 20 18:02 /etc/alternatives/vimdiff -> /usr/libexec/neovim/vimdiff
+
+  with
+
+    $ nvim --version
+    NVIM v0.9.5
+    Build type: Release
+    LuaJIT 2.1.1703358377
+
+    system vimrc file: "$VIM/sysinit.vim"
+    fall-back for $VIM: "/usr/share/nvim"
+
+    Run :checkhealth for more info
+
+  This is a bit out-of-date for my Neovim configuration, so I need to install
+  the PPA version.
+
+    $ sudo add-apt-repository ppa:neovim-ppa/unstable
+    $ nvim --version
+    NVIM v0.12.0-dev
+    Build type: RelWithDebInfo
+    LuaJIT 2.1.1703358377
+    Run "nvim -V1 -v" for more info
+
+  Config and plugins a little out-of-date but Neovim completely usable. Will
+  finish after getting fish updated.
+
+    $ sudo add-apt-repository ppa:fish-shell/release-4
+    $ sudo aot full-upgrade
+
+  The "full-upgrade" is needed or the update is "held back".
+
+    $ fish --version
+    fish, version 4.2.1
+
+  Upgrade my user's shell.
+
+    $ sudo usermod -s /usr/bin/fish grs

@@ -2504,8 +2504,8 @@ Why not do the tool in Python? Same reason pyenv uses Bash, if my Python
 environment is totally screwed up, I don't want my tool that I use to
 fix the environment screwed up too.
 
-The ve function does not depend on pyenv, but will use it if it is the
-path. This is a design feature if I have to deploy the tool to an
+The ve function does not depend on pyenv, but will use it if it is on
+the path. This is a design feature if I have to deploy the tool to an
 environment which lacked pyenv.
 
 Thought it would take a day or two to develop, took about 6 days.
@@ -2648,6 +2648,4 @@ tweaking and get back to the course.
 
 ## 2024-04-19:
 
-Converted this file from text to markdown. Will fo "markdown feedback"
-later this evening.
-
+Converted this file from text to markdown.

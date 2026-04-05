@@ -58,6 +58,7 @@ Set Theory
   union:          ∪  Unicode: 222a
 
 Math symbols:
+  nabla:            ∇   Unicode: 2207
   partial deriv:    ∂  Unicode: 2202 (Partial Differentiation)
   N-ary product:    ∏  Unicode: 220f
   minus sign:       −  Unicode: 2212
@@ -74,6 +75,14 @@ Math symbols:
   cube root:        ∛  Unicode: 221B
   congruence        ≡  Unicode: 2261
   composition       ∘  Unicode: 2218
+  less than:        ≤  Unicode: 2264
+  less than:        ≥  Unicode: 2265
+  approx equal:     ≈  Unicode: 2248
+  naturals:         ℕ  Unicode: 2115
+  integers:         ℤ  Unicode: 2124
+  rational:         ℚ  Unicode: 211a
+  reals:            ℝ  Unicode: 211d
+  complex:          ℂ  Unicode: 2102
 
 Useful in illustrating math calculations:
   Horizontal Ellipsis:  …  Unicode: 2026
@@ -87,13 +96,6 @@ For base vectors in R³:
   "j-hat":  𝐣   Unicode: 1d423
   "k-hat":  𝐤   Unicode: 1d424
 
-Math symbols:
-  nabla:    ∇   Unicode: 2207
-  naturals: ℕ   Unicode: 2115
-  integers: ℤ   Unicode: 2124
-  rational: ℚ   Unicode: 211a
-  reals:    ℝ   Unicode: 211d
-  complex:  ℂ   Unicode: 2102
 
 Large Greek Letters:
   alpha:   Α  Unicode: 0391

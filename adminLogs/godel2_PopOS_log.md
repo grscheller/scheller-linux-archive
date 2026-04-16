@@ -1238,7 +1238,7 @@ Next step is to look up what the error means.
 After some searching, turns out the rust-analyzer is not installed, just
 the "stub" for it.
 
-```
+```fish
     $ rustup component add rust-analyzer
 ```
 
@@ -1248,7 +1248,7 @@ After this, the LSP worked.
 
 Used rustup to add missing rust toolchain components.
 
-```
+```fish
     $ rustup component add cargo clippy llvm-tools rls \
              rust-analysis rust-analyzer rust-docs rust-src \
              rust-std rustc
@@ -1270,7 +1270,7 @@ Used rustup to add missing rust toolchain components.
 
 Then installed lldb which rust-lldb needs.
 
-```
+```bash
     $ sudo apt install lldb
     $ lldb --version
     lldb version 18.1.3
@@ -1311,7 +1311,7 @@ With more gusto than intelligence, lets run it
 
 Seems to have broken Neovim too.
 
-```
+```bash
     $ nvim --version
     NVIM v0.9.5
     Build type: Release
@@ -1350,7 +1350,7 @@ where there was a problem when Ansible was installed from a PPA
 
 Current fish version bit prehistoric, version 3.7.1. 
 
-```
+```fish
    $ sudo apt autoremove
    $ sudo add-apt-repository ppa:fish-shell/release-4
    $ sudo apt full-upgrade
@@ -1363,7 +1363,7 @@ Then rebooted.
 From `https://github.com/pop-os/cosmic-epoch/issues/1704`, here is the
 way to update Pop!OS.
 
-```
+```fish
    sudo apt update
    sudo apt full-upgrade
    sudo pop-upgrade release upgrade -f
@@ -1372,7 +1372,7 @@ way to update Pop!OS.
 
 This is what happened when I ran the third command.
 
-```
+```fish
    $ sudo pop-upgrade release upgrade -f
    checking if pop-upgrade requires an update
    Current Release: 24.04
@@ -1392,7 +1392,7 @@ I didn't think we were moving off nobel.
 
 Any case, fish and Neovim were downgraded.
 
-```
+```fish
    $ sudo add-apt-repository ppa:neovim-ppa/unstable
    $ sudo apt update
    $ sudo apt upgrade
@@ -1400,13 +1400,13 @@ Any case, fish and Neovim were downgraded.
 
 Saw something about fish being held back.
 
-```
+```fish
    $ sudo apt full-upgrade
 ```
 
 Fish and Neovim now back to where I need them to be.
 
-2025-11-16:
+## 2025-11-16:
 
 NVIDIA drivers broke when I did a previous PoP Store update.
 
@@ -1434,7 +1434,7 @@ Success! Desktop working.
     6.17.4-76061704-generic
 ```
 
-2025-11-16:
+## 2025-11-16:
 
 Change was made to not let Flatpak apps use Data Control Wayland
 Protocol.
@@ -1467,9 +1467,89 @@ clipboard manager. Middle mouse button paste does not, good!
 The clipboard manager seems to hang browsers. I removed it from my
 desktop top panel, but have not uninstalled it.
 
-2025-12-12:
+## 2025-12-12:
 
 After a system update, lost the console. No GUI, no commandline. 
 Able to ssh in.
 
 Reinstalling NVIDIA drives, see 2025-11-16.
+
+2026-04-15:
+
+### Enabling automatic system updates and upgrades.
+
+```fish
+    $ sudo systemctl enable --now apt-daily.timer
+    $ sudo systemctl enable --now apt-daily-upgrade.timer
+```
+### Enabled automatic system reboot every Sunday at 2:00 AM.
+
+Created /etc/systemd/system/weekly-reboot.service config file.
+
+```
+    # Systemd service unit to reboot system every Sunday at 2:00 AM.
+    # See also corresponding timer unit at /etc/systemd/system/weekly-reboot.timer
+    #
+    # Created by Geoffrey Scheller on Apr 15, 2026.
+
+    [Unit]
+    Description=Weekly system reboot
+
+    [Service]
+    Type=oneshot
+    ExecStart=/sbin/reboot
+```
+
+Created /etc/systemd/system/weekly-reboot.timer config file.
+
+```
+    # Systemd timer unit to reboot system every Sunday at 2:00 AM.
+    # See also corresponding system unit at /etc/systemd/system/weekly-reboot.service
+    #
+    # Created by Geoffrey Scheller on Apr 15, 2026.
+
+    [Unit]
+    Description=Trigger weekly reboot every Sunday at 2:00 AM
+
+    [Timer]
+    OnCalendar=Sun *-*-* 02:00:00
+    AccuracySec=1s
+    Persistent=true
+
+    [Install]
+    WantedBy=timers.target
+```
+
+```fish
+    $ sudo systemctl daemon-reload
+    $ sudo systemctl enable weekly-reboot.timer
+    Created symlink /etc/systemd/system/timers.target.wants/weekly-reboot.timer → /etc/systemd/system/weekly-reboot.timer.
+    $ sudo systemctl start weekly-reboot.timer
+```
+Verify.
+
+```fish
+    $ systemctl status weekly-reboot.timer
+    ● weekly-reboot.timer - Trigger weekly reboot every Sunday at 2:00 AM
+        Loaded: loaded (/etc/systemd/system/weekly-reboot.timer; enabled; preset: enabled)
+        Active: active (waiting) since Wed 2026-04-15 13:01:29 MDT; 18min ago
+       Trigger: Sun 2026-04-19 02:00:00 MDT; 3 days left
+      Triggers: ● weekly-reboot.service
+
+    $ systemctl list-timers weekly-reboot.timer
+    NEXT                          LEFT LAST PASSED UNIT                ACTIVATES
+    Sun 2026-04-19 02:00:00 MDT 3 days -         - weekly-reboot.timer weekly-reboot.service
+
+    1 timers listed.
+    Pass --all to see loaded but inactive timers, too.
+```
+
+### Installed claude-code locally for my personal use.
+
+```fish
+    $ npm install --location=user @anthropic-ai/claude-code
+
+    added 3 packages in 535ms
+```
+Note that claude is an executable and has moved away from
+using npm to install it.

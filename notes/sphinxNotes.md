@@ -26,11 +26,11 @@ These are the most common in docstrings and use the `:name:` syntax:
 
 ### Variables
 
-| Variable      | Description    |
-|:-------------:|:--------------:|
-| `:var name:`  | module         |
-| `:ivar name:` | instance       |
-| `:cvar name:` | class variable |
+| Variable      | Description                                |
+|:-------------:|:------------------------------------------:|
+| `:var name:`  | module scoped variable (outside any class) |
+| `:ivar name:` | instance variable (set on self)            |
+| `:cvar name:` | class variable - a ClassVar (set on cls)   |
 
 
 ## Directives (.. directive::)

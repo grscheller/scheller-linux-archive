@@ -97,4 +97,96 @@ vocabulary with the original but inverts its actual power structure.
 Your sarcastic formulation is funny because it describes the endpoint of
 that process with uncomfortable precision.
 
+### Me
 
+What are some new legitimate tends in software development?
+
+### Claude
+
+Great question, and worth distinguishing between genuine engineering
+advances and the next wave of vocabulary-driven consulting products.
+
+#### AI-Assisted Development — genuinely transformative but poorly understood
+
+This is real and significant. Tools like GitHub Copilot, and more
+recently agentic coding tools, are meaningfully changing the economics
+of certain development tasks. The honest assessment is that they are
+extraordinarily good at boilerplate, test generation, and
+well-understood algorithmic problems, and still quite unreliable at
+system-level reasoning, architectural judgment, and novel problem
+solving. The risk is that organizations treat AI assistance as
+a substitute for engineering judgment rather than an amplifier of it
+— which would recreate the Agile dynamic you described, but faster and
+with higher stakes.
+
+#### Platform Engineering is a legitimate organizational response to real complexity
+
+The DevOps movement, for all its consulting-product qualities,
+identified a genuine problem — the wall between development and
+operations created bad incentives and slow feedback loops. Platform
+Engineering is a maturation of that idea. Rather than making every
+developer responsible for infrastructure expertise, you build internal
+developer platforms that abstract infrastructure complexity behind
+well-designed interfaces. Done well this is serious engineering work.
+Done poorly it is just a renamed operations team with a Kubernetes
+cluster and a Confluence page.
+
+#### Observable Systems and Reliability Engineering
+
+Site Reliability Engineering, originating at Google, represents
+a genuinely disciplined approach to production systems — defining error
+budgets, service level objectives, and treating reliability as
+a quantifiable engineering property rather than a vague aspiration. The
+observability movement — moving beyond simple logging and metrics toward
+structured telemetry that lets you ask arbitrary questions about system
+behavior — is a real technical advance. This is one area where the
+practice is ahead of the consulting vocabulary, which is usually a good
+sign.
+
+#### WebAssembly is quietly significant
+
+WebAssembly is probably the most underappreciated genuine technical
+development of the last decade. It allows near-native performance
+execution in the browser and increasingly outside it, and it is
+language-agnostic — you can compile Rust, C, C++, and a growing list of
+other languages to it. Its longer-term implication is that the browser's
+historical constraint of JavaScript as the only executable language may
+eventually dissolve. This has not yet produced its full impact but the
+trajectory is meaningful.
+
+#### Rust as a systems programming shift
+
+Rust's memory safety guarantees without garbage collection represent
+a genuine engineering advance over C and C++ for systems programming.
+The US government's cybersecurity agencies have now explicitly
+recommended moving away from memory-unsafe languages, which gives Rust
+institutional tailwind beyond just developer enthusiasm. This is a case
+where a language is gaining adoption because it solves a problem
+— memory safety vulnerabilities — that has caused decades of serious
+security failures. That is a legitimate technical reason for adoption,
+which distinguishes it from fashion-driven language cycles.
+
+#### Data Mesh as an architectural idea — with caveats
+
+The idea that large organizations should treat data as a product owned
+by domain teams rather than centralizing everything in a monolithic data
+warehouse addresses a real organizational scaling problem. The
+underlying insight is sound. However it has already attracted
+significant consulting vocabulary overhead and many implementations use
+the terminology without the organizational discipline required to make
+it work, which should be a familiar pattern to you by now.
+
+#### The most honest meta-observation
+
+The legitimate trends share a common characteristic — they are responses
+to specific, measurable engineering problems: memory safety
+vulnerabilities, production system opacity, infrastructure complexity,
+JavaScript performance constraints. When a trend can articulate
+a specific technical problem it solves and offer measurable evidence
+that it solves it, that is a reasonable signal of legitimacy. When
+a trend leads with organizational transformation vocabulary and follows
+with technical specifics reluctantly if at all, the Agile pattern is
+probably repeating itself.
+
+The field is genuinely advancing, but the signal-to-noise ratio requires
+the same critical evaluation it always has.

@@ -4,7 +4,7 @@
 
 On 2026-05-15.
 
-### Me
+### Me:
 
 I work for an organization that embraces Agile software development.
 But except for vocabulary I see no real difference than want I
@@ -13,7 +13,7 @@ I say agile development is a scheme for millennials to lead software
 development projects without having to learn to code. What makes this
 so humorously funny is that I think there is an element of truth in it.
 
-### Claude
+### Claude:
 
 Your observation is sharp, and the humor lands precisely because it
 identifies a real sociological phenomenon dressed in methodological
@@ -97,11 +97,11 @@ vocabulary with the original but inverts its actual power structure.
 Your sarcastic formulation is funny because it describes the endpoint of
 that process with uncomfortable precision.
 
-### Me
+### Me:
 
 What are some new legitimate tends in software development?
 
-### Claude
+### Claude:
 
 Great question, and worth distinguishing between genuine engineering
 advances and the next wave of vocabulary-driven consulting products.

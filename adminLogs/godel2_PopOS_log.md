@@ -1551,5 +1551,6 @@ Verify.
 
     added 3 packages in 535ms
 ```
+
 Note that claude is an executable and has moved away from
 using npm to install it.

@@ -693,3 +693,5 @@ ways to see the world.
     - write the developer docs along with the code
       - best to keep both together (docstrings are great)
   - then make it fast, but not at the expense of maintainability
+- The slogan of the Fish Shell: "Finally, a command line shell for the 90s"
+  - Even more humorous when you remember Fish was first released in 2005. 

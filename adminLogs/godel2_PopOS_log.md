@@ -1462,7 +1462,7 @@ Revisionist history:
 Now works. ``ctrl-shift-c`` and ``ctrl-shift-p`` interact with the
 clipboard manager. Middle mouse button paste does not, good!
 
-2025-12-08:
+## 2025-12-08:
 
 The clipboard manager seems to hang browsers. I removed it from my
 desktop top panel, but have not uninstalled it.
@@ -1474,7 +1474,7 @@ Able to ssh in.
 
 Reinstalling NVIDIA drives, see 2025-11-16.
 
-2026-04-15:
+## 2026-04-15:
 
 ### Enabling automatic system updates and upgrades.
 
@@ -1554,3 +1554,10 @@ Verify.
 
 Note that claude is an executable and has moved away from
 using npm to install it.
+
+## 2026-06-11:
+
+Had to reinstall the Rust toolchain and rebuild tree-sitter
+for Neovim due to tree-sitter changes.
+
+Repeated on hamilton4, see hamilton4_PopOS_log.md for details.

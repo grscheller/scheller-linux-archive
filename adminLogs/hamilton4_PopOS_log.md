@@ -475,7 +475,7 @@ Repeated rust installation and fish/nvim configuration changes done on
 godel2 and noether2, except I did a complete install without modifying
 my path.
 
-```
+```fish
     $ curl -f https://sh.rustup.rs | sh
     ...
     info: downloading component 'cargo'
@@ -493,7 +493,7 @@ my path.
 
 Then installed lldb which rust-lldb needs.
 
-```
+```fish
     $ sudo apt install lldb
     $ lldb --version
     lldb version 18.1.3
@@ -505,7 +505,7 @@ Then installed lldb which rust-lldb needs.
 
 Current fish version bit prehistoric, version 3.7.1. 
 
-```
+```fish
    $ sudo apt autoremove
    $ sudo add-apt-repository ppa:fish-shell/release-4
    $ sudo apt full-upgrade
@@ -518,7 +518,7 @@ Then rebooted.
 Getting a DVD burned, here are some commands thrown around. Will redo
 a bit more systematically on noether2.
 
-```
+```fish
     $ sudo apt install dvd+rw-tools brasero genisoimage
     $ sudo apt install growisofs
     $ sudo apt install wodim
@@ -531,7 +531,7 @@ For some reason, `/dev/sd0` on PopOS/Ubuntu is readonly.
 
 Enabled data control Wayland protocol.
 
-```
+```fish
 $ echo 'export COSMIC_DATA_CONTROL_ENABLED=1' | sudo tee /etc/profile.d/data_control_cosmic.sh > /dev/null
 
 ```
@@ -566,3 +566,16 @@ Running this command now yields
 ```
 
 Monitor the terminal for prompts requiring **Y** or **ENTER**.
+
+## 2026-06-11:
+
+Had to reinstall the Rust toolchain and rebuild tree-sitter
+for Neovim due to tree-sitter changes.
+
+Repeated what I did on hamilton4.
+
+```fish
+    $ sudo apt install libclang-dev
+    $ rustup update
+    $ cargo install tree-sitter-cli
+```

@@ -579,3 +579,23 @@ Repeated what I did on hamilton4.
     $ rustup update
     $ cargo install tree-sitter-cli
 ```
+
+## 2026-06-13:
+
+Added passphrases to my two keys in my `~/.ssh/` directory.
+
+```console
+    $ ssh-keygen -p -f ~/.ssh/id_ed25519
+    Key has comment 'grs@hamilton4'
+    Enter new passphrase (empty for no passphrase):
+    Enter same passphrase again:
+    Your identification has been saved with the new passphrase.
+
+    $ ssh-keygen -p -f ~/.ssh/id_ed25519_grscheller
+    Key has comment 'geoffrey@scheller.com'
+    Enter new passphrase (empty for no passphrase):
+    Enter same passphrase again:
+    Your identification has been saved with the new passphrase.
+```
+
+

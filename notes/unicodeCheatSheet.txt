@@ -96,6 +96,14 @@ For base vectors in R³:
   "j-hat":  𝐣   Unicode: 1d423
   "k-hat":  𝐤   Unicode: 1d424
 
+Arrows:
+   left arrow: ←  Unicode: 2190
+     up arrow: ↑  Unicode: 2191
+  right arrow: →  Unicode: 2192
+   down arrow: ↓  Unicode: 2193
+
+   left arrow: 🠔  Unicode: 1f814
+  right arrow: 🠖  Unicode: 1f816
 
 Large Greek Letters:
   alpha:   Α  Unicode: 0391

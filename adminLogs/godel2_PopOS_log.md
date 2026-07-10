@@ -953,6 +953,10 @@ reinstall drivers to fix.
     $ sudo apt install system76-driver-nvidia
 ```
 
+The ~n<regex> is telling apt (not apt-get) to do a regular express
+match. A safer way to test before committing to the purge would to
+have done `apt purge ~nnvidia --simulate` (or just -s).
+
 ## 2025-03-03:
 
 Over the weekend I was not able to access godel2. When I got to work

@@ -1,0 +1,9 @@
+id: table-field-missing-explicit-key
+valid:
+  - local t = { 1, 2, 3, 4 }
+  - local t = { foo = 'bar', baz = 'qux' }
+  - local t = {}
+invalid:
+  - local t = { 1, 2, foo = 'bar' }
+  - local t = { 1, [2] = 2, 3 }
+  - local t = { { 1, 2 }, x = 3 }

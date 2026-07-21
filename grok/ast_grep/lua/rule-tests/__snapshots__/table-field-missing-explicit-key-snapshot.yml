@@ -1,0 +1,56 @@
+id: table-field-missing-explicit-key
+snapshots:
+  local t = { 1, 2, foo = 'bar' }:
+    labels:
+    - source: '1'
+      style: primary
+      start: 12
+      end: 13
+    - source: foo
+      style: secondary
+      start: 18
+      end: 21
+    - source: foo = 'bar'
+      style: secondary
+      start: 18
+      end: 29
+    - source: '{ 1, 2, foo = ''bar'' }'
+      style: secondary
+      start: 10
+      end: 31
+  local t = { 1, [2] = 2, 3 }:
+    labels:
+    - source: '1'
+      style: primary
+      start: 12
+      end: 13
+    - source: '2'
+      style: secondary
+      start: 16
+      end: 17
+    - source: '[2] = 2'
+      style: secondary
+      start: 15
+      end: 22
+    - source: '{ 1, [2] = 2, 3 }'
+      style: secondary
+      start: 10
+      end: 27
+  local t = { { 1, 2 }, x = 3 }:
+    labels:
+    - source: '{ 1, 2 }'
+      style: primary
+      start: 12
+      end: 20
+    - source: x
+      style: secondary
+      start: 22
+      end: 23
+    - source: x = 3
+      style: secondary
+      start: 22
+      end: 27
+    - source: '{ { 1, 2 }, x = 3 }'
+      style: secondary
+      start: 10
+      end: 29

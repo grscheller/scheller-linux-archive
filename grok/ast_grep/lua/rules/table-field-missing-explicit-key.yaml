@@ -1,0 +1,18 @@
+id: table-field-missing-explicit-key
+message: Table field has an implicit index; add an explicit `[N] =` key since this table mixes keyed and unkeyed fields
+severity: warning
+language: Lua
+rule:
+  kind: field
+  not:
+    has:
+      field: name
+      pattern: $_
+  inside:
+    kind: table_constructor
+    has:
+      kind: field
+      stopBy: neighbor
+      has:
+        field: name
+        pattern: $_

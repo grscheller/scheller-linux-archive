@@ -605,19 +605,76 @@ current stable release, v0.12.3. The COSMIC Store's FlatPak version is
 v0.12.3, but a FlatPak is useless to me. I will extract the appImage of
 version v0.12.3 release.
 
-# Download the AppImage
-curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage
-chmod u+x nvim-linux-x86_64.appimage
+```console
+    # Download the AppImage
+    $  $curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage
+    $  $chmod u+x nvim-linux-x86_64.appimage
 
-# Extract in place
-./nvim-linux-x86_64.appimage --appimage-extract
-# produces squashfs-root/ in the current directory
+    # Extract in place - produces squashfs-root/
+    $  $./nvim-linux-x86_64.appimage --appimage-extract
 
-# Move to a permanent location
-sudo mv squashfs-root /opt/nvim
+    # Move to a permanent location
+    $  $sudo mv squashfs-root /opt/nvim
 
-# Symlink the entry point onto PATH
-sudo ln -sf /opt/nvim/AppRun /usr/local/bin/nvim
+    # Symlink the entry point onto PATH
+    $  $sudo ln -sf /opt/nvim/AppRun /usr/local/bin/nvim
 
-# Clean up the downloaded file
-rm nvim-linux-x86_64.appimage
+    # Clean up the downloaded file
+    $  $rm nvim-linux-x86_64.appimage
+```
+
+## 2026-08-04:
+
+Lux, a luxurious package manager for Lua, see the
+[lumen-oss/lux](https://github.com/lumen-oss/lux)
+GitHub page.
+
+### Installing Lux
+
+I will use cargo-binstall to install a prebuilt binary.
+
+```console
+
+    $ rustup update
+    $ cargo install cargo-binstall
+    $ cargo binstall lux-cli
+    $ lx --version
+    lux-cli 0.40.1
+```
+
+From crates.io we have three compatible tools:
+
+- [cargo-binstall](https://crates.io/crates/cargo-binstall)
+- [cargo-update](https://crates.io/crates/cargo-update)
+- [cargo-run-bin](https://crates.io/crates/cargo-run-bin)
+
+```console
+    $ cargo binstall cargo-update
+    $ cargo binstall cargo-run-bin
+```
+
+Update everything,
+
+```console
+    $ cargo install-update -a
+        Polling registry 'https://index.crates.io/'.....
+
+    Package          Installed  Latest    Needs update
+    tree-sitter-cli  v0.26.9    v0.26.11  Yes
+    cargo-binstall   v1.21.1    v1.21.1   No
+    cargo-run-bin    v1.7.5     v1.7.5    No
+    cargo-update     v22.1.1    v22.1.1   No
+    lux-cli          v0.40.1    v0.40.1   No
+
+    Updating tree-sitter-cli
+     INFO resolve: Resolving package: 'tree-sitter-cli@=0.26.11'
+     WARN The package tree-sitter-cli v0.26.11 (x86_64-unknown-linux-gnu) has been downloaded from github.com
+     INFO This will install the following binaries:
+     INFO   - tree-sitter => /home/grs/.cargo/bin/tree-sitter
+     INFO Installing binaries...
+     INFO Done in 5.086512733s
+
+
+    Updated 1 package.
+    Overall updated 1 package: tree-sitter-cli.
+```

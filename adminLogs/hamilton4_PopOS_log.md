@@ -678,3 +678,19 @@ Update everything,
     Updated 1 package.
     Overall updated 1 package: tree-sitter-cli.
 ```
+
+## 2026-08-22:
+
+Preparing to replace pyenv with uv.
+
+Using pyenv would be problematic on Windows 11, especially since I have
+Neovim running natively on Windows. I need a working Python on Windows
+to finish my Neovim configuration files port to get hererocks to build.
+
+Decided to replace pyenv with uv on Linux too to maintain as much
+compatibility as possible between my software development environments.
+
+```console
+$ curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+

@@ -691,6 +691,6 @@ Decided to replace pyenv with uv on Linux too to maintain as much
 compatibility as possible between my software development environments.
 
 ```console
-$ curl -LsSf https://astral.sh/uv/install.sh | sh
+    $ curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 

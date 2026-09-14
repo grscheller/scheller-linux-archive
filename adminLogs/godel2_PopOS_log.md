@@ -1573,19 +1573,21 @@ current stable release, v0.12.3. The COSMIC Store's FlatPak version is
 v0.12.3, but a FlatPak is useless to me. I will extract the appImage of
 version v0.12.3 release.
 
-# Download the AppImage
-curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage
-chmod u+x nvim-linux-x86_64.appimage
+```fish
+    # Download the AppImage
+    curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage
+    chmod u+x nvim-linux-x86_64.appimage
 
-# Extract in place
-./nvim-linux-x86_64.appimage --appimage-extract
-# produces squashfs-root/ in the current directory
+    # Extract in place
+    ./nvim-linux-x86_64.appimage --appimage-extract
+    # produces squashfs-root/ in the current directory
 
-# Move to a permanent location
-sudo mv squashfs-root /opt/nvim
+    # Move to a permanent location
+    sudo mv squashfs-root /opt/nvim
 
-# Symlink the entrypoint onto PATH
-sudo ln -sf /opt/nvim/AppRun /usr/local/bin/nvim
+    # Symlink the entrypoint onto PATH
+    sudo ln -sf /opt/nvim/AppRun /usr/local/bin/nvim
 
-# Clean up the downloaded file
-rm nvim-linux-x86_64.appimage
+    # Clean up the downloaded file
+    rm nvim-linux-x86_64.appimage
+````

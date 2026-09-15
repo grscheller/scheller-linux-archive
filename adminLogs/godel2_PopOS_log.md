@@ -1591,3 +1591,14 @@ version v0.12.3 release.
     # Clean up the downloaded file
     rm nvim-linux-x86_64.appimage
 ````
+
+## 2026-09-15:
+
+Here is a better way to install a pre-built Neovim.
+
+```sh
+    $ sudo curl -LO https://github.com/neovim/neovim/releases/download/v0.12.5/nvim-linux-x86_64.tar.gz
+    $ sudo mv nvim-linux-x86_64/ /opt/nvim-0.12.5/
+    $ sudo rm /opt/nvim
+    $ sudo ln -s /opt/nvim-0.12.5 nvim
+```

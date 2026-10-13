@@ -1602,3 +1602,14 @@ Here is a better way to install a pre-built Neovim.
     $ sudo rm /opt/nvim
     $ sudo ln -s /opt/nvim-0.12.5 nvim
 ```
+
+### 2026-10-13:
+
+Brought COSMIC up to 1.10.0 release.
+
+NVidia Drives: driver 595.84 → 595.104.02
+Container toolkit 1.20.0 → 1.20.1
+
+Rollback packages generated and kept in /home/grs/nvidia-595.84-debs.
+
+See Claude chat: NVIDIA driver update on Pop!OS

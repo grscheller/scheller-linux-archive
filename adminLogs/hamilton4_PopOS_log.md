@@ -694,3 +694,59 @@ compatibility as possible between my software development environments.
     $ curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
+## 2026-11-14:
+
+The `/var/` file system got filled up. Pop!OS was failing to upgrade.
+
+Here is how I cleared up space,
+
+```console
+    $ df -h
+    Filesystem      Size  Used Avail Use% Mounted on
+    tmpfs           1.6G  2.3M  1.6G   1% /run
+    efivarfs        374K  131K  239K  36% /sys/firmware/efi/efivars
+    /dev/nvme0n1p3   98G   18G   76G  19% /
+    tmpfs           7.7G  172K  7.7G   1% /dev/shm
+    tmpfs           5.0M     0  5.0M   0% /run/lock
+    /dev/nvme0n1p1  2.0G  308M  1.7G  16% /boot/efi
+    /dev/nvme0n1p4  353G   43G  293G  13% /home
+    /dev/nvme1n1p1   27G   26G     0 100% /var
+    tmpfs           1.6G  124K  1.6G   1% /run/user/1000
+
+    $ sudo apt-get clean
+    [sudo] password for grs:
+
+    $ df -h
+    Filesystem      Size  Used Avail Use% Mounted on
+    tmpfs           1.6G  2.3M  1.6G   1% /run
+    efivarfs        374K  131K  239K  36% /sys/firmware/efi/efivars
+    /dev/nvme0n1p3   98G   18G   76G  19% /
+    tmpfs           7.7G  172K  7.7G   1% /dev/shm
+    tmpfs           5.0M     0  5.0M   0% /run/lock
+    /dev/nvme0n1p1  2.0G  308M  1.7G  16% /boot/efi
+    /dev/nvme0n1p4  353G   43G  293G  13% /home
+    /dev/nvme1n1p1   27G  1.5G   24G   6% /var
+    tmpfs           1.6G  120K  1.6G   1% /run/user/1000
+
+    $ sudo journalctl --vacuum-size=200M
+    Deleted archived journal /var/log/journal/691a84813a45e31176b6a74c674be0a6/system@5d6c752c6728489cbe3e56551e3873a0-0000000000372a7d-00065cdd0a10e946.journal (3.6M).
+    Deleted archived journal /var/log/journal/691a84813a45e31176b6a74c674be0a6/system@5d6c752c6728489cbe3e56551e3873a0-0000000000372b7e-00065cdd0a804332.journal (6.4M).
+    Deleted archived journal /var/log/journal/691a84813a45e31176b6a74c674be0a6/user-1000@5d6c752c6728489cbe3e56551e3873a0-0000000000372bd7-00065cdd0c67d7c3.journal (4.2M).
+    ...
+    Deleted archived journal /var/log/journal/691a84813a45e31176b6a74c674be0a6/user-1000@52555848e6e94e33941b5cce9eb3e229-0000000000399818-00065f547e0bf37b.journal (4.5M).
+    Vacuuming done, freed 327.9M of archived journals from /var/log/journal/691a84813a45e31176b6a74c674be0a6.
+    Vacuuming done, freed 0B of archived journals from /run/log/journal.
+    Vacuuming done, freed 0B of archived journals from /var/log/journal.
+
+    $ df -h /var
+    Filesystem      Size  Used Avail Use% Mounted on
+    /dev/nvme1n1p1   27G  1.1G   25G   5% /var
+```
+
+Then I finished with the upgrade,
+
+```console
+    $ df -h /var
+    Filesystem      Size  Used Avail Use% Mounted on
+    /dev/nvme1n1p1   27G  2.9G   23G  12% /var
+```
